@@ -2,26 +2,27 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[唐巧的iphone开发博客]]></title>
-  <link href="http://tangqiaoboy.github.com/atom.xml" rel="self"/>
-  <link href="http://tangqiaoboy.github.com/"/>
-  <updated>2011-12-25T17:47:00+08:00</updated>
-  <id>http://tangqiaoboy.github.com/</id>
+  <link href="http://blog.devtang.com/atom.xml" rel="self"/>
+  <link href="http://blog.devtang.com/"/>
+  <updated>2011-12-25T22:10:27+08:00</updated>
+  <id>http://blog.devtang.com/</id>
   <author>
-    <name><![CDATA[唐巧]]></name>
+    <name><![CDATA[Tang Qiao]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
-    <title type="html"><![CDATA[第一篇]]></title>
-    <link href="http://tangqiaoboy.github.com/blog/2011/12/25/di-%5B%3F%5D-pian/"/>
+    <title type="html"><![CDATA[First Post]]></title>
+    <link href="http://blog.devtang.com/blog/2011/12/25/first_post/"/>
     <updated>2011-12-25T14:17:00+08:00</updated>
-    <id>http://tangqiaoboy.github.com/blog/2011/12/25/di-[?]-pian</id>
-    <content type="html"><![CDATA[<p>大家好。这是一篇测试的文章。
-c代码高亮效果：</p>
+    <id>http://blog.devtang.com/blog/2011/12/25/first_post</id>
+    <content type="html"><![CDATA[<p>大家好。这是一篇测试的文章。</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p>c代码高亮效果：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -31,6 +32,15 @@ c代码高亮效果：</p>
 </span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
 </span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>objc代码高亮效果：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">a</span> <span class="o">=</span> <span class="s">@&quot;abc&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -46,17 +56,6 @@ c代码高亮效果：</p>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">+</span> <span class="p">(</span><span class="n">ImageCache</span> <span class="o">*</span><span class="p">)</span> <span class="n">sharedInstance</span> <span class="p">{</span>
 </span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">instance</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="k">@synchronized</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
@@ -67,21 +66,40 @@ c代码高亮效果：</p>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">instance</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span> <span class="n">init</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">cachePath</span> <span class="o">=</span> <span class="n">NSTemporaryDirectory</span><span class="p">();</span>
-</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">fileManager</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSFileManager</span> <span class="n">defaultManager</span><span class="p">];</span>
-</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">memoryCache</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableDictionary</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithCapacity:</span><span class="n">MAX_MEMORY_CACHE_NUMBER</span><span class="p">];</span>
-</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">memoryCacheKeys</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithCapacity:</span><span class="n">MAX_MEMORY_CACHE_NUMBER</span><span class="p">];</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 
+
+<!--more-->
+
+
+<p>objc高亮：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">+</span> <span class="p">(</span><span class="n">ImageCache</span> <span class="o">*</span><span class="p">)</span> <span class="n">sharedInstance</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">instance</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">@synchronized</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">instance</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">instance</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ImageCache</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">instance</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Javascript语法高亮:</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -102,8 +120,41 @@ c代码高亮效果：</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>gist 语法高亮：</p>
+
+<div><script src='https://gist.github.com/1519172.js?file='></script>
+<noscript><pre><code>+ (ImageCache *) sharedInstance {
+    if (instance == nil) {
+        @synchronized(self) {
+            if (instance == nil) {
+                instance = [[ImageCache alloc] init];
+            }
+        }
+    }
+    return instance;
+}
+
+- (id) init {
+    if (self = [super init]) {
+        self.cachePath = NSTemporaryDirectory();
+        self.fileManager = [NSFileManager defaultManager];
+        self.memoryCache = [[NSMutableDictionary alloc] initWithCapacity:MAX_MEMORY_CACHE_NUMBER];
+        self.memoryCacheKeys = [[NSMutableArray alloc] initWithCapacity:MAX_MEMORY_CACHE_NUMBER];
+        return self;
+    }
+    return self;
+}</code></pre></noscript></div>
+
+
 <p>图片测试：
-<img src="http://tangqiaoboy.github.com/images/mm.png"></p>
+<img src="http://blog.devtang.com/images/mm.png"></p>
+
+<p>引用测试：</p>
+
+<blockquote><p>这是一段引用的文字。<br/>第二行。</p></blockquote>
+
+
+
 ]]></content>
   </entry>
   

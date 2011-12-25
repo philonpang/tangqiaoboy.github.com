@@ -1,0 +1,9 @@
+---
+layout: post
+title: "第一篇"
+date: 2011-12-25 14:17
+comments: true
+categories: 
+---
+
+大家好。这是一篇测试的文章。

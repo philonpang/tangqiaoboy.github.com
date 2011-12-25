@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的iphone开发博客]]></title>
   <link href="http://tangqiaoboy.github.com/atom.xml" rel="self"/>
   <link href="http://tangqiaoboy.github.com/"/>
-  <updated>2011-12-25T15:06:39+08:00</updated>
+  <updated>2011-12-25T17:02:58+08:00</updated>
   <id>http://tangqiaoboy.github.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -21,16 +21,16 @@
     <content type="html"><![CDATA[<p>大家好。这是一篇测试的文章。
 代码片段：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>int main() {
-</span><span class='line'>    char * s = "hello world";
-</span><span class='line'>    printf("%s\n", s);
-</span><span class='line'>    return 0;
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">char</span> <span class="o">*</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;hello world&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

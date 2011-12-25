@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[唐巧的iphone开发博客]]></title>
   <link href="http://tangqiaoboy.github.com/atom.xml" rel="self"/>
   <link href="http://tangqiaoboy.github.com/"/>
-  <updated>2011-12-25T13:49:00+08:00</updated>
+  <updated>2011-12-25T14:19:51+08:00</updated>
   <id>http://tangqiaoboy.github.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[唐巧]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[第一篇]]></title>
+    <link href="http://tangqiaoboy.github.com/blog/2011/12/25/di-%5B%3F%5D-pian/"/>
+    <updated>2011-12-25T14:17:00+08:00</updated>
+    <id>http://tangqiaoboy.github.com/blog/2011/12/25/di-[?]-pian</id>
+    <content type="html"><![CDATA[<p>大家好。这是一篇测试的文章。</p>
+]]></content>
+  </entry>
   
 </feed>

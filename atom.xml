@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的iphone开发博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2011-12-25T22:10:27+08:00</updated>
+  <updated>2011-12-26T15:21:43+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[Tang Qiao]]></name>
@@ -19,6 +19,44 @@
     <updated>2011-12-25T14:17:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2011/12/25/first_post</id>
     <content type="html"><![CDATA[<p>大家好。这是一篇测试的文章。</p>
+
+<h1>一级标题</h1>
+
+<h2>二级标题</h2>
+
+<h6>六级标题</h6>
+
+<p><em>斜体</em>
+<strong>粗体</strong>
+<strong><em>粗斜体</em></strong></p>
+
+<pre><code> pre引用文字，原文。
+</code></pre>
+
+<p>列表一：</p>
+
+<ul>
+<li>1111</li>
+<li>22222
+
+<ol>
+<li>111</li>
+<li>222</li>
+</ol>
+</li>
+<li>33333</li>
+</ul>
+
+
+<p>列表二：</p>
+
+<ol>
+<li>11111</li>
+<li>211222</li>
+<li>33333</li>
+<li>4444</li>
+</ol>
+
 
 <p>c代码高亮效果：</p>
 
@@ -154,7 +192,10 @@
 <blockquote><p>这是一段引用的文字。<br/>第二行。</p></blockquote>
 
 
+<p>链接：
+<a href="http://blog.devtang.com">http://blog.devtang.com</a></p>
 
+<p><a href="http://blog.devtang.com">我的网站</a></p>
 ]]></content>
   </entry>
   

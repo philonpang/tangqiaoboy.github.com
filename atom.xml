@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的iphone开发博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2011-12-26T15:21:43+08:00</updated>
+  <updated>2011-12-26T21:54:52+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[Tang Qiao]]></name>
@@ -185,9 +185,9 @@
 
 
 <p>图片测试：
-<img src="http://blog.devtang.com/images/mm.png"></p>
-
-<p>引用测试：</p>
+<img src="http://blog.devtang.com/images/mm.png">
+<img src="http://photo.yupoo.com/cctravel/BxNJK0XI/medish.jpg">
+引用测试：</p>
 
 <blockquote><p>这是一段引用的文字。<br/>第二行。</p></blockquote>
 

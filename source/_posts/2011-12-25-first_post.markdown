@@ -4,9 +4,36 @@ title: "First Post"
 date: 2011-12-25 14:17
 comments: true
 categories: [xcode, tool]
+published: false
 ---
 
 大家好。这是一篇测试的文章。
+# 一级标题
+## 二级标题
+###### 六级标题
+
+*斜体*
+**粗体**
+***粗斜体***
+
+     pre引用文字，原文。
+
+
+列表一：
+
+ * 1111
+ * 22222
+   1. 111
+   2. 222
+ * 33333
+
+
+列表二：
+
+1. 11111
+1. 211222
+1. 33333
+1. 4444
 
 c代码高亮效果：
 ``` c
@@ -71,11 +98,17 @@ gist 语法高亮：
 
 图片测试：
 {% img /images/mm.png %}
-
+{% img http://photo.yupoo.com/cctravel/BxNJK0XI/medish.jpg %}
 引用测试：
 {% blockquote %}
 这是一段引用的文字。
 第二行。
 {% endblockquote %}
+
+链接：
+<http://blog.devtang.com>
+
+[我的网站](http://blog.devtang.com)
+
 
 

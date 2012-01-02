@@ -4,7 +4,7 @@
   <title><![CDATA[Category: summary | 唐巧的iphone开发博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/summary/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-01-01T20:59:21+08:00</updated>
+  <updated>2012-01-02T10:45:19+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[Tang Qiao]]></name>
@@ -74,10 +74,12 @@ gc的分享也让我好好学习了一下java的内存回收技术。后来面�
 <ul>
 <li>javascript、objectiveC 2种新的开发语言。</li>
 <li>对于shell脚本的掌握也有提升。</li>
-<li>对于git版本管理也熟练了。基本可以用git来做代码管理了。</li>
+<li>git版本管理。基本可以用git来做代码管理了。</li>
 <li>正在看python语言，打算进一步提高自己的脚本能力。</li>
 </ul>
 
+
+<p>值得一提的是，由于iphone开发的中文资料太少，今年接触和阅读了大量英文书和视频。在听完stanford的iphone开发课程和苹果的WWDC2011视频后，英语的听力水平提高不少。iphone开发的各种问题，也基本只能在stackoverflow.com上找到解答，所以现在已经很习惯直接阅读英文资料了。</p>
 
 <h3>读书</h3>
 
@@ -88,7 +90,7 @@ gc的分享也让我好好学习了一下java的内存回收技术。后来面�
 <li>前端开发的各种书：《ppk谈javascript》, 《Professional Javascript for Web Developers》等</li>
 <li>iphone开发的各种书：《iphone3开发基础教程》《iphone开发秘籍》、《iOS4 in Action》等</li>
 <li>工作效率类的书：《git权威指南》，《鸟哥的linux私房菜》，《vim book》，《番茄工作法》等</li>
-<li>传记类：《乔布斯传》</li>
+<li>传记类：《乔布斯传》，《编程人生》，《黑客与画家》，《软件随想录》</li>
 </ul>
 
 

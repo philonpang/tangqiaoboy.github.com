@@ -3,11 +3,11 @@
 # ----------------------- #
 
 url: http://blog.devtang.com
-title: 唐巧的iphone开发博客
+title: 唐巧的开发总结博客
 subtitle: 记录下自己学习的点滴
 author: Tang Qiao
 simple_search: http://google.com/search
-description:
+description: 希望通过这个博客，能够将自己的学习成果总结出来，与大家分享交流。
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in

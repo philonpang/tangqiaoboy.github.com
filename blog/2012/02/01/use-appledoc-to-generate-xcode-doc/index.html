@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>使用Objective-C的文档生成工具:appledoc - 唐巧的开发总结博客</title>
+  <meta name="author" content="Tang Qiao">
+
+  
+  <meta name="description" content="前言 做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。 从stackoverflow &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的开发总结博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的开发总结博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">使用Objective-C的文档生成工具:appledoc</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-01T20:37:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>前言</h2>
+
+<p>做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。</p>
+
+<p>从<a href="http://stackoverflow.com/questions/813529/documentation-generator-for-objective-c">stackoverflow</a> 上找到三个比较popular的工具：doxygen, headdoc和appledoc 。它们分别的官方网址如下：</p>
+
+<ul>
+<li>docxygen <a href="http://www.stack.nl/~dimitri/doxygen/index.html">http://www.stack.nl/~dimitri/doxygen/index.html</a></li>
+<li>headdoc <a href="http://developer.apple.com/opensource/tools/headerdoc.html">http://developer.apple.com/opensource/tools/headerdoc.html</a></li>
+<li>appledoc <a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2>介绍</h2>
+
+<p>我把这3个工具都大概调研了一下，说一下我的感受。</p>
+
+<h3>docxygen</h3>
+
+<p>docxygen感觉是这3个工具中支持语言最多的，可以配置的地方也比较多。我大概看了一下文档，觉得还是比较复杂，而且默认生成的风格与苹果的风格不一致。就去看后面2个工具的介绍了。另外，它虽然是开源软件，但是没有将源码放到github上让我感觉这个工具的开发活跃度是不是不够。</p>
+
+<h3>headerdoc</h3>
+
+<p>headerdoc是xcode 自带的文档生成工具。在安装完xcode后，就可以用命令行：headdoc2html + 源文件名 来生成对应的文档。我个人试用了一下，还是比较方便的，不过headerdoc的注释生成规则比较特别，只生成以 /*! */ 的格式的注释。还有一个缺点是每个类文件对应一个注释文件，没有汇总的文件，这点感觉有点不爽。</p>
+
+<h3>appledoc</h3>
+
+<p>appledoc是在stackoverflow上被大家推荐的一个注释工具。有几个原因造成我比较喜欢它：</p>
+
+<ol>
+<li>它默认生成的文档风格和苹果的官方文档是一致的，而doxygen需要另外配置。</li>
+<li>appledoc就是用objective-c生成的，必要的时候调试和改动也比较方便。</li>
+<li>可以生成docset，并且集成到xcode中。这一点是很赞的，相当于在源码中按住option再单击就可以调出相应方法的帮助。</li>
+<li>appledoc源码在github上，而doxygen在svn上。我个人比较偏激地认为比较活跃的开源项目都应该在github上。</li>
+<li>相对于headerdoc，它没有特殊的注释要求，可以用/** */ 的格式，也可以兼容/*! */的格式的注释，并且生成的注释有汇总页面。</li>
+</ol>
+
+
+<h2>安装</h2>
+
+<p>那么简单介绍一下如何安装appledoc，安装非常简单，只需要2步：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> git clone git://github.com/tomaz/appledoc.git
+</span><span class='line'> cd appledoc
+</span><span class='line'> sudo sh install-appledoc.sh</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>使用</h2>
+
+<p>使用appledoc时，只需要用如下命令即可：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>appledoc -o ./doc --project-name ynote --project-company youdao .</span></code></pre></td></tr></table></div></figure>
+
+
+<p>appledoc会扫描当前路径下的所有文件，然后生成好文档放到doc目录下。你也可以用appledoc &#8211;help查看所有可用的参数。</p>
+
+<p>基本上使用起来还是比较方便的，详细的信息可以查看官方的文档：<a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Tang Qiao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-01T20:37:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/xcode-/'>xcode,</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/01/23/use-javascript-to-import-pictures/" title="Previous Post: 用javascript协助导入图片">&laquo; 用javascript协助导入图片</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">使用Objective-C的文档生成工具:appledoc</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/23/use-javascript-to-import-pictures/">用javascript协助导入图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/20/we-must-self-learning/">我们必须自学</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/01/2011-summary/">2011年个人总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/12/27/mac-top/">mac下的top命令</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>网易有道云存储部门。<br/>iOS开发工程师。
+  <br/>iOS版有道笔记开发。
+  <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>tangqiaoboy</a>
+  
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Tang Qiao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

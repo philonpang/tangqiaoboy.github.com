@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>SVN和Git的使用感受 - 唐巧的开发总结博客</title>
+  <meta name="author" content="Tang Qiao">
+
+  
+  <meta name="description" content="从开始工作到现在，在公司里面一直用svn来做版本管理。大约半年前听说了Git，因为Git的光辉相当耀眼，作者是Linus Torvalds，被大量的开源软件采用，如jQuery, Perl, Qt, ROR, YUI, GNOME等，所以决定学一学。
+比较庆幸的是，国内有一本较好的介绍Git的书 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/03/talk-about-svn-and-git">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的开发总结博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的开发总结博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">SVN和Git的使用感受</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-03T21:08:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>从开始工作到现在，在公司里面一直用svn来做版本管理。大约半年前听说了Git，因为Git的光辉相当耀眼，作者是Linus Torvalds，被大量的开源软件采用，如jQuery, Perl, Qt, ROR, YUI, GNOME等，所以决定学一学。
+比较庆幸的是，国内有一本较好的介绍Git的书：<a href="http://www.amazon.cn/Git%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97-%E8%92%8B%E9%91%AB/dp/B0058FLC40/ref=sr_1_1?ie=UTF8&amp;qid=1328277616&amp;sr=8-1">《Git权威指南》</a>。
+我大概花了一个月的周末时间来学习它。在这里总结一下使用Git的感受，主要是和SVN来做一些比较，以便突出Git的特点。</p>
+
+<!--more-->
+
+
+<h3>学习成本</h3>
+
+<p>首先我感觉Git的学习成本还是比较高的。svn基本上不到20个命令就可以应付日常的工作了，而Git有上百个命令。我在学习SVN的时候，基本上没有看什么书，最多就是在网上随便看了一些贴子，就基本会使用SVN了。而我花在Git的学习时间算下来，至少有1周。</p>
+
+<p>因为Git的学习成本较高，所以当一个会svn的同学刚刚接触Git的时候，如果简单地把Git当SVN用，就会感觉Git相当难用。我在公司就时常听到同事抱怨它。所以我认为，要想真正用好Git，还是需要投入时间来学习它，否则是很难使用的。</p>
+
+<h3>Git的内部结构</h3>
+
+<p>Git真正是一个面向程序员的工具，它的内部数据结构是一个有向无环图，并且，你必须理解它的内部数据结构后，才能掌握它。因为你的很多操作，都其实对应的是这个有向无环图的操作。比如:</p>
+
+<ul>
+<li>git commit就是增加一个结点。</li>
+<li>git commit &#8211;amend就是改发一个结点。</li>
+<li>git reset就是修改HEAD指向的结点。</li>
+</ul>
+
+
+<p>另外，Git内部包括三个区域：工作区，暂存区和版本库。</p>
+
+<ul>
+<li>git add 是将工作区的内容保存到暂存区</li>
+<li>git checkout 是将暂存区的内容覆盖工作区</li>
+<li>git commit 是将暂存区的内容保存到版本库</li>
+<li>git reset 默认情况下是将版本库的内容覆盖工作区</li>
+<li>git diff 也有三种情况，分别是比较工作区与暂存区，工作区与版本库，暂存区与版本库之间的差别</li>
+</ul>
+
+
+<p>了解了Git的内部结构，对于这些Git的命令就更加理解了。</p>
+
+<h3>svn的坑</h3>
+
+<p>svn在平常使用上基本没什么坑，平时通过</p>
+
+<pre>svn pe svn:ignore . </pre>
+
+
+<p>设置好忽略的文件，以免误把不应该加入版本管理的文件加进来。</p>
+
+<p>我唯一遇到的一次问题是这样的：我有一个目录要加入svn的版本库，但是目录里面的一些文件不想加入。如果直接输入svn add 目录名，就会把目录下所有文件都加入到版本管理中。如果cd到那个目录里面配置svn:ignore，又会因为当前目录还不在版本管理中，设置不了。最后找到的解决办法是在svn add的时候增加 &#8211;non-recursive 参数：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svn add dirname --non-recursive
+</span><span class='line'>或者是：
+</span><span class='line'>$ svn add dirname --depth empty</span></code></pre></td></tr></table></div></figure>
+
+
+<p>还有就是对于一些不小心用svn add加入了版本管理，但实际上不应该加的目录。可以这么做：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svn export spool spool-tmp    (这里export可以将原目录中的.svn目录给清除掉)
+</span><span class='line'>svn rm spool
+</span><span class='line'>svn ci -m 'Removing inadvertently added directory "spool".'
+</span><span class='line'>mv spool-tmp spool
+</span><span class='line'>svn propset svn:ignore 'spool' .
+</span><span class='line'>svn ci -m 'Ignoring a directory called "spool".'</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Git的坑</h3>
+
+<ul>
+<li>在windows下的文件的权限因为无法和linux上完全一致，所以用Git检出的文件权限可能显示为被更改。
+另外因为windows下的换行和linux上也不一样，协作开发时也容易出问题。所以在windows上使用Git的同学需要加上以下2行配置参数：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global core.filemode false
+</span><span class='line'>git config --global core.autocrlf true
+</span><span class='line'>第一句是忽略文件权限的改动。
+</span><span class='line'>第二句是将文件checkout时自动把LF转成CRLF，check in 时自动把CRLF转成LF</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>svn的svn revert filename 对应的其实是 git checkout &#8211; filename, 而git revert xxx是基于xxx提交所做的改动，做一次反向提交，和svn revert 完全不一样。</li>
+</ul>
+
+
+<h3>Git的一些小技巧</h3>
+
+<ul>
+<li>一旦推送到远程仓库后，就不要用类似git reset, git ci &#8211;amend, git rebase等破坏性提交了，否则远程仓库会因为你的新推送不是Fast Forward而拒绝提交(关于什么是Fast Forward要讲的太多了，自已看书吧)。如果实在不小心做了。在确定别人没有检出前，用git push -f 可以强制推送到远程仓库中。如下图:</li>
+</ul>
+
+
+<p><img src="/images/git_push_f.jpg"></p>
+
+<ul>
+<li>在公司没有应用git前，你可以用git svn 来做管理。 git svn 相关命令：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> git svn clone -r REV1:HEAD svn_addr local_addr
+</span><span class='line'> git svn dcommit  提交到SVN
+</span><span class='line'> git svn rebase   将从svn up过来的信息，rebase成git提交
+</span><span class='line'> git svn rebase --continue  冲突后继续rebase信息
+</span><span class='line'> git svn fetch    从svn up信息</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在用户的home目录下，有一个.gitconfig文件，里面可以配置一些别名，方便平时的git操作。
+特别是那些平日使用SVN的短命令习惯了的同学，配置一下别名后，使用git就会相当顺手了。我配置的别名如下。这里特别多说一句，有些人喜欢将ci设置成commit -a，这样就不用git add来把需要提交的文件加入到暂存区了。在《Git权威指南》中，作者极力反对这样做。因为Git本身在提交前有add这步，就是为了让提交者能够审视自己的提交文件，以防止错误的提交发生。</li>
+</ul>
+
+
+<pre>
+[alias]
+    st = status -s
+    ci = commit
+    l = log --oneline --decorate -13
+    ll = log --oneline --decorate
+    co = checkout
+    br = branch
+    rb = rebase
+    dci = dcommit
+</pre>
+
+
+<ul>
+<li>如果你需要删除Git下没有加入到版本库中的文件，可以使用：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clean -nd 测试删除
+</span><span class='line'>git clean -fd 真实删除</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>用git svn clone 的时候，带上 -r rev1:HEAD参数，可以省去将SVN整个提交历史抓取下来的时间。</p></li>
+<li><p>搭建一个Git远程仓库相当简单，直接在一台带SSH的服务器上用git init &#8211;bare dirname即可。本地可以用git remote命令来设置多个远程分支。另外，第一次提交的时候，因为远程仓库中没有任何分支，需要用如下指令建立master分支：</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote add origin yourname@yourhost.com:~/path/repository_name
+</span><span class='line'>git remote add add2 yourname@yourhost.com:~/path/repository_name
+</span><span class='line'>git push origin master
+</span><span class='line'>git push add2 master
+</span><span class='line'>如果git remote add设置地址写错了，可以用git remote set-url更改：
+</span><span class='line'>git remote set-url origin yourname@yourhost.com:~/path/repository_name</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Tang Qiao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-03T21:08:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/shell/'>shell</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/" title="Previous Post: 使用Objective-C的文档生成工具:appledoc">&laquo; 使用Objective-C的文档生成工具:appledoc</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/03/talk-about-svn-and-git/">SVN和Git的使用感受</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">使用Objective-C的文档生成工具:appledoc</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/23/use-javascript-to-import-pictures/">用javascript协助导入图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/20/we-must-self-learning/">我们必须自学</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/01/2011-summary/">2011年个人总结</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>网易有道云存储部门。<br/>iOS开发工程师。
+  <br/>iOS版有道笔记开发。
+  <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>tangqiaoboy</a>
+  
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Tang Qiao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

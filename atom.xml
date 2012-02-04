@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的开发总结博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-04T15:39:19+08:00</updated>
+  <updated>2012-02-04T16:43:34+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[Tang Qiao]]></name>
@@ -22,13 +22,13 @@
 
 <p>xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code snippet中，使用的时候，只需要键入快捷键，就可以把模版的内容填到代码中。</p>
 
+<!--more-->
+
+
 <p>例如，在引入GCD(Grand Central Dispatch)后，当我们需要一个延时的操作时，只需要在xcode中键入：dispatch
 , 就可以看到xcode中弹出一个上下文菜单，第一项就是相应的代码片段。如下图所示：</p>
 
 <p><img src="http://blog.devtang.com/images/dispatch_after_snippet.jpg"></p>
-
-<!--more-->
-
 
 <h3>定义自己的代码片段</h3>
 
@@ -253,6 +253,9 @@
 
 <p>做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。</p>
 
+<!-- more -->
+
+
 <p>从<a href="http://stackoverflow.com/questions/813529/documentation-generator-for-objective-c">stackoverflow</a> 上找到三个比较popular的工具：doxygen, headdoc和appledoc 。它们分别的官方网址如下：</p>
 
 <ul>
@@ -260,9 +263,6 @@
 <li>headdoc <a href="http://developer.apple.com/opensource/tools/headerdoc.html">http://developer.apple.com/opensource/tools/headerdoc.html</a></li>
 <li>appledoc <a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></li>
 </ul>
-
-
-<!-- more -->
 
 
 <h2>介绍</h2>
@@ -557,6 +557,213 @@ gc的分享也让我好好学习了一下java的内存回收技术。后来面�
 <p>这2个快捷键在mac上都不一样。对应的是，先输入o，然后输入cpu则按cpu使用量排序，输入rsize则按内存使用量排序。</p>
 
 <p>如果记不清了，可以在top的界面上按?，在弹出的帮助界面中即可看到。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用RBTool自动提交code review请求]]></title>
+    <link href="http://blog.devtang.com/blog/2011/08/25/use-rbtool-to-post-review-request/"/>
+    <updated>2011-08-25T18:13:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2011/08/25/use-rbtool-to-post-review-request</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>让我们回想一下手工提交review请求的过程:</p>
+
+<ol>
+<li>首先得用 svn diff > filename.diff 生成diff文件。</li>
+<li>然后输入review board的网址，可能是 rb.companyname.com</li>
+<li>然后需要输入你的账号密码进行登录验证。</li>
+<li>然后你需要填写你的svn repository 地址，然后上传diff文件。</li>
+<li>然后你进到review请求的详细页面，填写summary, description, test-done, group和people项，而通常情况下，你的group是固定的，review你的people也就是那么几个人来回变。</li>
+<li>最后你填完这些内容，点击 publish 来发布你的review请求。</li>
+</ol>
+
+
+<!--more-->
+
+
+<h3>RBTool安装和配置</h3>
+
+<p>是不是觉得很烦索？其实review board官网提供了一个RBTool，
+可以帮你把这些步骤全部省掉，一切只需要在命令行敲一条 post-review指令即可。
+很心动吧？让我们来看看如何安装RBTool。</p>
+
+<p>首先需要你的电脑里安装了git, python, Mac同学表示这些东西都安全装预好了，如果是老版本的mac，也可以自行下载安装。Git的windows/mac/linux版本下载地址是：<a href="http://git-scm.com/">http://git-scm.com/</a> 。</p>
+
+<p>下载安装完git后，输入</p>
+
+<pre>
+git clone git://github.com/reviewboard/rbtools.git 
+cd rbtools
+sudo python setup.py install 
+</pre>
+
+
+<p>OK，post-review已经安装好了。</p>
+
+<p>然后你需要小小配置一下，在自己svn项目的根目录下，建立：.reviewboardrc 文件。在文件中输入：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>REVIEWBOARD_URL = "http://rb.yourcompany.com"
+</span><span class='line'>REPOSITORY = "https://dev.yourcompany.com/svn/xxxx"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这2行分别代表你们公司的review board网址和svn根目录地址。</p>
+
+<h3>RBTool的使用</h3>
+
+<p>OK，以后你要提交review请求，只需要在项目根目录下输入 post-review 即可。第一次需要输入登陆review board的用户名密码，post-review工具会记住密码，以后就不用输入了。post-review默认会将你当前svn目录下的diff修改提交到review board上。你也可以加上一些指定的参数来指定group, people, description等等。比如我就写了一个小脚本，将post-review改成：</p>
+
+<pre>
+post-review --target-groups=mygroup --target-people=friendname1,friendname2
+</pre>
+
+
+<p>post-review还可以更新以前提交的diff,方法是用 -r 指定review number即可。具体的可以用post-review &#8211;help来查看详细信息。也可以去review board官网查看详细的说明：<a href="http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools">http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools</a></p>
+
+<p>如果是用git svn管理的项目，另外加上参数：&#8211;parent git-svn 即可。</p>
+
+<p>赶快用RBTool工具提高你的工作效率吧～</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[不要在init和dealloc函数中使用accessor]]></title>
+    <link href="http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/"/>
+    <updated>2011-08-10T17:32:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method</id>
+    <content type="html"><![CDATA[<p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<p>Java同学肯定想不通上面的代码有什么错吧？原因是Objective-C需要自己负责内存的释放。
+所以需要在改变reference之前，将原对象release，对新的对象，也需要retain一下，代码就改成这样：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="p">[</span><span class="n">name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="p">[</span><span class="n">newName</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>初学者可能以为这样就对了，其实还是有错，如果newName和name的指向的是同一个对象，并且这个对象retain count只有1的话。
+那么name release之后，这个对象就被回收掉了。所以应该改成：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">!=</span> <span class="n">newName</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="p">[</span><span class="n">name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>          <span class="n">name</span> <span class="o">=</span> <span class="p">[</span><span class="n">newName</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样才算是一个正确的set函数，Java同学肯定被吓到了，虽然知道这么写，但这比Java麻烦多了。于是，Objective-C允许程序员使用 @property + @synthesize 关键字来自动生成这些代码。于是Objective-C的程序员幸福了。大部分时候根本就不用写getter和setter。</p>
+
+<p>但是需要小心，Objective-C的accessor不能在init和dealloc函数中使用！如果你在dealloc中这么写，就有问题：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">dealloc</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'>     <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>苹果在它的developer文档库中有一个专门讲cocoa的内存管理的文章：
+<a href="http://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/MemoryMgmt.pdf">http://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/MemoryMgmt.pdf</a></p>
+
+<p>文章的第16页有一节题目是：Don’t Use Accessor Methods in Initializer Methods and dealloc</p>
+
+<p>文章说：你唯一不应该用Accessor的地方是init函数和delloc函数。在init函数中，对于一个_count成员变量应该像下面这样赋值：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">init</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">_count</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSNumber</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithInteger:</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'>     <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于一个带参数的init函数，你应该实现成下面这样：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">initWithCount:</span><span class="p">(</span><span class="n">NSNumber</span> <span class="o">*</span><span class="p">)</span><span class="n">startingCount</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">_count</span> <span class="o">=</span> <span class="p">[</span><span class="n">startingCount</span> <span class="n">copy</span><span class="p">];</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'>     <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于在dealloc中，对应的写法应该是调release:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">dealloc</span> <span class="p">{</span>
+</span><span class='line'>     <span class="p">[</span><span class="n">_count</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>     <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是比较郁闷的是，文章最后没有说为什么不能！去stackoverflow上搜了一下，比较不靠谱的说法是这样少一次函数调用，更快。比较靠谱的说法是：在init和dealloc中，对象的存在与否还不确定，所以给对象发消息可能不会成功。</p>
+
+<p>顺便说一下, 当发现这个文章的时候，我们的代码中已经有了很多这样错误用法。虽然程序没有出现严重的内存问题，但是为了保险，还是打算一行一行改掉，后来我想，这个能不能用vim搞定呢？
+于是我进vim，用qa启动宏录制，然后输入</p>
+
+<pre>
+:%s/self./[/g  再输入：%s/= nil/release]/g 
+</pre>
+
+
+<p>再输入q, 这样就可以用@a来启动刚刚录制的宏来做替换了。相当方便。</p>
 ]]></content>
   </entry>
   

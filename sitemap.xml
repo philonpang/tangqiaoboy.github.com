@@ -1,6 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
+        <loc>
+            http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/
+        </loc>
+        <lastmod>2012-02-04T15:55:39+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.devtang.com/blog/2011/08/25/use-rbtool-to-post-review-request/</loc>
+        <lastmod>2012-02-04T16:26:25+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://blog.devtang.com/blog/2011/12/27/mac-top/</loc>
         <lastmod>2012-01-21T00:02:28+08:00</lastmod>
     </url>
@@ -18,7 +28,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/</loc>
-        <lastmod>2012-02-01T21:11:08+08:00</lastmod>
+        <lastmod>2012-02-04T16:27:14+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/02/03/talk-about-svn-and-git/</loc>
@@ -26,14 +36,14 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/</loc>
-        <lastmod>2012-02-04T15:38:49+08:00</lastmod>
+        <lastmod>2012-02-04T15:56:10+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/archives/</loc>
-        <lastmod>2012-02-04T15:38:49+08:00</lastmod>
+        <lastmod>2012-02-04T16:27:14+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/</loc>
-        <lastmod>2012-02-04T15:38:49+08:00</lastmod>
+        <lastmod>2012-02-04T16:27:14+08:00</lastmod>
     </url>
 </urlset>

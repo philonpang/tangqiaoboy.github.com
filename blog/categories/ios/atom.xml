@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的开发总结博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-04T15:39:19+08:00</updated>
+  <updated>2012-02-04T16:43:34+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[Tang Qiao]]></name>
@@ -22,13 +22,13 @@
 
 <p>xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code snippet中，使用的时候，只需要键入快捷键，就可以把模版的内容填到代码中。</p>
 
+<!--more-->
+
+
 <p>例如，在引入GCD(Grand Central Dispatch)后，当我们需要一个延时的操作时，只需要在xcode中键入：dispatch
 , 就可以看到xcode中弹出一个上下文菜单，第一项就是相应的代码片段。如下图所示：</p>
 
 <p><img src="/images/dispatch_after_snippet.jpg"></p>
-
-<!--more-->
-
 
 <h3>定义自己的代码片段</h3>
 
@@ -71,6 +71,9 @@ cd xcode_tool
 
 <p>做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。</p>
 
+<!-- more -->
+
+
 <p>从<a href="http://stackoverflow.com/questions/813529/documentation-generator-for-objective-c">stackoverflow</a> 上找到三个比较popular的工具：doxygen, headdoc和appledoc 。它们分别的官方网址如下：</p>
 
 <ul>
@@ -78,9 +81,6 @@ cd xcode_tool
 <li>headdoc <a href="http://developer.apple.com/opensource/tools/headerdoc.html">http://developer.apple.com/opensource/tools/headerdoc.html</a></li>
 <li>appledoc <a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></li>
 </ul>
-
-
-<!-- more -->
 
 
 <h2>介绍</h2>
@@ -126,6 +126,124 @@ appledoc -o ./doc --project-name ynote --project-company youdao .
 appledoc会扫描当前路径下的所有文件，然后生成好文档放到doc目录下。你也可以用appledoc --help查看所有可用的参数。</p>
 
 <p>基本上使用起来还是比较方便的，详细的信息可以查看官方的文档：<a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[不要在init和dealloc函数中使用accessor]]></title>
+    <link href="http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/"/>
+    <updated>2011-08-10T17:32:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method</id>
+    <content type="html"><![CDATA[<p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：
+``` objc
+-(void) setName:(NSString *)newName {</p>
+
+<pre><code> name = newName;
+</code></pre>
+
+<p>}
+```</p>
+
+<!--more-->
+
+
+<p>Java同学肯定想不通上面的代码有什么错吧？原因是Objective-C需要自己负责内存的释放。
+所以需要在改变reference之前，将原对象release，对新的对象，也需要retain一下，代码就改成这样：
+``` objc
+-(void) setName:(NSString *)newName {</p>
+
+<pre><code> [name release];
+ name = [newName retain];
+</code></pre>
+
+<p>}
+```</p>
+
+<p>初学者可能以为这样就对了，其实还是有错，如果newName和name的指向的是同一个对象，并且这个对象retain count只有1的话。
+那么name release之后，这个对象就被回收掉了。所以应该改成：</p>
+
+<p>``` objc
+-(void) setName:(NSString *)newName {</p>
+
+<pre><code> if (name != newName) {
+      [name release];
+      name = [newName retain];
+ }
+</code></pre>
+
+<p>}
+```</p>
+
+<p>这样才算是一个正确的set函数，Java同学肯定被吓到了，虽然知道这么写，但这比Java麻烦多了。于是，Objective-C允许程序员使用 @property + @synthesize 关键字来自动生成这些代码。于是Objective-C的程序员幸福了。大部分时候根本就不用写getter和setter。</p>
+
+<p>但是需要小心，Objective-C的accessor不能在init和dealloc函数中使用！如果你在dealloc中这么写，就有问题：
+``` objc
+-(void)dealloc {</p>
+
+<pre><code> self.name = nil;
+ [super dealloc]
+</code></pre>
+
+<p>}
+```</p>
+
+<p>苹果在它的developer文档库中有一个专门讲cocoa的内存管理的文章：
+<a href="http://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/MemoryMgmt.pdf">http://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/MemoryMgmt.pdf</a></p>
+
+<p>文章的第16页有一节题目是：Don’t Use Accessor Methods in Initializer Methods and dealloc</p>
+
+<p>文章说：你唯一不应该用Accessor的地方是init函数和delloc函数。在init函数中，对于一个_count成员变量应该像下面这样赋值：</p>
+
+<p>``` objc
+-(void) init {</p>
+
+<pre><code> self = [super init]; 
+ if (self) {
+      _count = [[NSNumber alloc] initWithInteger:0]; 
+ }
+ return self;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>对于一个带参数的init函数，你应该实现成下面这样：
+``` objc
+- (void) initWithCount:(NSNumber *)startingCount {</p>
+
+<pre><code> self = [super init]; 
+ if (self) {
+      _count = [startingCount copy];
+ }
+ return self;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>对于在dealloc中，对应的写法应该是调release:
+``` objc
+- (void)dealloc {</p>
+
+<pre><code> [_count release]; 
+ [super dealloc];
+</code></pre>
+
+<p>}
+```</p>
+
+<p>但是比较郁闷的是，文章最后没有说为什么不能！去stackoverflow上搜了一下，比较不靠谱的说法是这样少一次函数调用，更快。比较靠谱的说法是：在init和dealloc中，对象的存在与否还不确定，所以给对象发消息可能不会成功。</p>
+
+<p>顺便说一下, 当发现这个文章的时候，我们的代码中已经有了很多这样错误用法。虽然程序没有出现严重的内存问题，但是为了保险，还是打算一行一行改掉，后来我想，这个能不能用vim搞定呢？
+于是我进vim，用qa启动宏录制，然后输入</p>
+
+<pre>
+:%s/self./[/g  再输入：%s/= nil/release]/g 
+</pre>
+
+
+<p>再输入q, 这样就可以用@a来启动刚刚录制的宏来做替换了。相当方便。</p>
 ]]></content>
   </entry>
   

@@ -5,11 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>使用Github来管理xcode4中的代码片段 - 唐巧的开发总结博客</title>
+  <title>使用RBTool自动提交code review请求 - 唐巧的开发总结博客</title>
   <meta name="author" content="Tang Qiao">
 
   
-  <meta name="description" content="代码片段介绍 xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code &hellip;">
+  <meta name="description" content="前言 让我们回想一下手工提交review请求的过程: 首先得用 svn diff > filename.diff 生成diff文件。
+然后输入review board的网址，可能是 rb.companyname.com
+然后需要输入你的账号密码进行登录验证。
+然后你需要填写你的svn &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2011/08/25/use-rbtool-to-post-review-request">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">使用Github来管理xcode4中的代码片段</h1>
+      <h1 class="entry-title">使用RBTool自动提交code Review请求</h1>
     
     
       <p class="meta">
@@ -92,56 +95,73 @@
   
 
 
-<time datetime="2012-02-04T14:32:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+<time datetime="2011-08-25T18:13:00+08:00" pubdate data-updated="true">Aug 25<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h3>代码片段介绍</h3>
+<div class="entry-content"><h3>前言</h3>
 
-<p>xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code snippet中，使用的时候，只需要键入快捷键，就可以把模版的内容填到代码中。</p>
+<p>让我们回想一下手工提交review请求的过程:</p>
+
+<ol>
+<li>首先得用 svn diff > filename.diff 生成diff文件。</li>
+<li>然后输入review board的网址，可能是 rb.companyname.com</li>
+<li>然后需要输入你的账号密码进行登录验证。</li>
+<li>然后你需要填写你的svn repository 地址，然后上传diff文件。</li>
+<li>然后你进到review请求的详细页面，填写summary, description, test-done, group和people项，而通常情况下，你的group是固定的，review你的people也就是那么几个人来回变。</li>
+<li>最后你填完这些内容，点击 publish 来发布你的review请求。</li>
+</ol>
+
 
 <!--more-->
 
 
-<p>例如，在引入GCD(Grand Central Dispatch)后，当我们需要一个延时的操作时，只需要在xcode中键入：dispatch
-, 就可以看到xcode中弹出一个上下文菜单，第一项就是相应的代码片段。如下图所示：</p>
+<h3>RBTool安装和配置</h3>
 
-<p><img src="/images/dispatch_after_snippet.jpg"></p>
+<p>是不是觉得很烦索？其实review board官网提供了一个RBTool，
+可以帮你把这些步骤全部省掉，一切只需要在命令行敲一条 post-review指令即可。
+很心动吧？让我们来看看如何安装RBTool。</p>
 
-<h3>定义自己的代码片段</h3>
+<p>首先需要你的电脑里安装了git, python, Mac同学表示这些东西都安全装预好了，如果是老版本的mac，也可以自行下载安装。Git的windows/mac/linux版本下载地址是：<a href="http://git-scm.com/">http://git-scm.com/</a> 。</p>
 
-<p>那么如何自定义code snippet呢，相当简单，当你觉得某段代码很有用，可以当作模版的时候，将其整块选中，
-拖动到xcode右下角的code snippets区域中即可。xcode会自动帮你创建一个新的代码片段。
-之后你可以单击该代码片段，在弹出的界面中选择edit，即可为此代码片段设置快捷键等信息。</p>
+<p>下载安装完git后，输入</p>
 
-<p>如果有些地方你想让用户替换掉，可以用 &lt;#被替换的内容#> 的格式。
-这样在代码片段被使用后，焦点会自动移到该处，你只需要连贯的键入替换后的内容即可。如下图所示：</p>
+<pre>
+git clone git://github.com/reviewboard/rbtools.git 
+cd rbtools
+sudo python setup.py install 
+</pre>
 
-<p><img src="/images/edit_code_snippet.jpg"></p>
 
-<p>关于xcode的一些代码片段，<a href="http://nearthespeedoflight.com/article/xcode_4_code_snippets">这里</a>有一些用户的总结心得。</p>
+<p>OK，post-review已经安装好了。</p>
 
-<h3>使用Git管理代码片段</h3>
-
-<p>在了解了code snippet之后，我在想能不能用Git来管理它，于是就研究了一下，发现它都存放于目录 ~/Library/Developer/Xcode/UserData/CodeSnippets 中。于是，我就将这个目录设置成一个Git的版本库，然后将自己整理
-的代码片段都放到Github上了。现在我有2台mac机器，一台笔记本，一台公司的iMac，我常常在2台机器间切换着工作，由于将代码片段都放在github上，所以我在任何一端有更新，另一端都可以很方便的用git pull将更新拉到本地。前两天将公司机器升级到lion，又重装了lion版的xcode，简单设置一下，所有代码片段都回来了，非常方便。</p>
-
-<p>我的代码片段所在的github地址是<a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>,使用它非常方便，只需要如下3步即可：</p>
+<p>然后你需要小小配置一下，在自己svn项目的根目录下，建立：.reviewboardrc 文件。在文件中输入：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://github.com/tangqiaoboy/xcode_tool
-</span><span class='line'>cd xcode_tool
-</span><span class='line'>./setup_snippets.sh</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>REVIEWBOARD_URL = "http://rb.yourcompany.com"
+</span><span class='line'>REPOSITORY = "https://dev.yourcompany.com/svn/xxxx"</span></code></pre></td></tr></table></div></figure>
 
 
-<p>大家也可以将我的github项目fork一份，改成自己的。这样可以方便地增加和管理自己的代码片段。</p>
+<p>这2行分别代表你们公司的review board网址和svn根目录地址。</p>
 
-<p>祝大家玩得开心。</p>
+<h3>RBTool的使用</h3>
+
+<p>OK，以后你要提交review请求，只需要在项目根目录下输入 post-review 即可。第一次需要输入登陆review board的用户名密码，post-review工具会记住密码，以后就不用输入了。post-review默认会将你当前svn目录下的diff修改提交到review board上。你也可以加上一些指定的参数来指定group, people, description等等。比如我就写了一个小脚本，将post-review改成：</p>
+
+<pre>
+post-review --target-groups=mygroup --target-people=friendname1,friendname2
+</pre>
+
+
+<p>post-review还可以更新以前提交的diff,方法是用 -r 指定review number即可。具体的可以用post-review &#8211;help来查看详细信息。也可以去review board官网查看详细的说明：<a href="http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools">http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools</a></p>
+
+<p>如果是用git svn管理的项目，另外加上参数：&#8211;parent git-svn 即可。</p>
+
+<p>赶快用RBTool工具提高你的工作效率吧～</p>
 </div>
 
 
@@ -164,12 +184,12 @@
   
 
 
-<time datetime="2012-02-04T14:32:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+<time datetime="2011-08-25T18:13:00+08:00" pubdate data-updated="true">Aug 25<span>th</span>, 2011</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/xcode/'>xcode</a>
+    <a class='category' href='/blog/categories/shell/'>shell</a>
   
 </span>
 
@@ -185,8 +205,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/03/talk-about-svn-and-git/" title="Previous Post: SVN和Git的使用感受">&laquo; SVN和Git的使用感受</a>
+        <a class="basic-alignment left" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/" title="Previous Post: 不要在init和dealloc函数中使用accessor">&laquo; 不要在init和dealloc函数中使用accessor</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2011/12/27/mac-top/" title="next Post: mac下的top命令">mac下的top命令 &raquo;</a>
       
     </p>
   </footer>

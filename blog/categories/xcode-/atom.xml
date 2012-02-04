@@ -4,7 +4,7 @@
   <title><![CDATA[Category: xcode, | 唐巧的开发总结博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/xcode-/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-04T15:39:19+08:00</updated>
+  <updated>2012-02-04T16:43:34+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[Tang Qiao]]></name>
@@ -22,6 +22,9 @@
 
 <p>做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。</p>
 
+<!-- more -->
+
+
 <p>从<a href="http://stackoverflow.com/questions/813529/documentation-generator-for-objective-c">stackoverflow</a> 上找到三个比较popular的工具：doxygen, headdoc和appledoc 。它们分别的官方网址如下：</p>
 
 <ul>
@@ -29,9 +32,6 @@
 <li>headdoc <a href="http://developer.apple.com/opensource/tools/headerdoc.html">http://developer.apple.com/opensource/tools/headerdoc.html</a></li>
 <li>appledoc <a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></li>
 </ul>
-
-
-<!-- more -->
 
 
 <h2>介绍</h2>

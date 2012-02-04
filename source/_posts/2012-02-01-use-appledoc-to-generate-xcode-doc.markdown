@@ -8,12 +8,14 @@ categories: xcode, iOS
 ##前言
 做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。
 
+<!-- more -->
+
 从[stackoverflow](http://stackoverflow.com/questions/813529/documentation-generator-for-objective-c) 上找到三个比较popular的工具：doxygen, headdoc和appledoc 。它们分别的官方网址如下：
 
  * docxygen <http://www.stack.nl/~dimitri/doxygen/index.html>  
  * headdoc <http://developer.apple.com/opensource/tools/headerdoc.html> 
  * appledoc <http://gentlebytes.com/appledoc/> 
-<!-- more -->
+
 
 ##介绍
 我把这3个工具都大概调研了一下，说一下我的感受。

@@ -3,7 +3,7 @@ layout: post
 title: "使用Objective-C的文档生成工具:appledoc"
 date: 2012-02-01 20:37
 comments: true
-categories: xcode, iOS
+categories: xcode iOS
 ---
 ##前言
 做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。

@@ -6,6 +6,9 @@ comments: true
 categories: iOS
 ---
 xcode中默认的UILabel是垂直居中对齐的，如果你的UILabel高度有多行，当内容少的时候，会自动垂直居中。
+
+<!--more-->
+
 如下图所示（图片来自stackoverflow)：
 
 {% img /images/UILabel_1.jpg %}

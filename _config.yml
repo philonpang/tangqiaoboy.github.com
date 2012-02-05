@@ -3,7 +3,7 @@
 # ----------------------- #
 
 url: http://blog.devtang.com
-title: 唐巧的开发总结博客
+title: 唐巧的技术博客
 subtitle: 记录下自己学习的点滴
 author: Tang Qiao
 simple_search: http://google.com/search
@@ -38,7 +38,7 @@ pygments: false # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
 pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
-recent_posts: 10      # Posts in the sidebar Recent Posts section
+recent_posts: 15      # Posts in the sidebar Recent Posts section
 excerpt_link: "阅读 &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
 
 titlecase: true       # Converts page and post titles to tilecase
@@ -98,3 +98,7 @@ google_analytics_tracking_id:
 
 # Facebook Like
 facebook_like: false
+
+# weibo share
+weibo_share: true
+

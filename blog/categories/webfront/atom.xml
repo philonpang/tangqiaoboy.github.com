@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: webfront, | 唐巧的开发总结博客]]></title>
-  <link href="http://blog.devtang.com/blog/categories/webfront-/atom.xml" rel="self"/>
+  <title><![CDATA[Category: webfront | 唐巧的开发总结博客]]></title>
+  <link href="http://blog.devtang.com/blog/categories/webfront/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-04T17:36:56+08:00</updated>
+  <updated>2012-02-05T10:10:08+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[Tang Qiao]]></name>
@@ -20,12 +20,14 @@
     <id>http://blog.devtang.com/blog/2012/01/23/use-javascript-to-import-pictures</id>
     <content type="html"><![CDATA[<h2>需求</h2>
 
-<p>先说说需求。春节回家见爸妈，老爸迷上了摄影。他把平时的照片都上传到了<a href="http://photo.chengdu.cn/">成都图片网</a>,这个成都图片网专门有一个“快拍成都”的版块，用于大家将随手拍的生活中的图片分享上去。每天编辑还会选出一张最有特色的图片，刊登到《成都商报》上。快拍成都版块的网址是：<a href="http://photo.chengdu.cn/diary.php">http://photo.chengdu.cn/diary.php</a>，另外，这个成都图片网还带有一个"拍客论坛"，论坛的网址是：<a href="http://photo.chengdu.cn/bbs/">http://photo.chengdu.cn/bbs/</a>。</p>
-
-<p>老爸在兴奋地给我介绍完他的光辉成果之后,提出了他的需求：他希望在“快拍成都”发完图片后，能够自动将图片保存到他在"拍客论坛"上的“个人相册”中。</p>
+<p>先说说需求。春节回家见爸妈，老爸迷上了摄影。他把平时的照片都上传到了<a href="http://photo.chengdu.cn/">成都图片网</a>,这个成都图片网专门有一个“快拍成都”的版块，用于大家将随手拍的生活中的图片分享上去。每天编辑还会选出一张最有特色的图片，刊登到《成都商报》上。</p>
 
 <!--more-->
 
+
+<p>快拍成都版块的网址是：<a href="http://photo.chengdu.cn/diary.php">http://photo.chengdu.cn/diary.php</a>，另外，这个成都图片网还带有一个"拍客论坛"，论坛的网址是：<a href="http://photo.chengdu.cn/bbs/">http://photo.chengdu.cn/bbs/</a>。</p>
+
+<p>老爸在兴奋地给我介绍完他的光辉成果之后,提出了他的需求：他希望在“快拍成都”发完图片后，能够自动将图片保存到他在"拍客论坛"上的“个人相册”中。</p>
 
 <h2>调研</h2>
 

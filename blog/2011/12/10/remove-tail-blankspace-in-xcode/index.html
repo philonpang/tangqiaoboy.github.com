@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>使用Github来管理xcode4中的代码片段 - 唐巧的开发总结博客</title>
+  <title>去掉xcode源码末尾的空格 - 唐巧的开发总结博客</title>
   <meta name="author" content="Tang Qiao">
 
   
-  <meta name="description" content="代码片段介绍 xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code &hellip;">
+  <meta name="description" content="在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2011/12/10/remove-tail-blankspace-in-xcode">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,7 +76,7 @@
   
   <header>
     
-      <h1 class="entry-title">使用Github来管理xcode4中的代码片段</h1>
+      <h1 class="entry-title">去掉xcode源码末尾的空格</h1>
     
     
       <p class="meta">
@@ -92,56 +92,30 @@
   
 
 
-<time datetime="2012-02-04T14:32:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+<time datetime="2011-12-10T17:08:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h3>代码片段介绍</h3>
-
-<p>xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code snippet中，使用的时候，只需要键入快捷键，就可以把模版的内容填到代码中。</p>
+<div class="entry-content"><p>在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格,将尾部的空格去掉。可惜在xcode中并没有提供相应的功能。</p>
 
 <!--more-->
 
 
-<p>例如，在引入GCD(Grand Central Dispatch)后，当我们需要一个延时的操作时，只需要在xcode中键入：dispatch
-, 就可以看到xcode中弹出一个上下文菜单，第一项就是相应的代码片段。如下图所示：</p>
+<p>不过我们可以用命令行来达到这一效果,在工程目录下输入:</p>
 
-<p><img src="/images/dispatch_after_snippet.jpg"></p>
-
-<h3>定义自己的代码片段</h3>
-
-<p>那么如何自定义code snippet呢，相当简单，当你觉得某段代码很有用，可以当作模版的时候，将其整块选中，
-拖动到xcode右下角的code snippets区域中即可。xcode会自动帮你创建一个新的代码片段。
-之后你可以单击该代码片段，在弹出的界面中选择edit，即可为此代码片段设置快捷键等信息。</p>
-
-<p>如果有些地方你想让用户替换掉，可以用 &lt;#被替换的内容#> 的格式。
-这样在代码片段被使用后，焦点会自动移到该处，你只需要连贯的键入替换后的内容即可。如下图所示：</p>
-
-<p><img src="/images/edit_code_snippet.jpg"></p>
-
-<p>关于xcode的一些代码片段，<a href="http://nearthespeedoflight.com/article/xcode_4_code_snippets">这里</a>有一些用户的总结心得。</p>
-
-<h3>使用Git管理代码片段</h3>
-
-<p>在了解了code snippet之后，我在想能不能用Git来管理它，于是就研究了一下，发现它都存放于目录 ~/Library/Developer/Xcode/UserData/CodeSnippets 中。于是，我就将这个目录设置成一个Git的版本库，然后将自己整理
-的代码片段都放到Github上了。现在我有2台mac机器，一台笔记本，一台公司的iMac，我常常在2台机器间切换着工作，由于将代码片段都放在github上，所以我在任何一端有更新，另一端都可以很方便的用git pull将更新拉到本地。前两天将公司机器升级到lion，又重装了lion版的xcode，简单设置一下，所有代码片段都回来了，非常方便。</p>
-
-<p>我的代码片段所在的github地址是<a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>,使用它非常方便，只需要如下3步即可：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://github.com/tangqiaoboy/xcode_tool
-</span><span class='line'>cd xcode_tool
-</span><span class='line'>./setup_snippets.sh</span></code></pre></td></tr></table></div></figure>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>find . -name <span class="s2">&quot;*.[hm]&quot;</span> | xargs sed -Ee <span class="s1">&#39;s/ +$//g&#39;</span> -i <span class="s2">&quot;&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>大家也可以将我的github项目fork一份，改成自己的。这样可以方便地增加和管理自己的代码片段。</p>
+<p>这样,就可以把源码中行末多出来的空格去掉了,是不是很爽? 可以把这句加到执行post-review的脚本上，这样就可以做到自动去空格了。</p>
 
-<p>祝大家玩得开心。</p>
+<p>顺便说一下，我打算把这些小脚本工具总结出来，放到github上，地址是 <a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>，感兴趣的同学可以把它clone下来。</p>
+
+<p>祝玩得开心～</p>
 </div>
 
 
@@ -164,12 +138,12 @@
   
 
 
-<time datetime="2012-02-04T14:32:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+<time datetime="2011-12-10T17:08:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2011</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/xcode/'>xcode</a>
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/shell/'>shell</a>, <a class='category' href='/blog/categories/xcode/'>xcode</a>
   
 </span>
 
@@ -185,10 +159,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/03/talk-about-svn-and-git/" title="Previous Post: SVN和Git的使用感受">&laquo; SVN和Git的使用感受</a>
+        <a class="basic-alignment left" href="/blog/2011/11/20/set-uilabel-text-align-top/" title="Previous Post: 让UILabel的文字顶部对齐">&laquo; 让UILabel的文字顶部对齐</a>
       
       
-        <a class="basic-alignment right" href="/blog/2012/02/05/mvc-in-ios-develop/" title="next Post: 斯坦福大学iOS开发公开课总结">斯坦福大学iOS开发公开课总结 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2011/12/27/mac-top/" title="next Post: mac下的top命令">mac下的top命令 &raquo;</a>
       
     </p>
   </footer>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: xcode | 唐巧的开发总结博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/xcode/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-04T17:36:56+08:00</updated>
+  <updated>2012-02-05T10:10:08+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[Tang Qiao]]></name>
@@ -59,6 +59,97 @@ cd xcode_tool
 <p>大家也可以将我的github项目fork一份，改成自己的。这样可以方便地增加和管理自己的代码片段。</p>
 
 <p>祝大家玩得开心。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用Objective-C的文档生成工具:appledoc]]></title>
+    <link href="http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/"/>
+    <updated>2012-02-01T20:37:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。</p>
+
+<!-- more -->
+
+
+<p>从<a href="http://stackoverflow.com/questions/813529/documentation-generator-for-objective-c">stackoverflow</a> 上找到三个比较popular的工具：doxygen, headdoc和appledoc 。它们分别的官方网址如下：</p>
+
+<ul>
+<li>docxygen <a href="http://www.stack.nl/~dimitri/doxygen/index.html">http://www.stack.nl/~dimitri/doxygen/index.html</a></li>
+<li>headdoc <a href="http://developer.apple.com/opensource/tools/headerdoc.html">http://developer.apple.com/opensource/tools/headerdoc.html</a></li>
+<li>appledoc <a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></li>
+</ul>
+
+
+<h2>介绍</h2>
+
+<p>我把这3个工具都大概调研了一下，说一下我的感受。</p>
+
+<h3>docxygen</h3>
+
+<p>docxygen感觉是这3个工具中支持语言最多的，可以配置的地方也比较多。我大概看了一下文档，觉得还是比较复杂，而且默认生成的风格与苹果的风格不一致。就去看后面2个工具的介绍了。另外，它虽然是开源软件，但是没有将源码放到github上让我感觉这个工具的开发活跃度是不是不够。</p>
+
+<h3>headerdoc</h3>
+
+<p>headerdoc是xcode 自带的文档生成工具。在安装完xcode后，就可以用命令行：headdoc2html + 源文件名 来生成对应的文档。我个人试用了一下，还是比较方便的，不过headerdoc的注释生成规则比较特别，只生成以 /*! */ 的格式的注释。还有一个缺点是每个类文件对应一个注释文件，没有汇总的文件，这点感觉有点不爽。</p>
+
+<h3>appledoc</h3>
+
+<p>appledoc是在stackoverflow上被大家推荐的一个注释工具。有几个原因造成我比较喜欢它：</p>
+
+<ol>
+<li>它默认生成的文档风格和苹果的官方文档是一致的，而doxygen需要另外配置。</li>
+<li>appledoc就是用objective-c生成的，必要的时候调试和改动也比较方便。</li>
+<li>可以生成docset，并且集成到xcode中。这一点是很赞的，相当于在源码中按住option再单击就可以调出相应方法的帮助。</li>
+<li>appledoc源码在github上，而doxygen在svn上。我个人比较偏激地认为比较活跃的开源项目都应该在github上。</li>
+<li>相对于headerdoc，它没有特殊的注释要求，可以用/** */ 的格式，也可以兼容/*! */的格式的注释，并且生成的注释有汇总页面。</li>
+</ol>
+
+
+<h2>安装</h2>
+
+<p>那么简单介绍一下如何安装appledoc，安装非常简单，只需要2步：
+<code>
+ git clone git://github.com/tomaz/appledoc.git
+ cd appledoc
+ sudo sh install-appledoc.sh
+</code></p>
+
+<h2>使用</h2>
+
+<p>使用appledoc时，只需要用如下命令即可：
+<code>
+appledoc -o ./doc --project-name ynote --project-company youdao .
+</code>
+appledoc会扫描当前路径下的所有文件，然后生成好文档放到doc目录下。你也可以用appledoc --help查看所有可用的参数。</p>
+
+<p>基本上使用起来还是比较方便的，详细的信息可以查看官方的文档：<a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[去掉xcode源码末尾的空格]]></title>
+    <link href="http://blog.devtang.com/blog/2011/12/10/remove-tail-blankspace-in-xcode/"/>
+    <updated>2011-12-10T17:08:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2011/12/10/remove-tail-blankspace-in-xcode</id>
+    <content type="html"><![CDATA[<p>在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格,将尾部的空格去掉。可惜在xcode中并没有提供相应的功能。</p>
+
+<!--more-->
+
+
+<p>不过我们可以用命令行来达到这一效果,在工程目录下输入:</p>
+
+<p><code>bash
+find . -name "*.[hm]" | xargs sed -Ee 's/ +$//g' -i ""
+</code></p>
+
+<p>这样,就可以把源码中行末多出来的空格去掉了,是不是很爽? 可以把这句加到执行post-review的脚本上，这样就可以做到自动去空格了。</p>
+
+<p>顺便说一下，我打算把这些小脚本工具总结出来，放到github上，地址是 <a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>，感兴趣的同学可以把它clone下来。</p>
+
+<p>祝玩得开心～</p>
 ]]></content>
   </entry>
   

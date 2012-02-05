@@ -5,12 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>mac下的top命令 - 唐巧的开发总结博客</title>
+  <title>唐巧的开发总结博客</title>
   <meta name="author" content="Tang Qiao">
 
   
-  <meta name="description" content="以前只是在linux机器上使用top命令。常用的快键键是: p键 - 按cpu使用率排序
-m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应的是，先输入o，然后输入cpu则按cpu使用量排序，输入rsize则按内存使用量排序。 如果记不清了，可以在top的界面上按?， &hellip;">
+  <meta name="description" content="前言 让我们回想一下手工提交review请求的过程: 首先得用 svn diff > filename.diff 生成diff文件。
+然后输入review board的网址，可能是 rb.companyname.com
+然后需要输入你的账号密码进行登录验证。
+然后你需要填写你的svn &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +21,7 @@ m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应�
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2011/12/27/mac-top">
+  <link rel="canonical" href="http://blog.devtang.com/blog/page/2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -72,12 +74,15 @@ m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应�
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">Mac下的top命令</h1>
+      <h1 class="entry-title"><a href="/blog/2011/08/25/use-rbtool-to-post-review-request/">使用RBTool自动提交code Review请求</a></h1>
     
     
       <p class="meta">
@@ -93,81 +98,99 @@ m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应�
   
 
 
-<time datetime="2011-12-27T13:30:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2011</time>
+<time datetime="2011-08-25T18:13:00+08:00" pubdate data-updated="true">Aug 25<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>以前只是在linux机器上使用top命令。常用的快键键是:</p>
+  <div class="entry-content"><h3>前言</h3>
 
-<ul>
-<li>p键 - 按cpu使用率排序</li>
-<li>m键 - 按内存使用量排序</li>
-</ul>
+<p>让我们回想一下手工提交review请求的过程:</p>
+
+<ol>
+<li>首先得用 svn diff > filename.diff 生成diff文件。</li>
+<li>然后输入review board的网址，可能是 rb.companyname.com</li>
+<li>然后需要输入你的账号密码进行登录验证。</li>
+<li>然后你需要填写你的svn repository 地址，然后上传diff文件。</li>
+<li>然后你进到review请求的详细页面，填写summary, description, test-done, group和people项，而通常情况下，你的group是固定的，review你的people也就是那么几个人来回变。</li>
+<li>最后你填完这些内容，点击 publish 来发布你的review请求。</li>
+</ol>
 
 
-<p>这2个快捷键在mac上都不一样。对应的是，先输入o，然后输入cpu则按cpu使用量排序，输入rsize则按内存使用量排序。</p>
-
-<!--more-->
-
-
-<p>如果记不清了，可以在top的界面上按?，在弹出的帮助界面中即可看到。</p>
 </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/25/use-rbtool-to-post-review-request/">Read on &rarr;</a>
+    </footer>
+  
 
 
-  <footer>
-    <p class="meta">
+    </article>
+  
+  
+    <article>
       
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Tang Qiao</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-27T13:30:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2011</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/mac/'>mac</a>
-  
-</span>
-
-
-    </p>
+  <header>
     
-      <div class="sharing">
-  
-  
-  
-</div>
-
+      <h1 class="entry-title"><a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a></h1>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/" title="Previous Post: 去掉xcode源码末尾的空格">&laquo; 去掉xcode源码末尾的空格</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2012/01/01/2011-summary/" title="next Post: 2011年个人总结">2011年个人总结 &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-10T17:32:00+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">Read on &rarr;</a>
+    </footer>
+  
 
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
 <aside class="sidebar">
   
     <section>
@@ -227,7 +250,6 @@ m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应�
 
   
 </aside>
-
 
     </div>
   </div>

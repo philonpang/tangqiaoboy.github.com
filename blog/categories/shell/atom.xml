@@ -4,7 +4,7 @@
   <title><![CDATA[Category: shell | 唐巧的开发总结博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-04T17:36:56+08:00</updated>
+  <updated>2012-02-05T10:10:08+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[Tang Qiao]]></name>
@@ -155,6 +155,30 @@ git remote set-url origin yourname@yourhost.com:~/path/repository_name
 </code></p></li>
 </ul>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[去掉xcode源码末尾的空格]]></title>
+    <link href="http://blog.devtang.com/blog/2011/12/10/remove-tail-blankspace-in-xcode/"/>
+    <updated>2011-12-10T17:08:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2011/12/10/remove-tail-blankspace-in-xcode</id>
+    <content type="html"><![CDATA[<p>在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格,将尾部的空格去掉。可惜在xcode中并没有提供相应的功能。</p>
+
+<!--more-->
+
+
+<p>不过我们可以用命令行来达到这一效果,在工程目录下输入:</p>
+
+<p><code>bash
+find . -name "*.[hm]" | xargs sed -Ee 's/ +$//g' -i ""
+</code></p>
+
+<p>这样,就可以把源码中行末多出来的空格去掉了,是不是很爽? 可以把这句加到执行post-review的脚本上，这样就可以做到自动去空格了。</p>
+
+<p>顺便说一下，我打算把这些小脚本工具总结出来，放到github上，地址是 <a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>，感兴趣的同学可以把它clone下来。</p>
+
+<p>祝玩得开心～</p>
 ]]></content>
   </entry>
   

@@ -9,7 +9,7 @@
   <meta name="author" content="Tang Qiao">
 
   
-  <meta name="description" content="代码片段介绍 xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code &hellip;">
+  <meta name="description" content="前言 iphone开发相关的教程中最有名的，当数斯坦福大学发布的&#8221;iphone开发公开课&#8221;了。此公开课在以前叫做《iphone开发教程》，今年由于平板电脑的流行，所以也加入了ipad开发相关的课程。在网易公开课上，有该教程的2010年录象，并且前面15集带中文字幕文件， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -73,6 +73,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/05/mvc-in-ios-develop/">斯坦福大学iOS开发公开课总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-05T12:58:00+08:00" pubdate data-updated="true">Feb 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>iphone开发相关的教程中最有名的，当数斯坦福大学发布的&#8221;iphone开发公开课&#8221;了。此公开课在以前叫做《iphone开发教程》，今年由于平板电脑的流行，所以也加入了ipad开发相关的课程。在<a href="http://v.163.com/special/opencourse/iphonekaifa.html">网易公开课</a>上，有<a href="http://v.163.com/special/opencourse/iphonekaifa.html">该教程</a>的2010年录象，并且前面15集带中文字幕文件，非常适合初学者学习。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/05/mvc-in-ios-develop/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -233,9 +276,7 @@
 
   <div class="entry-content"><h2>需求</h2>
 
-<p>先说说需求。春节回家见爸妈，老爸迷上了摄影。他把平时的照片都上传到了<a href="http://photo.chengdu.cn/">成都图片网</a>,这个成都图片网专门有一个“快拍成都”的版块，用于大家将随手拍的生活中的图片分享上去。每天编辑还会选出一张最有特色的图片，刊登到《成都商报》上。快拍成都版块的网址是：<a href="http://photo.chengdu.cn/diary.php">http://photo.chengdu.cn/diary.php</a>，另外，这个成都图片网还带有一个&#8221;拍客论坛&#8221;，论坛的网址是：<a href="http://photo.chengdu.cn/bbs/">http://photo.chengdu.cn/bbs/</a>。</p>
-
-<p>老爸在兴奋地给我介绍完他的光辉成果之后,提出了他的需求：他希望在“快拍成都”发完图片后，能够自动将图片保存到他在&#8221;拍客论坛&#8221;上的“个人相册”中。</p>
+<p>先说说需求。春节回家见爸妈，老爸迷上了摄影。他把平时的照片都上传到了<a href="http://photo.chengdu.cn/">成都图片网</a>,这个成都图片网专门有一个“快拍成都”的版块，用于大家将随手拍的生活中的图片分享上去。每天编辑还会选出一张最有特色的图片，刊登到《成都商报》上。</p>
 
 </div>
   
@@ -375,61 +416,11 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
 
 <p>这2个快捷键在mac上都不一样。对应的是，先输入o，然后输入cpu则按cpu使用量排序，输入rsize则按内存使用量排序。</p>
 
-<p>如果记不清了，可以在top的界面上按?，在弹出的帮助界面中即可看到。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/25/use-rbtool-to-post-review-request/">使用RBTool自动提交code Review请求</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-25T18:13:00+08:00" pubdate data-updated="true">Aug 25<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>前言</h3>
-
-<p>让我们回想一下手工提交review请求的过程:</p>
-
-<ol>
-<li>首先得用 svn diff > filename.diff 生成diff文件。</li>
-<li>然后输入review board的网址，可能是 rb.companyname.com</li>
-<li>然后需要输入你的账号密码进行登录验证。</li>
-<li>然后你需要填写你的svn repository 地址，然后上传diff文件。</li>
-<li>然后你进到review请求的详细页面，填写summary, description, test-done, group和people项，而通常情况下，你的group是固定的，review你的people也就是那么几个人来回变。</li>
-<li>最后你填完这些内容，点击 publish 来发布你的review请求。</li>
-</ol>
-
-
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2011/08/25/use-rbtool-to-post-review-request/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2011/12/27/mac-top/">Read on &rarr;</a>
     </footer>
   
 
@@ -441,7 +432,7 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/">去掉xcode源码末尾的空格</a></h1>
     
     
       <p class="meta">
@@ -457,32 +448,61 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
   
 
 
-<time datetime="2011-08-10T17:32:00+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
+<time datetime="2011-12-10T17:08:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
-因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">newName</span> <span class="p">{</span>
-</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+  <div class="entry-content"><p>在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格,将尾部的空格去掉。可惜在xcode中并没有提供相应的功能。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/20/set-uilabel-text-align-top/">让UILabel的文字顶部对齐</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-20T22:43:00+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>xcode中默认的UILabel是垂直居中对齐的，如果你的UILabel高度有多行，当内容少的时候，会自动垂直居中。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/11/20/set-uilabel-text-align-top/">Read on &rarr;</a>
     </footer>
   
 
@@ -490,6 +510,8 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -500,6 +522,10 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/05/mvc-in-ios-develop/">斯坦福大学iOS开发公开课总结</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a>
@@ -519,6 +545,22 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
     
       <li class="post">
         <a href="/blog/2012/01/20/we-must-self-learning/">我们必须自学</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/01/2011-summary/">2011年个人总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/12/27/mac-top/">mac下的top命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/">去掉xcode源码末尾的空格</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/20/set-uilabel-text-align-top/">让UILabel的文字顶部对齐</a>
       </li>
     
   </ul>

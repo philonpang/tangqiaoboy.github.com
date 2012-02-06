@@ -19,13 +19,13 @@ iphone开发相关的教程中最有名的，当数斯坦福大学发布的"ipho
 
 ###iOS的MVC模式
 
-MVC模式算是客户端类程序使用的设计模式的标配了。iOS对于Modal, View和Controller之间的相互调用有它自己的规范和约定，在公开课的[第一课](http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#)中，就介绍了应该如何将MVC模式应用在iOS开发中。主要的内容就体现在如下这张图中(图片来自该公开课第一课的[配套pdf](http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#)的第37页)：
+MVC模式算是客户端类程序使用的设计模式的标配了。iOS对于Model, View和Controller之间的相互调用有它自己的规范和约定，在公开课的[第一课](http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#)中，就介绍了应该如何将MVC模式应用在iOS开发中。主要的内容就体现在如下这张图中(图片来自该公开课第一课的[配套pdf](http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#)的第37页)：
 
 {% img /images/ios_mvc.jpg %}
 
 我下面详细介绍一下这幅图的意思。
 
-* 首先图中绿色的箭头表示直接引用。直接引用直观来说，就是说需要包含引用类的申明头文件和类的实例变量。可以看到，只有Controller中，有对Modal和View的直接引用。其中对View的直接引用体现为IBOutlet。
+* 首先图中绿色的箭头表示直接引用。直接引用直观来说，就是说需要包含引用类的申明头文件和类的实例变量。可以看到，只有Controller中，有对Model和View的直接引用。其中对View的直接引用体现为IBOutlet。
 
 * 然后我们看View是怎么向Controller通讯的。对于这个，iOS中有3种常见的模式:
    1. 设置View对应的Action Target。如设置UIButton的Touch up inside的Action Target。
@@ -33,7 +33,7 @@ MVC模式算是客户端类程序使用的设计模式的标配了。iOS对于Mo
    1. 设置View的data source, 如UITableViewDataSource。
   通过这3种模式，View达到了既能向Controller通讯，又不需要知道具体的Controller是谁是目的，这样就和Controller解耦了。
 
-* 最后我们看Modal。Modal在图上有一个信号塔类似的图形，旁边写着Notification & KVO。这表明Modal主要是通过Notification和KVO来和Controller通讯的。关于Notification，我写了一个模版代码片段如下:（关于代码片段的管理，推荐大家看我写的另一篇文章：[使用Github来管理xcode4中的代码片段](http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/)
+* 最后我们看Model。Model在图上有一个信号塔类似的图形，旁边写着Notification & KVO。这表明Model主要是通过Notification和KVO来和Controller通讯的。关于Notification，我写了一个模版代码片段如下:（关于代码片段的管理，推荐大家看我写的另一篇文章：[使用Github来管理xcode4中的代码片段](http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/)
 
 ``` objc
 // 监听通知
@@ -45,7 +45,7 @@ NSDictionary * userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWit
 [[NSNotificationCenter defaultCenter] postNotificationName:<#notification_name#> object:self userInfo:userInfo];
 ```
 
-所以，对于初学者，要正确地使用MVC模式还是挺难的，回想我们以前做公司某产品iphone版的时候，就有一些Modal层直接依赖了Controller层，比如Modal层更新数据失败了，直接调用Controller层显示出一个失败的提示界面。这样层次划分不清，造成我们做ipad版的时候很痛苦。最后我们做了代码重构，把Modal的相应改变都用Notification来完成，使得在做ipad版开发时轻松了很多。
+所以，对于初学者，要正确地使用MVC模式还是挺难的，回想我们以前做公司某产品iphone版的时候，就有一些Model层直接依赖了Controller层，比如Model层更新数据失败了，直接调用Controller层显示出一个失败的提示界面。这样层次划分不清，造成我们做ipad版的时候很痛苦。最后我们做了代码重构，把Model的相应改变都用Notification来完成，使得在做ipad版开发时轻松了很多。
 
 
 ###Convention About synthesize

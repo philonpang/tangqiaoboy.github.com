@@ -4,14 +4,85 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-05T13:49:59+08:00</updated>
+  <updated>2012-02-06T22:26:05+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
-    <name><![CDATA[Tang Qiao]]></name>
+    <name><![CDATA[唐巧]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS5中UIViewController的新方法]]></title>
+    <link href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/"/>
+    <updated>2012-02-06T21:19:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>在苹果的WWDC2011大会视频的
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=101">《Session 101 - What's New in Cocoa》</a> 和
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=102">《Session 102 - Implementing UIViewController Containment》</a> 中介绍了苹果在iOS5中给UIViewController新增加的5方法以及一个属性:</p>
+
+<p><code>objc
+// 方法
+addChildViewController:
+removeFromParentViewController:
+transitionFromViewController:toViewController:duration:options:animations:completion:
+willMoveToParentViewController:
+didMoveToParentViewController:
+// 属性
+@property(nonatomic,readonly) NSArray *childViewControllers
+</code></p>
+
+<!--more-->
+
+
+<h3>原来的问题</h3>
+
+<p>这些新增的方法和属性用于改进我们的编程方式。那么让我们先看看以前的对于UIViewController的使用有什么潜在的问题，认清问题，我们才能理解苹果改变的意义。</p>
+
+<p>在以前，一个UIViewController的View可能有很多小的子view。这些子view很多时候被盖在最后，我们在最外层ViewController的viewDidLoad方法中，用addSubview增加了大量的子view。这些子view大多数不会一直处于界面上，只是在某些情况下才会出现，例如登陆失败的提示view，上传附件成功的提示view，网络失败的提示view等。但是虽然这些view很少出现，但是我们却常常一直把它们放在内存中。另外，当收到内存警告时，我们只能自己手工把这些view从super view中去掉。</p>
+
+<h3>改变</h3>
+
+<p>苹果新的API增加了addChildViewController方法，并且希望我们在使用addSubview时，同时调用[self addChildViewController:child]方法将sub view对应的viewController也加到当前ViewController的管理中。对于那些当前暂时不需要显示的subview，只通过addChildViewController把subViewController加进去。需要显示时再调用transitionFromViewController:toViewController:duration:options:animations:completion方法。</p>
+
+<p>另外，当收到系统的Memory Warning的时候，系统也会自动把当前没有显示的subview unload掉，以节省内存。</p>
+
+<h3>参考资料</h3>
+
+<p>关于这个，<a href="http://wangjun.easymorse.com/?p=1630">这儿</a>有一篇不错的文章介绍了一段sample代码用于演示新API的使用.</p>
+
+<p>我也将其代码稍加修改，增加了view load, unload, appear, disappear的事件Log，以及收到Memory Warning时的Log。代码放在了github上，地址是<a href="https://github.com/tangqiaoboy/iOS5ViewCtrlerSample">这里</a>，感兴趣的同学可以自己下载下来看看源码。</p>
+
+<p>可以看到，这些view在没有使用时，是不会被load的，并且当有Memory Warning时，当前没有显示的view自动被unload掉了。所以新的方法确实能有效地节省内存，也能方便地处理内存不足时的资源回收。运行Log如下：</p>
+
+<p><code>
+[7397:f803] -[FirstViewController willMoveToParentViewController:]
+[7397:f803] -[SecondViewController willMoveToParentViewController:]
+[7397:f803] -[ThirdViewController willMoveToParentViewController:]
+[7397:f803] -[ThirdViewController viewDidLoad]
+[7397:f803] -[ThirdViewController viewWillAppear:]
+[7397:f803] -[ThirdViewController viewDidAppear:]
+[7397:f803] 生日提醒
+[7397:f803] -[SecondViewController viewDidLoad]
+[7397:f803] -[ThirdViewController viewWillDisappear:]
+[7397:f803] -[SecondViewController viewWillAppear:]
+[7397:f803] -[SecondViewController viewDidAppear:]
+[7397:f803] -[ThirdViewController viewDidDisappear:]
+[7397:f803] 留言及回复
+[7397:f803] -[FirstViewController viewDidLoad]
+[7397:f803] -[SecondViewController viewWillDisappear:]
+[7397:f803] -[FirstViewController viewWillAppear:]
+[7397:f803] -[FirstViewController viewDidAppear:]
+[7397:f803] -[SecondViewController viewDidDisappear:]
+[7397:f803] Received memory warning.
+[7397:f803] -[SecondViewController viewDidUnload]
+[7397:f803] -[ThirdViewController viewDidUnload]
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[斯坦福大学iOS开发公开课总结]]></title>
@@ -33,14 +104,14 @@
 
 <h3>iOS的MVC模式</h3>
 
-<p>MVC模式算是客户端类程序使用的设计模式的标配了。iOS对于Modal, View和Controller之间的相互调用有它自己的规范和约定，在公开课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">第一课</a>中，就介绍了应该如何将MVC模式应用在iOS开发中。主要的内容就体现在如下这张图中(图片来自该公开课第一课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">配套pdf</a>的第37页)：</p>
+<p>MVC模式算是客户端类程序使用的设计模式的标配了。iOS对于Model, View和Controller之间的相互调用有它自己的规范和约定，在公开课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">第一课</a>中，就介绍了应该如何将MVC模式应用在iOS开发中。主要的内容就体现在如下这张图中(图片来自该公开课第一课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">配套pdf</a>的第37页)：</p>
 
 <p><img src="/images/ios_mvc.jpg"></p>
 
 <p>我下面详细介绍一下这幅图的意思。</p>
 
 <ul>
-<li><p>首先图中绿色的箭头表示直接引用。直接引用直观来说，就是说需要包含引用类的申明头文件和类的实例变量。可以看到，只有Controller中，有对Modal和View的直接引用。其中对View的直接引用体现为IBOutlet。</p></li>
+<li><p>首先图中绿色的箭头表示直接引用。直接引用直观来说，就是说需要包含引用类的申明头文件和类的实例变量。可以看到，只有Controller中，有对Model和View的直接引用。其中对View的直接引用体现为IBOutlet。</p></li>
 <li><p>然后我们看View是怎么向Controller通讯的。对于这个，iOS中有3种常见的模式:</p>
 
 <ol>
@@ -50,7 +121,7 @@
 通过这3种模式，View达到了既能向Controller通讯，又不需要知道具体的Controller是谁是目的，这样就和Controller解耦了。</li>
 </ol>
 </li>
-<li><p>最后我们看Modal。Modal在图上有一个信号塔类似的图形，旁边写着Notification &amp; KVO。这表明Modal主要是通过Notification和KVO来和Controller通讯的。关于Notification，我写了一个模版代码片段如下:（关于代码片段的管理，推荐大家看我写的另一篇文章：<a href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a></p></li>
+<li><p>最后我们看Model。Model在图上有一个信号塔类似的图形，旁边写着Notification &amp; KVO。这表明Model主要是通过Notification和KVO来和Controller通讯的。关于Notification，我写了一个模版代码片段如下:（关于代码片段的管理，推荐大家看我写的另一篇文章：<a href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a></p></li>
 </ul>
 
 
@@ -64,7 +135,7 @@ NSDictionary * userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWit
 [[NSNotificationCenter defaultCenter] postNotificationName:&lt;#notification_name#&gt; object:self userInfo:userInfo];
 </code></p>
 
-<p>所以，对于初学者，要正确地使用MVC模式还是挺难的，回想我们以前做公司某产品iphone版的时候，就有一些Modal层直接依赖了Controller层，比如Modal层更新数据失败了，直接调用Controller层显示出一个失败的提示界面。这样层次划分不清，造成我们做ipad版的时候很痛苦。最后我们做了代码重构，把Modal的相应改变都用Notification来完成，使得在做ipad版开发时轻松了很多。</p>
+<p>所以，对于初学者，要正确地使用MVC模式还是挺难的，回想我们以前做公司某产品iphone版的时候，就有一些Model层直接依赖了Controller层，比如Model层更新数据失败了，直接调用Controller层显示出一个失败的提示界面。这样层次划分不清，造成我们做ipad版的时候很痛苦。最后我们做了代码重构，把Model的相应改变都用Notification来完成，使得在做ipad版开发时轻松了很多。</p>
 
 <h3>Convention About synthesize</h3>
 
@@ -281,119 +352,6 @@ find . -name "*.[hm]" | xargs sed -Ee 's/ +$//g' -i ""
 <p>顺便说一下，我打算把这些小脚本工具总结出来，放到github上，地址是 <a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>，感兴趣的同学可以把它clone下来。</p>
 
 <p>祝玩得开心～</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[让UILabel的文字顶部对齐]]></title>
-    <link href="http://blog.devtang.com/blog/2011/11/20/set-uilabel-text-align-top/"/>
-    <updated>2011-11-20T22:43:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2011/11/20/set-uilabel-text-align-top</id>
-    <content type="html"><![CDATA[<p>xcode中默认的UILabel是垂直居中对齐的，如果你的UILabel高度有多行，当内容少的时候，会自动垂直居中。</p>
-
-<!--more-->
-
-
-<p>如下图所示（图片来自stackoverflow)：</p>
-
-<p><img src="/images/UILabel_1.jpg"></p>
-
-<p>比较郁闷的是，UILabel并不提供设置其垂直对齐方式的选项。所以如果你想让你的文字顶部对齐，那么就需要自己想办法了。 stackoverflow.com 上提供了几种方法来达到顶部对齐的效果。</p>
-
-<h4>方法一</h4>
-
-<p>在显示文字时，首先计算显示当前的文字需要多宽和多高，然后将对应的UILabel的大小改变成对应的宽度和高度。此方法的相示意图如下：</p>
-
-<p><img src="/images/UILabel_2.png"></p>
-
-<p>在显示文字时，首先计算显示当前的文字需要多宽和多高，然后将对应的UILabel的大小改变成对应的宽度和高度。此方法的相示意图如下：</p>
-
-<p>``` objc</p>
-
-<pre><code>CGSize maximumSize = CGSizeMake(300, 9999);
-NSString *dateString = @"The date today is January 1st, 1999";
-UIFont *dateFont = [UIFont fontWithName:@"Helvetica" size:14];
-CGSize dateStringSize = [dateString sizeWithFont:dateFont 
-    constrainedToSize:maximumSize 
-    lineBreakMode:self.dateLabel.lineBreakMode];
-CGRect dateFrame = CGRectMake(10, 10, 300, dateStringSize.height);
-self.dateLabel.frame = dateFrame;
-</code></pre>
-
-<p>```</p>
-
-<h4>方法二</h4>
-
-<p>此方法更加简单粗暴，但是很有效。其方法是在文本后面加多一些\n。
-需要注意的是，\n后还得加至少一个空格，否则多余的\n会被UILabel忽略。从这一点上看，UILabel似乎又过于“聪明”了。</p>
-
-<p>该方法的示意图如下：</p>
-
-<p><img src="/images/UILabel_3.png"></p>
-
-<p>该方法的代码如下：</p>
-
-<p>``` objc
-for(int i=0; i&lt;newLinesToPad; i++)</p>
-
-<pre><code>self.text = [self.text stringByAppendingString:@"\n "];
-</code></pre>
-
-<p>```</p>
-
-<h4>方法三</h4>
-
-<p>最正统的方法，利用objective-c的category特性，修改UILabel的绘制代码。示例代码如下：</p>
-
-<p>``` objc
-// -- file: UILabel+VerticalAlign.h</p>
-
-<h1>pragma mark VerticalAlign</h1>
-
-<p>@interface UILabel (VerticalAlign)
-- (void)alignTop;
-- (void)alignBottom;
-@end</p>
-
-<p>// -- file: UILabel+VerticalAlign.m
-@implementation UILabel (VerticalAlign)
-- (void)alignTop {</p>
-
-<pre><code>CGSize fontSize = [self.text sizeWithFont:self.font];
-double finalHeight = fontSize.height * self.numberOfLines;
-double finalWidth = self.frame.size.width;    //expected width of label
-CGSize theStringSize = [self.text sizeWithFont:self.font constrainedToSize:CGSizeMake(finalWidth, finalHeight) lineBreakMode:self.lineBreakMode];
-int newLinesToPad = (finalHeight  - theStringSize.height) / fontSize.height;
-for(int i=0; i&lt;newLinesToPad; i++)
-    self.text = [self.text stringByAppendingString:@"\n "];
-</code></pre>
-
-<p>}</p>
-
-<ul>
-<li>(void)alignBottom {
-  CGSize fontSize = [self.text sizeWithFont:self.font];
-  double finalHeight = fontSize.height * self.numberOfLines;
-  double finalWidth = self.frame.size.width;    //expected width of label
-  CGSize theStringSize = [self.text sizeWithFont:self.font constrainedToSize:CGSizeMake(finalWidth, finalHeight) lineBreakMode:self.lineBreakMode];
-  int newLinesToPad = (finalHeight  - theStringSize.height) / fontSize.height;
-  for(int i=0; i&lt;newLinesToPad; i++)
-
-<pre><code>  self.text = [NSString stringWithFormat:@" \n%@",self.text];
-</code></pre>
-
-<p>}
-@end
-```</p></li>
-</ul>
-
-
-<p>我选了简单暴力的方法二，你呢？</p>
-
-<h4>参考资料</h4>
-
-<p><a href="http://stackoverflow.com/questions/1054558/how-do-i-vertically-align-text-within-a-uilabel">http://stackoverflow.com/questions/1054558/how-do-i-vertically-align-text-within-a-uilabel</a> <br/>
-<a href="https://discussions.apple.com/thread/1759957?threadID=1759957">https://discussions.apple.com/thread/1759957?threadID=1759957</a></p>
 ]]></content>
   </entry>
   

@@ -4,14 +4,118 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-05T13:49:59+08:00</updated>
+  <updated>2012-02-06T22:26:05+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
-    <name><![CDATA[Tang Qiao]]></name>
+    <name><![CDATA[唐巧]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS5中UIViewController的新方法]]></title>
+    <link href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/"/>
+    <updated>2012-02-06T21:19:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>在苹果的WWDC2011大会视频的
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=101">《Session 101 - What&#8217;s New in Cocoa》</a> 和
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=102">《Session 102 - Implementing UIViewController Containment》</a> 中介绍了苹果在iOS5中给UIViewController新增加的5方法以及一个属性:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 方法</span>
+</span><span class='line'><span class="nl">addChildViewController:</span>
+</span><span class='line'><span class="nl">removeFromParentViewController:</span>
+</span><span class='line'><span class="nl">transitionFromViewController:toViewController:duration:options:animations:completion:</span>
+</span><span class='line'><span class="nl">willMoveToParentViewController:</span>
+</span><span class='line'><span class="nl">didMoveToParentViewController:</span>
+</span><span class='line'><span class="c1">// 属性</span>
+</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">childViewControllers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<h3>原来的问题</h3>
+
+<p>这些新增的方法和属性用于改进我们的编程方式。那么让我们先看看以前的对于UIViewController的使用有什么潜在的问题，认清问题，我们才能理解苹果改变的意义。</p>
+
+<p>在以前，一个UIViewController的View可能有很多小的子view。这些子view很多时候被盖在最后，我们在最外层ViewController的viewDidLoad方法中，用addSubview增加了大量的子view。这些子view大多数不会一直处于界面上，只是在某些情况下才会出现，例如登陆失败的提示view，上传附件成功的提示view，网络失败的提示view等。但是虽然这些view很少出现，但是我们却常常一直把它们放在内存中。另外，当收到内存警告时，我们只能自己手工把这些view从super view中去掉。</p>
+
+<h3>改变</h3>
+
+<p>苹果新的API增加了addChildViewController方法，并且希望我们在使用addSubview时，同时调用[self addChildViewController:child]方法将sub view对应的viewController也加到当前ViewController的管理中。对于那些当前暂时不需要显示的subview，只通过addChildViewController把subViewController加进去。需要显示时再调用transitionFromViewController:toViewController:duration:options:animations:completion方法。</p>
+
+<p>另外，当收到系统的Memory Warning的时候，系统也会自动把当前没有显示的subview unload掉，以节省内存。</p>
+
+<h3>参考资料</h3>
+
+<p>关于这个，<a href="http://wangjun.easymorse.com/?p=1630">这儿</a>有一篇不错的文章介绍了一段sample代码用于演示新API的使用.</p>
+
+<p>我也将其代码稍加修改，增加了view load, unload, appear, disappear的事件Log，以及收到Memory Warning时的Log。代码放在了github上，地址是<a href="https://github.com/tangqiaoboy/iOS5ViewCtrlerSample">这里</a>，感兴趣的同学可以自己下载下来看看源码。</p>
+
+<p>可以看到，这些view在没有使用时，是不会被load的，并且当有Memory Warning时，当前没有显示的view自动被unload掉了。所以新的方法确实能有效地节省内存，也能方便地处理内存不足时的资源回收。运行Log如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">FirstViewController</span> <span class="nl">willMoveToParentViewController:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">SecondViewController</span> <span class="nl">willMoveToParentViewController:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">ThirdViewController</span> <span class="nl">willMoveToParentViewController:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">ThirdViewController</span> <span class="n">viewDidLoad</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">ThirdViewController</span> <span class="nl">viewWillAppear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">ThirdViewController</span> <span class="nl">viewDidAppear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="err">生日提醒</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">SecondViewController</span> <span class="n">viewDidLoad</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">ThirdViewController</span> <span class="nl">viewWillDisappear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">SecondViewController</span> <span class="nl">viewWillAppear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">SecondViewController</span> <span class="nl">viewDidAppear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">ThirdViewController</span> <span class="nl">viewDidDisappear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="err">留言及回复</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">FirstViewController</span> <span class="n">viewDidLoad</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">SecondViewController</span> <span class="nl">viewWillDisappear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">FirstViewController</span> <span class="nl">viewWillAppear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">FirstViewController</span> <span class="nl">viewDidAppear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">SecondViewController</span> <span class="nl">viewDidDisappear:</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="n">Received</span> <span class="n">memory</span> <span class="n">warning</span><span class="p">.</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">SecondViewController</span> <span class="n">viewDidUnload</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">7397</span><span class="o">:</span><span class="n">f803</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">ThirdViewController</span> <span class="n">viewDidUnload</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[斯坦福大学iOS开发公开课总结]]></title>
@@ -33,14 +137,14 @@
 
 <h3>iOS的MVC模式</h3>
 
-<p>MVC模式算是客户端类程序使用的设计模式的标配了。iOS对于Modal, View和Controller之间的相互调用有它自己的规范和约定，在公开课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">第一课</a>中，就介绍了应该如何将MVC模式应用在iOS开发中。主要的内容就体现在如下这张图中(图片来自该公开课第一课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">配套pdf</a>的第37页)：</p>
+<p>MVC模式算是客户端类程序使用的设计模式的标配了。iOS对于Model, View和Controller之间的相互调用有它自己的规范和约定，在公开课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">第一课</a>中，就介绍了应该如何将MVC模式应用在iOS开发中。主要的内容就体现在如下这张图中(图片来自该公开课第一课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">配套pdf</a>的第37页)：</p>
 
 <p><img src="http://blog.devtang.com/images/ios_mvc.jpg"></p>
 
 <p>我下面详细介绍一下这幅图的意思。</p>
 
 <ul>
-<li><p>首先图中绿色的箭头表示直接引用。直接引用直观来说，就是说需要包含引用类的申明头文件和类的实例变量。可以看到，只有Controller中，有对Modal和View的直接引用。其中对View的直接引用体现为IBOutlet。</p></li>
+<li><p>首先图中绿色的箭头表示直接引用。直接引用直观来说，就是说需要包含引用类的申明头文件和类的实例变量。可以看到，只有Controller中，有对Model和View的直接引用。其中对View的直接引用体现为IBOutlet。</p></li>
 <li><p>然后我们看View是怎么向Controller通讯的。对于这个，iOS中有3种常见的模式:</p>
 
 <ol>
@@ -50,7 +154,7 @@
 通过这3种模式，View达到了既能向Controller通讯，又不需要知道具体的Controller是谁是目的，这样就和Controller解耦了。</li>
 </ol>
 </li>
-<li><p>最后我们看Modal。Modal在图上有一个信号塔类似的图形，旁边写着Notification &amp; KVO。这表明Modal主要是通过Notification和KVO来和Controller通讯的。关于Notification，我写了一个模版代码片段如下:（关于代码片段的管理，推荐大家看我写的另一篇文章：<a href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a></p></li>
+<li><p>最后我们看Model。Model在图上有一个信号塔类似的图形，旁边写着Notification &amp; KVO。这表明Model主要是通过Notification和KVO来和Controller通讯的。关于Notification，我写了一个模版代码片段如下:（关于代码片段的管理，推荐大家看我写的另一篇文章：<a href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a></p></li>
 </ul>
 
 
@@ -71,7 +175,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>所以，对于初学者，要正确地使用MVC模式还是挺难的，回想我们以前做公司某产品iphone版的时候，就有一些Modal层直接依赖了Controller层，比如Modal层更新数据失败了，直接调用Controller层显示出一个失败的提示界面。这样层次划分不清，造成我们做ipad版的时候很痛苦。最后我们做了代码重构，把Modal的相应改变都用Notification来完成，使得在做ipad版开发时轻松了很多。</p>
+<p>所以，对于初学者，要正确地使用MVC模式还是挺难的，回想我们以前做公司某产品iphone版的时候，就有一些Model层直接依赖了Controller层，比如Model层更新数据失败了，直接调用Controller层显示出一个失败的提示界面。这样层次划分不清，造成我们做ipad版的时候很痛苦。最后我们做了代码重构，把Model的相应改变都用Notification来完成，使得在做ipad版开发时轻松了很多。</p>
 
 <h3>Convention About synthesize</h3>
 
@@ -343,9 +447,9 @@
 <span class='line-number'>5</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'> git svn clone -r REV1:HEAD svn_addr local_addr
 </span><span class='line'> git svn dcommit  提交到SVN
+</span><span class='line'> git svn fetch    从svn up信息
 </span><span class='line'> git svn rebase   将从svn up过来的信息，rebase成git提交
-</span><span class='line'> git svn rebase --continue  冲突后继续rebase信息
-</span><span class='line'> git svn fetch    从svn up信息</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'> git svn rebase --continue  冲突后继续rebase信息</span></code></pre></td></tr></table></div></figure>
 
 
 <ul>
@@ -396,6 +500,25 @@
 </span><span class='line'>git push add2 master
 </span><span class='line'>如果git remote add设置地址写错了，可以用git remote set-url更改：
 </span><span class='line'>git remote set-url origin yourname@yourhost.com:~/path/repository_name</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>如何用Git将一个文件的历史提交恢复？</li>
+</ul>
+
+
+<p>上次遇到一个问题，我某次提交改动了很多文件，但是其中有一个是不应该改的。所以我需要把这次提交中关于那个文件的改动撤销。但是因为Git无法针对某一个文件revert，它的revert都是基于提交的。所以简单用svn revert是无法解决这个问题的。和同事讨论了一下，这个需求可以用以下步骤来解决：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>先用 git revert CommitId 将该文件的改动所在的历史提交建立一个反向提交。
+</span><span class='line'>然后用 git reset head^ 
+</span><span class='line'>然后用 git add 需要恢复的文件名
+</span><span class='line'>然后用 git commit --amend 修改这个revert提交
+</span><span class='line'>最后用 git checkout . 将其它文件的反向提交的改动取消</span></code></pre></td></tr></table></div></figure>
 
 
 

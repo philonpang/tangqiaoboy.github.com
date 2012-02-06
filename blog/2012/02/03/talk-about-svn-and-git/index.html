@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <title>SVN和Git的使用感受 - 唐巧的技术博客</title>
-  <meta name="author" content="Tang Qiao">
+  <meta name="author" content="唐巧">
 
   
   <meta name="description" content="从开始工作到现在，在公司里面一直用svn来做版本管理。大约半年前听说了Git，因为Git的光辉相当耀眼，作者是Linus Torvalds，被大量的开源软件采用，如jQuery, Perl, Qt, ROR, YUI, GNOME等，所以决定学一学。
@@ -216,9 +216,9 @@
 <span class='line-number'>5</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'> git svn clone -r REV1:HEAD svn_addr local_addr
 </span><span class='line'> git svn dcommit  提交到SVN
+</span><span class='line'> git svn fetch    从svn up信息
 </span><span class='line'> git svn rebase   将从svn up过来的信息，rebase成git提交
-</span><span class='line'> git svn rebase --continue  冲突后继续rebase信息
-</span><span class='line'> git svn fetch    从svn up信息</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'> git svn rebase --continue  冲突后继续rebase信息</span></code></pre></td></tr></table></div></figure>
 
 
 <ul>
@@ -271,6 +271,25 @@
 </span><span class='line'>git remote set-url origin yourname@yourhost.com:~/path/repository_name</span></code></pre></td></tr></table></div></figure>
 
 
+<ul>
+<li>如何用Git将一个文件的历史提交恢复？</li>
+</ul>
+
+
+<p>上次遇到一个问题，我某次提交改动了很多文件，但是其中有一个是不应该改的。所以我需要把这次提交中关于那个文件的改动撤销。但是因为Git无法针对某一个文件revert，它的revert都是基于提交的。所以简单用svn revert是无法解决这个问题的。和同事讨论了一下，这个需求可以用以下步骤来解决：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>先用 git revert CommitId 将该文件的改动所在的历史提交建立一个反向提交。
+</span><span class='line'>然后用 git reset head^ 
+</span><span class='line'>然后用 git add 需要恢复的文件名
+</span><span class='line'>然后用 git commit --amend 修改这个revert提交
+</span><span class='line'>最后用 git checkout . 将其它文件的反向提交的改动取消</span></code></pre></td></tr></table></div></figure>
+
+
 
 </div>
 
@@ -280,7 +299,7 @@
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Tang Qiao</span></span>
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
 
       
 
@@ -306,7 +325,7 @@
 
     </p>
     <p class="meta">
-      版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
 
     </p>
     
@@ -339,6 +358,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/02/05/mvc-in-ios-develop/">斯坦福大学iOS开发公开课总结</a>
@@ -392,10 +415,11 @@
 </section>
 <section>
   <h1>About Me</h1>
-  <p>网易有道云存储部门。<br/>iOS开发工程师。
-  <br/>iOS版有道笔记开发。
-  <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>tangqiaoboy</a>
-  
+  <p>  网易有道云存储部门。
+      <br/>iOS开发工程师。
+      <br/>iOS版有道笔记开发。
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧有道</a>
+      <span id="wb_follow_btn"></span>
   </p>
 </section>
 
@@ -406,7 +430,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2012 - Tang Qiao -
+  Copyright &copy; 2012 - 唐巧 -
   <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
 </p>
 
@@ -421,6 +445,15 @@
 
 
 
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
 
 
 </body>

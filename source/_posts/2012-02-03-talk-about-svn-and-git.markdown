@@ -81,9 +81,9 @@ git config --global core.autocrlf true
 ```
      git svn clone -r REV1:HEAD svn_addr local_addr
      git svn dcommit  提交到SVN
+     git svn fetch    从svn up信息
      git svn rebase   将从svn up过来的信息，rebase成git提交
      git svn rebase --continue  冲突后继续rebase信息
-     git svn fetch    从svn up信息
 ```
 
 * 在用户的home目录下，有一个.gitconfig文件，里面可以配置一些别名，方便平时的git操作。
@@ -118,7 +118,17 @@ git push add2 master
 git remote set-url origin yourname@yourhost.com:~/path/repository_name
 ```
 
+* 如何用Git将一个文件的历史提交恢复？
 
+上次遇到一个问题，我某次提交改动了很多文件，但是其中有一个是不应该改的。所以我需要把这次提交中关于那个文件的改动撤销。但是因为Git无法针对某一个文件revert，它的revert都是基于提交的。所以简单用svn revert是无法解决这个问题的。和同事讨论了一下，这个需求可以用以下步骤来解决：
+
+```
+先用 git revert CommitId 将该文件的改动所在的历史提交建立一个反向提交。
+然后用 git reset head^ 
+然后用 git add 需要恢复的文件名
+然后用 git commit --amend 修改这个revert提交
+最后用 git checkout . 将其它文件的反向提交的改动取消
+```
 
 
 

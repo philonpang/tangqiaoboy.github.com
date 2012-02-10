@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-10T19:43:59+08:00</updated>
+  <updated>2012-02-10T21:04:33+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,176 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[象写程序一样写博客：搭建基于github的博客]]></title>
+    <link href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/"/>
+    <updated>2012-02-10T19:55:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github</id>
+    <content type="html"><![CDATA[<p>github真是无所不能。其<a href="http://pages.github.com/">Pages功能</a>支持上传html，并且在页面中显示。于是有好事者做了一个基于github的博客管理工具：<a href="http://octopress.org/">octopress</a>，基本原理是用git来管理你的文章，然后最终发布到github上成为一个独立博客站点。由于github支持CNAME域名指向，所以如果有独立域名的话，可以基于这些做出一个专业的博客站点出来。</p>
+
+<p>本博客就是完全基于此搭建起来的，在使用了2个月之后，我将原系统根据中国人的需求做了一些配置，去掉了GFW会挡住的google font api，以及替换掉了速度超慢的国外的评论系统，也加上了分享到国内的微博的功能。现在把这些都总结出来，希望大家都可以方便地搭建基于github的博客来。</p>
+
+<!--more-->
+
+
+<h2>安装</h2>
+
+<p>首先说说怎么安装相应的工具。其实这些内容在 <a href="http://octopress.org/docs/setup/">http://octopress.org/docs/setup/</a> 上都有，我只是把它大概翻译了一下。</p>
+
+<h3>安装rvm和ruby</h3>
+
+<p>参考文档：<a href="http://octopress.org/docs/setup/rvm/">http://octopress.org/docs/setup/rvm/</a>，主要3步：</p>
+
+<p>首先安装：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>bash -s stable &lt; &lt;(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后设置classpath:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function' &gt;&gt; ~/.bash_profile
+</span><span class='line'>source ~/.bash_profile
+</span><span class='line'>
+</span><span class='line'># If using Zsh do this instead
+</span><span class='line'>echo '[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm' &gt;&gt; ~/.zshrc
+</span><span class='line'>source ~/.zshrc</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后安装ruby:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rvm install 1.9.2 && rvm use 1.9.2
+</span><span class='line'>rvm rubygems latest</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装Octopress</h3>
+
+<p>首先从github上将源码clone下来：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'>cd octopress    # If you use RVM, You'll be asked if you trust the .rvmrc file (say yes).
+</span><span class='line'>ruby --version  # Should report Ruby 1.9.2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后安装依赖:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install bundler
+</span><span class='line'>rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+</span><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后安装Octopress</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake install</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>配置</h3>
+
+<p>安装好之后可以简单配置一下：</p>
+
+<ul>
+<li>主要是修改文件：_config.yml ，这个配置文件都有相应的注释。主要就是改一些博客头，作者名之类的东西。
+注意最好把里面的twitter相关的信息全部删掉，否则由于GFW的原因，将会造成页面load很慢。</li>
+<li>修改定制文件/source/_includes/custom/head.html 把google的自定义字体去掉，原因同上。</li>
+</ul>
+
+
+<h2>设置github账号</h2>
+
+<p>基于github的博客当然需要先注册github账号，Github的账号注册地址是：<a href="https://github.com/signup/free">https://github.com/signup/free</a> 。申请好github账号后，建一个名为 username.github.com 的代码仓库。这里注意username必须是和你的账号名一致。</p>
+
+<h2>写博客方法</h2>
+
+<p>然后就可以写博客啦～ 写博客主要是用以下几个命令，<a href="http://octopress.org/docs/blogging/">这里</a>有详细介绍：</p>
+
+<ul>
+<li>rake new_post[&#8216;article name&#8217;] 生成博文框架，然后修改生成的文件即可</li>
+<li>rake generate 生成静态文件</li>
+<li>rake watch 检测文件变化，实时生成新内容</li>
+<li>rake preview 在本机4000端口生成访问内容</li>
+<li>rake deploy 发布文件</li>
+</ul>
+
+
+<p>博文是采用markdown语法，另外增加了一些扩充的插件，markdown的介绍文章网上可以搜到很多，比如<a href="http://daringfireball.net/projects/markdown/">这个</a>。</p>
+
+<h2>高级配置</h2>
+
+<p>我主要介绍一下如何配置评论和分享到微博功能。步骤如下：</p>
+
+<ul>
+<li>在_config.yml中增加一项： weibo_share: true</li>
+<li>修改 source/_includes/post/sharing.html ，增加：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  // 下面的大括号是全角的，如果复制，请自行改成半角
+</span><span class='line'> ｛% if site.weibo_share %｝
+</span><span class='line'>     ｛% include post/weibo.html %｝
+</span><span class='line'> ｛% endif %｝</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>增加文件：source/_includes/post/weibo.html</li>
+<li>访问 <a href="http://www.jiathis.com/">http://www.jiathis.com/</a> ，获取分享的代码</li>
+<li>访问 <a href="http://uyan.cc/">http://uyan.cc/</a> ，获得评论的代码</li>
+<li>将上面2步的代码都加入到weibo.html中即可</li>
+</ul>
+
+
+<h2>Tips</h2>
+
+<h4>从wordpress迁移到github</h4>
+
+<p>这儿有一篇文章介绍了如何做迁移：
+<a href="http://blog.xupeng.me/2011/12/14/migrate-to-octopress/">http://blog.xupeng.me/2011/12/14/migrate-to-octopress/</a></p>
+
+<h4>图片</h4>
+
+<p>如果要在文章中上传图片，直接copy到 /source/images目录下即可。在文章中可以直接引用。也可以选一些大的图床站点，例如flickr之类的放在那边。</p>
+
+<h4>域名</h4>
+
+<p>如果你象我一样有自己的域名，可以将域名指向这个博客，具体步骤是：</p>
+
+<ul>
+<li>在域名管理中，建立一个CNAME指向，将你的域名指向 yourname.github.com</li>
+<li>建一个名为CNAME的文件在source目录下，然后将自己的域名输入进去。</li>
+<li>将内容push到github后，第一次生效大概等1小时，之后你就可以用自己的域名访问了。</li>
+</ul>
+
+
+<h4>参考</h4>
+
+<p>这儿还有一些参考的文章：</p>
+
+<ul>
+<li><a href="http://www.yangzhiping.com/tech/octopress.html">http://www.yangzhiping.com/tech/octopress.html</a></li>
+<li><a href="http://blog.xupeng.me/2011/12/14/migrate-to-octopress/">http://blog.xupeng.me/2011/12/14/migrate-to-octopress/</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS5中UIViewController的新方法]]></title>

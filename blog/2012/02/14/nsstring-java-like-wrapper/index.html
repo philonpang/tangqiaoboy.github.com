@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>给NSString增加Java风格的方法 - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段： 1
+[self &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/14/nsstring-java-like-wrapper">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">文章列表</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">给NSString增加Java风格的方法</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-14T17:17:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">self</span> <span class="nl">stringByTrimmingCharactersInSet:</span><span class="p">[</span><span class="n">NSCharacterSet</span> <span class="n">whitespaceAndNewlineCharacterSet</span><span class="p">]];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<!--more-->
+
+
+<p>其实我也明白Objective-C这种长函数名的好处，就是能很清楚地了解当前的方法是干什么的。但是一些常用的方法，简单的方法名同样能表达清楚意思，并且更容易记住。长方法名的最大的问题是，代码写到一半得查文档，直接把思路打断了，所以我上周末花了一天时间把Objective-C的NSString类给封装了一下，把相应的方法调用都换成与Java类似的了。这样我每次用的时候就不用写那么长又记不住的方法名了。</p>
+
+<p>主要封装后的方法定义如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">NSString</span><span class="nl">(Wrapper)</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">unichar</span><span class="p">)</span> <span class="nl">charAt:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">index</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">compareTo:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">anotherString</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">compareToIgnoreCase:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">str</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nl">contains:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">str</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nl">startsWith:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="n">prefix</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nl">endsWith:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="n">suffix</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nl">equals:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">anotherString</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nl">equalsIgnoreCase:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">anotherString</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">indexOfChar:</span><span class="p">(</span><span class="n">unichar</span><span class="p">)</span><span class="n">ch</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">indexOfChar:</span><span class="p">(</span><span class="n">unichar</span><span class="p">)</span><span class="n">ch</span> <span class="nl">fromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">index</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">indexOfString:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="n">str</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">indexOfString:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="n">str</span> <span class="nl">fromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">index</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">lastIndexOfChar:</span><span class="p">(</span><span class="n">unichar</span><span class="p">)</span><span class="n">ch</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">lastIndexOfChar:</span><span class="p">(</span><span class="n">unichar</span><span class="p">)</span><span class="n">ch</span> <span class="nl">fromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">index</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">lastIndexOfString:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="n">str</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nl">lastIndexOfString:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="n">str</span> <span class="nl">fromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">index</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="nl">substringFromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">beginIndex</span> <span class="nl">toIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">endIndex</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">toLowerCase</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">toUpperCase</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">trim</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="nl">replaceAll:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="n">origin</span> <span class="nl">with:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="n">replacement</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span> <span class="nl">split:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">separator</span><span class="p">;</span>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看着方法体，一下子感觉轻松了好多，以后再也不必每次写的时候查文档了。代码放到github上了，你可以用如下命令获得代码或者直接访问网址<a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a> ：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git@github.com:tangqiaoboy/xcode_tool.git
+</span><span class='line'><span class="nb">cd </span>xcode_tool/NSStringWrappeer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果要把这个Wrapper加到现有工程中，只需要拷贝我的文件：NSStringWrapper.h和NSStringWrapper.m到你自己的工程中即可。在使用的时候注意我修改了一点，我将查找不存在的返回值设置成了-1，这样和java语言保持一致，如果你想用 NSNotFound作为查找不存在时的结果，请修改文件NSStringWrapper.m顶部的宏定义:JavaNotFound即可，如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">// 如果不喜欢，可以将-1改成 NSNotFound即可</span>
+</span><span class='line'><span class="cp">#define JavaNotFound -1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Have fun!</p>
+</div>
+
+
+  <footer>
+   <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-14T17:17:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/02/10/setup-blog-based-on-github/" title="Previous Post: 象写程序一样写博客：搭建基于github的博客">&laquo; 象写程序一样写博客：搭建基于github的博客</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/14/nsstring-java-like-wrapper/">给NSString增加Java风格的方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/10/setup-blog-based-on-github/">象写程序一样写博客：搭建基于github的博客</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/05/mvc-in-ios-develop/">斯坦福大学iOS开发公开课总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/03/talk-about-svn-and-git/">SVN和Git的使用感受</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">使用Objective-C的文档生成工具:appledoc</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/23/use-javascript-to-import-pictures/">用javascript协助导入图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/20/we-must-self-learning/">我们必须自学</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/01/2011-summary/">2011年个人总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/12/27/mac-top/">mac下的top命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/">去掉xcode源码末尾的空格</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/20/set-uilabel-text-align-top/">让UILabel的文字顶部对齐</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/25/use-rbtool-to-post-review-request/">使用RBTool自动提交code review请求</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>  网易有道云存储部门。
+      <br/>iOS开发工程师。
+      <br/>iOS版有道笔记开发。
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧有道</a>
+      <span id="wb_follow_btn"></span>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

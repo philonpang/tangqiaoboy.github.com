@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-16T21:23:50+08:00</updated>
+  <updated>2012-02-22T21:52:20+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,196 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用GCD]]></title>
+    <link href="http://blog.devtang.com/blog/2012/02/22/use-gcd/"/>
+    <updated>2012-02-22T20:44:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/02/22/use-gcd</id>
+    <content type="html"><![CDATA[<h2>什么是GCD</h2>
+
+<p>Grand Central Dispatch (GCD)是Apple开发的一个多核编程的解决方法。该方法在Mac OS X 10.6雪豹中首次推出，并随后被引入到了iOS4.0中。GCD是一个替代诸如NSThread, NSOperationQueue, NSInvocationOperation等技术的很高效和强大的技术，它看起来象就其它语言的闭包(Closure)一样，但苹果把它叫做blocks。</p>
+
+<!--More-->
+
+
+<h2>应用举例</h2>
+
+<p>让我们来看一个编程场景。我们要在iphone上做一个下载网页的功能，该功能非常简单，就是在iphone上放置一个按钮，点击该按钮时，显示一个转动的圆圈，表示正在进行下载，下载完成之后，将内容加载到界面上的一个文本控件中。</p>
+
+<h3>不用GCD前</h3>
+
+<p>虽然功能简单，但是我们必须把下载过程放到后台线程中，否则会阻塞UI线程显示。所以，如果不用GCD, 我们需要写如下3个方法：</p>
+
+<ul>
+<li>someClick 方法是点击按钮后的代码，可以看到我们用NSInvocationOperation建了一个后台线程，并且放到NSOperationQueue中。后台线程执行download方法。</li>
+<li>download 方法处理下载网页的逻辑。下载完成后用performSelectorOnMainThread执行download_completed 方法。</li>
+<li>download_completed 进行clear up的工作，并把下载的内容显示到文本控件中。</li>
+</ul>
+
+
+<p>这3个方法的代码如下。可以看到，虽然 开始下载 -> 下载中 -> 下载完成 这3个步骤是整个功能的三步。但是它们却被切分成了3块。他们之间因为是3个方法，所以还需要传递数据参数。如果是复杂的应用，数据参数很可能就不象本例子中的NSString那么简单了，另外，下载可能放到Model的类中来做，而界面的控制放到View Controller层来做，这使得本来就分开的代码变得更加散落。代码的可读性大大降低。</p>
+
+<p>``` objc
+static NSOperationQueue * queue;</p>
+
+<ul>
+<li><p>(IBAction)someClick:(id)sender {
+  self.indicator.hidden = NO;
+  [self.indicator startAnimating];
+  queue = [[NSOperationQueue alloc] init];
+  NSInvocationOperation * op = [[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(download) object:nil] autorelease];
+  [queue addOperation:op];
+}</p></li>
+<li><p>(void)download {
+  NSURL * url = [NSURL URLWithString:@"http://www.youdao.com"];
+  NSError * error;
+  NSString * data = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&amp;error];
+  if (data != nil) {</p>
+
+<pre><code>  [self performSelectorOnMainThread:@selector(download_completed:) withObject:data waitUntilDone:NO];
+</code></pre>
+
+  } else {
+
+<pre><code>  NSLog(@"error when download:%@", error);
+  [queue release];
+</code></pre>
+
+<p>  }
+}</p></li>
+<li><p>(void) download_completed:(NSString *) data {
+  NSLog(@"call back");
+  [self.indicator stopAnimating];
+  self.indicator.hidden = YES;
+  self.content.text = data;
+  [queue release];
+}
+```</p></li>
+</ul>
+
+
+<h3>使用GCD后</h3>
+
+<p>如果使用GCD，以上3个方法都可以放到一起，如下所示：</p>
+
+<p>``` objc</p>
+
+<pre><code>// 原代码块一
+self.indicator.hidden = NO;
+[self.indicator startAnimating];
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    // 原代码块二
+    NSURL * url = [NSURL URLWithString:@"http://www.youdao.com"];
+    NSError * error;
+    NSString * data = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&amp;error];
+    if (data != nil) {
+        // 原代码块三
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.indicator stopAnimating];
+            self.indicator.hidden = YES;
+            self.content.text = data;
+        });
+    } else {
+        NSLog(@"error when download:%@", error);
+    }
+});
+</code></pre>
+
+<p>```</p>
+
+<p>首先我们可以看到，代码变短了。因为少了原来3个方法的定义，也少了相互之间需要传递的变量的封装。</p>
+
+<p>另外，代码变清楚了，虽然是异步的代码，但是它们被GCD合理的整合在一起，逻辑非常清晰。如果应用上MVC模式，我们也可以将View Controller层的回调函数用GCD的方式传递给Modal层，这相比以前用@selector的方式，代码的逻辑关系会更加清楚。</p>
+
+<h2>GCD的定义</h2>
+
+<p>简单GCD的定义有点象函数指针，差别是用 ^ 替代了函数指针的 * 号，如下所示：</p>
+
+<p>``` objc</p>
+
+<pre><code> // 申明变量
+ (void) (^loggerBlock)(void);
+ // 定义
+</code></pre>
+
+<p> loggerBlock = ^{</p>
+
+<pre><code>      NSLog(@"Hello world");
+ };
+ // 调用
+ loggerBlock();
+</code></pre>
+
+<p>```</p>
+
+<p>但是大多数时候，我们通常使用内联的方式来定义它，即将它的程序块写在调用的函数里面，例如这样：</p>
+
+<p>``` objc</p>
+
+<pre><code> dispatch_async(dispatch_get_global_queue(0, 0), ^{
+      // something
+ });
+</code></pre>
+
+<p>```</p>
+
+<h2>系统提供的dispatch方法</h2>
+
+<p>为了方便地使用GCD，苹果提供了一些方法方便我们将block放在主线程 或 后台线程执行，或者延后执行。使用的例子如下：</p>
+
+<p>``` objc</p>
+
+<pre><code> //  后台执行：
+ dispatch_async(dispatch_get_global_queue(0, 0), ^{
+      // something
+ });
+ // 主线程执行：
+ dispatch_async(dispatch_get_main_queue(), ^{
+      // something
+ });
+ // 一次性执行：
+ static dispatch_once_t onceToken;
+ dispatch_once(&amp;onceToken, ^{
+     // code to be executed once
+ });
+ // 延迟2秒执行：
+ double delayInSeconds = 2.0;
+ dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+ dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+     // code to be executed on the main queue after delay
+ });
+</code></pre>
+
+<p>```</p>
+
+<p>另外，GCD还有一些高级用法，例如让后台2个线程并行执行，然后等2个线程都结束后，再汇总执行结果。这个可以用dispatch_group, dispatch_group_async 和 dispatch_group_notify来实现，示例如下：</p>
+
+<p>``` objc</p>
+
+<pre><code> dispatch_group_t group = dispatch_group_create();
+ dispatch_group_async(group, dispatch_get_global_queue(0,0), ^{
+      // 并行执行的线程一
+ });
+ dispatch_group_async(group, dispatch_get_global_queue(0,0), ^{
+      // 并行执行的线程二
+ });
+ dispatch_group_notify(group, dispatch_get_global_queue(0,0), ^{
+      // 汇总结果
+ });
+</code></pre>
+
+<p>```</p>
+
+<h2>后台运行</h2>
+
+<p>GCD的另一个用处是可以让程序在后台较长久的运行。在没有使用GCD时，当app被按home键退出后，app仅有最多5秒钟的时候做一些保存或清理资源的工作。但是在使用GCD后，app最多有10分钟的时间在后台长久运行。这个时间可以用来做清理本地缓存，发送统计数据等工作。</p>
+
+<h2>总结</h2>
+
+<p>总体来说，GCD能够极大地方便开发者进行多线程编程。如果你的app不需要支持iOS4.0以下的系统，那么就应该尽量使用GCD来处理后台线程和UI线程的交互。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[给iOS工程增加Daily Build]]></title>
@@ -193,8 +383,8 @@ import smtplib</p>
 <p>sender = 'sender@devtang.com'
 receivers = ['receiver@devtang.com']</p>
 
-<p>message = """From: Alert <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#x73;&#x65;&#110;&#x64;&#101;&#x72;&#x40;&#x64;&#101;&#118;&#116;&#97;&#110;&#x67;&#x2e;&#99;&#111;&#x6d;">&#115;&#101;&#110;&#x64;&#x65;&#x72;&#x40;&#100;&#x65;&#118;&#x74;&#x61;&#110;&#x67;&#46;&#99;&#111;&#109;</a>
-To: Some one <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#114;&#x65;&#x63;&#101;&#x69;&#118;&#101;&#x72;&#64;&#100;&#x65;&#118;&#x74;&#x61;&#x6e;&#x67;&#x2e;&#99;&#x6f;&#109;">&#x72;&#x65;&#99;&#x65;&#x69;&#x76;&#x65;&#114;&#x40;&#100;&#101;&#x76;&#x74;&#x61;&#110;&#x67;&#x2e;&#99;&#111;&#x6d;</a>
+<p>message = """From: Alert <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#115;&#x65;&#110;&#x64;&#101;&#114;&#x40;&#100;&#x65;&#118;&#x74;&#97;&#x6e;&#103;&#x2e;&#x63;&#x6f;&#x6d;">&#115;&#x65;&#x6e;&#100;&#x65;&#x72;&#x40;&#x64;&#x65;&#x76;&#x74;&#x61;&#110;&#x67;&#46;&#x63;&#111;&#109;</a>
+To: Some one <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#x72;&#101;&#x63;&#101;&#x69;&#x76;&#101;&#114;&#64;&#x64;&#x65;&#x76;&#116;&#97;&#x6e;&#x67;&#x2e;&#99;&#111;&#109;">&#114;&#x65;&#x63;&#101;&#105;&#x76;&#x65;&#114;&#x40;&#100;&#x65;&#118;&#116;&#97;&#x6e;&#x67;&#x2e;&#x63;&#x6f;&#109;</a>
 Subject: SMTP email sample</p>
 
 <p>Hope you can get it.
@@ -513,55 +703,6 @@ self.button = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 200, 100)] autor
 <p>苹果的设计对于开发者来说是非常友好的，很多时候使用相应的控件就行了，都不用操心底层细节。不象Android开发，一会儿要考虑不同手机分辨率不一样了，一会儿又要考虑有些不是触摸屏了，一会儿又发现某款手机的cpu内存太弱了跑不起来，需要优化程序。另外，Objective-C相对于C++语言来说，要简单优雅得多，而且更加强大，所以做iOS的开发者很省心。</p>
 
 <p>要说到不爽的地方，就是iOS开发相关的中文资料实在是太少了。要学习它，基本上需要查看苹果的官方英文文档以及WWDC大会视频，还有去<a href="http://www.stackoverflow.com">stackoverflow</a>上问问题。这对于英文不太好的同学这可能是一个障碍。不过反过来，习惯之后，通过这个锻炼了自己的英文水平，倒也是一大收获。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用Github来管理xcode4中的代码片段]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/"/>
-    <updated>2012-02-04T14:32:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets</id>
-    <content type="html"><![CDATA[<h3>代码片段介绍</h3>
-
-<p>xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code snippet中，使用的时候，只需要键入快捷键，就可以把模版的内容填到代码中。</p>
-
-<!--more-->
-
-
-<p>例如，在引入GCD(Grand Central Dispatch)后，当我们需要一个延时的操作时，只需要在xcode中键入：dispatch
-, 就可以看到xcode中弹出一个上下文菜单，第一项就是相应的代码片段。如下图所示：</p>
-
-<p><img src="/images/dispatch_after_snippet.jpg"></p>
-
-<h3>定义自己的代码片段</h3>
-
-<p>那么如何自定义code snippet呢，相当简单，当你觉得某段代码很有用，可以当作模版的时候，将其整块选中，
-拖动到xcode右下角的code snippets区域中即可。xcode会自动帮你创建一个新的代码片段。
-之后你可以单击该代码片段，在弹出的界面中选择edit，即可为此代码片段设置快捷键等信息。</p>
-
-<p>如果有些地方你想让用户替换掉，可以用 &lt;#被替换的内容#> 的格式。
-这样在代码片段被使用后，焦点会自动移到该处，你只需要连贯的键入替换后的内容即可。如下图所示：</p>
-
-<p><img src="/images/edit_code_snippet.jpg"></p>
-
-<p>关于xcode的一些代码片段，<a href="http://nearthespeedoflight.com/article/xcode_4_code_snippets">这里</a>有一些用户的总结心得。</p>
-
-<h3>使用Git管理代码片段</h3>
-
-<p>在了解了code snippet之后，我在想能不能用Git来管理它，于是就研究了一下，发现它都存放于目录 ~/Library/Developer/Xcode/UserData/CodeSnippets 中。于是，我就将这个目录设置成一个Git的版本库，然后将自己整理
-的代码片段都放到Github上了。现在我有2台mac机器，一台笔记本，一台公司的iMac，我常常在2台机器间切换着工作，由于将代码片段都放在github上，所以我在任何一端有更新，另一端都可以很方便的用git pull将更新拉到本地。前两天将公司机器升级到lion，又重装了lion版的xcode，简单设置一下，所有代码片段都回来了，非常方便。</p>
-
-<p>我的代码片段所在的github地址是<a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>,使用它非常方便，只需要如下3步即可：</p>
-
-<p><code>
-git clone https://github.com/tangqiaoboy/xcode_tool
-cd xcode_tool
-./setup_snippets.sh
-</code></p>
-
-<p>大家也可以将我的github项目fork一份，改成自己的。这样可以方便地增加和管理自己的代码片段。</p>
-
-<p>祝大家玩得开心。</p>
 ]]></content>
   </entry>
   

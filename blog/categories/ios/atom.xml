@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-02-22T21:52:20+08:00</updated>
+  <updated>2012-02-23T21:35:54+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -383,8 +383,8 @@ import smtplib</p>
 <p>sender = 'sender@devtang.com'
 receivers = ['receiver@devtang.com']</p>
 
-<p>message = """From: Alert <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#115;&#x65;&#110;&#x64;&#101;&#114;&#x40;&#100;&#x65;&#118;&#x74;&#97;&#x6e;&#103;&#x2e;&#x63;&#x6f;&#x6d;">&#115;&#x65;&#x6e;&#100;&#x65;&#x72;&#x40;&#x64;&#x65;&#x76;&#x74;&#x61;&#110;&#x67;&#46;&#x63;&#111;&#109;</a>
-To: Some one <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#x72;&#101;&#x63;&#101;&#x69;&#x76;&#101;&#114;&#64;&#x64;&#x65;&#x76;&#116;&#97;&#x6e;&#x67;&#x2e;&#99;&#111;&#109;">&#114;&#x65;&#x63;&#101;&#105;&#x76;&#x65;&#114;&#x40;&#100;&#x65;&#118;&#116;&#97;&#x6e;&#x67;&#x2e;&#x63;&#x6f;&#109;</a>
+<p>message = """From: Alert <a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#58;&#115;&#101;&#x6e;&#100;&#101;&#114;&#64;&#x64;&#101;&#x76;&#x74;&#x61;&#110;&#x67;&#x2e;&#x63;&#111;&#x6d;">&#x73;&#x65;&#110;&#x64;&#101;&#x72;&#x40;&#100;&#101;&#118;&#116;&#97;&#110;&#x67;&#46;&#x63;&#x6f;&#109;</a>
+To: Some one <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#x72;&#101;&#99;&#101;&#105;&#x76;&#101;&#x72;&#64;&#x64;&#x65;&#x76;&#116;&#x61;&#x6e;&#103;&#46;&#x63;&#x6f;&#x6d;">&#x72;&#101;&#99;&#101;&#105;&#x76;&#x65;&#114;&#x40;&#100;&#x65;&#118;&#116;&#x61;&#x6e;&#103;&#x2e;&#x63;&#x6f;&#x6d;</a>
 Subject: SMTP email sample</p>
 
 <p>Hope you can get it.
@@ -432,6 +432,20 @@ if [ "$?" -eq 0 ]; then</p>
 <p>fi
 umount ./upload
 ```</p>
+
+<h2>遇到的问题</h2>
+
+<p>本来我写的自动化脚本在Mac OS X 10.6下运行得很好。但是升级到lion后，脚本在手动执行时很正常，但是在用crontab启动时就会出现找不到开发者证书的错误。在网上搜了很久也没有找到解决办法。最后我试了一下在“钥匙串访问”中把开发者证书从“登录”那栏拖动到“系统”那栏，居然就解决了，如下图所示：</p>
+
+<p><img src="/images/dailybuild_issue.jpg"></p>
+
+<p>另外我搜到2个类似的问题的解决方案，虽然对我这个没起作用，也一并放在这儿，或许对遇到类似问题的人有帮助：</p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/7635143/cannot-build-xcode-project-from-command-line-but-can-from-xcode">http://stackoverflow.com/questions/7635143/cannot-build-xcode-project-from-command-line-but-can-from-xcode</a></li>
+<li><a href="http://shappy1978.iteye.com/blog/765842">http://shappy1978.iteye.com/blog/765842</a></li>
+</ul>
+
 
 <h2>总结</h2>
 

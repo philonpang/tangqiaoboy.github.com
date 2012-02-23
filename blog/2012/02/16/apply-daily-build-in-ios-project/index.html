@@ -413,6 +413,20 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h2>遇到的问题</h2>
+
+<p>本来我写的自动化脚本在Mac OS X 10.6下运行得很好。但是升级到lion后，脚本在手动执行时很正常，但是在用crontab启动时就会出现找不到开发者证书的错误。在网上搜了很久也没有找到解决办法。最后我试了一下在“钥匙串访问”中把开发者证书从“登录”那栏拖动到“系统”那栏，居然就解决了，如下图所示：</p>
+
+<p><img src="/images/dailybuild_issue.jpg"></p>
+
+<p>另外我搜到2个类似的问题的解决方案，虽然对我这个没起作用，也一并放在这儿，或许对遇到类似问题的人有帮助：</p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/7635143/cannot-build-xcode-project-from-command-line-but-can-from-xcode">http://stackoverflow.com/questions/7635143/cannot-build-xcode-project-from-command-line-but-can-from-xcode</a></li>
+<li><a href="http://shappy1978.iteye.com/blog/765842">http://shappy1978.iteye.com/blog/765842</a></li>
+</ul>
+
+
 <h2>总结</h2>
 
 <p>将以上各点结合起来，就可以用bash写出一个daily build脚本了。每天这一切都会自动完成，心情相当好。</p>

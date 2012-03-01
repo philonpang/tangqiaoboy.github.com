@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="什么是GCD Grand Central Dispatch (GCD)是Apple开发的一个多核编程的解决方法。该方法在Mac OS X 10.6雪豹中首次推出，并随后被引入到了iOS4.0中。GCD是一个替代诸如NSThread, NSOperationQueue, &hellip;">
+  <meta name="description" content="问题场景描述 常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。 对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。 在这种方式下，大家各自写自己的代码， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -73,6 +73,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/29/collaboration-with-git/">用Git进行协同开发</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-29T19:08:00+08:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>问题场景描述</h2>
+
+<p>常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。</p>
+
+<p>对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。</p>
+
+<p>在这种方式下，大家各自写自己的代码，提交到svn上，然后用svn up获得对方的代码。在调试问题的时候，大家可能不停地更新代码，然后让对方用svn up来更新。最终，虽然开发能够顺利进行，但是svn上会积累大量调试中的代码历史。所以，这样把svn当作代码中转站是一个很山寨的行为。</p>
+
+<p>在开发<a href="http://note.youdao.com">有道云笔记</a>新的<a href="http://itunes.apple.com/cn/app/id483995181">iPad版</a>时，我和前端同事zyc尝试用git进行了协同开发。在这里把具体方案分享给大家，欢迎大家讨论。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/29/collaboration-with-git/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -495,49 +544,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/23/use-javascript-to-import-pictures/">用javascript协助导入图片</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-23T23:10:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>需求</h2>
-
-<p>先说说需求。春节回家见爸妈，老爸迷上了摄影。他把平时的照片都上传到了<a href="http://photo.chengdu.cn/">成都图片网</a>,这个成都图片网专门有一个“快拍成都”的版块，用于大家将随手拍的生活中的图片分享上去。每天编辑还会选出一张最有特色的图片，刊登到《成都商报》上。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/01/23/use-javascript-to-import-pictures/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -551,6 +557,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/29/collaboration-with-git/">用Git进行协同开发</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/02/22/use-gcd/">使用GCD</a>
@@ -606,10 +616,6 @@
     
       <li class="post">
         <a href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/">去掉xcode源码末尾的空格</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/11/20/set-uilabel-text-align-top/">让UILabel的文字顶部对齐</a>
       </li>
     
   </ul>

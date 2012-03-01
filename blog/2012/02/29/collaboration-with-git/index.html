@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>使用Github来管理xcode4中的代码片段 - 唐巧的技术博客</title>
+  <title>用Git进行协同开发 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="代码片段介绍 xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code &hellip;">
+  <meta name="description" content="问题场景描述 常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。 对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。 在这种方式下，大家各自写自己的代码， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/29/collaboration-with-git">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,7 +76,7 @@
   
   <header>
     
-      <h1 class="entry-title">使用Github来管理xcode4中的代码片段</h1>
+      <h1 class="entry-title">用Git进行协同开发</h1>
     
     
       <p class="meta">
@@ -92,56 +92,72 @@
   
 
 
-<time datetime="2012-02-04T14:32:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+<time datetime="2012-02-29T19:08:00+08:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h3>代码片段介绍</h3>
+<div class="entry-content"><h2>问题场景描述</h2>
 
-<p>xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code snippet中，使用的时候，只需要键入快捷键，就可以把模版的内容填到代码中。</p>
+<p>常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。</p>
 
-<!--more-->
+<p>对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。</p>
+
+<p>在这种方式下，大家各自写自己的代码，提交到svn上，然后用svn up获得对方的代码。在调试问题的时候，大家可能不停地更新代码，然后让对方用svn up来更新。最终，虽然开发能够顺利进行，但是svn上会积累大量调试中的代码历史。所以，这样把svn当作代码中转站是一个很山寨的行为。</p>
+
+<p>在开发<a href="http://note.youdao.com">有道云笔记</a>新的<a href="http://itunes.apple.com/cn/app/id483995181">iPad版</a>时，我和前端同事zyc尝试用git进行了协同开发。在这里把具体方案分享给大家，欢迎大家讨论。</p>
+
+<!--More-->
 
 
-<p>例如，在引入GCD(Grand Central Dispatch)后，当我们需要一个延时的操作时，只需要在xcode中键入：dispatch
-, 就可以看到xcode中弹出一个上下文菜单，第一项就是相应的代码片段。如下图所示：</p>
+<h2>Git相关协议介绍</h2>
 
-<p><img src="/images/dispatch_after_snippet.jpg"></p>
+<p>Git对于你本机的代码项目，允许用很方便的方式进行非授权的只读访问,<a href="http://progit.org/book/zh/ch4-9.html">相关介绍链接</a>。简单来说，就是可以用Git自带的Git daemon命令在本机的9418端口启动一个守护进程，然后其它机器就可以以只读方式访问你开放出来的项目代码。</p>
 
-<h3>定义自己的代码片段</h3>
+<p>具体步骤如下：</p>
 
-<p>那么如何自定义code snippet呢，相当简单，当你觉得某段代码很有用，可以当作模版的时候，将其整块选中，
-拖动到xcode右下角的code snippets区域中即可。xcode会自动帮你创建一个新的代码片段。
-之后你可以单击该代码片段，在弹出的界面中选择edit，即可为此代码片段设置快捷键等信息。</p>
+<ul>
+<li>在你的Git工程下新建一个名为git-daemon-export-ok的文件放到.git目录下，表明该工程允许非授权访问。示例代码如下：</li>
+</ul>
 
-<p>如果有些地方你想让用户替换掉，可以用 &lt;#被替换的内容#> 的格式。
-这样在代码片段被使用后，焦点会自动移到该处，你只需要连贯的键入替换后的内容即可。如下图所示：</p>
 
-<p><img src="/images/edit_code_snippet.jpg"></p>
-
-<p>关于xcode的一些代码片段，<a href="http://nearthespeedoflight.com/article/xcode_4_code_snippets">这里</a>有一些用户的总结心得。</p>
-
-<h3>使用Git管理代码片段</h3>
-
-<p>在了解了code snippet之后，我在想能不能用Git来管理它，于是就研究了一下，发现它都存放于目录 ~/Library/Developer/Xcode/UserData/CodeSnippets 中。于是，我就将这个目录设置成一个Git的版本库，然后将自己整理
-的代码片段都放到Github上了。现在我有2台mac机器，一台笔记本，一台公司的iMac，我常常在2台机器间切换着工作，由于将代码片段都放在github上，所以我在任何一端有更新，另一端都可以很方便的用git pull将更新拉到本地。前两天将公司机器升级到lion，又重装了lion版的xcode，简单设置一下，所有代码片段都回来了，非常方便。</p>
-
-<p>我的代码片段所在的github地址是<a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>,使用它非常方便，只需要如下3步即可：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://github.com/tangqiaoboy/xcode_tool
-</span><span class='line'>cd xcode_tool
-</span><span class='line'>./setup_snippets.sh</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /path/to/project.git
+</span><span class='line'>touch git-daemon-export-ok
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>大家也可以将我的github项目fork一份，改成自己的。这样可以方便地增加和管理自己的代码片段。</p>
+<ul>
+<li>执行git daemon命令，设置你要Export出的项目目录的父目录，例如工程的代码地址是：/opt/git/project的话，则示例代码如下：</li>
+</ul>
 
-<p>祝大家玩得开心。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git daemon --reuseaddr --base-path<span class="o">=</span>/opt/git/ /opt/git/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>告知对方你的机器的IP，然后在对方的机器，用下列命令即可检出你的代码：</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git checkout git://your_ip_address/project
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>如果对方有更新，只需要 git pull 一下。</li>
+</ul>
+
+
+<h2>协作</h2>
+
+<p>对于这种基于Git的协作，我们可以在本地随意的提交代码，让对方用git pull更新。当开发完成，需要push到公共仓库的时候，再用git rebase -i将本地的提交进行清理即可。并且由于大家都是在机器间互拷，不依赖svn公共服务器，更新代码的速度也要快得多。</p>
 </div>
 
 
@@ -164,12 +180,12 @@
   
 
 
-<time datetime="2012-02-04T14:32:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+<time datetime="2012-02-29T19:08:00+08:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/xcode/'>xcode</a>
+    <a class='category' href='/blog/categories/shell/'>shell</a>
   
 </span>
 
@@ -220,10 +236,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/03/talk-about-svn-and-git/" title="Previous Post: SVN和Git的使用感受">&laquo; SVN和Git的使用感受</a>
+        <a class="basic-alignment left" href="/blog/2012/02/22/use-gcd/" title="Previous Post: 使用GCD">&laquo; 使用GCD</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/02/05/mvc-in-ios-develop/" title="next Post: 斯坦福大学iOS开发公开课总结">斯坦福大学iOS开发公开课总结 &raquo;</a>
       
     </p>
   </footer>

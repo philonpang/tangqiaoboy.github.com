@@ -120,15 +120,22 @@ git remote set-url origin yourname@yourhost.com:~/path/repository_name
 
 * 如何用Git将一个文件的历史提交恢复？
 
-上次遇到一个问题，我某次提交改动了很多文件，但是其中有一个是不应该改的。所以我需要把这次提交中关于那个文件的改动撤销。但是因为Git无法针对某一个文件revert，它的revert都是基于提交的。所以简单用svn revert是无法解决这个问题的。和同事讨论了一下，这个需求可以用以下步骤来解决：
+上次遇到一个问题，我某次提交改动了很多文件，但是其中有一个是不应该改的。所以我需要把这次提交中关于那个文件的改动撤销。直接用git checkout命令可以检出某一个文件的历史版本，然后就可以将对这个文件的改动取消了。如下：
 
 ```
-先用 git revert CommitId 将该文件的改动所在的历史提交建立一个反向提交。
-然后用 git reset head^ 
-然后用 git add 需要恢复的文件名
-然后用 git commit --amend 修改这个revert提交
-最后用 git checkout . 将其它文件的反向提交的改动取消
+git checkout CommitId fileName 
+git ci -m "revert a file modification"
 ```
 
+* 本地工作区还有未提交的内容时，不能pull?
+
+可以先用 git stash 将内容暂存，然后再pull，成功后再git stash pop将修改恢复。
+
+### 一些Git的资料
+
+* [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/) 很通俗的一本介绍Git的书，比较短小精炼。
+* [Pro Git](http://progit.org/book/zh/) 全面介绍Git的书，非常详细。
+* [《Git权威指南》](http://www.amazon.cn/Git%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97-%E8%92%8B%E9%91%AB/dp/B0058FLC40/ref=sr_1_1?ie=UTF8&qid=1328277616&sr=8-1) 中国人写的一本介绍Git的书，也非常通俗。我个人主要就是通过这本书来学习Git的。
+* [Github](http://www.github.com) 基于Git的开源网站。在Github的托管的项目相当多，著名的有：rails, jquery, node, homebrew, three20, jekyll, jquery-ui, backbone, coffee-script, tornado, redis, underscore, asi-http-request, django。
 
 

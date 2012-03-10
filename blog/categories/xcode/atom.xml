@@ -4,7 +4,7 @@
   <title><![CDATA[Category: xcode | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/xcode/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-03-01T19:54:22+08:00</updated>
+  <updated>2012-03-10T22:11:34+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,115 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[xcode4使用技巧]]></title>
+    <link href="http://blog.devtang.com/blog/2012/03/10/xcode4-tips/"/>
+    <updated>2012-03-10T20:42:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/03/10/xcode4-tips</id>
+    <content type="html"><![CDATA[<p>使用xcode4也有一段时间了，今天整理了一下xcode4的一些使用技巧，在这里分享给大家。</p>
+
+<!-- more -->
+
+
+<h3>设置作者</h3>
+
+<p>这里所指的作者就是每个源文件头部注释中的“Created by xxx"中的作者名。
+我很长一段时间不知道应该在哪里设置它。后来终于找到了。</p>
+
+<p>原来这个作者名是来自”地址薄“这个程序中”我“的姓名。在sportlight中输入”地“即可找到这个程序。如下图所示：</p>
+
+<p><img src="/images/xcode-set-author-name.jpg"></p>
+
+<h3>设置公司（组织）</h3>
+
+<p>这里所指的公司也是指源文件头部注释中的”Copyright (c) xxx"中的公司名字。这个相对好找一些。
+点击工程，在右边的工具栏中就可以找到"Organization"这一项。</p>
+
+<h3>模拟器</h3>
+
+<p>iOS模拟器也算是xcode的一部分。在刚开始使用时，不知道如何把照片导入到模拟器中。后来在网上搜到了方法：
+将照片拖到iOS模拟器中，iOS模拟器会用safari打开该图片，然后在safari中长按该图，就会弹出菜单，选择“保存到相册”即可。</p>
+
+<p>另外，模拟器也有一些快捷键，我常用的是 cmd + 左/右 来调整Orientation。另外，如果是iPad模拟器，可以按cmd + 1使其变成100%的大小。还有cmd + s可以将模拟器截图。</p>
+
+<h3>获得模拟器中的程序数据</h3>
+
+<p>其实模拟器中的程序存储在：/yourHome/Library/Application Support/iPhone Simulator/5.0/Applications 目录下，你可以直接进去找。</p>
+
+<p>另外，如果要删除所安装的程序，也可以直接将Applications目录下的文件夹删掉，这比在模拟器中删更方便。</p>
+
+<h3>安装旧版本的模拟器</h3>
+
+<p>在xcode中，只会带最新版的模拟器，虽然有些模拟器可以在设置里面下载，但是更老的版本就无法在xcode的设置页下载了。</p>
+
+<p>这个问题的解决办法是把以前的xcode和对应的模拟器装上，然后将模拟器复制或链接到最新的xcode目录下，代码如下：</p>
+
+<p><code>bash
+cd /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs
+sudo ln -s /Developer-3.2.5/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk .
+sudo ln -s /Developer-3.2.5/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk .
+</code></p>
+
+<p>以前的xcode可以从<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201191323919494/">以下地址</a>下载到(需要开发者账号),建议大家每次安装新xcode的时候，把模拟器都备份一下，安装完再恢复回来，这样就不用这么每次折腾了。</p>
+
+<h3>Behaviors</h3>
+
+<p>Behaviors是设置页面里的一栏，通过cmd + 逗号可以调出设置页面看到。
+在Behaviors里可以设置各种行为发生时，界面应该做何改变。</p>
+
+<p>例如，如果我们要每次运行结束后，就关闭Console界面，可以在Behaviors下面的"Run completes"一栏的右边，选中"Hide debugger"一项即可（如下图红色标识所示)。</p>
+
+<p>另外，我们也可以点击左下角的“+”来增加一些自定义的行为，例如我就增加了2个行为，分别用于把导航栏和工具栏同时隐藏和显示（如下图蓝色标识所示）。Behavior的扩展性很强，你甚至可以定义执行一些脚本，所以可以做的事情很多。</p>
+
+<p><img src="/images/xcode-behaviors.jpg"></p>
+
+<h3>快捷键</h3>
+
+<p>如果能慢慢熟悉一些快捷键，对于提高工作效率是有很大帮助的。虽然设置页面有所有的快键键列表，但是估计没人能全部记住并且用上，我个人总结出来常用的快键键如下：</p>
+
+<p>```
+cmd + 1              切换成Project Navigator (cmd + 2~7 也可以做相应切换，不过不常用）
+cmd + shift + 上     在.h和.m文件之间切换
+cmd + enter          切换成 standard editor
+cmd + opt + enter    切换成 assistant editor
+cmd + shift + y      切换 Console View的显示或隐藏
+cmd + 0              隐藏左边的导航(Navigator)区
+cmd + opt + 0        隐藏右边的工具(Utility)区
+ctrl  + 6            列出当前文件中所有的方法，可以输入关键词来过滤。这个相当赞，可以快速定位到想编辑的方法。</p>
+
+<pre><code>                 我直接把这个快键盘改成了ctrl+o，这样按起来更顺手。
+</code></pre>
+
+<p>cmd + ctrl + 左/右   到上/下一次编辑的位置，在2个编辑位置跳转的时候很方便。
+cmd + opt + j        跳转到文件过滤区
+cmd + shift + f      在工程中查找
+cmd + r              运行，如果选上直接kill掉上次进程的话，每次直接一按就可以重新运行了
+cmd + b              编译工程
+cmd + shift + k      清空编译好的文件
+cmd + .              结束本次调试
+ESC                  调出代码补全
+cmd + 单击           查看该方法的实现
+opt + 单击           查看该方法的文档
+cmd + t              新建一个tab栏
+cmd + shift + [      在tab栏之间切换
+```</p>
+
+<h3>Snippets</h3>
+
+<p>代码片段(Snippets)是xcode4新增的功能。用于管理一些常用的代码段，在需要时通过代码补全自动生成出来，可以提高工作效率。</p>
+
+<p>关于这个，可以参见我的另一篇文章：<a href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/">http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/</a></p>
+
+<h3>下载xcode</h3>
+
+<p>从Xcode4.3开始，苹果将Xcode的下载放到了Lion的mac app store中。郁闷的是，中国区连接app store下载的速度相当慢，在试了一些方法（例如设置hosts,设置dns）之后，我发现最好的办法如下：</p>
+
+<p>用开发者账号登陆：<a href="https://developer.apple.com/downloads/index.action">https://developer.apple.com/downloads/index.action</a>，然后点击下载获得下载地址，然后将地址复制到mac版迅雷中，用迅雷下载，速度可以达到200K左右。</p>
+
+<p>希望这些技巧能提高你的工作效率，祝玩得开心:)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用Github来管理xcode4中的代码片段]]></title>

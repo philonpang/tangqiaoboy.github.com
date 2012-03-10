@@ -40,7 +40,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/02/03/talk-about-svn-and-git/</loc>
-        <lastmod>2012-02-06T15:32:59+08:00</lastmod>
+        <lastmod>2012-03-10T20:16:30+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/</loc>
@@ -77,11 +77,15 @@
         <lastmod>2012-02-29T16:46:44+08:00</lastmod>
     </url>
     <url>
+        <loc>http://blog.devtang.com/blog/2012/03/10/xcode4-tips/</loc>
+        <lastmod>2012-03-10T22:08:48+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://blog.devtang.com/blog/archives/</loc>
-        <lastmod>2012-02-29T16:46:44+08:00</lastmod>
+        <lastmod>2012-03-10T22:08:48+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/</loc>
-        <lastmod>2012-02-29T16:46:44+08:00</lastmod>
+        <lastmod>2012-03-10T22:08:48+08:00</lastmod>
     </url>
 </urlset>

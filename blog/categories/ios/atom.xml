@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-03-01T19:54:22+08:00</updated>
+  <updated>2012-03-10T22:11:34+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,115 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[xcode4使用技巧]]></title>
+    <link href="http://blog.devtang.com/blog/2012/03/10/xcode4-tips/"/>
+    <updated>2012-03-10T20:42:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/03/10/xcode4-tips</id>
+    <content type="html"><![CDATA[<p>使用xcode4也有一段时间了，今天整理了一下xcode4的一些使用技巧，在这里分享给大家。</p>
+
+<!-- more -->
+
+
+<h3>设置作者</h3>
+
+<p>这里所指的作者就是每个源文件头部注释中的“Created by xxx"中的作者名。
+我很长一段时间不知道应该在哪里设置它。后来终于找到了。</p>
+
+<p>原来这个作者名是来自”地址薄“这个程序中”我“的姓名。在sportlight中输入”地“即可找到这个程序。如下图所示：</p>
+
+<p><img src="/images/xcode-set-author-name.jpg"></p>
+
+<h3>设置公司（组织）</h3>
+
+<p>这里所指的公司也是指源文件头部注释中的”Copyright (c) xxx"中的公司名字。这个相对好找一些。
+点击工程，在右边的工具栏中就可以找到"Organization"这一项。</p>
+
+<h3>模拟器</h3>
+
+<p>iOS模拟器也算是xcode的一部分。在刚开始使用时，不知道如何把照片导入到模拟器中。后来在网上搜到了方法：
+将照片拖到iOS模拟器中，iOS模拟器会用safari打开该图片，然后在safari中长按该图，就会弹出菜单，选择“保存到相册”即可。</p>
+
+<p>另外，模拟器也有一些快捷键，我常用的是 cmd + 左/右 来调整Orientation。另外，如果是iPad模拟器，可以按cmd + 1使其变成100%的大小。还有cmd + s可以将模拟器截图。</p>
+
+<h3>获得模拟器中的程序数据</h3>
+
+<p>其实模拟器中的程序存储在：/yourHome/Library/Application Support/iPhone Simulator/5.0/Applications 目录下，你可以直接进去找。</p>
+
+<p>另外，如果要删除所安装的程序，也可以直接将Applications目录下的文件夹删掉，这比在模拟器中删更方便。</p>
+
+<h3>安装旧版本的模拟器</h3>
+
+<p>在xcode中，只会带最新版的模拟器，虽然有些模拟器可以在设置里面下载，但是更老的版本就无法在xcode的设置页下载了。</p>
+
+<p>这个问题的解决办法是把以前的xcode和对应的模拟器装上，然后将模拟器复制或链接到最新的xcode目录下，代码如下：</p>
+
+<p><code>bash
+cd /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs
+sudo ln -s /Developer-3.2.5/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk .
+sudo ln -s /Developer-3.2.5/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk .
+</code></p>
+
+<p>以前的xcode可以从<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201191323919494/">以下地址</a>下载到(需要开发者账号),建议大家每次安装新xcode的时候，把模拟器都备份一下，安装完再恢复回来，这样就不用这么每次折腾了。</p>
+
+<h3>Behaviors</h3>
+
+<p>Behaviors是设置页面里的一栏，通过cmd + 逗号可以调出设置页面看到。
+在Behaviors里可以设置各种行为发生时，界面应该做何改变。</p>
+
+<p>例如，如果我们要每次运行结束后，就关闭Console界面，可以在Behaviors下面的"Run completes"一栏的右边，选中"Hide debugger"一项即可（如下图红色标识所示)。</p>
+
+<p>另外，我们也可以点击左下角的“+”来增加一些自定义的行为，例如我就增加了2个行为，分别用于把导航栏和工具栏同时隐藏和显示（如下图蓝色标识所示）。Behavior的扩展性很强，你甚至可以定义执行一些脚本，所以可以做的事情很多。</p>
+
+<p><img src="/images/xcode-behaviors.jpg"></p>
+
+<h3>快捷键</h3>
+
+<p>如果能慢慢熟悉一些快捷键，对于提高工作效率是有很大帮助的。虽然设置页面有所有的快键键列表，但是估计没人能全部记住并且用上，我个人总结出来常用的快键键如下：</p>
+
+<p>```
+cmd + 1              切换成Project Navigator (cmd + 2~7 也可以做相应切换，不过不常用）
+cmd + shift + 上     在.h和.m文件之间切换
+cmd + enter          切换成 standard editor
+cmd + opt + enter    切换成 assistant editor
+cmd + shift + y      切换 Console View的显示或隐藏
+cmd + 0              隐藏左边的导航(Navigator)区
+cmd + opt + 0        隐藏右边的工具(Utility)区
+ctrl  + 6            列出当前文件中所有的方法，可以输入关键词来过滤。这个相当赞，可以快速定位到想编辑的方法。</p>
+
+<pre><code>                 我直接把这个快键盘改成了ctrl+o，这样按起来更顺手。
+</code></pre>
+
+<p>cmd + ctrl + 左/右   到上/下一次编辑的位置，在2个编辑位置跳转的时候很方便。
+cmd + opt + j        跳转到文件过滤区
+cmd + shift + f      在工程中查找
+cmd + r              运行，如果选上直接kill掉上次进程的话，每次直接一按就可以重新运行了
+cmd + b              编译工程
+cmd + shift + k      清空编译好的文件
+cmd + .              结束本次调试
+ESC                  调出代码补全
+cmd + 单击           查看该方法的实现
+opt + 单击           查看该方法的文档
+cmd + t              新建一个tab栏
+cmd + shift + [      在tab栏之间切换
+```</p>
+
+<h3>Snippets</h3>
+
+<p>代码片段(Snippets)是xcode4新增的功能。用于管理一些常用的代码段，在需要时通过代码补全自动生成出来，可以提高工作效率。</p>
+
+<p>关于这个，可以参见我的另一篇文章：<a href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/">http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/</a></p>
+
+<h3>下载xcode</h3>
+
+<p>从Xcode4.3开始，苹果将Xcode的下载放到了Lion的mac app store中。郁闷的是，中国区连接app store下载的速度相当慢，在试了一些方法（例如设置hosts,设置dns）之后，我发现最好的办法如下：</p>
+
+<p>用开发者账号登陆：<a href="https://developer.apple.com/downloads/index.action">https://developer.apple.com/downloads/index.action</a>，然后点击下载获得下载地址，然后将地址复制到mac版迅雷中，用迅雷下载，速度可以达到200K左右。</p>
+
+<p>希望这些技巧能提高你的工作效率，祝玩得开心:)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用GCD]]></title>
@@ -383,8 +492,8 @@ import smtplib</p>
 <p>sender = 'sender@devtang.com'
 receivers = ['receiver@devtang.com']</p>
 
-<p>message = """From: Alert <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x73;&#x65;&#110;&#x64;&#x65;&#114;&#64;&#x64;&#x65;&#x76;&#x74;&#97;&#x6e;&#x67;&#46;&#99;&#111;&#109;">&#x73;&#x65;&#110;&#x64;&#101;&#114;&#x40;&#100;&#x65;&#118;&#x74;&#x61;&#110;&#103;&#46;&#99;&#111;&#109;</a>
-To: Some one <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#114;&#x65;&#99;&#x65;&#x69;&#118;&#101;&#x72;&#x40;&#x64;&#x65;&#x76;&#x74;&#97;&#x6e;&#x67;&#x2e;&#99;&#x6f;&#109;">&#x72;&#x65;&#99;&#x65;&#105;&#118;&#101;&#114;&#64;&#100;&#101;&#118;&#x74;&#97;&#x6e;&#103;&#46;&#x63;&#x6f;&#x6d;</a>
+<p>message = """From: Alert <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#115;&#x65;&#110;&#100;&#x65;&#114;&#x40;&#x64;&#101;&#118;&#x74;&#x61;&#110;&#103;&#x2e;&#99;&#111;&#x6d;">&#x73;&#x65;&#x6e;&#x64;&#x65;&#114;&#64;&#x64;&#x65;&#x76;&#116;&#97;&#110;&#103;&#x2e;&#99;&#111;&#109;</a>
+To: Some one <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#x72;&#x65;&#x63;&#x65;&#x69;&#118;&#101;&#x72;&#x40;&#x64;&#101;&#118;&#x74;&#x61;&#x6e;&#x67;&#46;&#x63;&#x6f;&#109;">&#x72;&#x65;&#x63;&#x65;&#105;&#x76;&#x65;&#114;&#x40;&#100;&#101;&#118;&#x74;&#97;&#x6e;&#x67;&#46;&#x63;&#111;&#109;</a>
 Subject: SMTP email sample</p>
 
 <p>Hope you can get it.
@@ -586,137 +695,6 @@ didMoveToParentViewController:
 [7397:f803] -[SecondViewController viewDidUnload]
 [7397:f803] -[ThirdViewController viewDidUnload]
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[斯坦福大学iOS开发公开课总结]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/05/mvc-in-ios-develop/"/>
-    <updated>2012-02-05T12:58:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/05/mvc-in-ios-develop</id>
-    <content type="html"><![CDATA[<h3>前言</h3>
-
-<p>iphone开发相关的教程中最有名的，当数斯坦福大学发布的"iphone开发公开课"了。此公开课在以前叫做《iphone开发教程》，今年由于平板电脑的流行，所以也加入了ipad开发相关的课程。在<a href="http://v.163.com/special/opencourse/iphonekaifa.html">网易公开课</a>上，有<a href="http://v.163.com/special/opencourse/iphonekaifa.html">该教程</a>的2010年录象，并且前面15集带中文字幕文件，非常适合初学者学习。</p>
-
-<!--more-->
-
-
-<p>在这里顺便说一下，网易公开课上的28集其实并不需要全部看完。真正的课程只有前面12集。后面的课程都是请一些业界的名人讲他们成功的app以及学生的作品展示，可看可不看。所以大家不要被28集这么多吓到。</p>
-
-<p>由于近一年来iOS5以及xcode4的发布，苹果对原有的开发环境xcode以及开发语言Objective-C都有改进，所以原有的教程中很多内容不再适用了。例如新的xcode4将Interface Builder集成到xcode中，整个IDE布局和快捷键完全大变样，又比如苹果为Objective-c引用了ARC和Storyboard，这些都使得app的编程方式大为不同。</p>
-
-<p>值得高兴的是，斯坦福大学最近更新了该公开课的2011年秋季录象，免费下载地址是：<a href="http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=480479762">http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=480479762</a>，不过现在该公开课还没有翻译，只能看英文原版了。新的课程相比以前要短了许多，一共只有9课。我大概快速看了一遍，总结一些心得给大家。</p>
-
-<h3>iOS的MVC模式</h3>
-
-<p>MVC模式算是客户端类程序使用的设计模式的标配了。iOS对于Model, View和Controller之间的相互调用有它自己的规范和约定，在公开课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">第一课</a>中，就介绍了应该如何将MVC模式应用在iOS开发中。主要的内容就体现在如下这张图中(图片来自该公开课第一课的<a href="http://itunes.apple.com/itunes-u/ipad-iphone-application-development/id480479762#">配套pdf</a>的第37页)：</p>
-
-<p><img src="/images/ios_mvc.jpg"></p>
-
-<p>我下面详细介绍一下这幅图的意思。</p>
-
-<ul>
-<li><p>首先图中绿色的箭头表示直接引用。直接引用直观来说，就是说需要包含引用类的申明头文件和类的实例变量。可以看到，只有Controller中，有对Model和View的直接引用。其中对View的直接引用体现为IBOutlet。</p></li>
-<li><p>然后我们看View是怎么向Controller通讯的。对于这个，iOS中有3种常见的模式:</p>
-
-<ol>
-<li>设置View对应的Action Target。如设置UIButton的Touch up inside的Action Target。</li>
-<li>设置View的delegate，如UIAlertViewDelegate, UIActionSheetDelegate等。</li>
-<li>设置View的data source, 如UITableViewDataSource。
-通过这3种模式，View达到了既能向Controller通讯，又不需要知道具体的Controller是谁是目的，这样就和Controller解耦了。</li>
-</ol>
-</li>
-<li><p>最后我们看Model。Model在图上有一个信号塔类似的图形，旁边写着Notification &amp; KVO。这表明Model主要是通过Notification和KVO来和Controller通讯的。关于Notification，我写了一个模版代码片段如下:（关于代码片段的管理，推荐大家看我写的另一篇文章：<a href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a></p></li>
-</ul>
-
-
-<p><code>objc
-// 监听通知
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(&lt;#methodName#&gt;) name:kLoginNotification object:nil];
-// 取消监听
-[[NSNotificationCenter defaultCenter] removeObserver:self];
-// 发送通知
-NSDictionary * userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:200] forKey:@"code"];
-[[NSNotificationCenter defaultCenter] postNotificationName:&lt;#notification_name#&gt; object:self userInfo:userInfo];
-</code></p>
-
-<p>所以，对于初学者，要正确地使用MVC模式还是挺难的，回想我们以前做公司某产品iphone版的时候，就有一些Model层直接依赖了Controller层，比如Model层更新数据失败了，直接调用Controller层显示出一个失败的提示界面。这样层次划分不清，造成我们做ipad版的时候很痛苦。最后我们做了代码重构，把Model的相应改变都用Notification来完成，使得在做ipad版开发时轻松了很多。</p>
-
-<h3>Convention About synthesize</h3>
-
-<p>“Convention over configuration"（约定高于配置）成就了Ruby On Rails，而iOS也有很多编程的约定。这些约定单独看没有什么好处，约定的最大好处就是，如果大家都遵守它，那么代码风格会趋于一致，你会很方便地读懂或修改别人的代码。</p>
-
-<p>我们可以从第一课PPT的第50页看到如下的代码：</p>
-
-<p><img src="/images/synthesize_convention.jpg"></p>
-
-<p>从图中可以看到，该课程推荐大家在使用synthesize关键字时，为property设置一个下划线前缀。我也看过一些iphone的开源项目，比如facebook开源的 <a href="https://github.com/facebook/three20/">three20</a> ，它是遵守了这样的约定的。</p>
-
-<p>其它的约定还包括：</p>
-
-<ul>
-<li>以new, copy, alloc开头的方法，都应当由调用者来release，而其它方法，都返回一个autorelease对象。</li>
-<li>通常iphone顶部的bar应该用UINavigation控件，而底部的bar应该用UIToolbar控件。</li>
-<li>所有的UI操作都应该在主线程(UI线程)进行。这个似乎不是约定，但是好多同学不知道，也写在这儿吧。</li>
-</ul>
-
-
-<h3>UIView</h3>
-
-<p>刚开始对界面之间的跳转很不理解，后来发现其实很简单，就是一层一层叠起来的View。从View A上点击一个按钮跳转到View B，其实就是把View B“盖”在View A上面而已。
-而“盖”的方式有好多种，通常的方法有2种：</p>
-
-<p> 一. 用UINavigationController把View B push进来。
-<code>objc
-[self.navigationController pushViewController:nextView animated:YES];
-</code></p>
-
-<p> 二. 用presentModalViewController方法把View B盖在上面。</p>
-
-<p><code>objc
-[self presentModalViewController:nextView animated:YES];
-</code></p>
-
-<p>除此之外，其实还有一种山寨方法，即把View A和View B都用addSubView加到AppDelegate类的self.window上。然后就可以调用 bringSubviewToFront 把 View B显示出来了，如下所示：
-<code>objc
-// AppDelegate.m类
-[self.window addSubview:viewB];
-[self.window addSubview:viewA];
-// 在需要时调用
-[self.window bringSubviewToFront:viewB];
-</code></p>
-
-<p>上面说的是界面之间的跳转。对于一个界面内，其控件的布局其实也是一个一个叠起来的，之所以说叠，是指如果2个控件如果有重叠部分，那么处于上面的那个控件会盖住下面的。</p>
-
-<h3>Nib File</h3>
-
-<p>Nib文件实际上内部格式是XML，而它本身并不编译成任何二进制代码。所以你如果用iFile之类的软件在iPhone上查看一些安装好的软件的目录，可以看到很多的以nib结尾的文件，这些就是该软件的界面文件。虽然这些XML经过了一些压缩转换，但是我们还是可以看到一些信息，例如它使用了哪些系统控件等。</p>
-
-<p>Nib文件刚开始给我的感觉很神秘，后来发现它其实就是用于可视化的编辑View类用的。其中的 File's Owner一栏，用于表示这个View对应的Controller类。通常情况下，Controller类会有一个名为view的变量，指向这个view的实例，我们也可以建立多个IBOutlet变量，指向这个view上的控件，以便做一些界面上的控制。</p>
-
-<p>在Interface Builder上还有一个好处，是可以方便的将View的事件与Controller的IBAction绑定。只需要按住Ctrl键，从控件往File's Owner一栏拖拽，即可看到可以绑定的方法列表。其实这些只是简化了我们的工作，如果完全抛开Interface Builder，我们一样可以完成这些工作。我所知道业界的一些iOS开发部门，为了多人协作更加方便，更是强制不允许使用Interface Builder，一切界面工作都在代码中完成。如果你用文本编辑器打开Nib文件看过，就能理解这样做是有道理的。因为如果2个同时编辑一个界面文件，那么冲突的可能性是100%，而且，从svn结出的冲突信息上看，你根本无法修正它。下面的代码演示了如何不用Interface Builder来添加控件以及绑定UI事件。</p>
-
-<p><code>objc
-// SampleViewController.m的viewDidLoad方法片段
-// 添加Table View控件
-UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 400)];
-[self.view addSubview:tableView];
-tableView.delegate = self;
-[tableView release];
-// 添加Button控件
-self.button = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 200, 100)] autorelease];
-[self.view addSubview:self.button];
-// 绑定事件
-[self.button addTarget:self action:@selector(buttonPressed) forControlEvents:(UIControlEventTouchUpInside)];
-</code></p>
-
-<h3>总结</h3>
-
-<p>总体来讲，学习iOS开发还是比较容易的。我大概花了一个月时间学习iPhone开发，就可以边做边学了。</p>
-
-<p>苹果的设计对于开发者来说是非常友好的，很多时候使用相应的控件就行了，都不用操心底层细节。不象Android开发，一会儿要考虑不同手机分辨率不一样了，一会儿又要考虑有些不是触摸屏了，一会儿又发现某款手机的cpu内存太弱了跑不起来，需要优化程序。另外，Objective-C相对于C++语言来说，要简单优雅得多，而且更加强大，所以做iOS的开发者很省心。</p>
-
-<p>要说到不爽的地方，就是iOS开发相关的中文资料实在是太少了。要学习它，基本上需要查看苹果的官方英文文档以及WWDC大会视频，还有去<a href="http://www.stackoverflow.com">stackoverflow</a>上问问题。这对于英文不太好的同学这可能是一个障碍。不过反过来，习惯之后，通过这个锻炼了自己的英文水平，倒也是一大收获。</p>
 ]]></content>
   </entry>
   

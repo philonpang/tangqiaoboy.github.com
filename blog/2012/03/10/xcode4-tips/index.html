@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>xcode4使用技巧 - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="使用xcode4也有一段时间了，今天整理了一下xcode4的一些使用技巧，在这里分享给大家。 设置作者 这里所指的作者就是每个源文件头部注释中的“Created by xxx&#8221;中的作者名。
+我很长一段时间不知道应该在哪里设置它。后来终于找到了。 原来这个作者名是来自”地址薄“这个程序中 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/03/10/xcode4-tips">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">文章列表</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Xcode4使用技巧</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-10T20:42:00+08:00" pubdate data-updated="true">Mar 10<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>使用xcode4也有一段时间了，今天整理了一下xcode4的一些使用技巧，在这里分享给大家。</p>
+
+<!-- more -->
+
+
+<h3>设置作者</h3>
+
+<p>这里所指的作者就是每个源文件头部注释中的“Created by xxx&#8221;中的作者名。
+我很长一段时间不知道应该在哪里设置它。后来终于找到了。</p>
+
+<p>原来这个作者名是来自”地址薄“这个程序中”我“的姓名。在sportlight中输入”地“即可找到这个程序。如下图所示：</p>
+
+<p><img src="/images/xcode-set-author-name.jpg"></p>
+
+<h3>设置公司（组织）</h3>
+
+<p>这里所指的公司也是指源文件头部注释中的”Copyright (c) xxx&#8221;中的公司名字。这个相对好找一些。
+点击工程，在右边的工具栏中就可以找到&#8221;Organization&#8221;这一项。</p>
+
+<h3>模拟器</h3>
+
+<p>iOS模拟器也算是xcode的一部分。在刚开始使用时，不知道如何把照片导入到模拟器中。后来在网上搜到了方法：
+将照片拖到iOS模拟器中，iOS模拟器会用safari打开该图片，然后在safari中长按该图，就会弹出菜单，选择“保存到相册”即可。</p>
+
+<p>另外，模拟器也有一些快捷键，我常用的是 cmd + 左/右 来调整Orientation。另外，如果是iPad模拟器，可以按cmd + 1使其变成100%的大小。还有cmd + s可以将模拟器截图。</p>
+
+<h3>获得模拟器中的程序数据</h3>
+
+<p>其实模拟器中的程序存储在：/yourHome/Library/Application Support/iPhone Simulator/5.0/Applications 目录下，你可以直接进去找。</p>
+
+<p>另外，如果要删除所安装的程序，也可以直接将Applications目录下的文件夹删掉，这比在模拟器中删更方便。</p>
+
+<h3>安装旧版本的模拟器</h3>
+
+<p>在xcode中，只会带最新版的模拟器，虽然有些模拟器可以在设置里面下载，但是更老的版本就无法在xcode的设置页下载了。</p>
+
+<p>这个问题的解决办法是把以前的xcode和对应的模拟器装上，然后将模拟器复制或链接到最新的xcode目录下，代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs
+</span><span class='line'>sudo ln -s /Developer-3.2.5/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk .
+</span><span class='line'>sudo ln -s /Developer-3.2.5/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk .
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以前的xcode可以从<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201191323919494/">以下地址</a>下载到(需要开发者账号),建议大家每次安装新xcode的时候，把模拟器都备份一下，安装完再恢复回来，这样就不用这么每次折腾了。</p>
+
+<h3>Behaviors</h3>
+
+<p>Behaviors是设置页面里的一栏，通过cmd + 逗号可以调出设置页面看到。
+在Behaviors里可以设置各种行为发生时，界面应该做何改变。</p>
+
+<p>例如，如果我们要每次运行结束后，就关闭Console界面，可以在Behaviors下面的&#8221;Run completes&#8221;一栏的右边，选中&#8221;Hide debugger&#8221;一项即可（如下图红色标识所示)。</p>
+
+<p>另外，我们也可以点击左下角的“+”来增加一些自定义的行为，例如我就增加了2个行为，分别用于把导航栏和工具栏同时隐藏和显示（如下图蓝色标识所示）。Behavior的扩展性很强，你甚至可以定义执行一些脚本，所以可以做的事情很多。</p>
+
+<p><img src="/images/xcode-behaviors.jpg"></p>
+
+<h3>快捷键</h3>
+
+<p>如果能慢慢熟悉一些快捷键，对于提高工作效率是有很大帮助的。虽然设置页面有所有的快键键列表，但是估计没人能全部记住并且用上，我个人总结出来常用的快键键如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cmd + 1              切换成Project Navigator <span class="o">(</span>cmd + 2~7 也可以做相应切换，不过不常用）
+</span><span class='line'>cmd + <span class="nb">shift</span> + 上     在.h和.m文件之间切换
+</span><span class='line'>cmd + enter          切换成 standard editor
+</span><span class='line'>cmd + opt + enter    切换成 assistant editor
+</span><span class='line'>cmd + <span class="nb">shift</span> + y      切换 Console View的显示或隐藏
+</span><span class='line'>cmd + 0              隐藏左边的导航<span class="o">(</span>Navigator<span class="o">)</span>区
+</span><span class='line'>cmd + opt + 0        隐藏右边的工具<span class="o">(</span>Utility<span class="o">)</span>区
+</span><span class='line'>ctrl  + 6            列出当前文件中所有的方法，可以输入关键词来过滤。这个相当赞，可以快速定位到想编辑的方法。
+</span><span class='line'>                     我直接把这个快键盘改成了ctrl+o，这样按起来更顺手。
+</span><span class='line'>cmd + ctrl + 左/右   到上/下一次编辑的位置，在2个编辑位置跳转的时候很方便。
+</span><span class='line'>cmd + opt + j        跳转到文件过滤区
+</span><span class='line'>cmd + <span class="nb">shift</span> + f      在工程中查找
+</span><span class='line'>cmd + r              运行，如果选上直接kill掉上次进程的话，每次直接一按就可以重新运行了
+</span><span class='line'>cmd + b              编译工程
+</span><span class='line'>cmd + <span class="nb">shift</span> + k      清空编译好的文件
+</span><span class='line'>cmd + .              结束本次调试
+</span><span class='line'>ESC                  调出代码补全
+</span><span class='line'>cmd + 单击           查看该方法的实现
+</span><span class='line'>opt + 单击           查看该方法的文档
+</span><span class='line'>cmd + t              新建一个tab栏
+</span><span class='line'>cmd + <span class="nb">shift</span> + <span class="o">[</span>      在tab栏之间切换
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Snippets</h3>
+
+<p>代码片段(Snippets)是xcode4新增的功能。用于管理一些常用的代码段，在需要时通过代码补全自动生成出来，可以提高工作效率。</p>
+
+<p>关于这个，可以参见我的另一篇文章：<a href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/">http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/</a></p>
+
+<h3>下载xcode</h3>
+
+<p>从Xcode4.3开始，苹果将Xcode的下载放到了Lion的mac app store中。郁闷的是，中国区连接app store下载的速度相当慢，在试了一些方法（例如设置hosts,设置dns）之后，我发现最好的办法如下：</p>
+
+<p>用开发者账号登陆：<a href="https://developer.apple.com/downloads/index.action">https://developer.apple.com/downloads/index.action</a>，然后点击下载获得下载地址，然后将地址复制到mac版迅雷中，用迅雷下载，速度可以达到200K左右。</p>
+
+<p>希望这些技巧能提高你的工作效率，祝玩得开心:)</p>
+</div>
+
+
+  <footer>
+   <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-10T20:42:00+08:00" pubdate data-updated="true">Mar 10<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/xcode/'>xcode</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/02/29/collaboration-with-git/" title="Previous Post: 用Git进行协同开发">&laquo; 用Git进行协同开发</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/10/xcode4-tips/">xcode4使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/29/collaboration-with-git/">用Git进行协同开发</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/22/use-gcd/">使用GCD</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/16/apply-daily-build-in-ios-project/">给iOS工程增加Daily Build</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/14/nsstring-java-like-wrapper/">给NSString增加Java风格的方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/10/setup-blog-based-on-github/">象写程序一样写博客：搭建基于github的博客</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/05/mvc-in-ios-develop/">斯坦福大学iOS开发公开课总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/03/talk-about-svn-and-git/">SVN和Git的使用感受</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">使用Objective-C的文档生成工具:appledoc</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/23/use-javascript-to-import-pictures/">用javascript协助导入图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/20/we-must-self-learning/">我们必须自学</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/01/2011-summary/">2011年个人总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/12/27/mac-top/">mac下的top命令</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>  网易有道云存储部门。
+      <br/>iOS开发工程师。
+      <br/>iOS版有道笔记开发。
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧有道</a>
+      <span id="wb_follow_btn"></span>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

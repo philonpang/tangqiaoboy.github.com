@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-03-10T22:11:34+08:00</updated>
+  <updated>2012-03-18T22:34:00+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,168 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iPhone开发常问的十个问题(2012年3月版)]]></title>
+    <link href="http://blog.devtang.com/blog/2012/03/15/10-most-common-questions-on-stackoverflow-201203/"/>
+    <updated>2012-03-15T22:04:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/03/15/10-most-common-questions-on-stackoverflow-201203</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>今天去stackoverflow.com上看了一下iPhone标签下排名最高的10个问题，将它们整理出来，希望这些常见问题能帮到一些iPhone开发的初学者。本来想把答案也翻译过来的，后来发现答案资料通常都比较复杂，翻译起来太麻烦。所以大家还是看英文的答案吧，我只顺带用中文总结一下答案。</p>
+
+<!-- more -->
+
+
+<h3>问题一: <a href="http://stackoverflow.com/questions/1939/how-to-articles-for-iphone-development-and-objective-c">有哪些iPhone开发和Objective-C的入门资料</a></h3>
+
+<p>这个确实是最常问的问题了。对于我个人来说，入门时所看的资料主要是《From C++ to Objective-c》和《iPhone开发基础教程》，另外，我也把stanford的iphone视频课程看完了，链接是：<a href="http://www.stanford.edu/class/cs193p/cgi-bin/index.php">http://www.stanford.edu/class/cs193p/cgi-bin/index.php</a></p>
+
+<p>个人体会是边学边做，上手会比较快。编程这东西，不自己上手做做，没感觉。另外，如果入门之后想提高的话，我觉得还是需要把苹果每年的WWDC视频都下载下来看看，里面讲的东西还是非常有用的, 链接是: <a href="http://developer.apple.com/WWDC/">http://developer.apple.com/WWDC/</a></p>
+
+<h3>问题二: <a href="http://stackoverflow.com/questions/113547/iphone-development-on-windows">如何在Windows中进行iPhone开发</a></h3>
+
+<p>大家还是把Windows想太全能了。至少在开发这一块上，Windows对于程序员来说，还是相当不友好的。这一点在使用Mac系统后，差别一下子就体会到了。就比如说git，在Windows下使用就有很多问题。另外话说回来，Mac机也不是什么都好，在中国，Mac系统相关的国内软件相当少，Mac下的游戏也相对Windows少很多，如果你想用Mac机来娱乐的话，会比较受限制。</p>
+
+<h3>问题三: <a href="http://stackoverflow.com/questions/392464/any-base64-library-on-iphone-sdk">有哪些基于iPhone的base64编码的库</a></h3>
+
+<p>从这个问题的答案中，我选了一个我个人觉得比较好用的Base64编码库，放到我的Xcode Tool中了。地址是：<a href="https://github.com/tangqiaoboy/xcode_tool/tree/master/Encoding">https://github.com/tangqiaoboy/xcode_tool/tree/master/Encoding</a>。</p>
+
+<h3>问题四: <a href="http://stackoverflow.com/questions/1083701/how-to-check-for-an-active-internet-connection-on-iphone-sdk">如何判断当前iPhone是否联网</a></h3>
+
+<p>最佳的答案是用苹果提供的Reachability类。详细的使用方式大家自己看答案吧，写得很清楚。</p>
+
+<h3>问题五: <a href="http://stackoverflow.com/questions/3889634/fast-and-lean-pdf-viewer-for-iphone-ipad-ios-tips-and-hints">如何做一个快速并且轻量级的PDF阅读器</a></h3>
+
+<p>我暂时没这个需求，就没有详细看答案。</p>
+
+<h3>问题六: <a href="http://stackoverflow.com/questions/2774343/how-do-i-associate-file-types-with-an-iphone-application">如何让我的app支持打开一种格式的文件</a></h3>
+
+<p>在iPhone 3.2以上系统中，使用URL schemes即可完成这个需求。详细见答案。</p>
+
+<h3>问题七: <a href="http://stackoverflow.com/questions/1126726/how-to-make-a-uitextfield-move-up-when-keyboard-is-present">当键盘出现的时候，如何让UITextField自动上移</a></h3>
+
+<p>对于iPhone界面控件的操作应该算是开发中必备的能力。键盘出现的时候上移相关的控件算是常见的需求，但是从这么多人问这个问题就可以看出，还是有很多人对这些需求的实现方式有疑问。</p>
+
+<p>对于这个问题，主要是通过增加对键盘出现和消失的相应的Notification，然后在键盘出现和消息的时候，通过设置相关控件的frame来实现。相关代码如下，来源自stackoverflow。</p>
+
+<p>``` objc
+-(void)textFieldDidBeginEditing:(UITextField *)sender
+{</p>
+
+<pre><code>if ([sender isEqual:_textField])
+{
+    //move the main view, so that the keyboard does not hide it.
+    if  (self.view.frame.origin.y &gt;= 0)
+    {
+        [self setViewMovedUp:YES];
+    }
+}
+</code></pre>
+
+<p>}</p>
+
+<p>//method to move the view up/down whenever the keyboard is shown/dismissed
+-(void)setViewMovedUp:(BOOL)movedUp
+{</p>
+
+<pre><code>[UIView beginAnimations:nil context:NULL];
+[UIView setAnimationDuration:0.5]; // if you want to slide up the view
+
+CGRect rect = self.view.frame;
+if (movedUp)
+{
+    // 1. move the view's origin up so that the text field that will be hidden come above the keyboard 
+    // 2. increase the size of the view so that the area behind the keyboard is covered up.
+    rect.origin.y -= kOFFSET_FOR_KEYBOARD;
+    rect.size.height += kOFFSET_FOR_KEYBOARD;
+}
+else
+{
+    // revert back to the normal state.
+    rect.origin.y += kOFFSET_FOR_KEYBOARD;
+    rect.size.height -= kOFFSET_FOR_KEYBOARD;
+}
+self.view.frame = rect;
+
+[UIView commitAnimations];
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li><p>(void)keyboardWillShow:(NSNotification *)notif
+{
+  //keyboard will be shown now. depending for which textfield is active, move up or move down the view appropriately</p>
+
+<p>  if ([_textField isFirstResponder] &amp;&amp; self.view.frame.origin.y >= 0)
+  {</p>
+
+<pre><code>  [self setViewMovedUp:YES];
+</code></pre>
+
+  }
+  else if (![_textField isFirstResponder] &amp;&amp; self.view.frame.origin.y &lt; 0)
+  {
+
+<pre><code>  [self setViewMovedUp:NO];
+</code></pre>
+
+<p>  }
+}</p></li>
+<li><p>(void)viewWillAppear:(BOOL)animated
+{
+  // register for keyboard notifications
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)</p>
+
+<pre><code>                                           name:UIKeyboardWillShowNotification object:self.view.window]; 
+</code></pre>
+
+<p>}</p></li>
+<li><p>(void)viewWillDisappear:(BOOL)animated
+{
+   // unregister for keyboard notifications while not visible.
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
+```</p></li>
+</ul>
+
+
+<h3>问题八: <a href="http://stackoverflow.com/questions/1282830/uiimagepickercontroller-uiimage-memory-and-more">有关UIImagePickerController, Image, Memory的问题和答案整理</a></h3>
+
+<p>这个其实是一个相关问题的汇总贴。其中对于UIImage的操作示例挺有用处。做iPhone开发，总是会遇到一些图象处理相关的东西，能够从这儿积累一些相应的知识，到真正自己需要的时候帮助就大了。</p>
+
+<h3>问题九: <a href="http://stackoverflow.com/questions/805547/how-to-sort-an-nsmutablearray-with-custom-objects-in-it">如何对包含自定义元素类型的NSMutableArray排序</a></h3>
+
+<p>答案讨论了各种方法，下面是其中提到的最简单的方法：定义一个比较用的selector</p>
+
+<p>``` objc
+- (NSComparisonResult)compare:(Person *)otherObject {</p>
+
+<pre><code>return [self.birthDate compare:otherObject.birthDate];
+</code></pre>
+
+<p>}</p>
+
+<p>NSArray *sortedArray;
+sortedArray = [drinkDetails sortedArrayUsingSelector:@selector(compare:)];
+```</p>
+
+<h3>问题十: <a href="http://stackoverflow.com/questions/360751/can-i-embed-a-custom-font-in-an-iphone-application">如何在iPhone中使用自定义字体</a></h3>
+
+<p>答案讨论了在iOS3.2以前及以后的做法，现在都5.1了，估计支持3.2以前的app很少了吧。所以我把iOS3.2以后的办法附在下面。简单来说，就是iOS3.2苹果支持自定义字体，只需要在Info.plist文件中设置UIAppFonts相关的信息即可。步骤如下：</p>
+
+<ol>
+<li>将自定义字体加到你的工程资源文件中</li>
+<li>在 info.plist 文件中增加一名为 UIAppFonts 的key</li>
+<li>将这个key修改成array</li>
+<li>将你用到的所有字体的名字，作为这个array的值，一项一项填进去（包括扩展名）</li>
+<li>保存 info.plist</li>
+<li>现在就可以在代码中直接用[UIFont fontWithName:@”CustomFontName” size:12]来取得你自定义的字体了。</li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[xcode4使用技巧]]></title>
@@ -492,8 +654,8 @@ import smtplib</p>
 <p>sender = 'sender@devtang.com'
 receivers = ['receiver@devtang.com']</p>
 
-<p>message = """From: Alert <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#115;&#x65;&#110;&#100;&#x65;&#114;&#x40;&#x64;&#101;&#118;&#x74;&#x61;&#110;&#103;&#x2e;&#99;&#111;&#x6d;">&#x73;&#x65;&#x6e;&#x64;&#x65;&#114;&#64;&#x64;&#x65;&#x76;&#116;&#97;&#110;&#103;&#x2e;&#99;&#111;&#109;</a>
-To: Some one <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#x72;&#x65;&#x63;&#x65;&#x69;&#118;&#101;&#x72;&#x40;&#x64;&#101;&#118;&#x74;&#x61;&#x6e;&#x67;&#46;&#x63;&#x6f;&#109;">&#x72;&#x65;&#x63;&#x65;&#105;&#x76;&#x65;&#114;&#x40;&#100;&#101;&#118;&#x74;&#97;&#x6e;&#x67;&#46;&#x63;&#111;&#109;</a>
+<p>message = """From: Alert <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x73;&#x65;&#x6e;&#100;&#x65;&#114;&#64;&#100;&#x65;&#118;&#x74;&#97;&#x6e;&#103;&#46;&#x63;&#x6f;&#x6d;">&#x73;&#x65;&#x6e;&#x64;&#x65;&#x72;&#64;&#x64;&#101;&#118;&#116;&#x61;&#110;&#x67;&#46;&#x63;&#x6f;&#109;</a>
+To: Some one <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#x72;&#x65;&#99;&#101;&#105;&#118;&#x65;&#x72;&#x40;&#x64;&#101;&#x76;&#x74;&#x61;&#x6e;&#x67;&#46;&#99;&#x6f;&#x6d;">&#x72;&#101;&#x63;&#x65;&#x69;&#x76;&#x65;&#114;&#x40;&#100;&#101;&#x76;&#x74;&#x61;&#x6e;&#x67;&#x2e;&#x63;&#111;&#109;</a>
 Subject: SMTP email sample</p>
 
 <p>Hope you can get it.
@@ -624,77 +786,6 @@ cd xcode_tool/NSStringWrappeer
 <p>```</p>
 
 <p>Have fun!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS5中UIViewController的新方法]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/"/>
-    <updated>2012-02-06T21:19:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5</id>
-    <content type="html"><![CDATA[<h3>前言</h3>
-
-<p>在苹果的WWDC2011大会视频的
-<a href="https://developer.apple.com/videos/wwdc/2011/?id=101">《Session 101 - What's New in Cocoa》</a> 和
-<a href="https://developer.apple.com/videos/wwdc/2011/?id=102">《Session 102 - Implementing UIViewController Containment》</a> 中介绍了苹果在iOS5中给UIViewController新增加的5方法以及一个属性:</p>
-
-<p><code>objc
-// 方法
-addChildViewController:
-removeFromParentViewController:
-transitionFromViewController:toViewController:duration:options:animations:completion:
-willMoveToParentViewController:
-didMoveToParentViewController:
-// 属性
-@property(nonatomic,readonly) NSArray *childViewControllers
-</code></p>
-
-<!--more-->
-
-
-<h3>原来的问题</h3>
-
-<p>这些新增的方法和属性用于改进我们的编程方式。那么让我们先看看以前的对于UIViewController的使用有什么潜在的问题，认清问题，我们才能理解苹果改变的意义。</p>
-
-<p>在以前，一个UIViewController的View可能有很多小的子view。这些子view很多时候被盖在最后，我们在最外层ViewController的viewDidLoad方法中，用addSubview增加了大量的子view。这些子view大多数不会一直处于界面上，只是在某些情况下才会出现，例如登陆失败的提示view，上传附件成功的提示view，网络失败的提示view等。但是虽然这些view很少出现，但是我们却常常一直把它们放在内存中。另外，当收到内存警告时，我们只能自己手工把这些view从super view中去掉。</p>
-
-<h3>改变</h3>
-
-<p>苹果新的API增加了addChildViewController方法，并且希望我们在使用addSubview时，同时调用[self addChildViewController:child]方法将sub view对应的viewController也加到当前ViewController的管理中。对于那些当前暂时不需要显示的subview，只通过addChildViewController把subViewController加进去。需要显示时再调用transitionFromViewController:toViewController:duration:options:animations:completion方法。</p>
-
-<p>另外，当收到系统的Memory Warning的时候，系统也会自动把当前没有显示的subview unload掉，以节省内存。</p>
-
-<h3>参考资料</h3>
-
-<p>关于这个，<a href="http://wangjun.easymorse.com/?p=1630">这儿</a>有一篇不错的文章介绍了一段sample代码用于演示新API的使用.</p>
-
-<p>我也将其代码稍加修改，增加了view load, unload, appear, disappear的事件Log，以及收到Memory Warning时的Log。代码放在了github上，地址是<a href="https://github.com/tangqiaoboy/iOS5ViewCtrlerSample">这里</a>，感兴趣的同学可以自己下载下来看看源码。</p>
-
-<p>可以看到，这些view在没有使用时，是不会被load的，并且当有Memory Warning时，当前没有显示的view自动被unload掉了。所以新的方法确实能有效地节省内存，也能方便地处理内存不足时的资源回收。运行Log如下：</p>
-
-<p><code>
-[7397:f803] -[FirstViewController willMoveToParentViewController:]
-[7397:f803] -[SecondViewController willMoveToParentViewController:]
-[7397:f803] -[ThirdViewController willMoveToParentViewController:]
-[7397:f803] -[ThirdViewController viewDidLoad]
-[7397:f803] -[ThirdViewController viewWillAppear:]
-[7397:f803] -[ThirdViewController viewDidAppear:]
-[7397:f803] 生日提醒
-[7397:f803] -[SecondViewController viewDidLoad]
-[7397:f803] -[ThirdViewController viewWillDisappear:]
-[7397:f803] -[SecondViewController viewWillAppear:]
-[7397:f803] -[SecondViewController viewDidAppear:]
-[7397:f803] -[ThirdViewController viewDidDisappear:]
-[7397:f803] 留言及回复
-[7397:f803] -[FirstViewController viewDidLoad]
-[7397:f803] -[SecondViewController viewWillDisappear:]
-[7397:f803] -[FirstViewController viewWillAppear:]
-[7397:f803] -[FirstViewController viewDidAppear:]
-[7397:f803] -[SecondViewController viewDidDisappear:]
-[7397:f803] Received memory warning.
-[7397:f803] -[SecondViewController viewDidUnload]
-[7397:f803] -[ThirdViewController viewDidUnload]
-</code></p>
 ]]></content>
   </entry>
   

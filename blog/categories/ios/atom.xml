@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-03-18T22:34:00+08:00</updated>
+  <updated>2012-03-24T23:10:43+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,150 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[关于UIWebView和PhoneGap的总结]]></title>
+    <link href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/"/>
+    <updated>2012-03-24T20:19:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>今天参加了Adobe和CSDN组织的一个关于<a href="http://hui.csdn.net/MeetingInfo.aspx?mid=99">PhoneGap的开发讲座</a> ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。</p>
+
+<p>正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容，所以也需要做js与native代码相互调用的事情。所以在这儿顺便总结一下UIWebView在使用上的细节，以及谈谈我对PhoneGap的看法。</p>
+
+<h2>机制</h2>
+
+<p>iOS SDK并没有原生提供js调用native代码的API。但是UIWebView的一个delegate方法使我们可以做到让js需要调用时，通知native。在native执行完相应调用后，可以用stringByEvaluatingJavaScriptFromString方法，将执行结果返回给js。这样，就实现了js与native代码的相互调用。</p>
+
+<p>以下是PhoneGap相关调用的示例代码：</p>
+
+<p>``` objc
+// Objective-C语言
+- (BOOL)webView:(UIWebView *)webView</p>
+
+<pre><code>shouldStartLoadWithRequest:(NSURLRequest *)request 
+navigationType:(UIWebViewNavigationType)navigationType {
+   NSURL * url = [request URL];
+   if ([[url scheme] isEqualToString:@"gap"]) {
+        // 在这里做js调native的事情
+        // ....
+        // 做完之后用如下方法调回js
+        [webView stringByEvaluatingJavaScriptFromString:@"alert('done')"];
+        return NO;
+    }       
+    return YES;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>具体让js通知native的方法是让js发起一次特殊的网络请求。这里，我们和PhoneGap都是使用加载一个隐藏的iframe来实现的，通过将iframe的src指定为一个特殊的URL，实现在delegate方法中截获这次请求。</p>
+
+<p>以下是PhoneGap相关调用的示例代码：</p>
+
+<p>```
+// Javascript语言
+// 通知iPhone UIWebView 加载url对应的资源
+// url的格式为: gap:something
+function loadURL(url) {</p>
+
+<pre><code>var iFrame;
+iFrame = document.createElement("iframe");
+iFrame.setAttribute("src", url);
+iFrame.setAttribute("style", "display:none;");
+iFrame.setAttribute("height", "0px");
+iFrame.setAttribute("width", "0px");
+iFrame.setAttribute("frameborder", "0");
+document.body.appendChild(iFrame);
+// 发起请求后这个iFrame就没用了，所以把它从dom上移除掉
+iFrame.parentNode.removeChild(iFrame);
+iFrame = null;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>在这里，可能有些人说，通过改document.location也可以达到相同的效果。关于这个，我和zyc专门试过，一般情况下，改document.location是可以，但是改document.location有一个很严重的问题，就是如果我们连续2个js调native，连续2次改document.location的话，在native的delegate方法中，只能截获后面那次请求，前一次请求由于很快被替换掉，所以被忽略掉了。</p>
+
+<p>我也专门去Github上查找相关的开源代码，它们都是用过iframe来实现调用的，例如这个：<a href="https://github.com/marcuswestin/WebViewJavascriptBridge">https://github.com/marcuswestin/WebViewJavascriptBridge</a></p>
+
+<h2>参数的传递</h2>
+
+<p>以上的示例代码为了讲清楚机制，所以只是示例了最简单的相互调用。但实际上js和native相互调用时，常常需要传递参数。</p>
+
+<p>例如，有道云笔记iPad版用UIWebView显示笔记的内容，当用户点击了笔记中的附件，这个时候，js需要通知native到后台下载这个笔记附件，同时通知js当前的下载进度。对于这个需求，js层获得用户点击事件后，就需要把当前点击的附件的ID传递给native，这样native才能知道下载哪个附件。</p>
+
+<p>参数传递最简单的方式是将参数作为url的一部分，放到iFrame的src里面。这样UIWebView通过截取分析url后面的内容即可获得参数。但是这样的问题是，该方法只能传递简单的参数信息，如果参数是一个很复杂的对象，那么这个url的编解码将会很复杂。对此，我们的有道云笔记和PhoneGap采用了不同的技术方案。</p>
+
+<ul>
+<li>我们的技术方案是将参数以JSON的形式传递，但是因为要附加在url之后，所以我们将JSON进行了Base64编码，以保证url中不会出现一些非法的字符。</li>
+<li>PhoneGap的技术方案是，也是用JSON传递参数，但是将JSON放在UIWebView中的一个全局数组中，UIWebView当需要读取参数时，通过读取这个全局数组来获得相应的参数。</li>
+</ul>
+
+
+<p>相比之下，应该说PhoneGap的方案更加全面，适用于多种场景。而我们的方案简洁高效，满足了我们自己产品的需求。</p>
+
+<h2>同步和异步</h2>
+
+<p>因为iOS SDK没有天生支持js和native相互调用，大家的技术方案都是自己实现的一套调用机制，所以这里面有同步异步的问题。细心的同学就能发现，js调用native是通过插入一个iframe，这个iframe插入完了就完了，执行的结果需要native另外用stringByEvaluatingJavaScriptFromString方法通知js，所以这是一个异步的调用。</p>
+
+<p>而stringByEvaluatingJavaScriptFromString方法本身会直接返回一个NSString类型的执行结果，所以这显然是一个同步调用。</p>
+
+<p>所以js call native是异步，native call js是异步。在处理一些逻辑的时候，不可避免需要考虑这个特点。</p>
+
+<p>这里顺便说一个android，其实在android开发中，js调native是同步的，但是PhoneGap为了将自己做成一个跨平台的框架，所以在android的js call native的native端，用 new Thread新建了一个执行线程，这样把android的js call native也变成了异步调用。</p>
+
+<h2>UIWebView的问题</h2>
+
+<h3>线程阻塞问题</h3>
+
+<p>我们在开发中发现，当在native层调用stringByEvaluatingJavaScriptFromString方法时，可能由于javascript是单线程的原因，会阻塞原有js代码的执行。这里我们的解决办法是在js端用defer将iframe的插入延后执行。</p>
+
+<h3>主线程的问题</h3>
+
+<p>UIWebView的stringByEvaluatingJavaScriptFromString方法必须是主线程中执行，而主线程的执行时间过长就会block UI的更新。所以我们应该尽量让stringByEvaluatingJavaScriptFromString方法执行的时间短。</p>
+
+<p>有道云笔记在保存的时候，需要调用js获得笔记的完整html内容，这个时候如果笔记内容很复杂，就会执行很长一段时间，而因为这个操作必须是主线程执行，所以我们显示“正在保存”的UIAlertView完全无法正常显示，整个UI界面完全卡住了。在新的编辑器里，我们更新了获得html内容的代码，才将这个问题解决。</p>
+
+<h2>调试</h2>
+
+<p>在iOS设备中调试javascript是一件相当苦逼的事情，拿pw的话来说：“一下子回到了ie6时代”。当然，业界也有一些调试工具可以用的。</p>
+
+<p>我们在开发时主要采用的是<a href="http://phonegap.github.com/weinre/">weinre</a>这个框架。用这个框架，可以做一些基本的调试工作，但是它现在功能还没有象pc上的js调试器那么强大，例如它不能下断点，另外如果有js执行错误，它也无法正确的将错误信息报出。它还有一些bug，例如在mac机下，如果你同时连接了有线网和无线网，那么weinre将无法正确地连接到调试页面。</p>
+
+<p>但终究，它是现在业界现存的唯一相对可用的调试工具了。本次的PhoneGap讲座的第一位演讲者董龙飞有一篇博客很好地介绍了weinre的使用，地址是<a href="http://www.donglongfei.com/2012/03/debug-phonegap-app-using-weinre/">这里</a>，推荐感兴趣的同学看看。即使不用PhoneGap，weinre也能给你在移动设备上设计网页带来方便。</p>
+
+<h2>我对PhoneGap的看法</h2>
+
+<p>今天的大会上，2位演讲者把PhoneGap吹得相当牛。但是其实真正用过的人才能知道，PhoneGap还是有相当多的问题的。至少我知道在网易就有一个使用PhoneGap而失败的项目，所以我认为PhoneGap还是有它相当大的局限性的。</p>
+
+<p>我认为PhoneGap有以下3大问题：</p>
+
+<ol>
+<li><p>首先，PhoneGap的编程语言其实是javascript，这对于非前端工作者来说，其实学习起来和学习原生的objective-C或Java编程语言难度差不多，而且由于历史原因，javascript语言本身的问题比其它语言都多。要想精通javascript，相当不易。</p></li>
+<li><p>然后，PhoneGap的目标是方便地创建跨平台的应用。但是其实苹果和google都发布了自己的人机交互指南。有些情况下，苹果的程序和android程序有着不同的交互原则的。象有道云笔记的<a href="http://itunes.apple.com/us/app/id450748070?ls=1&amp;mt=8">iPhone版</a>和<a href="http://m.note.youdao.com/noteproxy/download?todo=download&amp;platform=android&amp;keyfrom=note.web">android版</a>，就有着完全不同的界面和交互。使用PhoneGap就意味着你的程序在UI和交互上，既不象原生的iphone程序，又不象原生的android程序。</p></li>
+<li><p>最后，性能问题。Javascript终究无法和原生的程序比运行效率，这一点在当你要做一些动画效果的时候，就能显现得很明显。</p></li>
+</ol>
+
+
+<p>当然，PhoneGap的优势也很明显，如果你是做图书类，查询类，小工具类应用的话，这些应用UI交互不复杂，也不占用很高的cpu资源，PhoneGap将很好地发挥出它的优势。对于这类应用：</p>
+
+<ol>
+<li><p>你只需要编写一次，则可以同时完成iOS, android, windows phone等版本的开发。</p></li>
+<li><p>如果改动不大，只是内容升级，那它升级时只需要更新相应的js文件，而不需要提交审核，而一般正常提交苹果的app store审核的话，常常需要一周时间。</p></li>
+</ol>
+
+
+<p>所以PhoneGap不是万能的，但也不是没有用，它有它擅长的领域，一切都看你是否合理地使用它。</p>
+
+<p>最后，推荐<a href="http://www.phonegap.cn/">PhoneGap中国网站</a> ，在这里，你可以找到为数不多的中文资料。也推荐本次PhoneGap的演讲者<a href="http://weibo.com/donglongfei">董龙飞的微博</a>， 它是Adobe中国平台技术经理，应该能为你解答不少关于PhoneGap的问题。</p>
+
+<h2>对js的感想</h2>
+
+<p>现在前端工程师相当牛逼啊。前端工程师不但可以写前端网页，还可以用Flex写桌面端程序，可以用nodejs写server端程序，可以用PhoneGap写移动端程序，这一切，都是基于javascript语言的，还有最新出的windows 8，原生支持用js来写Metro程序，世界已经无法阻止前端工程师了。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iPhone开发常问的十个问题(2012年3月版)]]></title>
@@ -654,8 +798,8 @@ import smtplib</p>
 <p>sender = 'sender@devtang.com'
 receivers = ['receiver@devtang.com']</p>
 
-<p>message = """From: Alert <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x73;&#x65;&#x6e;&#100;&#x65;&#114;&#64;&#100;&#x65;&#118;&#x74;&#97;&#x6e;&#103;&#46;&#x63;&#x6f;&#x6d;">&#x73;&#x65;&#x6e;&#x64;&#x65;&#x72;&#64;&#x64;&#101;&#118;&#116;&#x61;&#110;&#x67;&#46;&#x63;&#x6f;&#109;</a>
-To: Some one <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#x72;&#x65;&#99;&#101;&#105;&#118;&#x65;&#x72;&#x40;&#x64;&#101;&#x76;&#x74;&#x61;&#x6e;&#x67;&#46;&#99;&#x6f;&#x6d;">&#x72;&#101;&#x63;&#x65;&#x69;&#x76;&#x65;&#114;&#x40;&#100;&#101;&#x76;&#x74;&#x61;&#x6e;&#x67;&#x2e;&#x63;&#111;&#109;</a>
+<p>message = """From: Alert <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#115;&#x65;&#x6e;&#100;&#101;&#x72;&#x40;&#x64;&#101;&#x76;&#116;&#x61;&#110;&#x67;&#x2e;&#x63;&#x6f;&#109;">&#115;&#x65;&#x6e;&#100;&#101;&#x72;&#64;&#100;&#x65;&#118;&#x74;&#97;&#x6e;&#x67;&#x2e;&#99;&#111;&#109;</a>
+To: Some one <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#114;&#x65;&#99;&#x65;&#105;&#x76;&#x65;&#114;&#64;&#x64;&#101;&#x76;&#x74;&#97;&#110;&#x67;&#x2e;&#x63;&#x6f;&#109;">&#114;&#x65;&#99;&#101;&#x69;&#x76;&#101;&#x72;&#x40;&#100;&#101;&#x76;&#x74;&#97;&#110;&#x67;&#x2e;&#x63;&#x6f;&#x6d;</a>
 Subject: SMTP email sample</p>
 
 <p>Hope you can get it.
@@ -721,71 +865,6 @@ umount ./upload
 <h2>总结</h2>
 
 <p>将以上各点结合起来，就可以用bash写出一个daily build脚本了。每天这一切都会自动完成，心情相当好。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[给NSString增加Java风格的方法]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/14/nsstring-java-like-wrapper/"/>
-    <updated>2012-02-14T17:17:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/14/nsstring-java-like-wrapper</id>
-    <content type="html"><![CDATA[<p>我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段：</p>
-
-<p><code>objc
-[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-</code></p>
-
-<!--more-->
-
-
-<p>其实我也明白Objective-C这种长函数名的好处，就是能很清楚地了解当前的方法是干什么的。但是一些常用的方法，简单的方法名同样能表达清楚意思，并且更容易记住。长方法名的最大的问题是，代码写到一半得查文档，直接把思路打断了，所以我上周末花了一天时间把Objective-C的NSString类给封装了一下，把相应的方法调用都换成与Java类似的了。这样我每次用的时候就不用写那么长又记不住的方法名了。</p>
-
-<p>主要封装后的方法定义如下：</p>
-
-<p><code>objc
-@interface NSString(Wrapper)
-- (unichar) charAt:(int)index;
-- (int) compareTo:(NSString*) anotherString;
-- (int) compareToIgnoreCase:(NSString*) str;
-- (BOOL) contains:(NSString*) str;
-- (BOOL) startsWith:(NSString*)prefix;
-- (BOOL) endsWith:(NSString*)suffix;
-- (BOOL) equals:(NSString*) anotherString;
-- (BOOL) equalsIgnoreCase:(NSString*) anotherString;
-- (int) indexOfChar:(unichar)ch;
-- (int) indexOfChar:(unichar)ch fromIndex:(int)index;
-- (int) indexOfString:(NSString*)str;
-- (int) indexOfString:(NSString*)str fromIndex:(int)index;
-- (int) lastIndexOfChar:(unichar)ch;
-- (int) lastIndexOfChar:(unichar)ch fromIndex:(int)index;
-- (int) lastIndexOfString:(NSString*)str;
-- (int) lastIndexOfString:(NSString*)str fromIndex:(int)index;
-- (NSString *) substringFromIndex:(int)beginIndex toIndex:(int)endIndex;
-- (NSString *) toLowerCase;
-- (NSString *) toUpperCase;
-- (NSString *) trim;
-- (NSString *) replaceAll:(NSString*)origin with:(NSString*)replacement;
-- (NSArray *) split:(NSString*) separator;
-@end
-</code></p>
-
-<p>看着方法体，一下子感觉轻松了好多，以后再也不必每次写的时候查文档了。代码放到github上了，你可以用如下命令获得代码或者直接访问网址<a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a> ：</p>
-
-<p><code>bash
-git clone git@github.com:tangqiaoboy/xcode_tool.git
-cd xcode_tool/NSStringWrappeer
-</code></p>
-
-<p>如果要把这个Wrapper加到现有工程中，只需要拷贝我的文件：NSStringWrapper.h和NSStringWrapper.m到你自己的工程中即可。在使用的时候注意我修改了一点，我将查找不存在的返回值设置成了-1，这样和java语言保持一致，如果你想用 NSNotFound作为查找不存在时的结果，请修改文件NSStringWrapper.m顶部的宏定义:JavaNotFound即可，如下所示：</p>
-
-<p>``` objc
-// 如果不喜欢，可以将-1改成 NSNotFound即可</p>
-
-<h1>define JavaNotFound -1</h1>
-
-<p>```</p>
-
-<p>Have fun!</p>
 ]]></content>
   </entry>
   

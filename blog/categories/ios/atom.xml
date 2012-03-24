@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-03-24T23:10:43+08:00</updated>
+  <updated>2012-03-24T23:31:29+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -23,6 +23,9 @@
 <p>今天参加了Adobe和CSDN组织的一个关于<a href="http://hui.csdn.net/MeetingInfo.aspx?mid=99">PhoneGap的开发讲座</a> ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。</p>
 
 <p>正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容，所以也需要做js与native代码相互调用的事情。所以在这儿顺便总结一下UIWebView在使用上的细节，以及谈谈我对PhoneGap的看法。</p>
+
+<!-- more -->
+
 
 <h2>机制</h2>
 
@@ -798,8 +801,8 @@ import smtplib</p>
 <p>sender = 'sender@devtang.com'
 receivers = ['receiver@devtang.com']</p>
 
-<p>message = """From: Alert <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#115;&#x65;&#x6e;&#100;&#101;&#x72;&#x40;&#x64;&#101;&#x76;&#116;&#x61;&#110;&#x67;&#x2e;&#x63;&#x6f;&#109;">&#115;&#x65;&#x6e;&#100;&#101;&#x72;&#64;&#100;&#x65;&#118;&#x74;&#97;&#x6e;&#x67;&#x2e;&#99;&#111;&#109;</a>
-To: Some one <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#114;&#x65;&#99;&#x65;&#105;&#x76;&#x65;&#114;&#64;&#x64;&#101;&#x76;&#x74;&#97;&#110;&#x67;&#x2e;&#x63;&#x6f;&#109;">&#114;&#x65;&#99;&#101;&#x69;&#x76;&#101;&#x72;&#x40;&#100;&#101;&#x76;&#x74;&#97;&#110;&#x67;&#x2e;&#x63;&#x6f;&#x6d;</a>
+<p>message = """From: Alert <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#x73;&#101;&#110;&#100;&#101;&#x72;&#x40;&#100;&#x65;&#x76;&#x74;&#97;&#110;&#x67;&#46;&#99;&#111;&#109;">&#115;&#x65;&#x6e;&#x64;&#x65;&#x72;&#64;&#x64;&#101;&#x76;&#116;&#97;&#110;&#x67;&#46;&#99;&#111;&#109;</a>
+To: Some one <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x72;&#x65;&#x63;&#x65;&#x69;&#118;&#101;&#114;&#x40;&#x64;&#x65;&#x76;&#x74;&#97;&#x6e;&#103;&#46;&#x63;&#111;&#109;">&#x72;&#x65;&#99;&#101;&#105;&#x76;&#x65;&#x72;&#64;&#x64;&#101;&#x76;&#x74;&#97;&#x6e;&#103;&#46;&#x63;&#x6f;&#x6d;</a>
 Subject: SMTP email sample</p>
 
 <p>Hope you can get it.

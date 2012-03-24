@@ -105,6 +105,9 @@
 
 <p>正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容，所以也需要做js与native代码相互调用的事情。所以在这儿顺便总结一下UIWebView在使用上的细节，以及谈谈我对PhoneGap的看法。</p>
 
+<!-- more -->
+
+
 <h2>机制</h2>
 
 <p>iOS SDK并没有原生提供js调用native代码的API。但是UIWebView的一个delegate方法使我们可以做到让js需要调用时，通知native。在native执行完相应调用后，可以用stringByEvaluatingJavaScriptFromString方法，将执行结果返回给js。这样，就实现了js与native代码的相互调用。</p>

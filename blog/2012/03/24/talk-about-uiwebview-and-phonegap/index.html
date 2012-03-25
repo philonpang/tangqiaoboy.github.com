@@ -233,6 +233,14 @@
 <p>但是这个方法对于UIWebView并不可用。也就是说，我们无法通过程序控制让光标输入焦点出现在UIWebView上。
 关于这个问题，我在stackoverflow上专门<a href="http://stackoverflow.com/questions/9835956/show-keyboard-in-contenteditable-uiwebview-programmatically">问了一下</a>，还是没有得到很好的解决办法。</p>
 
+<h3>CommonJS规范</h3>
+
+<p>commonJS是一个模块块加载的规范。而AMD是该规范的一个草案，CommonJS AMD规范描述了模块化的定义，依赖关系，引用关系以及加载机制，其规范原文在<a href="http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition">这里</a> 。它被requireJS，NodeJs，Dojo，jQuery等开源框架广泛使用。<a href="http://blog.csdn.net/dojotoolkit/article/details/6076668">这里</a>还有一篇不错的中文介绍文章。</p>
+
+<p>AMD规范需要用目录层级当作包层次，这一点就象java一样。之前我以为iOS打包后的ipa资源文件中不能有资源目录层级关系，今天在会上问了一下，原来是我自己弄错了。如果需要将目录层级带入ipa资源文件中，只需要将该目录拖入工程中，然后选择“Create groups for any added folders”。如下图所示，这样目录层级能够打包到ipa文件中。</p>
+
+<p><img src="/images/uiwebview-commonjs-folder.jpg"></p>
+
 <h2>调试</h2>
 
 <p>在iOS设备中调试javascript是一件相当苦逼的事情，拿pw的话来说：“一下子回到了ie6时代”。当然，业界也有一些调试工具可以用的。</p>

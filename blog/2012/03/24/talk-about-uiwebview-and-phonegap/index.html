@@ -226,6 +226,13 @@
 
 <p>有道云笔记在保存的时候，需要调用js获得笔记的完整html内容，这个时候如果笔记内容很复杂，就会执行很长一段时间，而因为这个操作必须是主线程执行，所以我们显示“正在保存”的UIAlertView完全无法正常显示，整个UI界面完全卡住了。在新的编辑器里，我们更新了获得html内容的代码，才将这个问题解决。</p>
 
+<h3>键盘控制</h3>
+
+<p>做iOS开发的都知道，当我们需要键盘显示在某个控件上时，可以调用[obj becomeFirstResponder]方法来让键盘出来，并且光标输入焦点出现在该控件上。</p>
+
+<p>但是这个方法对于UIWebView并不可用。也就是说，我们无法通过程序控制让光标输入焦点出现在UIWebView上。
+关于这个问题，我在stackoverflow上专门<a href="http://stackoverflow.com/questions/9835956/show-keyboard-in-contenteditable-uiwebview-programmatically">问了一下</a>，还是没有得到很好的解决办法。</p>
+
 <h2>调试</h2>
 
 <p>在iOS设备中调试javascript是一件相当苦逼的事情，拿pw的话来说：“一下子回到了ie6时代”。当然，业界也有一些调试工具可以用的。</p>

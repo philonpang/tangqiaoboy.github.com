@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-03-25T11:48:46+08:00</updated>
+  <updated>2012-04-06T18:23:49+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[关于iOS测试机个数上限的详细规则]]></title>
+    <link href="http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit/"/>
+    <updated>2012-04-06T16:50:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>因为公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
+
+<!-- more -->
+
+
+<h2>规则</h2>
+
+<p>我总结出来的规则如下（附上原文以便对应）：</p>
+
+<ul>
+<li>每一个开发者membership year,只能有100次增加设备的名额。如果你增加一个设备,之后又将该设备删除,并不会将用掉的名额恢复.</li>
+</ul>
+
+
+<p>You can register up to 100 devices per year for development purposes. Any devices added, then later removed, still count towards your maximum number of registered devices per year.</p>
+
+<ul>
+<li>在每一个开发者membership year开始的时候,Team Agent和Admin角色可以选择删掉一些设备来恢复资格, 也可以清空所有设备来恢复到最多100次设备的名额。这个操作在Team Agent和Admin在一次新的membership year开始后即可使用，在使用时，需要注意，先将需要删除的设备删掉，然后才能添加需要新增的设备。一旦开始增加新设备，删除设备以恢复名额的功能将不再可用。</li>
+</ul>
+
+
+<p>At the start of a new membership year, Team Agents and Admins can remove devices and restore the available device count for their development team to 100 devices.</p>
+
+<p>When Team Agents or Admins first sign in to the iOS Provisioning Portal at the start of a new membership year, they will be presented with the option to remove devices and restore the device count for those removed devices.</p>
+
+<p>Important Note: At the start of your membership year, make sure to remove all devices you no longer use for development prior to adding any new devices.</p>
+
+<ul>
+<li>在以后整个membership year中，删除设备不会增加新的名额。</li>
+</ul>
+
+
+<p>Removing devices during your membership year will not open these slots to add new devices.</p>
+
+<h2>举例</h2>
+
+<p>直接看规则比较晦涩，举个例子：</p>
+
+<p>假如第一年，你增加了70个设备，同时删除了10个设备，这个时候，虽然你的设备数是60，但是可用的增加测试机的名额却只有30个了。</p>
+
+<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 - 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
+
+<h2>总结</h2>
+
+<p>所以说，不管怎么样，你的账号下的可用测试设备始终不会超过100个。不会象有些人想的那样，每过一年名额就直接变成100了。另外，每年删除设备以恢复名额的机会只有开始的时候，以后删除设备也不会恢复名额。</p>
+
+<p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[关于UIWebView和PhoneGap的总结]]></title>
@@ -633,256 +690,6 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 <h2>总结</h2>
 
 <p>总体来说，GCD能够极大地方便开发者进行多线程编程。如果你的app不需要支持iOS4.0以下的系统，那么就应该尽量使用GCD来处理后台线程和UI线程的交互。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[给iOS工程增加Daily Build]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/16/apply-daily-build-in-ios-project/"/>
-    <updated>2012-02-16T19:27:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/16/apply-daily-build-in-ios-project</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>Daily Build是一件非常有意义的事情，也是敏捷开发中关于“持续集成”的一个实践。Daily Build对于开发来说有如下好处：</p>
-
-<ul>
-<li>保证了每次check in的代码可用，不会造成整个工程编译失败。</li>
-<li>进度跟进。产品经理可以每天看到最新的开发进度，并且试用产品，调整一些细节。很多时候，一个新功能，你真正用了一下才能有体会好或不好，所以daily build也给产品经理更多时间来调理他的设计。</li>
-<li>需求确认。产品经理可以确认开发的功能细节是他的预期。因为我们的开发比较紧凑，所以都没有传统的需求说明文档，所以daily build也给产品经理用于尽早确认开发的功能细节是他的预期，我就遇到一次产品经理发现开发出的一个功能细节和他的预期不一致，但是因为有daily build，使得我可以尽早做修改，把修改的代价减小了。</li>
-<li>测试跟进。如果功能点是独立的话，测试同事完全可以根据daily build来进行一些早期的测试。越早的Bug反馈可以使得修改bug所需的时间越短。</li>
-</ul>
-
-
-<!--more-->
-
-
-<h2>步骤</h2>
-
-<h3>xcodebuild命令</h3>
-
-<p>如何做daily build呢？其实Xcode就提供了命令行build的命令，这个命令是xcodebuild，用xcodebuild -usage
-可以查看到所有的可用参数，如下所示：</p>
-
-<p>``` bash
-[tangqiao ~]$xcodebuild -usage
-Usage: xcodebuild [-project <projectname>] [[-target <targetname>]...|-alltargets] [-configuration <configurationname>] [-arch <architecture>]... [-sdk [<sdkname>|<sdkpath>]] [<buildsetting>=<value>]... [<buildaction>]...</p>
-
-<pre><code>   xcodebuild [-project &lt;projectname&gt;] -scheme &lt;schemeName&gt; [-configuration &lt;configurationname&gt;] [-arch &lt;architecture&gt;]... [-sdk [&lt;sdkname&gt;|&lt;sdkpath&gt;]] [&lt;buildsetting&gt;=&lt;value&gt;]... [&lt;buildaction&gt;]...
-   xcodebuild -workspace &lt;workspacename&gt; -scheme &lt;schemeName&gt; [-configuration &lt;configurationname&gt;] [-arch &lt;architecture&gt;]... [-sdk [&lt;sdkname&gt;|&lt;sdkpath&gt;]] [&lt;buildsetting&gt;=&lt;value&gt;]... [&lt;buildaction&gt;]...
-   xcodebuild -version [-sdk [&lt;sdkfullpath&gt;|&lt;sdkname&gt;] [&lt;infoitem&gt;] ]
-   xcodebuild -list [[-project &lt;projectname&gt;]|[-workspace &lt;workspacename&gt;]]
-   xcodebuild -showsdks
-</code></pre>
-
-<p>```</p>
-
-<p>一般情况下的命令使用如下:</p>
-
-<p><code>bash
-xcodebuild -configuration Release -target "YourProduct"
-</code></p>
-
-<p>但在daily build中，用Release用为configuration其实不是特别好。因为Release的证书可能会被经常修改。我们可以基于Release的Configuation，建一个专门用于daily build的configuration。方法是：在工程详细页面中，选择Info一栏，在Configurations一栏的下方点击“+”号，然后选择"Duplicate Release Configuration", 新建名为"DailyBuild"的Configuration, 如下图所示：</p>
-
-<p><img src="/images/daily_build_1.png"></p>
-
-<p>之后就可以用如下命令来做daily build了</p>
-
-<p><code>bash
-xcodebuild -configuration DailyBuild -target "YourProduct"
-</code></p>
-
-<p>执行完命令后，会在当前工程下的 build/DailyBuild-iphoneos/目录下生成一个名为： YourProduct.app的文件。这个就是我们Build成功之后的程序文件。</p>
-
-<h3>生成ipa文件</h3>
-
-<p>接下来我们需要生成ipa文件，在生成ipa文件这件事情上，xcode似乎没有提供什么工具，不过这个没什么影响，因为ipa文件实际上就是一个zip文件，我们使用系统的zip命令来生成ipa文件即可。需要注意的是，ipa文件并不是简单地将编辑好的app文件打成zip文件，它需要将app文件放在一个名为Payload的文件夹下，然后将整个Payload目录打包成为.ipa文件，命令如下：</p>
-
-<p><code>bash
-cd $BUILD_PATH
-mkdir -p ipa/Payload
-cp -r ./DailyBuild-iphoneos/$PRODUCT_NAME ./ipa/Payload/
-cd ipa
-zip -r $FILE_NAME *
-</code></p>
-
-<h3>生成安装文件</h3>
-
-<p>苹果允许用itms-services协议来直接在iphone/ipad上安装应用程序，我们可以直接生成该协议需要的相关文件，这样产品经理和测试同学都可以直接在设备上安装新版的应用了。相关的参考资料可以见：<a href="http://blog.encomiabile.it/2010/12/21/ios4-and-wireless-application-deploy/">这里</a>和 <a href="http://blog.s135.com/itms-services/">这里</a></p>
-
-<p>具体来说，就是需要生成一个带 itms-services 协议的链接的html文件，以及一个 plist 文件。</p>
-
-<p>生成html的示例代码如下：</p>
-
-<p>``` bash
-cat &lt;&lt; EOF > install.html
-&lt;!DOCTYPE HTML>
-<html>
-  <head></p>
-
-<pre><code>&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
-&lt;title&gt;安装此软件&lt;/title&gt;
-</code></pre>
-
-<p>  </head>
-  <body></p>
-
-<pre><code>&lt;ul&gt;
-  &lt;li&gt;安装此软件:&lt;a href="itms-services://?action=download-manifest&amp;url=http%3A%2F%2Fwww.yourdomain.com%2Fynote.plist"&gt;$FILE_NAME&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p>  </body>
-</html>
-EOF
-```</p>
-
-<p>生成plist文件的代码如下，注意，需要将下面的涉及 www.yourdomain.com的地方换成你线上服务器的地址，将ProductName换成你的app安装后的名字。</p>
-
-<p>``` bash
-cat &lt;&lt; EOF > ynote.plist
-&lt;?xml version="1.0" encoding="UTF-8"?>
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-   <key>items</key>
-   <array></p>
-
-<pre><code>   &lt;dict&gt;
-       &lt;key&gt;assets&lt;/key&gt;
-       &lt;array&gt;
-           &lt;dict&gt;
-               &lt;key&gt;kind&lt;/key&gt;
-               &lt;string&gt;software-package&lt;/string&gt;
-               &lt;key&gt;url&lt;/key&gt;
-               &lt;string&gt;http://www.yourdomain.com/$FILE_NAME&lt;/string&gt;
-           &lt;/dict&gt;
-           &lt;dict&gt;
-               &lt;key&gt;kind&lt;/key&gt;
-               &lt;string&gt;display-image&lt;/string&gt;
-               &lt;key&gt;needs-shine&lt;/key&gt;
-               &lt;true/&gt;
-               &lt;key&gt;url&lt;/key&gt;
-               &lt;string&gt;http://www.yourdomain.com/icon.png&lt;/string&gt;
-           &lt;/dict&gt;
-       &lt;dict&gt;
-               &lt;key&gt;kind&lt;/key&gt;
-               &lt;string&gt;full-size-image&lt;/string&gt;
-               &lt;key&gt;needs-shine&lt;/key&gt;
-               &lt;true/&gt;
-               &lt;key&gt;url&lt;/key&gt;
-               &lt;string&gt;http://www.yourdomain.com/icon.png&lt;/string&gt;
-           &lt;/dict&gt;
-       &lt;/array&gt;&lt;key&gt;metadata&lt;/key&gt;
-       &lt;dict&gt;
-           &lt;key&gt;bundle-identifier&lt;/key&gt;
-           &lt;string&gt;com.yourdomain.productname&lt;/string&gt;
-           &lt;key&gt;bundle-version&lt;/key&gt;
-           &lt;string&gt;1.0.0&lt;/string&gt;
-           &lt;key&gt;kind&lt;/key&gt;
-           &lt;string&gt;software&lt;/string&gt;
-           &lt;key&gt;subtitle&lt;/key&gt;
-           &lt;string&gt;ProductName&lt;/string&gt;
-           &lt;key&gt;title&lt;/key&gt;
-           &lt;string&gt;ProductName&lt;/string&gt;
-       &lt;/dict&gt;
-   &lt;/dict&gt;
-</code></pre>
-
-<p>   </array>
-</dict>
-</plist></p>
-
-<p>EOF</p>
-
-<p>```</p>
-
-<h3>定时运行</h3>
-
-<p>这一点非常简单，使用crontab -e命令即可。大家可以随意google一下crontab命令，可以找到很多相关文档。假如我们要每周1-5的早上9点钟执行daily build，则crontab的配置如下：</p>
-
-<p><code>
-0 9 * * * 1-5 /Users/tangqiao/dailybuild.sh &gt;&gt; /Users/tangqiao/dailybuild.log 2&gt;&amp;1
-</code></p>
-
-<h3>失败报警</h3>
-
-<p>在daily build脚本运行失败时，最好能发报警邮件或者短信，以便能够尽早发现。发邮件可以用python的smtplib来写，示例如下：</p>
-
-<p>``` python
-import smtplib</p>
-
-<p>sender = 'sender@devtang.com'
-receivers = ['receiver@devtang.com']</p>
-
-<p>message = """From: Alert <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#115;&#101;&#110;&#100;&#101;&#114;&#x40;&#x64;&#x65;&#x76;&#x74;&#x61;&#110;&#x67;&#46;&#x63;&#x6f;&#x6d;">&#115;&#x65;&#x6e;&#100;&#x65;&#x72;&#64;&#x64;&#x65;&#118;&#116;&#x61;&#110;&#103;&#x2e;&#99;&#111;&#x6d;</a>
-To: Some one <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#x72;&#101;&#x63;&#101;&#x69;&#118;&#x65;&#114;&#x40;&#x64;&#x65;&#x76;&#116;&#x61;&#110;&#103;&#x2e;&#x63;&#x6f;&#109;">&#114;&#x65;&#99;&#x65;&#105;&#118;&#x65;&#114;&#x40;&#100;&#101;&#118;&#116;&#x61;&#x6e;&#x67;&#46;&#99;&#x6f;&#x6d;</a>
-Subject: SMTP email sample</p>
-
-<p>Hope you can get it.
-"""</p>
-
-<p>try:</p>
-
-<pre><code>obj = smtplib.SMTP('server.mail.devtang.com')
-obj.sendmail(sender, receivers, message)
-print 'OK: send mail succeed'
-</code></pre>
-
-<p>except Exception:</p>
-
-<pre><code>print 'Error: unable to send mail'
-</code></pre>
-
-<p>```</p>
-
-<h3>上传</h3>
-
-<p>daily build编译出来如果需要单独上传到另外一台web机器上，可以用ftp或者scp协议。如果web机器悲剧的是windows机器的话，可以在windows机器上开一个共享，然后用 mount -t smbfs来将这个共享mount到本地，相关的示例代码如下：
-``` bash
-mkdir upload
-mount -t smbfs //$SMB_USERNAME:$SMB_PASSWORD@$SMB_TARGET ./upload
-if [ "$?" -ne 0 ]; then</p>
-
-<pre><code>echo "Failed to mount smb directory"
-exit 1
-</code></pre>
-
-<p>fi
-mkdir ./upload/$FOLDER
-cp $FILE_NAME ./upload/$FOLDER/
-if [ "$?" -eq 0 ]; then</p>
-
-<pre><code>echo "[OK] $FILE_NAME is uploaded to $SMB_TARGET" 
-</code></pre>
-
-<p>else</p>
-
-<pre><code>echo "[ERROR] $FILE_NAME is FAILED to  uploaded to $SMB_TARGET" 
-</code></pre>
-
-<p>fi
-umount ./upload
-```</p>
-
-<h2>遇到的问题</h2>
-
-<p>本来我写的自动化脚本在Mac OS X 10.6下运行得很好。但是升级到lion后，脚本在手动执行时很正常，但是在用crontab启动时就会出现找不到开发者证书的错误。在网上搜了很久也没有找到解决办法。最后我试了一下在“钥匙串访问”中把开发者证书从“登录”那栏拖动到“系统”那栏，居然就解决了，如下图所示：</p>
-
-<p><img src="/images/dailybuild_issue.jpg"></p>
-
-<p>另外我搜到2个类似的问题的解决方案，虽然对我这个没起作用，也一并放在这儿，或许对遇到类似问题的人有帮助：</p>
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/7635143/cannot-build-xcode-project-from-command-line-but-can-from-xcode">http://stackoverflow.com/questions/7635143/cannot-build-xcode-project-from-command-line-but-can-from-xcode</a></li>
-<li><a href="http://shappy1978.iteye.com/blog/765842">http://shappy1978.iteye.com/blog/765842</a></li>
-</ul>
-
-
-<h2>总结</h2>
-
-<p>将以上各点结合起来，就可以用bash写出一个daily build脚本了。每天这一切都会自动完成，心情相当好。</p>
 ]]></content>
   </entry>
   

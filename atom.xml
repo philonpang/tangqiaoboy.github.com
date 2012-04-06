@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-03-25T11:48:46+08:00</updated>
+  <updated>2012-04-06T18:23:49+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[关于iOS测试机个数上限的详细规则]]></title>
+    <link href="http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit/"/>
+    <updated>2012-04-06T16:50:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>因为公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
+
+<!-- more -->
+
+
+<h2>规则</h2>
+
+<p>我总结出来的规则如下（附上原文以便对应）：</p>
+
+<ul>
+<li>每一个开发者membership year,只能有100次增加设备的名额。如果你增加一个设备,之后又将该设备删除,并不会将用掉的名额恢复.</li>
+</ul>
+
+
+<p>You can register up to 100 devices per year for development purposes. Any devices added, then later removed, still count towards your maximum number of registered devices per year.</p>
+
+<ul>
+<li>在每一个开发者membership year开始的时候,Team Agent和Admin角色可以选择删掉一些设备来恢复资格, 也可以清空所有设备来恢复到最多100次设备的名额。这个操作在Team Agent和Admin在一次新的membership year开始后即可使用，在使用时，需要注意，先将需要删除的设备删掉，然后才能添加需要新增的设备。一旦开始增加新设备，删除设备以恢复名额的功能将不再可用。</li>
+</ul>
+
+
+<p>At the start of a new membership year, Team Agents and Admins can remove devices and restore the available device count for their development team to 100 devices.</p>
+
+<p>When Team Agents or Admins first sign in to the iOS Provisioning Portal at the start of a new membership year, they will be presented with the option to remove devices and restore the device count for those removed devices.</p>
+
+<p>Important Note: At the start of your membership year, make sure to remove all devices you no longer use for development prior to adding any new devices.</p>
+
+<ul>
+<li>在以后整个membership year中，删除设备不会增加新的名额。</li>
+</ul>
+
+
+<p>Removing devices during your membership year will not open these slots to add new devices.</p>
+
+<h2>举例</h2>
+
+<p>直接看规则比较晦涩，举个例子：</p>
+
+<p>假如第一年，你增加了70个设备，同时删除了10个设备，这个时候，虽然你的设备数是60，但是可用的增加测试机的名额却只有30个了。</p>
+
+<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 - 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
+
+<h2>总结</h2>
+
+<p>所以说，不管怎么样，你的账号下的可用测试设备始终不会超过100个。不会象有些人想的那样，每过一年名额就直接变成100了。另外，每年删除设备以恢复名额的机会只有开始的时候，以后删除设备也不会恢复名额。</p>
+
+<p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[关于UIWebView和PhoneGap的总结]]></title>
@@ -2466,74 +2523,6 @@ gc的分享也让我好好学习了一下java的内存回收技术。后来面�
 
 <p><a href="http://stackoverflow.com/questions/1054558/how-do-i-vertically-align-text-within-a-uilabel">http://stackoverflow.com/questions/1054558/how-do-i-vertically-align-text-within-a-uilabel</a> <br/>
 <a href="https://discussions.apple.com/thread/1759957?threadID=1759957">https://discussions.apple.com/thread/1759957?threadID=1759957</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用RBTool自动提交code review请求]]></title>
-    <link href="http://blog.devtang.com/blog/2011/08/25/use-rbtool-to-post-review-request/"/>
-    <updated>2011-08-25T18:13:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2011/08/25/use-rbtool-to-post-review-request</id>
-    <content type="html"><![CDATA[<h3>前言</h3>
-
-<p>让我们回想一下手工提交review请求的过程:</p>
-
-<ol>
-<li>首先得用 svn diff > filename.diff 生成diff文件。</li>
-<li>然后输入review board的网址，可能是 rb.companyname.com</li>
-<li>然后需要输入你的账号密码进行登录验证。</li>
-<li>然后你需要填写你的svn repository 地址，然后上传diff文件。</li>
-<li>然后你进到review请求的详细页面，填写summary, description, test-done, group和people项，而通常情况下，你的group是固定的，review你的people也就是那么几个人来回变。</li>
-<li>最后你填完这些内容，点击 publish 来发布你的review请求。</li>
-</ol>
-
-
-<!--more-->
-
-
-<h3>RBTool安装和配置</h3>
-
-<p>是不是觉得很烦索？其实review board官网提供了一个RBTool，
-可以帮你把这些步骤全部省掉，一切只需要在命令行敲一条 post-review指令即可。
-很心动吧？让我们来看看如何安装RBTool。</p>
-
-<p>首先需要你的电脑里安装了git, python, Mac同学表示这些东西都安全装预好了，如果是老版本的mac，也可以自行下载安装。Git的windows/mac/linux版本下载地址是：<a href="http://git-scm.com/">http://git-scm.com/</a> 。</p>
-
-<p>下载安装完git后，输入</p>
-
-<pre>
-git clone git://github.com/reviewboard/rbtools.git 
-cd rbtools
-sudo python setup.py install 
-</pre>
-
-
-<p>OK，post-review已经安装好了。</p>
-
-<p>然后你需要小小配置一下，在自己svn项目的根目录下，建立：.reviewboardrc 文件。在文件中输入：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>REVIEWBOARD_URL = "http://rb.yourcompany.com"
-</span><span class='line'>REPOSITORY = "https://dev.yourcompany.com/svn/xxxx"</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这2行分别代表你们公司的review board网址和svn根目录地址。</p>
-
-<h3>RBTool的使用</h3>
-
-<p>OK，以后你要提交review请求，只需要在项目根目录下输入 post-review 即可。第一次需要输入登陆review board的用户名密码，post-review工具会记住密码，以后就不用输入了。post-review默认会将你当前svn目录下的diff修改提交到review board上。你也可以加上一些指定的参数来指定group, people, description等等。比如我就写了一个小脚本，将post-review改成：</p>
-
-<pre>
-post-review --target-groups=mygroup --target-people=friendname1,friendname2
-</pre>
-
-
-<p>post-review还可以更新以前提交的diff,方法是用 -r 指定review number即可。具体的可以用post-review &#8211;help来查看详细信息。也可以去review board官网查看详细的说明：<a href="http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools">http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools</a></p>
-
-<p>如果是用git svn管理的项目，另外加上参数：&#8211;parent git-svn 即可。</p>
-
-<p>赶快用RBTool工具提高你的工作效率吧～</p>
 ]]></content>
   </entry>
   

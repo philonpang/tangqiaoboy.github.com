@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>使用Objective-C的文档生成工具:appledoc - 唐巧的技术博客</title>
+  <title>关于iOS测试机个数上限的详细规则 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。 从stackoverflow &hellip;">
+  <meta name="description" content="前言 因为公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 苹果的官网文档。 规则 我总结出来的规则如下（附上原文以便对应 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,7 +76,7 @@
   
   <header>
     
-      <h1 class="entry-title">使用Objective-C的文档生成工具:appledoc</h1>
+      <h1 class="entry-title">关于iOS测试机个数上限的详细规则</h1>
     
     
       <p class="meta">
@@ -92,7 +92,7 @@
   
 
 
-<time datetime="2012-02-01T20:37:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2012</time>
+<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
         
       </p>
     
@@ -101,68 +101,53 @@
 
 <div class="entry-content"><h2>前言</h2>
 
-<p>做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。</p>
+<p>因为公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
 
 <!-- more -->
 
 
-<p>从<a href="http://stackoverflow.com/questions/813529/documentation-generator-for-objective-c">stackoverflow</a> 上找到三个比较popular的工具：doxygen, headdoc和appledoc 。它们分别的官方网址如下：</p>
+<h2>规则</h2>
+
+<p>我总结出来的规则如下（附上原文以便对应）：</p>
 
 <ul>
-<li>docxygen <a href="http://www.stack.nl/~dimitri/doxygen/index.html">http://www.stack.nl/~dimitri/doxygen/index.html</a></li>
-<li>headdoc <a href="http://developer.apple.com/opensource/tools/headerdoc.html">http://developer.apple.com/opensource/tools/headerdoc.html</a></li>
-<li>appledoc <a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></li>
+<li>每一个开发者membership year,只能有100次增加设备的名额。如果你增加一个设备,之后又将该设备删除,并不会将用掉的名额恢复.</li>
 </ul>
 
 
-<h2>介绍</h2>
+<p>You can register up to 100 devices per year for development purposes. Any devices added, then later removed, still count towards your maximum number of registered devices per year.</p>
 
-<p>我把这3个工具都大概调研了一下，说一下我的感受。</p>
-
-<h3>docxygen</h3>
-
-<p>docxygen感觉是这3个工具中支持语言最多的，可以配置的地方也比较多。我大概看了一下文档，觉得还是比较复杂，而且默认生成的风格与苹果的风格不一致。就去看后面2个工具的介绍了。另外，它虽然是开源软件，但是没有将源码放到github上让我感觉这个工具的开发活跃度是不是不够。</p>
-
-<h3>headerdoc</h3>
-
-<p>headerdoc是xcode 自带的文档生成工具。在安装完xcode后，就可以用命令行：headdoc2html + 源文件名 来生成对应的文档。我个人试用了一下，还是比较方便的，不过headerdoc的注释生成规则比较特别，只生成以 /*! */ 的格式的注释。还有一个缺点是每个类文件对应一个注释文件，没有汇总的文件，这点感觉有点不爽。</p>
-
-<h3>appledoc</h3>
-
-<p>appledoc是在stackoverflow上被大家推荐的一个注释工具。有几个原因造成我比较喜欢它：</p>
-
-<ol>
-<li>它默认生成的文档风格和苹果的官方文档是一致的，而doxygen需要另外配置。</li>
-<li>appledoc就是用objective-c生成的，必要的时候调试和改动也比较方便。</li>
-<li>可以生成docset，并且集成到xcode中。这一点是很赞的，相当于在源码中按住option再单击就可以调出相应方法的帮助。</li>
-<li>appledoc源码在github上，而doxygen在svn上。我个人比较偏激地认为比较活跃的开源项目都应该在github上。</li>
-<li>相对于headerdoc，它没有特殊的注释要求，可以用/** */ 的格式，也可以兼容/*! */的格式的注释，并且生成的注释有汇总页面。</li>
-</ol>
+<ul>
+<li>在每一个开发者membership year开始的时候,Team Agent和Admin角色可以选择删掉一些设备来恢复资格, 也可以清空所有设备来恢复到最多100次设备的名额。这个操作在Team Agent和Admin在一次新的membership year开始后即可使用，在使用时，需要注意，先将需要删除的设备删掉，然后才能添加需要新增的设备。一旦开始增加新设备，删除设备以恢复名额的功能将不再可用。</li>
+</ul>
 
 
-<h2>安装</h2>
+<p>At the start of a new membership year, Team Agents and Admins can remove devices and restore the available device count for their development team to 100 devices.</p>
 
-<p>那么简单介绍一下如何安装appledoc，安装非常简单，只需要2步：</p>
+<p>When Team Agents or Admins first sign in to the iOS Provisioning Portal at the start of a new membership year, they will be presented with the option to remove devices and restore the device count for those removed devices.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> git clone git://github.com/tomaz/appledoc.git
-</span><span class='line'> cd appledoc
-</span><span class='line'> sudo sh install-appledoc.sh</span></code></pre></td></tr></table></div></figure>
+<p>Important Note: At the start of your membership year, make sure to remove all devices you no longer use for development prior to adding any new devices.</p>
 
-
-<h2>使用</h2>
-
-<p>使用appledoc时，只需要用如下命令即可：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>appledoc -o ./doc --project-name ynote --project-company youdao .</span></code></pre></td></tr></table></div></figure>
+<ul>
+<li>在以后整个membership year中，删除设备不会增加新的名额。</li>
+</ul>
 
 
-<p>appledoc会扫描当前路径下的所有文件，然后生成好文档放到doc目录下。你也可以用appledoc &#8211;help查看所有可用的参数。</p>
+<p>Removing devices during your membership year will not open these slots to add new devices.</p>
 
-<p>基本上使用起来还是比较方便的，详细的信息可以查看官方的文档：<a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></p>
+<h2>举例</h2>
+
+<p>直接看规则比较晦涩，举个例子：</p>
+
+<p>假如第一年，你增加了70个设备，同时删除了10个设备，这个时候，虽然你的设备数是60，但是可用的增加测试机的名额却只有30个了。</p>
+
+<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 - 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
+
+<h2>总结</h2>
+
+<p>所以说，不管怎么样，你的账号下的可用测试设备始终不会超过100个。不会象有些人想的那样，每过一年名额就直接变成100了。另外，每年删除设备以恢复名额的机会只有开始的时候，以后删除设备也不会恢复名额。</p>
+
+<p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。</p>
 </div>
 
 
@@ -185,12 +170,12 @@
   
 
 
-<time datetime="2012-02-01T20:37:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2012</time>
+<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/xcode/'>xcode</a>
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
   
 </span>
 
@@ -241,10 +226,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/01/23/use-javascript-to-import-pictures/" title="Previous Post: 用javascript协助导入图片">&laquo; 用javascript协助导入图片</a>
+        <a class="basic-alignment left" href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/" title="Previous Post: 关于UIWebView和PhoneGap的总结">&laquo; 关于UIWebView和PhoneGap的总结</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/02/03/talk-about-svn-and-git/" title="next Post: SVN和Git的使用感受">SVN和Git的使用感受 &raquo;</a>
       
     </p>
   </footer>

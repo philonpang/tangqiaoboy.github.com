@@ -14,7 +14,17 @@ categories: iOS javascript
 <!-- more -->
 
 ## 机制
-iOS SDK并没有原生提供js调用native代码的API。但是UIWebView的一个delegate方法使我们可以做到让js需要调用时，通知native。在native执行完相应调用后，可以用stringByEvaluatingJavaScriptFromString方法，将执行结果返回给js。这样，就实现了js与native代码的相互调用。
+首先我们需要让UIWebView加载本地HTML。使用如下代码完成：
+
+``` objc
+    NSString * path = [[NSBundle mainBundle] bundlePath];
+    NSURL * baseURL = [NSURL fileURLWithPath:path];
+    NSString * htmlFile = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+    NSString * htmlString = [NSString stringWithContentsOfFile:htmlFile encoding:(NSUTF8StringEncoding) error:nil];
+    [self.webView loadHTMLString:htmlString baseURL:baseURL];
+```
+
+接着，我们需要让js能够调用native端。iOS SDK并没有原生提供js调用native代码的API。但是UIWebView的一个delegate方法使我们可以做到让js需要调用时，通知native。在native执行完相应调用后，可以用stringByEvaluatingJavaScriptFromString方法，将执行结果返回给js。这样，就实现了js与native代码的相互调用。
 
 以下是PhoneGap相关调用的示例代码：
 
@@ -61,6 +71,8 @@ function loadURL(url) {
 在这里，可能有些人说，通过改document.location也可以达到相同的效果。关于这个，我和zyc专门试过，一般情况下，改document.location是可以，但是改document.location有一个很严重的问题，就是如果我们连续2个js调native，连续2次改document.location的话，在native的delegate方法中，只能截获后面那次请求，前一次请求由于很快被替换掉，所以被忽略掉了。
 
 我也专门去Github上查找相关的开源代码，它们都是用过iframe来实现调用的，例如这个：<https://github.com/marcuswestin/WebViewJavascriptBridge>
+
+关于这个，我也做了一个Demo来简单示例，地址如下：<https://github.com/tangqiaoboy/UIWebViewSample>
 
 
 ## 参数的传递

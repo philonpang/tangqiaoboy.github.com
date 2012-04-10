@@ -110,7 +110,22 @@
 
 <h2>机制</h2>
 
-<p>iOS SDK并没有原生提供js调用native代码的API。但是UIWebView的一个delegate方法使我们可以做到让js需要调用时，通知native。在native执行完相应调用后，可以用stringByEvaluatingJavaScriptFromString方法，将执行结果返回给js。这样，就实现了js与native代码的相互调用。</p>
+<p>首先我们需要让UIWebView加载本地HTML。使用如下代码完成：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">path</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="n">bundlePath</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSURL</span> <span class="o">*</span> <span class="n">baseURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">fileURLWithPath:</span><span class="n">path</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">htmlFile</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource:</span><span class="s">@&quot;index&quot;</span> <span class="nl">ofType:</span><span class="s">@&quot;html&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">htmlString</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithContentsOfFile:</span><span class="n">htmlFile</span> <span class="nl">encoding:</span><span class="p">(</span><span class="n">NSUTF8StringEncoding</span><span class="p">)</span> <span class="nl">error:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">webView</span> <span class="nl">loadHTMLString:</span><span class="n">htmlString</span> <span class="nl">baseURL:</span><span class="n">baseURL</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>接着，我们需要让js能够调用native端。iOS SDK并没有原生提供js调用native代码的API。但是UIWebView的一个delegate方法使我们可以做到让js需要调用时，通知native。在native执行完相应调用后，可以用stringByEvaluatingJavaScriptFromString方法，将执行结果返回给js。这样，就实现了js与native代码的相互调用。</p>
 
 <p>以下是PhoneGap相关调用的示例代码：</p>
 
@@ -187,6 +202,8 @@
 <p>在这里，可能有些人说，通过改document.location也可以达到相同的效果。关于这个，我和zyc专门试过，一般情况下，改document.location是可以，但是改document.location有一个很严重的问题，就是如果我们连续2个js调native，连续2次改document.location的话，在native的delegate方法中，只能截获后面那次请求，前一次请求由于很快被替换掉，所以被忽略掉了。</p>
 
 <p>我也专门去Github上查找相关的开源代码，它们都是用过iframe来实现调用的，例如这个：<a href="https://github.com/marcuswestin/WebViewJavascriptBridge">https://github.com/marcuswestin/WebViewJavascriptBridge</a></p>
+
+<p>关于这个，我也做了一个Demo来简单示例，地址如下：<a href="https://github.com/tangqiaoboy/UIWebViewSample">https://github.com/tangqiaoboy/UIWebViewSample</a></p>
 
 <h2>参数的传递</h2>
 

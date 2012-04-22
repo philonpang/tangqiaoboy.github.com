@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-04-10T12:05:31+08:00</updated>
+  <updated>2012-04-22T17:31:14+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,216 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在iOS开发中使用FMDB]]></title>
+    <link href="http://blog.devtang.com/blog/2012/04/22/use-fmdb/"/>
+    <updated>2012-04-22T14:11:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/04/22/use-fmdb</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>SQLite (<a href="http://www.sqlite.org/docs.html">http://www.sqlite.org/docs.html</a>) 是一个轻量级的关系数据库。iOS SDK很早就支持了SQLite，在使用时，只需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。但是，原生的SQLite API在使用上相当不友好，在使用时，非常不便。于是，开源社区中就出现了一系列将SQLite API进行封装的库，而FMDB (<a href="https://github.com/ccgus/fmdb">https://github.com/ccgus/fmdb</a>) 则是开源社区中的优秀者。</p>
+
+<!-- more -->
+
+
+<p>FMDB在使用上相当方便。以下是一个简单的例子：</p>
+
+<p>``` objc
+NSString<em> docsdir = [NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES) lastObject];NSString</em> dbpath = [docsdir stringByAppendingPathComponent:@"user.sqlite"];
+FMDatabase<em> db = [FMDatabase databaseWithPath:dbpath];[db open];FMResultSet </em>rs = [db executeQuery:@"select * from people"];
+while ([rs next]) {    NSLog(@"%@ %@",        [rs stringForColumn:@"firstname"],</p>
+
+<pre><code>    [rs stringForColumn:@"lastname"]);}[db close];
+</code></pre>
+
+<p>```</p>
+
+<p>可以看到，使用FMDB后的数据库代码清晰明了，比原生的API优雅多了。另外，FMDB同时兼容ARC和非ARC工程，会自动根据工程配置来调整相关的内存管理代码。</p>
+
+<h2>使用说明</h2>
+
+<p>该使用说明主要翻译自fmdb的github项目说明文档: <a href="https://github.com/ccgus/fmdb">https://github.com/ccgus/fmdb</a></p>
+
+<h3>引入相关文件</h3>
+
+<p>首先将FMDB从github上clone下来，然后将以下文件copy到你的工程中：</p>
+
+<p><code>
+FMDatabase.h
+FMDatabase.m
+FMDatabaseAdditions.h
+FMDatabaseAdditions.m
+FMDatabasePool.h
+FMDatabasePool.m
+FMDatabaseQueue.h
+FMDatabaseQueue.m
+FMResultSet.h
+FMResultSet.m
+</code></p>
+
+<h3>建立数据库</h3>
+
+<p>建立数据库只需要如下一行即可,当该文件不存在时，fmdb会自己创建一个。如果你传入的参数是空串：@"" ，则fmdb会在临时文件目录下创建这个数据库，如果你传入的参数是 NULL，则它会建立一个在内存中的数据库。</p>
+
+<p><code>objc
+FMDatabase *db = [FMDatabase databaseWithPath:@"/tmp/tmp.db"];
+</code></p>
+
+<h3>打开数据库</h3>
+
+<p>使用如下语句，如果打开失败，可能是权限不足或者资源不足。通常打开完操作操作后，需要调用close方法来关闭数据库。</p>
+
+<p>``` objc
+if (![db open]) {</p>
+
+<pre><code>// error 
+return;
+</code></pre>
+
+<p>}
+// some operation
+// ...</p>
+
+<p>[db close];
+```</p>
+
+<h3>执行更新操作</h3>
+
+<p>除了Select操作之外，其它的都是更新操作。更新操作使用如下方法，如果有错误，可以用error参数中获得。</p>
+
+<p><code>objc
+-[FMDatabase executeUpdate:error:withArgumentsInArray:orVAList:]
+</code></p>
+
+<h3>执行查询操作</h3>
+
+<p>查询操作示例如下。注意：即使操作结果只有一行，也需要先调用FMResultSet的next方法。</p>
+
+<p>``` objc
+FMResultSet *s = [db executeQuery:@"SELECT * FROM myTable"];
+while ([s next]) {</p>
+
+<pre><code>//retrieve values for each record
+</code></pre>
+
+<p>}</p>
+
+<p>FMResultSet <em>s = [db executeQuery:@"SELECT COUNT(</em>) FROM myTable"];
+if ([s next]) {</p>
+
+<pre><code>int totalCount = [s intForColumnIndex:0];
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<p>FMDB提供如下多个方法来获取不同类型的数据：</p>
+
+<p><code>objc
+intForColumn:
+longForColumn:
+longLongIntForColumn:
+boolForColumn:
+doubleForColumn:
+stringForColumn:
+dateForColumn:
+dataForColumn:
+dataNoCopyForColumn:
+UTF8StringForColumnIndex:
+objectForColumn:
+</code></p>
+
+<p>通常情况下，你并不需要关闭FMResultSet，因为相关的数据库关闭时，FMResultSet也会被自动关闭。</p>
+
+<h3>数据参数</h3>
+
+<p>通常情况下，你可以按照标准的SQL语句，用?表示执行语句的参数，如：</p>
+
+<p><code>
+INSERT INTO myTable VALUES (?, ?, ?)
+</code></p>
+
+<p>然后，可以我们可以调用executeUpdate方法来将?所指代的具体参数传入，通常是用变长参数来传递进去的，如下：</p>
+
+<p><code>
+NSString *sql = @"insert into User (name, password) values (?, ?)";
+[db executeUpdate:sql, user.name, user.password];
+</code></p>
+
+<p>这里需要注意的是，参数必须是NSObject的子类，所以象int,double,bool这种基本类型，需要封装成对应的包装类才行，如下所示：</p>
+
+<p><code>
+// 错误，42不能作为参数
+[db executeUpdate:@"INSERT INTO myTable VALUES (?)", 42];
+// 正确，将42封装成 NSNumber 类
+[db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:42]];
+</code></p>
+
+<h3>线程安全</h3>
+
+<p>如果我们的app需要多线程操作数据库，那么就需要使用FMDatabaseQueue来保证线程安全了。
+切记不能在多个线程中共同一个FMDatabase对象并且在多个线程中同时使用，这个类本身不是线程安全的，这样使用会造成数据混乱等问题。</p>
+
+<p>使用FMDatabaseQueue很简单，首先用一个数据库文件地址来初使化FMDatabaseQueue，然后就可以将一个闭包(block)传入inDatabase方法中。
+在闭包中操作数据库，而不直接参与FMDatabase的管理。</p>
+
+<p>``` objc
+// 创建，最好放在一个单例的类中
+FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];</p>
+
+<p>// 使用
+[queue inDatabase:<sup>(FMDatabase</sup> *db) {</p>
+
+<pre><code>[db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:1]];
+[db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:2]];
+[db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:3]];
+
+FMResultSet *rs = [db executeQuery:@"select * from foo"];
+while ([rs next]) {
+    // …
+}
+</code></pre>
+
+<p>}];</p>
+
+<p>// 如果要支持事务
+[queue inTransaction:<sup>(FMDatabase</sup> <em>db, BOOL </em>rollback) {</p>
+
+<pre><code>[db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:1]];
+[db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:2]];
+[db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:3]];
+
+if (whoopsSomethingWrongHappened) {
+    *rollback = YES;
+    return;
+}
+// etc…
+[db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:4]];
+</code></pre>
+
+<p>}];</p>
+
+<p>```</p>
+
+<h2>工具</h2>
+
+<p>为了查看Sqlite中的数据，一个好的图形化界面的数据库管理程序是必不可少的。mysql有phpMyAdmin，那么sqlite呢？</p>
+
+<p>我主要使用的是Firefox的一个名为SQLite Manager的插件，安装此插件后，可以直接打开后缀名为sqlite的数据库文件。SQLite Manager提供一个图形化的界面来执行数据查询或更改操作。如下图所示：</p>
+
+<p><img src="/images/sqlite_manager.jpg"></p>
+
+<h2>总结</h2>
+
+<p>FMDB将SQLite API进行了很友好的封装，使用上非常方便，对于那些使用纯Sqlite API来进行数据库操作的app，可以考虑将其迁移到基于FMDB上，这对于以后数据库相关功能的开发维护，可以提高不少效率。</p>
+
+<p>我在学习fmdb的时候做了一个小工程用于练习，我把它放到github上了。感兴趣的可以自行下载：<a href="https://github.com/tangqiaoboy/FmdbSample">https://github.com/tangqiaoboy/FmdbSample</a></p>
+
+<p>祝大家玩得开心。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[关于iOS测试机个数上限的详细规则]]></title>
@@ -517,196 +727,6 @@ cmd + shift + [      在tab栏之间切换
 <p>用开发者账号登陆：<a href="https://developer.apple.com/downloads/index.action">https://developer.apple.com/downloads/index.action</a>，然后点击下载获得下载地址，然后将地址复制到mac版迅雷中，用迅雷下载，速度可以达到200K左右。</p>
 
 <p>希望这些技巧能提高你的工作效率，祝玩得开心:)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用GCD]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/22/use-gcd/"/>
-    <updated>2012-02-22T20:44:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/22/use-gcd</id>
-    <content type="html"><![CDATA[<h2>什么是GCD</h2>
-
-<p>Grand Central Dispatch (GCD)是Apple开发的一个多核编程的解决方法。该方法在Mac OS X 10.6雪豹中首次推出，并随后被引入到了iOS4.0中。GCD是一个替代诸如NSThread, NSOperationQueue, NSInvocationOperation等技术的很高效和强大的技术，它看起来象就其它语言的闭包(Closure)一样，但苹果把它叫做blocks。</p>
-
-<!--More-->
-
-
-<h2>应用举例</h2>
-
-<p>让我们来看一个编程场景。我们要在iphone上做一个下载网页的功能，该功能非常简单，就是在iphone上放置一个按钮，点击该按钮时，显示一个转动的圆圈，表示正在进行下载，下载完成之后，将内容加载到界面上的一个文本控件中。</p>
-
-<h3>不用GCD前</h3>
-
-<p>虽然功能简单，但是我们必须把下载过程放到后台线程中，否则会阻塞UI线程显示。所以，如果不用GCD, 我们需要写如下3个方法：</p>
-
-<ul>
-<li>someClick 方法是点击按钮后的代码，可以看到我们用NSInvocationOperation建了一个后台线程，并且放到NSOperationQueue中。后台线程执行download方法。</li>
-<li>download 方法处理下载网页的逻辑。下载完成后用performSelectorOnMainThread执行download_completed 方法。</li>
-<li>download_completed 进行clear up的工作，并把下载的内容显示到文本控件中。</li>
-</ul>
-
-
-<p>这3个方法的代码如下。可以看到，虽然 开始下载 -> 下载中 -> 下载完成 这3个步骤是整个功能的三步。但是它们却被切分成了3块。他们之间因为是3个方法，所以还需要传递数据参数。如果是复杂的应用，数据参数很可能就不象本例子中的NSString那么简单了，另外，下载可能放到Model的类中来做，而界面的控制放到View Controller层来做，这使得本来就分开的代码变得更加散落。代码的可读性大大降低。</p>
-
-<p>``` objc
-static NSOperationQueue * queue;</p>
-
-<ul>
-<li><p>(IBAction)someClick:(id)sender {
-  self.indicator.hidden = NO;
-  [self.indicator startAnimating];
-  queue = [[NSOperationQueue alloc] init];
-  NSInvocationOperation * op = [[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(download) object:nil] autorelease];
-  [queue addOperation:op];
-}</p></li>
-<li><p>(void)download {
-  NSURL * url = [NSURL URLWithString:@"http://www.youdao.com"];
-  NSError * error;
-  NSString * data = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&amp;error];
-  if (data != nil) {</p>
-
-<pre><code>  [self performSelectorOnMainThread:@selector(download_completed:) withObject:data waitUntilDone:NO];
-</code></pre>
-
-  } else {
-
-<pre><code>  NSLog(@"error when download:%@", error);
-  [queue release];
-</code></pre>
-
-<p>  }
-}</p></li>
-<li><p>(void) download_completed:(NSString *) data {
-  NSLog(@"call back");
-  [self.indicator stopAnimating];
-  self.indicator.hidden = YES;
-  self.content.text = data;
-  [queue release];
-}
-```</p></li>
-</ul>
-
-
-<h3>使用GCD后</h3>
-
-<p>如果使用GCD，以上3个方法都可以放到一起，如下所示：</p>
-
-<p>``` objc</p>
-
-<pre><code>// 原代码块一
-self.indicator.hidden = NO;
-[self.indicator startAnimating];
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    // 原代码块二
-    NSURL * url = [NSURL URLWithString:@"http://www.youdao.com"];
-    NSError * error;
-    NSString * data = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&amp;error];
-    if (data != nil) {
-        // 原代码块三
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.indicator stopAnimating];
-            self.indicator.hidden = YES;
-            self.content.text = data;
-        });
-    } else {
-        NSLog(@"error when download:%@", error);
-    }
-});
-</code></pre>
-
-<p>```</p>
-
-<p>首先我们可以看到，代码变短了。因为少了原来3个方法的定义，也少了相互之间需要传递的变量的封装。</p>
-
-<p>另外，代码变清楚了，虽然是异步的代码，但是它们被GCD合理的整合在一起，逻辑非常清晰。如果应用上MVC模式，我们也可以将View Controller层的回调函数用GCD的方式传递给Modal层，这相比以前用@selector的方式，代码的逻辑关系会更加清楚。</p>
-
-<h2>GCD的定义</h2>
-
-<p>简单GCD的定义有点象函数指针，差别是用 ^ 替代了函数指针的 * 号，如下所示：</p>
-
-<p>``` objc</p>
-
-<pre><code> // 申明变量
- (void) (^loggerBlock)(void);
- // 定义
-</code></pre>
-
-<p> loggerBlock = ^{</p>
-
-<pre><code>      NSLog(@"Hello world");
- };
- // 调用
- loggerBlock();
-</code></pre>
-
-<p>```</p>
-
-<p>但是大多数时候，我们通常使用内联的方式来定义它，即将它的程序块写在调用的函数里面，例如这样：</p>
-
-<p>``` objc</p>
-
-<pre><code> dispatch_async(dispatch_get_global_queue(0, 0), ^{
-      // something
- });
-</code></pre>
-
-<p>```</p>
-
-<h2>系统提供的dispatch方法</h2>
-
-<p>为了方便地使用GCD，苹果提供了一些方法方便我们将block放在主线程 或 后台线程执行，或者延后执行。使用的例子如下：</p>
-
-<p>``` objc</p>
-
-<pre><code> //  后台执行：
- dispatch_async(dispatch_get_global_queue(0, 0), ^{
-      // something
- });
- // 主线程执行：
- dispatch_async(dispatch_get_main_queue(), ^{
-      // something
- });
- // 一次性执行：
- static dispatch_once_t onceToken;
- dispatch_once(&amp;onceToken, ^{
-     // code to be executed once
- });
- // 延迟2秒执行：
- double delayInSeconds = 2.0;
- dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
- dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-     // code to be executed on the main queue after delay
- });
-</code></pre>
-
-<p>```</p>
-
-<p>另外，GCD还有一些高级用法，例如让后台2个线程并行执行，然后等2个线程都结束后，再汇总执行结果。这个可以用dispatch_group, dispatch_group_async 和 dispatch_group_notify来实现，示例如下：</p>
-
-<p>``` objc</p>
-
-<pre><code> dispatch_group_t group = dispatch_group_create();
- dispatch_group_async(group, dispatch_get_global_queue(0,0), ^{
-      // 并行执行的线程一
- });
- dispatch_group_async(group, dispatch_get_global_queue(0,0), ^{
-      // 并行执行的线程二
- });
- dispatch_group_notify(group, dispatch_get_global_queue(0,0), ^{
-      // 汇总结果
- });
-</code></pre>
-
-<p>```</p>
-
-<h2>后台运行</h2>
-
-<p>GCD的另一个用处是可以让程序在后台较长久的运行。在没有使用GCD时，当app被按home键退出后，app仅有最多5秒钟的时候做一些保存或清理资源的工作。但是在使用GCD后，app最多有10分钟的时间在后台长久运行。这个时间可以用来做清理本地缓存，发送统计数据等工作。</p>
-
-<h2>总结</h2>
-
-<p>总体来说，GCD能够极大地方便开发者进行多线程编程。如果你的app不需要支持iOS4.0以下的系统，那么就应该尽量使用GCD来处理后台线程和UI线程的交互。</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-04-10T12:05:31+08:00</updated>
+  <updated>2012-04-22T17:31:14+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,289 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在iOS开发中使用FMDB]]></title>
+    <link href="http://blog.devtang.com/blog/2012/04/22/use-fmdb/"/>
+    <updated>2012-04-22T14:11:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/04/22/use-fmdb</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>SQLite (<a href="http://www.sqlite.org/docs.html">http://www.sqlite.org/docs.html</a>) 是一个轻量级的关系数据库。iOS SDK很早就支持了SQLite，在使用时，只需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。但是，原生的SQLite API在使用上相当不友好，在使用时，非常不便。于是，开源社区中就出现了一系列将SQLite API进行封装的库，而FMDB (<a href="https://github.com/ccgus/fmdb">https://github.com/ccgus/fmdb</a>) 则是开源社区中的优秀者。</p>
+
+<!-- more -->
+
+
+<p>FMDB在使用上相当方便。以下是一个简单的例子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span><span class="o">*</span> <span class="n">docsdir</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSSearchPathForDirectoriesInDomains</span><span class="p">(</span> <span class="n">NSDocumentDirectory</span><span class="p">,</span> <span class="n">NSUserDomainMask</span><span class="p">,</span> <span class="n">YES</span><span class="p">)</span> <span class="n">lastObject</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSString</span><span class="o">*</span> <span class="n">dbpath</span> <span class="o">=</span> <span class="p">[</span><span class="n">docsdir</span> <span class="nl">stringByAppendingPathComponent:</span><span class="s">@&quot;user.sqlite&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="n">FMDatabase</span><span class="o">*</span> <span class="n">db</span> <span class="o">=</span> <span class="p">[</span><span class="n">FMDatabase</span> <span class="nl">databaseWithPath:</span><span class="n">dbpath</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">db</span> <span class="n">open</span><span class="p">];</span>
+</span><span class='line'><span class="n">FMResultSet</span> <span class="o">*</span><span class="n">rs</span> <span class="o">=</span> <span class="p">[</span><span class="n">db</span> <span class="nl">executeQuery:</span><span class="s">@&quot;select * from people&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="k">while</span> <span class="p">([</span><span class="n">rs</span> <span class="n">next</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@ %@&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">rs</span> <span class="nl">stringForColumn:</span><span class="s">@&quot;firstname&quot;</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">rs</span> <span class="nl">stringForColumn:</span><span class="s">@&quot;lastname&quot;</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">[</span><span class="n">db</span> <span class="n">close</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到，使用FMDB后的数据库代码清晰明了，比原生的API优雅多了。另外，FMDB同时兼容ARC和非ARC工程，会自动根据工程配置来调整相关的内存管理代码。</p>
+
+<h2>使用说明</h2>
+
+<p>该使用说明主要翻译自fmdb的github项目说明文档: <a href="https://github.com/ccgus/fmdb">https://github.com/ccgus/fmdb</a></p>
+
+<h3>引入相关文件</h3>
+
+<p>首先将FMDB从github上clone下来，然后将以下文件copy到你的工程中：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">FMDatabase</span><span class="p">.</span><span class="n">h</span>
+</span><span class='line'><span class="n">FMDatabase</span><span class="p">.</span><span class="n">m</span>
+</span><span class='line'><span class="n">FMDatabaseAdditions</span><span class="p">.</span><span class="n">h</span>
+</span><span class='line'><span class="n">FMDatabaseAdditions</span><span class="p">.</span><span class="n">m</span>
+</span><span class='line'><span class="n">FMDatabasePool</span><span class="p">.</span><span class="n">h</span>
+</span><span class='line'><span class="n">FMDatabasePool</span><span class="p">.</span><span class="n">m</span>
+</span><span class='line'><span class="n">FMDatabaseQueue</span><span class="p">.</span><span class="n">h</span>
+</span><span class='line'><span class="n">FMDatabaseQueue</span><span class="p">.</span><span class="n">m</span>
+</span><span class='line'><span class="n">FMResultSet</span><span class="p">.</span><span class="n">h</span>
+</span><span class='line'><span class="n">FMResultSet</span><span class="p">.</span><span class="n">m</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>建立数据库</h3>
+
+<p>建立数据库只需要如下一行即可,当该文件不存在时，fmdb会自己创建一个。如果你传入的参数是空串：@&#8221;&#8221; ，则fmdb会在临时文件目录下创建这个数据库，如果你传入的参数是 NULL，则它会建立一个在内存中的数据库。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">FMDatabase</span> <span class="o">*</span><span class="n">db</span> <span class="o">=</span> <span class="p">[</span><span class="n">FMDatabase</span> <span class="nl">databaseWithPath:</span><span class="s">@&quot;/tmp/tmp.db&quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>打开数据库</h3>
+
+<p>使用如下语句，如果打开失败，可能是权限不足或者资源不足。通常打开完操作操作后，需要调用close方法来关闭数据库。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">db</span> <span class="n">open</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// error </span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="c1">// some operation</span>
+</span><span class='line'><span class="c1">// ...</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">db</span> <span class="n">close</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>执行更新操作</h3>
+
+<p>除了Select操作之外，其它的都是更新操作。更新操作使用如下方法，如果有错误，可以用error参数中获得。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span><span class="p">[</span><span class="n">FMDatabase</span> <span class="nl">executeUpdate:error:withArgumentsInArray:orVAList:</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>执行查询操作</h3>
+
+<p>查询操作示例如下。注意：即使操作结果只有一行，也需要先调用FMResultSet的next方法。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">FMResultSet</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="n">db</span> <span class="nl">executeQuery:</span><span class="s">@&quot;SELECT * FROM myTable&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="k">while</span> <span class="p">([</span><span class="n">s</span> <span class="n">next</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">//retrieve values for each record</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">FMResultSet</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="n">db</span> <span class="nl">executeQuery:</span><span class="s">@&quot;SELECT COUNT(*) FROM myTable&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="k">if</span> <span class="p">([</span><span class="n">s</span> <span class="n">next</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">totalCount</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="nl">intForColumnIndex:</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>FMDB提供如下多个方法来获取不同类型的数据：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nl">intForColumn:</span>
+</span><span class='line'><span class="nl">longForColumn:</span>
+</span><span class='line'><span class="nl">longLongIntForColumn:</span>
+</span><span class='line'><span class="nl">boolForColumn:</span>
+</span><span class='line'><span class="nl">doubleForColumn:</span>
+</span><span class='line'><span class="nl">stringForColumn:</span>
+</span><span class='line'><span class="nl">dateForColumn:</span>
+</span><span class='line'><span class="nl">dataForColumn:</span>
+</span><span class='line'><span class="nl">dataNoCopyForColumn:</span>
+</span><span class='line'><span class="nl">UTF8StringForColumnIndex:</span>
+</span><span class='line'><span class="nl">objectForColumn:</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通常情况下，你并不需要关闭FMResultSet，因为相关的数据库关闭时，FMResultSet也会被自动关闭。</p>
+
+<h3>数据参数</h3>
+
+<p>通常情况下，你可以按照标准的SQL语句，用?表示执行语句的参数，如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">myTable</span> <span class="n">VALUES</span> <span class="p">(</span><span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后，可以我们可以调用executeUpdate方法来将?所指代的具体参数传入，通常是用变长参数来传递进去的，如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">sql</span> <span class="o">=</span> <span class="s">@&quot;insert into User (name, password) values (?, ?)&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="n">sql</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">password</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里需要注意的是，参数必须是NSObject的子类，所以象int,double,bool这种基本类型，需要封装成对应的包装类才行，如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 错误，42不能作为参数</span>
+</span><span class='line'><span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="s">@&quot;INSERT INTO myTable VALUES (?)&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">];</span>
+</span><span class='line'><span class="c1">// 正确，将42封装成 NSNumber 类</span>
+</span><span class='line'><span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="s">@&quot;INSERT INTO myTable VALUES (?)&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">42</span><span class="p">]];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>线程安全</h3>
+
+<p>如果我们的app需要多线程操作数据库，那么就需要使用FMDatabaseQueue来保证线程安全了。
+切记不能在多个线程中共同一个FMDatabase对象并且在多个线程中同时使用，这个类本身不是线程安全的，这样使用会造成数据混乱等问题。</p>
+
+<p>使用FMDatabaseQueue很简单，首先用一个数据库文件地址来初使化FMDatabaseQueue，然后就可以将一个闭包(block)传入inDatabase方法中。
+在闭包中操作数据库，而不直接参与FMDatabase的管理。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 创建，最好放在一个单例的类中</span>
+</span><span class='line'><span class="n">FMDatabaseQueue</span> <span class="o">*</span><span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">FMDatabaseQueue</span> <span class="nl">databaseQueueWithPath:</span><span class="n">aPath</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 使用</span>
+</span><span class='line'><span class="p">[</span><span class="n">queue</span> <span class="nl">inDatabase:</span><span class="o">^</span><span class="p">(</span><span class="n">FMDatabase</span> <span class="o">*</span><span class="n">db</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="s">@&quot;INSERT INTO myTable VALUES (?)&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">1</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="s">@&quot;INSERT INTO myTable VALUES (?)&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">2</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="s">@&quot;INSERT INTO myTable VALUES (?)&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">3</span><span class="p">]];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">FMResultSet</span> <span class="o">*</span><span class="n">rs</span> <span class="o">=</span> <span class="p">[</span><span class="n">db</span> <span class="nl">executeQuery:</span><span class="s">@&quot;select * from foo&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">while</span> <span class="p">([</span><span class="n">rs</span> <span class="n">next</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// …</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}];</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 如果要支持事务</span>
+</span><span class='line'><span class="p">[</span><span class="n">queue</span> <span class="nl">inTransaction:</span><span class="o">^</span><span class="p">(</span><span class="n">FMDatabase</span> <span class="o">*</span><span class="n">db</span><span class="p">,</span> <span class="kt">BOOL</span> <span class="o">*</span><span class="n">rollback</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="s">@&quot;INSERT INTO myTable VALUES (?)&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">1</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="s">@&quot;INSERT INTO myTable VALUES (?)&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">2</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="s">@&quot;INSERT INTO myTable VALUES (?)&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">3</span><span class="p">]];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">whoopsSomethingWrongHappened</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="o">*</span><span class="n">rollback</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// etc…</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">db</span> <span class="nl">executeUpdate:</span><span class="s">@&quot;INSERT INTO myTable VALUES (?)&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">4</span><span class="p">]];</span>
+</span><span class='line'><span class="p">}];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>工具</h2>
+
+<p>为了查看Sqlite中的数据，一个好的图形化界面的数据库管理程序是必不可少的。mysql有phpMyAdmin，那么sqlite呢？</p>
+
+<p>我主要使用的是Firefox的一个名为SQLite Manager的插件，安装此插件后，可以直接打开后缀名为sqlite的数据库文件。SQLite Manager提供一个图形化的界面来执行数据查询或更改操作。如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/sqlite_manager.jpg"></p>
+
+<h2>总结</h2>
+
+<p>FMDB将SQLite API进行了很友好的封装，使用上非常方便，对于那些使用纯Sqlite API来进行数据库操作的app，可以考虑将其迁移到基于FMDB上，这对于以后数据库相关功能的开发维护，可以提高不少效率。</p>
+
+<p>我在学习fmdb的时候做了一个小工程用于练习，我把它放到github上了。感兴趣的可以自行下载：<a href="https://github.com/tangqiaoboy/FmdbSample">https://github.com/tangqiaoboy/FmdbSample</a></p>
+
+<p>祝大家玩得开心。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[关于iOS测试机个数上限的详细规则]]></title>
@@ -2407,141 +2690,6 @@ gc的分享也让我好好学习了一下java的内存回收技术。后来面�
 <p>顺便说一下，我打算把这些小脚本工具总结出来，放到github上，地址是 <a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>，感兴趣的同学可以把它clone下来。</p>
 
 <p>祝玩得开心～</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[让UILabel的文字顶部对齐]]></title>
-    <link href="http://blog.devtang.com/blog/2011/11/20/set-uilabel-text-align-top/"/>
-    <updated>2011-11-20T22:43:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2011/11/20/set-uilabel-text-align-top</id>
-    <content type="html"><![CDATA[<p>xcode中默认的UILabel是垂直居中对齐的，如果你的UILabel高度有多行，当内容少的时候，会自动垂直居中。</p>
-
-<!--more-->
-
-
-<p>如下图所示（图片来自stackoverflow)：</p>
-
-<p><img src="http://blog.devtang.com/images/UILabel_1.jpg"></p>
-
-<p>比较郁闷的是，UILabel并不提供设置其垂直对齐方式的选项。所以如果你想让你的文字顶部对齐，那么就需要自己想办法了。 stackoverflow.com 上提供了几种方法来达到顶部对齐的效果。</p>
-
-<h4>方法一</h4>
-
-<p>在显示文字时，首先计算显示当前的文字需要多宽和多高，然后将对应的UILabel的大小改变成对应的宽度和高度。此方法的相示意图如下：</p>
-
-<p><img src="http://blog.devtang.com/images/UILabel_2.png"></p>
-
-<p>在显示文字时，首先计算显示当前的文字需要多宽和多高，然后将对应的UILabel的大小改变成对应的宽度和高度。此方法的相示意图如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">CGSize</span> <span class="n">maximumSize</span> <span class="o">=</span> <span class="n">CGSizeMake</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">9999</span><span class="p">);</span>
-</span><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">dateString</span> <span class="o">=</span> <span class="s">@&quot;The date today is January 1st, 1999&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="n">UIFont</span> <span class="o">*</span><span class="n">dateFont</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIFont</span> <span class="nl">fontWithName:</span><span class="s">@&quot;Helvetica&quot;</span> <span class="nl">size:</span><span class="mi">14</span><span class="p">];</span>
-</span><span class='line'><span class="n">CGSize</span> <span class="n">dateStringSize</span> <span class="o">=</span> <span class="p">[</span><span class="n">dateString</span> <span class="nl">sizeWithFont:</span><span class="n">dateFont</span>
-</span><span class='line'>    <span class="nl">constrainedToSize:</span><span class="n">maximumSize</span>
-</span><span class='line'>    <span class="nl">lineBreakMode:</span><span class="n">self</span><span class="p">.</span><span class="n">dateLabel</span><span class="p">.</span><span class="n">lineBreakMode</span><span class="p">];</span>
-</span><span class='line'><span class="n">CGRect</span> <span class="n">dateFrame</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="n">dateStringSize</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
-</span><span class='line'><span class="n">self</span><span class="p">.</span><span class="n">dateLabel</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">dateFrame</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>方法二</h4>
-
-<p>此方法更加简单粗暴，但是很有效。其方法是在文本后面加多一些\n。
-需要注意的是，\n后还得加至少一个空格，否则多余的\n会被UILabel忽略。从这一点上看，UILabel似乎又过于“聪明”了。</p>
-
-<p>该方法的示意图如下：</p>
-
-<p><img src="http://blog.devtang.com/images/UILabel_3.png"></p>
-
-<p>该方法的代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">newLinesToPad</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="nl">stringByAppendingString:</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s"> &quot;</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>方法三</h4>
-
-<p>最正统的方法，利用objective-c的category特性，修改UILabel的绘制代码。示例代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">// -- file: UILabel+VerticalAlign.h</span>
-</span><span class='line'><span class="cp">#pragma mark VerticalAlign</span>
-</span><span class='line'><span class="k">@interface</span> <span class="nc">UILabel</span> <span class="nl">(VerticalAlign)</span>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">alignTop</span><span class="p">;</span>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">alignBottom</span><span class="p">;</span>
-</span><span class='line'><span class="k">@end</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// -- file: UILabel+VerticalAlign.m</span>
-</span><span class='line'><span class="k">@implementation</span> <span class="nc">UILabel</span> <span class="nl">(VerticalAlign)</span>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">alignTop</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">CGSize</span> <span class="n">fontSize</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="nl">sizeWithFont:</span><span class="n">self</span><span class="p">.</span><span class="n">font</span><span class="p">];</span>
-</span><span class='line'>    <span class="kt">double</span> <span class="n">finalHeight</span> <span class="o">=</span> <span class="n">fontSize</span><span class="p">.</span><span class="n">height</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">numberOfLines</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">double</span> <span class="n">finalWidth</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>    <span class="c1">//expected width of label</span>
-</span><span class='line'>    <span class="n">CGSize</span> <span class="n">theStringSize</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="nl">sizeWithFont:</span><span class="n">self</span><span class="p">.</span><span class="n">font</span> <span class="nl">constrainedToSize:</span><span class="n">CGSizeMake</span><span class="p">(</span><span class="n">finalWidth</span><span class="p">,</span> <span class="n">finalHeight</span><span class="p">)</span> <span class="nl">lineBreakMode:</span><span class="n">self</span><span class="p">.</span><span class="n">lineBreakMode</span><span class="p">];</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">newLinesToPad</span> <span class="o">=</span> <span class="p">(</span><span class="n">finalHeight</span>  <span class="o">-</span> <span class="n">theStringSize</span><span class="p">.</span><span class="n">height</span><span class="p">)</span> <span class="o">/</span> <span class="n">fontSize</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">newLinesToPad</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="nl">stringByAppendingString:</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s"> &quot;</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">alignBottom</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">CGSize</span> <span class="n">fontSize</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="nl">sizeWithFont:</span><span class="n">self</span><span class="p">.</span><span class="n">font</span><span class="p">];</span>
-</span><span class='line'>    <span class="kt">double</span> <span class="n">finalHeight</span> <span class="o">=</span> <span class="n">fontSize</span><span class="p">.</span><span class="n">height</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">numberOfLines</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">double</span> <span class="n">finalWidth</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>    <span class="c1">//expected width of label</span>
-</span><span class='line'>    <span class="n">CGSize</span> <span class="n">theStringSize</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="nl">sizeWithFont:</span><span class="n">self</span><span class="p">.</span><span class="n">font</span> <span class="nl">constrainedToSize:</span><span class="n">CGSizeMake</span><span class="p">(</span><span class="n">finalWidth</span><span class="p">,</span> <span class="n">finalHeight</span><span class="p">)</span> <span class="nl">lineBreakMode:</span><span class="n">self</span><span class="p">.</span><span class="n">lineBreakMode</span><span class="p">];</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">newLinesToPad</span> <span class="o">=</span> <span class="p">(</span><span class="n">finalHeight</span>  <span class="o">-</span> <span class="n">theStringSize</span><span class="p">.</span><span class="n">height</span><span class="p">)</span> <span class="o">/</span> <span class="n">fontSize</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">newLinesToPad</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithFormat:</span><span class="s">@&quot; </span><span class="se">\n</span><span class="s">%@&quot;</span><span class="p">,</span><span class="n">self</span><span class="p">.</span><span class="n">text</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我选了简单暴力的方法二，你呢？</p>
-
-<h4>参考资料</h4>
-
-<p><a href="http://stackoverflow.com/questions/1054558/how-do-i-vertically-align-text-within-a-uilabel">http://stackoverflow.com/questions/1054558/how-do-i-vertically-align-text-within-a-uilabel</a> <br/>
-<a href="https://discussions.apple.com/thread/1759957?threadID=1759957">https://discussions.apple.com/thread/1759957?threadID=1759957</a></p>
 ]]></content>
   </entry>
   

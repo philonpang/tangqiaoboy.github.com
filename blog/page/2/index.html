@@ -9,7 +9,9 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 iphone开发相关的教程中最有名的，当数斯坦福大学发布的&#8221;iphone开发公开课&#8221;了。此公开课在以前叫做《iphone开发教程》，今年由于平板电脑的流行，所以也加入了ipad开发相关的课程。在网易公开课上，有该教程的2010年录象，并且前面15集带中文字幕文件， &hellip;">
+  <meta name="description" content="前言 在苹果的WWDC2011大会视频的
+《Session 101 - What&#8217;s New in Cocoa》 和
+《Session 102 - Implementing UIViewController Containment》 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -73,6 +75,72 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-06T21:19:00+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>在苹果的WWDC2011大会视频的
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=101">《Session 101 - What&#8217;s New in Cocoa》</a> 和
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=102">《Session 102 - Implementing UIViewController Containment》</a> 中介绍了苹果在iOS5中给UIViewController新增加的5方法以及一个属性:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 方法</span>
+</span><span class='line'><span class="nl">addChildViewController:</span>
+</span><span class='line'><span class="nl">removeFromParentViewController:</span>
+</span><span class='line'><span class="nl">transitionFromViewController:toViewController:duration:options:animations:completion:</span>
+</span><span class='line'><span class="nl">willMoveToParentViewController:</span>
+</span><span class='line'><span class="nl">didMoveToParentViewController:</span>
+</span><span class='line'><span class="c1">// 属性</span>
+</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">childViewControllers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -468,47 +536,6 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/11/20/set-uilabel-text-align-top/">让UILabel的文字顶部对齐</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-20T22:43:00+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>xcode中默认的UILabel是垂直居中对齐的，如果你的UILabel高度有多行，当内容少的时候，会自动垂直居中。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/11/20/set-uilabel-text-align-top/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -524,6 +551,10 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/04/22/use-fmdb/">在iOS开发中使用FMDB</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/04/06/about-100-devices-limit/">关于iOS测试机个数上限的详细规则</a>
@@ -579,10 +610,6 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
     
       <li class="post">
         <a href="/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">使用Objective-C的文档生成工具:appledoc</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/01/23/use-javascript-to-import-pictures/">用javascript协助导入图片</a>
       </li>
     
   </ul>

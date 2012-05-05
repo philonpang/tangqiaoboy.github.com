@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>用Git进行协同开发 - 唐巧的技术博客</title>
+  <title>不要使用SBJSON(json-framework) - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="问题场景描述 常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。 对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。 在这种方式下，大家各自写自己的代码， &hellip;">
+  <meta name="description" content="不知道为什么，在iOS开发中，有很多人使用 SBJSON （又被称作json-framework)来做JSON解析库。我想这是因为SBJSON是最早在iOS上出现的JSON解析库。但是随着iOS开发的流行，越来越多优秀的JSON解析库也涌现出来, SBJSON和它们相比，性能上有很大的差距。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/29/collaboration-with-git">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,7 +76,7 @@
   
   <header>
     
-      <h1 class="entry-title">用Git进行协同开发</h1>
+      <h1 class="entry-title">不要使用SBJSON(json-framework)</h1>
     
     
       <p class="meta">
@@ -92,72 +92,66 @@
   
 
 
-<time datetime="2012-02-29T19:08:00+08:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+<time datetime="2012-05-05T09:35:00+08:00" pubdate data-updated="true">May 5<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>问题场景描述</h2>
+<div class="entry-content"><p>不知道为什么，在iOS开发中，有很多人使用 <a href="https://github.com/stig/json-framework">SBJSON</a> （又被称作json-framework)来做JSON解析库。我想这是因为SBJSON是最早在iOS上出现的JSON解析库。但是随着iOS开发的流行，越来越多优秀的JSON解析库也涌现出来, SBJSON和它们相比，性能上有很大的差距。</p>
 
-<p>常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。</p>
-
-<p>对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。</p>
-
-<p>在这种方式下，大家各自写自己的代码，提交到svn上，然后用svn up获得对方的代码。在调试问题的时候，大家可能不停地更新代码，然后让对方用svn up来更新。最终，虽然开发能够顺利进行，但是svn上会积累大量调试中的代码历史。所以，这样把svn当作代码中转站是一个很山寨的行为。</p>
-
-<p>在开发<a href="http://note.youdao.com">有道云笔记</a>新的<a href="http://itunes.apple.com/cn/app/id483995181">iPad版</a>时，我和前端同事zyc尝试用git进行了协同开发。在这里把具体方案分享给大家，欢迎大家讨论。</p>
-
-<!--More-->
+<!-- more -->
 
 
-<h2>Git相关协议介绍</h2>
+<p>现在iOS行业内主要流行的JSON解析库有：
+<a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40010946">NSJSONSerialization</a>、
+<a href="http://samsoff.es/posts/parsing-json-with-the-iphones-private-json-framework">Apple JSON</a>、
+<a href="http://github.com/schwa/TouchJSON">TouchJSON</a>、
+<a href="http://github.com/stig/json-framework">SBJSON</a>、
+<a href="http://github.com/gabriel/yajl-objc">YAJL</a>、
+<a href="http://github.com/johnezang/JSONKit">JSONKit</a></p>
 
-<p>Git对于你本机的代码项目，允许用很方便的方式进行非授权的只读访问,<a href="http://progit.org/book/zh/ch4-9.html">相关介绍链接</a>。简单来说，就是可以用Git自带的Git daemon命令在本机的9418端口启动一个守护进程，然后其它机器就可以以只读方式访问你开放出来的项目代码。</p>
-
-<p>具体步骤如下：</p>
+<p>行业内许多同行都对这些库进行过benchmark测试。我在网上搜到的测试文章包括：</p>
 
 <ul>
-<li>在你的Git工程下新建一个名为git-daemon-export-ok的文件放到.git目录下，表明该工程允许非授权访问。示例代码如下：</li>
+<li>https://github.com/samsoffes/json-benchmarks</li>
+<li>http://blog.csdn.net/arthurchenjs/article/details/7009995</li>
+<li>http://blog.csdn.net/ccat/article/details/7207871</li>
+<li>http://omegadelta.net/2011/11/04/json-framework-now-sbjson-is-evil/</li>
+<li>http://stackoverflow.com/questions/2256625/comparison-of-json-parser-for-objective-c-json-framework-yajl-touchjson-etc</li>
 </ul>
 
+
+<p>下图是我从<a href="http://my.csdn.net/ArthurChenJS">ArthurChenJS</a>的<a href="http://blog.csdn.net/arthurchenjs/article/details/7009995">博客文章</a>中截取的一张benchmark测试结果图(横条越短，解析速度越快)：</p>
+
+<p><img src="/images/json_benchmark.gif"></p>
+
+<p>从这些文章中可以看到，SBJSON在多数测试中都处于倒数的第一或倒数第二的位置。所以说，SBJSON实际上在性能这一点上讲，确实是非常“SB”的，实在不值得大家留念。赶快把你的JSON解析库换成其它的吧！</p>
+
+<p>那么应该换成哪个呢？
+如果你的app只支持iOS 5.0以上系统，那么直接用苹果官方提供的JSON库：<a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40010946">NSJSONSerialization</a>
+库即可。
+如果你的app要支持iOS 5.0以下的系统，那么我个人推荐JSONKit，不过JSONKit本身做了很多内存上的优化，所以不支持ARC，你在使用时可以对其加上 -fno-objc-arc 的编译标志即可，设置这个编译标志的详细步骤可以见<a href="http://stackoverflow.com/questions/6308425/ios-5-best-practice-release-retain">这篇文章</a>。</p>
+
+<p>JSONKit的使用也非常方便，在使用上只需要把SBJSON的JSONValue方法换成objectFromJSONData，JSONRepresentation方法换成JSONString即可。附上一段使用示例：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /path/to/project.git
-</span><span class='line'>touch git-daemon-export-ok
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;JSONKit.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">path</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource:</span><span class="s">@&quot;data&quot;</span> <span class="nl">ofType:</span><span class="s">@&quot;json&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSData</span> <span class="o">*</span><span class="n">content</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSData</span> <span class="nl">dataWithContentsOfFile:</span><span class="n">path</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">kitData</span> <span class="o">=</span> <span class="p">[</span><span class="n">content</span> <span class="n">objectFromJSONData</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">kitString</span> <span class="o">=</span> <span class="p">[</span><span class="n">kitData</span> <span class="n">JSONString</span><span class="p">];</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ul>
-<li>执行git daemon命令，设置你要Export出的项目目录的父目录，例如工程的代码地址是：/opt/git/project的话，则示例代码如下：</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git daemon --reuseaddr --base-path<span class="o">=</span>/opt/git/ /opt/git/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>告知对方你的机器的IP，然后在对方的机器，用下列命令即可检出你的代码：</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git checkout git://your_ip_address/project
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>如果对方有更新，只需要 git pull 一下。</li>
-</ul>
-
-
-<h2>协作</h2>
-
-<p>对于这种基于Git的协作，我们可以在本地随意的提交代码，让对方用git pull更新。当开发完成，需要push到公共仓库的时候，再用git rebase -i将本地的提交进行清理即可。并且由于大家都是在机器间互拷，不依赖svn公共服务器，更新代码的速度也要快得多。</p>
+<p>祝大家玩得开心。</p>
 </div>
 
 
@@ -180,12 +174,12 @@
   
 
 
-<time datetime="2012-02-29T19:08:00+08:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+<time datetime="2012-05-05T09:35:00+08:00" pubdate data-updated="true">May 5<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/shell/'>shell</a>
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
   
 </span>
 
@@ -236,10 +230,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/22/use-gcd/" title="Previous Post: 使用GCD">&laquo; 使用GCD</a>
+        <a class="basic-alignment left" href="/blog/2012/04/22/use-fmdb/" title="Previous Post: 在iOS开发中使用FMDB">&laquo; 在iOS开发中使用FMDB</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/03/10/xcode4-tips/" title="next Post: xcode4使用技巧">xcode4使用技巧 &raquo;</a>
       
     </p>
   </footer>

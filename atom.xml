@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-04-22T22:00:04+08:00</updated>
+  <updated>2012-05-05T10:15:34+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,67 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[不要使用SBJSON(json-framework)]]></title>
+    <link href="http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson/"/>
+    <updated>2012-05-05T09:35:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson</id>
+    <content type="html"><![CDATA[<p>不知道为什么，在iOS开发中，有很多人使用 <a href="https://github.com/stig/json-framework">SBJSON</a> （又被称作json-framework)来做JSON解析库。我想这是因为SBJSON是最早在iOS上出现的JSON解析库。但是随着iOS开发的流行，越来越多优秀的JSON解析库也涌现出来, SBJSON和它们相比，性能上有很大的差距。</p>
+
+<!-- more -->
+
+
+<p>现在iOS行业内主要流行的JSON解析库有：
+<a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40010946">NSJSONSerialization</a>、
+<a href="http://samsoff.es/posts/parsing-json-with-the-iphones-private-json-framework">Apple JSON</a>、
+<a href="http://github.com/schwa/TouchJSON">TouchJSON</a>、
+<a href="http://github.com/stig/json-framework">SBJSON</a>、
+<a href="http://github.com/gabriel/yajl-objc">YAJL</a>、
+<a href="http://github.com/johnezang/JSONKit">JSONKit</a></p>
+
+<p>行业内许多同行都对这些库进行过benchmark测试。我在网上搜到的测试文章包括：</p>
+
+<ul>
+<li>https://github.com/samsoffes/json-benchmarks</li>
+<li>http://blog.csdn.net/arthurchenjs/article/details/7009995</li>
+<li>http://blog.csdn.net/ccat/article/details/7207871</li>
+<li>http://omegadelta.net/2011/11/04/json-framework-now-sbjson-is-evil/</li>
+<li>http://stackoverflow.com/questions/2256625/comparison-of-json-parser-for-objective-c-json-framework-yajl-touchjson-etc</li>
+</ul>
+
+
+<p>下图是我从<a href="http://my.csdn.net/ArthurChenJS">ArthurChenJS</a>的<a href="http://blog.csdn.net/arthurchenjs/article/details/7009995">博客文章</a>中截取的一张benchmark测试结果图(横条越短，解析速度越快)：</p>
+
+<p><img src="http://blog.devtang.com/images/json_benchmark.gif"></p>
+
+<p>从这些文章中可以看到，SBJSON在多数测试中都处于倒数的第一或倒数第二的位置。所以说，SBJSON实际上在性能这一点上讲，确实是非常“SB”的，实在不值得大家留念。赶快把你的JSON解析库换成其它的吧！</p>
+
+<p>那么应该换成哪个呢？
+如果你的app只支持iOS 5.0以上系统，那么直接用苹果官方提供的JSON库：<a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40010946">NSJSONSerialization</a>
+库即可。
+如果你的app要支持iOS 5.0以下的系统，那么我个人推荐JSONKit，不过JSONKit本身做了很多内存上的优化，所以不支持ARC，你在使用时可以对其加上 -fno-objc-arc 的编译标志即可，设置这个编译标志的详细步骤可以见<a href="http://stackoverflow.com/questions/6308425/ios-5-best-practice-release-retain">这篇文章</a>。</p>
+
+<p>JSONKit的使用也非常方便，在使用上只需要把SBJSON的JSONValue方法换成objectFromJSONData，JSONRepresentation方法换成JSONString即可。附上一段使用示例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;JSONKit.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">path</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource:</span><span class="s">@&quot;data&quot;</span> <span class="nl">ofType:</span><span class="s">@&quot;json&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSData</span> <span class="o">*</span><span class="n">content</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSData</span> <span class="nl">dataWithContentsOfFile:</span><span class="n">path</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">kitData</span> <span class="o">=</span> <span class="p">[</span><span class="n">content</span> <span class="n">objectFromJSONData</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">kitString</span> <span class="o">=</span> <span class="p">[</span><span class="n">kitData</span> <span class="n">JSONString</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>祝大家玩得开心。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[在iOS开发中使用FMDB]]></title>
@@ -2680,31 +2741,6 @@ gc的分享也让我好好学习了一下java的内存回收技术。后来面�
 
 
 <p>如果记不清了，可以在top的界面上按?，在弹出的帮助界面中即可看到。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[去掉xcode源码末尾的空格]]></title>
-    <link href="http://blog.devtang.com/blog/2011/12/10/remove-tail-blankspace-in-xcode/"/>
-    <updated>2011-12-10T17:08:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2011/12/10/remove-tail-blankspace-in-xcode</id>
-    <content type="html"><![CDATA[<p>在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格,将尾部的空格去掉。可惜在xcode中并没有提供相应的功能。</p>
-
-<!--more-->
-
-
-<p>不过我们可以用命令行来达到这一效果,在工程目录下输入:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>find . -name <span class="s2">&quot;*.[hm]&quot;</span> | xargs sed -Ee <span class="s1">&#39;s/ +$//g&#39;</span> -i <span class="s2">&quot;&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这样,就可以把源码中行末多出来的空格去掉了,是不是很爽? 可以把这句加到执行post-review的脚本上，这样就可以做到自动去空格了。</p>
-
-<p>顺便说一下，我打算把这些小脚本工具总结出来，放到github上，地址是 <a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>，感兴趣的同学可以把它clone下来。</p>
-
-<p>祝玩得开心～</p>
 ]]></content>
   </entry>
   

@@ -269,6 +269,14 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>从上面大家可以看出，block有如下特点：</p>
+
+<ol>
+<li>程序块可以在代码中以内联的方式来定义。</li>
+<li>程序块可以访问在创建它的范围内的可用的变量。</li>
+</ol>
+
+
 <h2>系统提供的dispatch方法</h2>
 
 <p>为了方便地使用GCD，苹果提供了一些方法方便我们将block放在主线程 或 后台线程执行，或者延后执行。使用的例子如下：</p>
@@ -351,6 +359,25 @@
 </span><span class='line'> <span class="n">dispatch_group_notify</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span>
 </span><span class='line'>      <span class="c1">// 汇总结果</span>
 </span><span class='line'> <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>修改block之外的变量</h2>
+
+<p>默认情况下，在程序块中访问的外部变量是复制过去的，即写操作不对原变量生效。但是你可以加上 __block来让其写操作生效，示例代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">__block</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'> <span class="kt">void</span>  <span class="p">(</span><span class="o">^</span><span class="n">foo</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="o">=</span> <span class="o">^</span><span class="p">{</span>
+</span><span class='line'>      <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'> <span class="n">foo</span><span class="p">();</span>
+</span><span class='line'> <span class="c1">// 这里，a的值被修改为1</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-05-19T10:32:29+08:00</updated>
+  <updated>2012-06-24T22:35:27+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,243 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[封装同步的UIActionSheet]]></title>
+    <link href="http://blog.devtang.com/blog/2012/06/24/enhance-uiactionsheet/"/>
+    <updated>2012-06-24T21:51:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/06/24/enhance-uiactionsheet</id>
+    <content type="html"><![CDATA[<h2>问题</h2>
+
+<p>做iOS开发的同学想必都用过UIActionSheet。UIActionSheet可以弹出一个选择列表，让用户选择列表中的某一项操作。使用UIActionSheet非常简单，以下是一个简单的示例代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">someButtonClicked</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">UIActionSheet</span> <span class="o">*</span> <span class="n">sheet</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIActionSheet</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="nb">nil</span> <span class="nl">delegate:</span><span class="n">self</span> <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;ddd&quot;</span> <span class="nl">destructiveButtonTitle:</span><span class="s">@&quot;aaa&quot;</span> <span class="nl">otherButtonTitles:</span><span class="s">@&quot;bbb&quot;</span><span class="p">,</span> <span class="s">@&quot;ccc&quot;</span><span class="p">,</span> <span class="s">@&quot;ddd&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">sheet</span><span class="p">.</span><span class="n">destructiveButtonIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">sheet</span> <span class="nl">showInView:</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">actionSheet:</span><span class="p">(</span><span class="n">UIActionSheet</span> <span class="o">*</span><span class="p">)</span><span class="n">actionSheet</span> <span class="nl">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">buttonIndex</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">buttonIndex</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;result = %d&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但我个人在使用时，感觉UIActionSheet有以下2个问题：</p>
+
+<!-- more -->
+
+
+<ol>
+<li><p>UIActionSheet是一个异步的调用，需要设置delegate来获得用户选择的结果。这么小粒度的选择界面，把调用显示和回调方法分开写在2个方法中，使得原本简单的逻辑复杂了。虽然也不会复杂到哪儿去，但是每次调用UIActionSheet就需要另外写一个delegate回调方法，让我觉得这是一个过度的设计。如果UIActionSheet在弹出界面时，是一个同步调用，在调用完 showInView方法后，就能获得用户的点击结果，那该多方便。</p></li>
+<li><p>UIActionSheet默认的init方法比较恶心。cancel Button其实默认是在最底部的，但是在init方法中是放在第一个参数。destructive默认是列表的第一个。如果你需要的界面不是将destructive button放在第一个，就需要再指定一次destructiveButtonIndex，而这个index的下标，是忽略cancel button来数的，虽说也不是很麻烦，但是心里感觉比较恶心。</p></li>
+</ol>
+
+
+<h2>改造UIActionSheet</h2>
+
+<p>基于上面2个原因，我想把UIActionSheet改造成一个同步的调用。这样，在我调用它的 showInView方法后，我希望它直接同步地返回用户的选择项，而不是通过一个Delegate方法来回调我。另外，我也不希望init方法有那么多麻烦的参数，我只希望init的时候，指定一个数组能够设置每个button的title就行了。</p>
+
+<p>于是我写了一个 SynchronizedUIActionSheet 类，这个类将 UIActionSheet简单封装了一下，利用 CFRunLoopRun 和 CFRunLoopStop 方法来将UIActionSheet改造成同步的调用。整个代码如下所示：</p>
+
+<p>SynchronizedUIActionSheet.h 文件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">// SynchronizedUIActionSheet.h</span>
+</span><span class='line'><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@interface</span> <span class="nc">SynchronizedUIActionSheet</span> : <span class="nc">NSObject</span><span class="o">&lt;</span><span class="n">UIActionSheetDelegate</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span> <span class="n">titles</span><span class="p">;</span>
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">NSInteger</span> <span class="n">destructiveButtonIndex</span><span class="p">;</span>
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">NSInteger</span> <span class="n">cancelButtonIndex</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">initWithTitles:</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="n">titles</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nl">showInView:</span><span class="p">(</span><span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="n">view</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>SynchronizedUIActionSheet.m 文件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;SynchronizedUIActionSheet.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@implementation</span> <span class="nc">SynchronizedUIActionSheet</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">UIActionSheet</span> <span class="o">*</span> <span class="n">_actionSheet</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSInteger</span> <span class="n">_selectedIndex</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@synthesize</span> <span class="n">titles</span> <span class="o">=</span> <span class="n">_titles</span><span class="p">;</span>
+</span><span class='line'><span class="k">@synthesize</span> <span class="n">destructiveButtonIndex</span> <span class="o">=</span> <span class="n">_destructiveButtonIndex</span><span class="p">;</span>
+</span><span class='line'><span class="k">@synthesize</span> <span class="n">cancelButtonIndex</span> <span class="o">=</span> <span class="n">_cancelButtonIndex</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">initWithTitles:</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="n">titles</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">_titles</span> <span class="o">=</span> <span class="n">titles</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">_destructiveButtonIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">_cancelButtonIndex</span> <span class="o">=</span> <span class="n">titles</span><span class="p">.</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">setTitles:</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="n">titles</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">_titles</span> <span class="o">=</span> <span class="n">titles</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">_cancelButtonIndex</span> <span class="o">=</span> <span class="n">titles</span><span class="p">.</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nl">showInView:</span><span class="p">(</span><span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="n">view</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">_actionSheet</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIActionSheet</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">title</span> <span class="k">in</span> <span class="n">_titles</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">_actionSheet</span> <span class="nl">addButtonWithTitle:</span><span class="n">title</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">_destructiveButtonIndex</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">_actionSheet</span><span class="p">.</span><span class="n">destructiveButtonIndex</span> <span class="o">=</span> <span class="n">_destructiveButtonIndex</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">_cancelButtonIndex</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">_actionSheet</span><span class="p">.</span><span class="n">cancelButtonIndex</span> <span class="o">=</span> <span class="n">_cancelButtonIndex</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">_actionSheet</span> <span class="nl">showInView:</span><span class="n">view</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">CFRunLoopRun</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">_selectedIndex</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">actionSheet:</span><span class="p">(</span><span class="n">UIActionSheet</span> <span class="o">*</span><span class="p">)</span><span class="n">actionSheet</span> <span class="nl">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">buttonIndex</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">_selectedIndex</span> <span class="o">=</span> <span class="n">buttonIndex</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">_actionSheet</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">CFRunLoopStop</span><span class="p">(</span><span class="n">CFRunLoopGetCurrent</span><span class="p">());</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在改造后，调用ActionSheet的示例代码如下，是不是感觉逻辑清爽了一些？</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nl">testButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">sender</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">SynchronizedUIActionSheet</span> <span class="o">*</span> <span class="n">synActionSheet</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SynchronizedUIActionSheet</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">synActionSheet</span><span class="p">.</span><span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;aaa&quot;</span><span class="p">,</span> <span class="s">@&quot;bbb&quot;</span><span class="p">,</span> <span class="s">@&quot;ccc&quot;</span><span class="p">,</span> <span class="s">@&quot;ddd&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">synActionSheet</span><span class="p">.</span><span class="n">destructiveButtonIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSUInteger</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">synActionSheet</span> <span class="nl">showInView:</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;result = %d&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>总结</h2>
+
+<p>利用NSRunLoop来将原本的异步方法改成同步，可以使我们在某些情形下，方便地将异步方法变成同步方法来执行。</p>
+
+<p>例如以前我们在做有道云笔记iPad版的时候，采用的图片多选控件需要用户允许我们获得地理位置信息，如果用户没有选择允许，那个这个图片多选控件就会执行失败。为了不让这个控件挂掉，我们想在用户禁止访问地理位置时，不使用该控件，而使用系统自带的图片单选的UIImagePickerController 控件来选择图片。对于这个需求，我们明显就希望将获得地理位置信息这个系统确认框做成同步的，使得我们可以根据用户的选择再决定用哪种图片选择方式。最终，我们也用类似上面的方法，用NSRunLoop来使我们的异步方法调用暂停在某一行，直到获得用户的反馈后，再往下执行，示例代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">someCheck</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">BOOL</span> <span class="n">isOver</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1">// do the async check method, after the method return, set isOver to YES</span>
+</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">isOver</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">[[</span><span class="n">NSRunLoop</span> <span class="n">currentRunLoop</span><span class="p">]</span> <span class="nl">runMode:</span><span class="n">NSDefaultRunLoopMode</span> <span class="nl">beforeDate:</span><span class="p">[</span><span class="n">NSDate</span> <span class="n">distantFuture</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以上Demo代码我放到github上了,地址是<a href="https://github.com/tangqiaoboy/SynchronizedUIActionSheetDemo">这里</a>，请随意取用。祝端午节快乐。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[不要使用SBJSON(json-framework)]]></title>
@@ -2746,28 +2983,6 @@ gc的分享也让我好好学习了一下java的内存回收技术。后来面�
 <li>2011-04-07 开始维护自己的原创博客, 原本在<a href="http://tangqiaoboy.blog.163.com">网易博客</a>上,2011-11-05购买了个人域名devtang.com, 12月份将博客移动到github下，地址是: <a href="http://blog.devtang.com">http://blog.devtang.com</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[mac下的top命令]]></title>
-    <link href="http://blog.devtang.com/blog/2011/12/27/mac-top/"/>
-    <updated>2011-12-27T13:30:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2011/12/27/mac-top</id>
-    <content type="html"><![CDATA[<p>以前只是在linux机器上使用top命令。常用的快键键是:</p>
-
-<ul>
-<li>p键 - 按cpu使用率排序</li>
-<li>m键 - 按内存使用量排序</li>
-</ul>
-
-
-<p>这2个快捷键在mac上都不一样。对应的是，先输入o，然后输入cpu则按cpu使用量排序，输入rsize则按内存使用量排序。</p>
-
-<!--more-->
-
-
-<p>如果记不清了，可以在top的界面上按?，在弹出的帮助界面中即可看到。</p>
 ]]></content>
   </entry>
   

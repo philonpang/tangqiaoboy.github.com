@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-06-24T22:35:27+08:00</updated>
+  <updated>2012-08-05T23:03:02+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,214 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Objective-C的新特性]]></title>
+    <link href="http://blog.devtang.com/blog/2012/08/05/use-modern-objective-c/"/>
+    <updated>2012-08-05T21:50:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/08/05/use-modern-objective-c</id>
+    <content type="html"><![CDATA[<p>苹果在今年的WWDC2012大会上介绍了大量Objective-C的新特性，能够帮助iOS程序员更加高效地编写代码。在不久前更新的XCode4.4版本中，这些新特性已经可以使用了。让我们看看这些新特性有哪些：</p>
+
+<!-- more -->
+
+
+<h2>Object Literals</h2>
+
+<p>这个是我认为最赞的一个改进。Object Literals允许你方便地定义数字、数组和字典对象。这个功能类似于java5提供的auto boxing功能。这虽然是一个语法糖，但我认为对提高写代码效率帮助很大。让我们先来看看以前定义数字、数组和字典对象的方法：</p>
+
+<p>``` objc</p>
+
+<pre><code>NSNumber * number = [NSNumber numberWithInt:1];
+NSArray * array = [NSArray arrayWithObjects:@"one", @"two", nil];
+NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:@"value1", @"key1", @"value2", @"key2", nil];
+</code></pre>
+
+<p>```
+是不是很恶心？现在以上代码可以简化成以下形式，注意到没有，不用再在参数的最后加恶心的nil了，字典的key和value也不再是倒着先写value,再写key了：</p>
+
+<p>``` objc</p>
+
+<pre><code>NSNumber * number = @1;
+NSArray * array = @[@"one", @"two"];
+NSDictionary * dict = @{@"key1":@"value1", @"key2":@"value2"};
+</code></pre>
+
+<p>```</p>
+
+<p>更多的示例如下：</p>
+
+<p>``` objc
+  // 整数
+  NSNumber <em>fortyTwo = @42;             // 等价于 [NSNumber numberWithInt:42]
+  NSNumber </em>fortyTwoUnsigned = @42U;    // 等价于 [NSNumber numberWithUnsignedInt:42U]
+  NSNumber <em>fortyTwoLong = @42L;        // 等价于 [NSNumber numberWithLong:42L]
+  NSNumber </em>fortyTwoLongLong = @42LL;   // 等价于 [NSNumber numberWithLongLong:42LL]</p>
+
+<p>  // 浮点数
+  NSNumber <em>piFloat = @3.141592654F;    // 等价于 [NSNumber numberWithFloat:3.141592654F]
+  NSNumber </em>piDouble = @3.1415926535;   // 等价于 [NSNumber numberWithDouble:3.1415926535]</p>
+
+<p>  // 布尔值
+  NSNumber <em>yesNumber = @YES;           // 等价于 [NSNumber numberWithBool:YES]
+  NSNumber </em>noNumber = @NO;             // 等价于 [NSNumber numberWithBool:NO]</p>
+
+<p>  // 空数组
+  NSArray * array = @[];                // 等价于 [NSArray array]
+  // 空的字典
+  NSDictionary * dict = @{};            // 等价于 [NSDictionary dictionary]</p>
+
+<p>```</p>
+
+<p>怎么样？是不是简单多了？而且，为了方便你的旧代码迁移到新的写法，xcode专门还提供了转换工具，在xcode4.4中，选择 Edit -> Refactor -> Convert to Modern Objective-C Syntax即可。如下所示：
+<img src="/images/modern-objc-convert-tool.png"></p>
+
+<h2>局部的函数调用不用前向申明</h2>
+
+<p>这虽然是一个挺小的改进，但是很贴心。假如我们在一个源文件中有2个函数：分别名为foo 和 bar，其中foo的定义在bar前面。那如果在foo函数内部直接调用bar，编译器会报警告说找不到函数bar。</p>
+
+<p>而现在，我们可以随意地在源文件中放置函数bar的位置。编译器在找不到bar时，会再源码后面找，如果找到了bar，就不会报错了。</p>
+
+<h2>带有类型的enum</h2>
+
+<p>现在我们可以定义enum是无符号整数还是整数，这样编译器会更加智能的做类型检查。如下所示：</p>
+
+<p>``` objc
+typedef enum TableViewCellType : NSInteger {</p>
+
+<pre><code>TableViewCellTypeQueue,
+TableViewCellTypeNewFans,
+TableViewCellTypeUserInfo,
+TableViewCellTypeOrganization,
+TableViewCellTypeFeedback,
+TableViewCellTypeRateApp,
+TableViewCellTypeRecommendation,
+TableViewCellTypeLogout
+</code></pre>
+
+<p>}TableViewCellType;
+```</p>
+
+<h2>默认生成@synthesize代码</h2>
+
+<p>以前写完一个诸如 @property (nonatomic, strong) NSString * username; 变量定义后，马上得转到 .m文件中去增加相应的 @synthesize username = _username; 代码。</p>
+
+<p>现在，编辑器发现你没有写 @synthesize时，会自动帮你加上这一行。这同时在另一方面，起到了鼓励大家使用以下划线开头的变量名作为成员变量名的作用。</p>
+
+<p>当然，为了向下兼容，如果你的程序里面已经有了 @property 变量对应的 @synthesize 代码时，编辑器就不会自动帮你增加这个代码了。</p>
+
+<p>另外有2种特殊情况下，即使你没有写 @synthesize ，编辑器也不会自动帮你加上，这2种情况是：</p>
+
+<ol>
+<li>你同时提供了该property的setter 和 getter方法。</li>
+<li>你的这个property是 readonly 的。</li>
+</ol>
+
+
+<h2>遍历元素</h2>
+
+<p>你是如何遍历数组的元素的？通常我们有2种做法，一种是用 for in，另一种是用一个变量来循环数组下标。如下：</p>
+
+<p>``` objc</p>
+
+<pre><code>    NSArray * lines = ...
+    for (NSString * line in lines) {
+       // ...
+    }
+    for (int i = 0; i &lt; lines.count; ++i) {
+        NSString * s = [lines objectAtIndex:i];
+        ...
+    }
+</code></pre>
+
+<p>```</p>
+
+<p>如果是字典，遍历的代码就要稍微复杂一点了：
+``` objc</p>
+
+<pre><code>    NSDictionary * dict = …
+    NSArray * keys = [dict allKeys];
+    for (NSString * key in keys) {
+        NSString * value = [dict objectForKey:key];
+
+    }
+</code></pre>
+
+<p>```</p>
+
+<p>现在，xcode对于iOS4.0以上的系统，支持用block来遍历元素了。用block来遍历字典可以简化代码的编写，建议大家都使用上这个新特性。</p>
+
+<p>``` objc</p>
+
+<pre><code>[lines enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *stop) {
+
+}];
+
+[_urlArguments enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+
+}];
+</code></pre>
+
+<p>```</p>
+
+<h2>Subscripting Methods</h2>
+
+<p>这个新特性在WWDC2012的视频中提到了，但是在XCode4.4中没有实现。也是一个很体贴的语法糖，它允许你用中括号来代替原本的方法来获取和设置数组元素。</p>
+
+<p>简单来说，以前的 [array objectAtIndex:idx] 和 [array replaceObjectAtIndex:idx withObject:obj]，可以直接写作 array[idx] 和 array[idx] = obj了。其实这个特性在很多高级语言中都实现了，只是Objective-C生于80年代，一直没改进这个。</p>
+
+<p>这个改进同样对NSDictionary有效。甚至，你也可以给你自己的类提供中括号操作符对应的方法。具体做法是实现如下两个方法：</p>
+
+<p><code>objc
+- (id)objectAtIndexedSubscript:(NSUInterger)idx;
+- (void)setObject:(id)value atIndexedSubscript:(NSUInteger)idx;
+</code></p>
+
+<p>期等XCode4.5中能够使用上这个特性。</p>
+
+<h2>Tips</h2>
+
+<p>上面提到了不用写 @synthesize 了，那原本写的那么多 @synthesize 怎么办呢？作为有代码洁癖的我很想把它们删掉，但怎么删呢？一个文件一个文件打开，然后行一行删掉吗？放心，苹果已经帮我们想了解决方案。在WWDC2012 Session 400 Developer Tools Kickoff 中，苹果介绍了具体做法。步骤如下：</p>
+
+<ol>
+<li>首先使用区域查找，因为一般项目都会依赖第三方的开源库，我们可不想更改别人的库，所以我们只查找我们库中的文件，如下图所示：</li>
+</ol>
+
+
+<p><img src="/images/modern-objc-remove-synthesize-1.png"></p>
+
+<ol>
+<li>接着我们用正则匹配，找到以 @synthesize开头，后面接着是 var = _var; 格式的行。插入正则表达式很简单，直接点击查找输入框左边的放大镜，选择“insert pattern"，苹果就会把常见的正则表达式都列出来，你直接选择就可以了，非常方便。如下图所示：</li>
+</ol>
+
+
+<p><img src="/images/modern-objc-insert-pattern.png"></p>
+
+<p>在插入好合适的正则表达式后，我们按回车，就可以搜索到结果。</p>
+
+<p><img src="/images/modern-objc-search-result.png"></p>
+
+<ol>
+<li>我们点击搜索界面的preview按钮，查看替换效果，可以看到，对于我们测试代码，XCode生成的预览图已经正确地当对应代码删掉了。然后我们就可以点击替换，去掉所有的 @synthesize 代码了。</li>
+</ol>
+
+
+<p><img src="/images/modern-objc-replace-review.png"></p>
+
+<p>在下载完XCode4.4后，我就把我们的工程代码都转换成了新特性的语法。在转换后，我发现原本25000行的代码少了将近1000行。心里还是很开心的，因为又可以少写一些体力活类型的代码了。</p>
+
+<p>还是那句话，希望这些新特性能够让大家玩得开心。</p>
+
+<h3>参考资料</h3>
+
+<ul>
+<li>LLVM官方网站比较全面地介绍了 Object Literal： <a href="http://clang.llvm.org/docs/ObjectiveCLiterals.html">http://clang.llvm.org/docs/ObjectiveCLiterals.html</a></li>
+<li>WWDC2012 Session 400 Developer Tools Kickoff</li>
+<li>WWDC2012 Session 405 Modern Objective-C</li>
+<li>WWDC2012 Session 413 Migrating to Modern Objective-C</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[封装同步的UIActionSheet]]></title>
@@ -514,183 +722,6 @@ if (whoopsSomethingWrongHappened) {
 <p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。</p>
 
 <p>具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。在沟通完成后，苹果就可以立即帮助你状态修改到“可删除设备来增加测试设备名额”。这样，你就可以选择性的删除一些不需要的设备来释放一些名额了。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[关于UIWebView和PhoneGap的总结]]></title>
-    <link href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/"/>
-    <updated>2012-03-24T20:19:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>今天参加了Adobe和CSDN组织的一个关于<a href="http://hui.csdn.net/MeetingInfo.aspx?mid=99">PhoneGap的开发讲座</a> ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。</p>
-
-<p>正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容，所以也需要做js与native代码相互调用的事情。所以在这儿顺便总结一下UIWebView在使用上的细节，以及谈谈我对PhoneGap的看法。</p>
-
-<!-- more -->
-
-
-<h2>机制</h2>
-
-<p>首先我们需要让UIWebView加载本地HTML。使用如下代码完成：</p>
-
-<p>``` objc</p>
-
-<pre><code>NSString * path = [[NSBundle mainBundle] bundlePath];
-NSURL * baseURL = [NSURL fileURLWithPath:path];
-NSString * htmlFile = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
-NSString * htmlString = [NSString stringWithContentsOfFile:htmlFile encoding:(NSUTF8StringEncoding) error:nil];
-[self.webView loadHTMLString:htmlString baseURL:baseURL];
-</code></pre>
-
-<p>```</p>
-
-<p>接着，我们需要让js能够调用native端。iOS SDK并没有原生提供js调用native代码的API。但是UIWebView的一个delegate方法使我们可以做到让js需要调用时，通知native。在native执行完相应调用后，可以用stringByEvaluatingJavaScriptFromString方法，将执行结果返回给js。这样，就实现了js与native代码的相互调用。</p>
-
-<p>以下是PhoneGap相关调用的示例代码：</p>
-
-<p>``` objc
-// Objective-C语言
-- (BOOL)webView:(UIWebView *)webView</p>
-
-<pre><code>shouldStartLoadWithRequest:(NSURLRequest *)request 
-navigationType:(UIWebViewNavigationType)navigationType {
-   NSURL * url = [request URL];
-   if ([[url scheme] isEqualToString:@"gap"]) {
-        // 在这里做js调native的事情
-        // ....
-        // 做完之后用如下方法调回js
-        [webView stringByEvaluatingJavaScriptFromString:@"alert('done')"];
-        return NO;
-    }       
-    return YES;
-</code></pre>
-
-<p>}
-```</p>
-
-<p>具体让js通知native的方法是让js发起一次特殊的网络请求。这里，我们和PhoneGap都是使用加载一个隐藏的iframe来实现的，通过将iframe的src指定为一个特殊的URL，实现在delegate方法中截获这次请求。</p>
-
-<p>以下是PhoneGap相关调用的示例代码：</p>
-
-<p>```
-// Javascript语言
-// 通知iPhone UIWebView 加载url对应的资源
-// url的格式为: gap:something
-function loadURL(url) {</p>
-
-<pre><code>var iFrame;
-iFrame = document.createElement("iframe");
-iFrame.setAttribute("src", url);
-iFrame.setAttribute("style", "display:none;");
-iFrame.setAttribute("height", "0px");
-iFrame.setAttribute("width", "0px");
-iFrame.setAttribute("frameborder", "0");
-document.body.appendChild(iFrame);
-// 发起请求后这个iFrame就没用了，所以把它从dom上移除掉
-iFrame.parentNode.removeChild(iFrame);
-iFrame = null;
-</code></pre>
-
-<p>}
-```</p>
-
-<p>在这里，可能有些人说，通过改document.location也可以达到相同的效果。关于这个，我和zyc专门试过，一般情况下，改document.location是可以，但是改document.location有一个很严重的问题，就是如果我们连续2个js调native，连续2次改document.location的话，在native的delegate方法中，只能截获后面那次请求，前一次请求由于很快被替换掉，所以被忽略掉了。</p>
-
-<p>我也专门去Github上查找相关的开源代码，它们都是用过iframe来实现调用的，例如这个：<a href="https://github.com/marcuswestin/WebViewJavascriptBridge">https://github.com/marcuswestin/WebViewJavascriptBridge</a></p>
-
-<p>关于这个，我也做了一个Demo来简单示例，地址如下：<a href="https://github.com/tangqiaoboy/UIWebViewSample">https://github.com/tangqiaoboy/UIWebViewSample</a></p>
-
-<h2>参数的传递</h2>
-
-<p>以上的示例代码为了讲清楚机制，所以只是示例了最简单的相互调用。但实际上js和native相互调用时，常常需要传递参数。</p>
-
-<p>例如，有道云笔记iPad版用UIWebView显示笔记的内容，当用户点击了笔记中的附件，这个时候，js需要通知native到后台下载这个笔记附件，同时通知js当前的下载进度。对于这个需求，js层获得用户点击事件后，就需要把当前点击的附件的ID传递给native，这样native才能知道下载哪个附件。</p>
-
-<p>参数传递最简单的方式是将参数作为url的一部分，放到iFrame的src里面。这样UIWebView通过截取分析url后面的内容即可获得参数。但是这样的问题是，该方法只能传递简单的参数信息，如果参数是一个很复杂的对象，那么这个url的编解码将会很复杂。对此，我们的有道云笔记和PhoneGap采用了不同的技术方案。</p>
-
-<ul>
-<li>我们的技术方案是将参数以JSON的形式传递，但是因为要附加在url之后，所以我们将JSON进行了Base64编码，以保证url中不会出现一些非法的字符。</li>
-<li>PhoneGap的技术方案是，也是用JSON传递参数，但是将JSON放在UIWebView中的一个全局数组中，UIWebView当需要读取参数时，通过读取这个全局数组来获得相应的参数。</li>
-</ul>
-
-
-<p>相比之下，应该说PhoneGap的方案更加全面，适用于多种场景。而我们的方案简洁高效，满足了我们自己产品的需求。</p>
-
-<h2>同步和异步</h2>
-
-<p>因为iOS SDK没有天生支持js和native相互调用，大家的技术方案都是自己实现的一套调用机制，所以这里面有同步异步的问题。细心的同学就能发现，js调用native是通过插入一个iframe，这个iframe插入完了就完了，执行的结果需要native另外用stringByEvaluatingJavaScriptFromString方法通知js，所以这是一个异步的调用。</p>
-
-<p>而stringByEvaluatingJavaScriptFromString方法本身会直接返回一个NSString类型的执行结果，所以这显然是一个同步调用。</p>
-
-<p>所以js call native是异步，native call js是异步。在处理一些逻辑的时候，不可避免需要考虑这个特点。</p>
-
-<p>这里顺便说一个android，其实在android开发中，js调native是同步的，但是PhoneGap为了将自己做成一个跨平台的框架，所以在android的js call native的native端，用 new Thread新建了一个执行线程，这样把android的js call native也变成了异步调用。</p>
-
-<h2>UIWebView的问题</h2>
-
-<h3>线程阻塞问题</h3>
-
-<p>我们在开发中发现，当在native层调用stringByEvaluatingJavaScriptFromString方法时，可能由于javascript是单线程的原因，会阻塞原有js代码的执行。这里我们的解决办法是在js端用defer将iframe的插入延后执行。</p>
-
-<h3>主线程的问题</h3>
-
-<p>UIWebView的stringByEvaluatingJavaScriptFromString方法必须是主线程中执行，而主线程的执行时间过长就会block UI的更新。所以我们应该尽量让stringByEvaluatingJavaScriptFromString方法执行的时间短。</p>
-
-<p>有道云笔记在保存的时候，需要调用js获得笔记的完整html内容，这个时候如果笔记内容很复杂，就会执行很长一段时间，而因为这个操作必须是主线程执行，所以我们显示“正在保存”的UIAlertView完全无法正常显示，整个UI界面完全卡住了。在新的编辑器里，我们更新了获得html内容的代码，才将这个问题解决。</p>
-
-<h3>键盘控制</h3>
-
-<p>做iOS开发的都知道，当我们需要键盘显示在某个控件上时，可以调用[obj becomeFirstResponder]方法来让键盘出来，并且光标输入焦点出现在该控件上。</p>
-
-<p>但是这个方法对于UIWebView并不可用。也就是说，我们无法通过程序控制让光标输入焦点出现在UIWebView上。
-关于这个问题，我在stackoverflow上专门<a href="http://stackoverflow.com/questions/9835956/show-keyboard-in-contenteditable-uiwebview-programmatically">问了一下</a>，还是没有得到很好的解决办法。</p>
-
-<h3>CommonJS规范</h3>
-
-<p>commonJS是一个模块块加载的规范。而AMD是该规范的一个草案，CommonJS AMD规范描述了模块化的定义，依赖关系，引用关系以及加载机制，其规范原文在<a href="http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition">这里</a> 。它被requireJS，NodeJs，Dojo，jQuery等开源框架广泛使用。<a href="http://blog.csdn.net/dojotoolkit/article/details/6076668">这里</a>还有一篇不错的中文介绍文章。</p>
-
-<p>AMD规范需要用目录层级当作包层次，这一点就象java一样。之前我以为iOS打包后的ipa资源文件中不能有资源目录层级关系，今天在会上问了一下，原来是我自己弄错了。如果需要将目录层级带入ipa资源文件中，只需要将该目录拖入工程中，然后选择“Create groups for any added folders”。如下图所示，这样目录层级能够打包到ipa文件中。</p>
-
-<p><img src="/images/uiwebview-commonjs-folder.jpg"></p>
-
-<h2>调试</h2>
-
-<p>在iOS设备中调试javascript是一件相当苦逼的事情，拿pw的话来说：“一下子回到了ie6时代”。当然，业界也有一些调试工具可以用的。</p>
-
-<p>我们在开发时主要采用的是<a href="http://phonegap.github.com/weinre/">weinre</a>这个框架。用这个框架，可以做一些基本的调试工作，但是它现在功能还没有象pc上的js调试器那么强大，例如它不能下断点，另外如果有js执行错误，它也无法正确的将错误信息报出。它还有一些bug，例如在mac机下，如果你同时连接了有线网和无线网，那么weinre将无法正确地连接到调试页面。</p>
-
-<p>但终究，它是现在业界现存的唯一相对可用的调试工具了。本次的PhoneGap讲座的第一位演讲者董龙飞有一篇博客很好地介绍了weinre的使用，地址是<a href="http://www.donglongfei.com/2012/03/debug-phonegap-app-using-weinre/">这里</a>，推荐感兴趣的同学看看。即使不用PhoneGap，weinre也能给你在移动设备上设计网页带来方便。</p>
-
-<h2>我对PhoneGap的看法</h2>
-
-<p>今天的大会上，2位演讲者把PhoneGap吹得相当牛。但是其实真正用过的人才能知道，PhoneGap还是有相当多的问题的。至少我知道在网易就有一个使用PhoneGap而失败的项目，所以我认为PhoneGap还是有它相当大的局限性的。</p>
-
-<p>我认为PhoneGap有以下3大问题：</p>
-
-<ol>
-<li><p>首先，PhoneGap的编程语言其实是javascript，这对于非前端工作者来说，其实学习起来和学习原生的objective-C或Java编程语言难度差不多，而且由于历史原因，javascript语言本身的问题比其它语言都多。要想精通javascript，相当不易。</p></li>
-<li><p>然后，PhoneGap的目标是方便地创建跨平台的应用。但是其实苹果和google都发布了自己的人机交互指南。有些情况下，苹果的程序和android程序有着不同的交互原则的。象有道云笔记的<a href="http://itunes.apple.com/us/app/id450748070?ls=1&amp;mt=8">iPhone版</a>和<a href="http://m.note.youdao.com/noteproxy/download?todo=download&amp;platform=android&amp;keyfrom=note.web">android版</a>，就有着完全不同的界面和交互。使用PhoneGap就意味着你的程序在UI和交互上，既不象原生的iphone程序，又不象原生的android程序。</p></li>
-<li><p>最后，性能问题。Javascript终究无法和原生的程序比运行效率，这一点在当你要做一些动画效果的时候，就能显现得很明显。</p></li>
-</ol>
-
-
-<p>当然，PhoneGap的优势也很明显，如果你是做图书类，查询类，小工具类应用的话，这些应用UI交互不复杂，也不占用很高的cpu资源，PhoneGap将很好地发挥出它的优势。对于这类应用：</p>
-
-<ol>
-<li><p>你只需要编写一次，则可以同时完成iOS, android, windows phone等版本的开发。</p></li>
-<li><p>如果改动不大，只是内容升级，那它升级时只需要更新相应的js文件，而不需要提交审核，而一般正常提交苹果的app store审核的话，常常需要一周时间。</p></li>
-</ol>
-
-
-<p>所以PhoneGap不是万能的，但也不是没有用，它有它擅长的领域，一切都看你是否合理地使用它。</p>
-
-<p>最后，推荐<a href="http://www.phonegap.cn/">PhoneGap中国网站</a> ，在这里，你可以找到为数不多的中文资料。也推荐本次PhoneGap的演讲者<a href="http://weibo.com/donglongfei">董龙飞的微博</a>， 它是Adobe中国平台技术经理，应该能为你解答不少关于PhoneGap的问题。</p>
-
-<h2>对js的感想</h2>
-
-<p>现在前端工程师相当牛逼啊。前端工程师不但可以写前端网页，还可以用Flex写桌面端程序，可以用nodejs写server端程序，可以用PhoneGap写移动端程序，这一切，都是基于javascript语言的，还有最新出的windows 8，原生支持用js来写Metro程序，世界已经无法阻止前端工程师了。</p>
 ]]></content>
   </entry>
   

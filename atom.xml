@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-06-24T22:35:27+08:00</updated>
+  <updated>2012-08-05T23:03:02+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,256 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Objective-C的新特性]]></title>
+    <link href="http://blog.devtang.com/blog/2012/08/05/use-modern-objective-c/"/>
+    <updated>2012-08-05T21:50:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/08/05/use-modern-objective-c</id>
+    <content type="html"><![CDATA[<p>苹果在今年的WWDC2012大会上介绍了大量Objective-C的新特性，能够帮助iOS程序员更加高效地编写代码。在不久前更新的XCode4.4版本中，这些新特性已经可以使用了。让我们看看这些新特性有哪些：</p>
+
+<!-- more -->
+
+
+<h2>Object Literals</h2>
+
+<p>这个是我认为最赞的一个改进。Object Literals允许你方便地定义数字、数组和字典对象。这个功能类似于java5提供的auto boxing功能。这虽然是一个语法糖，但我认为对提高写代码效率帮助很大。让我们先来看看以前定义数字、数组和字典对象的方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumber</span> <span class="o">*</span> <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSArray</span> <span class="o">*</span> <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;one&quot;</span><span class="p">,</span> <span class="s">@&quot;two&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSDictionary</span> <span class="o">*</span> <span class="n">dict</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSDictionary</span> <span class="nl">dictionaryWithObjectsAndKeys:</span><span class="s">@&quot;value1&quot;</span><span class="p">,</span> <span class="s">@&quot;key1&quot;</span><span class="p">,</span> <span class="s">@&quot;value2&quot;</span><span class="p">,</span> <span class="s">@&quot;key2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>是不是很恶心？现在以上代码可以简化成以下形式，注意到没有，不用再在参数的最后加恶心的nil了，字典的key和value也不再是倒着先写value,再写key了：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumber</span> <span class="o">*</span> <span class="n">number</span> <span class="o">=</span> <span class="err">@</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="n">NSArray</span> <span class="o">*</span> <span class="n">array</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span><span class="s">@&quot;one&quot;</span><span class="p">,</span> <span class="s">@&quot;two&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSDictionary</span> <span class="o">*</span> <span class="n">dict</span> <span class="o">=</span> <span class="err">@</span><span class="p">{</span><span class="s">@&quot;key1&quot;</span><span class="o">:</span><span class="s">@&quot;value1&quot;</span><span class="p">,</span> <span class="s">@&quot;key2&quot;</span><span class="o">:</span><span class="s">@&quot;value2&quot;</span><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更多的示例如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'>  <span class="c1">// 整数</span>
+</span><span class='line'>  <span class="n">NSNumber</span> <span class="o">*</span><span class="n">fortyTwo</span> <span class="o">=</span> <span class="err">@</span><span class="mi">42</span><span class="p">;</span>             <span class="c1">// 等价于 [NSNumber numberWithInt:42]</span>
+</span><span class='line'>  <span class="n">NSNumber</span> <span class="o">*</span><span class="n">fortyTwoUnsigned</span> <span class="o">=</span> <span class="err">@</span><span class="mi">42</span><span class="n">U</span><span class="p">;</span>    <span class="c1">// 等价于 [NSNumber numberWithUnsignedInt:42U]</span>
+</span><span class='line'>  <span class="n">NSNumber</span> <span class="o">*</span><span class="n">fortyTwoLong</span> <span class="o">=</span> <span class="err">@</span><span class="mi">42L</span><span class="p">;</span>        <span class="c1">// 等价于 [NSNumber numberWithLong:42L]</span>
+</span><span class='line'>  <span class="n">NSNumber</span> <span class="o">*</span><span class="n">fortyTwoLongLong</span> <span class="o">=</span> <span class="err">@</span><span class="mi">42L</span><span class="n">L</span><span class="p">;</span>   <span class="c1">// 等价于 [NSNumber numberWithLongLong:42LL]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 浮点数</span>
+</span><span class='line'>  <span class="n">NSNumber</span> <span class="o">*</span><span class="n">piFloat</span> <span class="o">=</span> <span class="err">@</span><span class="mf">3.141592654F</span><span class="p">;</span>    <span class="c1">// 等价于 [NSNumber numberWithFloat:3.141592654F]</span>
+</span><span class='line'>  <span class="n">NSNumber</span> <span class="o">*</span><span class="n">piDouble</span> <span class="o">=</span> <span class="err">@</span><span class="mf">3.1415926535</span><span class="p">;</span>   <span class="c1">// 等价于 [NSNumber numberWithDouble:3.1415926535]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 布尔值</span>
+</span><span class='line'>  <span class="n">NSNumber</span> <span class="o">*</span><span class="n">yesNumber</span> <span class="o">=</span> <span class="err">@</span><span class="n">YES</span><span class="p">;</span>           <span class="c1">// 等价于 [NSNumber numberWithBool:YES]</span>
+</span><span class='line'>  <span class="n">NSNumber</span> <span class="o">*</span><span class="n">noNumber</span> <span class="o">=</span> <span class="err">@</span><span class="n">NO</span><span class="p">;</span>             <span class="c1">// 等价于 [NSNumber numberWithBool:NO]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 空数组</span>
+</span><span class='line'>  <span class="n">NSArray</span> <span class="o">*</span> <span class="n">array</span> <span class="o">=</span> <span class="err">@</span><span class="p">[];</span>                <span class="c1">// 等价于 [NSArray array]</span>
+</span><span class='line'>  <span class="c1">// 空的字典</span>
+</span><span class='line'>  <span class="n">NSDictionary</span> <span class="o">*</span> <span class="n">dict</span> <span class="o">=</span> <span class="err">@</span><span class="p">{};</span>            <span class="c1">// 等价于 [NSDictionary dictionary]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>怎么样？是不是简单多了？而且，为了方便你的旧代码迁移到新的写法，xcode专门还提供了转换工具，在xcode4.4中，选择 Edit -> Refactor -> Convert to Modern Objective-C Syntax即可。如下所示：
+<img src="http://blog.devtang.com/images/modern-objc-convert-tool.png"></p>
+
+<h2>局部的函数调用不用前向申明</h2>
+
+<p>这虽然是一个挺小的改进，但是很贴心。假如我们在一个源文件中有2个函数：分别名为foo 和 bar，其中foo的定义在bar前面。那如果在foo函数内部直接调用bar，编译器会报警告说找不到函数bar。</p>
+
+<p>而现在，我们可以随意地在源文件中放置函数bar的位置。编译器在找不到bar时，会再源码后面找，如果找到了bar，就不会报错了。</p>
+
+<h2>带有类型的enum</h2>
+
+<p>现在我们可以定义enum是无符号整数还是整数，这样编译器会更加智能的做类型检查。如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">typedef</span> <span class="k">enum</span> <span class="n">TableViewCellType</span> <span class="o">:</span> <span class="n">NSInteger</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">TableViewCellTypeQueue</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">TableViewCellTypeNewFans</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">TableViewCellTypeUserInfo</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">TableViewCellTypeOrganization</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">TableViewCellTypeFeedback</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">TableViewCellTypeRateApp</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">TableViewCellTypeRecommendation</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">TableViewCellTypeLogout</span>
+</span><span class='line'><span class="p">}</span><span class="n">TableViewCellType</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>默认生成@synthesize代码</h2>
+
+<p>以前写完一个诸如 @property (nonatomic, strong) NSString * username; 变量定义后，马上得转到 .m文件中去增加相应的 @synthesize username = _username; 代码。</p>
+
+<p>现在，编辑器发现你没有写 @synthesize时，会自动帮你加上这一行。这同时在另一方面，起到了鼓励大家使用以下划线开头的变量名作为成员变量名的作用。</p>
+
+<p>当然，为了向下兼容，如果你的程序里面已经有了 @property 变量对应的 @synthesize 代码时，编辑器就不会自动帮你增加这个代码了。</p>
+
+<p>另外有2种特殊情况下，即使你没有写 @synthesize ，编辑器也不会自动帮你加上，这2种情况是：</p>
+
+<ol>
+<li>你同时提供了该property的setter 和 getter方法。</li>
+<li>你的这个property是 readonly 的。</li>
+</ol>
+
+
+<h2>遍历元素</h2>
+
+<p>你是如何遍历数组的元素的？通常我们有2种做法，一种是用 for in，另一种是用一个变量来循环数组下标。如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span> <span class="n">lines</span> <span class="o">=</span> <span class="p">...</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">line</span> <span class="k">in</span> <span class="n">lines</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>       <span class="c1">// ...</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lines</span><span class="p">.</span><span class="n">count</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSString</span> <span class="o">*</span> <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="n">lines</span> <span class="nl">objectAtIndex:</span><span class="n">i</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">...</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果是字典，遍历的代码就要稍微复杂一点了：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'>    <span class="n">NSDictionary</span> <span class="o">*</span> <span class="n">dict</span> <span class="o">=</span> <span class="err">…</span>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span> <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">dict</span> <span class="n">allKeys</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">key</span> <span class="k">in</span> <span class="n">keys</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSString</span> <span class="o">*</span> <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">dict</span> <span class="nl">objectForKey:</span><span class="n">key</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>现在，xcode对于iOS4.0以上的系统，支持用block来遍历元素了。用block来遍历字典可以简化代码的编写，建议大家都使用上这个新特性。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">lines</span> <span class="nl">enumerateObjectsUsingBlock:</span><span class="o">^</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">obj</span><span class="p">,</span> <span class="n">NSUInteger</span> <span class="n">idx</span><span class="p">,</span> <span class="kt">BOOL</span> <span class="o">*</span><span class="n">stop</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}];</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">_urlArguments</span> <span class="nl">enumerateKeysAndObjectsUsingBlock:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">key</span><span class="p">,</span> <span class="kt">id</span> <span class="n">obj</span><span class="p">,</span> <span class="kt">BOOL</span> <span class="o">*</span><span class="n">stop</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Subscripting Methods</h2>
+
+<p>这个新特性在WWDC2012的视频中提到了，但是在XCode4.4中没有实现。也是一个很体贴的语法糖，它允许你用中括号来代替原本的方法来获取和设置数组元素。</p>
+
+<p>简单来说，以前的 [array objectAtIndex:idx] 和 [array replaceObjectAtIndex:idx withObject:obj]，可以直接写作 array[idx] 和 array[idx] = obj了。其实这个特性在很多高级语言中都实现了，只是Objective-C生于80年代，一直没改进这个。</p>
+
+<p>这个改进同样对NSDictionary有效。甚至，你也可以给你自己的类提供中括号操作符对应的方法。具体做法是实现如下两个方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">objectAtIndexedSubscript:</span><span class="p">(</span><span class="n">NSUInterger</span><span class="p">)</span><span class="n">idx</span><span class="p">;</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">setObject:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">value</span> <span class="nl">atIndexedSubscript:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="n">idx</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>期等XCode4.5中能够使用上这个特性。</p>
+
+<h2>Tips</h2>
+
+<p>上面提到了不用写 @synthesize 了，那原本写的那么多 @synthesize 怎么办呢？作为有代码洁癖的我很想把它们删掉，但怎么删呢？一个文件一个文件打开，然后行一行删掉吗？放心，苹果已经帮我们想了解决方案。在WWDC2012 Session 400 Developer Tools Kickoff 中，苹果介绍了具体做法。步骤如下：</p>
+
+<ol>
+<li>首先使用区域查找，因为一般项目都会依赖第三方的开源库，我们可不想更改别人的库，所以我们只查找我们库中的文件，如下图所示：</li>
+</ol>
+
+
+<p><img src="http://blog.devtang.com/images/modern-objc-remove-synthesize-1.png"></p>
+
+<ol>
+<li>接着我们用正则匹配，找到以 @synthesize开头，后面接着是 var = _var; 格式的行。插入正则表达式很简单，直接点击查找输入框左边的放大镜，选择“insert pattern&#8221;，苹果就会把常见的正则表达式都列出来，你直接选择就可以了，非常方便。如下图所示：</li>
+</ol>
+
+
+<p><img src="http://blog.devtang.com/images/modern-objc-insert-pattern.png"></p>
+
+<p>在插入好合适的正则表达式后，我们按回车，就可以搜索到结果。</p>
+
+<p><img src="http://blog.devtang.com/images/modern-objc-search-result.png"></p>
+
+<ol>
+<li>我们点击搜索界面的preview按钮，查看替换效果，可以看到，对于我们测试代码，XCode生成的预览图已经正确地当对应代码删掉了。然后我们就可以点击替换，去掉所有的 @synthesize 代码了。</li>
+</ol>
+
+
+<p><img src="http://blog.devtang.com/images/modern-objc-replace-review.png"></p>
+
+<p>在下载完XCode4.4后，我就把我们的工程代码都转换成了新特性的语法。在转换后，我发现原本25000行的代码少了将近1000行。心里还是很开心的，因为又可以少写一些体力活类型的代码了。</p>
+
+<p>还是那句话，希望这些新特性能够让大家玩得开心。</p>
+
+<h3>参考资料</h3>
+
+<ul>
+<li>LLVM官方网站比较全面地介绍了 Object Literal： <a href="http://clang.llvm.org/docs/ObjectiveCLiterals.html">http://clang.llvm.org/docs/ObjectiveCLiterals.html</a></li>
+<li>WWDC2012 Session 400 Developer Tools Kickoff</li>
+<li>WWDC2012 Session 405 Modern Objective-C</li>
+<li>WWDC2012 Session 413 Migrating to Modern Objective-C</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[封装同步的UIActionSheet]]></title>
@@ -2882,107 +3132,6 @@
 <p>所以，我们不能期望从IT类培训机构中学习到最新的技术，一切只能通过我们自学。当然，自学之后在同行之间相互交流，对于我们的技术成长也是很有用的。</p>
 
 <p>所以，各位同行，别想有人能够教你，一切还是靠自己吧。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2011年个人总结]]></title>
-    <link href="http://blog.devtang.com/blog/2012/01/01/2011-summary/"/>
-    <updated>2012-01-01T18:47:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/01/01/2011-summary</id>
-    <content type="html"><![CDATA[<p>2011年的过去了，总结一下今年的成长和收获。</p>
-
-<h3>流水账</h3>
-
-<p>2011年是我完整工作的一年。不过这一年的工作也变动频繁。</p>
-
-<p>首先是从1月份专门搞uvs，把uvs升级成ouvs。升级后增加了对于时间段搜索的支持。另一方面，周末在家做的topcoder component终于拿到了一次第一。这是一个做IBM Symphony插件的项目，因为之前在IBM实习一直做相关的东西，所以能够很快的做出来，那个东西tricky的东西很多，所以基本上没有人做。不过除我之外还有一个会做的，竞争就只是我和他之间了，不过最终我比他得分稍高一点，拿到了800$的第一名奖金，另外digital run的排名还多拿了100多$。一月份的时候把这个钱通过wireless
-transfer转到了我的工商银行账号，然后马上换成了人民币。第一次尝到拿美元，还是很开心的。</p>
-
-<!--more-->
-
-
-<p>Topcoder比赛结果，<a href="http://community.topcoder.com/tc?module=CompContestDetails&amp;pj=30014856">来源</a>
-<img src="http://blog.devtang.com/images/topcoder_component_rank.png"></p>
-
-<p>3月份，oxygen离职去了知乎。其实我也明白微博的竞争似乎已经结束，某浪和某迅基本已经占位成功。在产品上没有新意，宣传上没有增加投入的情况下，要超过他们似乎是不可能的事。并且我也渐渐意识到微博本身的价值有些被过高估计，新浪的股票一路从50多涨到120多，现在又回归50多似乎说明了这一点。也是从3月份开始，我开始带实习生tianye了。这是我第一次带实习生，感觉自己很多细节上还是没有处理好，比起郭老大来说，有很多考虑不周的地方。不过至少我是尽力想做好这个mentor的。</p>
-
-<p><img src="http://blog.devtang.com/images/sina_stock_2011.png"></p>
-
-<p>也是从3月份开始，我开始跟着perfectworks做前端开发了。前端开发在春节就翻过一些书，有一些基本概念了。perfectworks在前端开发这块很牛，也很希望跟着他多学习一些东西。因为前端的tricky很多，如果没有牛人带的话，成长会很慢。后来果然在他的指导下，进步很快，没多久就开始写前端代码了，后来因为转组，没有再做前端，但js相关的开发经验在后来给我带来了挺多优势，比如做笔记的一些功能的时候，就是内嵌web浏览器来完成的，这里面就涉及挺多的js开发。由于有前端开发的经验，这部分的开发工作在我转到做笔记开发之后都派上了用场。</p>
-
-<p>5月份做了一次组内的talk，讲java gc。这也是我们开始尝试把有道的技术分享的文化带到微博组。开始的分享都是大家先自己研究，然后做报告。做java
-gc的分享也让我好好学习了一下java的内存回收技术。后来面试的时候发现，真正研究过这块的人还真是少之又少。从5月份开始，我们也尝试进行用scrum的方式进行项目开发。每2周一个sprint。后来回有道发现，在实施scrum开发实践方面，我们是贯彻的最彻底的。我们坚持了每天的站会，出牌方式的评估时间，严格按照scrum的要求来做项目计划和功能分解。每天会详细标明每个功能点的开发进度以及遇到的问题。后来了解到其他组的实践，都比我们山寨得多，比如有些组开发时间是由产品经理定的，有些组没有站会，有些组根本没有详细做功能分解，更别说每天更新status了。这一点也让我认识到微博团队是一个很优秀的团队。</p>
-
-<p>6月份，我经历了很大的变动,最终选择回到有道，在选组上，river给了我们很多帮助，各组的leader的热情也让我们受宠若惊。一开始我是坚定想选择infra组，做搜索的底层开发的，因为这样我的工作也算是有延续的。但是后来了解到ouvs开发已经基本完毕，只剩下一些bug fix或者小修小改的事情，我就感觉没那么有热情了。加上jwh说云存储这边需要iOS开发的人。正好当时xc把他的mac bookpro转让给了我，让我也有机会去了解iphone开发。其实从去年就觉得移动开发这块会是一个趋势，可能造就很多伟大的公司和产品。当时就买了android开发相关的书籍在看。所以自己觉得这正好是一个机会，可以转到移动开发这个领域。在决定之前，自己还是犹豫了好久，因为在后端做了一年多了，多少也积累了不少经验。转到移动开发，又是一个全新的开始，一切又需要重头做起。不过最终还是觉得应该乘年轻做自己喜欢做的事情，加上自己看好这个领域，所以就决定去云存储组做有道笔记的开发了。</p>
-
-<p>7月份初，微博的工作交接完毕，我专心开始学习iOS开发。其实公司给我的时间不多，差不多只有2周的时间学习，中间还要处理一些交接的遗留问题以及iphone版javascript相关的bug。对，我差不多刚进去就开始改js的bug了。那段时间是我最辛苦的一段时间，因为组内也没有对iOS开发特别熟的人，我只有自己学习，而公司内部的iOS交流气氛又不太好，各组的iOS开发同事交流不多。我基本上把周末和晚上的时间都用来学习iOS开发了。半个月之后，基本能够上手写代码了。之后做了2次关于iphone开发的talk,拉huangdx做了一次facebook320的Talk,给测试的同事做了一次iphone模拟器使用的talk,另外也组织建了一个iOS开发的泡泡群，拉上了网站部的同事来一起交流。基本上有一个交流的环境了，不过大家交流的习惯还不怎么强，所以群里面很多时候都比较冷清，这一点使我比较苦恼。</p>
-
-<p>9月初，完成了有道笔记手写和涂鸦功能的开发。中间也被拉去开发了有道词典的图片广告功能。9月底开始思考如何做ipad版笔记。</p>
-
-<p>10月份开始做ipad版的开发，最终于12月初提交上线。上线后排名一路上升，最高达到了效率类第一名的位置。现在一直稳定在效率类前5名。</p>
-
-<p>2011-12-20的app store截图：<img src="http://blog.devtang.com/images/ynote_ipad_rank_2011-12-20.png"></p>
-
-<p>10月份做了一个个人项目，图书馆借书系统的改造。把借书改成分布式的，每个人都要承担图书的保管任务，这样就不会丢书了。虽然只用了3天时间，但是能在工作时间做个人项目感觉还是挺爽的。</p>
-
-<p>12月份开始带第二个实习生maojj了。希望能把他带好。</p>
-
-<h3>主要工作</h3>
-
-<p>总结起来，自己这一年主要的工作是：</p>
-
-<ul>
-<li>1月-3月 微博搜索功能开发和维护</li>
-<li>4月-6月 微博前端开发</li>
-<li>7月-12月 有道笔记iphone,ipad版开发</li>
-</ul>
-
-
-<h3>技术成长</h3>
-
-<p>今年是自己技术语言扩张最快的一年，学习并掌握了：</p>
-
-<ul>
-<li>javascript、objectiveC 2种新的开发语言。</li>
-<li>对于shell脚本的掌握也有提升。</li>
-<li>git版本管理。基本可以用git来做代码管理了。</li>
-<li>正在看python语言，打算进一步提高自己的脚本能力。</li>
-</ul>
-
-
-<p>值得一提的是，由于iphone开发的中文资料太少，今年接触和阅读了大量英文书和视频。在听完stanford的iphone开发课程和苹果的WWDC2011视频后，英语的听力水平提高不少。iphone开发的各种问题，也基本只能在stackoverflow.com上找到解答，所以现在已经很习惯直接阅读英文资料了。</p>
-
-<h3>读书</h3>
-
-<p>这一年，我也看了很多书，包括：</p>
-
-<ul>
-<li>后端开发的各种书：《java程序员职场全攻略》等</li>
-<li>前端开发的各种书：《ppk谈javascript》, 《Professional Javascript for Web Developers》等</li>
-<li>iphone开发的各种书：《iphone3开发基础教程》《iphone开发秘籍》、《iOS4 in Action》等</li>
-<li>工作效率类的书：《git权威指南》，《鸟哥的linux私房菜》，《vim book》，《番茄工作法》等</li>
-<li>传记类：《乔布斯传》，《编程人生》，《黑客与画家》，《软件随想录》</li>
-</ul>
-
-
-<h3>变化</h3>
-
-<p>这一年感觉自己比较大的变化：</p>
-
-<ul>
-<li>在买了mac book后，由于mac book下的游戏比较少，所以更加注重学习脚本和工具了。脚本能力有不少长进。</li>
-<li>在做完图书馆个人项目后，更加强调执行力了。推动了公司内部iOS开发的交流。也更加注意通过写博客或wiki来总结知识。</li>
-<li>感觉身体由于久坐更差了，脖子和肩膀，还有手腕都常常有疼痛现象。所以开始注意加强锻炼了。除了早上打五禽戏，晚上周三会去游泳。</li>
-</ul>
-
-
-<h3>个人Milestone</h3>
-
-<ul>
-<li>2011-04-07 开始维护自己的原创博客, 原本在<a href="http://tangqiaoboy.blog.163.com">网易博客</a>上,2011-11-05购买了个人域名devtang.com, 12月份将博客移动到github下，地址是: <a href="http://blog.devtang.com">http://blog.devtang.com</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

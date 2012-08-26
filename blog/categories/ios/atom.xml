@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-08-05T23:03:02+08:00</updated>
+  <updated>2012-08-26T21:26:21+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,190 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[用脚本来简化iOS美术同学的工作]]></title>
+    <link href="http://blog.devtang.com/blog/2012/08/26/use-script-to-power-up-ui-work/"/>
+    <updated>2012-08-26T20:34:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/08/26/use-script-to-power-up-ui-work</id>
+    <content type="html"><![CDATA[<h2>问题</h2>
+
+<p>我们知道，在iOS开发中，为了使我们的app能够同时支持iPhone的Retina屏幕和普通屏幕，美术同学需要对UI设计稿中的每个元素进行2次切图。苹果要求对图片元素的命名分别为 name.png 和 name@2x.png，带@2x的表示是Retina屏幕的贴图，不带@2x的同名文件为普通屏幕的贴图。</p>
+
+<p>我在开发的时候发现很难要求美术同学按照开发的要求来对图片命名。她们通常对于切图的命名是例如 <em>登录按钮大.png</em> ，<em>登录按钮小.png</em>, <em>登录按钮按下大.png</em> <em>登录按钮按下小.png</em> 这样的形式。于是，对这些文件按照苹果的要求进行重命名就成了我这个码农的一个体力活。</p>
+
+<!-- more -->
+
+
+<h2>解决方案</h2>
+
+<p>有什么方法能减少开发和美术的体力活呢？想到因为 name@2x.png 的图片是 name.png 图片的2整倍，所以，我们完全可以让美术只切@2x的大图，而我们使用脚本来生成小图。于是我写了下面这样的一个脚本，我只需要将所有的大图按照类似 name-1@2x.png , name-2@2x.png 方式命名，然后脚本就会自动帮我生成对应的名为 name-1.png 和 name-2.png的小图。</p>
+
+<p>``` objc</p>
+
+<h1>! /bin/bash</h1>
+
+<h1>File name : convertImage.sh</h1>
+
+<h1>Author: Tang Qiao</h1>
+
+<h1></h1>
+
+<h1>print usage</h1>
+
+<p>usage() {</p>
+
+<pre><code>cat &lt;&lt; EOF
+Usage:
+    convertImage.sh &lt;src directory&gt; &lt;dest directory&gt;
+</code></pre>
+
+<p>EOF
+}</p>
+
+<p>if [ $# -ne 2 ]; then</p>
+
+<pre><code>usage
+exit 1
+</code></pre>
+
+<p>fi</p>
+
+<p>SRC_DIR=$1
+DEST_DIR=$2</p>
+
+<h1>check src dir</h1>
+
+<p>if [ ! -d $SRC_DIR ]; then</p>
+
+<pre><code>echo "src directory not exist: $SRC_DIR"
+exit 1
+</code></pre>
+
+<p>fi</p>
+
+<h1>check dest dir</h1>
+
+<p>if [ ! -d $DEST_DIR ]; then</p>
+
+<pre><code>mkdir -p $DEST_DIR
+</code></pre>
+
+<p>fi</p>
+
+<p>for src_file in $SRC_DIR/<em>.</em> ; do</p>
+
+<pre><code>echo "process file name: $src_file"
+# 获得去掉文件名的纯路径
+src_path=`dirname $src_file`
+# 获得去掉路径的纯文件名
+filename=`basename $src_file`
+# 获得文件名字(不包括扩展名)
+name=`echo "$filename" | cut -d'.' -f1`
+# remove @2x in filename if there is
+name=`echo "$name" | cut -d"@" -f1`
+# 获得文件扩展名
+extension=`echo "$filename" | cut -d'.' -f2`
+dest_file="$DEST_DIR/${name}.${extension}"
+
+convert $src_file -resize 50% $dest_file
+</code></pre>
+
+<p>done
+```</p>
+
+<p>脚本使用方法：将以上代码另存为 convertImage.sh，然后用以下方式调用此脚本，即可将源文件夹中所有以@2x结尾的图片文件转成一半大小的、去掉@2x的小图片。</p>
+
+<p><code>bash
+convertImage.sh 源文件夹 目标文件夹
+</code></p>
+
+<p>使用以上脚本后，美术只用切一半的图了。因为给我的切图少了，所以我可以更加方便地找到对应的切图了。另外，我也减少了一半对切图进行重命名的工作。</p>
+
+<h2>Tips</h2>
+
+<h3>imagemagick</h3>
+
+<p>如果你运行以上脚本失败，请先用brew 或 port安装 imagemagick。imagemagick是一个相当强大的图象处理库。
+<code>bash
+brew install imagemagick
+</code></p>
+
+<h3>检查图片</h3>
+
+<p>在使用该脚本一段时间后，我发现美术同学给我的大图的长宽常常不是偶数，这样造成缩小的图就不是原图的整倍数了。为了方便我检查美术给我的图片是否宽高都是偶数，我写了如下检查的脚本，这样就可以检查图片的宽高是否符合要求了。</p>
+
+<p>``` bash</p>
+
+<h1>! /bin/bash</h1>
+
+<h1>File name : checkImageSize.sh</h1>
+
+<h1>Author: Tang Qiao</h1>
+
+<h1></h1>
+
+<p>usage() {</p>
+
+<pre><code>cat &lt;&lt;EOF
+Usage:
+    checkImageSize.sh &lt;directory&gt;
+</code></pre>
+
+<p>EOF
+}</p>
+
+<p>if [ $# -ne 1 ]; then</p>
+
+<pre><code>usage
+exit 1
+</code></pre>
+
+<p>fi</p>
+
+<p>SRC_DIR=$1</p>
+
+<h1>check src dir</h1>
+
+<p>if [ ! -d $SRC_DIR ]; then</p>
+
+<pre><code>echo "src directory not exist: $SRC_DIR"
+exit 1
+</code></pre>
+
+<p>fi</p>
+
+<p>for src_file in $SRC_DIR/*.png ; do</p>
+
+<pre><code>echo "process file name: $src_file"
+width=`identify -format "%[fx:w]" $src_file`
+height=`identify -format "%[fx:h]" $src_file`
+# check width
+modValue=`awk -v a=$width 'BEGIN{printf "%d", a % 2}'`
+if [ "$modValue" == "1" ]; then
+   echo "[Error], the file $src_file width is $width" 
+fi
+# check height
+modValue=`awk -v a=$height 'BEGIN{printf "%d", a % 2}'`
+if [ "$modValue" == "1" ]; then
+   echo "[Error], the file $src_file height is $height" 
+fi
+</code></pre>
+
+<p>done
+```</p>
+
+<h3>问题</h3>
+
+<p>我在使用以上方法时，发现由于imagemagick压缩比太高，生成的图片如果象素太小，它就会生成索引图片，而不知道何故，少量索引图片在iPhone 3GS上会显示出一条黑线在图片底部。对于这些图片，用photoshop将其模式改成RGB颜色即可。如下所示：</p>
+
+<p><img src="/images/ui-script-tips.png" title="" ></p>
+
+<p>用脚本代替体力活是一件很happy的事情，因为你可以用省下来的时间多做一些有意思的事情了。</p>
+
+<p>Have fun !</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Objective-C的新特性]]></title>
@@ -663,65 +847,6 @@ if (whoopsSomethingWrongHappened) {
 <p>我在学习fmdb的时候做了一个小工程用于练习，我把它放到github上了。感兴趣的可以自行下载：<a href="https://github.com/tangqiaoboy/FmdbSample">https://github.com/tangqiaoboy/FmdbSample</a></p>
 
 <p>祝大家玩得开心。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[关于iOS测试机个数上限的详细规则]]></title>
-    <link href="http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit/"/>
-    <updated>2012-04-06T16:50:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
-
-<!-- more -->
-
-
-<h2>规则</h2>
-
-<p>我总结出来的规则如下（附上原文以便对应）：</p>
-
-<ul>
-<li>每一个开发者membership year,只能有100次增加设备的名额。如果你增加一个设备,之后又将该设备删除,并不会将用掉的名额恢复.</li>
-</ul>
-
-
-<p>You can register up to 100 devices per year for development purposes. Any devices added, then later removed, still count towards your maximum number of registered devices per year.</p>
-
-<ul>
-<li>在每一个开发者membership year开始的时候,Team Agent和Admin角色可以选择删掉一些设备来恢复资格, 也可以清空所有设备来恢复到最多100次设备的名额。这个操作在Team Agent和Admin在一次新的membership year开始后即可使用，在使用时，需要注意，先将需要删除的设备删掉，然后才能添加需要新增的设备。一旦开始增加新设备，删除设备以恢复名额的功能将不再可用。</li>
-</ul>
-
-
-<p>At the start of a new membership year, Team Agents and Admins can remove devices and restore the available device count for their development team to 100 devices.</p>
-
-<p>When Team Agents or Admins first sign in to the iOS Provisioning Portal at the start of a new membership year, they will be presented with the option to remove devices and restore the device count for those removed devices.</p>
-
-<p>Important Note: At the start of your membership year, make sure to remove all devices you no longer use for development prior to adding any new devices.</p>
-
-<ul>
-<li>在以后整个membership year中，删除设备不会增加新的名额。</li>
-</ul>
-
-
-<p>Removing devices during your membership year will not open these slots to add new devices.</p>
-
-<h2>举例</h2>
-
-<p>直接看规则比较晦涩，举个例子：</p>
-
-<p>假如第一年，你增加了70个设备，同时删除了10个设备，这个时候，虽然你的设备数是60，但是可用的增加测试机的名额却只有30个了。</p>
-
-<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 - 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
-
-<h2>总结</h2>
-
-<p>所以说，不管怎么样，你的账号下的可用测试设备始终不会超过100个。不会象有些人想的那样，每过一年名额就直接变成100了。另外，每年删除设备以恢复名额的机会只有开始的时候，以后删除设备也不会恢复名额。</p>
-
-<p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。</p>
-
-<p>具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。在沟通完成后，苹果就可以立即帮助你状态修改到“可删除设备来增加测试设备名额”。这样，你就可以选择性的删除一些不需要的设备来释放一些名额了。</p>
 ]]></content>
   </entry>
   

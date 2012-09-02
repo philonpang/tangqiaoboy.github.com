@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "First Post"
+title: "Markdown格式测试"
 date: 2011-12-25 14:17
 comments: true
 categories: [xcode, tool]
@@ -98,7 +98,7 @@ gist 语法高亮：
 
 图片测试：
 {% img /images/mm.png %}
-{% img http://photo.yupoo.com/cctravel/BxNJK0XI/medish.jpg %}
+
 引用测试：
 {% blockquote %}
 这是一段引用的文字。

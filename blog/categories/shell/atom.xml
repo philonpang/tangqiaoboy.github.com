@@ -4,7 +4,7 @@
   <title><![CDATA[Category: shell | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-08-26T21:26:21+08:00</updated>
+  <updated>2012-09-15T17:03:21+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -77,7 +77,7 @@ git checkout git://your_ip_address/project
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[SVN和Git的使用感受]]></title>
+    <title type="html"><![CDATA[Git的使用感受]]></title>
     <link href="http://blog.devtang.com/blog/2012/02/03/talk-about-svn-and-git/"/>
     <updated>2012-02-03T21:08:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2012/02/03/talk-about-svn-and-git</id>
@@ -88,13 +88,13 @@ git checkout git://your_ip_address/project
 <!--more-->
 
 
-<h3>学习成本</h3>
+<h2>学习成本</h2>
 
 <p>首先我感觉Git的学习成本还是比较高的。svn基本上不到20个命令就可以应付日常的工作了，而Git有上百个命令。我在学习SVN的时候，基本上没有看什么书，最多就是在网上随便看了一些贴子，就基本会使用SVN了。而我花在Git的学习时间算下来，至少有1周。</p>
 
 <p>因为Git的学习成本较高，所以当一个会svn的同学刚刚接触Git的时候，如果简单地把Git当SVN用，就会感觉Git相当难用。我在公司就时常听到同事抱怨它。所以我认为，要想真正用好Git，还是需要投入时间来学习它，否则是很难使用的。</p>
 
-<h3>Git的内部结构</h3>
+<h2>Git的内部结构</h2>
 
 <p>Git真正是一个面向程序员的工具，它的内部数据结构是一个有向无环图，并且，你必须理解它的内部数据结构后，才能掌握它。因为你的很多操作，都其实对应的是这个有向无环图的操作。比如:</p>
 
@@ -118,7 +118,7 @@ git checkout git://your_ip_address/project
 
 <p>了解了Git的内部结构，对于这些Git的命令就更加理解了。</p>
 
-<h3>svn的坑</h3>
+<h2>svn的坑</h2>
 
 <p>svn在平常使用上基本没什么坑，平时通过</p>
 
@@ -144,7 +144,7 @@ svn propset svn:ignore 'spool' .
 svn ci -m 'Ignoring a directory called "spool".'
 </code></p>
 
-<h3>Git的坑</h3>
+<h2>Git的坑</h2>
 
 <ul>
 <li>在windows下的文件的权限因为无法和linux上完全一致，所以用Git检出的文件权限可能显示为被更改。
@@ -164,28 +164,35 @@ git config --global core.autocrlf true
 </ul>
 
 
-<h3>Git的一些小技巧</h3>
+<h2>Git的一些小技巧</h2>
 
-<ul>
-<li>一旦推送到远程仓库后，就不要用类似git reset, git ci --amend, git rebase等破坏性提交了，否则远程仓库会因为你的新推送不是Fast Forward而拒绝提交(关于什么是Fast Forward要讲的太多了，自已看书吧)。如果实在不小心做了。在确定别人没有检出前，用git push -f 可以强制推送到远程仓库中。如下图:</li>
-</ul>
+<h3>强制推送</h3>
 
+<p> 一旦推送到远程仓库后，就不要用类似git reset, git ci --amend, git rebase等破坏性提交了，否则远程仓库会因为你的新推送不是Fast Forward而拒绝提交(关于什么是Fast Forward要讲的太多了，自已看书吧)。如果实在不小心做了。在确定别人没有检出前，用git push -f 可以强制推送到远程仓库中。如下图:</p>
 
 <p><img src="/images/git_push_f.jpg"></p>
 
-<ul>
-<li><p>在公司没有应用git前，你可以用git svn 来做管理。 git svn 相关命令：
-<code>
-   git svn clone -r REV1:HEAD svn_addr local_addr
-   git svn dcommit  提交到SVN
-   git svn fetch    从svn up信息
-   git svn rebase   将从svn up过来的信息，rebase成git提交
-   git svn rebase --continue  冲突后继续rebase信息
-</code></p></li>
-<li><p>在用户的home目录下，有一个.gitconfig文件，里面可以配置一些别名，方便平时的git操作。
-特别是那些平日使用SVN的短命令习惯了的同学，配置一下别名后，使用git就会相当顺手了。我配置的别名如下。这里特别多说一句，有些人喜欢将ci设置成commit -a，这样就不用git add来把需要提交的文件加入到暂存区了。在《Git权威指南》中，作者极力反对这样做。因为Git本身在提交前有add这步，就是为了让提交者能够审视自己的提交文件，以防止错误的提交发生。</p></li>
-</ul>
+<h3>使用git svn</h3>
 
+<p> 在公司没有应用git前，你可以用git svn 来做管理。 git svn 相关命令：</p>
+
+<p>```</p>
+
+<pre><code> git svn clone -r REV1:HEAD svn_addr local_addr
+ git svn dcommit  提交到SVN
+ git svn fetch    从svn up信息
+ git svn rebase   将从svn up过来的信息，rebase成git提交
+ git svn rebase --continue  冲突后继续rebase信息
+</code></pre>
+
+<p>```</p>
+
+<p>用git svn clone 的时候，带上 -r rev1:HEAD参数，可以省去将SVN整个提交历史抓取下来的时间。</p>
+
+<h3>设置常用命令的别名</h3>
+
+<p> 在用户的home目录下，有一个.gitconfig文件，里面可以配置一些别名，方便平时的git操作。
+特别是那些平日使用SVN的短命令习惯了的同学，配置一下别名后，使用git就会相当顺手了。我配置的别名如下。这里特别多说一句，有些人喜欢将ci设置成commit -a，这样就不用git add来把需要提交的文件加入到暂存区了。在《Git权威指南》中，作者极力反对这样做。因为Git本身在提交前有add这步，就是为了让提交者能够审视自己的提交文件，以防止错误的提交发生。</p>
 
 <pre>
 [alias]
@@ -200,25 +207,27 @@ git config --global core.autocrlf true
 </pre>
 
 
-<ul>
-<li><p>如果你需要删除Git下没有加入到版本库中的文件，可以使用：
+<h3>删除不在git管理下的文件</h3>
+
+<p> 如果你需要删除Git下没有加入到版本库中的文件，可以使用：
 <code>
 git clean -nd 测试删除
 git clean -fd 真实删除
-</code></p></li>
-<li><p>用git svn clone 的时候，带上 -r rev1:HEAD参数，可以省去将SVN整个提交历史抓取下来的时间。</p></li>
-<li><p>搭建一个Git远程仓库相当简单，直接在一台带SSH的服务器上用git init --bare dirname即可。本地可以用git remote命令来设置多个远程分支。另外，第一次提交的时候，因为远程仓库中没有任何分支，需要用如下指令建立master分支：
+</code></p>
+
+<h3>搭建自己的远程仓库</h3>
+
+<p>搭建一个Git远程仓库相当简单，直接在一台带SSH的服务器上用git init --bare dirname即可。本地可以用git remote命令来设置多个远程分支。另外，第一次提交的时候，因为远程仓库中没有任何分支，需要用如下指令建立master分支：
 <code>
 git remote add origin yourname@yourhost.com:~/path/repository_name
 git remote add add2 yourname@yourhost.com:~/path/repository_name
 git push origin master
 git push add2 master
-如果git remote add设置地址写错了，可以用git remote set-url更改：
+// 如果git remote add设置地址写错了，可以用git remote set-url更改：
 git remote set-url origin yourname@yourhost.com:~/path/repository_name
-</code></p></li>
-<li><p>如何用Git将一个文件的历史提交恢复？</p></li>
-</ul>
+</code></p>
 
+<h3>如何用Git将一个文件的历史提交恢复？</h3>
 
 <p>上次遇到一个问题，我某次提交改动了很多文件，但是其中有一个是不应该改的。所以我需要把这次提交中关于那个文件的改动撤销。直接用git checkout命令可以检出某一个文件的历史版本，然后就可以将对这个文件的改动取消了。如下：</p>
 
@@ -227,14 +236,123 @@ git checkout CommitId fileName
 git ci -m "revert a file modification"
 </code></p>
 
-<ul>
-<li>本地工作区还有未提交的内容时，不能pull?</li>
-</ul>
-
+<h3>本地工作区还有未提交的内容时，不能pull?</h3>
 
 <p>可以先用 git stash 将内容暂存，然后再pull，成功后再git stash pop将修改恢复。</p>
 
-<h3>一些Git的资料</h3>
+<h3>提交的邮箱错了？</h3>
+
+<p>有些时候，因为同时在github和公司内部做提交，所以用2个不同的邮箱。如果一个新工程clone下来，忘了用git config 来设置提交用户名和邮箱，就有可能用错误的邮箱作为账号名提交。这个时候，如果你只是错了最近的一次提交而已，可以用如下命令来将最近的一次提交作者名和邮箱修改：</p>
+
+<p><code>bash
+git config user.email your-email@163.com
+git config user.name your-name
+git commit --amend --reset-author
+</code>
+如果等你发现的时候，已经错了很多提交了。可以用如下命令来一次性修改多个提交的用户名和邮箱：</p>
+
+<p>``` bash
+git filter-branch -f --env-filter "</p>
+
+<pre><code>GIT_AUTHOR_NAME='Tang Qiao'
+GIT_AUTHOR_EMAIL='tangqiao@fenbi.com'
+GIT_COMMITTER_NAME='Tang Qiao'
+GIT_COMMITTER_EMAIL='tangqiao@fenbi.com'
+</code></pre>
+
+<p>" HEAD</p>
+
+<p>```</p>
+
+<h3>提交的时候自动去掉源码末尾的空格</h3>
+
+<p>源码末尾的空格几乎都是无意义的，应该去掉的。大多数review系统，都会将源码末尾的空格标红。所以，我们何不在提交时让git自动帮我们去掉这些空格呢？这个可以通过设置git的hook来实现，具体方法如下：</p>
+
+<ol>
+<li><p>用vim编辑一个名为pre-commit的文件：
+<code>
+vim .git/hooks/pre-commit
+</code></p></li>
+<li><p>输入如下代码，保存退出vim</p></li>
+</ol>
+
+
+<p>```</p>
+
+<h1>!/bin/sh</h1>
+
+<p>if git-rev-parse --verify HEAD >/dev/null 2>&amp;1 ; then
+   against=HEAD
+else
+   # Initial commit: diff against an empty tree object
+   against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi</p>
+
+<h1>Find files with trailing whitespace</h1>
+
+<p>for FILE in <code>exec git diff-index --check --cached $against -- | sed '/^[+-]/d' | sed -E 's/:[0-9]+:.*//' | uniq</code> ; do</p>
+
+<pre><code># Fix them!
+sed -i '' -E 's/[[:space:]]*$//' "$FILE"
+git add "$FILE"
+</code></pre>
+
+<p>done
+```</p>
+
+<ol>
+<li>增加pre-commit的运行权根：
+<code>
+chmod +x .git/hooks/pre-commit
+</code></li>
+</ol>
+
+
+<h3>让常用操作自动带颜色</h3>
+
+<p>默认的git diff, status, log什么的都是不带颜色的，可以用如下命令让它们都带上颜色。另外还有一些有趣的命令，一并列在下面。</p>
+
+<p>```
+git config --global --add user.email "email@163.com"
+git config --global --add user.name "your name"</p>
+
+<p>git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status -s
+git config --global alias.l log --oneline --decorate -12</p>
+
+<p>git config --global color.diff auto
+git config --global color.status auto
+git config --global color.branch auto
+git config --global merge.tool kdiff3
+git config --global meregtool.kdiff3.path "/usr/bin/kdiff3"<br/>
+git config --global alias.visual "!gitk"
+```</p>
+
+<h3>自动补全git命令</h3>
+
+<p>1.安装bash-completion: brew install bash-completion</p>
+
+<p>2.按要求把以下代码增加到 .bash_profile文件中：</p>
+
+<p><code>``
+  if [ -f</code>brew --prefix`/etc/bash_completion ]; then</p>
+
+<pre><code>. `brew --prefix`/etc/bash_completion
+</code></pre>
+
+<p>  fi
+```</p>
+
+<p>3.下载bash-completion对于Git的支持</p>
+
+<p><code>bash
+cd /usr/local/etc/bash_completion.d/
+sudo curl -O https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
+</code></p>
+
+<h2>一些Git的资料</h2>
 
 <ul>
 <li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/">Git Magic</a> 很通俗的一本介绍Git的书，比较短小精炼。</li>

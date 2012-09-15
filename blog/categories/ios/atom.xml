@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-08-26T21:26:21+08:00</updated>
+  <updated>2012-09-15T17:03:21+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -194,6 +194,14 @@ fi
 <p>用脚本代替体力活是一件很happy的事情，因为你可以用省下来的时间多做一些有意思的事情了。</p>
 
 <p>Have fun !</p>
+
+<h3>后记</h3>
+
+<p>在发表完这篇文章后，得到了很多反馈。</p>
+
+<p>其中<a href="http://weibo.com/wangyihan01">李祎</a>同学提到了一个iOS独立开发者的解决思路：<a href="http://kevincao.com/2011/08/prepare-png-for-iphone-app/">http://kevincao.com/2011/08/prepare-png-for-iphone-app/</a> ，我感觉该博客中提到的方法，或许更加适合美术同学，因为整个操作都是图形化的。所以附在这里，希望对大家有用。</p>
+
+<p>另外，网易杭研院的<a href="http://weibo.com/myerlang">施强</a>同学推荐了一个用于缩图的软件:<a href="http://www.xnconvert.com/">http://www.xnconvert.com/</a> ，据说也能很好的解决以上问题。一并在此推荐给大家作为参考。</p>
 ]]></content>
   </entry>
   

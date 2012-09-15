@@ -203,7 +203,7 @@
 <span class='line-number'>63</span>
 <span class='line-number'>64</span>
 <span class='line-number'>65</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">textFieldDidBeginEditing:</span><span class="p">(</span><span class="n">UITextField</span> <span class="o">*</span><span class="p">)</span><span class="n">sender</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">textFieldDidBeginEditing:</span><span class="p">(</span><span class="n">UITextField</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span>
 </span><span class='line'><span class="p">{</span>
 </span><span class='line'>    <span class="k">if</span> <span class="p">([</span><span class="n">sender</span> <span class="nl">isEqual:</span><span class="n">_textField</span><span class="p">])</span>
 </span><span class='line'>    <span class="p">{</span>
@@ -216,7 +216,7 @@
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="c1">//method to move the view up/down whenever the keyboard is shown/dismissed</span>
-</span><span class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">setViewMovedUp:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">movedUp</span>
+</span><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setViewMovedUp:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">movedUp</span>
 </span><span class='line'><span class="p">{</span>
 </span><span class='line'>    <span class="p">[</span><span class="n">UIView</span> <span class="nl">beginAnimations:</span><span class="nb">nil</span> <span class="nl">context:</span><span class="nb">NULL</span><span class="p">];</span>
 </span><span class='line'>    <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDuration:</span><span class="mf">0.5</span><span class="p">];</span> <span class="c1">// if you want to slide up the view</span>
@@ -241,7 +241,7 @@
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">keyboardWillShow:</span><span class="p">(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="p">)</span><span class="n">notif</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">keyboardWillShow:</span><span class="p">(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="p">)</span><span class="nv">notif</span>
 </span><span class='line'><span class="p">{</span>
 </span><span class='line'>    <span class="c1">//keyboard will be shown now. depending for which textfield is active, move up or move down the view appropriately</span>
 </span><span class='line'>
@@ -256,14 +256,14 @@
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">viewWillAppear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">animated</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillAppear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span>
 </span><span class='line'><span class="p">{</span>
 </span><span class='line'>    <span class="c1">// register for keyboard notifications</span>
 </span><span class='line'>    <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">addObserver:</span><span class="n">self</span> <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">keyboardWillShow:</span><span class="p">)</span>
 </span><span class='line'>                                                 <span class="nl">name:</span><span class="n">UIKeyboardWillShowNotification</span> <span class="nl">object:</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">window</span><span class="p">];</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">viewWillDisappear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">animated</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span>
 </span><span class='line'><span class="p">{</span>
 </span><span class='line'>     <span class="c1">// unregister for keyboard notifications while not visible.</span>
 </span><span class='line'>    <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">removeObserver:</span><span class="n">self</span> <span class="nl">name:</span><span class="n">UIKeyboardWillShowNotification</span> <span class="nl">object:</span><span class="nb">nil</span><span class="p">];</span>
@@ -285,7 +285,7 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSComparisonResult</span><span class="p">)</span><span class="nl">compare:</span><span class="p">(</span><span class="n">Person</span> <span class="o">*</span><span class="p">)</span><span class="n">otherObject</span> <span class="p">{</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSComparisonResult</span><span class="p">)</span><span class="nf">compare:</span><span class="p">(</span><span class="n">Person</span> <span class="o">*</span><span class="p">)</span><span class="nv">otherObject</span> <span class="p">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">birthDate</span> <span class="nl">compare:</span><span class="n">otherObject</span><span class="p">.</span><span class="n">birthDate</span><span class="p">];</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
@@ -350,11 +350,14 @@
   
   
   
-    <!-- JiaThis Button BEGIN -->
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
 <div id="ckepop">
 <span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_t163">网易微博</a>
 <a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
 <a class="jiathis_button_tqq">腾讯微博</a>
 <a class="jiathis_button_renren">人人网</a>
 <a class="jiathis_button_douban">豆瓣</a>
@@ -401,6 +404,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a>
@@ -456,10 +463,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2012/02/10/setup-blog-based-on-github/">象写程序一样写博客：搭建基于github的博客</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a>
       </li>
     
   </ul>

@@ -144,9 +144,9 @@
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// Objective-C语言</span>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">webView:</span><span class="p">(</span><span class="n">UIWebView</span> <span class="o">*</span><span class="p">)</span><span class="n">webView</span>
-</span><span class='line'>    <span class="nl">shouldStartLoadWithRequest:</span><span class="p">(</span><span class="n">NSURLRequest</span> <span class="o">*</span><span class="p">)</span><span class="n">request</span>
-</span><span class='line'>    <span class="nl">navigationType:</span><span class="p">(</span><span class="n">UIWebViewNavigationType</span><span class="p">)</span><span class="n">navigationType</span> <span class="p">{</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">webView:</span><span class="p">(</span><span class="n">UIWebView</span> <span class="o">*</span><span class="p">)</span><span class="nv">webView</span>
+</span><span class='line'>    <span class="nf">shouldStartLoadWithRequest:</span><span class="p">(</span><span class="n">NSURLRequest</span> <span class="o">*</span><span class="p">)</span><span class="nv">request</span>
+</span><span class='line'>    <span class="nf">navigationType:</span><span class="p">(</span><span class="n">UIWebViewNavigationType</span><span class="p">)</span><span class="nv">navigationType</span> <span class="p">{</span>
 </span><span class='line'>       <span class="n">NSURL</span> <span class="o">*</span> <span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">request</span> <span class="n">URL</span><span class="p">];</span>
 </span><span class='line'>       <span class="k">if</span> <span class="p">([[</span><span class="n">url</span> <span class="n">scheme</span><span class="p">]</span> <span class="nl">isEqualToString:</span><span class="s">@&quot;gap&quot;</span><span class="p">])</span> <span class="p">{</span>
 </span><span class='line'>            <span class="c1">// 在这里做js调native的事情</span>
@@ -337,11 +337,14 @@
   
   
   
-    <!-- JiaThis Button BEGIN -->
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
 <div id="ckepop">
 <span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_t163">网易微博</a>
 <a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
 <a class="jiathis_button_tqq">腾讯微博</a>
 <a class="jiathis_button_renren">人人网</a>
 <a class="jiathis_button_douban">豆瓣</a>
@@ -388,6 +391,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a>
@@ -443,10 +450,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2012/02/10/setup-blog-based-on-github/">象写程序一样写博客：搭建基于github的博客</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a>
       </li>
     
   </ul>

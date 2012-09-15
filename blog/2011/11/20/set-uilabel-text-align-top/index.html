@@ -191,13 +191,13 @@
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">// -- file: UILabel+VerticalAlign.h</span>
 </span><span class='line'><span class="cp">#pragma mark VerticalAlign</span>
 </span><span class='line'><span class="k">@interface</span> <span class="nc">UILabel</span> <span class="nl">(VerticalAlign)</span>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">alignTop</span><span class="p">;</span>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">alignBottom</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alignTop</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alignBottom</span><span class="p">;</span>
 </span><span class='line'><span class="k">@end</span>
 </span><span class='line'>
 </span><span class='line'><span class="c1">// -- file: UILabel+VerticalAlign.m</span>
 </span><span class='line'><span class="k">@implementation</span> <span class="nc">UILabel</span> <span class="nl">(VerticalAlign)</span>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">alignTop</span> <span class="p">{</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alignTop</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">CGSize</span> <span class="n">fontSize</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="nl">sizeWithFont:</span><span class="n">self</span><span class="p">.</span><span class="n">font</span><span class="p">];</span>
 </span><span class='line'>    <span class="kt">double</span> <span class="n">finalHeight</span> <span class="o">=</span> <span class="n">fontSize</span><span class="p">.</span><span class="n">height</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">numberOfLines</span><span class="p">;</span>
 </span><span class='line'>    <span class="kt">double</span> <span class="n">finalWidth</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>    <span class="c1">//expected width of label</span>
@@ -207,7 +207,7 @@
 </span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="nl">stringByAppendingString:</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s"> &quot;</span><span class="p">];</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">alignBottom</span> <span class="p">{</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alignBottom</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">CGSize</span> <span class="n">fontSize</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="nl">sizeWithFont:</span><span class="n">self</span><span class="p">.</span><span class="n">font</span><span class="p">];</span>
 </span><span class='line'>    <span class="kt">double</span> <span class="n">finalHeight</span> <span class="o">=</span> <span class="n">fontSize</span><span class="p">.</span><span class="n">height</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">numberOfLines</span><span class="p">;</span>
 </span><span class='line'>    <span class="kt">double</span> <span class="n">finalWidth</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>    <span class="c1">//expected width of label</span>
@@ -269,11 +269,14 @@
   
   
   
-    <!-- JiaThis Button BEGIN -->
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
 <div id="ckepop">
 <span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_t163">网易微博</a>
 <a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
 <a class="jiathis_button_tqq">腾讯微博</a>
 <a class="jiathis_button_renren">人人网</a>
 <a class="jiathis_button_douban">豆瓣</a>
@@ -320,6 +323,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a>
@@ -375,10 +382,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2012/02/10/setup-blog-based-on-github/">象写程序一样写博客：搭建基于github的博客</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a>
       </li>
     
   </ul>

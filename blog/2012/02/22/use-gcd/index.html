@@ -154,7 +154,7 @@
 <span class='line-number'>29</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">static</span> <span class="n">NSOperationQueue</span> <span class="o">*</span> <span class="n">queue</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nl">someClick:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">sender</span> <span class="p">{</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">someClick:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">indicator</span><span class="p">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
 </span><span class='line'>    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">indicator</span> <span class="n">startAnimating</span><span class="p">];</span>
 </span><span class='line'>    <span class="n">queue</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
@@ -162,7 +162,7 @@
 </span><span class='line'>    <span class="p">[</span><span class="n">queue</span> <span class="nl">addOperation:</span><span class="n">op</span><span class="p">];</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">download</span> <span class="p">{</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">download</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">NSURL</span> <span class="o">*</span> <span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">URLWithString:</span><span class="s">@&quot;http://www.youdao.com&quot;</span><span class="p">];</span>
 </span><span class='line'>    <span class="n">NSError</span> <span class="o">*</span> <span class="n">error</span><span class="p">;</span>
 </span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithContentsOfURL:</span><span class="n">url</span> <span class="nl">encoding:</span><span class="n">NSUTF8StringEncoding</span> <span class="nl">error:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">];</span>
@@ -174,7 +174,7 @@
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">download_completed:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">data</span> <span class="p">{</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">download_completed:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">data</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;call back&quot;</span><span class="p">);</span>
 </span><span class='line'>    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">indicator</span> <span class="n">stopAnimating</span><span class="p">];</span>
 </span><span class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">indicator</span><span class="p">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
@@ -431,11 +431,14 @@
   
   
   
-    <!-- JiaThis Button BEGIN -->
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
 <div id="ckepop">
 <span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_t163">网易微博</a>
 <a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
 <a class="jiathis_button_tqq">腾讯微博</a>
 <a class="jiathis_button_renren">人人网</a>
 <a class="jiathis_button_douban">豆瓣</a>
@@ -482,6 +485,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a>
@@ -537,10 +544,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2012/02/10/setup-blog-based-on-github/">象写程序一样写博客：搭建基于github的博客</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a>
       </li>
     
   </ul>

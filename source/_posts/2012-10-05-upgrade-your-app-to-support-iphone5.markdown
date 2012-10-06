@@ -23,6 +23,8 @@ categories: iOS
 
 {% img /images/iphone5support-1.jpg %}
 
+另外还有一个简单的办法，可以在启动模拟器后，用快捷键command+3(50%)，command+2(75%), command+1(100%)，来调整模拟器的显示比例，谢谢[Superrr一一](http://weibo.com/arcsystemworks) 提供的方法，比我的简单多了。
+
 ##具体升级步骤如下
 
 ####升级启动画面和第三方链接库

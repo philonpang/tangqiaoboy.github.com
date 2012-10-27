@@ -1,0 +1,1029 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>在MacOS和iOS系统中使用OpenCV - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="前言 OpenCV 是一个开源的跨平台计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。 最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/10/27/use-opencv-in-ios">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">文章列表</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">在MacOS和iOS系统中使用OpenCV</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-27T20:43:00+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>前言</h2>
+
+<p><img src="/images/opencv.png"></p>
+
+<p><a href="http://opencv.org/about.html">OpenCV</a> 是一个开源的跨平台计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。</p>
+
+<p>最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。有些问题费了我很多时间，在此总结分享给大家，希望后来人少走些弯路。</p>
+
+<p>可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。</p>
+
+<!-- more -->
+
+
+<h2>MacOS系统中使用OpenCV</h2>
+
+<h3>安装OpenCV</h3>
+
+<p>相信大部分Mac用户都安装了brew或port，如果你没有装，那么首先安装一下brew吧。使用如下命令安装brew:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSkL raw.github.com/mxcl/homebrew/go)&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在安装好brew后，只需要一条命令就可以安装OpenCV了：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install opencv
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通常情况下这样做就应该会安装成功，但我在公司和家里面的电脑尝试的时候，brew都会报一些错误，我遇到的都是一些小问题，按照brew的提示信息，解决掉相应的问题即可。</p>
+
+<p>安装成功后，你应该可以在“/usr/local/include&#8221;目录下找到名为opencv和opencv2的目录，这里面是OpenCV相关的头文件。你也可以在“/usr/local/lib&#8221;目录下找到许多以libopencv_开头的.dylib文件，这些是OpenCV的链接库文件。</p>
+
+<h3>在MacOS系统中使用OpenCV</h3>
+
+<p>接着我们可以试着在Xcode工程中使用OpenCV。</p>
+
+<p>新建一个Cocoa Application的工程。工程建好后，选中工程的Target，在Build Settings一样，找到“Header Search Paths&#8221;这一个选项，将它的值改为“/usr/local/include&#8221;。如下所示：</p>
+
+<p><img src="/images/use-opencv-in-mac-1.png"></p>
+
+<p>接着切换到Build Phases这个tab，在“Link Binary With Libraries&#8221;中，选项+号，然后将弹出的文件选择对话框目录切换到“/usr/local/lib&#8221;目录下，选择你需要使用的OpenCV链接库（通常情况下，你至少会需要core、highgui和imgproc库)，如下图所示：</p>
+
+<p><img src="/images/use-opencv-in-mac-2.png"></p>
+
+<p>这里有一个技巧，因为 /usr 目录在对话框中默认不是可见的，可以按快捷键 command + shift + G，在弹出的“前往文件夹&#8221;对话框中输入 /usr/local/lib ，即可跳转到目标文件夹。如下图所示：</p>
+
+<p><img src="/images/use-opencv-in-mac-3.png"></p>
+
+<p>下一步是我自己试出来的，你需要在Build Settings中，将“C++ Language Dialect”设置成C++11，将“C++ Standard Library”设置成libstdc++ ，如下图所示。个人感觉是由于XCode默认设置的GNU++11、libc++与OpenCV库有一些兼容性问题，我在更改该设置前老是出现编译错误。如果后续版本解决了这个问题，就不用进行这一步了。</p>
+
+<p><img src="/images/use-opencv-in-mac-4.png"></p>
+
+<p>把上面的设置都做好后，就可以在需要的使用OpenCV库的地方，加上opencv的头文件引用即可：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;opencv2/opencv.hpp&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意，如果你的源文件扩展名是.m的，你还需要改成.mm，这样编译器才知道你将会在该文件混合使用C++语言和Objective-C语言。</p>
+
+<p>OpenCV处理图象需要的格式是cv::Mat类，而MacOS的图象格式默认是NSImage，所以你需要知道如何在cv::Mat与NSImage之前相互转换。如下是一个NSImage的Addition，你肯定会需要它的。该代码来自stackoverflow上的<a href="http://stackoverflow.com/questions/8563356/nsimage-to-cvmat-and-vice-versa">这个贴子</a>。</p>
+
+<p>NSImage+OpenCV.h 文件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  NSImage+OpenCV.h</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  Created by TangQiao on 12-10-26.</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+</span><span class='line'><span class="cp">#import &quot;opencv2/opencv.hpp&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@interface</span> <span class="nc">NSImage</span> <span class="nl">(OpenCV)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">+</span><span class="p">(</span><span class="n">NSImage</span><span class="o">*</span><span class="p">)</span><span class="nf">imageWithCVMat:</span><span class="p">(</span><span class="k">const</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="p">)</span><span class="nv">cvMat</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithCVMat:</span><span class="p">(</span><span class="k">const</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="p">)</span><span class="nv">cvMat</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">CVMat</span><span class="p">;</span>
+</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">CVGrayscaleMat</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>NSImage+OpenCV.mm文件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  NSImage+OpenCV.mm</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  Created by TangQiao on 12-10-26.</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#import &quot;NSImage+OpenCV.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span> <span class="nf">ProviderReleaseDataNOP</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">info</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">@implementation</span> <span class="nc">NSImage</span> <span class="nl">(OpenCV)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span><span class="p">(</span><span class="n">CGImageRef</span><span class="p">)</span><span class="nf">CGImage</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">CGContextRef</span> <span class="n">bitmapCtx</span> <span class="o">=</span> <span class="n">CGBitmapContextCreate</span><span class="p">(</span><span class="nb">NULL</span><span class="cm">/*data - pass NULL to let CG allocate the memory*/</span><span class="p">,</span>
+</span><span class='line'>                                                   <span class="p">[</span><span class="n">self</span> <span class="n">size</span><span class="p">].</span><span class="n">width</span><span class="p">,</span>
+</span><span class='line'>                                                   <span class="p">[</span><span class="n">self</span> <span class="n">size</span><span class="p">].</span><span class="n">height</span><span class="p">,</span>
+</span><span class='line'>                                                   <span class="mi">8</span> <span class="cm">/*bitsPerComponent*/</span><span class="p">,</span>
+</span><span class='line'>                                                   <span class="mi">0</span> <span class="cm">/*bytesPerRow - CG will calculate it for you if it&#39;s allocating the data.  This might get padded out a bit for better alignment*/</span><span class="p">,</span>
+</span><span class='line'>                                                   <span class="p">[[</span><span class="n">NSColorSpace</span> <span class="n">genericRGBColorSpace</span><span class="p">]</span> <span class="n">CGColorSpace</span><span class="p">],</span>
+</span><span class='line'>                                                   <span class="n">kCGBitmapByteOrder32Host</span><span class="o">|</span><span class="n">kCGImageAlphaPremultipliedFirst</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">[</span><span class="n">NSGraphicsContext</span> <span class="n">saveGraphicsState</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">NSGraphicsContext</span> <span class="nl">setCurrentContext:</span><span class="p">[</span><span class="n">NSGraphicsContext</span> <span class="nl">graphicsContextWithGraphicsPort:</span><span class="n">bitmapCtx</span> <span class="nl">flipped:</span><span class="n">NO</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">self</span> <span class="nl">drawInRect:</span><span class="n">NSMakeRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="n">self</span> <span class="n">size</span><span class="p">].</span><span class="n">width</span><span class="p">,</span> <span class="p">[</span><span class="n">self</span> <span class="n">size</span><span class="p">].</span><span class="n">height</span><span class="p">)</span> <span class="nl">fromRect:</span><span class="n">NSZeroRect</span> <span class="nl">operation:</span><span class="n">NSCompositeCopy</span> <span class="nl">fraction:</span><span class="mf">1.0</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">NSGraphicsContext</span> <span class="n">restoreGraphicsState</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGImageRef</span> <span class="n">cgImage</span> <span class="o">=</span> <span class="n">CGBitmapContextCreateImage</span><span class="p">(</span><span class="n">bitmapCtx</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGContextRelease</span><span class="p">(</span><span class="n">bitmapCtx</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">cgImage</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span><span class="p">(</span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="p">)</span><span class="nf">CVMat</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">CGImageRef</span> <span class="n">imageRef</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="n">CGImage</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">CGColorSpaceRef</span> <span class="n">colorSpace</span> <span class="o">=</span> <span class="n">CGImageGetColorSpace</span><span class="p">(</span><span class="n">imageRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">cvMat</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">CV_8UC4</span><span class="p">);</span> <span class="c1">// 8 bits per component, 4 channels</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGContextRef</span> <span class="n">contextRef</span> <span class="o">=</span> <span class="n">CGBitmapContextCreate</span><span class="p">(</span><span class="n">cvMat</span><span class="p">.</span><span class="n">data</span><span class="p">,</span>                 <span class="c1">// Pointer to backing data</span>
+</span><span class='line'>                                                    <span class="n">cols</span><span class="p">,</span>                      <span class="c1">// Width of bitmap</span>
+</span><span class='line'>                                                    <span class="n">rows</span><span class="p">,</span>                     <span class="c1">// Height of bitmap</span>
+</span><span class='line'>                                                    <span class="mi">8</span><span class="p">,</span>                          <span class="c1">// Bits per component</span>
+</span><span class='line'>                                                    <span class="n">cvMat</span><span class="p">.</span><span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>              <span class="c1">// Bytes per row</span>
+</span><span class='line'>                                                    <span class="n">colorSpace</span><span class="p">,</span>                 <span class="c1">// Colorspace</span>
+</span><span class='line'>                                                    <span class="n">kCGImageAlphaNoneSkipLast</span> <span class="o">|</span>
+</span><span class='line'>                                                    <span class="n">kCGBitmapByteOrderDefault</span><span class="p">);</span> <span class="c1">// Bitmap info flags</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGContextDrawImage</span><span class="p">(</span><span class="n">contextRef</span><span class="p">,</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">),</span> <span class="n">imageRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGContextRelease</span><span class="p">(</span><span class="n">contextRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGImageRelease</span><span class="p">(</span><span class="n">imageRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">cvMat</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span><span class="p">(</span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="p">)</span><span class="nf">CVGrayscaleMat</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">CGImageRef</span> <span class="n">imageRef</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="n">CGImage</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">CGColorSpaceRef</span> <span class="n">colorSpace</span> <span class="o">=</span> <span class="n">CGColorSpaceCreateDeviceGray</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">cvMat</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">CV_8UC1</span><span class="p">);</span> <span class="c1">// 8 bits per component, 1 channel</span>
+</span><span class='line'>    <span class="n">CGContextRef</span> <span class="n">contextRef</span> <span class="o">=</span> <span class="n">CGBitmapContextCreate</span><span class="p">(</span><span class="n">cvMat</span><span class="p">.</span><span class="n">data</span><span class="p">,</span>                 <span class="c1">// Pointer to backing data</span>
+</span><span class='line'>                                                    <span class="n">cols</span><span class="p">,</span>                      <span class="c1">// Width of bitmap</span>
+</span><span class='line'>                                                    <span class="n">rows</span><span class="p">,</span>                     <span class="c1">// Height of bitmap</span>
+</span><span class='line'>                                                    <span class="mi">8</span><span class="p">,</span>                          <span class="c1">// Bits per component</span>
+</span><span class='line'>                                                    <span class="n">cvMat</span><span class="p">.</span><span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>              <span class="c1">// Bytes per row</span>
+</span><span class='line'>                                                    <span class="n">colorSpace</span><span class="p">,</span>                 <span class="c1">// Colorspace</span>
+</span><span class='line'>                                                    <span class="n">kCGImageAlphaNone</span> <span class="o">|</span>
+</span><span class='line'>                                                    <span class="n">kCGBitmapByteOrderDefault</span><span class="p">);</span> <span class="c1">// Bitmap info flags</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGContextDrawImage</span><span class="p">(</span><span class="n">contextRef</span><span class="p">,</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">),</span> <span class="n">imageRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGContextRelease</span><span class="p">(</span><span class="n">contextRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGColorSpaceRelease</span><span class="p">(</span><span class="n">colorSpace</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGImageRelease</span><span class="p">(</span><span class="n">imageRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">cvMat</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">+</span> <span class="p">(</span><span class="n">NSImage</span> <span class="o">*</span><span class="p">)</span><span class="nf">imageWithCVMat:</span><span class="p">(</span><span class="k">const</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="p">)</span><span class="nv">cvMat</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[[[</span><span class="n">NSImage</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithCVMat:</span><span class="n">cvMat</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithCVMat:</span><span class="p">(</span><span class="k">const</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="p">)</span><span class="nv">cvMat</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSData</span> <span class="nl">dataWithBytes:</span><span class="n">cvMat</span><span class="p">.</span><span class="n">data</span> <span class="nl">length:</span><span class="n">cvMat</span><span class="p">.</span><span class="n">elemSize</span><span class="p">()</span> <span class="o">*</span> <span class="n">cvMat</span><span class="p">.</span><span class="n">total</span><span class="p">()];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGColorSpaceRef</span> <span class="n">colorSpace</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">cvMat</span><span class="p">.</span><span class="n">elemSize</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">colorSpace</span> <span class="o">=</span> <span class="n">CGColorSpaceCreateDeviceGray</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">colorSpace</span> <span class="o">=</span> <span class="n">CGColorSpaceCreateDeviceRGB</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGDataProviderRef</span> <span class="n">provider</span> <span class="o">=</span> <span class="n">CGDataProviderCreateWithCFData</span><span class="p">((</span><span class="n">CFDataRef</span><span class="p">)</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGImageRef</span> <span class="n">imageRef</span> <span class="o">=</span> <span class="n">CGImageCreate</span><span class="p">(</span><span class="n">cvMat</span><span class="p">.</span><span class="n">cols</span><span class="p">,</span>                                     <span class="c1">// Width</span>
+</span><span class='line'>                                        <span class="n">cvMat</span><span class="p">.</span><span class="n">rows</span><span class="p">,</span>                                     <span class="c1">// Height</span>
+</span><span class='line'>                                        <span class="mi">8</span><span class="p">,</span>                                              <span class="c1">// Bits per component</span>
+</span><span class='line'>                                        <span class="mi">8</span> <span class="o">*</span> <span class="n">cvMat</span><span class="p">.</span><span class="n">elemSize</span><span class="p">(),</span>                           <span class="c1">// Bits per pixel</span>
+</span><span class='line'>                                        <span class="n">cvMat</span><span class="p">.</span><span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>                                  <span class="c1">// Bytes per row</span>
+</span><span class='line'>                                        <span class="n">colorSpace</span><span class="p">,</span>                                     <span class="c1">// Colorspace</span>
+</span><span class='line'>                                        <span class="n">kCGImageAlphaNone</span> <span class="o">|</span> <span class="n">kCGBitmapByteOrderDefault</span><span class="p">,</span>  <span class="c1">// Bitmap info flags</span>
+</span><span class='line'>                                        <span class="n">provider</span><span class="p">,</span>                                       <span class="c1">// CGDataProviderRef</span>
+</span><span class='line'>                                        <span class="nb">NULL</span><span class="p">,</span>                                           <span class="c1">// Decode</span>
+</span><span class='line'>                                        <span class="n">false</span><span class="p">,</span>                                          <span class="c1">// Should interpolate</span>
+</span><span class='line'>                                        <span class="n">kCGRenderingIntentDefault</span><span class="p">);</span>                     <span class="c1">// Intent</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">NSBitmapImageRep</span> <span class="o">*</span><span class="n">bitmapRep</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBitmapImageRep</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithCGImage:</span><span class="n">imageRef</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">NSImage</span> <span class="o">*</span><span class="n">image</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSImage</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">image</span> <span class="nl">addRepresentation:</span><span class="n">bitmapRep</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGImageRelease</span><span class="p">(</span><span class="n">imageRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGDataProviderRelease</span><span class="p">(</span><span class="n">provider</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGColorSpaceRelease</span><span class="p">(</span><span class="n">colorSpace</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">image</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>完成以上步骤后，恭喜你，你可以在源代码中自由地调用OpenCV的函数了。</p>
+
+<h2>在iOS系统中使用OpenCV</h2>
+
+<h4>下载或编译opencv2.framework</h4>
+
+<p>接下来介绍如何在iOS程序中使用OpenCV。在iOS上使用最新的OpenCV库比较简单，进入<a href="http://opencv.org/">opencv的官网</a>，下载build好的名为opencv2.framework即可（<a href="http://sourceforge.net/projects/opencvlibrary/files/opencv-ios/2.4.3/opencv2.framework.zip/download?utm_expid=6384-3">下载地址</a>）。</p>
+
+<p>如果你比较喜欢折腾，也可以自行下载opencv的源码，在本地编译opencv2.framework。<a href="http://docs.opencv.org/trunk/doc/tutorials/introduction/ios_install/ios_install.html#ios-installation">这里</a>有官方网站的教程，步骤非常简单，不过我照着它的教程尝试了一下失败了。感觉还是XCode编译器与OpenCV代码的兼容性问题，所以就没有继续研究了。</p>
+
+<h4>在iOS程序中使用OpenCV</h4>
+
+<p>新建一个iOS工程，将opencv2.framework直接拖动到工程中。然后，你需要在Build Settings中，将“C++ Standard Library”设置成libstdc++。</p>
+
+<p>因为opencv中的MIN宏和UIKit的MIN宏有冲突。所以需要在.pch文件中，先定义opencv的头文件，否则会有编译错误。将工程的.pch文件内容修改成如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;Availability.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#ifdef __cplusplus</span>
+</span><span class='line'><span class="cp">    #import &lt;opencv2/opencv.hpp&gt;</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#ifdef __OBJC__</span>
+</span><span class='line'><span class="cp">    #import &lt;UIKit/UIKit.h&gt;</span>
+</span><span class='line'><span class="cp">    #import &lt;Foundation/Foundation.h&gt;</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把上面的设置都做好后，就可以在需要的使用OpenCV库的地方，加上opencv的头文件引用即可：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;opencv2/opencv.hpp&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>还是那句话，如果你的源文件扩展名是.m的，你还需要改成.mm，这样编译器才知道你将会在该文件中混合使用C++语言和Objective-C语言。</p>
+
+<p>同样，iOS程序内部通常用UIImage表示图片，而OpenCV处理图象需要的格式是cv::Mat，你会需要下面这个Addition来在cv::Mat和UIImage格式之间相互转换。该代码来自<a href="https://github.com/aptogo/OpenCVForiPhone">aptogo的开源代码</a>，他的版权信息在源码头文件中。</p>
+
+<p>UIImage+OpenCV.h 文件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  UIImage+OpenCV.h</span>
+</span><span class='line'><span class="cp">//  OpenCVClient</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  Created by Robin Summerhill on 02/09/2011.</span>
+</span><span class='line'><span class="cp">//  Copyright 2011 Aptogo Limited. All rights reserved.</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  Permission is given to use this source code file without charge in any</span>
+</span><span class='line'><span class="cp">//  project, commercial or otherwise, entirely at your risk, with the condition</span>
+</span><span class='line'><span class="cp">//  that any redistribution (in part or whole) of source code must retain</span>
+</span><span class='line'><span class="cp">//  this copyright and permission notice. Attribution in compiled projects is</span>
+</span><span class='line'><span class="cp">//  appreciated but not required.</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@interface</span> <span class="nc">UIImage</span> <span class="nl">(UIImage_OpenCV)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">+</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nf">imageWithCVMat:</span><span class="p">(</span><span class="k">const</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="p">)</span><span class="nv">cvMat</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithCVMat:</span><span class="p">(</span><span class="k">const</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="p">)</span><span class="nv">cvMat</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">CVMat</span><span class="p">;</span>
+</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">CVGrayscaleMat</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>UIImage+OpenCV.mm 文件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  UIImage+OpenCV.mm</span>
+</span><span class='line'><span class="cp">//  OpenCVClient</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  Created by Robin Summerhill on 02/09/2011.</span>
+</span><span class='line'><span class="cp">//  Copyright 2011 Aptogo Limited. All rights reserved.</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  Permission is given to use this source code file without charge in any</span>
+</span><span class='line'><span class="cp">//  project, commercial or otherwise, entirely at your risk, with the condition</span>
+</span><span class='line'><span class="cp">//  that any redistribution (in part or whole) of source code must retain</span>
+</span><span class='line'><span class="cp">//  this copyright and permission notice. Attribution in compiled projects is</span>
+</span><span class='line'><span class="cp">//  appreciated but not required.</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#import &quot;UIImage+OpenCV.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span> <span class="nf">ProviderReleaseDataNOP</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">info</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Do not release memory</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">@implementation</span> <span class="nc">UIImage</span> <span class="nl">(UIImage_OpenCV)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span><span class="p">(</span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="p">)</span><span class="nf">CVMat</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGColorSpaceRef</span> <span class="n">colorSpace</span> <span class="o">=</span> <span class="n">CGImageGetColorSpace</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">CGImage</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">cvMat</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">CV_8UC4</span><span class="p">);</span> <span class="c1">// 8 bits per component, 4 channels</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGContextRef</span> <span class="n">contextRef</span> <span class="o">=</span> <span class="n">CGBitmapContextCreate</span><span class="p">(</span><span class="n">cvMat</span><span class="p">.</span><span class="n">data</span><span class="p">,</span>                 <span class="c1">// Pointer to backing data</span>
+</span><span class='line'>                                                    <span class="n">cols</span><span class="p">,</span>                      <span class="c1">// Width of bitmap</span>
+</span><span class='line'>                                                    <span class="n">rows</span><span class="p">,</span>                     <span class="c1">// Height of bitmap</span>
+</span><span class='line'>                                                    <span class="mi">8</span><span class="p">,</span>                          <span class="c1">// Bits per component</span>
+</span><span class='line'>                                                    <span class="n">cvMat</span><span class="p">.</span><span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>              <span class="c1">// Bytes per row</span>
+</span><span class='line'>                                                    <span class="n">colorSpace</span><span class="p">,</span>                 <span class="c1">// Colorspace</span>
+</span><span class='line'>                                                    <span class="n">kCGImageAlphaNoneSkipLast</span> <span class="o">|</span>
+</span><span class='line'>                                                    <span class="n">kCGBitmapByteOrderDefault</span><span class="p">);</span> <span class="c1">// Bitmap info flags</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGContextDrawImage</span><span class="p">(</span><span class="n">contextRef</span><span class="p">,</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">),</span> <span class="n">self</span><span class="p">.</span><span class="n">CGImage</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGContextRelease</span><span class="p">(</span><span class="n">contextRef</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">cvMat</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span><span class="p">(</span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="p">)</span><span class="nf">CVGrayscaleMat</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">CGColorSpaceRef</span> <span class="n">colorSpace</span> <span class="o">=</span> <span class="n">CGColorSpaceCreateDeviceGray</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">cvMat</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">CV_8UC1</span><span class="p">);</span> <span class="c1">// 8 bits per component, 1 channel</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGContextRef</span> <span class="n">contextRef</span> <span class="o">=</span> <span class="n">CGBitmapContextCreate</span><span class="p">(</span><span class="n">cvMat</span><span class="p">.</span><span class="n">data</span><span class="p">,</span>                 <span class="c1">// Pointer to backing data</span>
+</span><span class='line'>                                                    <span class="n">cols</span><span class="p">,</span>                      <span class="c1">// Width of bitmap</span>
+</span><span class='line'>                                                    <span class="n">rows</span><span class="p">,</span>                     <span class="c1">// Height of bitmap</span>
+</span><span class='line'>                                                    <span class="mi">8</span><span class="p">,</span>                          <span class="c1">// Bits per component</span>
+</span><span class='line'>                                                    <span class="n">cvMat</span><span class="p">.</span><span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>              <span class="c1">// Bytes per row</span>
+</span><span class='line'>                                                    <span class="n">colorSpace</span><span class="p">,</span>                 <span class="c1">// Colorspace</span>
+</span><span class='line'>                                                    <span class="n">kCGImageAlphaNone</span> <span class="o">|</span>
+</span><span class='line'>                                                    <span class="n">kCGBitmapByteOrderDefault</span><span class="p">);</span> <span class="c1">// Bitmap info flags</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGContextDrawImage</span><span class="p">(</span><span class="n">contextRef</span><span class="p">,</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">),</span> <span class="n">self</span><span class="p">.</span><span class="n">CGImage</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGContextRelease</span><span class="p">(</span><span class="n">contextRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGColorSpaceRelease</span><span class="p">(</span><span class="n">colorSpace</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">cvMat</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">+</span> <span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nf">imageWithCVMat:</span><span class="p">(</span><span class="k">const</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="p">)</span><span class="nv">cvMat</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[[[</span><span class="n">UIImage</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithCVMat:</span><span class="n">cvMat</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithCVMat:</span><span class="p">(</span><span class="k">const</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="p">)</span><span class="nv">cvMat</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSData</span> <span class="nl">dataWithBytes:</span><span class="n">cvMat</span><span class="p">.</span><span class="n">data</span> <span class="nl">length:</span><span class="n">cvMat</span><span class="p">.</span><span class="n">elemSize</span><span class="p">()</span> <span class="o">*</span> <span class="n">cvMat</span><span class="p">.</span><span class="n">total</span><span class="p">()];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGColorSpaceRef</span> <span class="n">colorSpace</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">cvMat</span><span class="p">.</span><span class="n">elemSize</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">colorSpace</span> <span class="o">=</span> <span class="n">CGColorSpaceCreateDeviceGray</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">colorSpace</span> <span class="o">=</span> <span class="n">CGColorSpaceCreateDeviceRGB</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGDataProviderRef</span> <span class="n">provider</span> <span class="o">=</span> <span class="n">CGDataProviderCreateWithCFData</span><span class="p">((</span><span class="n">CFDataRef</span><span class="p">)</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGImageRef</span> <span class="n">imageRef</span> <span class="o">=</span> <span class="n">CGImageCreate</span><span class="p">(</span><span class="n">cvMat</span><span class="p">.</span><span class="n">cols</span><span class="p">,</span>                                     <span class="c1">// Width</span>
+</span><span class='line'>                                        <span class="n">cvMat</span><span class="p">.</span><span class="n">rows</span><span class="p">,</span>                                     <span class="c1">// Height</span>
+</span><span class='line'>                                        <span class="mi">8</span><span class="p">,</span>                                              <span class="c1">// Bits per component</span>
+</span><span class='line'>                                        <span class="mi">8</span> <span class="o">*</span> <span class="n">cvMat</span><span class="p">.</span><span class="n">elemSize</span><span class="p">(),</span>                           <span class="c1">// Bits per pixel</span>
+</span><span class='line'>                                        <span class="n">cvMat</span><span class="p">.</span><span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>                                  <span class="c1">// Bytes per row</span>
+</span><span class='line'>                                        <span class="n">colorSpace</span><span class="p">,</span>                                     <span class="c1">// Colorspace</span>
+</span><span class='line'>                                        <span class="n">kCGImageAlphaNone</span> <span class="o">|</span> <span class="n">kCGBitmapByteOrderDefault</span><span class="p">,</span>  <span class="c1">// Bitmap info flags</span>
+</span><span class='line'>                                        <span class="n">provider</span><span class="p">,</span>                                       <span class="c1">// CGDataProviderRef</span>
+</span><span class='line'>                                        <span class="nb">NULL</span><span class="p">,</span>                                           <span class="c1">// Decode</span>
+</span><span class='line'>                                        <span class="n">false</span><span class="p">,</span>                                          <span class="c1">// Should interpolate</span>
+</span><span class='line'>                                        <span class="n">kCGRenderingIntentDefault</span><span class="p">);</span>                     <span class="c1">// Intent   </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">initWithCGImage:</span><span class="n">imageRef</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">CGImageRelease</span><span class="p">(</span><span class="n">imageRef</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGDataProviderRelease</span><span class="p">(</span><span class="n">provider</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGColorSpaceRelease</span><span class="p">(</span><span class="n">colorSpace</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>总结</h2>
+
+<p>上面2个环境搭建好后，你就可以在MacOS上试验各种图象处理算法，然后很方便地移值到iOS上。</p>
+
+<p>一直觉得，图象和声音是移动设备上的特点和优势。因为移动设备没有了可以快速输入的键盘，屏幕也不大，在移动设备上，声音，图象和视频应该是相比文字更方便让人输入的东西。移动端APP应该利用好这些特点，才能设计出更加体贴的功能。</p>
+
+<p>而且，通常情况下做图象处理都比较好玩，记得以前在学校做了一个在QQ游戏大厅自动下中国象棋的程序，其后台使用了网上下载的一个带命令行接口的象棋AI，然后我的代码主要做的事情就是识别象棋棋盘，然后将棋盘数据传给那个象棋AI，接着获得它返回的策略后，模拟鼠标点击来移动棋子。当时不懂什么图象算法，直接把棋子先截取下来保存，然后识别的时候做完全匹配，非常弱的办法，但是效果非常好，做出来也很好玩。嗯，所以文章最后，我想说的是：have fun!</p>
+</div>
+
+
+  <footer>
+   <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-27T20:43:00+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/opencv/'>OpenCV</a>, <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/" title="Previous Post: 粉笔网的架构和项目管理">&laquo; 粉笔网的架构和项目管理</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">粉笔网的架构和项目管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/09/3rd-libs-used-in-fenbi-app/">粉笔网iPhone端使用的第三方开源库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/05/upgrade-your-app-to-support-iphone5/">让你的APP支持iPhone5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/05/use-modern-objective-c/">Objective-C的新特性</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/24/enhance-uiactionsheet/">封装同步的UIActionSheet</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/05/do-not-use-sbjson/">不要使用SBJSON(json-framework)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/22/use-fmdb/">在iOS开发中使用FMDB</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/06/about-100-devices-limit/">关于iOS测试机个数上限的详细规则</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">关于UIWebView和PhoneGap的总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/10-most-common-questions-on-stackoverflow-201203/">iPhone开发常问的十个问题(2012年3月版)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/10/xcode4-tips/">xcode4使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/29/collaboration-with-git/">用Git进行协同开发</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>  前网易有道员工，现在在粉笔网创业中。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记。
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

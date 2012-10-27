@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-10-06T09:01:10+08:00</updated>
+  <updated>2012-10-27T23:00:55+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,613 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在MacOS和iOS系统中使用OpenCV]]></title>
+    <link href="http://blog.devtang.com/blog/2012/10/27/use-opencv-in-ios/"/>
+    <updated>2012-10-27T20:43:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/10/27/use-opencv-in-ios</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p><img src="/images/opencv.png"></p>
+
+<p><a href="http://opencv.org/about.html">OpenCV</a> 是一个开源的跨平台计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。</p>
+
+<p>最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。有些问题费了我很多时间，在此总结分享给大家，希望后来人少走些弯路。</p>
+
+<p>可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。</p>
+
+<!-- more -->
+
+
+<h2>MacOS系统中使用OpenCV</h2>
+
+<h3>安装OpenCV</h3>
+
+<p>相信大部分Mac用户都安装了brew或port，如果你没有装，那么首先安装一下brew吧。使用如下命令安装brew:</p>
+
+<p><code>bash
+ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+</code></p>
+
+<p>在安装好brew后，只需要一条命令就可以安装OpenCV了：
+<code>bash
+brew install opencv
+</code></p>
+
+<p>通常情况下这样做就应该会安装成功，但我在公司和家里面的电脑尝试的时候，brew都会报一些错误，我遇到的都是一些小问题，按照brew的提示信息，解决掉相应的问题即可。</p>
+
+<p>安装成功后，你应该可以在“/usr/local/include"目录下找到名为opencv和opencv2的目录，这里面是OpenCV相关的头文件。你也可以在“/usr/local/lib"目录下找到许多以libopencv_开头的.dylib文件，这些是OpenCV的链接库文件。</p>
+
+<h3>在MacOS系统中使用OpenCV</h3>
+
+<p>接着我们可以试着在Xcode工程中使用OpenCV。</p>
+
+<p>新建一个Cocoa Application的工程。工程建好后，选中工程的Target，在Build Settings一样，找到“Header Search Paths"这一个选项，将它的值改为“/usr/local/include"。如下所示：</p>
+
+<p><img src="/images/use-opencv-in-mac-1.png"></p>
+
+<p>接着切换到Build Phases这个tab，在“Link Binary With Libraries"中，选项+号，然后将弹出的文件选择对话框目录切换到“/usr/local/lib"目录下，选择你需要使用的OpenCV链接库（通常情况下，你至少会需要core、highgui和imgproc库)，如下图所示：</p>
+
+<p><img src="/images/use-opencv-in-mac-2.png"></p>
+
+<p>这里有一个技巧，因为 /usr 目录在对话框中默认不是可见的，可以按快捷键 command + shift + G，在弹出的“前往文件夹"对话框中输入 /usr/local/lib ，即可跳转到目标文件夹。如下图所示：</p>
+
+<p><img src="/images/use-opencv-in-mac-3.png"></p>
+
+<p>下一步是我自己试出来的，你需要在Build Settings中，将“C++ Language Dialect”设置成C++11，将“C++ Standard Library”设置成libstdc++ ，如下图所示。个人感觉是由于XCode默认设置的GNU++11、libc++与OpenCV库有一些兼容性问题，我在更改该设置前老是出现编译错误。如果后续版本解决了这个问题，就不用进行这一步了。</p>
+
+<p><img src="/images/use-opencv-in-mac-4.png"></p>
+
+<p>把上面的设置都做好后，就可以在需要的使用OpenCV库的地方，加上opencv的头文件引用即可：</p>
+
+<p>``` objc</p>
+
+<h1>import "opencv2/opencv.hpp"</h1>
+
+<p>```</p>
+
+<p>注意，如果你的源文件扩展名是.m的，你还需要改成.mm，这样编译器才知道你将会在该文件混合使用C++语言和Objective-C语言。</p>
+
+<p>OpenCV处理图象需要的格式是cv::Mat类，而MacOS的图象格式默认是NSImage，所以你需要知道如何在cv::Mat与NSImage之前相互转换。如下是一个NSImage的Addition，你肯定会需要它的。该代码来自stackoverflow上的<a href="http://stackoverflow.com/questions/8563356/nsimage-to-cvmat-and-vice-versa">这个贴子</a>。</p>
+
+<p>NSImage+OpenCV.h 文件：
+``` objc
+//
+//  NSImage+OpenCV.h
+//
+//  Created by TangQiao on 12-10-26.
+//</p>
+
+<h1>import &lt;Foundation/Foundation.h></h1>
+
+<h1>import "opencv2/opencv.hpp"</h1>
+
+<p>@interface NSImage (OpenCV)</p>
+
+<p>+(NSImage*)imageWithCVMat:(const cv::Mat&amp;)cvMat;
+-(id)initWithCVMat:(const cv::Mat&amp;)cvMat;</p>
+
+<p>@property(nonatomic, readonly) cv::Mat CVMat;
+@property(nonatomic, readonly) cv::Mat CVGrayscaleMat;</p>
+
+<p>@end</p>
+
+<p>```</p>
+
+<p>NSImage+OpenCV.mm文件：
+``` objc
+//
+//  NSImage+OpenCV.mm
+//
+//  Created by TangQiao on 12-10-26.
+//</p>
+
+<h1>import "NSImage+OpenCV.h"</h1>
+
+<p>static void ProviderReleaseDataNOP(void <em>info, const void </em>data, size_t size)
+{</p>
+
+<pre><code>return;
+</code></pre>
+
+<p>}</p>
+
+<p>@implementation NSImage (OpenCV)</p>
+
+<p>-(CGImageRef)CGImage
+{</p>
+
+<pre><code>CGContextRef bitmapCtx = CGBitmapContextCreate(NULL/*data - pass NULL to let CG allocate the memory*/,
+                                               [self size].width,
+                                               [self size].height,
+                                               8 /*bitsPerComponent*/,
+                                               0 /*bytesPerRow - CG will calculate it for you if it's allocating the data.  This might get padded out a bit for better alignment*/,
+                                               [[NSColorSpace genericRGBColorSpace] CGColorSpace],
+                                               kCGBitmapByteOrder32Host|kCGImageAlphaPremultipliedFirst);
+
+[NSGraphicsContext saveGraphicsState];
+[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithGraphicsPort:bitmapCtx flipped:NO]];
+[self drawInRect:NSMakeRect(0,0, [self size].width, [self size].height) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+[NSGraphicsContext restoreGraphicsState];
+
+CGImageRef cgImage = CGBitmapContextCreateImage(bitmapCtx);
+CGContextRelease(bitmapCtx);
+
+return cgImage;
+</code></pre>
+
+<p>}</p>
+
+<p>-(cv::Mat)CVMat
+{</p>
+
+<pre><code>CGImageRef imageRef = [self CGImage];
+CGColorSpaceRef colorSpace = CGImageGetColorSpace(imageRef);
+CGFloat cols = self.size.width;
+CGFloat rows = self.size.height;
+cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 4 channels
+
+CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to backing data
+                                                cols,                      // Width of bitmap
+                                                rows,                     // Height of bitmap
+                                                8,                          // Bits per component
+                                                cvMat.step[0],              // Bytes per row
+                                                colorSpace,                 // Colorspace
+                                                kCGImageAlphaNoneSkipLast |
+                                                kCGBitmapByteOrderDefault); // Bitmap info flags
+
+CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), imageRef);
+CGContextRelease(contextRef);
+CGImageRelease(imageRef);
+return cvMat;
+</code></pre>
+
+<p>}</p>
+
+<p>-(cv::Mat)CVGrayscaleMat
+{</p>
+
+<pre><code>CGImageRef imageRef = [self CGImage];
+CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+CGFloat cols = self.size.width;
+CGFloat rows = self.size.height;
+cv::Mat cvMat = cv::Mat(rows, cols, CV_8UC1); // 8 bits per component, 1 channel
+CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to backing data
+                                                cols,                      // Width of bitmap
+                                                rows,                     // Height of bitmap
+                                                8,                          // Bits per component
+                                                cvMat.step[0],              // Bytes per row
+                                                colorSpace,                 // Colorspace
+                                                kCGImageAlphaNone |
+                                                kCGBitmapByteOrderDefault); // Bitmap info flags
+
+CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), imageRef);
+CGContextRelease(contextRef);
+CGColorSpaceRelease(colorSpace);
+CGImageRelease(imageRef);
+return cvMat;
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li><p>(NSImage *)imageWithCVMat:(const cv::Mat&amp;)cvMat
+{
+  return [[[NSImage alloc] initWithCVMat:cvMat] autorelease];
+}</p></li>
+<li><p>(id)initWithCVMat:(const cv::Mat&amp;)cvMat
+{
+  NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize() * cvMat.total()];</p>
+
+<p>  CGColorSpaceRef colorSpace;</p>
+
+<p>  if (cvMat.elemSize() == 1)
+  {</p>
+
+<pre><code>  colorSpace = CGColorSpaceCreateDeviceGray();
+</code></pre>
+
+  }
+  else
+  {
+
+<pre><code>  colorSpace = CGColorSpaceCreateDeviceRGB();
+</code></pre>
+
+<p>  }</p>
+
+<p>  CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);</p>
+
+<p>  CGImageRef imageRef = CGImageCreate(cvMat.cols,                                     // Width</p>
+
+<pre><code>                                  cvMat.rows,                                     // Height
+                                  8,                                              // Bits per component
+                                  8 * cvMat.elemSize(),                           // Bits per pixel
+                                  cvMat.step[0],                                  // Bytes per row
+                                  colorSpace,                                     // Colorspace
+                                  kCGImageAlphaNone | kCGBitmapByteOrderDefault,  // Bitmap info flags
+                                  provider,                                       // CGDataProviderRef
+                                  NULL,                                           // Decode
+                                  false,                                          // Should interpolate
+                                  kCGRenderingIntentDefault);                     // Intent
+</code></pre>
+
+<p>  NSBitmapImageRep <em>bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:imageRef];
+  NSImage </em>image = [[NSImage alloc] init];
+  [image addRepresentation:bitmapRep];</p>
+
+<p>  CGImageRelease(imageRef);
+  CGDataProviderRelease(provider);
+  CGColorSpaceRelease(colorSpace);</p>
+
+<p>  return image;
+}</p></li>
+</ul>
+
+
+<p>@end</p>
+
+<p>```</p>
+
+<p>完成以上步骤后，恭喜你，你可以在源代码中自由地调用OpenCV的函数了。</p>
+
+<h2>在iOS系统中使用OpenCV</h2>
+
+<h4>下载或编译opencv2.framework</h4>
+
+<p>接下来介绍如何在iOS程序中使用OpenCV。在iOS上使用最新的OpenCV库比较简单，进入<a href="http://opencv.org/">opencv的官网</a>，下载build好的名为opencv2.framework即可（<a href="http://sourceforge.net/projects/opencvlibrary/files/opencv-ios/2.4.3/opencv2.framework.zip/download?utm_expid=6384-3">下载地址</a>）。</p>
+
+<p>如果你比较喜欢折腾，也可以自行下载opencv的源码，在本地编译opencv2.framework。<a href="http://docs.opencv.org/trunk/doc/tutorials/introduction/ios_install/ios_install.html#ios-installation">这里</a>有官方网站的教程，步骤非常简单，不过我照着它的教程尝试了一下失败了。感觉还是XCode编译器与OpenCV代码的兼容性问题，所以就没有继续研究了。</p>
+
+<h4>在iOS程序中使用OpenCV</h4>
+
+<p>新建一个iOS工程，将opencv2.framework直接拖动到工程中。然后，你需要在Build Settings中，将“C++ Standard Library”设置成libstdc++。</p>
+
+<p>因为opencv中的MIN宏和UIKit的MIN宏有冲突。所以需要在.pch文件中，先定义opencv的头文件，否则会有编译错误。将工程的.pch文件内容修改成如下所示：</p>
+
+<p>``` objc</p>
+
+<h1>import &lt;Availability.h></h1>
+
+<h1>ifdef __cplusplus</h1>
+
+<pre><code>#import &lt;opencv2/opencv.hpp&gt;
+</code></pre>
+
+<h1>endif</h1>
+
+<h1>ifdef <strong>OBJC</strong></h1>
+
+<pre><code>#import &lt;UIKit/UIKit.h&gt;
+#import &lt;Foundation/Foundation.h&gt;
+</code></pre>
+
+<h1>endif</h1>
+
+<p>```</p>
+
+<p>把上面的设置都做好后，就可以在需要的使用OpenCV库的地方，加上opencv的头文件引用即可：</p>
+
+<p>``` objc</p>
+
+<h1>import "opencv2/opencv.hpp"</h1>
+
+<p>```</p>
+
+<p>还是那句话，如果你的源文件扩展名是.m的，你还需要改成.mm，这样编译器才知道你将会在该文件中混合使用C++语言和Objective-C语言。</p>
+
+<p>同样，iOS程序内部通常用UIImage表示图片，而OpenCV处理图象需要的格式是cv::Mat，你会需要下面这个Addition来在cv::Mat和UIImage格式之间相互转换。该代码来自<a href="https://github.com/aptogo/OpenCVForiPhone">aptogo的开源代码</a>，他的版权信息在源码头文件中。</p>
+
+<p>UIImage+OpenCV.h 文件：
+``` objc
+//
+//  UIImage+OpenCV.h
+//  OpenCVClient
+//
+//  Created by Robin Summerhill on 02/09/2011.
+//  Copyright 2011 Aptogo Limited. All rights reserved.
+//
+//  Permission is given to use this source code file without charge in any
+//  project, commercial or otherwise, entirely at your risk, with the condition
+//  that any redistribution (in part or whole) of source code must retain
+//  this copyright and permission notice. Attribution in compiled projects is
+//  appreciated but not required.
+//</p>
+
+<h1>import &lt;UIKit/UIKit.h></h1>
+
+<p>@interface UIImage (UIImage_OpenCV)</p>
+
+<p>+(UIImage *)imageWithCVMat:(const cv::Mat&amp;)cvMat;
+-(id)initWithCVMat:(const cv::Mat&amp;)cvMat;</p>
+
+<p>@property(nonatomic, readonly) cv::Mat CVMat;
+@property(nonatomic, readonly) cv::Mat CVGrayscaleMat;</p>
+
+<p>@end</p>
+
+<p>```</p>
+
+<p>UIImage+OpenCV.mm 文件：
+``` objc
+//
+//  UIImage+OpenCV.mm
+//  OpenCVClient
+//
+//  Created by Robin Summerhill on 02/09/2011.
+//  Copyright 2011 Aptogo Limited. All rights reserved.
+//
+//  Permission is given to use this source code file without charge in any
+//  project, commercial or otherwise, entirely at your risk, with the condition
+//  that any redistribution (in part or whole) of source code must retain
+//  this copyright and permission notice. Attribution in compiled projects is
+//  appreciated but not required.
+//</p>
+
+<h1>import "UIImage+OpenCV.h"</h1>
+
+<p>static void ProviderReleaseDataNOP(void <em>info, const void </em>data, size_t size)
+{</p>
+
+<pre><code>// Do not release memory
+return;
+</code></pre>
+
+<p>}</p>
+
+<p>@implementation UIImage (UIImage_OpenCV)</p>
+
+<p>-(cv::Mat)CVMat
+{</p>
+
+<pre><code>CGColorSpaceRef colorSpace = CGImageGetColorSpace(self.CGImage);
+CGFloat cols = self.size.width;
+CGFloat rows = self.size.height;
+
+cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 4 channels
+
+CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to backing data
+                                                cols,                      // Width of bitmap
+                                                rows,                     // Height of bitmap
+                                                8,                          // Bits per component
+                                                cvMat.step[0],              // Bytes per row
+                                                colorSpace,                 // Colorspace
+                                                kCGImageAlphaNoneSkipLast |
+                                                kCGBitmapByteOrderDefault); // Bitmap info flags
+
+CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), self.CGImage);
+CGContextRelease(contextRef);
+
+return cvMat;
+</code></pre>
+
+<p>}</p>
+
+<p>-(cv::Mat)CVGrayscaleMat
+{</p>
+
+<pre><code>CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+CGFloat cols = self.size.width;
+CGFloat rows = self.size.height;
+
+cv::Mat cvMat = cv::Mat(rows, cols, CV_8UC1); // 8 bits per component, 1 channel
+
+CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to backing data
+                                                cols,                      // Width of bitmap
+                                                rows,                     // Height of bitmap
+                                                8,                          // Bits per component
+                                                cvMat.step[0],              // Bytes per row
+                                                colorSpace,                 // Colorspace
+                                                kCGImageAlphaNone |
+                                                kCGBitmapByteOrderDefault); // Bitmap info flags
+
+CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), self.CGImage);
+CGContextRelease(contextRef);
+CGColorSpaceRelease(colorSpace);
+
+return cvMat;
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li><p>(UIImage *)imageWithCVMat:(const cv::Mat&amp;)cvMat
+{
+  return [[[UIImage alloc] initWithCVMat:cvMat] autorelease];
+}</p></li>
+<li><p>(id)initWithCVMat:(const cv::Mat&amp;)cvMat
+{
+  NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize() * cvMat.total()];</p>
+
+<p>  CGColorSpaceRef colorSpace;</p>
+
+<p>  if (cvMat.elemSize() == 1)
+  {</p>
+
+<pre><code>  colorSpace = CGColorSpaceCreateDeviceGray();
+</code></pre>
+
+  }
+  else
+  {
+
+<pre><code>  colorSpace = CGColorSpaceCreateDeviceRGB();
+</code></pre>
+
+<p>  }</p>
+
+<p>  CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);</p>
+
+<p>  CGImageRef imageRef = CGImageCreate(cvMat.cols,                                     // Width</p>
+
+<pre><code>                                  cvMat.rows,                                     // Height
+                                  8,                                              // Bits per component
+                                  8 * cvMat.elemSize(),                           // Bits per pixel
+                                  cvMat.step[0],                                  // Bytes per row
+                                  colorSpace,                                     // Colorspace
+                                  kCGImageAlphaNone | kCGBitmapByteOrderDefault,  // Bitmap info flags
+                                  provider,                                       // CGDataProviderRef
+                                  NULL,                                           // Decode
+                                  false,                                          // Should interpolate
+                                  kCGRenderingIntentDefault);                     // Intent   
+</code></pre>
+
+<p>  self = [self initWithCGImage:imageRef];
+  CGImageRelease(imageRef);
+  CGDataProviderRelease(provider);
+  CGColorSpaceRelease(colorSpace);</p>
+
+<p>  return self;
+}</p></li>
+</ul>
+
+
+<p>@end</p>
+
+<p>```</p>
+
+<h2>总结</h2>
+
+<p>上面2个环境搭建好后，你就可以在MacOS上试验各种图象处理算法，然后很方便地移值到iOS上。</p>
+
+<p>一直觉得，图象和声音是移动设备上的特点和优势。因为移动设备没有了可以快速输入的键盘，屏幕也不大，在移动设备上，声音，图象和视频应该是相比文字更方便让人输入的东西。移动端APP应该利用好这些特点，才能设计出更加体贴的功能。</p>
+
+<p>而且，通常情况下做图象处理都比较好玩，记得以前在学校做了一个在QQ游戏大厅自动下中国象棋的程序，其后台使用了网上下载的一个带命令行接口的象棋AI，然后我的代码主要做的事情就是识别象棋棋盘，然后将棋盘数据传给那个象棋AI，接着获得它返回的策略后，模拟鼠标点击来移动棋子。当时不懂什么图象算法，直接把棋子先截取下来保存，然后识别的时候做完全匹配，非常弱的办法，但是效果非常好，做出来也很好玩。嗯，所以文章最后，我想说的是：have fun!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[粉笔网iPhone端使用的第三方开源库]]></title>
+    <link href="http://blog.devtang.com/blog/2012/10/09/3rd-libs-used-in-fenbi-app/"/>
+    <updated>2012-10-09T15:30:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/10/09/3rd-libs-used-in-fenbi-app</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>最近有朋友问我粉笔网iPhone端使用了哪些第三方的开源库。我在这儿整理了一下，分享给大家。</p>
+
+<p><img src="/images/fenbi_libs.png"></p>
+
+<!-- more -->
+
+
+<h3>ASIHttpRequest</h3>
+
+<p><a href="http://allseeing-i.com/ASIHTTPRequest/">ASIHttpRequest</a> 是一个被广泛使用的第三方网络访问开源库。用于提供更加友好的网络访问接口。相信很多搞iOS开发的朋友都用过它。
+ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTTPRequest/How-to-use">参考这里</a>。</p>
+
+<p>另外，由于ASIHTTPRequest的作者已经公开说明不再维护这个开源项目，并且该项目已经一年多没有更新了，所以我一直在寻找替代的开源库。不过现在暂时还没有找到更好的。</p>
+
+<h3>RegexKit</h3>
+
+<p><a href="http://regexkit.sourceforge.net/">RegexKit</a>是一个正则表达式工具类。提供强大的正则表达式匹配和替换功能。我们主要使用它来对类似微博的正文替换工作。例如将 @某某 换成带链接的，将图片的URL换成img标签等。</p>
+
+<p>同时，开源库MGTemplateEngine也依赖于此库。附上<a href="http://regexkit.sourceforge.net/Documentation/index.html">RegexKit4.0的官方文档教程</a>。</p>
+
+<h3>MGTemplateEngine</h3>
+
+<p><a href="http://svn.cocoasourcecode.com/MGTemplateEngine">MGTemplateEngine</a>是一个模版引擎。我们主要使用它来生成单条微博页的内容。我们的单条微博页打算用UIWebView来显示，所以内容需要用模版渲染成HTML格式。MGTemplateEngine的模版语言比较象：Smarty, FreeMarker 和 Django的模版语言。</p>
+
+<p>MGTemplateEngine的作者官方博客在<a href="http://mattgemmell.com/2008/05/20/mgtemplateengine-templates-with-cocoa/">这里</a>。</p>
+
+<p>我们在使用时，对此开源库的Filter类进行了修改，主要增加了3个自定义的filter，用于提供我们的格式化时间，转义html和过滤空头象的用户的方式。</p>
+
+<h3>JSONKit</h3>
+
+<p><a href="https://github.com/johnezang/JSONKit">JSONKit</a>是一个比较高效的JSON解析库。我之前比较过各大JSON解析库的性能（<a href="http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson/">文章在此</a>），JSONKit算是非常不错的，大概的使用示例如下：</p>
+
+<p>``` objc</p>
+
+<h1>import "JSONKit.h"</h1>
+
+<p>NSString <em>path = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
+NSData </em>content = [NSData dataWithContentsOfFile:path];
+NSDictionary <em>kitData = [content objectFromJSONData];
+NSString </em>kitString = [kitData JSONString];
+```</p>
+
+<h3>GTMNSString</h3>
+
+<p><a href="https://code.google.com/p/google-toolbox-for-mac/">GTMNSString</a>主要用于转义HTML中的特殊字符。以防止XSS攻击。</p>
+
+<h3>FMDB</h3>
+
+<p><a href="https://github.com/ccgus/fmdb">FMDB</a>是一个sqlite数据库封装类，需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。在使用上非常简单。如下是一个例子：</p>
+
+<p>``` objc
+NSString * docsdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+NSString * dbpath = [docsdir stringByAppendingPathComponent:@"user.sqlite"];
+FMDatabase * db = [FMDatabase databaseWithPath:dbpath];
+[db open];
+FMResultSet * rs = [db executeQuery:@"select * from People"];
+while ([rs next]) {</p>
+
+<pre><code>NSLog(@"%@ %@",
+[rs stringForColumn:@"firstname"],
+[rs stringForColumn:@"lastname"]);
+</code></pre>
+
+<p>}
+[db close];
+```</p>
+
+<h3>BBCustomBackButtonViewController</h3>
+
+<p><a href="https://github.com/typeoneerror/BBCustomBackButtonViewController">BBCustomBackButtonViewController</a> 是用于在ios4上提供自定义的NavigationBar按钮的开源库。使用上异常简单，只需要让自己的ViewController继承它就可以了。</p>
+
+<p>我对BBCustomBackButtonViewController进行了修改，主要是改动它的自定义的按钮的样式，使其和我们的风格一致。</p>
+
+<h3>MTStatusBarOverlay</h3>
+
+<p><a href="https://github.com/myell0w/MTStatusBarOverlay">MTStatusBarOverlay</a> 是一个在iphone的顶部status bar显示消息的开源库。示例代码如下：</p>
+
+<p>``` objc
++ (void)showCompletedTextOnStatusBar:(NSString *)text {</p>
+
+<pre><code>NSString * message = [NSString stringWithFormat:@"%@成功", text];
+MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
+overlay.animation = MTStatusBarOverlayAnimationFallDown;
+overlay.detailViewMode = MTDetailViewModeHistory;
+[overlay postImmediateFinishMessage:message duration:2.0 animated:YES];
+overlay.progress = 1.0;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>但是stackoverflow上说，有项目因为这个审核被拒，但是新浪微博明显采用了此UI方案，所以我们还是大胆用了这个库。后来，我们也顺利通过了审核。</p>
+
+<h3>MBProgressHUD</h3>
+
+<p><a href="https://github.com/jdg/MBProgressHUD">MBProgressHUD</a> 是一个用于显示灰色的加载进度或结果的类。与系统自带的UIAlertView相比，MBProgressHUD由于背影是黑色的，所以视觉上不是那么强烈。我们主要用它来显示一些加载中的提示，以及一些自已会消失的操作结果（例如网络失败等）。</p>
+
+<h3>NSStringWrapper</h3>
+
+<p>因为自己有多年Java开发的经历，我还是不太习惯Objective-C连基本的字符串操作都要查文档，而我自己又记不住老长的方法名，所以我把Objective-C的字符串基本操作都封装成了Java风格的方法调用。这部分是很早前拿周末时间在家里写的，所以是开源的，<a href="https://github.com/tangqiaoboy/xcode_tool/tree/master/NSStringWrappeer">源代码地址</a>。</p>
+
+<h3>EGOTableViewPullRefresh</h3>
+
+<p><a href="https://github.com/enormego/EGOTableViewPullRefresh">EGOTableViewPullRefresh</a> 一个开源的下拉刷新组件。我对它进行了改进，增加了强制刷新功能。</p>
+
+<h3>LoadMoreTableFooterView</h3>
+
+<p><a href="https://github.com/sishen/LoadMoreTableFooterView">LoadMoreTableFooterView</a> 一个开源的上拉加载更多的组件。我做了少量修改，以便让它支持iPhone5的分辨率。</p>
+
+<h3>zepto.js</h3>
+
+<p><a href="http://zeptojs.com/">zepto</a>是一个类似JQuery的javascript开源库，用于实现css选择器和一些dom操作。它的api几乎和JQuery完全一样，优点是体积小巧。</p>
+
+<h3>ejs</h3>
+
+<p><a href="http://embeddedjs.com/getting_started.html">ejs</a>一个js端的模版库。我们主要用于渲染一些UIWebview中异步加载的内容。例如笔记的评论，问题的答案。</p>
+
+<h2>总结</h2>
+
+<p>希望上面的开源库能对你有用。最后分享一张粉笔网全站用到的所有开源项目的图片。</p>
+
+<p><img src="/images/opensource.jpg"></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[让你的APP支持iPhone5]]></title>
@@ -546,241 +1153,6 @@ TableViewCellTypeLogout
 <li>WWDC2012 Session 413 Migrating to Modern Objective-C</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[封装同步的UIActionSheet]]></title>
-    <link href="http://blog.devtang.com/blog/2012/06/24/enhance-uiactionsheet/"/>
-    <updated>2012-06-24T21:51:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/06/24/enhance-uiactionsheet</id>
-    <content type="html"><![CDATA[<h2>问题</h2>
-
-<p>做iOS开发的同学想必都用过UIActionSheet。UIActionSheet可以弹出一个选择列表，让用户选择列表中的某一项操作。使用UIActionSheet非常简单，以下是一个简单的示例代码：</p>
-
-<p>``` objc
-- (void)someButtonClicked {</p>
-
-<pre><code>UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"ddd" destructiveButtonTitle:@"aaa" otherButtonTitles:@"bbb", @"ccc", @"ddd", nil];
-sheet.destructiveButtonIndex = 1;
-[sheet showInView:self.view];
-</code></pre>
-
-<p>}</p>
-
-<ul>
-<li>(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-  int result = buttonIndex;
-  NSLog(@"result = %d", result);
-}</li>
-</ul>
-
-
-<p>```</p>
-
-<p>但我个人在使用时，感觉UIActionSheet有以下2个问题：</p>
-
-<!-- more -->
-
-
-<ol>
-<li><p>UIActionSheet是一个异步的调用，需要设置delegate来获得用户选择的结果。这么小粒度的选择界面，把调用显示和回调方法分开写在2个方法中，使得原本简单的逻辑复杂了。虽然也不会复杂到哪儿去，但是每次调用UIActionSheet就需要另外写一个delegate回调方法，让我觉得这是一个过度的设计。如果UIActionSheet在弹出界面时，是一个同步调用，在调用完 showInView方法后，就能获得用户的点击结果，那该多方便。</p></li>
-<li><p>UIActionSheet默认的init方法比较恶心。cancel Button其实默认是在最底部的，但是在init方法中是放在第一个参数。destructive默认是列表的第一个。如果你需要的界面不是将destructive button放在第一个，就需要再指定一次destructiveButtonIndex，而这个index的下标，是忽略cancel button来数的，虽说也不是很麻烦，但是心里感觉比较恶心。</p></li>
-</ol>
-
-
-<h2>改造UIActionSheet</h2>
-
-<p>基于上面2个原因，我想把UIActionSheet改造成一个同步的调用。这样，在我调用它的 showInView方法后，我希望它直接同步地返回用户的选择项，而不是通过一个Delegate方法来回调我。另外，我也不希望init方法有那么多麻烦的参数，我只希望init的时候，指定一个数组能够设置每个button的title就行了。</p>
-
-<p>于是我写了一个 SynchronizedUIActionSheet 类，这个类将 UIActionSheet简单封装了一下，利用 CFRunLoopRun 和 CFRunLoopStop 方法来将UIActionSheet改造成同步的调用。整个代码如下所示：</p>
-
-<p>SynchronizedUIActionSheet.h 文件：</p>
-
-<p>``` objc
-// SynchronizedUIActionSheet.h</p>
-
-<h1>import &lt;Foundation/Foundation.h></h1>
-
-<p>@interface SynchronizedUIActionSheet : NSObject<UIActionSheetDelegate></p>
-
-<p>@property (nonatomic, strong) NSArray * titles;
-@property (nonatomic, assign) NSInteger destructiveButtonIndex;
-@property (nonatomic, assign) NSInteger cancelButtonIndex;</p>
-
-<ul>
-<li><p>(id)initWithTitles:(NSArray *)titles;</p></li>
-<li><p>(NSInteger)showInView:(UIView *)view;</p></li>
-</ul>
-
-
-<p>@end
-```</p>
-
-<p>SynchronizedUIActionSheet.m 文件：</p>
-
-<p>``` objc</p>
-
-<h1>import "SynchronizedUIActionSheet.h"</h1>
-
-<p>@implementation SynchronizedUIActionSheet {</p>
-
-<pre><code>UIActionSheet * _actionSheet;
-NSInteger _selectedIndex;
-</code></pre>
-
-<p>}</p>
-
-<p>@synthesize titles = <em>titles;
-@synthesize destructiveButtonIndex = </em>destructiveButtonIndex;
-@synthesize cancelButtonIndex = _cancelButtonIndex;</p>
-
-<ul>
-<li><p>(id)initWithTitles:(NSArray *)titles {
-  self = [super init];
-  if (self) {</p>
-
-<pre><code>  _titles = titles;
-  _destructiveButtonIndex = 0;
-  _cancelButtonIndex = titles.count - 1;
-</code></pre>
-
-<p>  }
-  return self;
-}</p></li>
-<li><p>(void)setTitles:(NSArray *)titles {
-  <em>titles = titles;
-  </em>cancelButtonIndex = titles.count - 1;  <br/>
-}</p></li>
-<li><p>(NSInteger)showInView:(UIView *)view {
-  <em>actionSheet = [[UIActionSheet alloc] init];
-  for (NSString * title in </em>titles) {</p>
-
-<pre><code>  [_actionSheet addButtonWithTitle:title];
-</code></pre>
-
-  }
-  if (_destructiveButtonIndex != -1) {
-
-<pre><code>  _actionSheet.destructiveButtonIndex = _destructiveButtonIndex;
-</code></pre>
-
-  }
-  if (_cancelButtonIndex != -1) {
-
-<pre><code>  _actionSheet.cancelButtonIndex = _cancelButtonIndex;
-</code></pre>
-
-<p>  }
-  [<em>actionSheet showInView:view];
-  CFRunLoopRun();
-  return </em>selectedIndex;
-}</p></li>
-<li><p>(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-  <em>selectedIndex = buttonIndex;
-  </em>actionSheet = nil;
-  CFRunLoopStop(CFRunLoopGetCurrent());
-}</p></li>
-</ul>
-
-
-<p>@end</p>
-
-<p>```</p>
-
-<p>在改造后，调用ActionSheet的示例代码如下，是不是感觉逻辑清爽了一些？</p>
-
-<p>``` objc
-- (IBAction)testButtonPressed:(id)sender {</p>
-
-<pre><code>SynchronizedUIActionSheet * synActionSheet = [[SynchronizedUIActionSheet alloc] init];
-synActionSheet.titles = [NSArray arrayWithObjects:@"aaa", @"bbb", @"ccc", @"ddd", nil];
-synActionSheet.destructiveButtonIndex = 1;
-NSUInteger result = [synActionSheet showInView:self.view];
-NSLog(@"result = %d", result);
-</code></pre>
-
-<p>}</p>
-
-<p>```</p>
-
-<h2>总结</h2>
-
-<p>利用NSRunLoop来将原本的异步方法改成同步，可以使我们在某些情形下，方便地将异步方法变成同步方法来执行。</p>
-
-<p>例如以前我们在做有道云笔记iPad版的时候，采用的图片多选控件需要用户允许我们获得地理位置信息，如果用户没有选择允许，那个这个图片多选控件就会执行失败。为了不让这个控件挂掉，我们想在用户禁止访问地理位置时，不使用该控件，而使用系统自带的图片单选的UIImagePickerController 控件来选择图片。对于这个需求，我们明显就希望将获得地理位置信息这个系统确认框做成同步的，使得我们可以根据用户的选择再决定用哪种图片选择方式。最终，我们也用类似上面的方法，用NSRunLoop来使我们的异步方法调用暂停在某一行，直到获得用户的反馈后，再往下执行，示例代码如下：</p>
-
-<p>``` objc
-- (id)someCheck {</p>
-
-<pre><code>BOOL isOver = NO;
-// do the async check method, after the method return, set isOver to YES
-while (!isOver) {
-    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-}
-return value;
-</code></pre>
-
-<p>}
-```</p>
-
-<p>以上Demo代码我放到github上了,地址是<a href="https://github.com/tangqiaoboy/SynchronizedUIActionSheetDemo">这里</a>，请随意取用。祝端午节快乐。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[不要使用SBJSON(json-framework)]]></title>
-    <link href="http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson/"/>
-    <updated>2012-05-05T09:35:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson</id>
-    <content type="html"><![CDATA[<p>不知道为什么，在iOS开发中，有很多人使用 <a href="https://github.com/stig/json-framework">SBJSON</a> （又被称作json-framework)来做JSON解析库。我想这是因为SBJSON是最早在iOS上出现的JSON解析库。但是随着iOS开发的流行，越来越多优秀的JSON解析库也涌现出来, SBJSON和它们相比，性能上有很大的差距。</p>
-
-<!-- more -->
-
-
-<p>现在iOS行业内主要流行的JSON解析库有：
-<a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40010946">NSJSONSerialization</a>、
-<a href="http://samsoff.es/posts/parsing-json-with-the-iphones-private-json-framework">Apple JSON</a>、
-<a href="http://github.com/schwa/TouchJSON">TouchJSON</a>、
-<a href="http://github.com/stig/json-framework">SBJSON</a>、
-<a href="http://github.com/gabriel/yajl-objc">YAJL</a>、
-<a href="http://github.com/johnezang/JSONKit">JSONKit</a></p>
-
-<p>行业内许多同行都对这些库进行过benchmark测试。我在网上搜到的测试文章包括：</p>
-
-<ul>
-<li><a href="https://github.com/samsoffes/json-benchmarks">https://github.com/samsoffes/json-benchmarks</a></li>
-<li><a href="http://blog.csdn.net/arthurchenjs/article/details/7009995">http://blog.csdn.net/arthurchenjs/article/details/7009995</a></li>
-<li><a href="http://blog.csdn.net/ccat/article/details/7207871">http://blog.csdn.net/ccat/article/details/7207871</a></li>
-<li><a href="http://omegadelta.net/2011/11/04/json-framework-now-sbjson-is-evil/">http://omegadelta.net/2011/11/04/json-framework-now-sbjson-is-evil/</a></li>
-<li><a href="http://stackoverflow.com/questions/2256625/comparison-of-json-parser-for-objective-c-json-framework-yajl-touchjson-etc">http://stackoverflow.com/questions/2256625/comparison-of-json-parser-for-objective-c-json-framework-yajl-touchjson-etc</a></li>
-</ul>
-
-
-<p>下图是我从<a href="http://my.csdn.net/ArthurChenJS">ArthurChenJS</a>的<a href="http://blog.csdn.net/arthurchenjs/article/details/7009995">博客文章</a>中截取的一张benchmark测试结果图(横条越短，解析速度越快)：</p>
-
-<p><img src="/images/json_benchmark.gif"></p>
-
-<p>从这些文章中可以看到，SBJSON在多数测试中都处于倒数的第一或倒数第二的位置。所以说，SBJSON实际上在性能这一点上讲，确实是非常“SB”的，实在不值得大家留念。赶快把你的JSON解析库换成其它的吧！</p>
-
-<p>那么应该换成哪个呢？
-如果你的app只支持iOS 5.0以上系统，那么直接用苹果官方提供的JSON库：<a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40010946">NSJSONSerialization</a>
-库即可。
-如果你的app要支持iOS 5.0以下的系统，那么我个人推荐JSONKit，不过JSONKit本身做了很多内存上的优化，所以不支持ARC，你在使用时可以对其加上 -fno-objc-arc 的编译标志即可，设置这个编译标志的详细步骤可以见<a href="http://stackoverflow.com/questions/6308425/ios-5-best-practice-release-retain">这篇文章</a>。</p>
-
-<p>JSONKit的使用也非常方便，在使用上只需要把SBJSON的JSONValue方法换成objectFromJSONData，JSONRepresentation方法换成JSONString即可。附上一段使用示例：</p>
-
-<p>``` objc</p>
-
-<h1>import "JSONKit.h"</h1>
-
-<p>NSString <em>path = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
-NSData </em>content = [NSData dataWithContentsOfFile:path];
-NSDictionary <em>kitData = [content objectFromJSONData];
-NSString </em>kitString = [kitData JSONString];
-```</p>
-
-<p>祝大家玩得开心。</p>
 ]]></content>
   </entry>
   

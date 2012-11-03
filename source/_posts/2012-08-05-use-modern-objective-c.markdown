@@ -131,9 +131,29 @@ typedef enum TableViewCellType : NSInteger {
 
 ##Subscripting Methods
 
-这个新特性在WWDC2012的视频中提到了，但是在XCode4.4中没有实现。也是一个很体贴的语法糖，它允许你用中括号来代替原本的方法来获取和设置数组元素。
+这个新特性在WWDC2012的视频中提到了，但是在XCode4.4中没有实现（在XCode4.5中实现了）。也是一个很体贴的语法糖，它允许你用中括号来代替原本的方法来获取和设置数组元素。
 
 简单来说，以前的 [array objectAtIndex:idx] 和 [array replaceObjectAtIndex:idx withObject:obj]，可以直接写作 array[idx] 和 array[idx] = obj了。其实这个特性在很多高级语言中都实现了，只是Objective-C生于80年代，一直没改进这个。
+
+以下是一些示例代码：
+``` objc
+    NSArray * array = @[ @"111", @"222", @"333"];
+    for (int i = 0; i < 3; ++i) {
+        NSLog(@"array[i] = %@", array[i]);
+    }
+    
+    NSMutableDictionary * dict =[@{  @1: @"value1",
+                                     @2: @"value2",
+                                     @3: @"value3" } mutableCopy];
+    for (int i = 0; i < 3; ++i) {
+        NSLog(@"dict[%d] = %@", i, dict[@(i+1)]);
+        dict[@(i+1)] = [NSString stringWithFormat:@"new %@", dict[@(i+1)]];
+    }
+    
+    [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSLog(@"dict[%@] = %@", key, dict[key]);
+    }];
+```
 
 这个改进同样对NSDictionary有效。甚至，你也可以给你自己的类提供中括号操作符对应的方法。具体做法是实现如下两个方法：
 
@@ -141,8 +161,6 @@ typedef enum TableViewCellType : NSInteger {
 - (id)objectAtIndexedSubscript:(NSUInterger)idx;
 - (void)setObject:(id)value atIndexedSubscript:(NSUInteger)idx;
 ```
-
-期等XCode4.5中能够使用上这个特性。
 
 ##Tips
 上面提到了不用写 @synthesize 了，那原本写的那么多 @synthesize 怎么办呢？作为有代码洁癖的我很想把它们删掉，但怎么删呢？一个文件一个文件打开，然后行一行删掉吗？放心，苹果已经帮我们想了解决方案。在WWDC2012 Session 400 Developer Tools Kickoff 中，苹果介绍了具体做法。步骤如下：

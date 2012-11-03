@@ -104,6 +104,33 @@ categories: iOS
 #define LOAD_MORE_MAX       (LOAD_MORE_THRESHOLD + 10.0)
 ```
 
+####调整屏幕Rotation的回调函数
+从iOS6开始，苹果修改了屏幕旋转的回调函数。在iOS6以前，回调函数是
+
+``` objc
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+```
+
+现在新的回调函数是：
+``` objc
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (NSInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+```
+
+并且，现在是否旋转屏幕是由最上层的View Controller决定。例如，如果你是由 UITabBarController或UINavigationController包起来的界面的话，是否旋转屏幕就由UITabBarController或UINavigationController中的shouldAutorotate回调决定，而默认其返回的是YES。修改方法是给这2个容器Controller增加Addition,将其shouldAutorotate修改成由当前显示的子view controller决定，或者直接默认返回NO。
+
 ####提交应用
 
 基本上就是以上这些调整工作了，完了之后用Xcode4.5编译后提交审核，并且在itunes connect中设置iPhone5屏幕尺寸的app介绍截图即可。业界传言说对于支持iPhone5的程序，苹果在应用审核的时候会优先进行，我不知道是否是真的，不过我们的应用确实只用了5天时间就通过了审核，这是我个人遇到过的最快的一次审核。

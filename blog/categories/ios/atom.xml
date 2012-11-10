@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-10-27T23:00:55+08:00</updated>
+  <updated>2012-11-10T21:31:26+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[改进iOS客户端的升级提醒功能]]></title>
+    <link href="http://blog.devtang.com/blog/2012/11/10/how-to-design-upgrade-notice/"/>
+    <updated>2012-11-10T18:42:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/11/10/how-to-design-upgrade-notice</id>
+    <content type="html"><![CDATA[<h2>功能设计</h2>
+
+<p>先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，在设计“升级提示功能”都有问题。在此分享一下我的想法，欢迎大家讨论。</p>
+
+<p>这些有问题的App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题，一句话描述起来就是：“这些App都会在用户刚刚使用它的时候，提示有新版本，让用户去AppStore上下载最新的版本”。下面是某个应用的升级提示截图：</p>
+
+<p><img src="/images/app-upgrade-1.png"></p>
+
+<p>为什么我认为这是一个糟糕的设计呢？因为用户刚刚打开你的App，明显就是想使用你的功能。例如刚刚打开新浪微博，可能就是想看一下最新的消息或回复。刚刚打开网易新闻客户端，可能就是想看看最新的新闻。这个时候，你告诉用户有新版本，是想让用户暂时放弃使用该App吗？我不知道有多少用户会去点“升级”这个按钮，反正我每次看到这个提示都很郁闷，因为我如果点了，我就暂时不能使用该应用了（升级时原版本的App是无法使用的）。所以我在想，这个提示升级的时间能不能做得更友好一些？</p>
+
+<!-- more -->
+
+
+<p>有一次在地铁上我想到了一个好办法，就是让升级提示不是出现在软件刚刚打开的时候，而是用户刚刚退出App的时候，我们可以在用户刚刚退出App的时候，向iOS设备发一个本地的通知(Local Notification)，在本地通知上显示升级提示。当用户点击这个升级提示时，我们的App在启动后跳转到AppStore，这样就达到的提示升级的效果。</p>
+
+<p>这样做相比以前的好处有以下几点：</p>
+
+<ol>
+<li>用户退出App的时刻，是一个访问这个App活动的结束。在这个时候提示，用户更有理由接受升级。</li>
+<li>即便用户当前不接受升级，但这个升级提示都会存在用户的通知中心中，用户想升级时，点击这个通知，就可以方便地一键跳到AppStore的下载页面。而之前的方法在用户取消后，用户就不方便取获下载地址了。</li>
+</ol>
+
+
+<p>另外，本地通知的使用只需要iOS4.0以上版本即可，而在中国，<a href="http://www.zhihu.com/question/20267080">iOS4.0以上比例</a>达到了99%。本地通知也不需要向用户申请发送通知的DeviceToken，所以该方案很少被用户禁止（用户只能专门去通知中心将该应用的所有通知关闭）。当然，这个升级提示也不应该每次都出现，以免对用户产生太多打挠，象我在粉笔网客户端上设置的策略是最多半个月出现一次。</p>
+
+<p>在我在粉笔网iPhone端实现该方案后，有一次我发现支付宝的iOS客户端也采用通知的方式来提示用户升级，看来大家都想到一块儿了。不过从通知的发送时间来看，他们应该不是使用的本地通知，而是通过服务器发送Push通知的方式。这种方式的好处是即使用户安装后一次也没有使用你的App，你还是可以通过通知来唤醒他，可能的坏处是：</p>
+
+<ol>
+<li>可能用户已经升完级了，你还把升级通知的信息发给用户了。象我就是，支付宝都升完级了，还发通知提示我有新版可以使用。</li>
+<li>用户如果禁止了应用的Push通知，你就没办法发送升级提醒了。</li>
+</ol>
+
+
+<h2>技术实现</h2>
+
+<p>再简单说一下技术实现，我写了一个VersionAgent类，每24小时最多向服务器请求一次最新的App版本，如果版本有更新，则在AppDelegate的applicationDidEnterBackgroundl回调中，发送一个本地通知，示例代码如下：</p>
+
+<p>``` objc
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{</p>
+
+<pre><code>if ([[VersionAgent sharedInstance] shouldShowLocalNotification]) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UILocalNotification * localNotification = [[UILocalNotification alloc] init];
+        if (localNotification) {
+            localNotification.fireDate= [[[NSDate alloc] init] dateByAddingTimeInterval:3];
+            localNotification.timeZone=[NSTimeZone defaultTimeZone];
+            localNotification.alertBody = @"粉笔网客户端有新的版本，点击到App Store升级。";
+            localNotification.alertAction = @"升级";
+            localNotification.soundName = @"";
+            [application scheduleLocalNotification:localNotification];
+        }
+    });
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>然后通过AppDelegate的回调函数，判断App的启动方式是否是通过用户点击通知中心的升级提示来启动，如果是，则跳转到AppStore，示例代码如下：
+``` objc
+- (void)application:(UIApplication <em>)application didReceiveLocalNotification:(UILocalNotification </em>)notification {</p>
+
+<pre><code>// open app store link
+NSString * url = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", APP_STORE_ID];
+[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<h2>题外话</h2>
+
+<p><img src="/images/app-upgrade-2.jpeg"></p>
+
+<p>最新微博上有一个<a href="http://www.chinanews.com/sh/2012/11-09/4315347.shtml?utm_source=bshare&amp;utm_campaign=bshare&amp;utm_medium=sinaminiblog#bsh-24-154760667">新闻</a>很火，一个技术男，给女友发弹窗通知求爱。有些人回复说这样做太麻烦，需要在服务器上记DeviceToken，否则所有用户都发的话，会让很多不相关的人收到。</p>
+
+<p>其实这完全可以用本地通知来做，完全不需要服务器配合，相当简单。
+具体做法是：你自己写一个发本地求爱通知的小应用，然后记下女友手机的UDID，将女友的手机设置成开发者设备，然后抓住一次机会在其手机上安装好开发者证书和你写的这个小App即可。可以把这个App隐藏在某个文件夹下面，然后打开一次，设置好本地通知的发出时间即可。</p>
+
+<p>我的很多文章最后结尾都是Have fun，不过最近很难高兴起来啊。因为0x12 Big，今天google的全线产品都无法访问了。想起我每天的工作都是用google搜技术贴，用gmail收邮件，用gtalk聊天，我的联系人信息，备忘录也是同步在google contact上，我真的无法fun起来了。本博客是架设在github上的，我也很担心该博客可能也会因为是境外IP而被禁止访问。</p>
+
+<p>有时候，我很气愤，而有时候，我会乐观地想，这些都是负能量的积累，黎明前的黑暗。不管怎么样，谁也无法阻止大家对自由的向往，希望有朝一日，所有人都能自由地获取信息。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[在MacOS和iOS系统中使用OpenCV]]></title>
@@ -748,6 +840,42 @@ overlay.progress = 1.0;
 
 <p>```</p>
 
+<h4>调整屏幕Rotation的回调函数</h4>
+
+<p>从iOS6开始，苹果修改了屏幕旋转的回调函数。在iOS6以前，回调函数是</p>
+
+<p>``` objc
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{</p>
+
+<pre><code>return (interfaceOrientation == UIInterfaceOrientationPortrait);
+</code></pre>
+
+<p>}
+```</p>
+
+<p>现在新的回调函数是：
+``` objc
+- (BOOL)shouldAutorotate {</p>
+
+<pre><code>return YES;
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li><p>(NSInteger)supportedInterfaceOrientations {
+  return UIInterfaceOrientationMaskAllButUpsideDown;
+}</p></li>
+<li><p>(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+  return UIInterfaceOrientationPortrait;
+}
+```</p></li>
+</ul>
+
+
+<p>并且，现在是否旋转屏幕是由最上层的View Controller决定。例如，如果你是由 UITabBarController或UINavigationController包起来的界面的话，是否旋转屏幕就由UITabBarController或UINavigationController中的shouldAutorotate回调决定，而默认其返回的是YES。修改方法是给这2个容器Controller增加Addition,将其shouldAutorotate修改成由当前显示的子view controller决定，或者直接默认返回NO。</p>
+
 <h4>提交应用</h4>
 
 <p>基本上就是以上这些调整工作了，完了之后用Xcode4.5编译后提交审核，并且在itunes connect中设置iPhone5屏幕尺寸的app介绍截图即可。业界传言说对于支持iPhone5的程序，苹果在应用审核的时候会优先进行，我不知道是否是真的，不过我们的应用确实只用了5天时间就通过了审核，这是我个人遇到过的最快的一次审核。</p>
@@ -945,214 +1073,6 @@ fi
 <p>其中<a href="http://weibo.com/wangyihan01">李祎</a>同学提到了一个iOS独立开发者的解决思路：<a href="http://kevincao.com/2011/08/prepare-png-for-iphone-app/">http://kevincao.com/2011/08/prepare-png-for-iphone-app/</a> ，我感觉该博客中提到的方法，或许更加适合美术同学，因为整个操作都是图形化的。所以附在这里，希望对大家有用。</p>
 
 <p>另外，网易杭研院的<a href="http://weibo.com/myerlang">施强</a>同学推荐了一个用于缩图的软件:<a href="http://www.xnconvert.com/">http://www.xnconvert.com/</a> ，据说也能很好的解决以上问题。一并在此推荐给大家作为参考。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Objective-C的新特性]]></title>
-    <link href="http://blog.devtang.com/blog/2012/08/05/use-modern-objective-c/"/>
-    <updated>2012-08-05T21:50:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/08/05/use-modern-objective-c</id>
-    <content type="html"><![CDATA[<p>苹果在今年的WWDC2012大会上介绍了大量Objective-C的新特性，能够帮助iOS程序员更加高效地编写代码。在不久前更新的XCode4.4版本中，这些新特性已经可以使用了。让我们看看这些新特性有哪些：</p>
-
-<!-- more -->
-
-
-<h2>Object Literals</h2>
-
-<p>这个是我认为最赞的一个改进。Object Literals允许你方便地定义数字、数组和字典对象。这个功能类似于java5提供的auto boxing功能。这虽然是一个语法糖，但我认为对提高写代码效率帮助很大。让我们先来看看以前定义数字、数组和字典对象的方法：</p>
-
-<p>``` objc</p>
-
-<pre><code>NSNumber * number = [NSNumber numberWithInt:1];
-NSArray * array = [NSArray arrayWithObjects:@"one", @"two", nil];
-NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:@"value1", @"key1", @"value2", @"key2", nil];
-</code></pre>
-
-<p>```
-是不是很恶心？现在以上代码可以简化成以下形式，注意到没有，不用再在参数的最后加恶心的nil了，字典的key和value也不再是倒着先写value,再写key了：</p>
-
-<p>``` objc</p>
-
-<pre><code>NSNumber * number = @1;
-NSArray * array = @[@"one", @"two"];
-NSDictionary * dict = @{@"key1":@"value1", @"key2":@"value2"};
-</code></pre>
-
-<p>```</p>
-
-<p>更多的示例如下：</p>
-
-<p>``` objc
-  // 整数
-  NSNumber <em>fortyTwo = @42;             // 等价于 [NSNumber numberWithInt:42]
-  NSNumber </em>fortyTwoUnsigned = @42U;    // 等价于 [NSNumber numberWithUnsignedInt:42U]
-  NSNumber <em>fortyTwoLong = @42L;        // 等价于 [NSNumber numberWithLong:42L]
-  NSNumber </em>fortyTwoLongLong = @42LL;   // 等价于 [NSNumber numberWithLongLong:42LL]</p>
-
-<p>  // 浮点数
-  NSNumber <em>piFloat = @3.141592654F;    // 等价于 [NSNumber numberWithFloat:3.141592654F]
-  NSNumber </em>piDouble = @3.1415926535;   // 等价于 [NSNumber numberWithDouble:3.1415926535]</p>
-
-<p>  // 布尔值
-  NSNumber <em>yesNumber = @YES;           // 等价于 [NSNumber numberWithBool:YES]
-  NSNumber </em>noNumber = @NO;             // 等价于 [NSNumber numberWithBool:NO]</p>
-
-<p>  // 空数组
-  NSArray * array = @[];                // 等价于 [NSArray array]
-  // 空的字典
-  NSDictionary * dict = @{};            // 等价于 [NSDictionary dictionary]</p>
-
-<p>```</p>
-
-<p>怎么样？是不是简单多了？而且，为了方便你的旧代码迁移到新的写法，xcode专门还提供了转换工具，在xcode4.4中，选择 Edit -> Refactor -> Convert to Modern Objective-C Syntax即可。如下所示：
-<img src="/images/modern-objc-convert-tool.png"></p>
-
-<h2>局部的函数调用不用前向申明</h2>
-
-<p>这虽然是一个挺小的改进，但是很贴心。假如我们在一个源文件中有2个函数：分别名为foo 和 bar，其中foo的定义在bar前面。那如果在foo函数内部直接调用bar，编译器会报警告说找不到函数bar。</p>
-
-<p>而现在，我们可以随意地在源文件中放置函数bar的位置。编译器在找不到bar时，会再源码后面找，如果找到了bar，就不会报错了。</p>
-
-<h2>带有类型的enum</h2>
-
-<p>现在我们可以定义enum是无符号整数还是整数，这样编译器会更加智能的做类型检查。如下所示：</p>
-
-<p>``` objc
-typedef enum TableViewCellType : NSInteger {</p>
-
-<pre><code>TableViewCellTypeQueue,
-TableViewCellTypeNewFans,
-TableViewCellTypeUserInfo,
-TableViewCellTypeOrganization,
-TableViewCellTypeFeedback,
-TableViewCellTypeRateApp,
-TableViewCellTypeRecommendation,
-TableViewCellTypeLogout
-</code></pre>
-
-<p>}TableViewCellType;
-```</p>
-
-<h2>默认生成@synthesize代码</h2>
-
-<p>以前写完一个诸如 @property (nonatomic, strong) NSString * username; 变量定义后，马上得转到 .m文件中去增加相应的 @synthesize username = _username; 代码。</p>
-
-<p>现在，编辑器发现你没有写 @synthesize时，会自动帮你加上这一行。这同时在另一方面，起到了鼓励大家使用以下划线开头的变量名作为成员变量名的作用。</p>
-
-<p>当然，为了向下兼容，如果你的程序里面已经有了 @property 变量对应的 @synthesize 代码时，编辑器就不会自动帮你增加这个代码了。</p>
-
-<p>另外有2种特殊情况下，即使你没有写 @synthesize ，编辑器也不会自动帮你加上，这2种情况是：</p>
-
-<ol>
-<li>你同时提供了该property的setter 和 getter方法。</li>
-<li>你的这个property是 readonly 的。</li>
-</ol>
-
-
-<h2>遍历元素</h2>
-
-<p>你是如何遍历数组的元素的？通常我们有2种做法，一种是用 for in，另一种是用一个变量来循环数组下标。如下：</p>
-
-<p>``` objc</p>
-
-<pre><code>    NSArray * lines = ...
-    for (NSString * line in lines) {
-       // ...
-    }
-    for (int i = 0; i &lt; lines.count; ++i) {
-        NSString * s = [lines objectAtIndex:i];
-        ...
-    }
-</code></pre>
-
-<p>```</p>
-
-<p>如果是字典，遍历的代码就要稍微复杂一点了：
-``` objc</p>
-
-<pre><code>    NSDictionary * dict = …
-    NSArray * keys = [dict allKeys];
-    for (NSString * key in keys) {
-        NSString * value = [dict objectForKey:key];
-
-    }
-</code></pre>
-
-<p>```</p>
-
-<p>现在，xcode对于iOS4.0以上的系统，支持用block来遍历元素了。用block来遍历字典可以简化代码的编写，建议大家都使用上这个新特性。</p>
-
-<p>``` objc</p>
-
-<pre><code>[lines enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *stop) {
-
-}];
-
-[_urlArguments enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-
-}];
-</code></pre>
-
-<p>```</p>
-
-<h2>Subscripting Methods</h2>
-
-<p>这个新特性在WWDC2012的视频中提到了，但是在XCode4.4中没有实现。也是一个很体贴的语法糖，它允许你用中括号来代替原本的方法来获取和设置数组元素。</p>
-
-<p>简单来说，以前的 [array objectAtIndex:idx] 和 [array replaceObjectAtIndex:idx withObject:obj]，可以直接写作 array[idx] 和 array[idx] = obj了。其实这个特性在很多高级语言中都实现了，只是Objective-C生于80年代，一直没改进这个。</p>
-
-<p>这个改进同样对NSDictionary有效。甚至，你也可以给你自己的类提供中括号操作符对应的方法。具体做法是实现如下两个方法：</p>
-
-<p><code>objc
-- (id)objectAtIndexedSubscript:(NSUInterger)idx;
-- (void)setObject:(id)value atIndexedSubscript:(NSUInteger)idx;
-</code></p>
-
-<p>期等XCode4.5中能够使用上这个特性。</p>
-
-<h2>Tips</h2>
-
-<p>上面提到了不用写 @synthesize 了，那原本写的那么多 @synthesize 怎么办呢？作为有代码洁癖的我很想把它们删掉，但怎么删呢？一个文件一个文件打开，然后行一行删掉吗？放心，苹果已经帮我们想了解决方案。在WWDC2012 Session 400 Developer Tools Kickoff 中，苹果介绍了具体做法。步骤如下：</p>
-
-<ol>
-<li>首先使用区域查找，因为一般项目都会依赖第三方的开源库，我们可不想更改别人的库，所以我们只查找我们库中的文件，如下图所示：</li>
-</ol>
-
-
-<p><img src="/images/modern-objc-remove-synthesize-1.png"></p>
-
-<ol>
-<li>接着我们用正则匹配，找到以 @synthesize开头，后面接着是 var = _var; 格式的行。插入正则表达式很简单，直接点击查找输入框左边的放大镜，选择“insert pattern"，苹果就会把常见的正则表达式都列出来，你直接选择就可以了，非常方便。如下图所示：</li>
-</ol>
-
-
-<p><img src="/images/modern-objc-insert-pattern.png"></p>
-
-<p>在插入好合适的正则表达式后，我们按回车，就可以搜索到结果。</p>
-
-<p><img src="/images/modern-objc-search-result.png"></p>
-
-<ol>
-<li>我们点击搜索界面的preview按钮，查看替换效果，可以看到，对于我们测试代码，XCode生成的预览图已经正确地当对应代码删掉了。然后我们就可以点击替换，去掉所有的 @synthesize 代码了。</li>
-</ol>
-
-
-<p><img src="/images/modern-objc-replace-review.png"></p>
-
-<p>在下载完XCode4.4后，我就把我们的工程代码都转换成了新特性的语法。在转换后，我发现原本25000行的代码少了将近1000行。心里还是很开心的，因为又可以少写一些体力活类型的代码了。</p>
-
-<p>还是那句话，希望这些新特性能够让大家玩得开心。</p>
-
-<h3>参考资料</h3>
-
-<ul>
-<li>LLVM官方网站比较全面地介绍了 Object Literal： <a href="http://clang.llvm.org/docs/ObjectiveCLiterals.html">http://clang.llvm.org/docs/ObjectiveCLiterals.html</a></li>
-<li>WWDC2012 Session 400 Developer Tools Kickoff</li>
-<li>WWDC2012 Session 405 Modern Objective-C</li>
-<li>WWDC2012 Session 413 Migrating to Modern Objective-C</li>
-</ul>
-
 ]]></content>
   </entry>
   

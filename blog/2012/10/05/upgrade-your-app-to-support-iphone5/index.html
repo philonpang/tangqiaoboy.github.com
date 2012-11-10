@@ -231,6 +231,50 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h4>调整屏幕Rotation的回调函数</h4>
+
+<p>从iOS6开始，苹果修改了屏幕旋转的回调函数。在iOS6以前，回调函数是</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">shouldAutorotateToInterfaceOrientation:</span><span class="p">(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nv">interfaceOrientation</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">(</span><span class="n">interfaceOrientation</span> <span class="o">==</span> <span class="n">UIInterfaceOrientationPortrait</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在新的回调函数是：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">shouldAutorotate</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">supportedInterfaceOrientations</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">UIInterfaceOrientationMaskAllButUpsideDown</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nf">preferredInterfaceOrientationForPresentation</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">UIInterfaceOrientationPortrait</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>并且，现在是否旋转屏幕是由最上层的View Controller决定。例如，如果你是由 UITabBarController或UINavigationController包起来的界面的话，是否旋转屏幕就由UITabBarController或UINavigationController中的shouldAutorotate回调决定，而默认其返回的是YES。修改方法是给这2个容器Controller增加Addition,将其shouldAutorotate修改成由当前显示的子view controller决定，或者直接默认返回NO。</p>
+
 <h4>提交应用</h4>
 
 <p>基本上就是以上这些调整工作了，完了之后用Xcode4.5编译后提交审核，并且在itunes connect中设置iPhone5屏幕尺寸的app介绍截图即可。业界传言说对于支持iPhone5的程序，苹果在应用审核的时候会优先进行，我不知道是否是真的，不过我们的应用确实只用了5天时间就通过了审核，这是我个人遇到过的最快的一次审核。</p>
@@ -335,6 +379,10 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a>
       </li>
     
@@ -388,10 +436,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2012/03/10/xcode4-tips/">xcode4使用技巧</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/29/collaboration-with-git/">用Git进行协同开发</a>
       </li>
     
   </ul>

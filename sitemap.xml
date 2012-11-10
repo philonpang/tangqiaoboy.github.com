@@ -108,7 +108,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/08/05/use-modern-objective-c/</loc>
-        <lastmod>2012-09-15T17:02:12+08:00</lastmod>
+        <lastmod>2012-11-03T10:57:28+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/08/26/use-script-to-power-up-ui-work/</loc>
@@ -120,7 +120,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/10/05/upgrade-your-app-to-support-iphone5/</loc>
-        <lastmod>2012-10-06T08:59:18+08:00</lastmod>
+        <lastmod>2012-11-03T11:43:48+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/10/09/3rd-libs-used-in-fenbi-app/</loc>
@@ -135,11 +135,15 @@
         <lastmod>2012-10-27T22:49:17+08:00</lastmod>
     </url>
     <url>
+        <loc>http://blog.devtang.com/blog/2012/11/10/how-to-design-upgrade-notice/</loc>
+        <lastmod>2012-11-10T21:28:34+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://blog.devtang.com/blog/archives/</loc>
-        <lastmod>2012-10-27T22:49:17+08:00</lastmod>
+        <lastmod>2012-11-10T21:28:34+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/</loc>
-        <lastmod>2012-10-27T22:49:17+08:00</lastmod>
+        <lastmod>2012-11-10T21:28:34+08:00</lastmod>
     </url>
 </urlset>

@@ -284,9 +284,46 @@
 
 <h2>Subscripting Methods</h2>
 
-<p>这个新特性在WWDC2012的视频中提到了，但是在XCode4.4中没有实现。也是一个很体贴的语法糖，它允许你用中括号来代替原本的方法来获取和设置数组元素。</p>
+<p>这个新特性在WWDC2012的视频中提到了，但是在XCode4.4中没有实现（在XCode4.5中实现了）。也是一个很体贴的语法糖，它允许你用中括号来代替原本的方法来获取和设置数组元素。</p>
 
 <p>简单来说，以前的 [array objectAtIndex:idx] 和 [array replaceObjectAtIndex:idx withObject:obj]，可以直接写作 array[idx] 和 array[idx] = obj了。其实这个特性在很多高级语言中都实现了，只是Objective-C生于80年代，一直没改进这个。</p>
+
+<p>以下是一些示例代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSArray</span> <span class="o">*</span> <span class="n">array</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span> <span class="s">@&quot;111&quot;</span><span class="p">,</span> <span class="s">@&quot;222&quot;</span><span class="p">,</span> <span class="s">@&quot;333&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;array[i] = %@&quot;</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">NSMutableDictionary</span> <span class="o">*</span> <span class="n">dict</span> <span class="o">=</span><span class="p">[</span><span class="err">@</span><span class="p">{</span>  <span class="err">@</span><span class="mi">1</span><span class="o">:</span> <span class="s">@&quot;value1&quot;</span><span class="p">,</span>
+</span><span class='line'>                                 <span class="err">@</span><span class="mi">2</span><span class="o">:</span> <span class="s">@&quot;value2&quot;</span><span class="p">,</span>
+</span><span class='line'>                                 <span class="err">@</span><span class="mi">3</span><span class="o">:</span> <span class="s">@&quot;value3&quot;</span> <span class="p">}</span> <span class="n">mutableCopy</span><span class="p">];</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;dict[%d] = %@&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">dict</span><span class="p">[</span><span class="err">@</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)]);</span>
+</span><span class='line'>    <span class="n">dict</span><span class="p">[</span><span class="err">@</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithFormat:</span><span class="s">@&quot;new %@&quot;</span><span class="p">,</span> <span class="n">dict</span><span class="p">[</span><span class="err">@</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)]];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">dict</span> <span class="nl">enumerateKeysAndObjectsUsingBlock:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">key</span><span class="p">,</span> <span class="kt">id</span> <span class="n">obj</span><span class="p">,</span> <span class="kt">BOOL</span> <span class="o">*</span><span class="n">stop</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;dict[%@] = %@&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">dict</span><span class="p">[</span><span class="n">key</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}];</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>这个改进同样对NSDictionary有效。甚至，你也可以给你自己的类提供中括号操作符对应的方法。具体做法是实现如下两个方法：</p>
 
@@ -296,8 +333,6 @@
 </span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setObject:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">value</span> <span class="nf">atIndexedSubscript:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="nv">idx</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<p>期等XCode4.5中能够使用上这个特性。</p>
 
 <h2>Tips</h2>
 
@@ -440,6 +475,10 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a>
       </li>
     
@@ -493,10 +532,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2012/03/10/xcode4-tips/">xcode4使用技巧</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/29/collaboration-with-git/">用Git进行协同开发</a>
       </li>
     
   </ul>

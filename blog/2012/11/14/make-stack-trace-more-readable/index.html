@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>让XCode的stack trace信息可读 - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="昨天在写iOS代码的时候，调试的时候模拟器崩溃了。异常停在了如下整个main函数的入口处： 1
+2
+3
+4
+5
+6
+7
+int main(int argc, char *argv[])
+{ @autoreleasepool { // 异常停在了下面这行，毫无提示作用 return &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/11/14/make-stack-trace-more-readable">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">文章列表</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">让XCode的stack Trace信息可读</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T20:19:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>昨天在写iOS代码的时候，调试的时候模拟器崩溃了。异常停在了如下整个main函数的入口处：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// 异常停在了下面这行，毫无提示作用</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">UIApplicationMain</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="nb">nil</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">MyClass</span> <span class="n">class</span><span class="p">]));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<p>XCode的Console界面报出了一些出错信息, 如下图所示：</p>
+
+<p><img src="/images/stacktrace-1.jpg"></p>
+
+<p>我根据Console里面的文字提示信息，猜出应该是出现了空指针nil的操作。但是具体出错在哪一行，却不知道。最终虽然找到了bug，但是debug的过程确实费了些时间。考虑到这个stace trace信息应该对我挺有帮助才对的，所以我就查了一下如何让这原本一堆16进制的调用栈信息更可读。于是在stackoverflow上找到了2个比较好的解决办法，在这里分享给大家。</p>
+
+<h2>方法一</h2>
+
+<p>该<a href="http://stackoverflow.com/questions/7841610/xcode-4-2-debug-doesnt-symbolicate-stack-call">方法</a>的步骤是，首先在你的AppDelegate中定义一个方法, 用于处理异常：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">uncaughtExceptionHandler</span><span class="p">(</span><span class="n">NSException</span> <span class="o">*</span><span class="n">exception</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;CRASH: %@&quot;</span><span class="p">,</span> <span class="n">exception</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Stack Trace: %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">exception</span> <span class="n">callStackSymbols</span><span class="p">]);</span>
+</span><span class='line'>    <span class="c1">// Internal error reporting</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后在应用启动时，设置这个方法作为自己的自定义异常回调：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">NSSetUncaughtExceptionHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">uncaughtExceptionHandler</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">// Normal launch stuff</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>完成之后，当对于上面的异常，在定义了这个回调之后，Log信息变成如下所示，出错行一目了然，根据下面的可读的stack trace，我一下就可以找到是QuestionParser这个类的第378行导致的异常，进而可以跳到出错行分析原因，很容易就把bug修复了。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Ape</span><span class="p">[</span><span class="mi">2711</span><span class="o">:</span><span class="mi">11303</span><span class="p">]</span> <span class="nl">CRASH:</span> <span class="o">***</span> <span class="o">-</span><span class="p">[</span><span class="n">__NSPlaceholderDictionary</span> <span class="nl">initWithObjects:forKeys:count:</span><span class="p">]</span><span class="o">:</span> <span class="n">attempt</span> <span class="n">to</span> <span class="n">insert</span> <span class="nb">nil</span> <span class="n">object</span> <span class="n">from</span> <span class="n">objects</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'><span class="n">Ape</span><span class="p">[</span><span class="mi">2711</span><span class="o">:</span><span class="mi">11303</span><span class="p">]</span> <span class="n">Stack</span> <span class="nl">Trace:</span> <span class="p">(</span>
+</span><span class='line'>  <span class="mi">0</span>   <span class="n">CoreFoundation</span>                      <span class="mh">0x0209402e</span> <span class="n">__exceptionPreprocess</span> <span class="o">+</span> <span class="mi">206</span>
+</span><span class='line'>  <span class="mi">1</span>   <span class="n">libobjc</span><span class="p">.</span><span class="n">A</span><span class="p">.</span><span class="n">dylib</span>                     <span class="mh">0x01a71e7e</span> <span class="n">objc_exception_throw</span> <span class="o">+</span> <span class="mi">44</span>
+</span><span class='line'>  <span class="mi">2</span>   <span class="n">CoreFoundation</span>                      <span class="mh">0x0205aa95</span> <span class="o">-</span><span class="p">[</span><span class="n">__NSPlaceholderDictionary</span> <span class="nl">initWithObjects:forKeys:count:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">165</span>
+</span><span class='line'>  <span class="mi">3</span>   <span class="n">CoreFoundation</span>                      <span class="mh">0x020874e9</span> <span class="o">+</span><span class="p">[</span><span class="n">NSDictionary</span> <span class="nl">dictionaryWithObjects:forKeys:count:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">73</span>
+</span><span class='line'>  <span class="mi">4</span>   <span class="n">Ape</span>                                 <span class="mh">0x00096a0a</span> <span class="o">+</span><span class="p">[</span><span class="n">QuestionParser</span> <span class="nl">parseToDictionary:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">378</span>
+</span><span class='line'>  <span class="mi">5</span>   <span class="n">Ape</span>                                 <span class="mh">0x00096434</span> <span class="o">-</span><span class="p">[</span><span class="n">QuestionStore</span> <span class="nl">putQuestion:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">308</span>
+</span><span class='line'>  <span class="mi">6</span>   <span class="n">Ape</span>                                 <span class="mh">0x00089ddf</span> <span class="o">-</span><span class="p">[</span><span class="n">QuestionViewController</span> <span class="nl">requestFinished:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">303</span>
+</span><span class='line'>  <span class="mi">7</span>   <span class="n">Ape</span>                                 <span class="mh">0x000869dd</span> <span class="o">-</span><span class="p">[</span><span class="n">NetworkAgent</span> <span class="nl">requestFinished:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">653</span>
+</span><span class='line'>  <span class="mi">8</span>   <span class="n">Ape</span>                                 <span class="mh">0x00085d33</span> <span class="n">__27</span><span class="o">-</span><span class="p">[</span><span class="n">NetworkAgent</span> <span class="nl">addRequest:</span><span class="p">]</span><span class="n">_block_invoke_0</span> <span class="o">+</span> <span class="mi">131</span>
+</span><span class='line'>  <span class="mi">9</span>   <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cf153f</span> <span class="n">_dispatch_call_block_and_release</span> <span class="o">+</span> <span class="mi">15</span>
+</span><span class='line'>  <span class="mi">10</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01d03014</span> <span class="n">_dispatch_client_callout</span> <span class="o">+</span> <span class="mi">14</span>
+</span><span class='line'>  <span class="mi">11</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cf2fd6</span> <span class="n">_dispatch_after_timer_callback</span> <span class="o">+</span> <span class="mi">28</span>
+</span><span class='line'>  <span class="mi">12</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01d03014</span> <span class="n">_dispatch_client_callout</span> <span class="o">+</span> <span class="mi">14</span>
+</span><span class='line'>  <span class="mi">13</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cfa8b7</span> <span class="n">_dispatch_source_latch_and_call</span> <span class="o">+</span> <span class="mi">219</span>
+</span><span class='line'>  <span class="mi">14</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cf6405</span> <span class="n">_dispatch_source_invoke</span> <span class="o">+</span> <span class="mi">322</span>
+</span><span class='line'>  <span class="mi">15</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cf3768</span> <span class="n">_dispatch_main_queue_callback_4CF</span> <span class="o">+</span> <span class="mi">187</span>
+</span><span class='line'>  <span class="mi">16</span>  <span class="n">CoreFoundation</span>                      <span class="mh">0x0203aaf5</span> <span class="n">__CFRunLoopRun</span> <span class="o">+</span> <span class="mi">1925</span>
+</span><span class='line'>  <span class="mi">17</span>  <span class="n">CoreFoundation</span>                      <span class="mh">0x02039f44</span> <span class="n">CFRunLoopRunSpecific</span> <span class="o">+</span> <span class="mi">276</span>
+</span><span class='line'>  <span class="mi">18</span>  <span class="n">CoreFoundation</span>                      <span class="mh">0x02039e1b</span> <span class="n">CFRunLoopRunInMode</span> <span class="o">+</span> <span class="mi">123</span>
+</span><span class='line'>  <span class="mi">19</span>  <span class="n">GraphicsServices</span>                    <span class="mh">0x0282b7e3</span> <span class="n">GSEventRunModal</span> <span class="o">+</span> <span class="mi">88</span>
+</span><span class='line'>  <span class="mi">20</span>  <span class="n">GraphicsServices</span>                    <span class="mh">0x0282b668</span> <span class="n">GSEventRun</span> <span class="o">+</span> <span class="mi">104</span>
+</span><span class='line'>  <span class="mi">21</span>  <span class="n">UIKit</span>                               <span class="mh">0x00be265c</span> <span class="n">UIApplicationMain</span> <span class="o">+</span> <span class="mi">1211</span>
+</span><span class='line'>  <span class="mi">22</span>  <span class="n">Ape</span>                                 <span class="mh">0x00016c5d</span> <span class="n">main</span> <span class="o">+</span> <span class="mi">141</span>
+</span><span class='line'>  <span class="mi">23</span>  <span class="n">Ape</span>                                 <span class="mh">0x00002b05</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">53</span>
+</span><span class='line'>  <span class="mi">24</span>  <span class="o">???</span>                                 <span class="mh">0x00000001</span> <span class="mh">0x0</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>方法二</h2>
+
+<p>方法二相比方法一更加简单，具体做法是在XCode界面中按cmd + 6跳到Breakpoint的tab，然后点击左下角的+号，增加一个Exception的断点，如下图所示。这样，当异常出现时，会自动停在异常处，而不会抛出到UIApplicationMain。拿我的有bug的程序来说，代码会自动断在QuestionParser这个类的第378行。</p>
+
+<p><img src="/images/stacktrace-2.png"></p>
+
+<h2>总结</h2>
+
+<p>其实以前XCode是能显示出可读的stack trace信息的，似乎到了XCode4.2以后就出问题了。所以上面提到的2个办法相当于walk around解决了XCode4.2以后出现的bug。如果该文章对你有用，希望你能帮我点击下面的分享按钮，分享给更多朋友，同时也帮我宣传一下博客，这将有助于我分享更多的心得给大家，Have fun!</p>
+</div>
+
+
+  <footer>
+   <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T20:19:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/11/10/how-to-design-upgrade-notice/" title="Previous Post: 改进iOS客户端的升级提醒功能">&laquo; 改进iOS客户端的升级提醒功能</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/14/make-stack-trace-more-readable/">让XCode的stack trace信息可读</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">粉笔网的架构和项目管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/09/3rd-libs-used-in-fenbi-app/">粉笔网iPhone端使用的第三方开源库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/05/upgrade-your-app-to-support-iphone5/">让你的APP支持iPhone5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/05/use-modern-objective-c/">Objective-C的新特性</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/24/enhance-uiactionsheet/">封装同步的UIActionSheet</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/05/do-not-use-sbjson/">不要使用SBJSON(json-framework)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/22/use-fmdb/">在iOS开发中使用FMDB</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/06/about-100-devices-limit/">关于iOS测试机个数上限的详细规则</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">关于UIWebView和PhoneGap的总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/10-most-common-questions-on-stackoverflow-201203/">iPhone开发常问的十个问题(2012年3月版)</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>  前网易有道员工，现在在粉笔网创业中。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记。
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

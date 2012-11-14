@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-11-10T21:31:26+08:00</updated>
+  <updated>2012-11-14T21:06:12+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,112 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[让XCode的stack trace信息可读]]></title>
+    <link href="http://blog.devtang.com/blog/2012/11/14/make-stack-trace-more-readable/"/>
+    <updated>2012-11-14T20:19:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/11/14/make-stack-trace-more-readable</id>
+    <content type="html"><![CDATA[<p>昨天在写iOS代码的时候，调试的时候模拟器崩溃了。异常停在了如下整个main函数的入口处：</p>
+
+<p>``` objc
+int main(int argc, char *argv[])
+{</p>
+
+<pre><code>@autoreleasepool {
+    // 异常停在了下面这行，毫无提示作用
+    return UIApplicationMain(argc, argv, nil, NSStringFromClass([MyClass class]));
+}
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<!-- more -->
+
+
+<p>XCode的Console界面报出了一些出错信息, 如下图所示：</p>
+
+<p><img src="/images/stacktrace-1.jpg"></p>
+
+<p>我根据Console里面的文字提示信息，猜出应该是出现了空指针nil的操作。但是具体出错在哪一行，却不知道。最终虽然找到了bug，但是debug的过程确实费了些时间。考虑到这个stace trace信息应该对我挺有帮助才对的，所以我就查了一下如何让这原本一堆16进制的调用栈信息更可读。于是在stackoverflow上找到了2个比较好的解决办法，在这里分享给大家。</p>
+
+<h2>方法一</h2>
+
+<p>该<a href="http://stackoverflow.com/questions/7841610/xcode-4-2-debug-doesnt-symbolicate-stack-call">方法</a>的步骤是，首先在你的AppDelegate中定义一个方法, 用于处理异常：</p>
+
+<p>``` objc
+void uncaughtExceptionHandler(NSException *exception) {</p>
+
+<pre><code>NSLog(@"CRASH: %@", exception);
+NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
+// Internal error reporting
+</code></pre>
+
+<p>}
+```
+然后在应用启动时，设置这个方法作为自己的自定义异常回调：</p>
+
+<p>``` objc
+- (BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions
+{</p>
+
+<pre><code>NSSetUncaughtExceptionHandler(&amp;uncaughtExceptionHandler);
+// Normal launch stuff
+</code></pre>
+
+<p>}
+```</p>
+
+<p>完成之后，当对于上面的异常，在定义了这个回调之后，Log信息变成如下所示，出错行一目了然，根据下面的可读的stack trace，我一下就可以找到是QuestionParser这个类的第378行导致的异常，进而可以跳到出错行分析原因，很容易就把bug修复了。</p>
+
+<p>``` objc
+Ape[2711:11303] CRASH: *** -[__NSPlaceholderDictionary initWithObjects:forKeys:count:]: attempt to insert nil object from objects[2]
+Ape[2711:11303] Stack Trace: (</p>
+
+<pre><code>0   CoreFoundation                      0x0209402e __exceptionPreprocess + 206
+1   libobjc.A.dylib                     0x01a71e7e objc_exception_throw + 44
+2   CoreFoundation                      0x0205aa95 -[__NSPlaceholderDictionary initWithObjects:forKeys:count:] + 165
+3   CoreFoundation                      0x020874e9 +[NSDictionary dictionaryWithObjects:forKeys:count:] + 73
+4   Ape                                 0x00096a0a +[QuestionParser parseToDictionary:] + 378
+5   Ape                                 0x00096434 -[QuestionStore putQuestion:] + 308
+6   Ape                                 0x00089ddf -[QuestionViewController requestFinished:] + 303
+7   Ape                                 0x000869dd -[NetworkAgent requestFinished:] + 653
+8   Ape                                 0x00085d33 __27-[NetworkAgent addRequest:]_block_invoke_0 + 131
+9   libdispatch.dylib                   0x01cf153f _dispatch_call_block_and_release + 15
+10  libdispatch.dylib                   0x01d03014 _dispatch_client_callout + 14
+11  libdispatch.dylib                   0x01cf2fd6 _dispatch_after_timer_callback + 28
+12  libdispatch.dylib                   0x01d03014 _dispatch_client_callout + 14
+13  libdispatch.dylib                   0x01cfa8b7 _dispatch_source_latch_and_call + 219
+14  libdispatch.dylib                   0x01cf6405 _dispatch_source_invoke + 322
+15  libdispatch.dylib                   0x01cf3768 _dispatch_main_queue_callback_4CF + 187
+16  CoreFoundation                      0x0203aaf5 __CFRunLoopRun + 1925
+17  CoreFoundation                      0x02039f44 CFRunLoopRunSpecific + 276
+18  CoreFoundation                      0x02039e1b CFRunLoopRunInMode + 123
+19  GraphicsServices                    0x0282b7e3 GSEventRunModal + 88
+20  GraphicsServices                    0x0282b668 GSEventRun + 104
+21  UIKit                               0x00be265c UIApplicationMain + 1211
+22  Ape                                 0x00016c5d main + 141
+23  Ape                                 0x00002b05 start + 53
+24  ???                                 0x00000001 0x0 + 1
+</code></pre>
+
+<p>)</p>
+
+<p>```</p>
+
+<h2>方法二</h2>
+
+<p>方法二相比方法一更加简单，具体做法是在XCode界面中按cmd + 6跳到Breakpoint的tab，然后点击左下角的+号，增加一个Exception的断点，如下图所示。这样，当异常出现时，会自动停在异常处，而不会抛出到UIApplicationMain。拿我的有bug的程序来说，代码会自动断在QuestionParser这个类的第378行。</p>
+
+<p><img src="/images/stacktrace-2.png"></p>
+
+<h2>总结</h2>
+
+<p>其实以前XCode是能显示出可读的stack trace信息的，似乎到了XCode4.2以后就出问题了。所以上面提到的2个办法相当于walk around解决了XCode4.2以后出现的bug。如果该文章对你有用，希望你能帮我点击下面的分享按钮，分享给更多朋友，同时也帮我宣传一下博客，这将有助于我分享更多的心得给大家，Have fun!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[改进iOS客户端的升级提醒功能]]></title>
@@ -881,198 +987,6 @@ overlay.progress = 1.0;
 <p>基本上就是以上这些调整工作了，完了之后用Xcode4.5编译后提交审核，并且在itunes connect中设置iPhone5屏幕尺寸的app介绍截图即可。业界传言说对于支持iPhone5的程序，苹果在应用审核的时候会优先进行，我不知道是否是真的，不过我们的应用确实只用了5天时间就通过了审核，这是我个人遇到过的最快的一次审核。</p>
 
 <p>祝大家国庆节玩得开心～</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[用脚本来简化iOS美术同学的工作]]></title>
-    <link href="http://blog.devtang.com/blog/2012/08/26/use-script-to-power-up-ui-work/"/>
-    <updated>2012-08-26T20:34:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/08/26/use-script-to-power-up-ui-work</id>
-    <content type="html"><![CDATA[<h2>问题</h2>
-
-<p>我们知道，在iOS开发中，为了使我们的app能够同时支持iPhone的Retina屏幕和普通屏幕，美术同学需要对UI设计稿中的每个元素进行2次切图。苹果要求对图片元素的命名分别为 name.png 和 name@2x.png，带@2x的表示是Retina屏幕的贴图，不带@2x的同名文件为普通屏幕的贴图。</p>
-
-<p>我在开发的时候发现很难要求美术同学按照开发的要求来对图片命名。她们通常对于切图的命名是例如 <em>登录按钮大.png</em> ，<em>登录按钮小.png</em>, <em>登录按钮按下大.png</em> <em>登录按钮按下小.png</em> 这样的形式。于是，对这些文件按照苹果的要求进行重命名就成了我这个码农的一个体力活。</p>
-
-<!-- more -->
-
-
-<h2>解决方案</h2>
-
-<p>有什么方法能减少开发和美术的体力活呢？想到因为 name@2x.png 的图片是 name.png 图片的2整倍，所以，我们完全可以让美术只切@2x的大图，而我们使用脚本来生成小图。于是我写了下面这样的一个脚本，我只需要将所有的大图按照类似 name-1@2x.png , name-2@2x.png 方式命名，然后脚本就会自动帮我生成对应的名为 name-1.png 和 name-2.png的小图。</p>
-
-<p>``` objc</p>
-
-<h1>! /bin/bash</h1>
-
-<h1>File name : convertImage.sh</h1>
-
-<h1>Author: Tang Qiao</h1>
-
-<h1></h1>
-
-<h1>print usage</h1>
-
-<p>usage() {</p>
-
-<pre><code>cat &lt;&lt; EOF
-Usage:
-    convertImage.sh &lt;src directory&gt; &lt;dest directory&gt;
-</code></pre>
-
-<p>EOF
-}</p>
-
-<p>if [ $# -ne 2 ]; then</p>
-
-<pre><code>usage
-exit 1
-</code></pre>
-
-<p>fi</p>
-
-<p>SRC_DIR=$1
-DEST_DIR=$2</p>
-
-<h1>check src dir</h1>
-
-<p>if [ ! -d $SRC_DIR ]; then</p>
-
-<pre><code>echo "src directory not exist: $SRC_DIR"
-exit 1
-</code></pre>
-
-<p>fi</p>
-
-<h1>check dest dir</h1>
-
-<p>if [ ! -d $DEST_DIR ]; then</p>
-
-<pre><code>mkdir -p $DEST_DIR
-</code></pre>
-
-<p>fi</p>
-
-<p>for src_file in $SRC_DIR/<em>.</em> ; do</p>
-
-<pre><code>echo "process file name: $src_file"
-# 获得去掉文件名的纯路径
-src_path=`dirname $src_file`
-# 获得去掉路径的纯文件名
-filename=`basename $src_file`
-# 获得文件名字(不包括扩展名)
-name=`echo "$filename" | cut -d'.' -f1`
-# remove @2x in filename if there is
-name=`echo "$name" | cut -d"@" -f1`
-# 获得文件扩展名
-extension=`echo "$filename" | cut -d'.' -f2`
-dest_file="$DEST_DIR/${name}.${extension}"
-
-convert $src_file -resize 50% $dest_file
-</code></pre>
-
-<p>done
-```</p>
-
-<p>脚本使用方法：将以上代码另存为 convertImage.sh，然后用以下方式调用此脚本，即可将源文件夹中所有以@2x结尾的图片文件转成一半大小的、去掉@2x的小图片。</p>
-
-<p><code>bash
-convertImage.sh 源文件夹 目标文件夹
-</code></p>
-
-<p>使用以上脚本后，美术只用切一半的图了。因为给我的切图少了，所以我可以更加方便地找到对应的切图了。另外，我也减少了一半对切图进行重命名的工作。</p>
-
-<h2>Tips</h2>
-
-<h3>imagemagick</h3>
-
-<p>如果你运行以上脚本失败，请先用brew 或 port安装 imagemagick。imagemagick是一个相当强大的图象处理库。
-<code>bash
-brew install imagemagick
-</code></p>
-
-<h3>检查图片</h3>
-
-<p>在使用该脚本一段时间后，我发现美术同学给我的大图的长宽常常不是偶数，这样造成缩小的图就不是原图的整倍数了。为了方便我检查美术给我的图片是否宽高都是偶数，我写了如下检查的脚本，这样就可以检查图片的宽高是否符合要求了。</p>
-
-<p>``` bash</p>
-
-<h1>! /bin/bash</h1>
-
-<h1>File name : checkImageSize.sh</h1>
-
-<h1>Author: Tang Qiao</h1>
-
-<h1></h1>
-
-<p>usage() {</p>
-
-<pre><code>cat &lt;&lt;EOF
-Usage:
-    checkImageSize.sh &lt;directory&gt;
-</code></pre>
-
-<p>EOF
-}</p>
-
-<p>if [ $# -ne 1 ]; then</p>
-
-<pre><code>usage
-exit 1
-</code></pre>
-
-<p>fi</p>
-
-<p>SRC_DIR=$1</p>
-
-<h1>check src dir</h1>
-
-<p>if [ ! -d $SRC_DIR ]; then</p>
-
-<pre><code>echo "src directory not exist: $SRC_DIR"
-exit 1
-</code></pre>
-
-<p>fi</p>
-
-<p>for src_file in $SRC_DIR/*.png ; do</p>
-
-<pre><code>echo "process file name: $src_file"
-width=`identify -format "%[fx:w]" $src_file`
-height=`identify -format "%[fx:h]" $src_file`
-# check width
-modValue=`awk -v a=$width 'BEGIN{printf "%d", a % 2}'`
-if [ "$modValue" == "1" ]; then
-   echo "[Error], the file $src_file width is $width" 
-fi
-# check height
-modValue=`awk -v a=$height 'BEGIN{printf "%d", a % 2}'`
-if [ "$modValue" == "1" ]; then
-   echo "[Error], the file $src_file height is $height" 
-fi
-</code></pre>
-
-<p>done
-```</p>
-
-<h3>问题</h3>
-
-<p>我在使用以上方法时，发现由于imagemagick压缩比太高，生成的图片如果象素太小，它就会生成索引图片，而不知道何故，少量索引图片在iPhone 3GS上会显示出一条黑线在图片底部。对于这些图片，用photoshop将其模式改成RGB颜色即可。如下所示：</p>
-
-<p><img src="/images/ui-script-tips.png" title="" ></p>
-
-<p>用脚本代替体力活是一件很happy的事情，因为你可以用省下来的时间多做一些有意思的事情了。</p>
-
-<p>Have fun !</p>
-
-<h3>后记</h3>
-
-<p>在发表完这篇文章后，得到了很多反馈。</p>
-
-<p>其中<a href="http://weibo.com/wangyihan01">李祎</a>同学提到了一个iOS独立开发者的解决思路：<a href="http://kevincao.com/2011/08/prepare-png-for-iphone-app/">http://kevincao.com/2011/08/prepare-png-for-iphone-app/</a> ，我感觉该博客中提到的方法，或许更加适合美术同学，因为整个操作都是图形化的。所以附在这里，希望对大家有用。</p>
-
-<p>另外，网易杭研院的<a href="http://weibo.com/myerlang">施强</a>同学推荐了一个用于缩图的软件:<a href="http://www.xnconvert.com/">http://www.xnconvert.com/</a> ，据说也能很好的解决以上问题。一并在此推荐给大家作为参考。</p>
 ]]></content>
   </entry>
   

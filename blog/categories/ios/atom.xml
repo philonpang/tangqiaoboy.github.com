@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-11-14T21:09:27+08:00</updated>
+  <updated>2012-11-16T20:50:30+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,100 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[放弃iOS4，拥抱iOS5]]></title>
+    <link href="http://blog.devtang.com/blog/2012/11/16/drop-ios4-enbrace-ios5/"/>
+    <updated>2012-11-16T20:47:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/11/16/drop-ios4-enbrace-ios5</id>
+    <content type="html"><![CDATA[<p><img src="/images/ios5.jpg"></p>
+
+<h2>前言</h2>
+
+<p>苹果在2011年的WWDC大会上发布了iOS5，不过考虑到要支持iOS4.x的系统，大多数App都无法使用iOS5的新特性。现在将近1年半过去了，从我们自己的App后台的统计数据、一些第三方的统计数据和一些业界的朋友告知我的数据都显示，iOS4.x的系统所占比例已经小于5%了，并且还在持续下降。所以，我们有必要放弃对iOS4.x的支持，全面拥抱iOS5。</p>
+
+<p>只支持iOS5.0以上版本使得我们可以使用iOS5带来的诸多新特性，有些新特性可以极大地方便我们的开发，我将这些新特性列举如下。</p>
+
+<!-- more -->
+
+
+<h2>Storyboard</h2>
+
+<p>Storyboard（故事板）是XCode4和iOS5提供的一个用于控制View Controller之间跳转关系的新概念。你可以把它理解成以前一堆Nib文件的集合。在这个集合里面，每个Nib文件被称作scene（场景），scene之间的跳转关系被称作segue。segue代表着传统的界面间切换的方式，通常是Push方式和Modal方式，当然，你也可以自定义自己的Segue。如下示例图是一个Storyboard的界面：</p>
+
+<p><img src="/images/enbrace-ios5-1.png"></p>
+
+<p>使用Storyboard的好处有以下几点：</p>
+
+<ol>
+<li>你可以从storyboard中很方便地梳理出所有View Controller的界面间的调用关系。比如上面那个storyboard示例图，我们就可以很清楚地了解到4个View Controller相互之间是怎么调用的。而这在以前，这些调用关系，都是隐藏在每个View Controller的代码中的，你需要一点一点读代码，才可以将整个调用逻辑整理清楚。</li>
+<li>使用Storyboard可以使用Table View Controller的Static Cell功能。简单来说，对于象设置页面等固定内容的TableView，可以直接在Storyboard中通过拖拽就可以设置其界面了，而不是象以前那样需要写一堆table view的delegate和data source回调函数。</li>
+<li>通过实现 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 方法，每个View Controller的跳转逻辑都聚集在一处，这方便我们统一管理界面跳转和传递数据，这相当于多了一个编程约定。</li>
+<li>Storyboard可以方便将一些常用功能模块化和复用。例如WWDC2011年介绍Storyboard的视频就将微博分享功能模块化成一个单独的Storyboard。我在开发App时，也将例如通过第三方注册登录模块做成一个单独的Storyboard，便于以后复用。</li>
+</ol>
+
+
+<p>另外，在iOS6中，storyboard又新增了如exit segue, container view等新功能，这些功能都非常体贴，我们向新的技术方案迁移可以在未来更加方便地使用iOS和XCode的新特性，方便我们的开发。</p>
+
+<p>当然，Storyboard也有它的问题。比如，如果2个人同时编译storyboard，在版本管理中出现冲突时会比较麻烦。虽然storyboard是XML格式的，但是里面的信息有些时候还是不太清晰，当冲突发生时，合并冲突可能会比较麻烦。解决办法是，将Storyboard按功能拆分，每个人尽量负责一个单独的Storyboard，如果实在需要2个人都修改它，避免同时修改。</p>
+
+<h2>ARC</h2>
+
+<p>因为ARC是在编译期做的，所以虽然是与iOS5.0同时推出的Objective-C特性，但是其实ARC是支持iOS4的。只是在iOS4中，不能使用ARC的weak关键字。</p>
+
+<p>由于不需要支持iOS4，我们可以将原本的 __unsafe_unretained 关键字换成weak。这样当这个弱引用对象被回收时，weak指针会被智能地设置成nil，防止“野指针”的产生。</p>
+
+<p>很多人说ARC有这样那样的问题，其实他们是没有真正用好ARC。我在开发粉笔网iPhone客户端时，由于使用了ARC，花三个月开发完的应用，用instruments检测后，没有发现任何内存泄漏问题。这在没有使用ARC的工程中是不可想象的。苹果在推出ARC两年后，今年正式将ARC引入到Mac OS操作系统的SDK中，并且正式将原有的GC deprecated掉，这也说明了ARC技术方案已经是非常成熟的了。</p>
+
+<h2>UIKit</h2>
+
+<p>UIKit在iOS5进行了大量更新。除了新增了如UIStepper控件外，也为以前的控件增加了更多的定制接口。我们可以方便地定义UINavigationBar, UITabBar, UIToolBar等常用控件。</p>
+
+<p>苹果在iOS5中给UIViewController新增加的5方法以及一个属性。关于这个新特性我在<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">这篇文章</a>中详细介绍过。新增的方法主要解决的是让 view的load/unLoad/appear/disappear的相关回调可以传递到子view controller中。</p>
+
+<h2>CoreImage</h2>
+
+<p>苹果从iOS5开始，引入了新的图象类CIImage。CIImage相比以前的UIImage类，更加适合于图象处理和图象分析。</p>
+
+<p>在图象处理方法，苹果内置了CIFilter类，方便开发者对图形进行各种各样的特效处理，在iOS5中，苹果提供了48种Filter，而在iOS6中，内置的Filter达到了93种。可以使用如下代码，查询到当前系统中提供的Filter列表：</p>
+
+<p>``` objc
+- (void)logAllFilters {</p>
+
+<pre><code>NSArray * properties = [CIFilter filterNamesInCategory:kCICategoryBuiltIn];
+NSLog(@"%@", properties);
+for (NSString * filterName in properties) {
+    CIFilter * fltr = [CIFilter filterWithName:filterName];
+    NSLog(@"%@", [fltr attributes]);
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>这些内置的Filter在分类上，包括：</p>
+
+<ol>
+<li>颜色效果类。例如黄昏效果，曝光度调整等。</li>
+<li>组合效果类。把2张图片按各种规则混合成一张图。</li>
+<li>几何变形类。例如把照片倾斜或者翻转。</li>
+<li>重复效果类。如平铺，折叠，镜象等。</li>
+<li>失真扭曲类。如把图片中心做成漩涡效果等。</li>
+<li>模糊和锐化类。</li>
+<li>Stylize效果。</li>
+<li>Halftone效果。</li>
+</ol>
+
+
+<p>以上所有效果可以叠加作用在一起，最终你可以创造出自己的图片处理效果。最终你可以通过CIContext，将处理过的CIImage转换成UIImage输出。有了Core Image，你可以方便地开发图象处理相关的应用，而不用关心图象处理算法的细节。</p>
+
+<h2>其它</h2>
+
+<p>GameKit, Core Data, NewsstandKit, GLKit在iOS5中都有更新。可惜我都没有具体使用过，所以不便做更多介绍。</p>
+
+<p>Have fun!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[让XCode的 stack trace信息可读]]></title>
@@ -815,178 +909,6 @@ overlay.progress = 1.0;
 <p>希望上面的开源库能对你有用。最后分享一张粉笔网全站用到的所有开源项目的图片。</p>
 
 <p><img src="/images/opensource.jpg"></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[让你的APP支持iPhone5]]></title>
-    <link href="http://blog.devtang.com/blog/2012/10/05/upgrade-your-app-to-support-iphone5/"/>
-    <updated>2012-10-05T16:18:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/10/05/upgrade-your-app-to-support-iphone5</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>国庆节前，为了支持iPhone5的屏幕分辨率(640象素 x 1136象素)，我尝试着升级粉笔网<a href="http://itunes.apple.com/cn/app/fen-bi-wang/id551540593">iPhone客户端</a>。整个过程花了大概一天的时间，我把这个过程总结下来，希望对大家有帮助。</p>
-
-<!-- more -->
-
-
-<h2>升级准备</h2>
-
-<p>为了支持iPhone5，我们首先需要准备以下工具和资源：</p>
-
-<ol>
-<li>下载最新版的XCode4.5</li>
-<li>让美术同学提供640 x 1136分辨率的启动画面，640 x 1136分辨率的程序截图（用于在app store中显示）</li>
-<li>由于iPhone5使用的A6处理器采用了新的armv7s架构，所以如果你使用了第三方的静态链接库，需要下载对应支持armv7s的版本。我们由于使用了第三方的数据统计工具Flurry，所以下载更新了Flurry的静态链接库。</li>
-<li>如果你的显示器分辨率太小，将无法显示完整的iPhone5模拟器，可选的解决办法是换个更大的显示器或者把显示器竖起来，象我这样:</li>
-</ol>
-
-
-<p><img src="/images/iphone5support-1.jpg"></p>
-
-<p>另外还有一个简单的办法，可以在启动模拟器后，用快捷键command+3(50%)，command+2(75%), command+1(100%)，来调整模拟器的显示比例，谢谢<a href="http://weibo.com/arcsystemworks">Superrr一一</a> 提供的方法，比我的简单多了。</p>
-
-<h2>具体升级步骤如下</h2>
-
-<h4>升级启动画面和第三方链接库</h4>
-
-<p>升级启动画面，将美术同学提供的640 x 1136分辨率的启动画面图片，命名为Default-568h@2x.png，添加到工程中即可。</p>
-
-<p>升级第三方链接库，这个只需要用新的第三方链接库替换掉以前的即可。如果你使用了例如opencv这种需要自己编译对应版本链接库的开源库，那么替换之前，需要自己先用xcode4.5编译其armv7s版本的静态链接库。</p>
-
-<h4>调整xib文件</h4>
-
-<p>粉笔网客户端的界面基本上都是顶部是UINavigationBar, 底部是UITabBar或UIToolBar，中间是UITableView。</p>
-
-<p>对于这一类界面，调整起来非常简单，只需要将UITableView设置成高度自动扩展的Autosizing方式，如下图所示：</p>
-
-<p><img src="/images/autosizing-1.png"></p>
-
-<p>对于底部的UIToolBar，Autosizing设置成靠底部对齐的方式即可。如下图所示：</p>
-
-<p><img src="/images/autosizing-2.png"></p>
-
-<h4>代码调整</h4>
-
-<p>有一些界面元素的位置是用代码来设置的，例如“发表笔记”界面中浮动贴在输入法键盘上面的各种可选操作的UIToolbar。因为键盘的高度在不同的输入法下是不一样的，所以需要用代码动态调整。</p>
-
-<p>我的调整代码如下：</p>
-
-<p>``` objc</p>
-
-<p>// 说明：keyboardWillShow函数和keyboardWillHide函数分别监听了
-// UIKeyboardWillShowNotification和UIKeyboardWillHideNotification</p>
-
-<ul>
-<li><p>(void) keyboardWillShow:(NSNotification *)notification {
-  NSDictionary * info = [notification userInfo];
-  CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-  float textViewHeight = UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT - UI_TOOL_BAR_HEIGHT - kbSize.height;
-  [UIView animateWithDuration:0.3 animations:<sup>{</sup></p>
-
-<pre><code>  _textView.frame = CGRectMake(0, UI_NAVIGATION_BAR_HEIGHT, UI_SCREEN_WIDTH, textViewHeight);
-  _toolbar.frame = CGRectMake(0, UI_NAVIGATION_BAR_HEIGHT + textViewHeight, UI_SCREEN_WIDTH, UI_TOOL_BAR_HEIGHT);
-</code></pre>
-
-<p>  }];
-}</p></li>
-<li><p>(void) keyboardWillHide:(NSNotification *)notification {
-  CGSize kbSize = CGSizeMake(320, 216);
-  float textViewHeight = UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT - UI_TOOL_BAR_HEIGHT - kbSize.height;
-  [UIView animateWithDuration:0.3 animations:<sup>{</sup></p>
-
-<pre><code>  _textView.frame = CGRectMake(0, UI_NAVIGATION_BAR_HEIGHT, UI_SCREEN_WIDTH, textViewHeight);
-  _toolbar.frame = CGRectMake(0, UI_NAVIGATION_BAR_HEIGHT + textViewHeight, UI_SCREEN_WIDTH, UI_TOOL_BAR_HEIGHT);
-</code></pre>
-
-<p>  }];
-}</p></li>
-</ul>
-
-
-<p>```</p>
-
-<p>可以看到，我将设备的各种高度都定义成了宏，这里的宏UI_SCREEN_HEIGHT表示整个设备的高度，以前这个宏的值是固定的480，现在因为iPhone5中高度值变了，所以我们将这个宏定义改成了如下的值，这样，所有相关的用代码实现的界面位置调整都搞定了。我的UI相关的宏定义如下：</p>
-
-<p>``` objc</p>
-
-<h1>define UI_NAVIGATION_BAR_HEIGHT        44</h1>
-
-<h1>define UI_TOOL_BAR_HEIGHT              44</h1>
-
-<h1>define UI_TAB_BAR_HEIGHT               49</h1>
-
-<h1>define UI_STATUS_BAR_HEIGHT            20</h1>
-
-<h1>define UI_SCREEN_WIDTH                 320</h1>
-
-<p>// 将以下宏定义的值从480改成[[UIScreen mainScreen] bounds].size.height</p>
-
-<h1>define UI_SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)</h1>
-
-<p>```</p>
-
-<p>如果你以前没有将这些设备的高度值抽取成宏，我建议你通过查找替换，先将所有用到480的地方修改成宏，然后再增加上面的宏定义即可。</p>
-
-<p>当然，也有一些调整稍微复杂一些，例如粉笔网首页的上拉加载更多，需要判断上拉高度是否到达阈值，这些也是和设备高度相关的。这些阈值信息以前可能就直接写成和高度相关的值，例如220什么的，这些通过直接查找480还没法直接找到。</p>
-
-<p>对于这些问题，只能是通过在模拟器中测试，发现问题，然后再把这些“Magic Number”替换成用上面提到的宏计算的公式。例如我们的上拉加载更多的阈值宏定义如下：</p>
-
-<p>``` cpp</p>
-
-<h1>define LOAD_MORE_TEXT_HEIGHT 77</h1>
-
-<p>// 显示文字阈值</p>
-
-<h1>define LOAD_MORE_THRESHOLD (UI_SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT - UI_NAVIGATION_BAR_HEIGHT - UI_TAB_BAR_HEIGHT - LOAD_MORE_TEXT_HEIGHT)</h1>
-
-<p>// 刷新阈值</p>
-
-<h1>define LOAD_MORE_MAX       (LOAD_MORE_THRESHOLD + 10.0)</h1>
-
-<p>```</p>
-
-<h4>调整屏幕Rotation的回调函数</h4>
-
-<p>从iOS6开始，苹果修改了屏幕旋转的回调函数。在iOS6以前，回调函数是</p>
-
-<p>``` objc
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{</p>
-
-<pre><code>return (interfaceOrientation == UIInterfaceOrientationPortrait);
-</code></pre>
-
-<p>}
-```</p>
-
-<p>现在新的回调函数是：
-``` objc
-- (BOOL)shouldAutorotate {</p>
-
-<pre><code>return YES;
-</code></pre>
-
-<p>}</p>
-
-<ul>
-<li><p>(NSInteger)supportedInterfaceOrientations {
-  return UIInterfaceOrientationMaskAllButUpsideDown;
-}</p></li>
-<li><p>(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-  return UIInterfaceOrientationPortrait;
-}
-```</p></li>
-</ul>
-
-
-<p>并且，现在是否旋转屏幕是由最上层的View Controller决定。例如，如果你是由 UITabBarController或UINavigationController包起来的界面的话，是否旋转屏幕就由UITabBarController或UINavigationController中的shouldAutorotate回调决定，而默认其返回的是YES。修改方法是给这2个容器Controller增加Addition,将其shouldAutorotate修改成由当前显示的子view controller决定，或者直接默认返回NO。</p>
-
-<h4>提交应用</h4>
-
-<p>基本上就是以上这些调整工作了，完了之后用Xcode4.5编译后提交审核，并且在itunes connect中设置iPhone5屏幕尺寸的app介绍截图即可。业界传言说对于支持iPhone5的程序，苹果在应用审核的时候会优先进行，我不知道是否是真的，不过我们的应用确实只用了5天时间就通过了审核，这是我个人遇到过的最快的一次审核。</p>
-
-<p>祝大家国庆节玩得开心～</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-11-14T21:09:27+08:00</updated>
+  <updated>2012-11-16T20:50:30+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,105 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[放弃iOS4，拥抱iOS5]]></title>
+    <link href="http://blog.devtang.com/blog/2012/11/16/drop-ios4-enbrace-ios5/"/>
+    <updated>2012-11-16T20:47:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/11/16/drop-ios4-enbrace-ios5</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/ios5.jpg"></p>
+
+<h2>前言</h2>
+
+<p>苹果在2011年的WWDC大会上发布了iOS5，不过考虑到要支持iOS4.x的系统，大多数App都无法使用iOS5的新特性。现在将近1年半过去了，从我们自己的App后台的统计数据、一些第三方的统计数据和一些业界的朋友告知我的数据都显示，iOS4.x的系统所占比例已经小于5%了，并且还在持续下降。所以，我们有必要放弃对iOS4.x的支持，全面拥抱iOS5。</p>
+
+<p>只支持iOS5.0以上版本使得我们可以使用iOS5带来的诸多新特性，有些新特性可以极大地方便我们的开发，我将这些新特性列举如下。</p>
+
+<!-- more -->
+
+
+<h2>Storyboard</h2>
+
+<p>Storyboard（故事板）是XCode4和iOS5提供的一个用于控制View Controller之间跳转关系的新概念。你可以把它理解成以前一堆Nib文件的集合。在这个集合里面，每个Nib文件被称作scene（场景），scene之间的跳转关系被称作segue。segue代表着传统的界面间切换的方式，通常是Push方式和Modal方式，当然，你也可以自定义自己的Segue。如下示例图是一个Storyboard的界面：</p>
+
+<p><img src="http://blog.devtang.com/images/enbrace-ios5-1.png"></p>
+
+<p>使用Storyboard的好处有以下几点：</p>
+
+<ol>
+<li>你可以从storyboard中很方便地梳理出所有View Controller的界面间的调用关系。比如上面那个storyboard示例图，我们就可以很清楚地了解到4个View Controller相互之间是怎么调用的。而这在以前，这些调用关系，都是隐藏在每个View Controller的代码中的，你需要一点一点读代码，才可以将整个调用逻辑整理清楚。</li>
+<li>使用Storyboard可以使用Table View Controller的Static Cell功能。简单来说，对于象设置页面等固定内容的TableView，可以直接在Storyboard中通过拖拽就可以设置其界面了，而不是象以前那样需要写一堆table view的delegate和data source回调函数。</li>
+<li>通过实现 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 方法，每个View Controller的跳转逻辑都聚集在一处，这方便我们统一管理界面跳转和传递数据，这相当于多了一个编程约定。</li>
+<li>Storyboard可以方便将一些常用功能模块化和复用。例如WWDC2011年介绍Storyboard的视频就将微博分享功能模块化成一个单独的Storyboard。我在开发App时，也将例如通过第三方注册登录模块做成一个单独的Storyboard，便于以后复用。</li>
+</ol>
+
+
+<p>另外，在iOS6中，storyboard又新增了如exit segue, container view等新功能，这些功能都非常体贴，我们向新的技术方案迁移可以在未来更加方便地使用iOS和XCode的新特性，方便我们的开发。</p>
+
+<p>当然，Storyboard也有它的问题。比如，如果2个人同时编译storyboard，在版本管理中出现冲突时会比较麻烦。虽然storyboard是XML格式的，但是里面的信息有些时候还是不太清晰，当冲突发生时，合并冲突可能会比较麻烦。解决办法是，将Storyboard按功能拆分，每个人尽量负责一个单独的Storyboard，如果实在需要2个人都修改它，避免同时修改。</p>
+
+<h2>ARC</h2>
+
+<p>因为ARC是在编译期做的，所以虽然是与iOS5.0同时推出的Objective-C特性，但是其实ARC是支持iOS4的。只是在iOS4中，不能使用ARC的weak关键字。</p>
+
+<p>由于不需要支持iOS4，我们可以将原本的 __unsafe_unretained 关键字换成weak。这样当这个弱引用对象被回收时，weak指针会被智能地设置成nil，防止“野指针”的产生。</p>
+
+<p>很多人说ARC有这样那样的问题，其实他们是没有真正用好ARC。我在开发粉笔网iPhone客户端时，由于使用了ARC，花三个月开发完的应用，用instruments检测后，没有发现任何内存泄漏问题。这在没有使用ARC的工程中是不可想象的。苹果在推出ARC两年后，今年正式将ARC引入到Mac OS操作系统的SDK中，并且正式将原有的GC deprecated掉，这也说明了ARC技术方案已经是非常成熟的了。</p>
+
+<h2>UIKit</h2>
+
+<p>UIKit在iOS5进行了大量更新。除了新增了如UIStepper控件外，也为以前的控件增加了更多的定制接口。我们可以方便地定义UINavigationBar, UITabBar, UIToolBar等常用控件。</p>
+
+<p>苹果在iOS5中给UIViewController新增加的5方法以及一个属性。关于这个新特性我在<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">这篇文章</a>中详细介绍过。新增的方法主要解决的是让 view的load/unLoad/appear/disappear的相关回调可以传递到子view controller中。</p>
+
+<h2>CoreImage</h2>
+
+<p>苹果从iOS5开始，引入了新的图象类CIImage。CIImage相比以前的UIImage类，更加适合于图象处理和图象分析。</p>
+
+<p>在图象处理方法，苹果内置了CIFilter类，方便开发者对图形进行各种各样的特效处理，在iOS5中，苹果提供了48种Filter，而在iOS6中，内置的Filter达到了93种。可以使用如下代码，查询到当前系统中提供的Filter列表：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">logAllFilters</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span> <span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="n">CIFilter</span> <span class="nl">filterNamesInCategory:</span><span class="n">kCICategoryBuiltIn</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">properties</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">filterName</span> <span class="k">in</span> <span class="n">properties</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">CIFilter</span> <span class="o">*</span> <span class="n">fltr</span> <span class="o">=</span> <span class="p">[</span><span class="n">CIFilter</span> <span class="nl">filterWithName:</span><span class="n">filterName</span><span class="p">];</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">fltr</span> <span class="n">attributes</span><span class="p">]);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这些内置的Filter在分类上，包括：</p>
+
+<ol>
+<li>颜色效果类。例如黄昏效果，曝光度调整等。</li>
+<li>组合效果类。把2张图片按各种规则混合成一张图。</li>
+<li>几何变形类。例如把照片倾斜或者翻转。</li>
+<li>重复效果类。如平铺，折叠，镜象等。</li>
+<li>失真扭曲类。如把图片中心做成漩涡效果等。</li>
+<li>模糊和锐化类。</li>
+<li>Stylize效果。</li>
+<li>Halftone效果。</li>
+</ol>
+
+
+<p>以上所有效果可以叠加作用在一起，最终你可以创造出自己的图片处理效果。最终你可以通过CIContext，将处理过的CIImage转换成UIImage输出。有了Core Image，你可以方便地开发图象处理相关的应用，而不用关心图象处理算法的细节。</p>
+
+<h2>其它</h2>
+
+<p>GameKit, Core Data, NewsstandKit, GLKit在iOS5中都有更新。可惜我都没有具体使用过，所以不便做更多介绍。</p>
+
+<p>Have fun!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[让XCode的 stack trace信息可读]]></title>
@@ -3845,98 +3944,6 @@ ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTT
 <h2>总结</h2>
 
 <p>将以上各点结合起来，就可以用bash写出一个daily build脚本了。每天这一切都会自动完成，心情相当好。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[给NSString增加Java风格的方法]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/14/nsstring-java-like-wrapper/"/>
-    <updated>2012-02-14T17:17:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/14/nsstring-java-like-wrapper</id>
-    <content type="html"><![CDATA[<p>我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">self</span> <span class="nl">stringByTrimmingCharactersInSet:</span><span class="p">[</span><span class="n">NSCharacterSet</span> <span class="n">whitespaceAndNewlineCharacterSet</span><span class="p">]];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<!--more-->
-
-
-<p>其实我也明白Objective-C这种长函数名的好处，就是能很清楚地了解当前的方法是干什么的。但是一些常用的方法，简单的方法名同样能表达清楚意思，并且更容易记住。长方法名的最大的问题是，代码写到一半得查文档，直接把思路打断了，所以我上周末花了一天时间把Objective-C的NSString类给封装了一下，把相应的方法调用都换成与Java类似的了。这样我每次用的时候就不用写那么长又记不住的方法名了。</p>
-
-<p>主要封装后的方法定义如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">NSString</span><span class="nl">(Wrapper)</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">unichar</span><span class="p">)</span> <span class="nf">charAt:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">compareTo:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">anotherString</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">compareToIgnoreCase:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">str</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">contains:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">str</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">startsWith:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">prefix</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">endsWith:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">suffix</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">equals:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">anotherString</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">equalsIgnoreCase:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">anotherString</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">indexOfChar:</span><span class="p">(</span><span class="n">unichar</span><span class="p">)</span><span class="nv">ch</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">indexOfChar:</span><span class="p">(</span><span class="n">unichar</span><span class="p">)</span><span class="nv">ch</span> <span class="nf">fromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">indexOfString:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">str</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">indexOfString:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">str</span> <span class="nf">fromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">lastIndexOfChar:</span><span class="p">(</span><span class="n">unichar</span><span class="p">)</span><span class="nv">ch</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">lastIndexOfChar:</span><span class="p">(</span><span class="n">unichar</span><span class="p">)</span><span class="nv">ch</span> <span class="nf">fromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">lastIndexOfString:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">str</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nf">lastIndexOfString:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">str</span> <span class="nf">fromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="nf">substringFromIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">beginIndex</span> <span class="nf">toIndex:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">endIndex</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="nf">toLowerCase</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="nf">toUpperCase</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="nf">trim</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="nf">replaceAll:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">origin</span> <span class="nf">with:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">replacement</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span> <span class="nf">split:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span> <span class="n">separator</span><span class="p">;</span>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>看着方法体，一下子感觉轻松了好多，以后再也不必每次写的时候查文档了。代码放到github上了，你可以用如下命令获得代码或者直接访问网址<a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a> ：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git@github.com:tangqiaoboy/xcode_tool.git
-</span><span class='line'><span class="nb">cd </span>xcode_tool/NSStringWrappeer
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果要把这个Wrapper加到现有工程中，只需要拷贝我的文件：NSStringWrapper.h和NSStringWrapper.m到你自己的工程中即可。在使用的时候注意我修改了一点，我将查找不存在的返回值设置成了-1，这样和java语言保持一致，如果你想用 NSNotFound作为查找不存在时的结果，请修改文件NSStringWrapper.m顶部的宏定义:JavaNotFound即可，如下所示：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">// 如果不喜欢，可以将-1改成 NSNotFound即可</span>
-</span><span class='line'><span class="cp">#define JavaNotFound -1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Have fun!</p>
 ]]></content>
   </entry>
   

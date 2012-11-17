@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-11-16T20:50:30+08:00</updated>
+  <updated>2012-11-17T12:00:11+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -103,6 +103,33 @@
 
 
 <p>以上所有效果可以叠加作用在一起，最终你可以创造出自己的图片处理效果。最终你可以通过CIContext，将处理过的CIImage转换成UIImage输出。有了Core Image，你可以方便地开发图象处理相关的应用，而不用关心图象处理算法的细节。</p>
+
+<h2>NSJSONSerialization</h2>
+
+<p>在我的<a href="http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson/">《不要使用SBJSON(json-framework)》</a> 一文中，我提到了关于JSON解析库的性能测试。测试结果表明，苹果从iOS5开始提供的 <a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40010946">NSJSONSerialization</a> 类有着最好的性能表现。所以，从iOS5以后，你可以扔掉那些第三方JSON解析库了。</p>
+
+<h2>ViewController切换</h2>
+
+<p>iOS提供了如下新的接口来切换ViewController，而以前的presentModalViewController和dismissModalViewControllerAnimated被Deprecated掉了。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 新的接口</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">presentViewController:</span><span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewControllerToPresent</span> <span class="nf">animated:</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">flag</span> <span class="nf">completion:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dismissViewControllerAnimated:</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">flag</span> <span class="nf">completion:</span> <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 被Deprecated的接口</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">presentModalViewController:</span><span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">modalViewController</span> <span class="nf">animated:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dismissModalViewControllerAnimated:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>新接口的差别是提供了一个completion参数，允许你传入一个block，来定义该操作结束时的回调。使用新的函数后，可以方便同时Dismiss或Present多个View Controller，也可以方便做多个UI效果之间的衔接。</p>
 
 <h2>其它</h2>
 

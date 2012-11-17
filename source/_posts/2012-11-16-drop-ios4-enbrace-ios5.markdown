@@ -76,6 +76,23 @@ UIKit在iOS5进行了大量更新。除了新增了如UIStepper控件外，也�
 
 以上所有效果可以叠加作用在一起，最终你可以创造出自己的图片处理效果。最终你可以通过CIContext，将处理过的CIImage转换成UIImage输出。有了Core Image，你可以方便地开发图象处理相关的应用，而不用关心图象处理算法的细节。
 
+## NSJSONSerialization
+在我的[《不要使用SBJSON(json-framework)》](http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson/) 一文中，我提到了关于JSON解析库的性能测试。测试结果表明，苹果从iOS5开始提供的 [NSJSONSerialization](http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40010946) 类有着最好的性能表现。所以，从iOS5以后，你可以扔掉那些第三方JSON解析库了。
+
+## ViewController切换
+iOS提供了如下新的接口来切换ViewController，而以前的presentModalViewController和dismissModalViewControllerAnimated被Deprecated掉了。
+
+``` objc
+// 新的接口
+- (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^)(void))completion;
+- (void)dismissViewControllerAnimated: (BOOL)flag completion: (void (^)(void))completion;
+
+// 被Deprecated的接口
+- (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated;
+- (void)dismissModalViewControllerAnimated:(BOOL)animated;
+```
+
+新接口的差别是提供了一个completion参数，允许你传入一个block，来定义该操作结束时的回调。使用新的函数后，可以方便同时Dismiss或Present多个View Controller，也可以方便做多个UI效果之间的衔接。
 
 ##其它
 GameKit, Core Data, NewsstandKit, GLKit在iOS5中都有更新。可惜我都没有具体使用过，所以不便做更多介绍。

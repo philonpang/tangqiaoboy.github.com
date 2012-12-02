@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-11-17T12:00:11+08:00</updated>
+  <updated>2012-12-02T15:20:57+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,151 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用CocoaPods来做iOS程序的包依赖管理]]></title>
+    <link href="http://blog.devtang.com/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/"/>
+    <updated>2012-12-02T14:09:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency</id>
+    <content type="html"><![CDATA[<p><img src="/images/cocoapods-logo.png"></p>
+
+<h2>前言</h2>
+
+<p>每种语言发展到一个阶段，就会出现相应的依赖管理工具, 或者是中央代码仓库。比如</p>
+
+<ul>
+<li>Java: maven，Ivy</li>
+<li>Ruby: gems</li>
+<li>Python: pip, easy_install</li>
+<li>Nodejs: npm</li>
+</ul>
+
+
+<p>随着iOS开发者的增多，业界也出现了为iOS程序提供依赖管理的工具，这个工具叫：<a href="http://cocoapods.org/">CocoaPods</a>。</p>
+
+<!-- more -->
+
+
+<h2>CocoaPods简介</h2>
+
+<p>CocoaPods是一个负责管理iOS项目中第三方开源代码的工具。CocoaPods<a href="https://github.com/CocoaPods/CocoaPods">项目的源码</a>在Github上管理。该项目开始于2011年8月12日，经过一年多的发展，现在已经超过1000次提交，并且持续保持活跃更新。开发iOS项目不可避免地要使用第三方开源库，CocoaPods的出现使得我们可以节省设置和更新第三方开源库的时间。</p>
+
+<p>拿我之前开发的粉笔网iPhone客户端为例，其使用了14个第三方开源库。在没有使用CocoaPods以前，我需要：</p>
+
+<ol>
+<li>把这些第三方开源库的相关文件复制到项目中，或者设置成git的submodule，然后这些开源库通常需要依赖系统的一些framework，我需要手工地将这些framework一一增加到项目依赖中，比如ASI网络库就需要增加以下framework: CFNetwork, SystemConfiguration, MobileCoreServices, CoreGraphics and zlib。</li>
+<li>对于RegexKitLite这个正则表达式库，我还需要设置-licucore的编译参数</li>
+<li>手工管理这些依赖包的更新。</li>
+</ol>
+
+
+<p>这些体力活虽然简单，但毫无技术含量并且浪费时间。在使用CocoaPods之后，我只需要将用到的第三方开源库放到一个名为Podfile的文件中，然后执行pod install。CocoaPods就会自动将这些第三方开源库的源码下载下来，并且为我的工程设置好相应的系统依赖和编译参数。</p>
+
+<h2>CocoaPods的安装和使用介绍</h2>
+
+<h3>安装</h3>
+
+<p>安装方式异常简单, Mac下都自带ruby，使用ruby的gem命令即可下载安装：
+<code>bash
+$ gem install cocoapods
+$ pod setup
+</code></p>
+
+<h3>使用</h3>
+
+<p>使用时需要新建一个名为Podfile的文件，以如下格式，将依赖的库名字依次列在文件中即可</p>
+
+<p><code>
+platform :ios
+pod 'JSONKit',       '~&gt; 1.4'
+pod 'Reachability',  '~&gt; 3.0.0'
+pod 'ASIHTTPRequest'
+pod 'RegexKitLite'
+</code></p>
+
+<p>然后你将编辑好的Podfile文件放到你的项目根目录中，执行如下命令即可：
+<code>bash
+cd "your project home"
+pod install
+</code></p>
+
+<p>现在，你的所有第三方库都已经下载完成并且设置好了编译参数和依赖，你只需要记住如下2点即可：</p>
+
+<ol>
+<li>使用CocoaPods生成的 <em>.xcworkspace 文件来打开工程，而不是以前的 </em>.xcodeproj 文件。</li>
+<li>每次更改了Podfile文件，你需要重新执行一次pod install命令。</li>
+</ol>
+
+
+<h3>查找第三方库</h3>
+
+<p>你如果不知道cocoaPods管理的库中，是否有你想要的库，那么你可以通过pod search命令进行查找，以下是我用pod search json查找到的所有可用的库：</p>
+
+<p>``` bash
+$ pod search json</p>
+
+<p>-> AnyJSON (0.0.1)
+   Encode / Decode JSON by any means possible.
+   - Homepage: https://github.com/mattt/AnyJSON
+   - Source:   https://github.com/mattt/AnyJSON.git
+   - Versions: 0.0.1 [master repo]</p>
+
+<p>-> JSONKit (1.5pre)
+   A Very High Performance Objective-C JSON Library.
+   - Homepage: https://github.com/johnezang/JSONKit
+   - Source:   git://github.com/johnezang/JSONKit.git
+   - Versions: 1.5pre, 1.4 [master repo]</p>
+
+<p>-> MTJSONDictionary (0.0.4)
+   An NSDictionary category for when you're working with it converting to/from JSON. DEPRECATED, use MTJSONUtils
+   instead.
+   - Homepage: https://github.com/mysterioustrousers/MTJSONDictionary.git
+   - Source:   https://github.com/mysterioustrousers/MTJSONDictionary.git
+   - Versions: 0.0.4, 0.0.3, 0.0.2 [master repo]</p>
+
+<p>-> MTJSONUtils (0.1.0)
+   An NSObject category for working with JSON.
+   - Homepage: https://github.com/mysterioustrousers/MTJSONUtils.git
+   - Source:   https://github.com/mysterioustrousers/MTJSONUtils.git
+   - Versions: 0.1.0, 0.0.1 [master repo]</p>
+
+<p>-> SBJson (3.1.1)
+   This library implements strict JSON parsing and generation in Objective-C.
+   - Homepage: http://stig.github.com/json-framework/
+   - Source:   https://github.com/stig/json-framework.git
+   - Versions: 3.1.1, 3.1, 3.0.4, 2.2.3 [master repo]</p>
+
+<p>-> TouchJSON (1.0)
+   TouchJSON is an Objective-C based parser and generator for JSON encoded data.
+   - Homepage: https://github.com/TouchCode/TouchJSON
+   - Source:   https://github.com/TouchCode/TouchJSON.git
+   - Versions: 1.0 [master repo]
+```</p>
+
+<h3>生成第三方库的帮助文档</h3>
+
+<p>如果你想让CococaPods帮你生成第三方库的帮助文档，并集成到XCode中，那么用brew安装appledoc即可：</p>
+
+<p><code>bash
+brew install appledoc
+</code></p>
+
+<p>关于appledoc，我在今年初的另一篇博客<a href="http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">《使用Objective-C的文档生成工具:appledoc》</a>中有专门介绍。它最大的优点是可以将帮助文档集成到XCode中，这样你在敲代码的时候，按住opt键单击类名或方法名，就可以显示出相应的帮助文档。</p>
+
+<h2>原理</h2>
+
+<p>大概研究了一下CocoaPods的原理，它是将所有的依赖库都放到另一个名为Pods项目中，然后让主项目依赖Pods项目，这样，源码管理工作都从主项目移到了Pods项目中。发现的一些技术细节有：</p>
+
+<ol>
+<li>Pods项目最终会编译成一个名为libPods.a的文件，主项目只需要依赖这个.a文件即可。</li>
+<li>对于资源文件，CocoaPods提供了一个名为Pods-resources.sh的bash脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。</li>
+<li>CocoaPods通过一个名为Pods.xcconfig的文件来在编译时设置所有的依赖和参数。</li>
+</ol>
+
+
+<p>Have fun!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[放弃iOS4，拥抱iOS5]]></title>
@@ -797,138 +942,6 @@ return cvMat;
 <p>一直觉得，图象和声音是移动设备上的特点和优势。因为移动设备没有了可以快速输入的键盘，屏幕也不大，在移动设备上，声音，图象和视频应该是相比文字更方便让人输入的东西。移动端APP应该利用好这些特点，才能设计出更加体贴的功能。</p>
 
 <p>而且，通常情况下做图象处理都比较好玩，记得以前在学校做了一个在QQ游戏大厅自动下中国象棋的程序，其后台使用了网上下载的一个带命令行接口的象棋AI，然后我的代码主要做的事情就是识别象棋棋盘，然后将棋盘数据传给那个象棋AI，接着获得它返回的策略后，模拟鼠标点击来移动棋子。当时不懂什么图象算法，直接把棋子先截取下来保存，然后识别的时候做完全匹配，非常弱的办法，但是效果非常好，做出来也很好玩。嗯，所以文章最后，我想说的是：have fun!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[粉笔网iPhone端使用的第三方开源库]]></title>
-    <link href="http://blog.devtang.com/blog/2012/10/09/3rd-libs-used-in-fenbi-app/"/>
-    <updated>2012-10-09T15:30:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/10/09/3rd-libs-used-in-fenbi-app</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>最近有朋友问我粉笔网iPhone端使用了哪些第三方的开源库。我在这儿整理了一下，分享给大家。</p>
-
-<p><img src="/images/fenbi_libs.png"></p>
-
-<!-- more -->
-
-
-<h3>ASIHttpRequest</h3>
-
-<p><a href="http://allseeing-i.com/ASIHTTPRequest/">ASIHttpRequest</a> 是一个被广泛使用的第三方网络访问开源库。用于提供更加友好的网络访问接口。相信很多搞iOS开发的朋友都用过它。
-ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTTPRequest/How-to-use">参考这里</a>。</p>
-
-<p>另外，由于ASIHTTPRequest的作者已经公开说明不再维护这个开源项目，并且该项目已经一年多没有更新了，所以我一直在寻找替代的开源库。不过现在暂时还没有找到更好的。</p>
-
-<h3>RegexKit</h3>
-
-<p><a href="http://regexkit.sourceforge.net/">RegexKit</a>是一个正则表达式工具类。提供强大的正则表达式匹配和替换功能。我们主要使用它来对类似微博的正文替换工作。例如将 @某某 换成带链接的，将图片的URL换成img标签等。</p>
-
-<p>同时，开源库MGTemplateEngine也依赖于此库。附上<a href="http://regexkit.sourceforge.net/Documentation/index.html">RegexKit4.0的官方文档教程</a>。</p>
-
-<h3>MGTemplateEngine</h3>
-
-<p><a href="http://svn.cocoasourcecode.com/MGTemplateEngine">MGTemplateEngine</a>是一个模版引擎。我们主要使用它来生成单条微博页的内容。我们的单条微博页打算用UIWebView来显示，所以内容需要用模版渲染成HTML格式。MGTemplateEngine的模版语言比较象：Smarty, FreeMarker 和 Django的模版语言。</p>
-
-<p>MGTemplateEngine的作者官方博客在<a href="http://mattgemmell.com/2008/05/20/mgtemplateengine-templates-with-cocoa/">这里</a>。</p>
-
-<p>我们在使用时，对此开源库的Filter类进行了修改，主要增加了3个自定义的filter，用于提供我们的格式化时间，转义html和过滤空头象的用户的方式。</p>
-
-<h3>JSONKit</h3>
-
-<p><a href="https://github.com/johnezang/JSONKit">JSONKit</a>是一个比较高效的JSON解析库。我之前比较过各大JSON解析库的性能（<a href="http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson/">文章在此</a>），JSONKit算是非常不错的，大概的使用示例如下：</p>
-
-<p>``` objc</p>
-
-<h1>import "JSONKit.h"</h1>
-
-<p>NSString <em>path = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
-NSData </em>content = [NSData dataWithContentsOfFile:path];
-NSDictionary <em>kitData = [content objectFromJSONData];
-NSString </em>kitString = [kitData JSONString];
-```</p>
-
-<h3>GTMNSString</h3>
-
-<p><a href="https://code.google.com/p/google-toolbox-for-mac/">GTMNSString</a>主要用于转义HTML中的特殊字符。以防止XSS攻击。</p>
-
-<h3>FMDB</h3>
-
-<p><a href="https://github.com/ccgus/fmdb">FMDB</a>是一个sqlite数据库封装类，需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。在使用上非常简单。如下是一个例子：</p>
-
-<p>``` objc
-NSString * docsdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-NSString * dbpath = [docsdir stringByAppendingPathComponent:@"user.sqlite"];
-FMDatabase * db = [FMDatabase databaseWithPath:dbpath];
-[db open];
-FMResultSet * rs = [db executeQuery:@"select * from People"];
-while ([rs next]) {</p>
-
-<pre><code>NSLog(@"%@ %@",
-[rs stringForColumn:@"firstname"],
-[rs stringForColumn:@"lastname"]);
-</code></pre>
-
-<p>}
-[db close];
-```</p>
-
-<h3>BBCustomBackButtonViewController</h3>
-
-<p><a href="https://github.com/typeoneerror/BBCustomBackButtonViewController">BBCustomBackButtonViewController</a> 是用于在ios4上提供自定义的NavigationBar按钮的开源库。使用上异常简单，只需要让自己的ViewController继承它就可以了。</p>
-
-<p>我对BBCustomBackButtonViewController进行了修改，主要是改动它的自定义的按钮的样式，使其和我们的风格一致。</p>
-
-<h3>MTStatusBarOverlay</h3>
-
-<p><a href="https://github.com/myell0w/MTStatusBarOverlay">MTStatusBarOverlay</a> 是一个在iphone的顶部status bar显示消息的开源库。示例代码如下：</p>
-
-<p>``` objc
-+ (void)showCompletedTextOnStatusBar:(NSString *)text {</p>
-
-<pre><code>NSString * message = [NSString stringWithFormat:@"%@成功", text];
-MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
-overlay.animation = MTStatusBarOverlayAnimationFallDown;
-overlay.detailViewMode = MTDetailViewModeHistory;
-[overlay postImmediateFinishMessage:message duration:2.0 animated:YES];
-overlay.progress = 1.0;
-</code></pre>
-
-<p>}
-```</p>
-
-<p>但是stackoverflow上说，有项目因为这个审核被拒，但是新浪微博明显采用了此UI方案，所以我们还是大胆用了这个库。后来，我们也顺利通过了审核。</p>
-
-<h3>MBProgressHUD</h3>
-
-<p><a href="https://github.com/jdg/MBProgressHUD">MBProgressHUD</a> 是一个用于显示灰色的加载进度或结果的类。与系统自带的UIAlertView相比，MBProgressHUD由于背影是黑色的，所以视觉上不是那么强烈。我们主要用它来显示一些加载中的提示，以及一些自已会消失的操作结果（例如网络失败等）。</p>
-
-<h3>NSStringWrapper</h3>
-
-<p>因为自己有多年Java开发的经历，我还是不太习惯Objective-C连基本的字符串操作都要查文档，而我自己又记不住老长的方法名，所以我把Objective-C的字符串基本操作都封装成了Java风格的方法调用。这部分是很早前拿周末时间在家里写的，所以是开源的，<a href="https://github.com/tangqiaoboy/xcode_tool/tree/master/NSStringWrappeer">源代码地址</a>。</p>
-
-<h3>EGOTableViewPullRefresh</h3>
-
-<p><a href="https://github.com/enormego/EGOTableViewPullRefresh">EGOTableViewPullRefresh</a> 一个开源的下拉刷新组件。我对它进行了改进，增加了强制刷新功能。</p>
-
-<h3>LoadMoreTableFooterView</h3>
-
-<p><a href="https://github.com/sishen/LoadMoreTableFooterView">LoadMoreTableFooterView</a> 一个开源的上拉加载更多的组件。我做了少量修改，以便让它支持iPhone5的分辨率。</p>
-
-<h3>zepto.js</h3>
-
-<p><a href="http://zeptojs.com/">zepto</a>是一个类似JQuery的javascript开源库，用于实现css选择器和一些dom操作。它的api几乎和JQuery完全一样，优点是体积小巧。</p>
-
-<h3>ejs</h3>
-
-<p><a href="http://embeddedjs.com/getting_started.html">ejs</a>一个js端的模版库。我们主要用于渲染一些UIWebview中异步加载的内容。例如笔记的评论，问题的答案。</p>
-
-<h2>总结</h2>
-
-<p>希望上面的开源库能对你有用。最后分享一张粉笔网全站用到的所有开源项目的图片。</p>
-
-<p><img src="/images/opensource.jpg"></p>
 ]]></content>
   </entry>
   

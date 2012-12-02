@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-11-17T12:00:11+08:00</updated>
+  <updated>2012-12-02T15:20:57+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,213 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用CocoaPods来做iOS程序的包依赖管理]]></title>
+    <link href="http://blog.devtang.com/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/"/>
+    <updated>2012-12-02T14:09:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/cocoapods-logo.png"></p>
+
+<h2>前言</h2>
+
+<p>每种语言发展到一个阶段，就会出现相应的依赖管理工具, 或者是中央代码仓库。比如</p>
+
+<ul>
+<li>Java: maven，Ivy</li>
+<li>Ruby: gems</li>
+<li>Python: pip, easy_install</li>
+<li>Nodejs: npm</li>
+</ul>
+
+
+<p>随着iOS开发者的增多，业界也出现了为iOS程序提供依赖管理的工具，这个工具叫：<a href="http://cocoapods.org/">CocoaPods</a>。</p>
+
+<!-- more -->
+
+
+<h2>CocoaPods简介</h2>
+
+<p>CocoaPods是一个负责管理iOS项目中第三方开源代码的工具。CocoaPods<a href="https://github.com/CocoaPods/CocoaPods">项目的源码</a>在Github上管理。该项目开始于2011年8月12日，经过一年多的发展，现在已经超过1000次提交，并且持续保持活跃更新。开发iOS项目不可避免地要使用第三方开源库，CocoaPods的出现使得我们可以节省设置和更新第三方开源库的时间。</p>
+
+<p>拿我之前开发的粉笔网iPhone客户端为例，其使用了14个第三方开源库。在没有使用CocoaPods以前，我需要：</p>
+
+<ol>
+<li>把这些第三方开源库的相关文件复制到项目中，或者设置成git的submodule，然后这些开源库通常需要依赖系统的一些framework，我需要手工地将这些framework一一增加到项目依赖中，比如ASI网络库就需要增加以下framework: CFNetwork, SystemConfiguration, MobileCoreServices, CoreGraphics and zlib。</li>
+<li>对于RegexKitLite这个正则表达式库，我还需要设置-licucore的编译参数</li>
+<li>手工管理这些依赖包的更新。</li>
+</ol>
+
+
+<p>这些体力活虽然简单，但毫无技术含量并且浪费时间。在使用CocoaPods之后，我只需要将用到的第三方开源库放到一个名为Podfile的文件中，然后执行pod install。CocoaPods就会自动将这些第三方开源库的源码下载下来，并且为我的工程设置好相应的系统依赖和编译参数。</p>
+
+<h2>CocoaPods的安装和使用介绍</h2>
+
+<h3>安装</h3>
+
+<p>安装方式异常简单, Mac下都自带ruby，使用ruby的gem命令即可下载安装：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>gem install cocoapods
+</span><span class='line'><span class="nv">$ </span>pod setup
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>使用</h3>
+
+<p>使用时需要新建一个名为Podfile的文件，以如下格式，将依赖的库名字依次列在文件中即可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>platform :ios
+</span><span class='line'>pod <span class="s1">&#39;JSONKit&#39;</span>,       <span class="s1">&#39;~&gt; 1.4&#39;</span>
+</span><span class='line'>pod <span class="s1">&#39;Reachability&#39;</span>,  <span class="s1">&#39;~&gt; 3.0.0&#39;</span>
+</span><span class='line'>pod <span class="s1">&#39;ASIHTTPRequest&#39;</span>
+</span><span class='line'>pod <span class="s1">&#39;RegexKitLite&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后你将编辑好的Podfile文件放到你的项目根目录中，执行如下命令即可：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="s2">&quot;your project home&quot;</span>
+</span><span class='line'>pod install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在，你的所有第三方库都已经下载完成并且设置好了编译参数和依赖，你只需要记住如下2点即可：</p>
+
+<ol>
+<li>使用CocoaPods生成的 <em>.xcworkspace 文件来打开工程，而不是以前的 </em>.xcodeproj 文件。</li>
+<li>每次更改了Podfile文件，你需要重新执行一次pod install命令。</li>
+</ol>
+
+
+<h3>查找第三方库</h3>
+
+<p>你如果不知道cocoaPods管理的库中，是否有你想要的库，那么你可以通过pod search命令进行查找，以下是我用pod search json查找到的所有可用的库：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>pod search json
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>-&gt; AnyJSON <span class="o">(</span>0.0.1<span class="o">)</span>
+</span><span class='line'>   Encode / Decode JSON by any means possible.
+</span><span class='line'>   - Homepage: https://github.com/mattt/AnyJSON
+</span><span class='line'>   - Source:   https://github.com/mattt/AnyJSON.git
+</span><span class='line'>   - Versions: 0.0.1 <span class="o">[</span>master repo<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>-&gt; JSONKit <span class="o">(</span>1.5pre<span class="o">)</span>
+</span><span class='line'>   A Very High Performance Objective-C JSON Library.
+</span><span class='line'>   - Homepage: https://github.com/johnezang/JSONKit
+</span><span class='line'>   - Source:   git://github.com/johnezang/JSONKit.git
+</span><span class='line'>   - Versions: 1.5pre, 1.4 <span class="o">[</span>master repo<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>-&gt; MTJSONDictionary <span class="o">(</span>0.0.4<span class="o">)</span>
+</span><span class='line'>   An NSDictionary category <span class="k">for </span>when you<span class="err">&#39;</span>re working with it converting to/from JSON. DEPRECATED, use MTJSONUtils
+</span><span class='line'>   instead.
+</span><span class='line'>   - Homepage: https://github.com/mysterioustrousers/MTJSONDictionary.git
+</span><span class='line'>   - Source:   https://github.com/mysterioustrousers/MTJSONDictionary.git
+</span><span class='line'>   - Versions: 0.0.4, 0.0.3, 0.0.2 <span class="o">[</span>master repo<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>-&gt; MTJSONUtils <span class="o">(</span>0.1.0<span class="o">)</span>
+</span><span class='line'>   An NSObject category <span class="k">for </span>working with JSON.
+</span><span class='line'>   - Homepage: https://github.com/mysterioustrousers/MTJSONUtils.git
+</span><span class='line'>   - Source:   https://github.com/mysterioustrousers/MTJSONUtils.git
+</span><span class='line'>   - Versions: 0.1.0, 0.0.1 <span class="o">[</span>master repo<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>-&gt; SBJson <span class="o">(</span>3.1.1<span class="o">)</span>
+</span><span class='line'>   This library implements strict JSON parsing and generation in Objective-C.
+</span><span class='line'>   - Homepage: http://stig.github.com/json-framework/
+</span><span class='line'>   - Source:   https://github.com/stig/json-framework.git
+</span><span class='line'>   - Versions: 3.1.1, 3.1, 3.0.4, 2.2.3 <span class="o">[</span>master repo<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>-&gt; TouchJSON <span class="o">(</span>1.0<span class="o">)</span>
+</span><span class='line'>   TouchJSON is an Objective-C based parser and generator <span class="k">for </span>JSON encoded data.
+</span><span class='line'>   - Homepage: https://github.com/TouchCode/TouchJSON
+</span><span class='line'>   - Source:   https://github.com/TouchCode/TouchJSON.git
+</span><span class='line'>   - Versions: 1.0 <span class="o">[</span>master repo<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>生成第三方库的帮助文档</h3>
+
+<p>如果你想让CococaPods帮你生成第三方库的帮助文档，并集成到XCode中，那么用brew安装appledoc即可：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install appledoc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>关于appledoc，我在今年初的另一篇博客<a href="http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">《使用Objective-C的文档生成工具:appledoc》</a>中有专门介绍。它最大的优点是可以将帮助文档集成到XCode中，这样你在敲代码的时候，按住opt键单击类名或方法名，就可以显示出相应的帮助文档。</p>
+
+<h2>原理</h2>
+
+<p>大概研究了一下CocoaPods的原理，它是将所有的依赖库都放到另一个名为Pods项目中，然后让主项目依赖Pods项目，这样，源码管理工作都从主项目移到了Pods项目中。发现的一些技术细节有：</p>
+
+<ol>
+<li>Pods项目最终会编译成一个名为libPods.a的文件，主项目只需要依赖这个.a文件即可。</li>
+<li>对于资源文件，CocoaPods提供了一个名为Pods-resources.sh的bash脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。</li>
+<li>CocoaPods通过一个名为Pods.xcconfig的文件来在编译时设置所有的依赖和参数。</li>
+</ol>
+
+
+<p>Have fun!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[放弃iOS4，拥抱iOS5]]></title>
@@ -3633,344 +3840,6 @@ ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTT
 <h2>总结</h2>
 
 <p>总体来说，GCD能够极大地方便开发者进行多线程编程。如果你的app不需要支持iOS4.0以下的系统，那么就应该尽量使用GCD来处理后台线程和UI线程的交互。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[给iOS工程增加Daily Build]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/16/apply-daily-build-in-ios-project/"/>
-    <updated>2012-02-16T19:27:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/16/apply-daily-build-in-ios-project</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>Daily Build是一件非常有意义的事情，也是敏捷开发中关于“持续集成”的一个实践。Daily Build对于开发来说有如下好处：</p>
-
-<ul>
-<li>保证了每次check in的代码可用，不会造成整个工程编译失败。</li>
-<li>进度跟进。产品经理可以每天看到最新的开发进度，并且试用产品，调整一些细节。很多时候，一个新功能，你真正用了一下才能有体会好或不好，所以daily build也给产品经理更多时间来调理他的设计。</li>
-<li>需求确认。产品经理可以确认开发的功能细节是他的预期。因为我们的开发比较紧凑，所以都没有传统的需求说明文档，所以daily build也给产品经理用于尽早确认开发的功能细节是他的预期，我就遇到一次产品经理发现开发出的一个功能细节和他的预期不一致，但是因为有daily build，使得我可以尽早做修改，把修改的代价减小了。</li>
-<li>测试跟进。如果功能点是独立的话，测试同事完全可以根据daily build来进行一些早期的测试。越早的Bug反馈可以使得修改bug所需的时间越短。</li>
-</ul>
-
-
-<!--more-->
-
-
-<h2>步骤</h2>
-
-<h3>xcodebuild命令</h3>
-
-<p>如何做daily build呢？其实Xcode就提供了命令行build的命令，这个命令是xcodebuild，用xcodebuild -usage
-可以查看到所有的可用参数，如下所示：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>tangqiao ~<span class="o">]</span><span class="nv">$xcodebuild</span> -usage
-</span><span class='line'>Usage: xcodebuild <span class="o">[</span>-project &lt;projectname&gt;<span class="o">]</span> <span class="o">[[</span>-target &lt;targetname&gt;<span class="o">]</span>...|-alltargets<span class="o">]</span> <span class="o">[</span>-configuration &lt;configurationname&gt;<span class="o">]</span> <span class="o">[</span>-arch &lt;architecture&gt;<span class="o">]</span>... <span class="o">[</span>-sdk <span class="o">[</span>&lt;sdkname&gt;|&lt;sdkpath&gt;<span class="o">]]</span> <span class="o">[</span>&lt;buildsetting&gt;<span class="o">=</span>&lt;value&gt;<span class="o">]</span>... <span class="o">[</span>&lt;buildaction&gt;<span class="o">]</span>...
-</span><span class='line'>       xcodebuild <span class="o">[</span>-project &lt;projectname&gt;<span class="o">]</span> -scheme &lt;schemeName&gt; <span class="o">[</span>-configuration &lt;configurationname&gt;<span class="o">]</span> <span class="o">[</span>-arch &lt;architecture&gt;<span class="o">]</span>... <span class="o">[</span>-sdk <span class="o">[</span>&lt;sdkname&gt;|&lt;sdkpath&gt;<span class="o">]]</span> <span class="o">[</span>&lt;buildsetting&gt;<span class="o">=</span>&lt;value&gt;<span class="o">]</span>... <span class="o">[</span>&lt;buildaction&gt;<span class="o">]</span>...
-</span><span class='line'>       xcodebuild -workspace &lt;workspacename&gt; -scheme &lt;schemeName&gt; <span class="o">[</span>-configuration &lt;configurationname&gt;<span class="o">]</span> <span class="o">[</span>-arch &lt;architecture&gt;<span class="o">]</span>... <span class="o">[</span>-sdk <span class="o">[</span>&lt;sdkname&gt;|&lt;sdkpath&gt;<span class="o">]]</span> <span class="o">[</span>&lt;buildsetting&gt;<span class="o">=</span>&lt;value&gt;<span class="o">]</span>... <span class="o">[</span>&lt;buildaction&gt;<span class="o">]</span>...
-</span><span class='line'>       xcodebuild -version <span class="o">[</span>-sdk <span class="o">[</span>&lt;sdkfullpath&gt;|&lt;sdkname&gt;<span class="o">]</span> <span class="o">[</span>&lt;infoitem&gt;<span class="o">]</span> <span class="o">]</span>
-</span><span class='line'>       xcodebuild -list <span class="o">[[</span>-project &lt;projectname&gt;<span class="o">]</span>|<span class="o">[</span>-workspace &lt;workspacename&gt;<span class="o">]]</span>
-</span><span class='line'>       xcodebuild -showsdks
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>一般情况下的命令使用如下:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>xcodebuild -configuration Release -target <span class="s2">&quot;YourProduct&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>但在daily build中，用Release用为configuration其实不是特别好。因为Release的证书可能会被经常修改。我们可以基于Release的Configuation，建一个专门用于daily build的configuration。方法是：在工程详细页面中，选择Info一栏，在Configurations一栏的下方点击“+”号，然后选择&#8221;Duplicate Release Configuration&#8221;, 新建名为&#8221;DailyBuild&#8221;的Configuration, 如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/daily_build_1.png"></p>
-
-<p>之后就可以用如下命令来做daily build了</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>xcodebuild -configuration DailyBuild -target <span class="s2">&quot;YourProduct&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>执行完命令后，会在当前工程下的 build/DailyBuild-iphoneos/目录下生成一个名为： YourProduct.app的文件。这个就是我们Build成功之后的程序文件。</p>
-
-<h3>生成ipa文件</h3>
-
-<p>接下来我们需要生成ipa文件，在生成ipa文件这件事情上，xcode似乎没有提供什么工具，不过这个没什么影响，因为ipa文件实际上就是一个zip文件，我们使用系统的zip命令来生成ipa文件即可。需要注意的是，ipa文件并不是简单地将编辑好的app文件打成zip文件，它需要将app文件放在一个名为Payload的文件夹下，然后将整个Payload目录打包成为.ipa文件，命令如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="nv">$BUILD_PATH</span>
-</span><span class='line'>mkdir -p ipa/Payload
-</span><span class='line'>cp -r ./DailyBuild-iphoneos/<span class="nv">$PRODUCT_NAME</span> ./ipa/Payload/
-</span><span class='line'><span class="nb">cd </span>ipa
-</span><span class='line'>zip -r <span class="nv">$FILE_NAME</span> *
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>生成安装文件</h3>
-
-<p>苹果允许用itms-services协议来直接在iphone/ipad上安装应用程序，我们可以直接生成该协议需要的相关文件，这样产品经理和测试同学都可以直接在设备上安装新版的应用了。相关的参考资料可以见：<a href="http://blog.encomiabile.it/2010/12/21/ios4-and-wireless-application-deploy/">这里</a>和 <a href="http://blog.s135.com/itms-services/">这里</a></p>
-
-<p>具体来说，就是需要生成一个带 itms-services 协议的链接的html文件，以及一个 plist 文件。</p>
-
-<p>生成html的示例代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat <span class="s">&lt;&lt; EOF &gt; install.html</span>
-</span><span class='line'><span class="s">&lt;!DOCTYPE HTML&gt;</span>
-</span><span class='line'><span class="s">&lt;html&gt;</span>
-</span><span class='line'><span class="s">  &lt;head&gt;</span>
-</span><span class='line'><span class="s">    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</span>
-</span><span class='line'><span class="s">    &lt;title&gt;安装此软件&lt;/title&gt;</span>
-</span><span class='line'><span class="s">  &lt;/head&gt;</span>
-</span><span class='line'><span class="s">  &lt;body&gt;</span>
-</span><span class='line'><span class="s">    &lt;ul&gt;</span>
-</span><span class='line'><span class="s">      &lt;li&gt;安装此软件:&lt;a href=&quot;itms-services://?action=download-manifest&amp;url=http%3A%2F%2Fwww.yourdomain.com%2Fynote.plist&quot;&gt;$FILE_NAME&lt;/a&gt;&lt;/li&gt;</span>
-</span><span class='line'><span class="s">    &lt;/ul&gt;</span>
-</span><span class='line'><span class="s">    &lt;/div&gt;</span>
-</span><span class='line'><span class="s">  &lt;/body&gt;</span>
-</span><span class='line'><span class="s">&lt;/html&gt;</span>
-</span><span class='line'><span class="s">EOF</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>生成plist文件的代码如下，注意，需要将下面的涉及 www.yourdomain.com的地方换成你线上服务器的地址，将ProductName换成你的app安装后的名字。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat <span class="s">&lt;&lt; EOF &gt; ynote.plist</span>
-</span><span class='line'><span class="s">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-</span><span class='line'><span class="s">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
-</span><span class='line'><span class="s">&lt;plist version=&quot;1.0&quot;&gt;</span>
-</span><span class='line'><span class="s">&lt;dict&gt;</span>
-</span><span class='line'><span class="s">   &lt;key&gt;items&lt;/key&gt;</span>
-</span><span class='line'><span class="s">   &lt;array&gt;</span>
-</span><span class='line'><span class="s">       &lt;dict&gt;</span>
-</span><span class='line'><span class="s">           &lt;key&gt;assets&lt;/key&gt;</span>
-</span><span class='line'><span class="s">           &lt;array&gt;</span>
-</span><span class='line'><span class="s">               &lt;dict&gt;</span>
-</span><span class='line'><span class="s">                   &lt;key&gt;kind&lt;/key&gt;</span>
-</span><span class='line'><span class="s">                   &lt;string&gt;software-package&lt;/string&gt;</span>
-</span><span class='line'><span class="s">                   &lt;key&gt;url&lt;/key&gt;</span>
-</span><span class='line'><span class="s">                   &lt;string&gt;http://www.yourdomain.com/$FILE_NAME&lt;/string&gt;</span>
-</span><span class='line'><span class="s">               &lt;/dict&gt;</span>
-</span><span class='line'><span class="s">               &lt;dict&gt;</span>
-</span><span class='line'><span class="s">                   &lt;key&gt;kind&lt;/key&gt;</span>
-</span><span class='line'><span class="s">                   &lt;string&gt;display-image&lt;/string&gt;</span>
-</span><span class='line'><span class="s">                   &lt;key&gt;needs-shine&lt;/key&gt;</span>
-</span><span class='line'><span class="s">                   &lt;true/&gt;</span>
-</span><span class='line'><span class="s">                   &lt;key&gt;url&lt;/key&gt;</span>
-</span><span class='line'><span class="s">                   &lt;string&gt;http://www.yourdomain.com/icon.png&lt;/string&gt;</span>
-</span><span class='line'><span class="s">               &lt;/dict&gt;</span>
-</span><span class='line'><span class="s">           &lt;dict&gt;</span>
-</span><span class='line'><span class="s">                   &lt;key&gt;kind&lt;/key&gt;</span>
-</span><span class='line'><span class="s">                   &lt;string&gt;full-size-image&lt;/string&gt;</span>
-</span><span class='line'><span class="s">                   &lt;key&gt;needs-shine&lt;/key&gt;</span>
-</span><span class='line'><span class="s">                   &lt;true/&gt;</span>
-</span><span class='line'><span class="s">                   &lt;key&gt;url&lt;/key&gt;</span>
-</span><span class='line'><span class="s">                   &lt;string&gt;http://www.yourdomain.com/icon.png&lt;/string&gt;</span>
-</span><span class='line'><span class="s">               &lt;/dict&gt;</span>
-</span><span class='line'><span class="s">           &lt;/array&gt;&lt;key&gt;metadata&lt;/key&gt;</span>
-</span><span class='line'><span class="s">           &lt;dict&gt;</span>
-</span><span class='line'><span class="s">               &lt;key&gt;bundle-identifier&lt;/key&gt;</span>
-</span><span class='line'><span class="s">               &lt;string&gt;com.yourdomain.productname&lt;/string&gt;</span>
-</span><span class='line'><span class="s">               &lt;key&gt;bundle-version&lt;/key&gt;</span>
-</span><span class='line'><span class="s">               &lt;string&gt;1.0.0&lt;/string&gt;</span>
-</span><span class='line'><span class="s">               &lt;key&gt;kind&lt;/key&gt;</span>
-</span><span class='line'><span class="s">               &lt;string&gt;software&lt;/string&gt;</span>
-</span><span class='line'><span class="s">               &lt;key&gt;subtitle&lt;/key&gt;</span>
-</span><span class='line'><span class="s">               &lt;string&gt;ProductName&lt;/string&gt;</span>
-</span><span class='line'><span class="s">               &lt;key&gt;title&lt;/key&gt;</span>
-</span><span class='line'><span class="s">               &lt;string&gt;ProductName&lt;/string&gt;</span>
-</span><span class='line'><span class="s">           &lt;/dict&gt;</span>
-</span><span class='line'><span class="s">       &lt;/dict&gt;</span>
-</span><span class='line'><span class="s">   &lt;/array&gt;</span>
-</span><span class='line'><span class="s">&lt;/dict&gt;</span>
-</span><span class='line'><span class="s">&lt;/plist&gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="s">EOF</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>定时运行</h3>
-
-<p>这一点非常简单，使用crontab -e命令即可。大家可以随意google一下crontab命令，可以找到很多相关文档。假如我们要每周1-5的早上9点钟执行daily build，则crontab的配置如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>0 9 * * * 1-5 /Users/tangqiao/dailybuild.sh &gt;&gt; /Users/tangqiao/dailybuild.log 2&gt;&amp;1
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>失败报警</h3>
-
-<p>在daily build脚本运行失败时，最好能发报警邮件或者短信，以便能够尽早发现。发邮件可以用python的smtplib来写，示例如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">smtplib</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sender</span> <span class="o">=</span> <span class="s">&#39;sender@devtang.com&#39;</span>
-</span><span class='line'><span class="n">receivers</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;receiver@devtang.com&#39;</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;From: Alert &lt;sender@devtang.com&gt;</span>
-</span><span class='line'><span class="s">To: Some one &lt;receiver@devtang.com&gt;</span>
-</span><span class='line'><span class="s">Subject: SMTP email sample</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">Hope you can get it.</span>
-</span><span class='line'><span class="s">&quot;&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">try</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">obj</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s">&#39;server.mail.devtang.com&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">obj</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">receivers</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&#39;OK: send mail succeed&#39;</span>
-</span><span class='line'><span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&#39;Error: unable to send mail&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>上传</h3>
-
-<p>daily build编译出来如果需要单独上传到另外一台web机器上，可以用ftp或者scp协议。如果web机器悲剧的是windows机器的话，可以在windows机器上开一个共享，然后用 mount -t smbfs来将这个共享mount到本地，相关的示例代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir upload
-</span><span class='line'>mount -t smbfs //<span class="nv">$SMB_USERNAME</span>:<span class="nv">$SMB_PASSWORD</span>@<span class="nv">$SMB_TARGET</span> ./upload
-</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$?&quot;</span> -ne 0 <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;Failed to mount smb directory&quot;</span>
-</span><span class='line'>    <span class="nb">exit </span>1
-</span><span class='line'><span class="k">fi</span>
-</span><span class='line'>mkdir ./upload/<span class="nv">$FOLDER</span>
-</span><span class='line'>cp <span class="nv">$FILE_NAME</span> ./upload/<span class="nv">$FOLDER</span>/
-</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$?&quot;</span> -eq 0 <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;[OK] $FILE_NAME is uploaded to $SMB_TARGET&quot;</span>
-</span><span class='line'><span class="k">else</span>
-</span><span class='line'><span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;[ERROR] $FILE_NAME is FAILED to  uploaded to $SMB_TARGET&quot;</span>
-</span><span class='line'><span class="k">fi</span>
-</span><span class='line'>umount ./upload
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>遇到的问题</h2>
-
-<p>本来我写的自动化脚本在Mac OS X 10.6下运行得很好。但是升级到lion后，脚本在手动执行时很正常，但是在用crontab启动时就会出现找不到开发者证书的错误。在网上搜了很久也没有找到解决办法。最后我试了一下在“钥匙串访问”中把开发者证书从“登录”那栏拖动到“系统”那栏，居然就解决了，如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/dailybuild_issue.jpg"></p>
-
-<p>另外我搜到2个类似的问题的解决方案，虽然对我这个没起作用，也一并放在这儿，或许对遇到类似问题的人有帮助：</p>
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/7635143/cannot-build-xcode-project-from-command-line-but-can-from-xcode">http://stackoverflow.com/questions/7635143/cannot-build-xcode-project-from-command-line-but-can-from-xcode</a></li>
-<li><a href="http://shappy1978.iteye.com/blog/765842">http://shappy1978.iteye.com/blog/765842</a></li>
-</ul>
-
-
-<h2>总结</h2>
-
-<p>将以上各点结合起来，就可以用bash写出一个daily build脚本了。每天这一切都会自动完成，心情相当好。</p>
 ]]></content>
   </entry>
   

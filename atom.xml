@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-12-02T15:20:57+08:00</updated>
+  <updated>2012-12-08T20:53:05+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,184 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用Privoxy做智能代理切换]]></title>
+    <link href="http://blog.devtang.com/blog/2012/12/08/use-privoxy/"/>
+    <updated>2012-12-08T16:47:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/12/08/use-privoxy</id>
+    <content type="html"><![CDATA[<blockquote><p>You take the blue pill, the story ends, you wake up in your bed, and believe whatever you want to believe. </p><p>You take the red pill, you stay in Wonderland, and I show you just how deep the rabbit hole goes.</p><p>&#8211; 《黑客帝国》</p></blockquote>
+
+
+<p>如果你不知道什么是“墙”，那么应该祝福你继续活在美丽的Matrix里。但如果你选择服用红色药丸，那么在享受了墙外的信息流畅之后，你就再也无法忍受墙内的世界了。</p>
+
+<!-- more -->
+
+
+<h2>GoAgent</h2>
+
+<p><a href="https://code.google.com/p/goagent/">GoAgent</a>是一个基于Google App Engine的翻墙工具。关于GoAgent的安装教程，网络上已经有很多了，大家可以随便搜索一下就可以找到，当然，记得用google搜索。</p>
+
+<h2>SwitchySharp</h2>
+
+<p>拿GoAgent直接作代理服务器地址不太合适，因为如果全部走代理的话，国内的访问太慢了，所以我们需要给Chrome浏览器配置<a href="https://chrome.google.com/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm">SwitchySharp插件</a>，SwitchySharp插件加上自动更新的“墙”List（地址见下图），我们就可以在浏览器中享受无墙的世界了。</p>
+
+<p><img src="http://blog.devtang.com/images/switch-sharp.png"></p>
+
+<h2>Privoxy</h2>
+
+<p>因为虽然SwitchySharp搞定了访问网页时的代理智能切换，但是我们在使用诸如Dropbox, twitter客户端等软件时，还是无法智能切换到代理。而使用Privoxy就能解决这个问题。</p>
+
+<p>Privoxy是一个智能代理切换软件，它的使用必须基于GoAgent或其它已部署好的代理服务。下面介绍如何安装和配置privoxy。</p>
+
+<h3>安装</h3>
+
+<p>使用brew就可以一键安装：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install privoxy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>自动启动</h3>
+
+<p>设置好自动启动后，我们就不用管它了。方法如下：</p>
+
+<p>切换到/Library/LaunchAgents目录，用sudo vim新建一个名为local.privoxy.plist的文件，文件内容如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class='line'><span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+</span><span class='line'><span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;dict&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>Label<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;string&gt;</span>local.arcueid.privoxy<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>ProgramArguments<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;array&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;string&gt;</span>/usr/local/sbin/privoxy<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;string&gt;</span>--no-daemon<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;string&gt;</span>/usr/local/etc/privoxy/config<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/array&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>RunAtLoad<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;true/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>KeepAlive<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;true/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>StandardErrorPath<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;string&gt;</span>/usr/local/Cellar/privoxy/3.0.19/sbin/privoxy.log<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>StandardOutPath<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;string&gt;</span>/usr/local/Cellar/privoxy/3.0.19/sbin/privoxy.log<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dict&gt;</span>
+</span><span class='line'><span class="nt">&lt;/plist&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编辑完成后，执行如下命令，就可以把privoxy设置成开机自动启动了：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo launchctl load /Library/LaunchAgents/local.privoxy.plist
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以用如下2条命令验证privoxy已经启动了。一是用ps查看是否有privoxy进程，二是查看privoxy默认监听的8118端口是否已经打开。如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>tangqiao LaunchAgents<span class="o">]</span><span class="nv">$ps</span> aux  | grep privoxy
+</span><span class='line'>tangqiao       25641   0.3  0.0  2436516    492 s001  U+    5:31下午   0:00.00 grep --color<span class="o">=</span>auto privoxy
+</span><span class='line'>root           17984   0.0  0.2  2477764  17452   ??  Ss   10:13上午   0:50.28 /usr/local/Cellar/privoxy/3.0.19/sbin/privoxy --no-daemon /usr/local/etc/privoxy/config
+</span><span class='line'><span class="o">[</span>tangqiao LaunchAgents<span class="o">]</span><span class="nv">$netstat</span> -an | grep 8118
+</span><span class='line'>tcp4       0      0  127.0.0.1.8118         *.*                    LISTEN
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>配置</h3>
+
+<p>我们需要配置Provixy才能使用它。配置步骤如下：</p>
+
+<p>一. 用vim打开privoxy的配置文件：vim /usr/local/etc/privoxy/config
+在最后增加如下内容：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>actionsfile wall.action
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>二. 在/usr/local/etc/privoxy/目录下新建一个名为 wall.action的文件，然后在上面添加如下内容：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">{</span>+forward-override<span class="o">{</span>forward 0.0.0.0:8087<span class="o">}}</span>
+</span><span class='line'>.google.com.hk
+</span><span class='line'>.facebook.com
+</span><span class='line'>.google.com
+</span><span class='line'>.fbcdn.net
+</span><span class='line'>.gstatic.com
+</span><span class='line'>.gmail.com
+</span><span class='line'>.twitter.com
+</span><span class='line'>.youtube.com
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>该内容第一行表示接下来的内容会智能走端口为8087的代理，后面每行一个地址。你可以随时将你想增加的内容添加进去。该配置文件的官方详细说明文档<a href="http://www.privoxy.org/3.0.19/user-manual/actions-file.html#ACTIONS-FILE">在这里</a>。</p>
+
+<p>三. 打开mac的代理设置，将“Web代理”和&#8221;安全Web代理&#8221;都设置成127.0.0.1，端口为8118。如下图所示：</p>
+
+<p>  <img src="http://blog.devtang.com/images/mac-proxy.png"></p>
+
+<h3>Tips</h3>
+
+<ol>
+<li><p>如果你的GoAgent监听在8087端口，而Privoxy监听在8118端口，那么到这一步，你就可以让你的所有应用正常翻墙了。
+需要注意的是SwitchySharp默认会忽略系统代理直接连接网络，你可能需要选择它的“使用系统代理设置”这一项，如下所示：</p>
+
+<p>  <img src="http://blog.devtang.com/images/switch-sharp-use-system-proxy.png"></p></li>
+<li><p>用浏览器访问 config.privoxy.org，即可用Web界面管理自己的provixy配置文件。不过，事先需要在config文件中启用Web管理功能，方法是编辑/usr/local/etc/privoxy/config 文件，将enable-edit-actions的值设置为1即可。</p></li>
+<li><p>访问 <a href="http://config.privoxy.org/show-url-info">http://config.privoxy.org/show-url-info</a> 可以查询某一个特定的URL是否会走代理服务。我们可以随时在这儿查询，结合上面的第2步，将一些URL Pattern加入到代理列表文件 wall.action 中, 我们就可以方便地管理Privoxy。</p></li>
+<li><p>证书是个麻烦事儿，由于GoAgent的证书是自己生成的而不是权威机构颁发的，所以需要把GoAgent的证书加到钥匙串访问的可信证书里面，如下图所示。另外GoAgent的默认带的证书因为是公开的，所以有潜在被<a href="http://zh.wikipedia.org/zh-hk/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a>的危险，所以更安全的做法是把默认的证书删掉再重启GoAgent，这样GoAgent就会重新另外生成一个证书了，再把这个新证书加到钥匙串访问中，会更安全一些。
+<img src="http://blog.devtang.com/images/goagent-cer.png"></p></li>
+</ol>
+
+
+<h2>参考文章</h2>
+
+<ol>
+<li><p><a href="http://venmos.com/blog/2012/09/20/mac-autossh-privoxy/">http://venmos.com/blog/2012/09/20/mac-autossh-privoxy/</a></p></li>
+<li><p><a href="http://y-zh.net/archives/77">http://y-zh.net/archives/77</a></p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用CocoaPods来做iOS程序的包依赖管理]]></title>
@@ -3543,303 +3721,6 @@ ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTT
 <h2>协作</h2>
 
 <p>对于这种基于Git的协作，我们可以在本地随意的提交代码，让对方用git pull更新。当开发完成，需要push到公共仓库的时候，再用git rebase -i将本地的提交进行清理即可。并且由于大家都是在机器间互拷，不依赖svn公共服务器，更新代码的速度也要快得多。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用GCD]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/22/use-gcd/"/>
-    <updated>2012-02-22T20:44:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/22/use-gcd</id>
-    <content type="html"><![CDATA[<h2>什么是GCD</h2>
-
-<p>Grand Central Dispatch (GCD)是Apple开发的一个多核编程的解决方法。该方法在Mac OS X 10.6雪豹中首次推出，并随后被引入到了iOS4.0中。GCD是一个替代诸如NSThread, NSOperationQueue, NSInvocationOperation等技术的很高效和强大的技术，它看起来象就其它语言的闭包(Closure)一样，但苹果把它叫做blocks。</p>
-
-<!--More-->
-
-
-<h2>应用举例</h2>
-
-<p>让我们来看一个编程场景。我们要在iphone上做一个下载网页的功能，该功能非常简单，就是在iphone上放置一个按钮，点击该按钮时，显示一个转动的圆圈，表示正在进行下载，下载完成之后，将内容加载到界面上的一个文本控件中。</p>
-
-<h3>不用GCD前</h3>
-
-<p>虽然功能简单，但是我们必须把下载过程放到后台线程中，否则会阻塞UI线程显示。所以，如果不用GCD, 我们需要写如下3个方法：</p>
-
-<ul>
-<li>someClick 方法是点击按钮后的代码，可以看到我们用NSInvocationOperation建了一个后台线程，并且放到NSOperationQueue中。后台线程执行download方法。</li>
-<li>download 方法处理下载网页的逻辑。下载完成后用performSelectorOnMainThread执行download_completed 方法。</li>
-<li>download_completed 进行clear up的工作，并把下载的内容显示到文本控件中。</li>
-</ul>
-
-
-<p>这3个方法的代码如下。可以看到，虽然 开始下载 -> 下载中 -> 下载完成 这3个步骤是整个功能的三步。但是它们却被切分成了3块。他们之间因为是3个方法，所以还需要传递数据参数。如果是复杂的应用，数据参数很可能就不象本例子中的NSString那么简单了，另外，下载可能放到Model的类中来做，而界面的控制放到View Controller层来做，这使得本来就分开的代码变得更加散落。代码的可读性大大降低。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">static</span> <span class="n">NSOperationQueue</span> <span class="o">*</span> <span class="n">queue</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">someClick:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">indicator</span><span class="p">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">indicator</span> <span class="n">startAnimating</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">queue</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">NSInvocationOperation</span> <span class="o">*</span> <span class="n">op</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">NSInvocationOperation</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTarget:</span><span class="n">self</span> <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="n">download</span><span class="p">)</span> <span class="nl">object:</span><span class="nb">nil</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">queue</span> <span class="nl">addOperation:</span><span class="n">op</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">download</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">NSURL</span> <span class="o">*</span> <span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">URLWithString:</span><span class="s">@&quot;http://www.youdao.com&quot;</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">NSError</span> <span class="o">*</span> <span class="n">error</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithContentsOfURL:</span><span class="n">url</span> <span class="nl">encoding:</span><span class="n">NSUTF8StringEncoding</span> <span class="nl">error:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">];</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">data</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="nl">performSelectorOnMainThread:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">download_completed:</span><span class="p">)</span> <span class="nl">withObject:</span><span class="n">data</span> <span class="nl">waitUntilDone:</span><span class="n">NO</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;error when download:%@&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">[</span><span class="n">queue</span> <span class="n">release</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">download_completed:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">data</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;call back&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">indicator</span> <span class="n">stopAnimating</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">indicator</span><span class="p">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">queue</span> <span class="n">release</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>使用GCD后</h3>
-
-<p>如果使用GCD，以上3个方法都可以放到一起，如下所示：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 原代码块一</span>
-</span><span class='line'><span class="n">self</span><span class="p">.</span><span class="n">indicator</span><span class="p">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
-</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">indicator</span> <span class="n">startAnimating</span><span class="p">];</span>
-</span><span class='line'><span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="n">DISPATCH_QUEUE_PRIORITY_DEFAULT</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>    <span class="c1">// 原代码块二</span>
-</span><span class='line'>    <span class="n">NSURL</span> <span class="o">*</span> <span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">URLWithString:</span><span class="s">@&quot;http://www.youdao.com&quot;</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">NSError</span> <span class="o">*</span> <span class="n">error</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithContentsOfURL:</span><span class="n">url</span> <span class="nl">encoding:</span><span class="n">NSUTF8StringEncoding</span> <span class="nl">error:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">];</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">data</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// 原代码块三</span>
-</span><span class='line'>        <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>            <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">indicator</span> <span class="n">stopAnimating</span><span class="p">];</span>
-</span><span class='line'>            <span class="n">self</span><span class="p">.</span><span class="n">indicator</span><span class="p">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
-</span><span class='line'>            <span class="n">self</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;error when download:%@&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>首先我们可以看到，代码变短了。因为少了原来3个方法的定义，也少了相互之间需要传递的变量的封装。</p>
-
-<p>另外，代码变清楚了，虽然是异步的代码，但是它们被GCD合理的整合在一起，逻辑非常清晰。如果应用上MVC模式，我们也可以将View Controller层的回调函数用GCD的方式传递给Modal层，这相比以前用@selector的方式，代码的逻辑关系会更加清楚。</p>
-
-<h2>GCD的定义</h2>
-
-<p>简单GCD的定义有点象函数指针，差别是用 ^ 替代了函数指针的 * 号，如下所示：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="c1">// 申明变量</span>
-</span><span class='line'> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">(</span><span class="o">^</span><span class="n">loggerBlock</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
-</span><span class='line'> <span class="c1">// 定义</span>
-</span><span class='line'>
-</span><span class='line'> <span class="n">loggerBlock</span> <span class="o">=</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Hello world&quot;</span><span class="p">);</span>
-</span><span class='line'> <span class="p">};</span>
-</span><span class='line'> <span class="c1">// 调用</span>
-</span><span class='line'> <span class="n">loggerBlock</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>但是大多数时候，我们通常使用内联的方式来定义它，即将它的程序块写在调用的函数里面，例如这样：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>      <span class="c1">// something</span>
-</span><span class='line'> <span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>从上面大家可以看出，block有如下特点：</p>
-
-<ol>
-<li>程序块可以在代码中以内联的方式来定义。</li>
-<li>程序块可以访问在创建它的范围内的可用的变量。</li>
-</ol>
-
-
-<h2>系统提供的dispatch方法</h2>
-
-<p>为了方便地使用GCD，苹果提供了一些方法方便我们将block放在主线程 或 后台线程执行，或者延后执行。使用的例子如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="c1">//  后台执行：</span>
-</span><span class='line'> <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>      <span class="c1">// something</span>
-</span><span class='line'> <span class="p">});</span>
-</span><span class='line'> <span class="c1">// 主线程执行：</span>
-</span><span class='line'> <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>      <span class="c1">// something</span>
-</span><span class='line'> <span class="p">});</span>
-</span><span class='line'> <span class="c1">// 一次性执行：</span>
-</span><span class='line'> <span class="k">static</span> <span class="n">dispatch_once_t</span> <span class="n">onceToken</span><span class="p">;</span>
-</span><span class='line'> <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>     <span class="c1">// code to be executed once</span>
-</span><span class='line'> <span class="p">});</span>
-</span><span class='line'> <span class="c1">// 延迟2秒执行：</span>
-</span><span class='line'> <span class="kt">double</span> <span class="n">delayInSeconds</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
-</span><span class='line'> <span class="n">dispatch_time_t</span> <span class="n">popTime</span> <span class="o">=</span> <span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="n">delayInSeconds</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">);</span>
-</span><span class='line'> <span class="n">dispatch_after</span><span class="p">(</span><span class="n">popTime</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
-</span><span class='line'>     <span class="c1">// code to be executed on the main queue after delay</span>
-</span><span class='line'> <span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>dispatch_queue_t 也可以自己定义，如要要自定义queue，可以用dispatch_queue_create方法，示例如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">dispatch_queue_t</span> <span class="n">urls_queue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">&quot;blog.devtang.com&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'><span class="n">dispatch_async</span><span class="p">(</span><span class="n">urls_queue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>     <span class="c1">// your code</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'><span class="n">dispatch_release</span><span class="p">(</span><span class="n">urls_queue</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>另外，GCD还有一些高级用法，例如让后台2个线程并行执行，然后等2个线程都结束后，再汇总执行结果。这个可以用dispatch_group, dispatch_group_async 和 dispatch_group_notify来实现，示例如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">dispatch_group_t</span> <span class="n">group</span> <span class="o">=</span> <span class="n">dispatch_group_create</span><span class="p">();</span>
-</span><span class='line'> <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>      <span class="c1">// 并行执行的线程一</span>
-</span><span class='line'> <span class="p">});</span>
-</span><span class='line'> <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>      <span class="c1">// 并行执行的线程二</span>
-</span><span class='line'> <span class="p">});</span>
-</span><span class='line'> <span class="n">dispatch_group_notify</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>      <span class="c1">// 汇总结果</span>
-</span><span class='line'> <span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>修改block之外的变量</h2>
-
-<p>默认情况下，在程序块中访问的外部变量是复制过去的，即写操作不对原变量生效。但是你可以加上 __block来让其写操作生效，示例代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">__block</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'> <span class="kt">void</span>  <span class="p">(</span><span class="o">^</span><span class="n">foo</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="o">=</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>      <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'> <span class="p">}</span>
-</span><span class='line'> <span class="n">foo</span><span class="p">();</span>
-</span><span class='line'> <span class="c1">// 这里，a的值被修改为1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>后台运行</h2>
-
-<p>GCD的另一个用处是可以让程序在后台较长久的运行。在没有使用GCD时，当app被按home键退出后，app仅有最多5秒钟的时候做一些保存或清理资源的工作。但是在使用GCD后，app最多有10分钟的时间在后台长久运行。这个时间可以用来做清理本地缓存，发送统计数据等工作。</p>
-
-<h2>总结</h2>
-
-<p>总体来说，GCD能够极大地方便开发者进行多线程编程。如果你的app不需要支持iOS4.0以下的系统，那么就应该尽量使用GCD来处理后台线程和UI线程的交互。</p>
 ]]></content>
   </entry>
   

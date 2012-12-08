@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>使用Privoxy做智能代理切换 - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="You take the blue pill, the story ends, you wake up in your bed, and believe whatever you want to believe. You take the red pill, you stay in &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/12/08/use-privoxy">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">所有文章</a></li>
+  <li><a href="/blog/categories/ios/">iOS开发</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">使用Privoxy做智能代理切换</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-08T16:47:00+08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><blockquote><p>You take the blue pill, the story ends, you wake up in your bed, and believe whatever you want to believe. </p><p>You take the red pill, you stay in Wonderland, and I show you just how deep the rabbit hole goes.</p><p>&#8211; 《黑客帝国》</p></blockquote>
+
+
+<p>如果你不知道什么是“墙”，那么应该祝福你继续活在美丽的Matrix里。但如果你选择服用红色药丸，那么在享受了墙外的信息流畅之后，你就再也无法忍受墙内的世界了。</p>
+
+<!-- more -->
+
+
+<h2>GoAgent</h2>
+
+<p><a href="https://code.google.com/p/goagent/">GoAgent</a>是一个基于Google App Engine的翻墙工具。关于GoAgent的安装教程，网络上已经有很多了，大家可以随便搜索一下就可以找到，当然，记得用google搜索。</p>
+
+<h2>SwitchySharp</h2>
+
+<p>拿GoAgent直接作代理服务器地址不太合适，因为如果全部走代理的话，国内的访问太慢了，所以我们需要给Chrome浏览器配置<a href="https://chrome.google.com/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm">SwitchySharp插件</a>，SwitchySharp插件加上自动更新的“墙”List（地址见下图），我们就可以在浏览器中享受无墙的世界了。</p>
+
+<p><img src="/images/switch-sharp.png"></p>
+
+<h2>Privoxy</h2>
+
+<p>因为虽然SwitchySharp搞定了访问网页时的代理智能切换，但是我们在使用诸如Dropbox, twitter客户端等软件时，还是无法智能切换到代理。而使用Privoxy就能解决这个问题。</p>
+
+<p>Privoxy是一个智能代理切换软件，它的使用必须基于GoAgent或其它已部署好的代理服务。下面介绍如何安装和配置privoxy。</p>
+
+<h3>安装</h3>
+
+<p>使用brew就可以一键安装：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install privoxy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>自动启动</h3>
+
+<p>设置好自动启动后，我们就不用管它了。方法如下：</p>
+
+<p>切换到/Library/LaunchAgents目录，用sudo vim新建一个名为local.privoxy.plist的文件，文件内容如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class='line'><span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+</span><span class='line'><span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;dict&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>Label<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;string&gt;</span>local.arcueid.privoxy<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>ProgramArguments<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;array&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;string&gt;</span>/usr/local/sbin/privoxy<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;string&gt;</span>--no-daemon<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;string&gt;</span>/usr/local/etc/privoxy/config<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/array&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>RunAtLoad<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;true/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>KeepAlive<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;true/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>StandardErrorPath<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;string&gt;</span>/usr/local/Cellar/privoxy/3.0.19/sbin/privoxy.log<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;key&gt;</span>StandardOutPath<span class="nt">&lt;/key&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;string&gt;</span>/usr/local/Cellar/privoxy/3.0.19/sbin/privoxy.log<span class="nt">&lt;/string&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dict&gt;</span>
+</span><span class='line'><span class="nt">&lt;/plist&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编辑完成后，执行如下命令，就可以把privoxy设置成开机自动启动了：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo launchctl load /Library/LaunchAgents/local.privoxy.plist
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以用如下2条命令验证privoxy已经启动了。一是用ps查看是否有privoxy进程，二是查看privoxy默认监听的8118端口是否已经打开。如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>tangqiao LaunchAgents<span class="o">]</span><span class="nv">$ps</span> aux  | grep privoxy
+</span><span class='line'>tangqiao       25641   0.3  0.0  2436516    492 s001  U+    5:31下午   0:00.00 grep --color<span class="o">=</span>auto privoxy
+</span><span class='line'>root           17984   0.0  0.2  2477764  17452   ??  Ss   10:13上午   0:50.28 /usr/local/Cellar/privoxy/3.0.19/sbin/privoxy --no-daemon /usr/local/etc/privoxy/config
+</span><span class='line'><span class="o">[</span>tangqiao LaunchAgents<span class="o">]</span><span class="nv">$netstat</span> -an | grep 8118
+</span><span class='line'>tcp4       0      0  127.0.0.1.8118         *.*                    LISTEN
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>配置</h3>
+
+<p>我们需要配置Provixy才能使用它。配置步骤如下：</p>
+
+<p>一. 用vim打开privoxy的配置文件：vim /usr/local/etc/privoxy/config
+在最后增加如下内容：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>actionsfile wall.action
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>二. 在/usr/local/etc/privoxy/目录下新建一个名为 wall.action的文件，然后在上面添加如下内容：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">{</span>+forward-override<span class="o">{</span>forward 0.0.0.0:8087<span class="o">}}</span>
+</span><span class='line'>.google.com.hk
+</span><span class='line'>.facebook.com
+</span><span class='line'>.google.com
+</span><span class='line'>.fbcdn.net
+</span><span class='line'>.gstatic.com
+</span><span class='line'>.gmail.com
+</span><span class='line'>.twitter.com
+</span><span class='line'>.youtube.com
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>该内容第一行表示接下来的内容会智能走端口为8087的代理，后面每行一个地址。你可以随时将你想增加的内容添加进去。该配置文件的官方详细说明文档<a href="http://www.privoxy.org/3.0.19/user-manual/actions-file.html#ACTIONS-FILE">在这里</a>。</p>
+
+<p>三. 打开mac的代理设置，将“Web代理”和&#8221;安全Web代理&#8221;都设置成127.0.0.1，端口为8118。如下图所示：</p>
+
+<p>  <img src="/images/mac-proxy.png"></p>
+
+<h3>Tips</h3>
+
+<ol>
+<li><p>如果你的GoAgent监听在8087端口，而Privoxy监听在8118端口，那么到这一步，你就可以让你的所有应用正常翻墙了。
+需要注意的是SwitchySharp默认会忽略系统代理直接连接网络，你可能需要选择它的“使用系统代理设置”这一项，如下所示：</p>
+
+<p>  <img src="/images/switch-sharp-use-system-proxy.png"></p></li>
+<li><p>用浏览器访问 config.privoxy.org，即可用Web界面管理自己的provixy配置文件。不过，事先需要在config文件中启用Web管理功能，方法是编辑/usr/local/etc/privoxy/config 文件，将enable-edit-actions的值设置为1即可。</p></li>
+<li><p>访问 <a href="http://config.privoxy.org/show-url-info">http://config.privoxy.org/show-url-info</a> 可以查询某一个特定的URL是否会走代理服务。我们可以随时在这儿查询，结合上面的第2步，将一些URL Pattern加入到代理列表文件 wall.action 中, 我们就可以方便地管理Privoxy。</p></li>
+<li><p>证书是个麻烦事儿，由于GoAgent的证书是自己生成的而不是权威机构颁发的，所以需要把GoAgent的证书加到钥匙串访问的可信证书里面，如下图所示。另外GoAgent的默认带的证书因为是公开的，所以有潜在被<a href="http://zh.wikipedia.org/zh-hk/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a>的危险，所以更安全的做法是把默认的证书删掉再重启GoAgent，这样GoAgent就会重新另外生成一个证书了，再把这个新证书加到钥匙串访问中，会更安全一些。
+<img src="/images/goagent-cer.png"></p></li>
+</ol>
+
+
+<h2>参考文章</h2>
+
+<ol>
+<li><p><a href="http://venmos.com/blog/2012/09/20/mac-autossh-privoxy/">http://venmos.com/blog/2012/09/20/mac-autossh-privoxy/</a></p></li>
+<li><p><a href="http://y-zh.net/archives/77">http://y-zh.net/archives/77</a></p></li>
+</ol>
+
+</div>
+
+
+  <footer>
+   <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-08T16:47:00+08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mac/'>mac</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/" title="Previous Post: 使用CocoaPods来做iOS程序的包依赖管理">&laquo; 使用CocoaPods来做iOS程序的包依赖管理</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/08/use-privoxy/">使用Privoxy做智能代理切换</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/">使用CocoaPods来做iOS程序的包依赖管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/16/drop-ios4-enbrace-ios5/">放弃iOS4，拥抱iOS5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/14/make-stack-trace-more-readable/">让XCode的 stack trace信息可读</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">粉笔网的架构和项目管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/09/3rd-libs-used-in-fenbi-app/">粉笔网iPhone端使用的第三方开源库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/05/upgrade-your-app-to-support-iphone5/">让你的APP支持iPhone5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/05/use-modern-objective-c/">Objective-C的新特性</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/24/enhance-uiactionsheet/">封装同步的UIActionSheet</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/05/do-not-use-sbjson/">不要使用SBJSON(json-framework)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/22/use-fmdb/">在iOS开发中使用FMDB</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>  前网易有道员工，现在在粉笔网创业中。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记。
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-12-08T20:53:05+08:00</updated>
+  <updated>2012-12-09T15:23:25+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,321 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[关于IAP的破解]]></title>
+    <link href="http://blog.devtang.com/blog/2012/12/09/iap-crack-issue/"/>
+    <updated>2012-12-09T15:06:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/12/09/iap-crack-issue</id>
+    <content type="html"><![CDATA[<h3>介绍</h3>
+
+<p>大概在今年7月份，有俄罗斯黑客<a href="http://www.in-appstore.com/">破解</a>了苹果的应用内付费（In-App Purchases），设备在不越狱的情况下就可以免费获得来自苹果官网App Store里应用的收费道具。受影响的产品众多，包括著名的Angry Birds，切水果，Mega Jump, Pandora等。<a href="https://docs.google.com/spreadsheet/ccc?key=0AvSXyNTiqEXMdGRKZlN1Snl5S3h1Z1NsTTFYTlJPTUE#gid=0">这里</a>有一份受影响的著名的游戏应用列表。</p>
+
+<p>正常的越狱行为还是比较复杂的，需要下载破解软件，并且操作进入DFU模式，所以大部分人并不能够方便地越狱。但该方案不需要越狱就可以破解应用内付费，给用户实施该行为提供了方便。</p>
+
+<!-- more -->
+
+
+<p>为了验证破解的有效性，我今天试了一下，确实能够直接绕开苹果的应用内付费就直接完成购买操作。而苹果也在它的官方文档上<a href="http://developer.apple.com/library/ios/#releasenotes/StoreKit/IAP_ReceiptValidation/_index.html">特别注明</a>了该漏洞的存在，截图如下：</p>
+
+<p><img src="http://blog.devtang.com/images/iap-crack-issue.png"></p>
+
+<p>从该文档中我们可以知道，iOS6以下的所有设备（包括越狱或非越狱设备），都会受到该漏洞的影响。</p>
+
+<h3>攻击原理</h3>
+
+<p>我们知道通常的IAP购买行为，从逻辑上就是设备向App Store发起一个购买操作，App Store在验证过用户的密码确认身份后，扣费并返回购买成功的凭证，整个网络操作是通过SSL加密的。</p>
+
+<p>该IAP破解方法，是让设备误以为另一个网站就是AppStore，而向它通讯，而这个假AppStore返回一个假的购买成功的凭证，这样就欺骗设备完成了购买。整个欺骗使用的手段包括：</p>
+
+<ol>
+<li>用户给自己添加一个受信任的证书以完成SSL通讯的证书校验</li>
+<li>设置一个伪DNS（域名解析服务）地址，把AppStore的域名指向假的地址。</li>
+</ol>
+
+
+<h3>应对措施</h3>
+
+<p>现在看来，暂时有效的应对方法是，将该交易凭证上传到我们自己的服务器上，然后让我们自己的服务器与AppStore进行验证，以确认该凭证是否是伪造的，然后将验证结果返回给设备。苹果的官方网站上也是这么介绍的。这样做麻烦的地方是，对于那些游戏和工具类应用，增加了服务器开发和维护的开销。</p>
+
+<p>但是就象苹果自己也意识到的那样（如下图），既然破解者可以欺骗设备来和AppStore通讯，那么同样破解者从原理上，也可以欺骗设备同我们自己的服务器通讯，到头来，设备本身无论如何是无法知道自己的信息的真实性的。</p>
+
+<p><img src="http://blog.devtang.com/images/iap-crack-isuue-2.png"></p>
+
+<p>对于这件事，我们只能期望于：因为我们的应用用户量不大，验证协议又不是通用的，所以破解者需要专门针对我们的通讯协议进行破解，这需要他本身有动力做这个事情，并且要花费他一些时间。所以可能他觉得做这个事情没什么挑战和意义，就不破解我们了。在这件事情上，“希望他不要破解”，好象也是我们唯一能做的事情。</p>
+
+<p>乐观一点讲，AppStore上有上百万的应用，如果所有应用都采用服务器验证购买凭证，黑客一一针对破解，确实也太不可能了，所以这件事情还是很有必要的。另外随着iOS6的普及，该漏洞也将被修补掉，所以大家也不用过于悲观。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS应用内付费(IAP)开发步骤列表]]></title>
+    <link href="http://blog.devtang.com/blog/2012/12/09/in-app-purchase-check-list/"/>
+    <updated>2012-12-09T12:55:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/12/09/in-app-purchase-check-list</id>
+    <content type="html"><![CDATA[<p>前两天和服务端同事一起，完成了应用内付费（以下简称IAP, In app purchase）的开发工作。步骤繁多，在此把开发步骤列表整理如下。因为只是步骤列表，所以并不含详细的说明教程，需要看教程的新手，可以看我附在最后的一些参考链接。</p>
+
+<!-- more -->
+
+
+<h3>配置Developer.apple.com</h3>
+
+<p>登录到<a href="https://developer.apple.com/">Developer.apple.com</a>，然后进行以下步骤：</p>
+
+<ol>
+<li>为应用建立建立一个不带通配符的App ID</li>
+<li>用该App ID生成和安装相应的Provisioning Profile文件。</li>
+</ol>
+
+
+<h3>配置iTunes Connect</h3>
+
+<p>登录到<a href="https://itunesconnect.apple.com/">iTunes Connet</a>，然后进行以下步骤：</p>
+
+<ol>
+<li>用该App ID创建一个新的应用。</li>
+<li><p>在该应用中，创建应用内付费项目，选择付费类型，通常可选的是可重复消费(Consumable)的或是永久有效(Non-Consumable)的2种，然后设置好价格和Product ID以及购买介绍和截图即可，这里的Product ID是需要记住的，后面开发的时候需要。如下图所示：
+<img src="http://blog.devtang.com/images/iap-add-product-id.png"></p></li>
+<li><p>添加一个用于在sandbox付费的测试用户，如下图所示。注意苹果对该测试用户的密码要求
+和正式账号一样，必须是至少8位，并且同时包含数字和大小写字母：
+<img src="http://blog.devtang.com/images/iap-adduser-1.png">
+<img src="http://blog.devtang.com/images/iap-adduser-2.png"></p></li>
+<li><p>填写相关的税务，银行，联系人信息。如下图所示：
+<img src="http://blog.devtang.com/images/iap-tax-info.png"></p></li>
+</ol>
+
+
+<h3>开发工作(ios端)</h3>
+
+<p>1、 在工程中引入 storekit.framework 和 #import &lt;StoreKit/StoreKit.h></p>
+
+<p>2、 获得所有的付费Product ID列表。这个可以用常量存储在本地，也可以由自己的服务器返回。</p>
+
+<p>3、 制作一个界面，展示所有的应用内付费项目。这些应用内付费项目的价格和介绍信息可以是自己的服务器返回。但如果是不带服务器的单机游戏应用或工具类应用，则可以通过向App Store查询获得。我在测试时发现，向App Store查询速度非常慢，通常需要2-3秒钟，所以不建议这么做，最好还是搞个自己的服务器吧。</p>
+
+<p>4、当用户点击了一个IAP项目，我们先查询用户是否允许应用内付费，如果不允许则不用进行以下步骤了。代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">if</span> <span class="p">([</span><span class="n">SKPaymentQueue</span> <span class="n">canMakePayments</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// 执行下面提到的第5步：</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">self</span> <span class="n">getProductInfo</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;失败，用户禁止应用内付费购买.&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>5、 我们先通过该IAP的ProductID向AppStore查询，获得SKPayment实例，然后通过SKPaymentQueue的 addPayment方法发起一个购买的操作。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 下面的ProductId应该是事先在itunesConnect中添加好的，已存在的付费项目。否则查询会失败。</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">getProductInfo</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">NSSet</span> <span class="o">*</span> <span class="n">set</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSSet</span> <span class="nl">setWithArray:</span><span class="err">@</span><span class="p">[</span><span class="s">@&quot;ProductId&quot;</span><span class="p">]];</span>
+</span><span class='line'>  <span class="n">SKProductsRequest</span> <span class="o">*</span> <span class="n">request</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SKProductsRequest</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithProductIdentifiers:</span><span class="n">set</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">request</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">request</span> <span class="n">start</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 以上查询的回调函数</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">productsRequest:</span><span class="p">(</span><span class="n">SKProductsRequest</span> <span class="o">*</span><span class="p">)</span><span class="nv">request</span> <span class="nf">didReceiveResponse:</span><span class="p">(</span><span class="n">SKProductsResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">myProduct</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">products</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">myProduct</span><span class="p">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;无法获取产品信息，购买失败。&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">SKPayment</span> <span class="o">*</span> <span class="n">payment</span> <span class="o">=</span> <span class="p">[</span><span class="n">SKPayment</span> <span class="nl">paymentWithProduct:</span><span class="n">myProduct</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">addPayment:</span><span class="n">payment</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>6、 在viewDidLoad方法中，将购买页面设置成购买的Observer。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">// 监听购买结果</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">addTransactionObserver:</span><span class="n">self</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidUnload</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidUnload</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">removeTransactionObserver:</span><span class="n">self</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>7、 当用户购买的操作有结果时，就会触发下面的回调函数，相应进行处理即可。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">paymentQueue:</span><span class="p">(</span><span class="n">SKPaymentQueue</span> <span class="o">*</span><span class="p">)</span><span class="nv">queue</span> <span class="nf">updatedTransactions:</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">transactions</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">SKPaymentTransaction</span> <span class="o">*</span><span class="n">transaction</span> <span class="k">in</span> <span class="n">transactions</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">switch</span> <span class="p">(</span><span class="n">transaction</span><span class="p">.</span><span class="n">transactionState</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">SKPaymentTransactionStatePurchased:</span><span class="c1">//交易完成</span>
+</span><span class='line'>                <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;transactionIdentifier = %@&quot;</span><span class="p">,</span> <span class="n">transaction</span><span class="p">.</span><span class="n">transactionIdentifier</span><span class="p">);</span>
+</span><span class='line'>                <span class="p">[</span><span class="n">self</span> <span class="nl">completeTransaction:</span><span class="n">transaction</span><span class="p">];</span>
+</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">SKPaymentTransactionStateFailed:</span><span class="c1">//交易失败</span>
+</span><span class='line'>                <span class="p">[</span><span class="n">self</span> <span class="nl">failedTransaction:</span><span class="n">transaction</span><span class="p">];</span>
+</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">SKPaymentTransactionStateRestored:</span><span class="c1">//已经购买过该商品</span>
+</span><span class='line'>                <span class="p">[</span><span class="n">self</span> <span class="nl">restoreTransaction:</span><span class="n">transaction</span><span class="p">];</span>
+</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">SKPaymentTransactionStatePurchasing:</span>      <span class="c1">//商品添加进列表</span>
+</span><span class='line'>                <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;商品添加进列表&quot;</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">completeTransaction:</span><span class="p">(</span><span class="n">SKPaymentTransaction</span> <span class="o">*</span><span class="p">)</span><span class="nv">transaction</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Your application should implement these two methods.</span>
+</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span> <span class="n">productIdentifier</span> <span class="o">=</span> <span class="n">transaction</span><span class="p">.</span><span class="n">payment</span><span class="p">.</span><span class="n">productIdentifier</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span> <span class="n">receipt</span> <span class="o">=</span> <span class="p">[</span><span class="n">transaction</span><span class="p">.</span><span class="n">transactionReceipt</span> <span class="n">base64EncodedString</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">([</span><span class="n">productIdentifier</span> <span class="n">length</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// 向自己的服务器验证购买凭证</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Remove the transaction from the payment queue.</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">finishTransaction:</span> <span class="n">transaction</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">failedTransaction:</span><span class="p">(</span><span class="n">SKPaymentTransaction</span> <span class="o">*</span><span class="p">)</span><span class="nv">transaction</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">transaction</span><span class="p">.</span><span class="n">error</span><span class="p">.</span><span class="n">code</span> <span class="o">!=</span> <span class="n">SKErrorPaymentCancelled</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;购买失败&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;用户取消交易&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">finishTransaction:</span> <span class="n">transaction</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">restoreTransaction:</span><span class="p">(</span><span class="n">SKPaymentTransaction</span> <span class="o">*</span><span class="p">)</span><span class="nv">transaction</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// 对于已购商品，处理恢复购买的逻辑</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">finishTransaction:</span> <span class="n">transaction</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>8、服务器验证凭证(Optional)。如果购买成功，我们需要将凭证发送到服务器上进行验证。考虑到网络异常情况，iOS端的发送凭证操作应该进行持久化，如果程序退出，崩溃或网络异常，可以恢复重试。</p>
+
+<h3>开发工作(服务端)</h3>
+
+<p>服务端的工作比较简单，分4步：</p>
+
+<ol>
+<li>接收ios端发过来的购买凭证。</li>
+<li>判断凭证是否已经存在或验证过，然后存储该凭证。</li>
+<li>将该凭证发送到苹果的服务器验证，并将验证结果返回给客户端。</li>
+<li>如果需要，修改用户相应的会员权限。</li>
+</ol>
+
+
+<p>考虑到网络异常情况，服务器的验证应该是一个可恢复的队列，如果网络失败了，应该进行重试。</p>
+
+<p>与苹果的验证接口文档在<a href="https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/StoreKitGuide/VerifyingStoreReceipts/VerifyingStoreReceipts.html#//apple_ref/doc/uid/TP40008267-CH104-SW3">这里</a>。简单来说就是将该购买凭证用Base64编码，然后POST给苹果的验证服务器，苹果将验证结果以JSON形式返回。</p>
+
+<p>苹果AppStore线上的购买凭证验证地址是<a href="https://buy.itunes.apple.com/verifyReceipt">https://buy.itunes.apple.com/verifyReceipt</a> ，测试的验证地址是：<a href="https://sandbox.itunes.apple.com/verifyReceipt">https://sandbox.itunes.apple.com/verifyReceipt</a></p>
+
+<h2>参考链接</h2>
+
+<p>以下参考链接详细说明了完成应用内付费开发的步骤：</p>
+
+<ol>
+<li><a href="https://developer.apple.com/appstore/in-app-purchase/index.html">https://developer.apple.com/appstore/in-app-purchase/index.html</a></li>
+<li><a href="http://www.himigame.com/iphone-cocos2d/550.html">http://www.himigame.com/iphone-cocos2d/550.html</a></li>
+<li><a href="http://www.cocoachina.com/iphonedev/sdk/2011/1028/3435.html">http://www.cocoachina.com/iphonedev/sdk/2011/1028/3435.html</a></li>
+<li><a href="http://www.cocoachina.com/newbie/basic/2012/0214/3976.html">http://www.cocoachina.com/newbie/basic/2012/0214/3976.html</a></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用Privoxy做智能代理切换]]></title>
@@ -3524,203 +3839,6 @@ ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTT
 <li>现在就可以在代码中直接用[UIFont fontWithName:@”CustomFontName” size:12]来取得你自定义的字体了。</li>
 </ol>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[xcode4使用技巧]]></title>
-    <link href="http://blog.devtang.com/blog/2012/03/10/xcode4-tips/"/>
-    <updated>2012-03-10T20:42:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/03/10/xcode4-tips</id>
-    <content type="html"><![CDATA[<p>使用xcode4也有一段时间了，今天整理了一下xcode4的一些使用技巧，在这里分享给大家。</p>
-
-<!-- more -->
-
-
-<h3>设置作者</h3>
-
-<p>这里所指的作者就是每个源文件头部注释中的“Created by xxx&#8221;中的作者名。
-我很长一段时间不知道应该在哪里设置它。后来终于找到了。</p>
-
-<p>原来这个作者名是来自”地址薄“这个程序中”我“的姓名。在sportlight中输入”地“即可找到这个程序。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/xcode-set-author-name.jpg"></p>
-
-<h3>设置公司（组织）</h3>
-
-<p>这里所指的公司也是指源文件头部注释中的”Copyright (c) xxx&#8221;中的公司名字。这个相对好找一些。
-点击工程，在右边的工具栏中就可以找到&#8221;Organization&#8221;这一项。</p>
-
-<h3>模拟器</h3>
-
-<p>iOS模拟器也算是xcode的一部分。在刚开始使用时，不知道如何把照片导入到模拟器中。后来在网上搜到了方法：
-将照片拖到iOS模拟器中，iOS模拟器会用safari打开该图片，然后在safari中长按该图，就会弹出菜单，选择“保存到相册”即可。</p>
-
-<p>另外，模拟器也有一些快捷键，我常用的是 cmd + 左/右 来调整Orientation。另外，如果是iPad模拟器，可以按cmd + 1使其变成100%的大小。还有cmd + s可以将模拟器截图。</p>
-
-<h3>获得模拟器中的程序数据</h3>
-
-<p>其实模拟器中的程序存储在：/yourHome/Library/Application Support/iPhone Simulator/5.0/Applications 目录下，你可以直接进去找。</p>
-
-<p>另外，如果要删除所安装的程序，也可以直接将Applications目录下的文件夹删掉，这比在模拟器中删更方便。</p>
-
-<h3>安装旧版本的模拟器</h3>
-
-<p>在xcode中，只会带最新版的模拟器，虽然有些模拟器可以在设置里面下载，但是更老的版本就无法在xcode的设置页下载了。</p>
-
-<p>这个问题的解决办法是把以前的xcode和对应的模拟器装上，然后将模拟器复制或链接到最新的xcode目录下，代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs
-</span><span class='line'>sudo ln -s /Developer-3.2.5/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk .
-</span><span class='line'>sudo ln -s /Developer-3.2.5/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk .
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>以前的xcode可以从<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201191323919494/">以下地址</a>下载到(需要开发者账号),建议大家每次安装新xcode的时候，把模拟器都备份一下，安装完再恢复回来，这样就不用这么每次折腾了。</p>
-
-<h3>Behaviors</h3>
-
-<p>Behaviors是设置页面里的一栏，通过cmd + 逗号可以调出设置页面看到。
-在Behaviors里可以设置各种行为发生时，界面应该做何改变。</p>
-
-<p>例如，如果我们要每次运行结束后，就关闭Console界面，可以在Behaviors下面的&#8221;Run completes&#8221;一栏的右边，选中&#8221;Hide debugger&#8221;一项即可（如下图红色标识所示)。</p>
-
-<p>另外，我们也可以点击左下角的“+”来增加一些自定义的行为，例如我就增加了2个行为，分别用于把导航栏和工具栏同时隐藏和显示（如下图蓝色标识所示）。Behavior的扩展性很强，你甚至可以定义执行一些脚本，所以可以做的事情很多。</p>
-
-<p><img src="http://blog.devtang.com/images/xcode-behaviors.jpg"></p>
-
-<h3>快捷键</h3>
-
-<p>如果能慢慢熟悉一些快捷键，对于提高工作效率是有很大帮助的。虽然设置页面有所有的快键键列表，但是估计没人能全部记住并且用上，我个人总结出来常用的快键键如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>cmd + 1              切换成Project Navigator <span class="o">(</span>cmd + 2~7 也可以做相应切换，不过不常用）
-</span><span class='line'>cmd + <span class="nb">shift</span> + 上     在.h和.m文件之间切换
-</span><span class='line'>cmd + enter          切换成 standard editor
-</span><span class='line'>cmd + opt + enter    切换成 assistant editor
-</span><span class='line'>cmd + <span class="nb">shift</span> + y      切换 Console View的显示或隐藏
-</span><span class='line'>cmd + 0              隐藏左边的导航<span class="o">(</span>Navigator<span class="o">)</span>区
-</span><span class='line'>cmd + opt + 0        隐藏右边的工具<span class="o">(</span>Utility<span class="o">)</span>区
-</span><span class='line'>ctrl  + 6            列出当前文件中所有的方法，可以输入关键词来过滤。这个相当赞，可以快速定位到想编辑的方法。
-</span><span class='line'>                     我直接把这个快键盘改成了ctrl+o，这样按起来更顺手。
-</span><span class='line'>cmd + ctrl + 左/右   到上/下一次编辑的位置，在2个编辑位置跳转的时候很方便。
-</span><span class='line'>cmd + opt + j        跳转到文件过滤区
-</span><span class='line'>cmd + <span class="nb">shift</span> + f      在工程中查找
-</span><span class='line'>cmd + r              运行，如果选上直接kill掉上次进程的话，每次直接一按就可以重新运行了
-</span><span class='line'>cmd + b              编译工程
-</span><span class='line'>cmd + <span class="nb">shift</span> + k      清空编译好的文件
-</span><span class='line'>cmd + .              结束本次调试
-</span><span class='line'>ESC                  调出代码补全
-</span><span class='line'>cmd + 单击           查看该方法的实现
-</span><span class='line'>opt + 单击           查看该方法的文档
-</span><span class='line'>cmd + t              新建一个tab栏
-</span><span class='line'>cmd + <span class="nb">shift</span> + <span class="o">[</span>      在tab栏之间切换
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Snippets</h3>
-
-<p>代码片段(Snippets)是xcode4新增的功能。用于管理一些常用的代码段，在需要时通过代码补全自动生成出来，可以提高工作效率。</p>
-
-<p>关于这个，可以参见我的另一篇文章：<a href="http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/">http://blog.devtang.com/blog/2012/02/04/use-git-to-manage-code-snippets/</a></p>
-
-<h3>下载xcode</h3>
-
-<p>从Xcode4.3开始，苹果将Xcode的下载放到了Lion的mac app store中。郁闷的是，中国区连接app store下载的速度相当慢，在试了一些方法（例如设置hosts,设置dns）之后，我发现最好的办法如下：</p>
-
-<p>用开发者账号登陆：<a href="https://developer.apple.com/downloads/index.action">https://developer.apple.com/downloads/index.action</a>，然后点击下载获得下载地址，然后将地址复制到mac版迅雷中，用迅雷下载，速度可以达到200K左右。</p>
-
-<p>希望这些技巧能提高你的工作效率，祝玩得开心:)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[用Git进行协同开发]]></title>
-    <link href="http://blog.devtang.com/blog/2012/02/29/collaboration-with-git/"/>
-    <updated>2012-02-29T19:08:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/02/29/collaboration-with-git</id>
-    <content type="html"><![CDATA[<h2>问题场景描述</h2>
-
-<p>常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。</p>
-
-<p>对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。</p>
-
-<p>在这种方式下，大家各自写自己的代码，提交到svn上，然后用svn up获得对方的代码。在调试问题的时候，大家可能不停地更新代码，然后让对方用svn up来更新。最终，虽然开发能够顺利进行，但是svn上会积累大量调试中的代码历史。所以，这样把svn当作代码中转站是一个很山寨的行为。</p>
-
-<p>在开发<a href="http://note.youdao.com">有道云笔记</a>新的<a href="http://itunes.apple.com/cn/app/id483995181">iPad版</a>时，我和前端同事zyc尝试用git进行了协同开发。在这里把具体方案分享给大家，欢迎大家讨论。</p>
-
-<!--More-->
-
-
-<h2>Git相关协议介绍</h2>
-
-<p>Git对于你本机的代码项目，允许用很方便的方式进行非授权的只读访问,<a href="http://progit.org/book/zh/ch4-9.html">相关介绍链接</a>。简单来说，就是可以用Git自带的Git daemon命令在本机的9418端口启动一个守护进程，然后其它机器就可以以只读方式访问你开放出来的项目代码。</p>
-
-<p>具体步骤如下：</p>
-
-<ul>
-<li>在你的Git工程下新建一个名为git-daemon-export-ok的文件放到.git目录下，表明该工程允许非授权访问。示例代码如下：</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /path/to/project.git
-</span><span class='line'>touch git-daemon-export-ok
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>执行git daemon命令，设置你要Export出的项目目录的父目录，例如工程的代码地址是：/opt/git/project的话，则示例代码如下：</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git daemon --reuseaddr --base-path<span class="o">=</span>/opt/git/ /opt/git/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>告知对方你的机器的IP，然后在对方的机器，用下列命令即可检出你的代码：</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git checkout git://your_ip_address/project
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>如果对方有更新，只需要 git pull 一下。</li>
-</ul>
-
-
-<h2>协作</h2>
-
-<p>对于这种基于Git的协作，我们可以在本地随意的提交代码，让对方用git pull更新。当开发完成，需要push到公共仓库的时候，再用git rebase -i将本地的提交进行清理即可。并且由于大家都是在机器间互拷，不依赖svn公共服务器，更新代码的速度也要快得多。</p>
 ]]></content>
   </entry>
   

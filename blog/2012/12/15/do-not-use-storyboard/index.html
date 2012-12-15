@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>关于iOS测试机个数上限的详细规则 - 唐巧的技术博客</title>
+  <title>StoryBoard--看上去很美 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 苹果的官网文档。 规则 我总结出来的规则如下（附上原文以便对应）： &hellip;">
+  <meta name="description" content="介绍 StoryBoard是苹果在2011年的WWDC Session 309《Introducing Interface Builder Storyboarding》中介绍的Interface Builder的新功能。其基本想法是将原本的xib进行升级，引入一个容器用于管理多个xib文件， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/12/15/do-not-use-storyboard">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,7 +77,7 @@
   
   <header>
     
-      <h1 class="entry-title">关于iOS测试机个数上限的详细规则</h1>
+      <h1 class="entry-title">StoryBoard--看上去很美</h1>
     
     
       <p class="meta">
@@ -93,64 +93,50 @@
   
 
 
-<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+<time datetime="2012-12-15T10:21:00+08:00" pubdate data-updated="true">Dec 15<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>前言</h2>
+<div class="entry-content"><h2>介绍</h2>
 
-<p>公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
+<p>StoryBoard是苹果在2011年的WWDC Session 309《Introducing Interface Builder Storyboarding》中介绍的Interface Builder的新功能。其基本想法是将原本的xib进行升级，引入一个容器用于管理多个xib文件，并且这个容器可以通过拖拽设置xib之间的界面跳转。而这个容器就是被苹果称做的StoryBoard。下图是一个Storyboard的截图。</p>
+
+<p><img src="/images/enbrace-ios5-1.png"></p>
 
 <!-- more -->
 
 
-<h2>规则</h2>
+<h2>优点</h2>
 
-<p>我总结出来的规则如下（附上原文以便对应）：</p>
+<p>总体上来说，Storyboard有以下好处：</p>
 
-<ul>
-<li>每一个开发者membership year,只能有100次增加设备的名额。如果你增加一个设备,之后又将该设备删除,并不会将用掉的名额恢复.</li>
-</ul>
-
-
-<p>You can register up to 100 devices per year for development purposes. Any devices added, then later removed, still count towards your maximum number of registered devices per year.</p>
-
-<ul>
-<li>在每一个开发者membership year开始的时候,Team Agent和Admin角色可以选择删掉一些设备来恢复资格, 也可以清空所有设备来恢复到最多100次设备的名额。这个操作在Team Agent和Admin在一次新的membership year开始后即可使用，在使用时，需要注意，先将需要删除的设备删掉，然后才能添加需要新增的设备。一旦开始增加新设备，删除设备以恢复名额的功能将不再可用。</li>
-</ul>
+<ol>
+<li>你可以从storyboard中很方便地梳理出所有View Controller的界面间的调用关系。这一点对于新加入项目组的开发同事来说，比较友好。</li>
+<li>使用Storyboard可以使用Table View Controller的Static Cell功能。对于开发一些Cell不多，但每个Cell都不一样的列表类设置界面会比较方便。</li>
+<li>通过实现 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 方法，每个View Controller的跳转逻辑都聚集在一处，这方便我们统一管理界面跳转和传递数据。</li>
+<li>Storyboard可以方便将一些常用功能模块化和复用。例如WWDC2011年介绍Storyboard的视频就将微博分享功能模块化成一个单独的Storyboard。我在开发App时，也将例如通过第三方注册登录模块做成一个单独的Storyboard，便于以后复用。</li>
+</ol>
 
 
-<p>At the start of a new membership year, Team Agents and Admins can remove devices and restore the available device count for their development team to 100 devices.</p>
+<h2>缺点</h2>
 
-<p>When Team Agents or Admins first sign in to the iOS Provisioning Portal at the start of a new membership year, they will be presented with the option to remove devices and restore the device count for those removed devices.</p>
+<p>我在新项目使用Storyboard时，却发现它只是看上去很美，真正用起来，却有很多问题，我发现的问题有：</p>
 
-<p>Important Note: At the start of your membership year, make sure to remove all devices you no longer use for development prior to adding any new devices.</p>
+<ol>
+<li>首先它和xib一样，对版本管理是灾难。因为是它实际上的多个xib的集合，所以更容易让多人编辑产生冲突。苹果对storyboard的设计也不好，基本上你只要打开，什么都不做，这个文件就会被更改，所以冲突几乎是不可避免的&#8212;除非你不打开，实在不小心打开看了，需要在提交前回退成服务器上的版本。</li>
+<li>Storyboard提供的 Static cell特性只适合于UITableViewController的子类。我很多时候的用法是一个TableView嵌套在另一个UIView中，static cell就不能用了。</li>
+<li>segue的概念对于开发来说并不省事，如果是用程序内部trigger一个segue，那么需要在另一个回调的地方设置dest view controller的参数信息。</li>
+</ol>
 
-<ul>
-<li>在以后整个membership year中，删除设备不会增加新的名额。</li>
-</ul>
-
-
-<p>Removing devices during your membership year will not open these slots to add new devices.</p>
-
-<h2>举例</h2>
-
-<p>直接看规则比较晦涩，举个例子：</p>
-
-<p>假如第一年，你增加了70个设备，同时删除了10个设备，这个时候，虽然你的设备数是60，但是可用的增加测试机的名额却只有30个了。</p>
-
-<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 - 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
 
 <h2>总结</h2>
 
-<p>所以说，不管怎么样，你的账号下的可用测试设备始终不会超过100个。不会象有些人想的那样，每过一年名额就直接变成100了。另外，每年删除设备以恢复名额的机会只有开始的时候，以后删除设备也不会恢复名额。</p>
+<p>我仔细比较权衡了一下优缺点，最主要的问题是我的版本管理在多人协作开发时将陷入灾难，而这是完全不能接受的。而最主要的好处就是，你可以在一个类似白板的地方“一揽众山小“一样了解所有界面之间的切换关系，但这个有那么重要吗？我自已其实很清楚跳转逻辑，这个只是对新同事了解项目代码时有帮助，那我花一点时间直接给他讲讲画画不就搞定的吗？为了这点好处而让版本管理无法使用，是完全不能接受的。</p>
 
-<p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。</p>
-
-<p>具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。在沟通完成后，苹果就可以立即帮助你状态修改到“可删除设备来增加测试设备名额”。这样，你就可以选择性的删除一些不需要的设备来释放一些名额了。</p>
+<p>所以最终我决定放弃使用StoryBoard了，这个“看上去很美”的功能有着不可接受的缺陷。现在看来，它仅适用于做一些Demo的开发。苹果一直没有处理好这类可视化界面设计功能的版本管理，象xib文件，虽然是xml格式的，但如果多人编辑了，合并起来也会很麻烦。所以业界好多同行都不用xib,直接用纯代码来写界面，虽然稍慢一点儿，但是工程很干净，也基本没有了多人协作的版本冲突问题。</p>
 </div>
 
 
@@ -173,7 +159,7 @@
   
 
 
-<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+<time datetime="2012-12-15T10:21:00+08:00" pubdate data-updated="true">Dec 15<span>th</span>, 2012</time>
       
 
 <span class="categories">
@@ -232,10 +218,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/" title="Previous Post: 关于UIWebView和PhoneGap的总结">&laquo; 关于UIWebView和PhoneGap的总结</a>
+        <a class="basic-alignment left" href="/blog/2012/12/09/iap-crack-issue/" title="Previous Post: 关于IAP的破解">&laquo; 关于IAP的破解</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/04/22/use-fmdb/" title="next Post: 在iOS开发中使用FMDB">在iOS开发中使用FMDB &raquo;</a>
       
     </p>
   </footer>

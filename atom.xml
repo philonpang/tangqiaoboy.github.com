@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-12-15T11:09:24+08:00</updated>
+  <updated>2012-12-23T20:01:49+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,219 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在iOS中使用ZXing库]]></title>
+    <link href="http://blog.devtang.com/blog/2012/12/23/use-zxing-library/"/>
+    <updated>2012-12-23T17:03:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2012/12/23/use-zxing-library</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/zxing-icon.png"></p>
+
+<h2>前言</h2>
+
+<p><a href="https://code.google.com/p/zxing/">ZXing</a>(<a href="https://github.com/zxing/zxing">Github镜像地址</a>)是一个开源的条码生成和扫描库（开源协议为<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache2.0</a>)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。</p>
+
+<p>我上周在iOS项目开发中使用了ZXing的扫描二维码功能。在此总结一下如何将ZXing集成到已有的iOS工程中，分享给大家。</p>
+
+<!-- more -->
+
+
+<h2>集成步骤</h2>
+
+<p>首先去Google Code或Github将ZXing的代码下载下来，整个工程比较大，我们只需要其中涉及iOS的部分，所以最好做一些裁剪。简单来说，我们只需要保留cpp和iphone这2个文件夹，其余的全部删掉。如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/zxing-step-1.png"></p>
+
+<p>接着我们继续裁剪，对于cpp这个目录，只保留cpp/core/src/zxing下面的内容，其余内容也可以删掉了。但是整个目录结构必须保持原样。裁剪完后，整个目录结构如下所示：</p>
+
+<p><img src="http://blog.devtang.com/images/zxing-step-2.png"></p>
+
+<p>接下来，我们把裁剪后的zxing目录整个移动到我们的iOS项目的目录下，并且把上图中可以看到的ZXingWidget.xcodeproj文件拖动到我们的iOS工程中。</p>
+
+<p>下一步，我们需要设置ZXing项目和我们原本的iOS项目之间的依赖关系。在我们的iOS项目的设置中，点击build phases tab，然后增加 Target Dependencies 和 Link binary，并且增加这些framework依赖：</p>
+
+<pre><code>a. AVFoundation
+b. AudioToolbox
+c. CoreVideo
+d. CoreMedia
+e. libiconv
+f. AddressBook
+g. AddressBookUI
+</code></pre>
+
+<p>完成之后如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/zxing-step-3.png"></p>
+
+<p>最后一步，在设置中增加如下2个header search path:</p>
+
+<ul>
+<li>./zxing/iphone/ZXingWidget/Classes</li>
+<li>./zxing/cpp/core/src</li>
+</ul>
+
+
+<p>需要注意的是，第一个path要设置成循环查找子目录，而第二个不循环查找，如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/zxing-step-4.png"></p>
+
+<p>恭喜你，完成这步之后，你就已经完成ZXing库的集成了。下面谈谈如何使用ZXing库来做二维码识别。</p>
+
+<h2>二维码识别</h2>
+
+<p>ZXing的iOS版本提供2种方法来做二维码识别功能，第一种方法比较简单，第二种方法比较复杂。我在做Demo时使用了第一种方法，做真正项目开发的时候使用了第二种方法，所以都给大家介绍一下。</p>
+
+<h3>使用方法一</h3>
+
+<p>ZXing直接提供了一个扫描二维码的View Controller，即ZXingWidgetController。在需要使用的界面代码中，加入文件依赖：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;ZXingWidgetController.h&gt;</span>
+</span><span class='line'><span class="cp">#import &lt;QRCodeReader.h&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+然后在需要扫描的时候，调用如下代码即可：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">scanPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">ZXingWidgetController</span> <span class="o">*</span><span class="n">widController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ZXingWidgetController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithDelegate:</span><span class="n">self</span> <span class="nl">showCancel:</span><span class="n">YES</span> <span class="nl">OneDMode:</span><span class="n">NO</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">NSMutableSet</span> <span class="o">*</span><span class="n">readers</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableSet</span> <span class="n">alloc</span> <span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">QRCodeReader</span><span class="o">*</span> <span class="n">qrcodeReader</span> <span class="o">=</span> <span class="p">[[</span><span class="n">QRCodeReader</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">readers</span> <span class="nl">addObject:</span><span class="n">qrcodeReader</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">qrcodeReader</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">widController</span><span class="p">.</span><span class="n">readers</span> <span class="o">=</span> <span class="n">readers</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">readers</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span> <span class="nl">presentModalViewController:</span><span class="n">widController</span> <span class="nl">animated:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">widController</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在ZXing扫描有结果时，会调用如下回调函数：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@protocol</span> <span class="nc">ZXingDelegate</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">zxingController:</span><span class="p">(</span><span class="n">ZXingWidgetController</span><span class="o">*</span><span class="p">)</span><span class="nv">controller</span> <span class="nf">didScanResult:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">result</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">zxingControllerDidCancel:</span><span class="p">(</span><span class="n">ZXingWidgetController</span><span class="o">*</span><span class="p">)</span><span class="nv">controller</span><span class="p">;</span>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>使用方法二</h3>
+
+<p>方法二与方法一的区别就相当于AVFoundation和UIImagePickerController的区别一样。简单来说，就是使用方法二比方法一更加麻烦，但是获得的可定制性更高。</p>
+
+<p>使用方法二时，你需要自己用AVFoundation获得Camera返回的实时图象，然后转成UIImage，最后传给ZXing的Decoder类完成二维码的识别。由于使用AVFoundation涉及的代码略多，我写的示意代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;Decoder.h&quot;</span>
+</span><span class='line'><span class="cp">#import &quot;TwoDDecoderResult.h&quot;</span>
+</span><span class='line'><span class="cp">#import &quot;QRCodeReader.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// setup QR reader</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">qrReader</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableSet</span> <span class="n">alloc</span> <span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">QRCodeReader</span><span class="o">*</span> <span class="n">qrcodeReader</span> <span class="o">=</span> <span class="p">[[</span><span class="n">QRCodeReader</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">qrReader</span> <span class="nl">addObject:</span><span class="n">qrcodeReader</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">scanningQR</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">STEP_QR</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// AVFoundation的回调函数</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">captureOutput:</span><span class="p">(</span><span class="n">AVCaptureOutput</span> <span class="o">*</span><span class="p">)</span><span class="nv">captureOutput</span> <span class="nf">didOutputSampleBuffer:</span><span class="p">(</span><span class="n">CMSampleBufferRef</span><span class="p">)</span><span class="nv">sampleBuffer</span> <span class="nf">fromConnection:</span><span class="p">(</span><span class="n">AVCaptureConnection</span> <span class="o">*</span><span class="p">)</span><span class="nv">connection</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// 第一步，将sampleBuffer转成UIImage</span>
+</span><span class='line'>  <span class="n">UIImage</span> <span class="o">*</span><span class="n">image</span><span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">getCaptureImage:</span><span class="n">sampleBuffer</span><span class="p">];</span>
+</span><span class='line'>  <span class="c1">// 第二步，用Decoder识别图象</span>
+</span><span class='line'>  <span class="n">Decoder</span> <span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Decoder</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">d</span><span class="p">.</span><span class="n">readers</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">qrReader</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">d</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">scanningQR</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="nl">decodeImage:</span><span class="n">image</span><span class="p">]</span> <span class="o">==</span> <span class="n">YES</span> <span class="o">?</span> <span class="n">NO</span> <span class="o">:</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ZXing的Decoder类提供了以下回调函数获得识别结果：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@protocol</span> <span class="nc">DecoderDelegate</span><span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+</span><span class='line'><span class="err">@</span><span class="n">optional</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="n">decoder</span> <span class="nl">willDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">image</span> <span class="nl">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">subset</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">didDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">image</span> <span class="nf">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">subset</span> <span class="nf">withResult:</span><span class="p">(</span><span class="n">TwoDDecoderResult</span> <span class="o">*</span><span class="p">)</span><span class="nv">result</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;result = %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">result</span> <span class="n">text</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">failedToDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">image</span> <span class="nf">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">subset</span> <span class="nf">reason:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">reason</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">foundPossibleResultPoint:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">point</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Trouble Shoot &amp; Tips</h2>
+
+<p>我在使用中遇到了一些问题，主要是编译的问题。</p>
+
+<ol>
+<li>一个是找不到 <iostream> 头文件。解决方法：把用到ZXing的源文件扩展名由.m改成.mm。</li>
+<li>报错：Undefined symbols for architecture armv7s，<a href="http://stackoverflow.com/questions/12968369/undefined-symbols-for-architecture-armv7-when-using-zxing-library-in-xcode-4-5">解决方法</a>：把ZXingWidget的一个build target参数：&#8221;Build Active Architecture Only&#8221; 修改成 &#8220;NO&#8221;.</li>
+<li>报错：No such file or directory，出现该错误可能是你的Header Search Path写错了，或者就是你的zxing库的目录结构不是我上面强调的，好好检查一下吧。</li>
+<li>如果你需要生成二维码做测试，推荐一个不错的在线生成二维码的网站：<a href="http://cli.im/">http://cli.im/</a></li>
+</ol>
+
+
+<h2>ZXing和OpenCV的兼容问题</h2>
+
+<p>ZXing 2.1 和OpenCV 2.4.3的iOS库有一些兼容问题，他们对C++标准库的版本和编译器版本都有一些需求，造成满足一方了，另一方就编译不通过了。Stackoverflow上有人终于找到了一个让它们和平共处的方法，但是只适用于iOS5.0以上版本。正好我们的App只支持iOS5.0+，所以就搞定了。所以如果你也正好遇到这个问题，可以参考<a href="http://stackoverflow.com/questions/13498581/opencv-zxing-incompatibility-on-ios">这个贴子</a>。</p>
+
+<p>希望本文对大家有用，Have Fun~</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[StoryBoard--看上去很美]]></title>
@@ -3465,209 +3678,6 @@ ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTT
 <p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。</p>
 
 <p>具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。在沟通完成后，苹果就可以立即帮助你状态修改到“可删除设备来增加测试设备名额”。这样，你就可以选择性的删除一些不需要的设备来释放一些名额了。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[关于UIWebView和PhoneGap的总结]]></title>
-    <link href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/"/>
-    <updated>2012-03-24T20:19:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>今天参加了Adobe和CSDN组织的一个关于<a href="http://hui.csdn.net/MeetingInfo.aspx?mid=99">PhoneGap的开发讲座</a> ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。</p>
-
-<p>正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容，所以也需要做js与native代码相互调用的事情。所以在这儿顺便总结一下UIWebView在使用上的细节，以及谈谈我对PhoneGap的看法。</p>
-
-<!-- more -->
-
-
-<h2>机制</h2>
-
-<p>首先我们需要让UIWebView加载本地HTML。使用如下代码完成：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">path</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="n">bundlePath</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSURL</span> <span class="o">*</span> <span class="n">baseURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">fileURLWithPath:</span><span class="n">path</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">htmlFile</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource:</span><span class="s">@&quot;index&quot;</span> <span class="nl">ofType:</span><span class="s">@&quot;html&quot;</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">htmlString</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithContentsOfFile:</span><span class="n">htmlFile</span> <span class="nl">encoding:</span><span class="p">(</span><span class="n">NSUTF8StringEncoding</span><span class="p">)</span> <span class="nl">error:</span><span class="nb">nil</span><span class="p">];</span>
-</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">webView</span> <span class="nl">loadHTMLString:</span><span class="n">htmlString</span> <span class="nl">baseURL:</span><span class="n">baseURL</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>接着，我们需要让js能够调用native端。iOS SDK并没有原生提供js调用native代码的API。但是UIWebView的一个delegate方法使我们可以做到让js需要调用时，通知native。在native执行完相应调用后，可以用stringByEvaluatingJavaScriptFromString方法，将执行结果返回给js。这样，就实现了js与native代码的相互调用。</p>
-
-<p>以下是PhoneGap相关调用的示例代码：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// Objective-C语言</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">webView:</span><span class="p">(</span><span class="n">UIWebView</span> <span class="o">*</span><span class="p">)</span><span class="nv">webView</span>
-</span><span class='line'>    <span class="nf">shouldStartLoadWithRequest:</span><span class="p">(</span><span class="n">NSURLRequest</span> <span class="o">*</span><span class="p">)</span><span class="nv">request</span>
-</span><span class='line'>    <span class="nf">navigationType:</span><span class="p">(</span><span class="n">UIWebViewNavigationType</span><span class="p">)</span><span class="nv">navigationType</span> <span class="p">{</span>
-</span><span class='line'>       <span class="n">NSURL</span> <span class="o">*</span> <span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">request</span> <span class="n">URL</span><span class="p">];</span>
-</span><span class='line'>       <span class="k">if</span> <span class="p">([[</span><span class="n">url</span> <span class="n">scheme</span><span class="p">]</span> <span class="nl">isEqualToString:</span><span class="s">@&quot;gap&quot;</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>            <span class="c1">// 在这里做js调native的事情</span>
-</span><span class='line'>            <span class="c1">// ....</span>
-</span><span class='line'>            <span class="c1">// 做完之后用如下方法调回js</span>
-</span><span class='line'>            <span class="p">[</span><span class="n">webView</span> <span class="nl">stringByEvaluatingJavaScriptFromString:</span><span class="s">@&quot;alert(&#39;done&#39;)&quot;</span><span class="p">];</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">YES</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>具体让js通知native的方法是让js发起一次特殊的网络请求。这里，我们和PhoneGap都是使用加载一个隐藏的iframe来实现的，通过将iframe的src指定为一个特殊的URL，实现在delegate方法中截获这次请求。</p>
-
-<p>以下是PhoneGap相关调用的示例代码：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// Javascript语言</span>
-</span><span class='line'><span class="c1">// 通知iPhone UIWebView 加载url对应的资源</span>
-</span><span class='line'><span class="c1">// url的格式为: gap:something</span>
-</span><span class='line'><span class="n">function</span> <span class="nf">loadURL</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">var</span> <span class="n">iFrame</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">iFrame</span> <span class="o">=</span> <span class="n">document</span><span class="p">.</span><span class="n">createElement</span><span class="p">(</span><span class="s">&quot;iframe&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">iFrame</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">iFrame</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&quot;style&quot;</span><span class="p">,</span> <span class="s">&quot;display:none;&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">iFrame</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&quot;height&quot;</span><span class="p">,</span> <span class="s">&quot;0px&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">iFrame</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&quot;width&quot;</span><span class="p">,</span> <span class="s">&quot;0px&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">iFrame</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&quot;frameborder&quot;</span><span class="p">,</span> <span class="s">&quot;0&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">document</span><span class="p">.</span><span class="n">body</span><span class="p">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">iFrame</span><span class="p">);</span>
-</span><span class='line'>    <span class="c1">// 发起请求后这个iFrame就没用了，所以把它从dom上移除掉</span>
-</span><span class='line'>    <span class="n">iFrame</span><span class="p">.</span><span class="n">parentNode</span><span class="p">.</span><span class="n">removeChild</span><span class="p">(</span><span class="n">iFrame</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">iFrame</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在这里，可能有些人说，通过改document.location也可以达到相同的效果。关于这个，我和zyc专门试过，一般情况下，改document.location是可以，但是改document.location有一个很严重的问题，就是如果我们连续2个js调native，连续2次改document.location的话，在native的delegate方法中，只能截获后面那次请求，前一次请求由于很快被替换掉，所以被忽略掉了。</p>
-
-<p>我也专门去Github上查找相关的开源代码，它们都是用过iframe来实现调用的，例如这个：<a href="https://github.com/marcuswestin/WebViewJavascriptBridge">https://github.com/marcuswestin/WebViewJavascriptBridge</a></p>
-
-<p>关于这个，我也做了一个Demo来简单示例，地址如下：<a href="https://github.com/tangqiaoboy/UIWebViewSample">https://github.com/tangqiaoboy/UIWebViewSample</a></p>
-
-<h2>参数的传递</h2>
-
-<p>以上的示例代码为了讲清楚机制，所以只是示例了最简单的相互调用。但实际上js和native相互调用时，常常需要传递参数。</p>
-
-<p>例如，有道云笔记iPad版用UIWebView显示笔记的内容，当用户点击了笔记中的附件，这个时候，js需要通知native到后台下载这个笔记附件，同时通知js当前的下载进度。对于这个需求，js层获得用户点击事件后，就需要把当前点击的附件的ID传递给native，这样native才能知道下载哪个附件。</p>
-
-<p>参数传递最简单的方式是将参数作为url的一部分，放到iFrame的src里面。这样UIWebView通过截取分析url后面的内容即可获得参数。但是这样的问题是，该方法只能传递简单的参数信息，如果参数是一个很复杂的对象，那么这个url的编解码将会很复杂。对此，我们的有道云笔记和PhoneGap采用了不同的技术方案。</p>
-
-<ul>
-<li>我们的技术方案是将参数以JSON的形式传递，但是因为要附加在url之后，所以我们将JSON进行了Base64编码，以保证url中不会出现一些非法的字符。</li>
-<li>PhoneGap的技术方案是，也是用JSON传递参数，但是将JSON放在UIWebView中的一个全局数组中，UIWebView当需要读取参数时，通过读取这个全局数组来获得相应的参数。</li>
-</ul>
-
-
-<p>相比之下，应该说PhoneGap的方案更加全面，适用于多种场景。而我们的方案简洁高效，满足了我们自己产品的需求。</p>
-
-<h2>同步和异步</h2>
-
-<p>因为iOS SDK没有天生支持js和native相互调用，大家的技术方案都是自己实现的一套调用机制，所以这里面有同步异步的问题。细心的同学就能发现，js调用native是通过插入一个iframe，这个iframe插入完了就完了，执行的结果需要native另外用stringByEvaluatingJavaScriptFromString方法通知js，所以这是一个异步的调用。</p>
-
-<p>而stringByEvaluatingJavaScriptFromString方法本身会直接返回一个NSString类型的执行结果，所以这显然是一个同步调用。</p>
-
-<p>所以js call native是异步，native call js是异步。在处理一些逻辑的时候，不可避免需要考虑这个特点。</p>
-
-<p>这里顺便说一个android，其实在android开发中，js调native是同步的，但是PhoneGap为了将自己做成一个跨平台的框架，所以在android的js call native的native端，用 new Thread新建了一个执行线程，这样把android的js call native也变成了异步调用。</p>
-
-<h2>UIWebView的问题</h2>
-
-<h3>线程阻塞问题</h3>
-
-<p>我们在开发中发现，当在native层调用stringByEvaluatingJavaScriptFromString方法时，可能由于javascript是单线程的原因，会阻塞原有js代码的执行。这里我们的解决办法是在js端用defer将iframe的插入延后执行。</p>
-
-<h3>主线程的问题</h3>
-
-<p>UIWebView的stringByEvaluatingJavaScriptFromString方法必须是主线程中执行，而主线程的执行时间过长就会block UI的更新。所以我们应该尽量让stringByEvaluatingJavaScriptFromString方法执行的时间短。</p>
-
-<p>有道云笔记在保存的时候，需要调用js获得笔记的完整html内容，这个时候如果笔记内容很复杂，就会执行很长一段时间，而因为这个操作必须是主线程执行，所以我们显示“正在保存”的UIAlertView完全无法正常显示，整个UI界面完全卡住了。在新的编辑器里，我们更新了获得html内容的代码，才将这个问题解决。</p>
-
-<h3>键盘控制</h3>
-
-<p>做iOS开发的都知道，当我们需要键盘显示在某个控件上时，可以调用[obj becomeFirstResponder]方法来让键盘出来，并且光标输入焦点出现在该控件上。</p>
-
-<p>但是这个方法对于UIWebView并不可用。也就是说，我们无法通过程序控制让光标输入焦点出现在UIWebView上。
-关于这个问题，我在stackoverflow上专门<a href="http://stackoverflow.com/questions/9835956/show-keyboard-in-contenteditable-uiwebview-programmatically">问了一下</a>，还是没有得到很好的解决办法。</p>
-
-<h3>CommonJS规范</h3>
-
-<p>commonJS是一个模块块加载的规范。而AMD是该规范的一个草案，CommonJS AMD规范描述了模块化的定义，依赖关系，引用关系以及加载机制，其规范原文在<a href="http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition">这里</a> 。它被requireJS，NodeJs，Dojo，jQuery等开源框架广泛使用。<a href="http://blog.csdn.net/dojotoolkit/article/details/6076668">这里</a>还有一篇不错的中文介绍文章。</p>
-
-<p>AMD规范需要用目录层级当作包层次，这一点就象java一样。之前我以为iOS打包后的ipa资源文件中不能有资源目录层级关系，今天在会上问了一下，原来是我自己弄错了。如果需要将目录层级带入ipa资源文件中，只需要将该目录拖入工程中，然后选择“Create groups for any added folders”。如下图所示，这样目录层级能够打包到ipa文件中。</p>
-
-<p><img src="http://blog.devtang.com/images/uiwebview-commonjs-folder.jpg"></p>
-
-<h2>调试</h2>
-
-<p>在iOS设备中调试javascript是一件相当苦逼的事情，拿pw的话来说：“一下子回到了ie6时代”。当然，业界也有一些调试工具可以用的。</p>
-
-<p>我们在开发时主要采用的是<a href="http://phonegap.github.com/weinre/">weinre</a>这个框架。用这个框架，可以做一些基本的调试工作，但是它现在功能还没有象pc上的js调试器那么强大，例如它不能下断点，另外如果有js执行错误，它也无法正确的将错误信息报出。它还有一些bug，例如在mac机下，如果你同时连接了有线网和无线网，那么weinre将无法正确地连接到调试页面。</p>
-
-<p>但终究，它是现在业界现存的唯一相对可用的调试工具了。本次的PhoneGap讲座的第一位演讲者董龙飞有一篇博客很好地介绍了weinre的使用，地址是<a href="http://www.donglongfei.com/2012/03/debug-phonegap-app-using-weinre/">这里</a>，推荐感兴趣的同学看看。即使不用PhoneGap，weinre也能给你在移动设备上设计网页带来方便。</p>
-
-<h2>我对PhoneGap的看法</h2>
-
-<p>今天的大会上，2位演讲者把PhoneGap吹得相当牛。但是其实真正用过的人才能知道，PhoneGap还是有相当多的问题的。至少我知道在网易就有一个使用PhoneGap而失败的项目，所以我认为PhoneGap还是有它相当大的局限性的。</p>
-
-<p>我认为PhoneGap有以下3大问题：</p>
-
-<ol>
-<li><p>首先，PhoneGap的编程语言其实是javascript，这对于非前端工作者来说，其实学习起来和学习原生的objective-C或Java编程语言难度差不多，而且由于历史原因，javascript语言本身的问题比其它语言都多。要想精通javascript，相当不易。</p></li>
-<li><p>然后，PhoneGap的目标是方便地创建跨平台的应用。但是其实苹果和google都发布了自己的人机交互指南。有些情况下，苹果的程序和android程序有着不同的交互原则的。象有道云笔记的<a href="http://itunes.apple.com/us/app/id450748070?ls=1&amp;mt=8">iPhone版</a>和<a href="http://m.note.youdao.com/noteproxy/download?todo=download&amp;platform=android&amp;keyfrom=note.web">android版</a>，就有着完全不同的界面和交互。使用PhoneGap就意味着你的程序在UI和交互上，既不象原生的iphone程序，又不象原生的android程序。</p></li>
-<li><p>最后，性能问题。Javascript终究无法和原生的程序比运行效率，这一点在当你要做一些动画效果的时候，就能显现得很明显。</p></li>
-</ol>
-
-
-<p>当然，PhoneGap的优势也很明显，如果你是做图书类，查询类，小工具类应用的话，这些应用UI交互不复杂，也不占用很高的cpu资源，PhoneGap将很好地发挥出它的优势。对于这类应用：</p>
-
-<ol>
-<li><p>你只需要编写一次，则可以同时完成iOS, android, windows phone等版本的开发。</p></li>
-<li><p>如果改动不大，只是内容升级，那它升级时只需要更新相应的js文件，而不需要提交审核，而一般正常提交苹果的app store审核的话，常常需要一周时间。</p></li>
-</ol>
-
-
-<p>所以PhoneGap不是万能的，但也不是没有用，它有它擅长的领域，一切都看你是否合理地使用它。</p>
-
-<p>最后，推荐<a href="http://www.phonegap.cn/">PhoneGap中国网站</a> ，在这里，你可以找到为数不多的中文资料。也推荐本次PhoneGap的演讲者<a href="http://weibo.com/donglongfei">董龙飞的微博</a>， 它是Adobe中国平台技术经理，应该能为你解答不少关于PhoneGap的问题。</p>
-
-<h2>对js的感想</h2>
-
-<p>现在前端工程师相当牛逼啊。前端工程师不但可以写前端网页，还可以用Flex写桌面端程序，可以用nodejs写server端程序，可以用PhoneGap写移动端程序，这一切，都是基于javascript语言的，还有最新出的windows 8，原生支持用js来写Metro程序，世界已经无法阻止前端工程师了。</p>
 ]]></content>
   </entry>
   

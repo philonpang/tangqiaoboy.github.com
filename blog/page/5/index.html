@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>去掉xcode源码末尾的空格 - 唐巧的技术博客</title>
+  <title>唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格, &hellip;">
+  <meta name="description" content="Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2011/12/10/remove-tail-blankspace-in-xcode">
+  <link rel="canonical" href="http://blog.devtang.com/blog/page/5">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -72,12 +73,15 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">去掉xcode源码末尾的空格</h1>
+      <h1 class="entry-title"><a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a></h1>
     
     
       <p class="meta">
@@ -93,123 +97,47 @@
   
 
 
-<time datetime="2011-12-10T17:08:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2011</time>
+<time datetime="2011-08-10T17:32:00+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格,将尾部的空格去掉。可惜在xcode中并没有提供相应的功能。</p>
-
-<!--more-->
-
-
-<p>不过我们可以用命令行来达到这一效果,在工程目录下输入:</p>
+  <div class="entry-content"><p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>find . -name <span class="s2">&quot;*.[hm]&quot;</span> | xargs sed -Ee <span class="s1">&#39;s/ +$//g&#39;</span> -i <span class="s2">&quot;&quot;</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>这样,就可以把源码中行末多出来的空格去掉了,是不是很爽? 可以把这句加到执行post-review的脚本上，这样就可以做到自动去空格了。</p>
 
-<p>顺便说一下，我打算把这些小脚本工具总结出来，放到github上，地址是 <a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>，感兴趣的同学可以把它clone下来。</p>
 
-<p>祝玩得开心～</p>
 
-    <p class="meta">
-      
+  </div>
   
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
-
-      
-
-
-
-
-
-
-
-
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">阅读 &rarr;</a>
+    </footer>
   
 
 
-<time datetime="2011-12-10T17:08:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2011</time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/shell/'>shell</a>, <a class='category' href='/blog/categories/xcode/'>xcode</a>
-  
-</span>
-
-
-    </p>
-    <p class="meta">
-      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
-
-    </p>
-</div>
-
-
-  <footer>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  
-  
-  
-    <style>
-    .flash-video{display:none;}
-</style>
-<!-- JiaThis Button BEGIN -->
-<div id="ckepop">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_tsina">新浪微博</a>
-<a class="jiathis_button_t163">网易微博</a>
-<a class="jiathis_button_tqq">腾讯微博</a>
-<a class="jiathis_button_renren">人人网</a>
-<a class="jiathis_button_douban">豆瓣</a>
-
-<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-    data_track_clickback:true,
-    sm:"t163,tsina,tqq,renren,douban",
-    summary:"",
-    hideMore:false
-}
-</script>
-<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-<br />
-<!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
-<!-- UY END -->
-
-  
-</div>
-
+    <a href="/blog/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2011/11/20/set-uilabel-text-align-top/" title="Previous Post: 让UILabel的文字顶部对齐">&laquo; 让UILabel的文字顶部对齐</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2011/12/27/mac-top/" title="next Post: mac下的top命令">mac下的top命令 &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
+    <a class="next" href="/blog/page/4/">Newer &rarr;</a>
+    
+  </div>
 </div>
-
 <aside class="sidebar">
   
     <section>
@@ -221,7 +149,7 @@ var jiathis_config={
       </li>
     
       <li class="post">
-        <a href="/blog/2012/12/15/do-not-use-storyboard/">StoryBoard--看上去很美</a>
+        <a href="/blog/2012/12/15/do-not-use-storyboard/">StoryBoard&#8211;看上去很美</a>
       </li>
     
       <li class="post">
@@ -290,7 +218,6 @@ var jiathis_config={
 
   
 </aside>
-
 
     </div>
   </div>

@@ -1,0 +1,511 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>在iOS中使用ZXing库 - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="前言 ZXing(Github镜像地址)是一个开源的条码生成和扫描库（开源协议为Apache2.0)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2012/12/23/use-zxing-library">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">所有文章</a></li>
+  <li><a href="/blog/categories/ios/">iOS开发</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">在iOS中使用ZXing库</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-23T17:03:00+08:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="/images/zxing-icon.png"></p>
+
+<h2>前言</h2>
+
+<p><a href="https://code.google.com/p/zxing/">ZXing</a>(<a href="https://github.com/zxing/zxing">Github镜像地址</a>)是一个开源的条码生成和扫描库（开源协议为<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache2.0</a>)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。</p>
+
+<p>我上周在iOS项目开发中使用了ZXing的扫描二维码功能。在此总结一下如何将ZXing集成到已有的iOS工程中，分享给大家。</p>
+
+<!-- more -->
+
+
+<h2>集成步骤</h2>
+
+<p>首先去Google Code或Github将ZXing的代码下载下来，整个工程比较大，我们只需要其中涉及iOS的部分，所以最好做一些裁剪。简单来说，我们只需要保留cpp和iphone这2个文件夹，其余的全部删掉。如下图所示：</p>
+
+<p><img src="/images/zxing-step-1.png"></p>
+
+<p>接着我们继续裁剪，对于cpp这个目录，只保留cpp/core/src/zxing下面的内容，其余内容也可以删掉了。但是整个目录结构必须保持原样。裁剪完后，整个目录结构如下所示：</p>
+
+<p><img src="/images/zxing-step-2.png"></p>
+
+<p>接下来，我们把裁剪后的zxing目录整个移动到我们的iOS项目的目录下，并且把上图中可以看到的ZXingWidget.xcodeproj文件拖动到我们的iOS工程中。</p>
+
+<p>下一步，我们需要设置ZXing项目和我们原本的iOS项目之间的依赖关系。在我们的iOS项目的设置中，点击build phases tab，然后增加 Target Dependencies 和 Link binary，并且增加这些framework依赖：</p>
+
+<pre><code>a. AVFoundation
+b. AudioToolbox
+c. CoreVideo
+d. CoreMedia
+e. libiconv
+f. AddressBook
+g. AddressBookUI
+</code></pre>
+
+<p>完成之后如下图所示：</p>
+
+<p><img src="/images/zxing-step-3.png"></p>
+
+<p>最后一步，在设置中增加如下2个header search path:</p>
+
+<ul>
+<li>./zxing/iphone/ZXingWidget/Classes</li>
+<li>./zxing/cpp/core/src</li>
+</ul>
+
+
+<p>需要注意的是，第一个path要设置成循环查找子目录，而第二个不循环查找，如下图所示：</p>
+
+<p><img src="/images/zxing-step-4.png"></p>
+
+<p>恭喜你，完成这步之后，你就已经完成ZXing库的集成了。下面谈谈如何使用ZXing库来做二维码识别。</p>
+
+<h2>二维码识别</h2>
+
+<p>ZXing的iOS版本提供2种方法来做二维码识别功能，第一种方法比较简单，第二种方法比较复杂。我在做Demo时使用了第一种方法，做真正项目开发的时候使用了第二种方法，所以都给大家介绍一下。</p>
+
+<h3>使用方法一</h3>
+
+<p>ZXing直接提供了一个扫描二维码的View Controller，即ZXingWidgetController。在需要使用的界面代码中，加入文件依赖：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;ZXingWidgetController.h&gt;</span>
+</span><span class='line'><span class="cp">#import &lt;QRCodeReader.h&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+然后在需要扫描的时候，调用如下代码即可：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">scanPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">ZXingWidgetController</span> <span class="o">*</span><span class="n">widController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ZXingWidgetController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithDelegate:</span><span class="n">self</span> <span class="nl">showCancel:</span><span class="n">YES</span> <span class="nl">OneDMode:</span><span class="n">NO</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">NSMutableSet</span> <span class="o">*</span><span class="n">readers</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableSet</span> <span class="n">alloc</span> <span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">QRCodeReader</span><span class="o">*</span> <span class="n">qrcodeReader</span> <span class="o">=</span> <span class="p">[[</span><span class="n">QRCodeReader</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">readers</span> <span class="nl">addObject:</span><span class="n">qrcodeReader</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">qrcodeReader</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">widController</span><span class="p">.</span><span class="n">readers</span> <span class="o">=</span> <span class="n">readers</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">readers</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span> <span class="nl">presentModalViewController:</span><span class="n">widController</span> <span class="nl">animated:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">widController</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在ZXing扫描有结果时，会调用如下回调函数：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@protocol</span> <span class="nc">ZXingDelegate</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">zxingController:</span><span class="p">(</span><span class="n">ZXingWidgetController</span><span class="o">*</span><span class="p">)</span><span class="nv">controller</span> <span class="nf">didScanResult:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">result</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">zxingControllerDidCancel:</span><span class="p">(</span><span class="n">ZXingWidgetController</span><span class="o">*</span><span class="p">)</span><span class="nv">controller</span><span class="p">;</span>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>使用方法二</h3>
+
+<p>方法二与方法一的区别就相当于AVFoundation和UIImagePickerController的区别一样。简单来说，就是使用方法二比方法一更加麻烦，但是获得的可定制性更高。</p>
+
+<p>使用方法二时，你需要自己用AVFoundation获得Camera返回的实时图象，然后转成UIImage，最后传给ZXing的Decoder类完成二维码的识别。由于使用AVFoundation涉及的代码略多，我写的示意代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;Decoder.h&quot;</span>
+</span><span class='line'><span class="cp">#import &quot;TwoDDecoderResult.h&quot;</span>
+</span><span class='line'><span class="cp">#import &quot;QRCodeReader.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// setup QR reader</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">qrReader</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableSet</span> <span class="n">alloc</span> <span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">QRCodeReader</span><span class="o">*</span> <span class="n">qrcodeReader</span> <span class="o">=</span> <span class="p">[[</span><span class="n">QRCodeReader</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">qrReader</span> <span class="nl">addObject:</span><span class="n">qrcodeReader</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">scanningQR</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">STEP_QR</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// AVFoundation的回调函数</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">captureOutput:</span><span class="p">(</span><span class="n">AVCaptureOutput</span> <span class="o">*</span><span class="p">)</span><span class="nv">captureOutput</span> <span class="nf">didOutputSampleBuffer:</span><span class="p">(</span><span class="n">CMSampleBufferRef</span><span class="p">)</span><span class="nv">sampleBuffer</span> <span class="nf">fromConnection:</span><span class="p">(</span><span class="n">AVCaptureConnection</span> <span class="o">*</span><span class="p">)</span><span class="nv">connection</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// 第一步，将sampleBuffer转成UIImage</span>
+</span><span class='line'>  <span class="n">UIImage</span> <span class="o">*</span><span class="n">image</span><span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">getCaptureImage:</span><span class="n">sampleBuffer</span><span class="p">];</span>
+</span><span class='line'>  <span class="c1">// 第二步，用Decoder识别图象</span>
+</span><span class='line'>  <span class="n">Decoder</span> <span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Decoder</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">d</span><span class="p">.</span><span class="n">readers</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">qrReader</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">d</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">scanningQR</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="nl">decodeImage:</span><span class="n">image</span><span class="p">]</span> <span class="o">==</span> <span class="n">YES</span> <span class="o">?</span> <span class="n">NO</span> <span class="o">:</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ZXing的Decoder类提供了以下回调函数获得识别结果：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@protocol</span> <span class="nc">DecoderDelegate</span><span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+</span><span class='line'><span class="err">@</span><span class="n">optional</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="n">decoder</span> <span class="nl">willDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">image</span> <span class="nl">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">subset</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">didDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">image</span> <span class="nf">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">subset</span> <span class="nf">withResult:</span><span class="p">(</span><span class="n">TwoDDecoderResult</span> <span class="o">*</span><span class="p">)</span><span class="nv">result</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;result = %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">result</span> <span class="n">text</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">failedToDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">image</span> <span class="nf">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">subset</span> <span class="nf">reason:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">reason</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">foundPossibleResultPoint:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">point</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Trouble Shoot &amp; Tips</h2>
+
+<p>我在使用中遇到了一些问题，主要是编译的问题。</p>
+
+<ol>
+<li>一个是找不到 <iostream> 头文件。解决方法：把用到ZXing的源文件扩展名由.m改成.mm。</li>
+<li>报错：Undefined symbols for architecture armv7s，<a href="http://stackoverflow.com/questions/12968369/undefined-symbols-for-architecture-armv7-when-using-zxing-library-in-xcode-4-5">解决方法</a>：把ZXingWidget的一个build target参数：&#8221;Build Active Architecture Only&#8221; 修改成 &#8220;NO&#8221;.</li>
+<li>报错：No such file or directory，出现该错误可能是你的Header Search Path写错了，或者就是你的zxing库的目录结构不是我上面强调的，好好检查一下吧。</li>
+<li>如果你需要生成二维码做测试，推荐一个不错的在线生成二维码的网站：<a href="http://cli.im/">http://cli.im/</a></li>
+</ol>
+
+
+<h2>ZXing和OpenCV的兼容问题</h2>
+
+<p>ZXing 2.1 和OpenCV 2.4.3的iOS库有一些兼容问题，他们对C++标准库的版本和编译器版本都有一些需求，造成满足一方了，另一方就编译不通过了。Stackoverflow上有人终于找到了一个让它们和平共处的方法，但是只适用于iOS5.0以上版本。正好我们的App只支持iOS5.0+，所以就搞定了。所以如果你也正好遇到这个问题，可以参考<a href="http://stackoverflow.com/questions/13498581/opencv-zxing-incompatibility-on-ios">这个贴子</a>。</p>
+
+<p>希望本文对大家有用，Have Fun~</p>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-23T17:03:00+08:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+</div>
+
+
+  <footer>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12/15/do-not-use-storyboard/" title="Previous Post: StoryBoard--看上去很美">&laquo; StoryBoard--看上去很美</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/23/use-zxing-library/">在iOS中使用ZXing库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/15/do-not-use-storyboard/">StoryBoard--看上去很美</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/09/iap-crack-issue/">关于IAP的破解</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/09/in-app-purchase-check-list/">iOS应用内付费(IAP)开发步骤列表</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/08/use-privoxy/">使用Privoxy做智能代理切换</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/">使用CocoaPods来做iOS程序的包依赖管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/16/drop-ios4-enbrace-ios5/">放弃iOS4，拥抱iOS5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/14/make-stack-trace-more-readable/">让XCode的 stack trace信息可读</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">粉笔网的架构和项目管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/09/3rd-libs-used-in-fenbi-app/">粉笔网iPhone端使用的第三方开源库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/05/upgrade-your-app-to-support-iphone5/">让你的APP支持iPhone5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>  前网易有道员工，现在在粉笔网创业中。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记。
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

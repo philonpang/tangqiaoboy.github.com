@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2012-12-23T20:01:49+08:00</updated>
+  <updated>2013-01-01T18:16:46+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2012年个人总结]]></title>
+    <link href="http://blog.devtang.com/blog/2013/01/01/2012-summary/"/>
+    <updated>2013-01-01T14:31:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/01/01/2012-summary</id>
+    <content type="html"><![CDATA[<p>和<a href="http://blog.devtang.com/blog/2012/01/01/2011-summary/">去年</a>一样，记录一下今年的成长和收获。</p>
+
+<!-- more -->
+
+
+<h2>主要工作</h2>
+
+<p>自己这一年主要的工作是：</p>
+
+<ul>
+<li>1-4月份，有道云笔记iOS端开发</li>
+<li>4-12月份，粉笔网iPhone端开发</li>
+</ul>
+
+
+<h3>有道云笔记开发</h3>
+
+<!--
+1月26日，结婚。从2004年1月26日我和她相识，再到今年的同一天结婚。8年过去了，我和她因为相伴，过得快乐和充实。在承诺“执子之手，与之携老”的誓言后，我们也学会了相互诉说，相互迁就和相互照顾。
+-->
+
+
+<p>1-4月份，我继续开发了有道云笔记iOS端的新功能。做得最费劲的功能是和<a href="http://weibo.com/perfectworks">perfectworks</a>一起做iPad版的图文混排编缉器。本来想iOS的UIWebView是基于webkit内核的，把PC版的编辑器代码移植一下就行了。可真正做的时候，遇到很多问题。</p>
+
+<p>首先是我们发现UIWebView有一些平台特有的javascript兼容性Bug。当时苹果官方的用Safari直接连接模拟器进行调试的工具还没有推出，我们只能用<a href="http://phonegap.github.com/weinre/">weinre</a>这个第三方工具来调试js，但是weinre有时候会出Bug，这个时候就只能用Alert来把调试信息打出来了，真是比IE6还苦。</p>
+
+<p>然后是在iOS平台上，native端调js是同步的，但js调native调是异步的。所以原有的js代码需要做很多重构。关于这里面的技术细节，我总结在<a href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">这里</a>。</p>
+
+<p>最后是联调，因为js和ios两边同时开发，我们需要大量的联调工作。所以我每天抱着笔记本跑到前端组和perfectworks坐到一起。另外，我们还相互之间互相暴露了git的地址，然后相互pull各自调试代码，待各自都调试完成了，再把代码rebase整理一下，push到服务器上。最后，我们将这种实践整理成文<a href="http://blog.devtang.com/blog/2012/02/29/collaboration-with-git/">《用Git进行协同开发》</a>。</p>
+
+<p>另外，在2-3月份，我还和c4pt0r一起，通过有道的个人项目时间，开发了有道云笔记的Mac版。不过这个版本由于是非正式项目，所以应该还有很多需要完善的Feature。最终c4pt0r将其取名为<a href="https://github.com/c4pt0r/notever/wiki/NotEver">NotEver</a>，发布到了github上。</p>
+
+<h3>粉笔网开发</h3>
+
+<p>在粉笔网我花了3个多月时间，独立完成了粉笔网iPhone客户端开发工作。整个代码量除去第三方库，有3万多行。那段时间非常辛苦，每周6天，每天11个小时，最终产品如期上线。在产品上线后，我写了<a href="http://blog.devtang.com/blog/2012/09/15/talk-about-my-startup-exp/">一篇博客</a>来专门讲述这中间的感悟。那篇文章发出后，在微博上得到了大量的转发，最终引起了CSDN的<a href="http://weibo.com/cmdnclub">炫姐姐</a>的关注。在她的邀请下，我们进行了一次技术和项目管理的<a href="http://blog.devtang.com/blog/2012/10/15/scrum-and-architecture-in-fenbi/">分享</a>。</p>
+
+<h2>创业</h2>
+
+<p>5月12日，我离职加入了由前网易同事创立的一家创业公司：<a href="http://fenbi.com/">粉笔网</a>。离职前纠结了相当长时间，主要是有道是一家非常棒的公司，在有道的工作非常开心，而且我们的产品有道云笔记一直在国内占据着云笔记类用户量第一的位置。不过最终我还是选择了离职，主要的原因是：</p>
+
+<ol>
+<li>想接受更大的挑战。在粉笔网我会独立负责整个iOS端的开发工作，会辛苦很多，但是成长也会快很多。</li>
+<li>想有更大的潜在经济回报。在大公司拿死工资总还是无法摆脱财务自由，创业虽然成功率很低，但至少有希望，并且希望把握在自己手中。</li>
+<li>想和大家一起打造一个小而精的技术团队。</li>
+</ol>
+
+
+<p>现在回过头来看，创业确实比较辛苦，但我也确实成长了很多。并且由于我们团队成员大多已经结婚，所以我们努力打造着一个不加班的创业公司文化。我们从9月份产品上线后，就一直坚持正常的上下班时间。</p>
+
+<p>但是另一方面，我们的工作并不轻松。我们每周一个Scrum，每天的工作量很大，所以我们会尽量高效地沟通，做好自己的时间管理。这里面Scrum和番茄钟帮了我很大的忙。我现在每天除去沟通的时间，常常能花4-5小时专注地写代码，而这在以前，常常只有3小时左右。</p>
+
+<p>有一些朋友很关心我，问我：“如果创业失败了怎么办？”。其实失败了能怎么样呢？失败无非就是损失掉了短期的利益。但长远来看，我比以前更加专业了，我们团队更加牛逼了，不管我们是继续另一份创业或者去大公司找工作，我相信都有这个实力。</p>
+
+<h2>技术成长</h2>
+
+<p>这一年专心于iOS开发的积累，已经能够非常熟练地进行iOS日常的开发。</p>
+
+<p>另外在这一年，我注意在工作的时候记下一些总结，然后在周末有空的时候，就会花时间把这些整理成文章。回顾2012年，我一共写了36篇博客文章，平均每月3篇。写博客有助于我梳理自己的知识，同时也结交了不少iOS开发的同行。</p>
+
+<h2>个人Milestone</h2>
+
+<ul>
+<li>2012-5-10 离职创业</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[在iOS中使用ZXing库]]></title>
@@ -3619,65 +3692,6 @@ ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTT
 <p>我在学习fmdb的时候做了一个小工程用于练习，我把它放到github上了。感兴趣的可以自行下载：<a href="https://github.com/tangqiaoboy/FmdbSample">https://github.com/tangqiaoboy/FmdbSample</a></p>
 
 <p>祝大家玩得开心。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[关于iOS测试机个数上限的详细规则]]></title>
-    <link href="http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit/"/>
-    <updated>2012-04-06T16:50:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
-
-<!-- more -->
-
-
-<h2>规则</h2>
-
-<p>我总结出来的规则如下（附上原文以便对应）：</p>
-
-<ul>
-<li>每一个开发者membership year,只能有100次增加设备的名额。如果你增加一个设备,之后又将该设备删除,并不会将用掉的名额恢复.</li>
-</ul>
-
-
-<p>You can register up to 100 devices per year for development purposes. Any devices added, then later removed, still count towards your maximum number of registered devices per year.</p>
-
-<ul>
-<li>在每一个开发者membership year开始的时候,Team Agent和Admin角色可以选择删掉一些设备来恢复资格, 也可以清空所有设备来恢复到最多100次设备的名额。这个操作在Team Agent和Admin在一次新的membership year开始后即可使用，在使用时，需要注意，先将需要删除的设备删掉，然后才能添加需要新增的设备。一旦开始增加新设备，删除设备以恢复名额的功能将不再可用。</li>
-</ul>
-
-
-<p>At the start of a new membership year, Team Agents and Admins can remove devices and restore the available device count for their development team to 100 devices.</p>
-
-<p>When Team Agents or Admins first sign in to the iOS Provisioning Portal at the start of a new membership year, they will be presented with the option to remove devices and restore the device count for those removed devices.</p>
-
-<p>Important Note: At the start of your membership year, make sure to remove all devices you no longer use for development prior to adding any new devices.</p>
-
-<ul>
-<li>在以后整个membership year中，删除设备不会增加新的名额。</li>
-</ul>
-
-
-<p>Removing devices during your membership year will not open these slots to add new devices.</p>
-
-<h2>举例</h2>
-
-<p>直接看规则比较晦涩，举个例子：</p>
-
-<p>假如第一年，你增加了70个设备，同时删除了10个设备，这个时候，虽然你的设备数是60，但是可用的增加测试机的名额却只有30个了。</p>
-
-<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 - 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
-
-<h2>总结</h2>
-
-<p>所以说，不管怎么样，你的账号下的可用测试设备始终不会超过100个。不会象有些人想的那样，每过一年名额就直接变成100了。另外，每年删除设备以恢复名额的机会只有开始的时候，以后删除设备也不会恢复名额。</p>
-
-<p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。</p>
-
-<p>具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。在沟通完成后，苹果就可以立即帮助你状态修改到“可删除设备来增加测试设备名额”。这样，你就可以选择性的删除一些不需要的设备来释放一些名额了。</p>
 ]]></content>
   </entry>
   

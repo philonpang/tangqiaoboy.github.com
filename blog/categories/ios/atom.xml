@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-01-13T13:56:23+08:00</updated>
+  <updated>2013-01-13T14:09:06+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -91,7 +91,7 @@ str = [str initWithString:@"Bar"];
 
 <p>在<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书也提到，早期苹果是建议程序员使用 allocWithZone来管理内存分配的，每个NSZone表示一块内存分区，allowWithZone方法可以允许对象从指定分区分配内存。了解到这段历史后，也不难理解苹果这么设计的原因了。因为在这种情况下，alloc要处理的情况复杂，和init放到一起不合适。</p>
 
-<p>而对于大多数出生在90年代的语言来说，</p>
+<p>而对于大多数出生在90年代的语言来说(例如Java,JavaScript,C#)，由于内存具体的分配方案都不需要程序员操心了，所以就不需要单独为内存分配实现一个alloc方法了。</p>
 
 <h2>后记</h2>
 

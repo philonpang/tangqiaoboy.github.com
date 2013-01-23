@@ -8,9 +8,9 @@ categories: iOS
 
 ##功能设计
 
-先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，在设计“升级提示功能”都有问题。在此分享一下我的想法，欢迎大家讨论。
+先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，设计的“升级提示功能”都不太友好。在此分享一下我的想法，欢迎大家讨论。
 
-这些有问题的App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题，一句话描述起来就是：“这些App都会在用户刚刚使用它的时候，提示有新版本，让用户去AppStore上下载最新的版本”。下面是某个应用的升级提示截图：
+这些App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题，一句话描述起来就是：“这些App都会在用户刚刚使用它的时候，提示有新版本，让用户去AppStore上下载最新的版本”。下面是某个应用的升级提示截图：
 
 {% img /images/app-upgrade-1.png %}
 
@@ -35,7 +35,22 @@ categories: iOS
 
 ##技术实现
 
-再简单说一下技术实现，我写了一个VersionAgent类，每24小时最多向服务器请求一次最新的App版本，如果版本有更新，则在AppDelegate的applicationDidEnterBackgroundl回调中，发送一个本地通知，示例代码如下：
+再简单说一下技术实现，我写了一个VersionAgent类，每24小时最多向服务器请求一次最新的App版本。然后在每次App启动5秒后，检查一下是否过了24小时一次的请求阈值，如下所示：
+
+``` objc
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    double delayInSeconds = 5.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [[VersionAgent sharedInstance] checkVersion];
+    });
+}
+
+```
+
+
+如果版本有更新，则在AppDelegate的applicationDidEnterBackgroundl回调中，发送一个本地通知，示例代码如下：
 
 ``` objc
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -57,6 +72,7 @@ categories: iOS
 ```
 
 然后通过AppDelegate的回调函数，判断App的启动方式是否是通过用户点击通知中心的升级提示来启动，如果是，则跳转到AppStore，示例代码如下：
+
 ``` objc
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     // open app store link

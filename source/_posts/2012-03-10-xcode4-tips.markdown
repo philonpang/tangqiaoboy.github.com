@@ -61,7 +61,7 @@ Behaviors是设置页面里的一栏，通过cmd + 逗号可以调出设置页�
 
 ```
 cmd + 1              切换成Project Navigator (cmd + 2~7 也可以做相应切换，不过不常用）
-cmd + shift + 上     在.h和.m文件之间切换
+cmd + ctrl + 上     在.h和.m文件之间切换
 cmd + enter          切换成 standard editor
 cmd + opt + enter    切换成 assistant editor
 cmd + shift + y      切换 Console View的显示或隐藏

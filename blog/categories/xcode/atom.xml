@@ -4,7 +4,7 @@
   <title><![CDATA[Category: xcode | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/xcode/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-01-13T14:09:06+08:00</updated>
+  <updated>2013-02-21T20:18:33+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -81,7 +81,7 @@ sudo ln -s /Developer-3.2.5/Platforms/iPhoneSimulator.platform/Developer/SDKs/iP
 
 <p>```
 cmd + 1              切换成Project Navigator (cmd + 2~7 也可以做相应切换，不过不常用）
-cmd + shift + 上     在.h和.m文件之间切换
+cmd + ctrl + 上     在.h和.m文件之间切换
 cmd + enter          切换成 standard editor
 cmd + opt + enter    切换成 assistant editor
 cmd + shift + y      切换 Console View的显示或隐藏

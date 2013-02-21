@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-01-13T14:09:06+08:00</updated>
+  <updated>2013-02-21T20:18:33+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,77 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[分享iOS开发技巧的微信公共账号]]></title>
+    <link href="http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account/"/>
+    <updated>2013-02-21T20:02:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account</id>
+    <content type="html"><![CDATA[<p><img src="/images/weixin-why.png"></p>
+
+<p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
+
+<p>后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。现在群里面加入了包括网易，腾讯，新浪，搜狐，美团，豆瓣等公司的iOS程序员以及一些自由职业者。因为大家都是比较有经验的开发者，所以每天大家的讨论不太多，但是都很有价值。</p>
+
+<p>但是，我发现QQ群对于讨论的归档性太弱。很多有代表意义的讨论，对于其他人可能是有用的，但是由于群的归档性太差，随着时间流逝，这些信息无法被有效沉淀。</p>
+
+<p>所以我想做一个尝试。我想把这个QQ群里面有价值的讨论信息整理归档到这个公共账号上。希望大部分iOS同行每天都能得到少量的，但是有价值的信息。对于特别有价值的信息，我也会在后期整理成博客，发表在博客上。</p>
+
+<p>希望这能对你平时的工作有所帮助。</p>
+
+<p>如果你感兴趣，那么可以扫描以下二维码加该账号为好友，或者在微信中搜索“iOS开发”。</p>
+
+<p><img src="/images/weixin-qr.jpg"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[设置应用内的系统控件语言]]></title>
+    <link href="http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language/"/>
+    <updated>2013-01-23T21:05:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language</id>
+    <content type="html"><![CDATA[<p><img src="/images/bdj-rank.jpg"></p>
+
+<p>在iOS应用中，有时候会需要调用系统的一些UI控件，例如：</p>
+
+<ol>
+<li>在UIWebView中长按会弹出系统的上下文菜单</li>
+<li>在UIImagePickerController中会使用系统的照相机界面</li>
+<li>在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。</li>
+</ol>
+
+
+<p>以上这些UI控件中，其显示的语言并不是和你当前手机的系统语言一致的。而是根据你的App内部的语言设置来显示。结果就是，如果你没有设置恰当的话，你的中文App可能会出现一些英文的控件文字。</p>
+
+<!-- more -->
+
+
+<p>例如下图中，一个名为“百思不得姐”的应用，其在AppStore免费总榜中排名前100，图书类分类榜排名第一的应用，就闹出了系统控件显示成了英文的笑话，在其软件界面中长按，就会出如下的菜单，可以看到，这个菜单的文字全是英文的：</p>
+
+<p><img src="/images/ios-menu-1.jpg"></p>
+
+<p>而正常的菜单应该是中文的，如下是新浪微博的正文长按之后的效果：</p>
+
+<p><img src="/images/ios-menu-2.jpg"></p>
+
+<p>如何解决这个问题呢？方法如下:</p>
+
+<p>用vim直接打开工程的Info.plist文件，在文件中增加如下内容即可：</p>
+
+<p>``` xml
+   <key>CFBundleLocalizations</key>     <br/>
+   <array></p>
+
+<pre><code>       &lt;string&gt;zh_CN&lt;/string&gt;
+       &lt;string&gt;en&lt;/string&gt;
+</code></pre>
+
+<p>   </array>
+```</p>
+
+<p>TO: 百思不得姐的开发者，不用谢：）你们应用的内容挺有意思的。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[谈ObjC对象的两段构造模式]]></title>
@@ -329,264 +400,6 @@ self.scanningQR = [d decodeImage:image] == YES ? NO : YES;
 <p>我仔细比较权衡了一下优缺点，最主要的问题是我的版本管理在多人协作开发时将陷入灾难，而这是完全不能接受的。而最主要的好处就是，你可以在一个类似白板的地方“一揽众山小“一样了解所有界面之间的切换关系，但这个有那么重要吗？我自已其实很清楚跳转逻辑，这个只是对新同事了解项目代码时有帮助，那我花一点时间直接给他讲讲画画不就搞定的吗？为了这点好处而让版本管理无法使用，是完全不能接受的。</p>
 
 <p>所以最终我决定放弃使用StoryBoard了，这个“看上去很美”的功能有着不可接受的缺陷。现在看来，它仅适用于做一些Demo的开发。苹果一直没有处理好这类可视化界面设计功能的版本管理，象xib文件，虽然是xml格式的，但如果多人编辑了，合并起来也会很麻烦。所以业界好多同行都不用xib,直接用纯代码来写界面，虽然稍慢一点儿，但是工程很干净，也基本没有了多人协作的版本冲突问题。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[关于IAP的破解]]></title>
-    <link href="http://blog.devtang.com/blog/2012/12/09/iap-crack-issue/"/>
-    <updated>2012-12-09T15:06:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/12/09/iap-crack-issue</id>
-    <content type="html"><![CDATA[<h3>介绍</h3>
-
-<p>大概在今年7月份，有俄罗斯黑客<a href="http://www.in-appstore.com/">破解</a>了苹果的应用内付费（In-App Purchases），设备在不越狱的情况下就可以免费获得来自苹果官网App Store里应用的收费道具。受影响的产品众多，包括著名的Angry Birds，切水果，Mega Jump, Pandora等。<a href="https://docs.google.com/spreadsheet/ccc?key=0AvSXyNTiqEXMdGRKZlN1Snl5S3h1Z1NsTTFYTlJPTUE#gid=0">这里</a>有一份受影响的著名的游戏应用列表。</p>
-
-<p>正常的越狱行为还是比较复杂的，需要下载破解软件，并且操作进入DFU模式，所以大部分人并不能够方便地越狱。但该方案不需要越狱就可以破解应用内付费，给用户实施该行为提供了方便。</p>
-
-<!-- more -->
-
-
-<p>为了验证破解的有效性，我今天试了一下，确实能够直接绕开苹果的应用内付费就直接完成购买操作。而苹果也在它的官方文档上<a href="http://developer.apple.com/library/ios/#releasenotes/StoreKit/IAP_ReceiptValidation/_index.html">特别注明</a>了该漏洞的存在，截图如下：</p>
-
-<p><img src="/images/iap-crack-issue.png"></p>
-
-<p>从该文档中我们可以知道，iOS6以下的所有设备（包括越狱或非越狱设备），都会受到该漏洞的影响。</p>
-
-<h3>攻击原理</h3>
-
-<p>我们知道通常的IAP购买行为，从逻辑上就是设备向App Store发起一个购买操作，App Store在验证过用户的密码确认身份后，扣费并返回购买成功的凭证，整个网络操作是通过SSL加密的。</p>
-
-<p>该IAP破解方法，是让设备误以为另一个网站就是AppStore，而向它通讯，而这个假AppStore返回一个假的购买成功的凭证，这样就欺骗设备完成了购买。整个欺骗使用的手段包括：</p>
-
-<ol>
-<li>用户给自己添加一个受信任的证书以完成SSL通讯的证书校验</li>
-<li>设置一个伪DNS（域名解析服务）地址，把AppStore的域名指向假的地址。</li>
-</ol>
-
-
-<h3>应对措施</h3>
-
-<p>现在看来，暂时有效的应对方法是，将该交易凭证上传到我们自己的服务器上，然后让我们自己的服务器与AppStore进行验证，以确认该凭证是否是伪造的，然后将验证结果返回给设备。苹果的官方网站上也是这么介绍的。这样做麻烦的地方是，对于那些游戏和工具类应用，增加了服务器开发和维护的开销。</p>
-
-<p>但是就象苹果自己也意识到的那样（如下图），既然破解者可以欺骗设备来和AppStore通讯，那么同样破解者从原理上，也可以欺骗设备同我们自己的服务器通讯，到头来，设备本身无论如何是无法知道自己的信息的真实性的。</p>
-
-<p><img src="/images/iap-crack-isuue-2.png"></p>
-
-<p>对于这件事，我们只能期望于：因为我们的应用用户量不大，验证协议又不是通用的，所以破解者需要专门针对我们的通讯协议进行破解，这需要他本身有动力做这个事情，并且要花费他一些时间。所以可能他觉得做这个事情没什么挑战和意义，就不破解我们了。在这件事情上，“希望他不要破解”，好象也是我们唯一能做的事情。</p>
-
-<p>乐观一点讲，AppStore上有上百万的应用，如果所有应用都采用服务器验证购买凭证，黑客一一针对破解，确实也太不可能了，所以这件事情还是很有必要的。另外随着iOS6的普及，该漏洞也将被修补掉，所以大家也不用过于悲观。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS应用内付费(IAP)开发步骤列表]]></title>
-    <link href="http://blog.devtang.com/blog/2012/12/09/in-app-purchase-check-list/"/>
-    <updated>2012-12-09T12:55:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/12/09/in-app-purchase-check-list</id>
-    <content type="html"><![CDATA[<p>前两天和服务端同事一起，完成了应用内付费（以下简称IAP, In app purchase）的开发工作。步骤繁多，在此把开发步骤列表整理如下。因为只是步骤列表，所以并不含详细的说明教程，需要看教程的新手，可以看我附在最后的一些参考链接。</p>
-
-<!-- more -->
-
-
-<h3>配置Developer.apple.com</h3>
-
-<p>登录到<a href="https://developer.apple.com/">Developer.apple.com</a>，然后进行以下步骤：</p>
-
-<ol>
-<li>为应用建立建立一个不带通配符的App ID</li>
-<li>用该App ID生成和安装相应的Provisioning Profile文件。</li>
-</ol>
-
-
-<h3>配置iTunes Connect</h3>
-
-<p>登录到<a href="https://itunesconnect.apple.com/">iTunes Connet</a>，然后进行以下步骤：</p>
-
-<ol>
-<li>用该App ID创建一个新的应用。</li>
-<li><p>在该应用中，创建应用内付费项目，选择付费类型，通常可选的是可重复消费(Consumable)的或是永久有效(Non-Consumable)的2种，然后设置好价格和Product ID以及购买介绍和截图即可，这里的Product ID是需要记住的，后面开发的时候需要。如下图所示：
-<img src="/images/iap-add-product-id.png"></p></li>
-<li><p>添加一个用于在sandbox付费的测试用户，如下图所示。注意苹果对该测试用户的密码要求
-和正式账号一样，必须是至少8位，并且同时包含数字和大小写字母：
-<img src="/images/iap-adduser-1.png">
-<img src="/images/iap-adduser-2.png"></p></li>
-<li><p>填写相关的税务，银行，联系人信息。如下图所示：
-<img src="/images/iap-tax-info.png"></p></li>
-</ol>
-
-
-<h3>开发工作(ios端)</h3>
-
-<p>1、 在工程中引入 storekit.framework 和 #import &lt;StoreKit/StoreKit.h></p>
-
-<p>2、 获得所有的付费Product ID列表。这个可以用常量存储在本地，也可以由自己的服务器返回。</p>
-
-<p>3、 制作一个界面，展示所有的应用内付费项目。这些应用内付费项目的价格和介绍信息可以是自己的服务器返回。但如果是不带服务器的单机游戏应用或工具类应用，则可以通过向App Store查询获得。我在测试时发现，向App Store查询速度非常慢，通常需要2-3秒钟，所以不建议这么做，最好还是搞个自己的服务器吧。</p>
-
-<p>4、当用户点击了一个IAP项目，我们先查询用户是否允许应用内付费，如果不允许则不用进行以下步骤了。代码如下：
-``` objc</p>
-
-<pre><code>if ([SKPaymentQueue canMakePayments]) {
-    // 执行下面提到的第5步：
-    [self getProductInfo];
-} else {
-    NSLog(@"失败，用户禁止应用内付费购买.");
-}
-</code></pre>
-
-<p>```</p>
-
-<p>5、 我们先通过该IAP的ProductID向AppStore查询，获得SKPayment实例，然后通过SKPaymentQueue的 addPayment方法发起一个购买的操作。
-``` objc
-// 下面的ProductId应该是事先在itunesConnect中添加好的，已存在的付费项目。否则查询会失败。
-- (void)getProductInfo {</p>
-
-<pre><code>NSSet * set = [NSSet setWithArray:@[@"ProductId"]];
-SKProductsRequest * request = [[SKProductsRequest alloc] initWithProductIdentifiers:set];
-request.delegate = self;
-[request start];
-</code></pre>
-
-<p>}</p>
-
-<p>// 以上查询的回调函数
-- (void)productsRequest:(SKProductsRequest <em>)request didReceiveResponse:(SKProductsResponse </em>)response {</p>
-
-<pre><code>NSArray *myProduct = response.products;
-if (myProduct.count == 0) {
-    NSLog(@"无法获取产品信息，购买失败。");
-    return;
-}
-SKPayment * payment = [SKPayment paymentWithProduct:myProduct[0]];
-[[SKPaymentQueue defaultQueue] addPayment:payment];
-</code></pre>
-
-<p>}
-```</p>
-
-<p>6、 在viewDidLoad方法中，将购买页面设置成购买的Observer。
-``` objc
-- (void)viewDidLoad {</p>
-
-<pre><code>[super viewDidLoad];
-// 监听购买结果
-[[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-</code></pre>
-
-<p>}</p>
-
-<ul>
-<li>(void)viewDidUnload {
-  [super viewDidUnload];
-  [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
-}
-```</li>
-</ul>
-
-
-<p>7、 当用户购买的操作有结果时，就会触发下面的回调函数，相应进行处理即可。
-``` objc
-- (void)paymentQueue:(SKPaymentQueue <em>)queue updatedTransactions:(NSArray </em>)transactions {</p>
-
-<pre><code>for (SKPaymentTransaction *transaction in transactions)
-{
-    switch (transaction.transactionState)
-    {
-        case SKPaymentTransactionStatePurchased://交易完成
-            NSLog(@"transactionIdentifier = %@", transaction.transactionIdentifier);
-            [self completeTransaction:transaction];
-            break;
-        case SKPaymentTransactionStateFailed://交易失败
-            [self failedTransaction:transaction];
-            break;
-        case SKPaymentTransactionStateRestored://已经购买过该商品
-            [self restoreTransaction:transaction];
-            break;
-        case SKPaymentTransactionStatePurchasing:      //商品添加进列表
-            NSLog(@"商品添加进列表");
-            break;
-        default:
-            break;
-    }
-}
-</code></pre>
-
-<p>}</p>
-
-<ul>
-<li>(void)completeTransaction:(SKPaymentTransaction *)transaction {
-  // Your application should implement these two methods.
-  NSString * productIdentifier = transaction.payment.productIdentifier;
-  NSString * receipt = [transaction.transactionReceipt base64EncodedString];
-  if ([productIdentifier length] > 0) {
-
-<pre><code>  // 向自己的服务器验证购买凭证
-</code></pre>
-
-<p>  }</p>
-
-<p>  // Remove the transaction from the payment queue.
-  [[SKPaymentQueue defaultQueue] finishTransaction: transaction];</p></li>
-</ul>
-
-
-<p>}</p>
-
-<ul>
-<li><p>(void)failedTransaction:(SKPaymentTransaction *)transaction {
-  if(transaction.error.code != SKErrorPaymentCancelled) {</p>
-
-<pre><code>  NSLog(@"购买失败");
-</code></pre>
-
-  } else {
-
-<pre><code>  NSLog(@"用户取消交易");
-</code></pre>
-
-<p>  }
-  [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
-}</p></li>
-<li><p>(void)restoreTransaction:(SKPaymentTransaction *)transaction {
-  // 对于已购商品，处理恢复购买的逻辑
-  [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
-}</p></li>
-</ul>
-
-
-<p>```</p>
-
-<p>8、服务器验证凭证(Optional)。如果购买成功，我们需要将凭证发送到服务器上进行验证。考虑到网络异常情况，iOS端的发送凭证操作应该进行持久化，如果程序退出，崩溃或网络异常，可以恢复重试。</p>
-
-<h3>开发工作(服务端)</h3>
-
-<p>服务端的工作比较简单，分4步：</p>
-
-<ol>
-<li>接收ios端发过来的购买凭证。</li>
-<li>判断凭证是否已经存在或验证过，然后存储该凭证。</li>
-<li>将该凭证发送到苹果的服务器验证，并将验证结果返回给客户端。</li>
-<li>如果需要，修改用户相应的会员权限。</li>
-</ol>
-
-
-<p>考虑到网络异常情况，服务器的验证应该是一个可恢复的队列，如果网络失败了，应该进行重试。</p>
-
-<p>与苹果的验证接口文档在<a href="https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/StoreKitGuide/VerifyingStoreReceipts/VerifyingStoreReceipts.html#//apple_ref/doc/uid/TP40008267-CH104-SW3">这里</a>。简单来说就是将该购买凭证用Base64编码，然后POST给苹果的验证服务器，苹果将验证结果以JSON形式返回。</p>
-
-<p>苹果AppStore线上的购买凭证验证地址是<a href="https://buy.itunes.apple.com/verifyReceipt">https://buy.itunes.apple.com/verifyReceipt</a> ，测试的验证地址是：<a href="https://sandbox.itunes.apple.com/verifyReceipt">https://sandbox.itunes.apple.com/verifyReceipt</a></p>
-
-<h2>参考链接</h2>
-
-<p>以下参考链接详细说明了完成应用内付费开发的步骤：</p>
-
-<ol>
-<li><a href="https://developer.apple.com/appstore/in-app-purchase/index.html">https://developer.apple.com/appstore/in-app-purchase/index.html</a></li>
-<li><a href="http://www.himigame.com/iphone-cocos2d/550.html">http://www.himigame.com/iphone-cocos2d/550.html</a></li>
-<li><a href="http://www.cocoachina.com/iphonedev/sdk/2011/1028/3435.html">http://www.cocoachina.com/iphonedev/sdk/2011/1028/3435.html</a></li>
-<li><a href="http://www.cocoachina.com/newbie/basic/2012/0214/3976.html">http://www.cocoachina.com/newbie/basic/2012/0214/3976.html</a></li>
-</ol>
-
 ]]></content>
   </entry>
   

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>我们必须自学 - 唐巧的技术博客</title>
+  <title>是否应该使用ARC? - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前两天看到一个文章，题名为《所有的程序员都是自学成才》。当时没有什么特别的想法，只是觉得自己也确实是基本上靠自学来掌握新的知识的。但是今天在公车上没事好好想了一想，想明白了，原来对于程序员来说，只能自学才能成才。 这个道理似乎有点奇怪，因为我们从小都是由老师教授新知识的。我自己也实验过， &hellip;">
+  <meta name="description" content="我和身边做iOS开发的同事组建了一个QQ群，每隔一段时间，大家就会讨论是否应该使用ARC。所以我觉得有必要将这些讨论分享出来，让大家消除对于ARC的疑虑。 关于ARC的介绍文章网上已经很多，苹果的官方文档也不少。担心使用ARC会带来问题的同学主要的理由有以下5点: 担心这个技术方案不靠谱。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/01/20/we-must-self-learning">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2013/03/27/should-we-use-arc">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,7 +77,7 @@
   
   <header>
     
-      <h1 class="entry-title">我们必须自学</h1>
+      <h1 class="entry-title">是否应该使用ARC?</h1>
     
     
       <p class="meta">
@@ -93,33 +93,47 @@
   
 
 
-<time datetime="2012-01-20T23:53:00+08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
+<time datetime="2013-03-27T21:23:00+08:00" pubdate data-updated="true">Mar 27<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>前两天看到一个文章，题名为<a href="http://www.aqee.net/all-programmers-are-self-taught/">《所有的程序员都是自学成才》</a>。当时没有什么特别的想法，只是觉得自己也确实是基本上靠自学来掌握新的知识的。但是今天在公车上没事好好想了一想，想明白了，原来对于程序员来说，只能自学才能成才。</p>
+<div class="entry-content"><p><img src="/images/arc-logo.jpg"></p>
 
-<!--more-->
+<p>我和身边做iOS开发的同事组建了一个QQ群，每隔一段时间，大家就会讨论是否应该使用ARC。所以我觉得有必要将这些讨论分享出来，让大家消除对于ARC的疑虑。</p>
+
+<!-- more -->
 
 
-<p>这个道理似乎有点奇怪，因为我们从小都是由老师教授新知识的。我自己也实验过，掌握同样的高中课本上的知识，自己自学的速度通常比老师讲授的速度要慢一倍的时间。即一个知识点，如果你自己要看2小时的书才能理解的话，有好的老师给你讲解的话，只需要一个小时就够了。所以，我一直希望在学习各种东西的时候都能去听一些课程，因为我认为这样节省了我学习的时间。</p>
-
-<p>但是这个道理在程序员这一行行不通，为什么这么说呢？原因有2点：</p>
+<p>关于ARC的介绍文章网上已经很多，苹果的官方文档也不少。担心使用ARC会带来问题的同学主要的理由有以下5点:</p>
 
 <ol>
-<li>计算机编程相关的知识更新速度很快。同时，国内的IT类资料的翻译质量相当差，原创的优秀书籍也很少。所以，我们通常需要靠阅读英文才能掌握最新的资料。</li>
-<li>计算机编程知识需要较多的专业知识积累和实践。</li>
+<li>担心这个技术方案不靠谱。苹果大多数时候的技术方案都是比较靠谱的，但也有一些技术方案有很多坑，例如storyboard。关于storyboard的问题可以参看我的<a href="http://blog.devtang.com/blog/2012/12/15/do-not-use-storyboard/">这篇文章</a>。</li>
+<li>原有的项目在非ARC环境下运行良好，担心迁移成本或引入新的问题。</li>
+<li>苹果以前手工管理内存需要非常小心，稍微不注意应用程序就崩溃了。有过这段经历的iOS开发老手，心里上还是觉得自己手工管理内存更踏实一些。</li>
+<li>使用ARC需要了解ARC的一些细节，还需要引入_bridge等新的关键字，学习成本还是有的。</li>
+<li>以为ARC只能支持iOS5.0以上（这是非常大的误解）。</li>
 </ol>
 
 
-<p>如果一个培训机构有一个老师，他强到能够通过自己做一些项目来积累很多专业知识和实践，并且不断地从国外资料上学习最新的技术。那么这个人在企业里面会比在国内的培训机构更有施展自己能力的空间。国内的培训机构因为受众面的原因，基本上还是培养那种没有自学能力，只能做低级技术活的代码民工，所以对老师的技术要求不会那么高，自然也不会给出很诱人的薪水。但是企业就不一样了，企业需要不停地利用新技术来增强自己的产品竞争力，所以对于IT企业来说，产品的竞争就是人才的竞争，所以给优秀的人能够开出很高的薪水。</p>
+<p>对于上面提到5点问题，我认为相应的回答如下:</p>
 
-<p>所以，我们不能期望从IT类培训机构中学习到最新的技术，一切只能通过我们自学。当然，自学之后在同行之间相互交流，对于我们的技术成长也是很有用的。</p>
+<ol>
+<li>ARC是WWDC2011大会时提出的技术，离现在已经快2年了，而且苹果现在将MacOS上的垃圾回收机制废弃(Deprecated)，采用ARC替代，无疑证明了ARC是成熟的了。</li>
+<li>确实有一些迁移成本，但苹果在Xcode中专门集成了迁移工具，成本已经非常小了。如下图就是Xcode集成的将非ARC工程转换成ARC工程的工具。另外，为了兼容第三方的非ARC开源库，你也可以在工程中随意使用编译参数：<code>-fno-objc-arc</code> ,这个参数允许对部分文件关闭ARC。</li>
+<li>手工管理内存虽然踏实，但是泄露很容易发生。常常开发完成后，需要使用Instruments来检测泄露。但用了ARC后，基本不会出现泄露了，我在开发粉笔网iPhone客户端时，由于使用了ARC，花三个月开发完的应用，用instruments检测后，没有发现任何内存泄漏问题。这在没有使用ARC的工程中是不可想象的。</li>
+<li>确实有学习成本。但是非常值得学习，能省不少开发精力。</li>
+<li><p>虽然ARC是与iOS5一同推出，但是由于ARC的实现机制是在编译期完成，所以使用ARC之后App仍然可以支持iOS4.3。稍微需要注意的是，如果要在ARC开启的情况下支持iOS4.3，需要将weak关键字换成 __unsafe_unretained，另外还有一些细节需要处理，在这里我就不展开说了。</p>
 
-<p>所以，各位同行，别想有人能够教你，一切还是靠自己吧。</p>
+<p><img src="/images/xcode-convert-to-arc.jpg"></p></li>
+</ol>
+
+
+<p>所以，希望大家都能在项目中使用ARC，一旦你感受到它带来的好处，你就离不开它了。它也能让你从繁琐的内存管理代码中解放出来，将精力更多关注于代码结构、设计模式而不是底层的内存管理。</p>
+
+<p>关于ARC的教程，除了苹果的官方文档外，推荐易飞杨写的<a href="http://www.yifeiyang.net/category/embedded/iphone-embedded/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA/arc/">ARC相关的文章</a>。易飞杨的博客中关于iPhone开发的文章都写得很深入，值得好好阅读。</p>
 </div>
 
 
@@ -142,12 +156,12 @@
   
 
 
-<time datetime="2012-01-20T23:53:00+08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
+<time datetime="2013-03-27T21:23:00+08:00" pubdate data-updated="true">Mar 27<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/summary/'>summary</a>
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
   
 </span>
 
@@ -201,10 +215,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/01/01/2011-summary/" title="Previous Post: 2011年个人总结">&laquo; 2011年个人总结</a>
+        <a class="basic-alignment left" href="/blog/2013/02/21/introduction-of-weixin-public-account/" title="Previous Post: 分享iOS开发技巧的微信公共账号">&laquo; 分享iOS开发技巧的微信公共账号</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/01/23/use-javascript-to-import-pictures/" title="next Post: 用javascript协助导入图片">用javascript协助导入图片 &raquo;</a>
       
     </p>
   </footer>

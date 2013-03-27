@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。 后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。 &hellip;">
+  <meta name="description" content=" 我和身边做iOS开发的同事组建了一个QQ群，每隔一段时间，大家就会讨论是否应该使用ARC。所以我觉得有必要将这些讨论分享出来，让大家消除对于ARC的疑虑。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,49 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/03/27/should-we-use-arc/">是否应该使用ARC?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-27T21:23:00+08:00" pubdate data-updated="true">Mar 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/arc-logo.jpg"></p>
+
+<p>我和身边做iOS开发的同事组建了一个QQ群，每隔一段时间，大家就会讨论是否应该使用ARC。所以我觉得有必要将这些讨论分享出来，让大家消除对于ARC的疑虑。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/03/27/should-we-use-arc/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/02/21/introduction-of-weixin-public-account/">分享iOS开发技巧的微信公共账号</a></h1>
     
     
@@ -103,23 +146,18 @@
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/weixin-why.png"></p>
+  <div class="entry-content"><p><img src="/images/weixin-why.png" width="300px" /></p>
 
 <p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
 
-<p>后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。现在群里面加入了包括网易，腾讯，新浪，搜狐，美团，豆瓣等公司的iOS程序员以及一些自由职业者。因为大家都是比较有经验的开发者，所以每天大家的讨论不太多，但是都很有价值。</p>
+<p>后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。现在群里面加入了包括网易，腾讯，百度，新浪，搜狐，美团，豆瓣等公司的iOS程序员以及一些自由职业者。因为大家都是比较有经验的开发者，所以每天大家的讨论不太多，但是都很有价值。</p>
 
-<p>但是，我发现QQ群对于讨论的归档性太弱。很多有代表意义的讨论，对于其他人可能是有用的，但是由于群的归档性太差，随着时间流逝，这些信息无法被有效沉淀。</p>
-
-<p>所以我想做一个尝试。我想把这个QQ群里面有价值的讨论信息整理归档到这个公共账号上。希望大部分iOS同行每天都能得到少量的，但是有价值的信息。对于特别有价值的信息，我也会在后期整理成博客，发表在博客上。</p>
-
-<p>希望这能对你平时的工作有所帮助。</p>
-
-<p>如果你感兴趣，那么可以扫描以下二维码加该账号为好友，或者在微信中搜索“iOS开发”。</p>
-
-<p><img src="/images/weixin-qr.jpg"></p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/02/21/introduction-of-weixin-public-account/">阅读 &rarr;</a>
+    </footer>
   
 
 
@@ -492,61 +530,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/">使用CocoaPods来做iOS程序的包依赖管理</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-02T14:09:00+08:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/cocoapods-logo.png"></p>
-
-<h2>前言</h2>
-
-<p>每种语言发展到一个阶段，就会出现相应的依赖管理工具, 或者是中央代码仓库。比如</p>
-
-<ul>
-<li>Java: maven，Ivy</li>
-<li>Ruby: gems</li>
-<li>Python: pip, easy_install</li>
-<li>Nodejs: npm</li>
-</ul>
-
-
-<p>随着iOS开发者的增多，业界也出现了为iOS程序提供依赖管理的工具，这个工具叫：<a href="http://cocoapods.org/">CocoaPods</a>。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -560,6 +543,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/27/should-we-use-arc/">是否应该使用ARC?</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/02/21/introduction-of-weixin-public-account/">分享iOS开发技巧的微信公共账号</a>
@@ -615,10 +602,6 @@
     
       <li class="post">
         <a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">粉笔网的架构和项目管理</a>
       </li>
     
   </ul>

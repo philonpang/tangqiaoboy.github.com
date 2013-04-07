@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-03-27T21:45:55+08:00</updated>
+  <updated>2013-04-07T21:14:55+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS应用内支付(IAP)的那些坑]]></title>
+    <link href="http://blog.devtang.com/blog/2013/04/07/tricks-in-iap/"/>
+    <updated>2013-04-07T20:14:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/04/07/tricks-in-iap</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/iap-icon.jpg"></p>
+
+<h2>前言</h2>
+
+<p><a href="https://www.udacity.com/">udacity</a>中的在线课程<a href="https://www.udacity.com/course/ep245">《How to build a startup》</a>中提到，所谓创业，就是尝试寻找新的赢利模式。正因为这是一种尝试，所以不可避免地需要调整产品方向，寻找市场中还未被发现的用户需求，给用户创造价值，进而获得收入。最近很火的<a href="http://book.douban.com/subject/10945606/">精益创业</a>的观点，则是强调将这种尝试成本降到最小，使得自己可以根据市场反馈迅速调整产品。</p>
+
+<p>作为我们创业的第二个方向尝试，我们在今年春节后上线了新的在线智能题库：<a href="http://yuantiku.com/">猿题库</a>。这应该算是我们在互联网教育这个创业领域的第一次做产品方向调整。</p>
+
+<p>猿题库现在推出了公务员考试行测和申论2个产品，均包括web, iOS和Android三个平台。这次我们尝试做一个收费的产品，所以在iOS端集成了应用内支付（IAP）功能。在开发过程中和上线后，我们遇到了IAP中的一些坑，在此分享给各位。</p>
+
+<!-- more -->
+
+
+<h2>IAP 审核相关的坑</h2>
+
+<p>IAP开发的详细步骤我写在<a href="http://blog.devtang.com/blog/2012/12/09/in-app-purchase-check-list/">另一篇博客</a>中了。在此主要介绍审核时遇到的问题。</p>
+
+<h3>IAP类型错误</h3>
+
+<p>由于我们是按月付费的产品，所以在设置IAP类型时，我没有经验，只是简单设置成了可重复消费(Consumable)的IAP项目。但是我不知道，苹果对于这种按时间收费的产品，应该使用不可更新的定阅（Non-Renewing Subscription）类型。这个类型设置错误造成了我们app的一次审核被拒。</p>
+
+<h3>IAP验证逻辑</h3>
+
+<p>由于苹果在iOS5.0以下有IAP的bug，使得攻击者可以伪造支付成功的凭证。而iOS6.0的系统在越狱后同样可以伪造凭证，所以我们对于应用内支付，增加了服务器端的验证。
+服务器端会将支付凭证发给苹果的服务器进行二次验证，以保证凭证是真实有效的。</p>
+
+<p>在我们公司的测试服务器中，我们会连接苹果的测试服务器（https://sandbox.itunes.apple.com/verifyReceipt）验证。</p>
+
+<p>在我们部署在线上的正式服务器中，我们会连接苹果的正式服务器（https://buy.itunes.apple.com/verifyReceipt ）验证。</p>
+
+<p>我们提交给苹果审核的是正式版，我们以为苹果审核时，我们应该连接苹果的线上验证服务器来验证购买凭证。结果我理解错了，苹果在审核App时，只会在sandbox环境购买，其产生的购买凭证，也只能连接苹果的测试验证服务器。但是审核的app又是连接的我们的线上服务器。所以我们这边的服务器无法验证通过IAP购买，造成我们app的又一次审核被拒。</p>
+
+<p>解决方法是判断苹果正式验证服务器的返回code，如果是21007，则再一次连接测试服务器进行验证即可。苹果的<a href="http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/StoreKitGuide/RenewableSubscriptions/RenewableSubscriptions.html">这一篇文档</a>上有对返回的code的详细说明。</p>
+
+<h2>IAP上线后的遇到的情况</h2>
+
+<p>我们在服务器端增加了验证IAP是否有效的逻辑。在产品上线后，如我们所料，我们收到了大量的欺骗性购买，这些都被我们的服务器识别出来了，但是我们也遇到了以下这次没有想到的情况:</p>
+
+<p>1、由于国内越狱用户的比例比较大(大概为50%),所以虽然我们服务器会验证购买凭证，但是每天有超过50%以上的凭证都是伪造的。同时由于苹果的验证服务器在美国，凭证验证请求响应的时间比较慢，大量的伪造凭证发给苹果服务器，不知道会不会被苹果认为我们是在恶意进行DDOS。至少我们发现有些时候，验证请求会超时。</p>
+
+<p>2、由于国内有许多小白用户，他们的手机从购买时就被渠道商帮忙越狱过了并且安装了IAP free插件。所以对于这类用户，他们即使想付费购买，由于系统原有的IAP支付功能已经被破坏，所以他们是无法正常付费的。麻烦的是，他们会以为这是我们的app的问题，转而给我们的客服打电话投诉。这让我们非常郁闷。</p>
+
+<p>3、苹果的验证服务器有时候会出问题，我们发现本来约定好返回的JSON数据在有几次返回的居然是一个XML格式的文件。造成我们将正常的付费IAP凭证验证失败。所以，在服务器记录下所有的验证凭证非常有必要，一来可以防止黑客多次提交同一个成功凭证的重放攻击，二来在需要时可以手工进行再验证。</p>
+
+<h2>越狱手机可能被黑客窃取购买凭证！！</h2>
+
+<p>我们发现有一部分用户反馈说已经收到苹果的扣费账单，但是我们从服务器的验证记录看，他上传的凭证却是虚假的。由于这些用户不太多，我们一开始以为是用户在恶意欺骗我们，后来我们让他将苹果的付费账单邮件转发给我们，以及将itunes的购买记录截图转发给我们，我们越来越怀疑这里面有一个黑色的产业链。越狱手机的正常购买凭证可能被黑客的恶意程序截获，具体的攻击方式我们讨论了一下，其实就是被<a href="http://zh.wikipedia.org/wiki/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a>，详细的过程如下:</p>
+
+<ol>
+<li>越狱手机的在被破解后，可能从一些破解渠道安装了黑客的恶意程序。</li>
+<li>黑客将越狱手机所有https请求都经过他的中间服务器。</li>
+<li>当有支付请求时，黑客先将请求发给苹果服务器，待苹果将成功的凭证返回后，黑客将这个凭证替换成假的凭证，完全支付凭证的偷取。</li>
+</ol>
+
+
+<p>或许有人会问，这个凭证拿来有什么用呢?很简单 ，因为苹果为了保护用户的隐私，支付凭证中并不包含任何用户的apple id信息，所以我们的app和服务器无法知道这个凭证是谁买的，而只能知道这个凭证是真的还是假的。于是黑客就可以用这个凭证，在另外的账号中通知我们完成了购买，而发来的验证凭证又是真实的，所以我们的服务器就会误认为是黑客的账号完成了购买，继而把会员期算在黑客的账号上。</p>
+
+<p>再举一个简单的例子，你拿500块钱买了顺风优选的500元购物券，由于这个购物券是不记名的，所以顺风优选无法知道是谁买的。如果这个购物券在发放过程中被人掉包，那么偷购物券的人就可以拿这个偷来的真购物券来购物，而顺风优选的卡因为是不记名的，所以也无法查证这件事情。在这个例子中，购物券的不记名和苹果的支付凭证无账号信息是同一个道理。</p>
+
+<p>鉴于以上情况，考虑到越狱手机不但不能成功支付，还会有安全问题，所以我们在新版中取消了越狱手机中的IAP支付功能。</p>
+
+<p><font color=red>所以，请大家还是不要越狱自己的手机，iphone手机越狱后风险相当大。实在不值得为了免费玩几个游戏就丢掉安全性。</font></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[是否应该使用ARC?]]></title>
@@ -2862,252 +2932,6 @@ ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTT
 <p>另外，我们对于Linux系统管理都不太懂，特别希望能找到一个系统管理高手加入我们团队，我们乐意向你学习。同时，如果你对学习开发有兴趣，那就太好不过了，我们的目标是DevOps。</p>
 
 <p>我们也欢迎实习生申请加入，但要求每周至少全职实习4天。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[用脚本来简化iOS美术同学的工作]]></title>
-    <link href="http://blog.devtang.com/blog/2012/08/26/use-script-to-power-up-ui-work/"/>
-    <updated>2012-08-26T20:34:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/08/26/use-script-to-power-up-ui-work</id>
-    <content type="html"><![CDATA[<h2>问题</h2>
-
-<p>我们知道，在iOS开发中，为了使我们的app能够同时支持iPhone的Retina屏幕和普通屏幕，美术同学需要对UI设计稿中的每个元素进行2次切图。苹果要求对图片元素的命名分别为 name.png 和 name@2x.png，带@2x的表示是Retina屏幕的贴图，不带@2x的同名文件为普通屏幕的贴图。</p>
-
-<p>我在开发的时候发现很难要求美术同学按照开发的要求来对图片命名。她们通常对于切图的命名是例如 <em>登录按钮大.png</em> ，<em>登录按钮小.png</em>, <em>登录按钮按下大.png</em> <em>登录按钮按下小.png</em> 这样的形式。于是，对这些文件按照苹果的要求进行重命名就成了我这个码农的一个体力活。</p>
-
-<!-- more -->
-
-
-<h2>解决方案</h2>
-
-<p>有什么方法能减少开发和美术的体力活呢？想到因为 name@2x.png 的图片是 name.png 图片的2整倍，所以，我们完全可以让美术只切@2x的大图，而我们使用脚本来生成小图。于是我写了下面这样的一个脚本，我只需要将所有的大图按照类似 name-1@2x.png , name-2@2x.png 方式命名，然后脚本就会自动帮我生成对应的名为 name-1.png 和 name-2.png的小图。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#! /bin/bash</span>
-</span><span class='line'><span class="cp"># File name : convertImage.sh</span>
-</span><span class='line'><span class="cp"># Author: Tang Qiao</span>
-</span><span class='line'><span class="cp"># </span>
-</span><span class='line'>
-</span><span class='line'><span class="cp"># print usage</span>
-</span><span class='line'><span class="n">usage</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span>
-</span><span class='line'>    <span class="nl">Usage:</span>
-</span><span class='line'>        <span class="n">convertImage</span><span class="p">.</span><span class="n">sh</span> <span class="o">&lt;</span><span class="n">src</span> <span class="n">directory</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">dest</span> <span class="n">directory</span><span class="o">&gt;</span>
-</span><span class='line'><span class="n">EOF</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="p">[</span> <span class="n">$</span><span class="err">#</span> <span class="o">-</span><span class="n">ne</span> <span class="mi">2</span> <span class="p">];</span> <span class="n">then</span>
-</span><span class='line'>    <span class="n">usage</span>
-</span><span class='line'>    <span class="n">exit</span> <span class="mi">1</span>
-</span><span class='line'><span class="n">fi</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">SRC_DIR</span><span class="o">=</span><span class="n">$1</span>
-</span><span class='line'><span class="n">DEST_DIR</span><span class="o">=</span><span class="n">$2</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp"># check src dir</span>
-</span><span class='line'><span class="k">if</span> <span class="p">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">d</span> <span class="n">$SRC_DIR</span> <span class="p">];</span> <span class="n">then</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;src directory not exist: $SRC_DIR&quot;</span>
-</span><span class='line'>    <span class="n">exit</span> <span class="mi">1</span>
-</span><span class='line'><span class="n">fi</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp"># check dest dir</span>
-</span><span class='line'><span class="k">if</span> <span class="p">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">d</span> <span class="n">$DEST_DIR</span> <span class="p">];</span> <span class="n">then</span>
-</span><span class='line'>    <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="n">$DEST_DIR</span>
-</span><span class='line'><span class="n">fi</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="n">src_file</span> <span class="k">in</span> <span class="n">$SRC_DIR</span><span class="o">/*</span><span class="p">.</span><span class="o">*</span> <span class="p">;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;process file name: $src_file&quot;</span>
-</span><span class='line'><span class="cp">    # 获得去掉文件名的纯路径</span>
-</span><span class='line'>    <span class="n">src_path</span><span class="o">=</span><span class="err">`</span><span class="n">dirname</span> <span class="n">$src_file</span><span class="err">`</span>
-</span><span class='line'><span class="cp">    # 获得去掉路径的纯文件名</span>
-</span><span class='line'>    <span class="n">filename</span><span class="o">=</span><span class="err">`</span><span class="n">basename</span> <span class="n">$src_file</span><span class="err">`</span>
-</span><span class='line'><span class="cp">    # 获得文件名字(不包括扩展名)</span>
-</span><span class='line'>    <span class="n">name</span><span class="o">=</span><span class="err">`</span><span class="n">echo</span> <span class="s">&quot;$filename&quot;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="sc">&#39;.&#39;</span> <span class="o">-</span><span class="n">f1</span><span class="err">`</span>
-</span><span class='line'><span class="cp">    # remove @2x in filename if there is</span>
-</span><span class='line'>    <span class="n">name</span><span class="o">=</span><span class="err">`</span><span class="n">echo</span> <span class="s">&quot;$name&quot;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="s">&quot;@&quot;</span> <span class="o">-</span><span class="n">f1</span><span class="err">`</span>
-</span><span class='line'><span class="cp">    # 获得文件扩展名</span>
-</span><span class='line'>    <span class="n">extension</span><span class="o">=</span><span class="err">`</span><span class="n">echo</span> <span class="s">&quot;$filename&quot;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="sc">&#39;.&#39;</span> <span class="o">-</span><span class="n">f2</span><span class="err">`</span>
-</span><span class='line'>    <span class="n">dest_file</span><span class="o">=</span><span class="s">&quot;$DEST_DIR/${name}.${extension}&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">convert</span> <span class="n">$src_file</span> <span class="o">-</span><span class="n">resize</span> <span class="mi">50</span><span class="o">%</span> <span class="n">$dest_file</span>
-</span><span class='line'><span class="n">done</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>脚本使用方法：将以上代码另存为 convertImage.sh，然后用以下方式调用此脚本，即可将源文件夹中所有以@2x结尾的图片文件转成一半大小的、去掉@2x的小图片。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>convertImage.sh 源文件夹 目标文件夹
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>使用以上脚本后，美术只用切一半的图了。因为给我的切图少了，所以我可以更加方便地找到对应的切图了。另外，我也减少了一半对切图进行重命名的工作。</p>
-
-<h2>Tips</h2>
-
-<h3>imagemagick</h3>
-
-<p>如果你运行以上脚本失败，请先用brew 或 port安装 imagemagick。imagemagick是一个相当强大的图象处理库。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install imagemagick
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>检查图片</h3>
-
-<p>在使用该脚本一段时间后，我发现美术同学给我的大图的长宽常常不是偶数，这样造成缩小的图就不是原图的整倍数了。为了方便我检查美术给我的图片是否宽高都是偶数，我写了如下检查的脚本，这样就可以检查图片的宽高是否符合要求了。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#! /bin/bash</span>
-</span><span class='line'><span class="c"># File name : checkImageSize.sh</span>
-</span><span class='line'><span class="c"># Author: Tang Qiao</span>
-</span><span class='line'><span class="c"># </span>
-</span><span class='line'>
-</span><span class='line'>usage<span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    cat <span class="s">&lt;&lt;EOF</span>
-</span><span class='line'><span class="s">    Usage:</span>
-</span><span class='line'><span class="s">        checkImageSize.sh &lt;directory&gt;</span>
-</span><span class='line'><span class="s">EOF</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-ne 1 <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">    </span>usage
-</span><span class='line'>    <span class="nb">exit </span>1
-</span><span class='line'><span class="k">fi</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">SRC_DIR</span><span class="o">=</span><span class="nv">$1</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># check src dir</span>
-</span><span class='line'><span class="k">if</span> <span class="o">[</span> ! -d <span class="nv">$SRC_DIR</span> <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;src directory not exist: $SRC_DIR&quot;</span>
-</span><span class='line'>    <span class="nb">exit </span>1
-</span><span class='line'><span class="k">fi</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for </span>src_file in <span class="nv">$SRC_DIR</span>/*.png ; <span class="k">do</span>
-</span><span class='line'><span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;process file name: $src_file&quot;</span>
-</span><span class='line'>    <span class="nv">width</span><span class="o">=</span><span class="sb">`</span>identify -format <span class="s2">&quot;%[fx:w]&quot;</span> <span class="nv">$src_file</span><span class="sb">`</span>
-</span><span class='line'>    <span class="nv">height</span><span class="o">=</span><span class="sb">`</span>identify -format <span class="s2">&quot;%[fx:h]&quot;</span> <span class="nv">$src_file</span><span class="sb">`</span>
-</span><span class='line'>    <span class="c"># check width</span>
-</span><span class='line'>    <span class="nv">modValue</span><span class="o">=</span><span class="sb">`</span>awk -v <span class="nv">a</span><span class="o">=</span><span class="nv">$width</span> <span class="s1">&#39;BEGIN{printf &quot;%d&quot;, a % 2}&#39;</span><span class="sb">`</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$modValue&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">       </span><span class="nb">echo</span> <span class="s2">&quot;[Error], the file $src_file width is $width&quot;</span>
-</span><span class='line'>    <span class="k">fi</span>
-</span><span class='line'>    <span class="c"># check height</span>
-</span><span class='line'>    <span class="nv">modValue</span><span class="o">=</span><span class="sb">`</span>awk -v <span class="nv">a</span><span class="o">=</span><span class="nv">$height</span> <span class="s1">&#39;BEGIN{printf &quot;%d&quot;, a % 2}&#39;</span><span class="sb">`</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$modValue&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">       </span><span class="nb">echo</span> <span class="s2">&quot;[Error], the file $src_file height is $height&quot;</span>
-</span><span class='line'>    <span class="k">fi</span>
-</span><span class='line'><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>问题</h3>
-
-<p>我在使用以上方法时，发现由于imagemagick压缩比太高，生成的图片如果象素太小，它就会生成索引图片，而不知道何故，少量索引图片在iPhone 3GS上会显示出一条黑线在图片底部。对于这些图片，用photoshop将其模式改成RGB颜色即可。如下所示：</p>
-
-<p><img src="http://blog.devtang.com/images/ui-script-tips.png" title="" ></p>
-
-<p>用脚本代替体力活是一件很happy的事情，因为你可以用省下来的时间多做一些有意思的事情了。</p>
-
-<p>Have fun !</p>
-
-<h3>后记</h3>
-
-<p>在发表完这篇文章后，得到了很多反馈。</p>
-
-<p>其中<a href="http://weibo.com/wangyihan01">李祎</a>同学提到了一个iOS独立开发者的解决思路：<a href="http://kevincao.com/2011/08/prepare-png-for-iphone-app/">http://kevincao.com/2011/08/prepare-png-for-iphone-app/</a> ，我感觉该博客中提到的方法，或许更加适合美术同学，因为整个操作都是图形化的。所以附在这里，希望对大家有用。</p>
-
-<p>另外，网易杭研院的<a href="http://weibo.com/myerlang">施强</a>同学推荐了一个用于缩图的软件:<a href="http://www.xnconvert.com/">http://www.xnconvert.com/</a> ，据说也能很好的解决以上问题。一并在此推荐给大家作为参考。</p>
 ]]></content>
   </entry>
   

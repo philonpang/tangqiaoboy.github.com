@@ -67,7 +67,24 @@ IAP开发的详细步骤我写在[另一篇博客](http://blog.devtang.com/blog/
 
 <font color=red>所以，请大家还是不要越狱自己的手机，iphone手机越狱后风险相当大。实在不值得为了免费玩几个游戏就丢掉安全性。</font>
 
+## 后记
 
+### 中间人攻击的演示
 
+iOS独立开发者[王轲_IndieBros](http://weibo.com/indiebros)在他的博客文章[《使用mitmproxy获取iTunes 11的Raw HTTPs Response》](http://www.iwangke.me/2013/02/18/get-itunes-raw-response-with-mitmproxy/)中演示了如何使用中间人攻击来修改Game Center游戏数据。王轲还把我的例子白话翻译了一下（可见我还是说得太绕了，囧）：
+
+{% blockquote %}
+坏人在购买过程中插了一腿，换走了用户的无记名发票（购物小票形象些），然后手持无记名小票伪装成真实顾客或者转手出售获利。
+{% endblockquote %}
+
+### 关于越狱与盗版
+
+不少细心的同学评论纠正我，指出越狱并不等同于使用盗版。确实，如果说严格的定义，越狱只是让iPhone获得root权限，进而可以做任何事情。如果越狱的同学在越狱后不安装IAP free插件，不使用app sync插件，不使用任何国内的和非bigboss的cydia源，不使用任何盗版软件，所有应用都是从app store官方网站上下载的话，被黑客攻击的可能性会降低一些。
+
+即使这样，由于手机已经被root了，苹果的沙盒安全机制失效，所以风险还是很大的。
+
+### 关于越狱用户的比例
+
+有同学提出我文章中写的越狱手机比例太高了，想询问数据来源。这个比例主要来自我们自己的app的统计信息，以及结合国内的统计工具友盟的[越狱手机比例统计](http://www.umeng.com/umengdata_reports)，去年底国内的越狱比例是42%。
 
 

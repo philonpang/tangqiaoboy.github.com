@@ -4,7 +4,7 @@
   <title><![CDATA[Category: OpenCV | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/opencv/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-04-09T21:23:38+08:00</updated>
+  <updated>2013-04-09T21:23:52+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -20,7 +20,7 @@
     <id>http://blog.devtang.com/blog/2012/10/27/use-opencv-in-ios</id>
     <content type="html"><![CDATA[<h2>前言</h2>
 
-<p>{% img /images/opencv.png %}</p>
+<p><img src="/images/opencv.png"></p>
 
 <p><a href="http://opencv.org/about.html">OpenCV</a> 是一个开源的跨平台计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。</p>
 
@@ -56,19 +56,19 @@ brew install opencv
 
 <p>新建一个Cocoa Application的工程。工程建好后，选中工程的Target，在Build Settings一样，找到“Header Search Paths"这一个选项，将它的值改为“/usr/local/include"。如下所示：</p>
 
-<p>{% img /images/use-opencv-in-mac-1.png %}</p>
+<p><img src="/images/use-opencv-in-mac-1.png"></p>
 
 <p>接着切换到Build Phases这个tab，在“Link Binary With Libraries"中，选项+号，然后将弹出的文件选择对话框目录切换到“/usr/local/lib"目录下，选择你需要使用的OpenCV链接库（通常情况下，你至少会需要core、highgui和imgproc库)，如下图所示：</p>
 
-<p>{% img /images/use-opencv-in-mac-2.png %}</p>
+<p><img src="/images/use-opencv-in-mac-2.png"></p>
 
 <p>这里有一个技巧，因为 /usr 目录在对话框中默认不是可见的，可以按快捷键 command + shift + G，在弹出的“前往文件夹"对话框中输入 /usr/local/lib ，即可跳转到目标文件夹。如下图所示：</p>
 
-<p>{% img /images/use-opencv-in-mac-3.png %}</p>
+<p><img src="/images/use-opencv-in-mac-3.png"></p>
 
 <p>下一步是我自己试出来的，你需要在Build Settings中，将“C++ Language Dialect”设置成C++11，将“C++ Standard Library”设置成libstdc++ ，如下图所示。个人感觉是由于XCode默认设置的GNU++11、libc++与OpenCV库有一些兼容性问题，我在更改该设置前老是出现编译错误。如果后续版本解决了这个问题，就不用进行这一步了。</p>
 
-<p>{% img /images/use-opencv-in-mac-4.png %}</p>
+<p><img src="/images/use-opencv-in-mac-4.png"></p>
 
 <p>把上面的设置都做好后，就可以在需要的使用OpenCV库的地方，加上opencv的头文件引用即可：</p>
 

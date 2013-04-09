@@ -4,7 +4,7 @@
   <title><![CDATA[Category: shell | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-04-09T21:23:38+08:00</updated>
+  <updated>2013-04-09T21:23:52+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -170,7 +170,7 @@ git config --global core.autocrlf true
 
 <p> 一旦推送到远程仓库后，就不要用类似git reset, git ci --amend, git rebase等破坏性提交了，否则远程仓库会因为你的新推送不是Fast Forward而拒绝提交(关于什么是Fast Forward要讲的太多了，自已看书吧)。如果实在不小心做了。在确定别人没有检出前，用git push -f 可以强制推送到远程仓库中。如下图:</p>
 
-<p>{% img /images/git_push_f.jpg %}</p>
+<p><img src="/images/git_push_f.jpg"></p>
 
 <h3>使用git svn</h3>
 

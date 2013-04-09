@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scrum | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/scrum/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-04-09T21:23:38+08:00</updated>
+  <updated>2013-04-09T21:23:52+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -25,11 +25,11 @@
 <!-- more -->
 
 
-<p>{% img /images/fenbi-scrum.jpg %}</p>
+<p><img src="/images/fenbi-scrum.jpg"></p>
 
 <p>第二部分是关于粉笔网的技术架构方案。粉笔网在技术上还是一个微博类的<a href="http://baike.baidu.com/view/713949.htm">UGC</a>信息聚合系统。一方面，我们的团队之前做过<a href="http://t.163.com">网易微博</a>和<a href="http://izhuanjiao.com">爱转角</a>这2个微博类系统，积累了很多经验。另一方面，我们作为创业团队，没有在大公司里可以使用的内部开发的成熟的分布式存储系统，所以，我们只有借助于开源社区。最终，我们比较了现在各种方案的优缺点后，提出了我们自己的能够支持千万级用户的系统架构方案。这个方案最终通过了我们自己的压力测试，并且在上线后运行良好。CSDN整理出来的报道文章在<a href="http://www.csdn.net/article/2012-10-11/2810661?bsh_bid=145141477">这里</a>。</p>
 
-<p>{% img /images/fenbi-arch.png %}</p>
+<p><img src="/images/fenbi-arch.png"></p>
 
 <p>我们将演示的PDF文件在此分享给大家。下载链接：<a href="http://blog.fenbi.com/assets/fenbi-scrum.pdf">第一部分</a> , <a href="http://blog.fenbi.com/assets/fenbi-arch.pdf">第二部分</a> 。</p>
 ]]></content>

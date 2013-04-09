@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-04-09T21:23:38+08:00</updated>
+  <updated>2013-04-09T21:23:52+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -18,7 +18,7 @@
     <link href="http://blog.devtang.com/blog/2013/04/07/tricks-in-iap/"/>
     <updated>2013-04-07T20:14:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2013/04/07/tricks-in-iap</id>
-    <content type="html"><![CDATA[<p>{% img /images/iap-icon.jpg %}</p>
+    <content type="html"><![CDATA[<p><img src="/images/iap-icon.jpg"></p>
 
 <h2>前言</h2>
 
@@ -89,9 +89,7 @@
 
 <p>iOS独立开发者<a href="http://weibo.com/indiebros">王轲_IndieBros</a>在他的博客文章<a href="http://www.iwangke.me/2013/02/18/get-itunes-raw-response-with-mitmproxy/">《使用mitmproxy获取iTunes 11的Raw HTTPs Response》</a>中演示了如何使用中间人攻击来修改Game Center游戏数据。王轲还把我的例子白话翻译了一下（可见我还是说得太绕了，囧）：</p>
 
-<p>{% blockquote %}
-坏人在购买过程中插了一腿，换走了用户的无记名发票（购物小票形象些），然后手持无记名小票伪装成真实顾客或者转手出售获利。
-{% endblockquote %}</p>
+<p><blockquote><p>坏人在购买过程中插了一腿，换走了用户的无记名发票（购物小票形象些），然后手持无记名小票伪装成真实顾客或者转手出售获利。</p></blockquote></p>
 
 <h3>关于越狱与盗版</h3>
 
@@ -110,7 +108,7 @@
     <link href="http://blog.devtang.com/blog/2013/03/27/should-we-use-arc/"/>
     <updated>2013-03-27T21:23:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2013/03/27/should-we-use-arc</id>
-    <content type="html"><![CDATA[<p>{% img /images/arc-logo.jpg %}</p>
+    <content type="html"><![CDATA[<p><img src="/images/arc-logo.jpg"></p>
 
 <p>我和身边做iOS开发的同事组建了一个QQ群，每隔一段时间，大家就会讨论是否应该使用ARC。所以我觉得有必要将这些讨论分享出来，让大家消除对于ARC的疑虑。</p>
 
@@ -137,7 +135,7 @@
 <li>确实有学习成本。但是非常值得学习，能省不少开发精力。</li>
 <li><p>虽然ARC是与iOS5一同推出，但是由于ARC的实现机制是在编译期完成，所以使用ARC之后App仍然可以支持iOS4.3。稍微需要注意的是，如果要在ARC开启的情况下支持iOS4.3，需要将weak关键字换成 __unsafe_unretained，另外还有一些细节需要处理，在这里我就不展开说了。</p>
 
-<p>{% img /images/xcode-convert-to-arc.jpg %}</p></li>
+<p><img src="/images/xcode-convert-to-arc.jpg"></p></li>
 </ol>
 
 
@@ -169,7 +167,7 @@
 
 <p>如果你感兴趣，那么可以扫描以下二维码加该账号为好友，或者在微信中搜索“iOS开发”。</p>
 
-<p>{% img /images/weixin-qr.jpg %}</p>
+<p><img src="/images/weixin-qr.jpg"></p>
 
 <hr>
 
@@ -210,7 +208,7 @@
     <link href="http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language/"/>
     <updated>2013-01-23T21:05:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language</id>
-    <content type="html"><![CDATA[<p>{% img /images/bdj-rank.jpg %}</p>
+    <content type="html"><![CDATA[<p><img src="/images/bdj-rank.jpg"></p>
 
 <p>在iOS应用中，有时候会需要调用系统的一些UI控件，例如：</p>
 
@@ -228,11 +226,11 @@
 
 <p>例如下图中，一个名为“百思不得姐”的应用，其在AppStore免费总榜中排名前100，图书类分类榜排名第一的应用，就闹出了系统控件显示成了英文的笑话，在其软件界面中长按，就会出如下的菜单，可以看到，这个菜单的文字全是英文的：</p>
 
-<p>{% img /images/ios-menu-1.jpg %}</p>
+<p><img src="/images/ios-menu-1.jpg"></p>
 
 <p>而正常的菜单应该是中文的，如下是新浪微博的正文长按之后的效果：</p>
 
-<p>{% img /images/ios-menu-2.jpg %}</p>
+<p><img src="/images/ios-menu-2.jpg"></p>
 
 <p>如何解决这个问题呢？方法如下:</p>
 
@@ -339,7 +337,7 @@ str = [str initWithString:@"Bar"];
 
 <p>自从Mac OS X 10.5上引入了垃圾回收机制后，苹果就不建议程序员使用allocWithZone了，事实上，cocoa框架也会忽略allocWithZone指定的分区。苹果在文档中也<a href="https://developer.apple.com/library/mac/#documentation/cocoa/Reference/Foundation/Classes/NSObject_Class/Reference/Reference.html#//apple_ref/occ/clm/NSObject/allocWithZone:">提到</a>，allocWithZone仅仅是一个历史遗留设计了。下图是苹果的文档截图：</p>
 
-<p>{% img /images/allocWithZone.png  %}</p>
+<p><img src="/images/allocWithZone.png" title="" ></p>
 
 <h3>Objective-C的历史</h3>
 

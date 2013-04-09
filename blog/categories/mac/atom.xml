@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mac | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-04-09T21:23:38+08:00</updated>
+  <updated>2013-04-09T21:23:52+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -18,15 +18,7 @@
     <link href="http://blog.devtang.com/blog/2012/12/08/use-privoxy/"/>
     <updated>2012-12-08T16:47:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2012/12/08/use-privoxy</id>
-    <content type="html"><![CDATA[<p>{% blockquote %}</p>
-
-<p>You take the blue pill, the story ends, you wake up in your bed, and believe whatever you want to believe.</p>
-
-<p>You take the red pill, you stay in Wonderland, and I show you just how deep the rabbit hole goes.</p>
-
-<p>-- 《黑客帝国》</p>
-
-<p>{% endblockquote %}</p>
+    <content type="html"><![CDATA[<p><blockquote><p></p></p><p><p>You take the blue pill, the story ends, you wake up in your bed, and believe whatever you want to believe.</p></p><p><p>You take the red pill, you stay in Wonderland, and I show you just how deep the rabbit hole goes.</p></p><p><p>-- 《黑客帝国》</p></p><p><p></p></blockquote></p>
 
 <p>如果你不知道什么是“墙”，那么应该祝福你继续活在美丽的Matrix里。但如果你选择服用红色药丸，那么在享受了墙外的信息流畅之后，你就再也无法忍受墙内的世界了。</p>
 
@@ -41,7 +33,7 @@
 
 <p>拿GoAgent直接作代理服务器地址不太合适，因为如果全部走代理的话，国内的访问太慢了，所以我们需要给Chrome浏览器配置<a href="https://chrome.google.com/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm">SwitchySharp插件</a>，SwitchySharp插件加上自动更新的“墙”List（地址见下图），我们就可以在浏览器中享受无墙的世界了。</p>
 
-<p>{% img /images/switch-sharp.png %}</p>
+<p><img src="/images/switch-sharp.png"></p>
 
 <h2>Privoxy</h2>
 
@@ -138,7 +130,7 @@ tcp4       0      0  127.0.0.1.8118         *.*                    LISTEN
 
 <p>三. 打开mac的代理设置，将“Web代理”和"安全Web代理"都设置成127.0.0.1，端口为8118。如下图所示：</p>
 
-<p>  {% img /images/mac-proxy.png %}</p>
+<p>  <img src="/images/mac-proxy.png"></p>
 
 <h3>Tips</h3>
 
@@ -146,11 +138,11 @@ tcp4       0      0  127.0.0.1.8118         *.*                    LISTEN
 <li><p>如果你的GoAgent监听在8087端口，而Privoxy监听在8118端口，那么到这一步，你就可以让你的所有应用正常翻墙了。
 需要注意的是SwitchySharp默认会忽略系统代理直接连接网络，你可能需要选择它的“使用系统代理设置”这一项，如下所示：</p>
 
-<p>  {% img /images/switch-sharp-use-system-proxy.png %}</p></li>
+<p>  <img src="/images/switch-sharp-use-system-proxy.png"></p></li>
 <li><p>用浏览器访问 config.privoxy.org，即可用Web界面管理自己的provixy配置文件。不过，事先需要在config文件中启用Web管理功能，方法是编辑/usr/local/etc/privoxy/config 文件，将enable-edit-actions的值设置为1即可。</p></li>
 <li><p>访问 <a href="http://config.privoxy.org/show-url-info">http://config.privoxy.org/show-url-info</a> 可以查询某一个特定的URL是否会走代理服务。我们可以随时在这儿查询，结合上面的第2步，将一些URL Pattern加入到代理列表文件 wall.action 中, 我们就可以方便地管理Privoxy。</p></li>
 <li><p>证书是个麻烦事儿，由于GoAgent的证书是自己生成的而不是权威机构颁发的，所以需要把GoAgent的证书加到钥匙串访问的可信证书里面，如下图所示。另外GoAgent的默认带的证书因为是公开的，所以有潜在被<a href="http://zh.wikipedia.org/zh-hk/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a>的危险，所以更安全的做法是把默认的证书删掉再重启GoAgent，这样GoAgent就会重新另外生成一个证书了，再把这个新证书加到钥匙串访问中，会更安全一些。
-{% img /images/goagent-cer.png %}</p></li>
+<img src="/images/goagent-cer.png"></p></li>
 </ol>
 
 

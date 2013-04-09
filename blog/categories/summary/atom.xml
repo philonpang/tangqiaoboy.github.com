@@ -4,7 +4,7 @@
   <title><![CDATA[Category: summary | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/summary/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-04-09T21:20:48+08:00</updated>
+  <updated>2013-04-09T21:23:38+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -117,17 +117,17 @@
 
 <p>以下是我们整个项目的进展图，我们每周一个sprint，每3周一个Milestone，需求在中间经历过一些变动，但都是在对项目进度的影响在可控的范围内。</p>
 
-<p><img src="/images/fenbi_dev.png"></p>
+<p>{% img /images/fenbi_dev.png %}</p>
 
 <h2>代码总结</h2>
 
 <p>回顾我们团队这3个多月的代码贡献，可以用惊人来形容。除去第三方的开源库依赖，后台写了将近10万行代码，前端8万行代码，iPhone端7万行，android端7万行。一共30多万行代码。</p>
 
 <p>以下是用<a href="http://gitstats.sourceforge.net/">gitstat软件</a>统计出来的代码增长图，首先是web前端和后台，它们在一个项目里面：
-<img src="/images/fenbi_web_commit_log.jpeg"></p>
+{% img /images/fenbi_web_commit_log.jpeg %}</p>
 
 <p>然后是iPhone端：
-<img src="/images/fenbi_iphone_commit_log.jpeg"></p>
+{% img /images/fenbi_iphone_commit_log.jpeg %}</p>
 
 <h2>创业感受</h2>
 
@@ -360,11 +360,11 @@ transfer转到了我的工商银行账号，然后马上换成了人民币。第
 
 
 <p>Topcoder比赛结果，<a href="http://community.topcoder.com/tc?module=CompContestDetails&amp;pj=30014856">来源</a>
-<img src="/images/topcoder_component_rank.png"></p>
+{% img /images/topcoder_component_rank.png %}</p>
 
 <p>3月份，oxygen离职去了知乎。其实我也明白微博的竞争似乎已经结束，某浪和某迅基本已经占位成功。在产品上没有新意，宣传上没有增加投入的情况下，要超过他们似乎是不可能的事。并且我也渐渐意识到微博本身的价值有些被过高估计，新浪的股票一路从50多涨到120多，现在又回归50多似乎说明了这一点。也是从3月份开始，我开始带实习生tianye了。这是我第一次带实习生，感觉自己很多细节上还是没有处理好，比起郭老大来说，有很多考虑不周的地方。不过至少我是尽力想做好这个mentor的。</p>
 
-<p><img src="/images/sina_stock_2011.png"></p>
+<p>{%img /images/sina_stock_2011.png %}</p>
 
 <p>也是从3月份开始，我开始跟着perfectworks做前端开发了。前端开发在春节就翻过一些书，有一些基本概念了。perfectworks在前端开发这块很牛，也很希望跟着他多学习一些东西。因为前端的tricky很多，如果没有牛人带的话，成长会很慢。后来果然在他的指导下，进步很快，没多久就开始写前端代码了，后来因为转组，没有再做前端，但js相关的开发经验在后来给我带来了挺多优势，比如做笔记的一些功能的时候，就是内嵌web浏览器来完成的，这里面就涉及挺多的js开发。由于有前端开发的经验，这部分的开发工作在我转到做笔记开发之后都派上了用场。</p>
 
@@ -379,7 +379,7 @@ gc的分享也让我好好学习了一下java的内存回收技术。后来面�
 
 <p>10月份开始做ipad版的开发，最终于12月初提交上线。上线后排名一路上升，最高达到了效率类第一名的位置。现在一直稳定在效率类前5名。</p>
 
-<p>2011-12-20的app store截图：<img src="/images/ynote_ipad_rank_2011-12-20.png"></p>
+<p>2011-12-20的app store截图：{%img /images/ynote_ipad_rank_2011-12-20.png %}</p>
 
 <p>10月份做了一个个人项目，图书馆借书系统的改造。把借书改成分布式的，每个人都要承担图书的保管任务，这样就不会丢书了。虽然只用了3天时间，但是能在工作时间做个人项目感觉还是挺爽的。</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-04-07T21:29:50+08:00</updated>
+  <updated>2013-04-09T21:20:48+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -22,9 +22,11 @@
 
 <h2>前言</h2>
 
-<p><a href="https://www.udacity.com/">udacity</a>中的在线课程<a href="https://www.udacity.com/course/ep245">《How to build a startup》</a>中提到，所谓创业，就是尝试寻找新的赢利模式。正因为这是一种尝试，所以不可避免地需要调整产品方向，寻找市场中还未被发现的用户需求，给用户创造价值，进而获得收入。最近很火的<a href="http://book.douban.com/subject/10945606/">精益创业</a>的观点，则是强调将这种尝试成本降到最小，使得自己可以根据市场反馈迅速调整产品。</p>
+<!--
+[udacity](https://www.udacity.com/)中的在线课程[《How to build a startup》](https://www.udacity.com/course/ep245)中提到，所谓创业，就是尝试寻找新的赢利模式。正因为这是一种尝试，所以不可避免地需要调整产品方向，寻找市场中还未被发现的用户需求，给用户创造价值，进而获得收入。最近很火的[精益创业](http://book.douban.com/subject/10945606/)的观点，则是强调将这种尝试成本降到最小，使得自己可以根据市场反馈迅速调整产品。-->
 
-<p>作为我们创业的第二个方向尝试，我们在今年春节后上线了新的在线智能题库：<a href="http://yuantiku.com/">猿题库</a>。这应该是我们在互联网教育这个创业领域的早已计划好的第二个方向。</p>
+
+<p>我们在今年春节后上线了新的在线智能题库：<a href="http://yuantiku.com/">猿题库</a>。<!-- 这应该是我们在互联网教育这个创业领域的早已计划好的第二个方向。--></p>
 
 <p>猿题库现在推出了公务员考试行测和申论2个产品，均包括web, iOS和Android三个平台。这次我们尝试做一个收费的产品，所以在iOS端集成了应用内支付（IAP）功能。在开发过程中和上线后，我们遇到了IAP中的一些坑，在此分享给各位。</p>
 
@@ -80,6 +82,25 @@
 <p>鉴于以上情况，考虑到越狱手机不但不能成功支付，还会有安全问题，所以我们在新版中取消了越狱手机中的IAP支付功能。</p>
 
 <p><font color=red>所以，请大家还是不要越狱自己的手机，iphone手机越狱后风险相当大。实在不值得为了免费玩几个游戏就丢掉安全性。</font></p>
+
+<h2>后记</h2>
+
+<h3>中间人攻击的演示</h3>
+
+<p>iOS独立开发者<a href="http://weibo.com/indiebros">王轲_IndieBros</a>在他的博客文章<a href="http://www.iwangke.me/2013/02/18/get-itunes-raw-response-with-mitmproxy/">《使用mitmproxy获取iTunes 11的Raw HTTPs Response》</a>中演示了如何使用中间人攻击来修改Game Center游戏数据。王轲还把我的例子白话翻译了一下（可见我还是说得太绕了，囧）：</p>
+
+<blockquote><p>坏人在购买过程中插了一腿，换走了用户的无记名发票（购物小票形象些），然后手持无记名小票伪装成真实顾客或者转手出售获利。</p></blockquote>
+
+
+<h3>关于越狱与盗版</h3>
+
+<p>不少细心的同学评论纠正我，指出越狱并不等同于使用盗版。确实，如果说严格的定义，越狱只是让iPhone获得root权限，进而可以做任何事情。如果越狱的同学在越狱后不安装IAP free插件，不使用app sync插件，不使用任何国内的和非bigboss的cydia源，不使用任何盗版软件，所有应用都是从app store官方网站上下载的话，被黑客攻击的可能性会降低一些。</p>
+
+<p>即使这样，由于手机已经被root了，苹果的沙盒安全机制失效，所以风险还是很大的。</p>
+
+<h3>关于越狱用户的比例</h3>
+
+<p>有同学提出我文章中写的越狱手机比例太高了，想询问数据来源。这个比例主要来自我们自己的app的统计信息，以及结合国内的统计工具友盟的<a href="http://www.umeng.com/umengdata_reports">越狱手机比例统计</a>，去年底国内的越狱比例是42%。</p>
 ]]></content>
   </entry>
   
@@ -121,7 +142,7 @@
 
 <p>所以，希望大家都能在项目中使用ARC，一旦你感受到它带来的好处，你就离不开它了。它也能让你从繁琐的内存管理代码中解放出来，将精力更多关注于代码结构、设计模式而不是底层的内存管理。</p>
 
-<p>关于ARC的教程，除了苹果的官方文档外，推荐易飞杨写的<a href="http://www.yifeiyang.net/category/embedded/iphone-embedded/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA/arc/">ARC相关的文章</a>。易飞杨的博客中关于iPhone开发的文章都写得很深入，值得好好阅读。</p>
+<p>关于ARC的教程，除了苹果的官方文档外，推荐易飞杨写的<a href="http://www.yifeiyang.net/category/embedded/iphone-embedded/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA/arc/">ARC相关的文章</a>（注：链接需要翻墙才能打开）。易飞杨的博客中关于iPhone开发的文章都写得很深入，值得好好阅读。</p>
 ]]></content>
   </entry>
   

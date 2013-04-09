@@ -32,5 +32,5 @@ categories: iOS
 
 所以，希望大家都能在项目中使用ARC，一旦你感受到它带来的好处，你就离不开它了。它也能让你从繁琐的内存管理代码中解放出来，将精力更多关注于代码结构、设计模式而不是底层的内存管理。
 
-关于ARC的教程，除了苹果的官方文档外，推荐易飞杨写的[ARC相关的文章](http://www.yifeiyang.net/category/embedded/iphone-embedded/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA/arc/)。易飞杨的博客中关于iPhone开发的文章都写得很深入，值得好好阅读。
+关于ARC的教程，除了苹果的官方文档外，推荐易飞杨写的[ARC相关的文章](http://www.yifeiyang.net/category/embedded/iphone-embedded/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA/arc/)（注：链接需要翻墙才能打开）。易飞杨的博客中关于iPhone开发的文章都写得很深入，值得好好阅读。
 

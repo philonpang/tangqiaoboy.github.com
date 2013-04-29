@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-04-09T21:23:52+08:00</updated>
+  <updated>2013-04-29T21:34:44+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,112 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[那些被遗漏的Objective-C保留字]]></title>
+    <link href="http://blog.devtang.com/blog/2013/04/29/the-missing-objc-keywords/"/>
+    <updated>2013-04-29T20:22:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/04/29/the-missing-objc-keywords</id>
+    <content type="html"><![CDATA[<p><img src="/images/forget.jpeg"></p>
+
+<p>今天翻到很久以前自己在网易博客上写的<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201110133108545/">这篇文章</a>，惊奇地发现自己都忘记了里面的一些内容。所以我又重新学习了一下，然后改了改内容，挪到这里。</p>
+
+<h2>前言</h2>
+
+<p><a href="http://www.amazon.cn/s?ie=UTF8&amp;search-alias=books&amp;field-author=Steffen%20Itterheim">Steffen Itterheim</a>是<a href="http://www.amazon.cn/Learn-Iphone-and-Ipad-Cocos2d-Game-Development-The-Leading-Framework-for-Building-2D-Graphical-and-Interactive-Applications-Itterheim-Steffen/dp/1430233036/ref=sr_1_1?ie=UTF8&amp;qid=1321168092&amp;sr=8-1">《Learn Iphone and Ipad Cocos2d Game Development》</a>作者。cocos2d和cocos2d-x现在已成为著名的游戏开发引擎。在AppStore上有超过100个游戏是基于Cocos2D。</p>
+
+<p>Steffen Itterheim在<a href="http://www.learn-cocos2d.com/2011/10/complete-list-objectivec-20-compiler-directives">他的博客</a>中总结了 Objective-C 2.0 所有的编译器保留字，并且对这些保留字做了介绍和使用示例。这些保留字如下：</p>
+
+<pre>
+@class
+@defs
+@protocol @required @optional @end
+@interface @public @package @protected @private @property @end
+@implementation @synthesize @dynamic @end
+@throw @try @catch @finally
+@synchronized @autoreleasepool
+@selector @encode
+@compatibility_alias
+@”string”
+</pre>
+
+
+<p>我把这些保留字过了一遍，发现很少用到的有 @dynamic @defs @encode @compatibility_alis，所以就给大家介绍一下这几个关键字吧。</p>
+
+<!-- more -->
+
+
+<h2>@dynamic</h2>
+
+<p>@dynamic 是相对于 @synthesize的，它们用样用于修饰 @property，用于生成对应的的getter和setter方法。但是@ dynamic表示这个成员变量的getter和setter方法并不是直接由编译器生成，而是手工生成或者运行时生成。</p>
+
+<p>示例如下：</p>
+
+<p>``` objc
+@implementation ClassName
+@synthesize aProperty, bProperty;
+@synthesize cProperty=instanceVariableName;
+@dynamic anotherProperty;</p>
+
+<p>// method implementations
+@end
+```</p>
+
+<h2>@defs</h2>
+
+<p>@defs 用于返回一个Objective-C类的struct结构，这个struct与原Objective-C类具有相同的内存布局。就象你所知的那样，Objective-C类可以理解成由基本的C struct加上额外的方法构成。</p>
+
+<p>示例代码如下：</p>
+
+<p><code>objc
+struct { @defs( NSObject) }
+</code></p>
+
+<p>你可能会想，什么情况下才会需要使用这个关键字。答案是涉及非常底层的操作或优化的时候才会用到。像如这篇讨论<a href="http://www.mulle-kybernetik.com/artikel/Optimization/opti-3-imp-deluxe.html">Objective-C如何做缓存优化</a>的文章中，就用到了该关键字。</p>
+
+<h2>@encode</h2>
+
+<p>@encode 是用于表示一个类型的字符串，对此，苹果有专门的<a href="http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">介绍文档</a></p>
+
+<p>示例如下：</p>
+
+<p>``` objc
+-(void) aMethod
+{</p>
+
+<pre><code>char *enc1 = @encode(int);                 // enc1 = "i"
+char *enc2 = @encode(id);                  // enc2 = "@"
+char *enc3 = @encode(@selector(aMethod));  // enc3 = ":"
+
+// practical example:
+CGRect rect = CGRectMake(0, 0, 100, 100);
+NSValue *v = [NSValue value:&amp;rect withObjCType:@encode(CGRect)];
+</code></pre>
+
+<p>}
+```</p>
+
+<h2>@compatibility_alis</h2>
+
+<p>@compatibility_alis 是用于给一个类设置一个别名。这样就不用重构以前的类文件就可以用新的名字来替代原有名字。</p>
+
+<p>示例如下：</p>
+
+<p><code>objc
+@compatibility_alias AliasClassName ExistingClassName
+</code></p>
+
+<h2>@autoreleasepool</h2>
+
+<p>@autoreleasepool 是用于ARC下代替 NSAutoreleasePool的保留字，我把它写在这里，是想告诉那些以为ARC慢的同学，在苹果的<a href="http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html">这篇官方文档</a>中有提到， @autoreleasepool 比 NSAutoreleasePool快6倍。当然，文档中也提到，ARC下不止Autorelease Pool的实现变快了，retain和release也快很多。如果你还没有在工程中使用ARC，推荐看看我的<a href="http://blog.devtang.com/blog/2013/03/27/should-we-use-arc/">《是否应该使用ARC》</a>。</p>
+
+<h2>Cheat Sheet</h2>
+
+<p>有一个热心者根据他的博文，制作了一张<a href="http://maniacdev.com/cheatsheetobjccd.pdf">《Objective-C 2.0保留字速查表》</a>，对于新手来说，把这张速查表打印出来，对于熟悉现在的保留字还是很有用的，它的下载地址是：<a href="http://maniacdev.com/cheatsheetobjccd.pdf">http://maniacdev.com/cheatsheetobjccd.pdf</a></p>
+
+<p>五一节到了，祝大家节日快乐！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS应用内支付(IAP)的那些坑]]></title>
@@ -58,7 +164,7 @@
 
 <p>我们在服务器端增加了验证IAP是否有效的逻辑。在产品上线后，如我们所料，我们收到了大量的欺骗性购买，这些都被我们的服务器识别出来了，但是我们也遇到了以下这次没有想到的情况:</p>
 
-<p>1、由于国内越狱用户的比例比较大(大概为50%),所以虽然我们服务器会验证购买凭证，但是每天有超过50%以上的凭证都是伪造的。同时由于苹果的验证服务器在美国，凭证验证请求响应的时间比较慢，大量的伪造凭证发给苹果服务器，不知道会不会被苹果认为我们是在恶意进行DDOS。至少我们发现有些时候，验证请求会超时。</p>
+<p>1、由于国内越狱用户的比例比较大(2012年底国内越狱比例是42%),所以虽然我们服务器会验证购买凭证，但是每天有超过50%以上的凭证都是伪造的。同时由于苹果的验证服务器在美国，凭证验证请求响应的时间比较慢，大量的伪造凭证发给苹果服务器，不知道会不会被苹果认为我们是在恶意进行DDOS。至少我们发现有些时候，验证请求会超时。</p>
 
 <p>2、由于国内有许多小白用户，他们的手机从购买时就被渠道商帮忙越狱过了并且安装了IAP free插件。所以对于这类用户，他们即使想付费购买，由于系统原有的IAP支付功能已经被破坏，所以他们是无法正常付费的。麻烦的是，他们会以为这是我们的app的问题，转而给我们的客服打电话投诉。这让我们非常郁闷。</p>
 
@@ -66,7 +172,7 @@
 
 <h2>越狱手机可能被黑客窃取购买凭证！！</h2>
 
-<p>我们发现有一部分用户反馈说已经收到苹果的扣费账单，但是我们从服务器的验证记录看，他上传的凭证却是虚假的。由于这些用户不太多，我们一开始以为是用户在恶意欺骗我们，后来我们让他将苹果的付费账单邮件转发给我们，以及将itunes的购买记录截图转发给我们，我们越来越怀疑这里面有一个黑色的产业链。越狱手机的正常购买凭证可能被黑客的恶意程序截获，具体的攻击方式我们讨论了一下，其实就是被<a href="http://zh.wikipedia.org/wiki/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a>，详细的过程如下:</p>
+<p>我们发现有一部分用户反馈说已经收到苹果的扣费账单，但是我们从服务器的验证记录看，他上传的凭证却是虚假的。由于这些用户不太多，我们一开始以为是用户在恶意欺骗我们，后来我们让他将苹果的付费账单邮件转发给我们，以及将itunes的购买记录截图转发给我们，随着讨论的深入，我们越来越怀疑这里面有一个黑色的产业链。越狱手机的正常购买凭证可能被黑客的恶意程序截获，具体的攻击方式我们讨论了一下，其实就是被<a href="http://zh.wikipedia.org/wiki/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a>，详细的过程如下:</p>
 
 <ol>
 <li>越狱手机的在被破解后，可能从一些破解渠道安装了黑客的恶意程序。</li>
@@ -81,7 +187,7 @@
 
 <p>鉴于以上情况，考虑到越狱手机不但不能成功支付，还会有安全问题，所以我们在新版中取消了越狱手机中的IAP支付功能。</p>
 
-<p><font color=red>所以，请大家还是不要越狱自己的手机，iphone手机越狱后风险相当大。实在不值得为了免费玩几个游戏就丢掉安全性。</font></p>
+<p><font color=red>所以，请大家还是不要越狱自己的手机，iPhone手机越狱后风险相当大。实在不值得为了免费玩几个游戏就丢掉安全性。</font></p>
 
 <h2>后记</h2>
 
@@ -248,102 +354,6 @@
 ```</p>
 
 <p>TO: 百思不得姐的开发者，不用谢：）你们应用的内容挺有意思的。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[谈ObjC对象的两段构造模式]]></title>
-    <link href="http://blog.devtang.com/blog/2013/01/13/two-stage-creation-on-cocoa/"/>
-    <updated>2013-01-13T10:15:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/01/13/two-stage-creation-on-cocoa</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>Objective-c语言在申请对象的时，需要使用两段构造(<a href="http://volonbolon.net/post/634999801/two-stage-creation-in-cocoa">Two Stage Creation</a>)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例：</p>
-
-<p><code>objc
-NSString * str = [[NSString alloc] initWithString:@"http://blog.devtang.com"];
-</code></p>
-
-<p>由于该语言的对象创建方法和大多数其它语言（如C、C++、Java、JavaScript）都不一样，所以引起了我的好奇。是什么原因促使Objective-C做了这种设计，而又是什么原因促使大多数其它语言都采用"new"方法来一次性创建对象呢？</p>
-
-<p>在看了<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书（顺便吐槽一下该书中文版翻译质量不高，建议看英文版），并且做了一些调研之后，我将总结分享给大家，欢迎大家讨论。</p>
-
-<!-- more -->
-
-
-<h2>对象的创建</h2>
-
-<p>我们先来看看在对象的创建过程中，alloc和init到底做了哪些事情。</p>
-
-<h3>alloc方法</h3>
-
-<p>根据苹果的<a href="https://developer.apple.com/library/mac/#documentation/cocoa/conceptual/CocoaFundamentals/CocoaObjects/CocoaObjects.html#//apple_ref/doc/uid/TP40002974-CH4-SW54">官方文档</a>。当对象创建时，cocoa会从应用程序的虚拟地址空间上为该对象分配足够的内存。cocoa会遍历该对象所有的成员变量，通过成员变量的类型来计算所需占用的内存。</p>
-
-<p>当我们通过alloc或allocWithZone方法创建对象时，cocoa会返回一个未”初使化“过的对象。在这个过程中，cocoa除了上面提到的申请了一块足够大的内存外，还做了以下3件事：</p>
-
-<ol>
-<li>将该新对象的引用计数(Retain Count)设置成1。</li>
-<li>将该新对象的isa成员变量指向它的类对象。</li>
-<li>将该新对象的所有其它成员变量的值设置成零。（根据成员变量类型，零有可能是指nil或Nil或0.0）</li>
-</ol>
-
-
-<p>isa成员变量是在<a href="https://developer.apple.com/library/mac/#documentation/cocoa/Reference/Foundation/Classes/NSObject_Class/Reference/Reference.html#//apple_ref/occ/cl/NSObject">NSObject</a>中定义的，所以保证Cocoa的所有对象都带有此成员变量。借助该变量可以实现Cocoa对象在运行时的自省(Introspection)功能。</p>
-
-<h3>init方法</h3>
-
-<p>大部分情况下，我们都不希望所有成员变量都是零，所以init方法会做真正的初使化工作，让对象的成员变量的值符合我们程序逻辑中的初始化状态。例如，NSMutableString可能就会额外再申请一块字符数组，用于动态修改字符串。</p>
-
-<p>init还有一个需要注意的问题。某些情况下，init会造成alloc的原本空间不够用，而第二次分配内存空间。所以下面的写法是错的：</p>
-
-<p><code>objc
-NSString * s = [NSString alloc];
-[s init]; // 这儿init返回的地址可能会变。s原本的指针地址可能是无效的地址。
-</code></p>
-
-<p>为此，苹果引入了一个编程规范，让大家写的时候将alloc 和init写在一行。所以上面的代码正确的写法是</p>
-
-<p><code>objc
-NSString * s = [[NSString alloc] init];
-</code></p>
-
-<h3>new</h3>
-
-<p>在后来，苹果也引入了类方法：new。但是由于历史原因，init方法是实例方法而非类方法，所以作为类方法的new，只能简单地等价于 alloc + init，不能指定init的参数，所以用处不大。苹果在设计上也禁止多次调用init方法，例如如下代码会抛出 NSInvalidArgumentException。</p>
-
-<p><code>objc
-NSString * str = [NSString new];
-str = [str initWithString:@"Bar"];
-</code></p>
-
-<h2>为什么这么设计</h2>
-
-<p>说回来文章开始时提出来问题，为什么苹果要这么设计而其它语言不这么设计？</p>
-
-<p>上面提到，alloc其实不只干了申请内存的事情，还做了：
- 1. 内存管理的事情，设置Retain Count。
- 2. 运行时自省的功能，设置isa变量。
- 3. 非逻辑性的初使化功能，设置所有成员变量为零。</p>
-
-<p>简单看来，根据设计模式的Single Responsibility的设计原则，苹果觉得alloc和init是做的2件不同的事情，把这两件事情分开放在2个函数中，对于程序员更加清楚明了。更详细查阅文档后，我觉得这是由于历史原因，让苹果觉得alloc方法过于复杂，在历史上，alloc不仅仅是分配内存，还可以详细的指定该内存所在的内存分区（用NSZone表示）。这就是下面要提到的allocWithZone方法。</p>
-
-<p>在<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书也提到，早期苹果是建议程序员使用 allocWithZone来管理内存分配的，每个NSZone表示一块内存分区，allowWithZone方法可以允许对象从指定分区分配内存。了解到这段历史后，也不难理解苹果这么设计的原因了。因为在这种情况下，alloc要处理的情况复杂，和init放到一起不合适。</p>
-
-<p>而对于大多数出生在90年代的语言来说(例如Java,JavaScript,C#)，由于内存具体的分配方案都不需要程序员操心了，所以就不需要单独为内存分配实现一个alloc方法了。</p>
-
-<h2>后记</h2>
-
-<h3>allocWithZone被废弃</h3>
-
-<p>自从Mac OS X 10.5上引入了垃圾回收机制后，苹果就不建议程序员使用allocWithZone了，事实上，cocoa框架也会忽略allocWithZone指定的分区。苹果在文档中也<a href="https://developer.apple.com/library/mac/#documentation/cocoa/Reference/Foundation/Classes/NSObject_Class/Reference/Reference.html#//apple_ref/occ/clm/NSObject/allocWithZone:">提到</a>，allocWithZone仅仅是一个历史遗留设计了。下图是苹果的文档截图：</p>
-
-<p><img src="/images/allocWithZone.png" title="" ></p>
-
-<h3>Objective-C的历史</h3>
-
-<p>Objective-C是一门非常老的语言。如果你查阅文档，你会发现它和C++出生在同一时代（两种语言的发行年份都是<a href="http://en.wikipedia.org/wiki/Stepstone">1983年</a>），都是作为C语言的面向对象的接班人被推出。当然，最终C++胜出。由于历史久远，Objective-C也无法有太多优秀的语言做参考，所以，有很多历史遗留的设计。在2007年苹果公司发布了Obj-C 2.0, 对其进行了大量改进。</p>
-
-<p>在最近几年的WWDC大会上，每年苹果都会对Objective-C和其对应的LLVM编译器进行改进，例如WWDC2011推出的ARC，WWDC2012推出的Object Literals等。所以现在使用Objective-C做开发已经非常舒服了。期待苹果给开发者带来更多惊喜。</p>
 ]]></content>
   </entry>
   

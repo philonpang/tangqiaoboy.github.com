@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-04-29T21:34:44+08:00</updated>
+  <updated>2013-05-01T18:17:45+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,51 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[历史上的WWDC门票售空图片]]></title>
+    <link href="http://blog.devtang.com/blog/2013/04/30/the-history-of-wwdc/"/>
+    <updated>2013-04-30T22:40:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/04/30/the-history-of-wwdc</id>
+    <content type="html"><![CDATA[<h2>2008年</h2>
+
+<p>62天售空。介绍了iPhone 3G。</p>
+
+<p><img src="http://blog.devtang.com/images/wwdc-2008.jpg" width="500px" /></p>
+
+<h2>2009年</h2>
+
+<p>33天售空。介绍了iPhone 3GS。</p>
+
+<p><img src="http://blog.devtang.com/images/wwdc-2009.png" width="500px" /></p>
+
+<h2>2010年</h2>
+
+<p>8天售空。介绍了iPhone 4。</p>
+
+<p><img src="http://blog.devtang.com/images/wwdc-2010.png" width="500px" /></p>
+
+<h2>2011年</h2>
+
+<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
+
+<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
+
+<p><img src="http://blog.devtang.com/images/wwdc-2011.png" width="500px" /></p>
+
+<h2>2012年</h2>
+
+<p>2小时售空。介绍了iOS6。</p>
+
+<p><img src="http://blog.devtang.com/images/wwdc-2012.png" width="500px" /></p>
+
+<h2>2013年</h2>
+
+<p>2分钟售空。期待。</p>
+
+<p><img src="http://blog.devtang.com/images/wwdc-2013.png" width="500px" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[那些被遗漏的Objective-C保留字]]></title>
@@ -306,54 +351,6 @@ NSValue *v = [NSValue value:&amp;rect withObjCType:@encode(CGRect)];
 <p>所以我希望群里面的人都足够精通iOS开发，对于在群里面提出来的问题，都是值得讨论的问题。通过讨论，大家都有了收获，才不致于觉得这个群太打扰而把它屏蔽掉。</p>
 
 <p>因此，我不希望群里面加太多的人，现在人数基本上有讨论的气氛，对于技术问题的讨论也都会有结果。所以，<font color="red">暂时不接受任何加群申请。</font></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[设置应用内的系统控件语言]]></title>
-    <link href="http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language/"/>
-    <updated>2013-01-23T21:05:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language</id>
-    <content type="html"><![CDATA[<p><img src="/images/bdj-rank.jpg"></p>
-
-<p>在iOS应用中，有时候会需要调用系统的一些UI控件，例如：</p>
-
-<ol>
-<li>在UIWebView中长按会弹出系统的上下文菜单</li>
-<li>在UIImagePickerController中会使用系统的照相机界面</li>
-<li>在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。</li>
-</ol>
-
-
-<p>以上这些UI控件中，其显示的语言并不是和你当前手机的系统语言一致的。而是根据你的App内部的语言设置来显示。结果就是，如果你没有设置恰当的话，你的中文App可能会出现一些英文的控件文字。</p>
-
-<!-- more -->
-
-
-<p>例如下图中，一个名为“百思不得姐”的应用，其在AppStore免费总榜中排名前100，图书类分类榜排名第一的应用，就闹出了系统控件显示成了英文的笑话，在其软件界面中长按，就会出如下的菜单，可以看到，这个菜单的文字全是英文的：</p>
-
-<p><img src="/images/ios-menu-1.jpg"></p>
-
-<p>而正常的菜单应该是中文的，如下是新浪微博的正文长按之后的效果：</p>
-
-<p><img src="/images/ios-menu-2.jpg"></p>
-
-<p>如何解决这个问题呢？方法如下:</p>
-
-<p>用vim直接打开工程的Info.plist文件，在文件中增加如下内容即可：</p>
-
-<p>``` xml
-   <key>CFBundleLocalizations</key>     <br/>
-   <array></p>
-
-<pre><code>       &lt;string&gt;zh_CN&lt;/string&gt;
-       &lt;string&gt;en&lt;/string&gt;
-</code></pre>
-
-<p>   </array>
-```</p>
-
-<p>TO: 百思不得姐的开发者，不用谢：）你们应用的内容挺有意思的。</p>
 ]]></content>
   </entry>
   

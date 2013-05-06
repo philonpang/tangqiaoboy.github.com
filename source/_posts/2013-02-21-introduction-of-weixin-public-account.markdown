@@ -6,7 +6,7 @@ comments: true
 categories: iOS
 ---
 
-<img src="/images/weixin-why.png" width="300px" />
+<img src="/images/weixin-why.jpg" width="300px" />
 
 记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。
 

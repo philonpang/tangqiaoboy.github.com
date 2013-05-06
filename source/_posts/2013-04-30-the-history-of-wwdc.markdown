@@ -26,15 +26,15 @@ categories: iOS
 
 从这一年开始，iPhone新品都没能赶上在WWDC中介绍。
 
-<img src="/images/wwdc-2011.png" width="500px" />
+<img src="/images/wwdc-2011.jpg" width="500px" />
 
 ##2012年
 2小时售空。介绍了iOS6。
 
-<img src="/images/wwdc-2012.png" width="500px" />
+<img src="/images/wwdc-2012.jpg" width="500px" />
 
 ##2013年
 2分钟售空。期待。
 
-<img src="/images/wwdc-2013.png" width="500px" />
+<img src="/images/wwdc-2013.jpg" width="500px" />
 

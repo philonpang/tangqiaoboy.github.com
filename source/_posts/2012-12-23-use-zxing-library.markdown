@@ -40,7 +40,7 @@ categories: iOS
 
 完成之后如下图所示：
 
-{% img /images/zxing-step-3.png %}
+{% img /images/zxing-step-3.jpg %}
 
 
 最后一步，在设置中增加如下2个header search path:

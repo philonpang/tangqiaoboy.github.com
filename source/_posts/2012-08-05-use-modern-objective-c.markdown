@@ -54,7 +54,7 @@ categories: iOS
 ```
 
 怎么样？是不是简单多了？而且，为了方便你的旧代码迁移到新的写法，xcode专门还提供了转换工具，在xcode4.4中，选择 Edit -> Refactor -> Convert to Modern Objective-C Syntax即可。如下所示：
-{% img /images/modern-objc-convert-tool.png %}
+{% img /images/modern-objc-convert-tool.jpg %}
 
 ##局部的函数调用不用前向申明
 

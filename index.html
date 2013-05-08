@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="2008年 62天售空。介绍了iPhone 3G。 2009年 33天售空。介绍了iPhone 3GS。 2010年 8天售空。介绍了iPhone 4。 2011年 12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。 从这一年开始， &hellip;">
+  <meta name="description" content="前言 随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,53 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/05/08/git-submodule-issues/">Git Submodule的坑</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-08T21:44:00+08:00" pubdate data-updated="true">May 8<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了，赶紧抽空充充电吧。本文并不打算做Git入门级介绍，想学习git的同学，推荐国内作者蒋鑫写的<a href="http://book.douban.com/subject/6526452/">《Git权威指南》</a>。</p>
+
+<p>对于一些比较大的工程，为了便于复用，常常需要抽取子项目。例如我开发的猿题库客户端现在包括3门考试，客户端涉及的公共UI、公共底层逻辑、公共的第三方库、以及公共的答题卡扫描算法就被我分别抽取成了子项目。这些子项目都以git submodule的形式，增加到工程中。</p>
+
+<p>在使用了git submodule一段时间后，我发现了一些submodule的问题，在此分享给大家。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/05/08/git-submodule-issues/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a></h1>
     
     
@@ -127,19 +174,19 @@
 
 <p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
 
-<p><img src="/images/wwdc-2011.png" width="500px" /></p>
+<p><img src="/images/wwdc-2011.jpg" width="500px" /></p>
 
 <h2>2012年</h2>
 
 <p>2小时售空。介绍了iOS6。</p>
 
-<p><img src="/images/wwdc-2012.png" width="500px" /></p>
+<p><img src="/images/wwdc-2012.jpg" width="500px" /></p>
 
 <h2>2013年</h2>
 
 <p>2分钟售空。期待。</p>
 
-<p><img src="/images/wwdc-2013.png" width="500px" /></p>
+<p><img src="/images/wwdc-2013.jpg" width="500px" /></p>
 </div>
   
   
@@ -334,7 +381,7 @@
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/weixin-why.png" width="300px" /></p>
+  <div class="entry-content"><p><img src="/images/weixin-why.jpg" width="300px" /></p>
 
 <p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
 
@@ -543,51 +590,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/15/do-not-use-storyboard/">StoryBoard&#8211;看上去很美</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-15T10:21:00+08:00" pubdate data-updated="true">Dec 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>介绍</h2>
-
-<p>StoryBoard是苹果在2011年的WWDC Session 309《Introducing Interface Builder Storyboarding》中介绍的Interface Builder的新功能。其基本想法是将原本的xib进行升级，引入一个容器用于管理多个xib文件，并且这个容器可以通过拖拽设置xib之间的界面跳转。而这个容器就是被苹果称做的StoryBoard。下图是一个Storyboard的截图。</p>
-
-<p><img src="/images/enbrace-ios5-1.png"></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/12/15/do-not-use-storyboard/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -601,6 +603,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/08/git-submodule-issues/">Git submodule的坑</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a>
@@ -716,10 +722,6 @@
     
       <li class="post">
         <a href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">关于UIWebView和PhoneGap的总结</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/15/10-most-common-questions-on-stackoverflow-201203/">iPhone开发常问的十个问题(2012年3月版)</a>
       </li>
     
   </ul>

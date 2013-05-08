@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>关于iOS测试机个数上限的详细规则 - 唐巧的技术博客</title>
+  <title>Git submodule的坑 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 苹果的官网文档。 规则 我总结出来的规则如下（附上原文以便对应）： &hellip;">
+  <meta name="description" content="前言 随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2013/05/08/git-submodule-issues">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,7 +77,7 @@
   
   <header>
     
-      <h1 class="entry-title">关于iOS测试机个数上限的详细规则</h1>
+      <h1 class="entry-title">Git Submodule的坑</h1>
     
     
       <p class="meta">
@@ -93,7 +93,7 @@
   
 
 
-<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+<time datetime="2013-05-08T21:44:00+08:00" pubdate data-updated="true">May 8<span>th</span>, 2013</time>
         
       </p>
     
@@ -102,55 +102,130 @@
 
 <div class="entry-content"><h2>前言</h2>
 
-<p>公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
+<p>随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了，赶紧抽空充充电吧。本文并不打算做Git入门级介绍，想学习git的同学，推荐国内作者蒋鑫写的<a href="http://book.douban.com/subject/6526452/">《Git权威指南》</a>。</p>
+
+<p>对于一些比较大的工程，为了便于复用，常常需要抽取子项目。例如我开发的猿题库客户端现在包括3门考试，客户端涉及的公共UI、公共底层逻辑、公共的第三方库、以及公共的答题卡扫描算法就被我分别抽取成了子项目。这些子项目都以git submodule的形式，增加到工程中。</p>
+
+<p>在使用了git submodule一段时间后，我发现了一些submodule的问题，在此分享给大家。</p>
 
 <!-- more -->
 
 
-<h2>规则</h2>
+<h2>更新submodule的坑</h2>
 
-<p>我总结出来的规则如下（附上原文以便对应）：</p>
+<p>submodule项目和它的父项目本质上是2个独立的git仓库。只是父项目存储了它依赖的submodule项目的版本号信息而已。如果你的同事更新了submodule，然后更新了父项目中依赖的版本号。你需要在git pull之后，调用 git submodule update来更新submodule信息。</p>
 
-<ul>
-<li>每一个开发者membership year,只能有100次增加设备的名额。如果你增加一个设备,之后又将该设备删除,并不会将用掉的名额恢复.</li>
-</ul>
+<p>这儿的坑在于，如果你git pull之后，忘记了调用 git submodule update，那么你极有可能再次把旧的submodule依赖信息提交上去。对于那些习惯使用 git commit -a的人来说，这种危险会更大一些。所以建议大家:</p>
 
-
-<p>You can register up to 100 devices per year for development purposes. Any devices added, then later removed, still count towards your maximum number of registered devices per year.</p>
-
-<ul>
-<li>在每一个开发者membership year开始的时候,Team Agent和Admin角色可以选择删掉一些设备来恢复资格, 也可以清空所有设备来恢复到最多100次设备的名额。这个操作在Team Agent和Admin在一次新的membership year开始后即可使用，在使用时，需要注意，先将需要删除的设备删掉，然后才能添加需要新增的设备。一旦开始增加新设备，删除设备以恢复名额的功能将不再可用。</li>
-</ul>
+<ol>
+<li>git pull之后，立即执行git status, 如果发现submodule有修改，立即执行git submodule update</li>
+<li>尽量不要使用 git commit -a， git add命令存在的意义就是让你对加入暂存区的文件做二次确认，而 git commit -a相当于跳过了这个确认过程。</li>
+</ol>
 
 
-<p>At the start of a new membership year, Team Agents and Admins can remove devices and restore the available device count for their development team to 100 devices.</p>
+<p>更复杂一些，如果你的submodule又依赖了submodule，那么很可能你需要在git pull 和 git submodule update之后，再分别到每个submodule中再执行一次git submodule update，这里可以使用 git submodule foreach命令来实现： <code>git submodule foreach git submodule update</code></p>
 
-<p>When Team Agents or Admins first sign in to the iOS Provisioning Portal at the start of a new membership year, they will be presented with the option to remove devices and restore the device count for those removed devices.</p>
+<h2>修改submodule的坑</h2>
 
-<p>Important Note: At the start of your membership year, make sure to remove all devices you no longer use for development prior to adding any new devices.</p>
+<p>有些时候你需要对submodule做一些修改，很常见的做法就是切到submodule的目录，然后做修改，然后commit和push。</p>
 
-<ul>
-<li>在以后整个membership year中，删除设备不会增加新的名额。</li>
-</ul>
+<p>这里的坑在于，默认git submodule update并不会将submodule切到任何branch，所以，默认下submodule的HEAD是处于游离状态的(&#8216;detached HEAD&#8217; state)。所以在修改前，记得一定要用git checkout master将当前的submodule分支切换到master，然后才能做修改和提交。</p>
+
+<p>如果你不慎忘记切换到master分支，又做了提交，可以用cherry-pick命令挽救。具体做法如下：</p>
+
+<ol>
+<li>用 <code>git checkout master</code> 将HEAD从游离状态切换到 master 分支, 这时候，git会报Warning说有一个提交没有在branch上，记住这个提交的change-id（假如change-id为 aaaa)</li>
+<li>用 <code>git cherry-pick aaaa</code> 来将刚刚的提交作用在master分支上</li>
+<li>用 <code>git push</code> 将更新提交到远程版本库中</li>
+</ol>
 
 
-<p>Removing devices during your membership year will not open these slots to add new devices.</p>
+<p>以下是相关命令的操作示范和命令行输出结果：</p>
 
-<h2>举例</h2>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>➜ ui_common git:<span class="o">(</span>df697f9<span class="o">)</span> git checkout master
+</span><span class='line'>Warning: you are leaving 1 commit behind, not connected to
+</span><span class='line'>any of your branches:
+</span><span class='line'>
+</span><span class='line'>  df697f9 forget to check out master
+</span><span class='line'>
+</span><span class='line'>If you want to keep them by creating a new branch, this may be a good <span class="nb">time</span>
+</span><span class='line'>to <span class="k">do </span>so with:
+</span><span class='line'>
+</span><span class='line'> git branch new_branch_name df697f911e5a0f09d883f8f360977e470c53d81e
+</span><span class='line'>
+</span><span class='line'>Switched to branch <span class="s1">&#39;master&#39;</span>
+</span><span class='line'>➜ ui_common git:<span class="o">(</span>master<span class="o">)</span> git cherry-pick df697f9
+</span></code></pre></td></tr></table></div></figure>
 
-<p>直接看规则比较晦涩，举个例子：</p>
 
-<p>假如第一年，你增加了70个设备，同时删除了10个设备，这个时候，虽然你的设备数是60，但是可用的增加测试机的名额却只有30个了。</p>
+<h2>使用第三方工具</h2>
 
-<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 - 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
+<p>对于submodule的重度使用者，有几个工具可作推荐：</p>
 
-<h2>总结</h2>
+<ol>
+<li><a href="http://source.android.com/source/version-control.html">Repo</a>  Google用于管理Android项目的工具。</li>
+<li><a href="http://gitslave.sourceforge.net/">Gitslave</a></li>
+<li><a href="https://github.com/apenwarr/git-subtree/">Git Subtree</a></li>
+</ol>
 
-<p>所以说，不管怎么样，你的账号下的可用测试设备始终不会超过100个。不会象有些人想的那样，每过一年名额就直接变成100了。另外，每年删除设备以恢复名额的机会只有开始的时候，以后删除设备也不会恢复名额。</p>
 
-<p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。</p>
+<p>以上工具，我都没有实际用过，所以无法提供更多信息。</p>
 
-<p>具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。在沟通完成后，苹果就可以立即帮助你状态修改到“可删除设备来增加测试设备名额”。这样，你就可以选择性的删除一些不需要的设备来释放一些名额了。</p>
+<h2>Tips</h2>
+
+<p>由于常常使用submodule的相关命令，可以在 ~/.gitconfig文件中将其设置别名，方便操作，我设置的所有相关别名如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span><span class="nb">alias</span><span class="o">]</span>
+</span><span class='line'>  <span class="nv">st</span> <span class="o">=</span> status -s
+</span><span class='line'>  <span class="nv">ci</span> <span class="o">=</span> commit
+</span><span class='line'>  <span class="nv">l</span> <span class="o">=</span> log --oneline --decorate -12 --color
+</span><span class='line'>  <span class="nv">ll</span> <span class="o">=</span> log --oneline --decorate --color
+</span><span class='line'>  <span class="nv">lc</span> <span class="o">=</span> log --graph --color
+</span><span class='line'>  <span class="nv">co</span> <span class="o">=</span> checkout
+</span><span class='line'>  <span class="nv">br</span> <span class="o">=</span> branch
+</span><span class='line'>  <span class="nv">rb</span> <span class="o">=</span> rebase
+</span><span class='line'>  <span class="nv">dci</span> <span class="o">=</span> dcommit
+</span><span class='line'>  <span class="nv">sbi</span> <span class="o">=</span> submodule init
+</span><span class='line'>  <span class="nv">sbu</span> <span class="o">=</span> submodule update
+</span><span class='line'>  <span class="nv">sbp</span> <span class="o">=</span> submodule foreach git pull
+</span><span class='line'>  <span class="nv">sbc</span> <span class="o">=</span> submodule foreach git co master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考链接</h2>
+
+<ol>
+<li><p><a href="http://codingkilledthecat.wordpress.com/2012/04/28/why-your-company-shouldnt-use-git-submodules/">《why-your-company-shouldnt-use-git-submodules》</a> (需翻墙)</p></li>
+<li><p><a href="http://fiji.sc/Git_submodule_tutorial">《Git_submodule_tutorial》</a></p></li>
+</ol>
+
 </div>
 
 
@@ -173,12 +248,12 @@
   
 
 
-<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+<time datetime="2013-05-08T21:44:00+08:00" pubdate data-updated="true">May 8<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
+    <a class='category' href='/blog/categories/shell/'>shell</a>
   
 </span>
 
@@ -232,10 +307,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/" title="Previous Post: 关于UIWebView和PhoneGap的总结">&laquo; 关于UIWebView和PhoneGap的总结</a>
+        <a class="basic-alignment left" href="/blog/2013/04/30/the-history-of-wwdc/" title="Previous Post: 历史上的WWDC门票售空图片">&laquo; 历史上的WWDC门票售空图片</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/04/22/use-fmdb/" title="next Post: 在iOS开发中使用FMDB">在iOS开发中使用FMDB &raquo;</a>
       
     </p>
   </footer>

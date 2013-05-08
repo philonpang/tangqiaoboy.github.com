@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-05-01T18:17:45+08:00</updated>
+  <updated>2013-05-08T22:17:03+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -42,19 +42,19 @@
 
 <p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
 
-<p><img src="http://blog.devtang.com/images/wwdc-2011.png" width="500px" /></p>
+<p><img src="http://blog.devtang.com/images/wwdc-2011.jpg" width="500px" /></p>
 
 <h2>2012年</h2>
 
 <p>2小时售空。介绍了iOS6。</p>
 
-<p><img src="http://blog.devtang.com/images/wwdc-2012.png" width="500px" /></p>
+<p><img src="http://blog.devtang.com/images/wwdc-2012.jpg" width="500px" /></p>
 
 <h2>2013年</h2>
 
 <p>2分钟售空。期待。</p>
 
-<p><img src="http://blog.devtang.com/images/wwdc-2013.png" width="500px" /></p>
+<p><img src="http://blog.devtang.com/images/wwdc-2013.jpg" width="500px" /></p>
 ]]></content>
   </entry>
   
@@ -301,7 +301,7 @@ NSValue *v = [NSValue value:&amp;rect withObjCType:@encode(CGRect)];
     <link href="http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account/"/>
     <updated>2013-02-21T20:02:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/weixin-why.png" width="300px" /></p>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/weixin-why.jpg" width="300px" /></p>
 
 <p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
 

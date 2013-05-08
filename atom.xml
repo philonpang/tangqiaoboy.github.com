@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-05-01T18:17:45+08:00</updated>
+  <updated>2013-05-08T22:17:03+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,140 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git submodule的坑]]></title>
+    <link href="http://blog.devtang.com/blog/2013/05/08/git-submodule-issues/"/>
+    <updated>2013-05-08T21:44:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/05/08/git-submodule-issues</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了，赶紧抽空充充电吧。本文并不打算做Git入门级介绍，想学习git的同学，推荐国内作者蒋鑫写的<a href="http://book.douban.com/subject/6526452/">《Git权威指南》</a>。</p>
+
+<p>对于一些比较大的工程，为了便于复用，常常需要抽取子项目。例如我开发的猿题库客户端现在包括3门考试，客户端涉及的公共UI、公共底层逻辑、公共的第三方库、以及公共的答题卡扫描算法就被我分别抽取成了子项目。这些子项目都以git submodule的形式，增加到工程中。</p>
+
+<p>在使用了git submodule一段时间后，我发现了一些submodule的问题，在此分享给大家。</p>
+
+<!-- more -->
+
+
+<h2>更新submodule的坑</h2>
+
+<p>submodule项目和它的父项目本质上是2个独立的git仓库。只是父项目存储了它依赖的submodule项目的版本号信息而已。如果你的同事更新了submodule，然后更新了父项目中依赖的版本号。你需要在git pull之后，调用 git submodule update来更新submodule信息。</p>
+
+<p>这儿的坑在于，如果你git pull之后，忘记了调用 git submodule update，那么你极有可能再次把旧的submodule依赖信息提交上去。对于那些习惯使用 git commit -a的人来说，这种危险会更大一些。所以建议大家:</p>
+
+<ol>
+<li>git pull之后，立即执行git status, 如果发现submodule有修改，立即执行git submodule update</li>
+<li>尽量不要使用 git commit -a， git add命令存在的意义就是让你对加入暂存区的文件做二次确认，而 git commit -a相当于跳过了这个确认过程。</li>
+</ol>
+
+
+<p>更复杂一些，如果你的submodule又依赖了submodule，那么很可能你需要在git pull 和 git submodule update之后，再分别到每个submodule中再执行一次git submodule update，这里可以使用 git submodule foreach命令来实现： <code>git submodule foreach git submodule update</code></p>
+
+<h2>修改submodule的坑</h2>
+
+<p>有些时候你需要对submodule做一些修改，很常见的做法就是切到submodule的目录，然后做修改，然后commit和push。</p>
+
+<p>这里的坑在于，默认git submodule update并不会将submodule切到任何branch，所以，默认下submodule的HEAD是处于游离状态的(&#8216;detached HEAD&#8217; state)。所以在修改前，记得一定要用git checkout master将当前的submodule分支切换到master，然后才能做修改和提交。</p>
+
+<p>如果你不慎忘记切换到master分支，又做了提交，可以用cherry-pick命令挽救。具体做法如下：</p>
+
+<ol>
+<li>用 <code>git checkout master</code> 将HEAD从游离状态切换到 master 分支, 这时候，git会报Warning说有一个提交没有在branch上，记住这个提交的change-id（假如change-id为 aaaa)</li>
+<li>用 <code>git cherry-pick aaaa</code> 来将刚刚的提交作用在master分支上</li>
+<li>用 <code>git push</code> 将更新提交到远程版本库中</li>
+</ol>
+
+
+<p>以下是相关命令的操作示范和命令行输出结果：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>➜ ui_common git:<span class="o">(</span>df697f9<span class="o">)</span> git checkout master
+</span><span class='line'>Warning: you are leaving 1 commit behind, not connected to
+</span><span class='line'>any of your branches:
+</span><span class='line'>
+</span><span class='line'>  df697f9 forget to check out master
+</span><span class='line'>
+</span><span class='line'>If you want to keep them by creating a new branch, this may be a good <span class="nb">time</span>
+</span><span class='line'>to <span class="k">do </span>so with:
+</span><span class='line'>
+</span><span class='line'> git branch new_branch_name df697f911e5a0f09d883f8f360977e470c53d81e
+</span><span class='line'>
+</span><span class='line'>Switched to branch <span class="s1">&#39;master&#39;</span>
+</span><span class='line'>➜ ui_common git:<span class="o">(</span>master<span class="o">)</span> git cherry-pick df697f9
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>使用第三方工具</h2>
+
+<p>对于submodule的重度使用者，有几个工具可作推荐：</p>
+
+<ol>
+<li><a href="http://source.android.com/source/version-control.html">Repo</a>  Google用于管理Android项目的工具。</li>
+<li><a href="http://gitslave.sourceforge.net/">Gitslave</a></li>
+<li><a href="https://github.com/apenwarr/git-subtree/">Git Subtree</a></li>
+</ol>
+
+
+<p>以上工具，我都没有实际用过，所以无法提供更多信息。</p>
+
+<h2>Tips</h2>
+
+<p>由于常常使用submodule的相关命令，可以在 ~/.gitconfig文件中将其设置别名，方便操作，我设置的所有相关别名如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span><span class="nb">alias</span><span class="o">]</span>
+</span><span class='line'>  <span class="nv">st</span> <span class="o">=</span> status -s
+</span><span class='line'>  <span class="nv">ci</span> <span class="o">=</span> commit
+</span><span class='line'>  <span class="nv">l</span> <span class="o">=</span> log --oneline --decorate -12 --color
+</span><span class='line'>  <span class="nv">ll</span> <span class="o">=</span> log --oneline --decorate --color
+</span><span class='line'>  <span class="nv">lc</span> <span class="o">=</span> log --graph --color
+</span><span class='line'>  <span class="nv">co</span> <span class="o">=</span> checkout
+</span><span class='line'>  <span class="nv">br</span> <span class="o">=</span> branch
+</span><span class='line'>  <span class="nv">rb</span> <span class="o">=</span> rebase
+</span><span class='line'>  <span class="nv">dci</span> <span class="o">=</span> dcommit
+</span><span class='line'>  <span class="nv">sbi</span> <span class="o">=</span> submodule init
+</span><span class='line'>  <span class="nv">sbu</span> <span class="o">=</span> submodule update
+</span><span class='line'>  <span class="nv">sbp</span> <span class="o">=</span> submodule foreach git pull
+</span><span class='line'>  <span class="nv">sbc</span> <span class="o">=</span> submodule foreach git co master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考链接</h2>
+
+<ol>
+<li><p><a href="http://codingkilledthecat.wordpress.com/2012/04/28/why-your-company-shouldnt-use-git-submodules/">《why-your-company-shouldnt-use-git-submodules》</a> (需翻墙)</p></li>
+<li><p><a href="http://fiji.sc/Git_submodule_tutorial">《Git_submodule_tutorial》</a></p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[历史上的WWDC门票售空图片]]></title>
@@ -42,19 +176,19 @@
 
 <p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
 
-<p><img src="http://blog.devtang.com/images/wwdc-2011.png" width="500px" /></p>
+<p><img src="http://blog.devtang.com/images/wwdc-2011.jpg" width="500px" /></p>
 
 <h2>2012年</h2>
 
 <p>2小时售空。介绍了iOS6。</p>
 
-<p><img src="http://blog.devtang.com/images/wwdc-2012.png" width="500px" /></p>
+<p><img src="http://blog.devtang.com/images/wwdc-2012.jpg" width="500px" /></p>
 
 <h2>2013年</h2>
 
 <p>2分钟售空。期待。</p>
 
-<p><img src="http://blog.devtang.com/images/wwdc-2013.png" width="500px" /></p>
+<p><img src="http://blog.devtang.com/images/wwdc-2013.jpg" width="500px" /></p>
 ]]></content>
   </entry>
   
@@ -318,7 +452,7 @@
     <link href="http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account/"/>
     <updated>2013-02-21T20:02:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/weixin-why.png" width="300px" /></p>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/weixin-why.jpg" width="300px" /></p>
 
 <p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
 
@@ -646,7 +780,7 @@ g. AddressBookUI
 
 <p>完成之后如下图所示：</p>
 
-<p><img src="http://blog.devtang.com/images/zxing-step-3.png"></p>
+<p><img src="http://blog.devtang.com/images/zxing-step-3.jpg"></p>
 
 <p>最后一步，在设置中增加如下2个header search path:</p>
 
@@ -1840,7 +1974,7 @@ g. AddressBookUI
 
 <p>这些App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题，一句话描述起来就是：“这些App都会在用户刚刚使用它的时候，提示有新版本，让用户去AppStore上下载最新的版本”。下面是某个应用的升级提示截图：</p>
 
-<p><img src="http://blog.devtang.com/images/app-upgrade-1.png"></p>
+<p><img src="http://blog.devtang.com/images/app-upgrade-1.jpg"></p>
 
 <p>为什么我认为这是一个糟糕的设计呢？因为用户刚刚打开你的App，明显就是想使用你的功能。例如刚刚打开新浪微博，可能就是想看一下最新的消息或回复。刚刚打开网易新闻客户端，可能就是想看看最新的新闻。这个时候，你告诉用户有新版本，是想让用户暂时放弃使用该App吗？我不知道有多少用户会去点“升级”这个按钮，反正我每次看到这个提示都很郁闷，因为我如果点了，我就暂时不能使用该应用了（升级时原版本的App是无法使用的）。所以我在想，这个提示升级的时间能不能做得更友好一些？</p>
 
@@ -2706,159 +2840,9 @@ g. AddressBookUI
 
 <p>第二部分是关于粉笔网的技术架构方案。粉笔网在技术上还是一个微博类的<a href="http://baike.baidu.com/view/713949.htm">UGC</a>信息聚合系统。一方面，我们的团队之前做过<a href="http://t.163.com">网易微博</a>和<a href="http://izhuanjiao.com">爱转角</a>这2个微博类系统，积累了很多经验。另一方面，我们作为创业团队，没有在大公司里可以使用的内部开发的成熟的分布式存储系统，所以，我们只有借助于开源社区。最终，我们比较了现在各种方案的优缺点后，提出了我们自己的能够支持千万级用户的系统架构方案。这个方案最终通过了我们自己的压力测试，并且在上线后运行良好。CSDN整理出来的报道文章在<a href="http://www.csdn.net/article/2012-10-11/2810661?bsh_bid=145141477">这里</a>。</p>
 
-<p><img src="http://blog.devtang.com/images/fenbi-arch.png"></p>
+<p><img src="http://blog.devtang.com/images/fenbi-arch.jpg"></p>
 
 <p>我们将演示的PDF文件在此分享给大家。下载链接：<a href="http://blog.fenbi.com/assets/fenbi-scrum.pdf">第一部分</a> , <a href="http://blog.fenbi.com/assets/fenbi-arch.pdf">第二部分</a> 。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[粉笔网iPhone端使用的第三方开源库]]></title>
-    <link href="http://blog.devtang.com/blog/2012/10/09/3rd-libs-used-in-fenbi-app/"/>
-    <updated>2012-10-09T15:30:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/10/09/3rd-libs-used-in-fenbi-app</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>最近有朋友问我粉笔网iPhone端使用了哪些第三方的开源库。我在这儿整理了一下，分享给大家。</p>
-
-<p><img src="http://blog.devtang.com/images/fenbi_libs.png"></p>
-
-<!-- more -->
-
-
-<h3>ASIHttpRequest</h3>
-
-<p><a href="http://allseeing-i.com/ASIHTTPRequest/">ASIHttpRequest</a> 是一个被广泛使用的第三方网络访问开源库。用于提供更加友好的网络访问接口。相信很多搞iOS开发的朋友都用过它。
-ASIHttpRequest 的主要使用文档可以<a href="http://allseeing-i.com/ASIHTTPRequest/How-to-use">参考这里</a>。</p>
-
-<p>另外，由于ASIHTTPRequest的作者已经公开说明不再维护这个开源项目，并且该项目已经一年多没有更新了，所以我一直在寻找替代的开源库。不过现在暂时还没有找到更好的。</p>
-
-<h3>RegexKit</h3>
-
-<p><a href="http://regexkit.sourceforge.net/">RegexKit</a>是一个正则表达式工具类。提供强大的正则表达式匹配和替换功能。我们主要使用它来对类似微博的正文替换工作。例如将 @某某 换成带链接的，将图片的URL换成img标签等。</p>
-
-<p>同时，开源库MGTemplateEngine也依赖于此库。附上<a href="http://regexkit.sourceforge.net/Documentation/index.html">RegexKit4.0的官方文档教程</a>。</p>
-
-<h3>MGTemplateEngine</h3>
-
-<p><a href="http://svn.cocoasourcecode.com/MGTemplateEngine">MGTemplateEngine</a>是一个模版引擎。我们主要使用它来生成单条微博页的内容。我们的单条微博页打算用UIWebView来显示，所以内容需要用模版渲染成HTML格式。MGTemplateEngine的模版语言比较象：Smarty, FreeMarker 和 Django的模版语言。</p>
-
-<p>MGTemplateEngine的作者官方博客在<a href="http://mattgemmell.com/2008/05/20/mgtemplateengine-templates-with-cocoa/">这里</a>。</p>
-
-<p>我们在使用时，对此开源库的Filter类进行了修改，主要增加了3个自定义的filter，用于提供我们的格式化时间，转义html和过滤空头象的用户的方式。</p>
-
-<h3>JSONKit</h3>
-
-<p><a href="https://github.com/johnezang/JSONKit">JSONKit</a>是一个比较高效的JSON解析库。我之前比较过各大JSON解析库的性能（<a href="http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson/">文章在此</a>），JSONKit算是非常不错的，大概的使用示例如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;JSONKit.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">path</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource:</span><span class="s">@&quot;data&quot;</span> <span class="nl">ofType:</span><span class="s">@&quot;json&quot;</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSData</span> <span class="o">*</span><span class="n">content</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSData</span> <span class="nl">dataWithContentsOfFile:</span><span class="n">path</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">kitData</span> <span class="o">=</span> <span class="p">[</span><span class="n">content</span> <span class="n">objectFromJSONData</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">kitString</span> <span class="o">=</span> <span class="p">[</span><span class="n">kitData</span> <span class="n">JSONString</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>GTMNSString</h3>
-
-<p><a href="https://code.google.com/p/google-toolbox-for-mac/">GTMNSString</a>主要用于转义HTML中的特殊字符。以防止XSS攻击。</p>
-
-<h3>FMDB</h3>
-
-<p><a href="https://github.com/ccgus/fmdb">FMDB</a>是一个sqlite数据库封装类，需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。在使用上非常简单。如下是一个例子：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">docsdir</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSSearchPathForDirectoriesInDomains</span><span class="p">(</span><span class="n">NSDocumentDirectory</span><span class="p">,</span> <span class="n">NSUserDomainMask</span><span class="p">,</span> <span class="n">YES</span><span class="p">)</span> <span class="n">lastObject</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">dbpath</span> <span class="o">=</span> <span class="p">[</span><span class="n">docsdir</span> <span class="nl">stringByAppendingPathComponent:</span><span class="s">@&quot;user.sqlite&quot;</span><span class="p">];</span>
-</span><span class='line'><span class="n">FMDatabase</span> <span class="o">*</span> <span class="n">db</span> <span class="o">=</span> <span class="p">[</span><span class="n">FMDatabase</span> <span class="nl">databaseWithPath:</span><span class="n">dbpath</span><span class="p">];</span>
-</span><span class='line'><span class="p">[</span><span class="n">db</span> <span class="n">open</span><span class="p">];</span>
-</span><span class='line'><span class="n">FMResultSet</span> <span class="o">*</span> <span class="n">rs</span> <span class="o">=</span> <span class="p">[</span><span class="n">db</span> <span class="nl">executeQuery:</span><span class="s">@&quot;select * from People&quot;</span><span class="p">];</span>
-</span><span class='line'><span class="k">while</span> <span class="p">([</span><span class="n">rs</span> <span class="n">next</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@ %@&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">rs</span> <span class="nl">stringForColumn:</span><span class="s">@&quot;firstname&quot;</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">rs</span> <span class="nl">stringForColumn:</span><span class="s">@&quot;lastname&quot;</span><span class="p">]);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="p">[</span><span class="n">db</span> <span class="n">close</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>BBCustomBackButtonViewController</h3>
-
-<p><a href="https://github.com/typeoneerror/BBCustomBackButtonViewController">BBCustomBackButtonViewController</a> 是用于在ios4上提供自定义的NavigationBar按钮的开源库。使用上异常简单，只需要让自己的ViewController继承它就可以了。</p>
-
-<p>我对BBCustomBackButtonViewController进行了修改，主要是改动它的自定义的按钮的样式，使其和我们的风格一致。</p>
-
-<h3>MTStatusBarOverlay</h3>
-
-<p><a href="https://github.com/myell0w/MTStatusBarOverlay">MTStatusBarOverlay</a> 是一个在iphone的顶部status bar显示消息的开源库。示例代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">showCompletedTextOnStatusBar:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">text</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span> <span class="n">message</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithFormat:</span><span class="s">@&quot;%@成功&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">MTStatusBarOverlay</span> <span class="o">*</span><span class="n">overlay</span> <span class="o">=</span> <span class="p">[</span><span class="n">MTStatusBarOverlay</span> <span class="n">sharedInstance</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">overlay</span><span class="p">.</span><span class="n">animation</span> <span class="o">=</span> <span class="n">MTStatusBarOverlayAnimationFallDown</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">overlay</span><span class="p">.</span><span class="n">detailViewMode</span> <span class="o">=</span> <span class="n">MTDetailViewModeHistory</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">overlay</span> <span class="nl">postImmediateFinishMessage:</span><span class="n">message</span> <span class="nl">duration:</span><span class="mf">2.0</span> <span class="nl">animated:</span><span class="n">YES</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">overlay</span><span class="p">.</span><span class="n">progress</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>但是stackoverflow上说，有项目因为这个审核被拒，但是新浪微博明显采用了此UI方案，所以我们还是大胆用了这个库。后来，我们也顺利通过了审核。</p>
-
-<h3>MBProgressHUD</h3>
-
-<p><a href="https://github.com/jdg/MBProgressHUD">MBProgressHUD</a> 是一个用于显示灰色的加载进度或结果的类。与系统自带的UIAlertView相比，MBProgressHUD由于背影是黑色的，所以视觉上不是那么强烈。我们主要用它来显示一些加载中的提示，以及一些自已会消失的操作结果（例如网络失败等）。</p>
-
-<h3>NSStringWrapper</h3>
-
-<p>因为自己有多年Java开发的经历，我还是不太习惯Objective-C连基本的字符串操作都要查文档，而我自己又记不住老长的方法名，所以我把Objective-C的字符串基本操作都封装成了Java风格的方法调用。这部分是很早前拿周末时间在家里写的，所以是开源的，<a href="https://github.com/tangqiaoboy/xcode_tool/tree/master/NSStringWrappeer">源代码地址</a>。</p>
-
-<h3>EGOTableViewPullRefresh</h3>
-
-<p><a href="https://github.com/enormego/EGOTableViewPullRefresh">EGOTableViewPullRefresh</a> 一个开源的下拉刷新组件。我对它进行了改进，增加了强制刷新功能。</p>
-
-<h3>LoadMoreTableFooterView</h3>
-
-<p><a href="https://github.com/sishen/LoadMoreTableFooterView">LoadMoreTableFooterView</a> 一个开源的上拉加载更多的组件。我做了少量修改，以便让它支持iPhone5的分辨率。</p>
-
-<h3>zepto.js</h3>
-
-<p><a href="http://zeptojs.com/">zepto</a>是一个类似JQuery的javascript开源库，用于实现css选择器和一些dom操作。它的api几乎和JQuery完全一样，优点是体积小巧。</p>
-
-<h3>ejs</h3>
-
-<p><a href="http://embeddedjs.com/getting_started.html">ejs</a>一个js端的模版库。我们主要用于渲染一些UIWebview中异步加载的内容。例如笔记的评论，问题的答案。</p>
-
-<h2>总结</h2>
-
-<p>希望上面的开源库能对你有用。最后分享一张粉笔网全站用到的所有开源项目的图片。</p>
-
-<p><img src="http://blog.devtang.com/images/opensource.jpg"></p>
 ]]></content>
   </entry>
   

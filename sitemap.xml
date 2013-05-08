@@ -108,7 +108,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/08/05/use-modern-objective-c/</loc>
-        <lastmod>2013-01-01T18:14:48+08:00</lastmod>
+        <lastmod>2013-05-06T20:40:02+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/08/26/use-script-to-power-up-ui-work/</loc>
@@ -128,7 +128,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/10/15/scrum-and-architecture-in-fenbi/</loc>
-        <lastmod>2013-01-01T18:14:48+08:00</lastmod>
+        <lastmod>2013-05-06T20:40:02+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/10/27/use-opencv-in-ios/</loc>
@@ -136,7 +136,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/11/10/how-to-design-upgrade-notice/</loc>
-        <lastmod>2013-01-23T11:44:24+08:00</lastmod>
+        <lastmod>2013-05-06T20:40:02+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/11/14/make-stack-trace-more-readable/</loc>
@@ -170,7 +170,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/12/23/use-zxing-library/</loc>
-        <lastmod>2013-01-01T18:14:48+08:00</lastmod>
+        <lastmod>2013-05-06T20:40:02+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/01/01/2012-summary/</loc>
@@ -186,7 +186,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account/</loc>
-        <lastmod>2013-03-27T21:15:17+08:00</lastmod>
+        <lastmod>2013-05-06T20:40:02+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/03/27/should-we-use-arc/</loc>
@@ -202,14 +202,18 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/04/30/the-history-of-wwdc/</loc>
-        <lastmod>2013-04-30T23:15:42+08:00</lastmod>
+        <lastmod>2013-05-06T20:40:02+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.devtang.com/blog/2013/05/08/git-submodule-issues/</loc>
+        <lastmod>2013-05-08T22:15:32+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/archives/</loc>
-        <lastmod>2013-04-30T23:15:42+08:00</lastmod>
+        <lastmod>2013-05-08T22:15:32+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/</loc>
-        <lastmod>2013-04-30T23:15:42+08:00</lastmod>
+        <lastmod>2013-05-08T22:15:32+08:00</lastmod>
     </url>
 </urlset>

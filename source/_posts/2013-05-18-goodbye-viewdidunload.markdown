@@ -61,6 +61,8 @@ CABackingStore类型的内存区会被标记成volatile类型（这里的volatil
 
 ### 总结
 
+所以，简单来说，对于iOS6，你不需要做任何以前viewDidUnload的事情，更不需要把以前viewDidUnload的代码移动到 didReceiveMemoryWarning方法中。
+
 引用WWDC 2012 中的一段话来给viewDidUnload说再见：
 
 {% blockquote %}

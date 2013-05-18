@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-05-18T18:06:16+08:00</updated>
+  <updated>2013-05-18T20:39:31+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -78,6 +78,8 @@ CABackingStore类型的内存区会被标记成volatile类型（这里的volatil
 它就可以直接被复用，而避免了再次调用 UIView的 drawRect: 方法。</p>
 
 <h3>总结</h3>
+
+<p>所以，简单来说，对于iOS6，你不需要做任何以前viewDidUnload的事情，更不需要把以前viewDidUnload的代码移动到 didReceiveMemoryWarning方法中。</p>
 
 <p>引用WWDC 2012 中的一段话来给viewDidUnload说再见：</p>
 

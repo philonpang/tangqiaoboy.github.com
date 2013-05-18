@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>历史上的WWDC门票售空图片 - 唐巧的技术博客</title>
+  <title>再见，viewDidUnload方法 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="2008年 62天售空。介绍了iPhone 3G。 2009年 33天售空。介绍了iPhone 3GS。 2010年 8天售空。介绍了iPhone 4。 2011年 12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。 从这一年开始， &hellip;">
+  <meta name="description" content="前言 我在去年的一篇文章《iOS5中UIViewController的新方法》中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2013/04/30/the-history-of-wwdc">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2013/05/18/goodbye-viewdidunload">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,7 +77,7 @@
   
   <header>
     
-      <h1 class="entry-title">历史上的WWDC门票售空图片</h1>
+      <h1 class="entry-title">再见，viewDidUnload方法</h1>
     
     
       <p class="meta">
@@ -93,50 +93,86 @@
   
 
 
-<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
+<time datetime="2013-05-18T17:37:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>2008年</h2>
+<div class="entry-content"><h3>前言</h3>
 
-<p>62天售空。介绍了iPhone 3G。</p>
+<p>我在去年的一篇文章<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">《iOS5中UIViewController的新方法》</a>中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中，viewDidUnload回调方法被Deprecated掉了。查看苹果的文档，可以看到如下的说明。</p>
 
-<p><img src="/images/wwdc-2008.jpg" width="500px" /></p>
+<p><img src="/images/viewdidunload-1.jpg"></p>
 
-<h2>2009年</h2>
+<p>那么，原本在viewDidUnload中的代码应该怎么处理？在iOS6中，又应该怎么处理内存警告？带着这些问题，我查找了一些资料，在此分享给大家。</p>
 
-<p>33天售空。介绍了iPhone 3GS。</p>
+<!-- more -->
 
-<p><img src="/images/wwdc-2009.png" width="500px" /></p>
 
-<h2>2010年</h2>
+<h3>分析</h3>
 
-<p>8天售空。介绍了iPhone 4。</p>
+<p>在iOS4和iOS5系统中，当内存不足，应用收到Memory warning时，系统会自动调用当前没在界面上的ViewController的viewDidUnload方法。
+通常情况下，这些未显示在界面上的ViewController是UINavigationController Push栈中未在栈顶的ViewController，以及UITabBarViewController中未显示的子ViewController。这些View Controller都会在Memory Warning事件发生时，被系统自动调用viewDidUnload方法。</p>
 
-<p><img src="/images/wwdc-2010.png" width="500px" /></p>
+<p>在iOS6中，由于viewDidUnload事件在iOS6下任何情况都不会被触发，所以苹果在文档中建议，应该将回收内存的相关操作移到另一个回调函数：didReceiveMemoryWarning 中。但是如果你仅仅是把以前写到viewDidUnload函数中的代码移动到didReceiveMemoryWarning函数中，那么你就错了。以下是一个 <font color=red>错误的示例代码</font> ：</p>
 
-<h2>2011年</h2>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">didReceiveMemoryWarning</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">didReceiveMemoryWarning</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">([</span><span class="n">self</span> <span class="n">isViewLoaded</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">[[</span><span class="n">self</span> <span class="n">view</span><span class="p">]</span> <span class="n">window</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="nl">setView:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
 
-<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
+<p><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">这篇文章</a>解释了iOS6不推荐你将view置为nil的原因（链接打开需要翻墙）, 翻译过来如下：</p>
 
-<p><img src="/images/wwdc-2011.jpg" width="500px" /></p>
+<ol>
+<li><p>UIView有一个CALayer的成员变量，CALayer是具体用于将自己画到屏幕上的。如下图所示：</p>
 
-<h2>2012年</h2>
+<p><img src="/images/viewdidunload-2.jpg"></p></li>
+<li><p>CALayer是一个bitmap图象的容器类，当UIView调用自身的drawRect时，CALayer才会创建这个bitmap图象类。</p></li>
+<li><p>具体占内存的其实是一个bitmap图象类，CALayer只占48bytes, UIView只占96bytes。而一个iPad的全屏UIView的bitmap类会占到12M的大小！</p></li>
+<li><p>在iOS6时，当系统发出MemoryWarning时，系统会自动回收bitmap类。但是不回收UIView和CALayer类。这样即回收了大部分内存，又能在需要bitmap类时，通过调用UIView的drawRect: 方法重建。</p></li>
+</ol>
 
-<p>2小时售空。介绍了iOS6。</p>
 
-<p><img src="/images/wwdc-2012.jpg" width="500px" /></p>
+<h3>内存优化</h3>
 
-<h2>2013年</h2>
+<p>另外文章中还提到苹果的操作系统对此做的一个内存优化技巧，解释如下：</p>
 
-<p>2分钟售空。期待。</p>
+<ol>
+<li><p>当一段内存被分配时，它会被标记成“In use“, 以防止被重复使用。当内存被释放时，这段内存会被标记成&#8221;Not in use&#8221;，这样，在有新的内存申请时，这块内存就可能被分配给其它变量。</p></li>
+<li><p>CALayer包括的具体的bitmap内容的私有成员变量类型为<a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CABackingStore</a>， 当收到MemroyWarning时，
+CABackingStore类型的内存区会被标记成volatile类型（这里的volatile和 C以及Java语言的volatile不是一个意思），volatile表示，这块内存可能被再次被原变量重用。</p></li>
+</ol>
 
-<p><img src="/images/wwdc-2013.jpg" width="500px" /></p>
+
+<p>这样，有了上面的优化后，当收到Memoy Warning时，虽然所有的CALayer所包含的bitmap内存都被标记成volatile了，但是只要这块内存没有再次被复用，那么当需要重建bitmap内存时，
+它就可以直接被复用，而避免了再次调用 UIView的 drawRect: 方法。</p>
+
+<h3>总结</h3>
+
+<p>引用WWDC 2012 中的一段话来给viewDidUnload说再见：</p>
+
+<blockquote><p>The method viewWillUnload and viewDidUnload. We&#8217;re not going to call them anymore. I mean, there&#8217;s kind of a cost-benifit equation and analysis that we went through. In the early days, there was a real performance need for us to ensure that on memory warnings we unloaded views. There was all kinds of graphics and backing stores and so forth that would also get unloaded. We now unload those independently of the view, so it isn&#8217;t that big of a deal for us for those to be unloaded, and there were so many bugs where there would be pointers into。</p></blockquote>
+
+
+<h3>参考链接</h3>
+
+<ul>
+<li><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">View Controller Lifecycle in iOS 6</a></li>
+<li><a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CALayer Internals: Contents</a></li>
+</ul>
+
 </div>
 
 
@@ -159,7 +195,7 @@
   
 
 
-<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
+<time datetime="2013-05-18T17:37:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
       
 
 <span class="categories">
@@ -218,10 +254,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/04/29/the-missing-objc-keywords/" title="Previous Post: 那些被遗漏的Objective-C保留字">&laquo; 那些被遗漏的Objective-C保留字</a>
+        <a class="basic-alignment left" href="/blog/2013/05/08/git-submodule-issues/" title="Previous Post: Git submodule的坑">&laquo; Git submodule的坑</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/05/08/git-submodule-issues/" title="next Post: Git submodule的坑">Git submodule的坑 &raquo;</a>
       
     </p>
   </footer>

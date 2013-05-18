@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>历史上的WWDC门票售空图片 - 唐巧的技术博客</title>
+  <title>唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="2008年 62天售空。介绍了iPhone 3G。 2009年 33天售空。介绍了iPhone 3GS。 2010年 8天售空。介绍了iPhone 4。 2011年 12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。 从这一年开始， &hellip;">
+  <meta name="description" content="Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2013/04/30/the-history-of-wwdc">
+  <link rel="canonical" href="http://blog.devtang.com/blog/page/6">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -72,12 +73,15 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">历史上的WWDC门票售空图片</h1>
+      <h1 class="entry-title"><a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a></h1>
     
     
       <p class="meta">
@@ -93,142 +97,46 @@
   
 
 
-<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
+<time datetime="2011-08-10T17:32:00+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>2008年</h2>
+  <div class="entry-content"><p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
 
-<p>62天售空。介绍了iPhone 3G。</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="/images/wwdc-2008.jpg" width="500px" /></p>
 
-<h2>2009年</h2>
 
-<p>33天售空。介绍了iPhone 3GS。</p>
 
-<p><img src="/images/wwdc-2009.png" width="500px" /></p>
-
-<h2>2010年</h2>
-
-<p>8天售空。介绍了iPhone 4。</p>
-
-<p><img src="/images/wwdc-2010.png" width="500px" /></p>
-
-<h2>2011年</h2>
-
-<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
-
-<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
-
-<p><img src="/images/wwdc-2011.jpg" width="500px" /></p>
-
-<h2>2012年</h2>
-
-<p>2小时售空。介绍了iOS6。</p>
-
-<p><img src="/images/wwdc-2012.jpg" width="500px" /></p>
-
-<h2>2013年</h2>
-
-<p>2分钟售空。期待。</p>
-
-<p><img src="/images/wwdc-2013.jpg" width="500px" /></p>
 </div>
-
-
-  <footer>
-   <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
-
-      
-
-
-
-
-
-
-
-
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">阅读 &rarr;</a>
+    </footer>
   
 
 
-<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
-  
-</span>
-
-
-    </p>
-    <p class="meta">
-      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  
-  
-  
-    <style>
-    .flash-video{display:none;}
-</style>
-<!-- JiaThis Button BEGIN -->
-<div id="ckepop">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_tsina">新浪微博</a>
-<a class="jiathis_button_t163">网易微博</a>
-<a class="jiathis_button_tqq">腾讯微博</a>
-<a class="jiathis_button_renren">人人网</a>
-<a class="jiathis_button_douban">豆瓣</a>
-
-<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-    data_track_clickback:true,
-    sm:"t163,tsina,tqq,renren,douban",
-    summary:"",
-    hideMore:false
-}
-</script>
-<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-<br />
-<!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
-<!-- UY END -->
-
-  
-</div>
-
+    <a href="/blog/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/04/29/the-missing-objc-keywords/" title="Previous Post: 那些被遗漏的Objective-C保留字">&laquo; 那些被遗漏的Objective-C保留字</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/05/08/git-submodule-issues/" title="next Post: Git submodule的坑">Git submodule的坑 &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
+    <a class="next" href="/blog/page/5/">Newer &rarr;</a>
+    
+  </div>
 </div>
-
 <aside class="sidebar">
   
     <section>
@@ -280,7 +188,7 @@ var jiathis_config={
       </li>
     
       <li class="post">
-        <a href="/blog/2012/12/15/do-not-use-storyboard/">StoryBoard--看上去很美</a>
+        <a href="/blog/2012/12/15/do-not-use-storyboard/">StoryBoard&#8211;看上去很美</a>
       </li>
     
       <li class="post">
@@ -369,7 +277,6 @@ var jiathis_config={
 
   
 </aside>
-
 
     </div>
   </div>

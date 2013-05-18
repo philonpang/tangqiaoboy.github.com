@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-05-08T22:17:03+08:00</updated>
+  <updated>2013-05-18T18:06:16+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[再见，viewDidUnload方法]]></title>
+    <link href="http://blog.devtang.com/blog/2013/05/18/goodbye-viewdidunload/"/>
+    <updated>2013-05-18T17:37:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/05/18/goodbye-viewdidunload</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>我在去年的一篇文章<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">《iOS5中UIViewController的新方法》</a>中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中，viewDidUnload回调方法被Deprecated掉了。查看苹果的文档，可以看到如下的说明。</p>
+
+<p><img src="/images/viewdidunload-1.jpg"></p>
+
+<p>那么，原本在viewDidUnload中的代码应该怎么处理？在iOS6中，又应该怎么处理内存警告？带着这些问题，我查找了一些资料，在此分享给大家。</p>
+
+<!-- more -->
+
+
+<h3>分析</h3>
+
+<p>在iOS4和iOS5系统中，当内存不足，应用收到Memory warning时，系统会自动调用当前没在界面上的ViewController的viewDidUnload方法。
+通常情况下，这些未显示在界面上的ViewController是UINavigationController Push栈中未在栈顶的ViewController，以及UITabBarViewController中未显示的子ViewController。这些View Controller都会在Memory Warning事件发生时，被系统自动调用viewDidUnload方法。</p>
+
+<p>在iOS6中，由于viewDidUnload事件在iOS6下任何情况都不会被触发，所以苹果在文档中建议，应该将回收内存的相关操作移到另一个回调函数：didReceiveMemoryWarning 中。但是如果你仅仅是把以前写到viewDidUnload函数中的代码移动到didReceiveMemoryWarning函数中，那么你就错了。以下是一个 <font color=red>错误的示例代码</font> ：</p>
+
+<p>``` objc</p>
+
+<ul>
+<li>(void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  if([self isViewLoaded] &amp;&amp; ![[self view] window]) {
+
+<pre><code>  [self setView:nil];
+</code></pre>
+
+<p>  }
+}</p></li>
+</ul>
+
+
+<p>```</p>
+
+<p><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">这篇文章</a>解释了iOS6不推荐你将view置为nil的原因（链接打开需要翻墙）, 翻译过来如下：</p>
+
+<ol>
+<li><p>UIView有一个CALayer的成员变量，CALayer是具体用于将自己画到屏幕上的。如下图所示：</p>
+
+<p><img src="/images/viewdidunload-2.jpg"></p></li>
+<li><p>CALayer是一个bitmap图象的容器类，当UIView调用自身的drawRect时，CALayer才会创建这个bitmap图象类。</p></li>
+<li><p>具体占内存的其实是一个bitmap图象类，CALayer只占48bytes, UIView只占96bytes。而一个iPad的全屏UIView的bitmap类会占到12M的大小！</p></li>
+<li><p>在iOS6时，当系统发出MemoryWarning时，系统会自动回收bitmap类。但是不回收UIView和CALayer类。这样即回收了大部分内存，又能在需要bitmap类时，通过调用UIView的drawRect: 方法重建。</p></li>
+</ol>
+
+
+<h3>内存优化</h3>
+
+<p>另外文章中还提到苹果的操作系统对此做的一个内存优化技巧，解释如下：</p>
+
+<ol>
+<li><p>当一段内存被分配时，它会被标记成“In use“, 以防止被重复使用。当内存被释放时，这段内存会被标记成"Not in use"，这样，在有新的内存申请时，这块内存就可能被分配给其它变量。</p></li>
+<li><p>CALayer包括的具体的bitmap内容的私有成员变量类型为<a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CABackingStore</a>， 当收到MemroyWarning时，
+CABackingStore类型的内存区会被标记成volatile类型（这里的volatile和 C以及Java语言的volatile不是一个意思），volatile表示，这块内存可能被再次被原变量重用。</p></li>
+</ol>
+
+
+<p>这样，有了上面的优化后，当收到Memoy Warning时，虽然所有的CALayer所包含的bitmap内存都被标记成volatile了，但是只要这块内存没有再次被复用，那么当需要重建bitmap内存时，
+它就可以直接被复用，而避免了再次调用 UIView的 drawRect: 方法。</p>
+
+<h3>总结</h3>
+
+<p>引用WWDC 2012 中的一段话来给viewDidUnload说再见：</p>
+
+<p><blockquote><p></p></p><p><p>The method viewWillUnload and viewDidUnload. We're not going to call them anymore. I mean, there's kind of a cost-benifit equation and analysis that we went through. In the early days, there was a real performance need for us to ensure that on memory warnings we unloaded views. There was all kinds of graphics and backing stores and so forth that would also get unloaded. We now unload those independently of the view, so it isn't that big of a deal for us for those to be unloaded, and there were so many bugs where there would be pointers into。</p></p><p><p></p></blockquote></p>
+
+<h3>参考链接</h3>
+
+<ul>
+<li><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">View Controller Lifecycle in iOS 6</a></li>
+<li><a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CALayer Internals: Contents</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[历史上的WWDC门票售空图片]]></title>
@@ -293,64 +375,6 @@ NSValue *v = [NSValue value:&amp;rect withObjCType:@encode(CGRect)];
 <p>所以，希望大家都能在项目中使用ARC，一旦你感受到它带来的好处，你就离不开它了。它也能让你从繁琐的内存管理代码中解放出来，将精力更多关注于代码结构、设计模式而不是底层的内存管理。</p>
 
 <p>关于ARC的教程，除了苹果的官方文档外，推荐易飞杨写的<a href="http://www.yifeiyang.net/category/embedded/iphone-embedded/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA/arc/">ARC相关的文章</a>（注：链接需要翻墙才能打开）。易飞杨的博客中关于iPhone开发的文章都写得很深入，值得好好阅读。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[分享iOS开发技巧的微信公共账号]]></title>
-    <link href="http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account/"/>
-    <updated>2013-02-21T20:02:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/weixin-why.jpg" width="300px" /></p>
-
-<p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
-
-<p>后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。现在群里面加入了包括网易，腾讯，百度，新浪，搜狐，美团，豆瓣等公司的iOS程序员以及一些自由职业者。因为大家都是比较有经验的开发者，所以每天大家的讨论不太多，但是都很有价值。</p>
-
-<!-- more -->
-
-
-<p>但是，我发现QQ群对于讨论的归档性太弱。很多有代表意义的讨论，对于其他人可能是有用的，但是由于群的归档性太差，随着时间流逝，这些信息无法被有效沉淀。</p>
-
-<p>所以我想做一个尝试。我想把这个QQ群里面有价值的讨论信息整理归档到这个公共账号上。希望大部分iOS同行每天都能得到少量的，但是有价值的信息。对于特别有价值的信息，我也会在后期整理成博客，发表在博客上。</p>
-
-<p>希望这能对你平时的工作有所帮助。</p>
-
-<p>如果你感兴趣，那么可以扫描以下二维码加该账号为好友，或者在微信中搜索“iOS开发”。</p>
-
-<p><img src="/images/weixin-qr.jpg"></p>
-
-<hr>
-
-
-<h1>后记（2013年3月27日）</h1>
-
-<h3>微信公共账号的运营感受</h3>
-
-<p>上面的提到的公共账号，我尝试运营了半个月，有如下感受：</p>
-
-<ol>
-<li>微信公共平台实时性太高，文章归档性弱，微信4.5才增加查看所有历史消息的功能，而且很多人还不知道从哪儿查看历史消息。</li>
-<li>微信公共平台相对微博或RSS订阅，对订阅人的干扰强度更大。因为消息会实时推送到订阅人手机上，并且有消息收到提醒。</li>
-<li>微信公共平台上的消息因为是在手机上阅读，不适合作长篇的，深度的技术讲解，但适合作简单入门的技术介绍</li>
-<li>微信公共平台的后台管理太弱，不适宜代码的排版。</li>
-<li>微信公共平台上的消息不能被搜索引擎检索，阻碍了有价值的信息的传播。</li>
-</ol>
-
-
-<p>综上所述，微信公共平台更适合于发表新闻类或漫谈的文章（例如Fenng的小道消息），或者入门性技术介绍（例如池建强的Mac技巧）。不适合长篇的技术深入讨论，更不适合贴代码，也不适合归档文章（要归档得自己另外整理）。</p>
-
-<p>另外，每天通过公共账号发表文章相当费时间精力，至少需要1个小时的时间。对于我这个身处于创业公司的人来说，实在没有那么多时间花在这上面。所以现在该公共账号已经基本处于停止更新状态。</p>
-
-<h3>如何申请加群？</h3>
-
-<p>有很多朋友留言问我们的QQ群号并想申请加入，在此我统一回复一下。</p>
-
-<p>QQ群由于实时性太强，所以一旦有讨论，就会对平时的工作造成影响。所以QQ群里面的讨论不应该太热烈，否则每天就没法干活了。</p>
-
-<p>所以我希望群里面的人都足够精通iOS开发，对于在群里面提出来的问题，都是值得讨论的问题。通过讨论，大家都有了收获，才不致于觉得这个群太打扰而把它屏蔽掉。</p>
-
-<p>因此，我不希望群里面加太多的人，现在人数基本上有讨论的气氛，对于技术问题的讨论也都会有结果。所以，<font color="red">暂时不接受任何加群申请。</font></p>
 ]]></content>
   </entry>
   

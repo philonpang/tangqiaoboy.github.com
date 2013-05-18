@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-05-08T22:17:03+08:00</updated>
+  <updated>2013-05-18T18:06:16+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,87 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[再见，viewDidUnload方法]]></title>
+    <link href="http://blog.devtang.com/blog/2013/05/18/goodbye-viewdidunload/"/>
+    <updated>2013-05-18T17:37:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/05/18/goodbye-viewdidunload</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>我在去年的一篇文章<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">《iOS5中UIViewController的新方法》</a>中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中，viewDidUnload回调方法被Deprecated掉了。查看苹果的文档，可以看到如下的说明。</p>
+
+<p><img src="http://blog.devtang.com/images/viewdidunload-1.jpg"></p>
+
+<p>那么，原本在viewDidUnload中的代码应该怎么处理？在iOS6中，又应该怎么处理内存警告？带着这些问题，我查找了一些资料，在此分享给大家。</p>
+
+<!-- more -->
+
+
+<h3>分析</h3>
+
+<p>在iOS4和iOS5系统中，当内存不足，应用收到Memory warning时，系统会自动调用当前没在界面上的ViewController的viewDidUnload方法。
+通常情况下，这些未显示在界面上的ViewController是UINavigationController Push栈中未在栈顶的ViewController，以及UITabBarViewController中未显示的子ViewController。这些View Controller都会在Memory Warning事件发生时，被系统自动调用viewDidUnload方法。</p>
+
+<p>在iOS6中，由于viewDidUnload事件在iOS6下任何情况都不会被触发，所以苹果在文档中建议，应该将回收内存的相关操作移到另一个回调函数：didReceiveMemoryWarning 中。但是如果你仅仅是把以前写到viewDidUnload函数中的代码移动到didReceiveMemoryWarning函数中，那么你就错了。以下是一个 <font color=red>错误的示例代码</font> ：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">didReceiveMemoryWarning</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">didReceiveMemoryWarning</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">([</span><span class="n">self</span> <span class="n">isViewLoaded</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">[[</span><span class="n">self</span> <span class="n">view</span><span class="p">]</span> <span class="n">window</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="nl">setView:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">这篇文章</a>解释了iOS6不推荐你将view置为nil的原因（链接打开需要翻墙）, 翻译过来如下：</p>
+
+<ol>
+<li><p>UIView有一个CALayer的成员变量，CALayer是具体用于将自己画到屏幕上的。如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/viewdidunload-2.jpg"></p></li>
+<li><p>CALayer是一个bitmap图象的容器类，当UIView调用自身的drawRect时，CALayer才会创建这个bitmap图象类。</p></li>
+<li><p>具体占内存的其实是一个bitmap图象类，CALayer只占48bytes, UIView只占96bytes。而一个iPad的全屏UIView的bitmap类会占到12M的大小！</p></li>
+<li><p>在iOS6时，当系统发出MemoryWarning时，系统会自动回收bitmap类。但是不回收UIView和CALayer类。这样即回收了大部分内存，又能在需要bitmap类时，通过调用UIView的drawRect: 方法重建。</p></li>
+</ol>
+
+
+<h3>内存优化</h3>
+
+<p>另外文章中还提到苹果的操作系统对此做的一个内存优化技巧，解释如下：</p>
+
+<ol>
+<li><p>当一段内存被分配时，它会被标记成“In use“, 以防止被重复使用。当内存被释放时，这段内存会被标记成&#8221;Not in use&#8221;，这样，在有新的内存申请时，这块内存就可能被分配给其它变量。</p></li>
+<li><p>CALayer包括的具体的bitmap内容的私有成员变量类型为<a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CABackingStore</a>， 当收到MemroyWarning时，
+CABackingStore类型的内存区会被标记成volatile类型（这里的volatile和 C以及Java语言的volatile不是一个意思），volatile表示，这块内存可能被再次被原变量重用。</p></li>
+</ol>
+
+
+<p>这样，有了上面的优化后，当收到Memoy Warning时，虽然所有的CALayer所包含的bitmap内存都被标记成volatile了，但是只要这块内存没有再次被复用，那么当需要重建bitmap内存时，
+它就可以直接被复用，而避免了再次调用 UIView的 drawRect: 方法。</p>
+
+<h3>总结</h3>
+
+<p>引用WWDC 2012 中的一段话来给viewDidUnload说再见：</p>
+
+<blockquote><p>The method viewWillUnload and viewDidUnload. We&#8217;re not going to call them anymore. I mean, there&#8217;s kind of a cost-benifit equation and analysis that we went through. In the early days, there was a real performance need for us to ensure that on memory warnings we unloaded views. There was all kinds of graphics and backing stores and so forth that would also get unloaded. We now unload those independently of the view, so it isn&#8217;t that big of a deal for us for those to be unloaded, and there were so many bugs where there would be pointers into。</p></blockquote>
+
+
+<h3>参考链接</h3>
+
+<ul>
+<li><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">View Controller Lifecycle in iOS 6</a></li>
+<li><a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CALayer Internals: Contents</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git submodule的坑]]></title>
@@ -2821,28 +2902,6 @@ g. AddressBookUI
 <p>一直觉得，图象和声音是移动设备上的特点和优势。因为移动设备没有了可以快速输入的键盘，屏幕也不大，在移动设备上，声音，图象和视频应该是相比文字更方便让人输入的东西。移动端APP应该利用好这些特点，才能设计出更加体贴的功能。</p>
 
 <p>而且，通常情况下做图象处理都比较好玩，记得以前在学校做了一个在QQ游戏大厅自动下中国象棋的程序，其后台使用了网上下载的一个带命令行接口的象棋AI，然后我的代码主要做的事情就是识别象棋棋盘，然后将棋盘数据传给那个象棋AI，接着获得它返回的策略后，模拟鼠标点击来移动棋子。当时不懂什么图象算法，直接把棋子先截取下来保存，然后识别的时候做完全匹配，非常弱的办法，但是效果非常好，做出来也很好玩。嗯，所以文章最后，我想说的是：have fun!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[粉笔网的架构和项目管理]]></title>
-    <link href="http://blog.devtang.com/blog/2012/10/15/scrum-and-architecture-in-fenbi/"/>
-    <updated>2012-10-15T10:56:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/10/15/scrum-and-architecture-in-fenbi</id>
-    <content type="html"><![CDATA[<p>10月10日，在 <a href="http://weibo.com/cmdnclub">CMDN炫姐姐</a> 的邀请下，我们粉笔网团队通过CSDN的CMDN Club,对外进行了第一次<a href="http://hui.csdn.net/MeetingInfo.aspx?MID=137">技术分享</a>。分享的内容主要包括2部分:</p>
-
-<p>第一部分是关于粉笔网使用Scrum进行快速开发的故事。我们分享了如何在3个多月完成了全平台的开发的经验分享，其中也包括我们对Scrum的具体使用方式和其中遇到的各种问题。CSDN整理出来的报道文章在<a href="http://www.csdn.net/article/2012-10-11/2810658">这里</a>。</p>
-
-<!-- more -->
-
-
-<p><img src="http://blog.devtang.com/images/fenbi-scrum.jpg"></p>
-
-<p>第二部分是关于粉笔网的技术架构方案。粉笔网在技术上还是一个微博类的<a href="http://baike.baidu.com/view/713949.htm">UGC</a>信息聚合系统。一方面，我们的团队之前做过<a href="http://t.163.com">网易微博</a>和<a href="http://izhuanjiao.com">爱转角</a>这2个微博类系统，积累了很多经验。另一方面，我们作为创业团队，没有在大公司里可以使用的内部开发的成熟的分布式存储系统，所以，我们只有借助于开源社区。最终，我们比较了现在各种方案的优缺点后，提出了我们自己的能够支持千万级用户的系统架构方案。这个方案最终通过了我们自己的压力测试，并且在上线后运行良好。CSDN整理出来的报道文章在<a href="http://www.csdn.net/article/2012-10-11/2810661?bsh_bid=145141477">这里</a>。</p>
-
-<p><img src="http://blog.devtang.com/images/fenbi-arch.jpg"></p>
-
-<p>我们将演示的PDF文件在此分享给大家。下载链接：<a href="http://blog.fenbi.com/assets/fenbi-scrum.pdf">第一部分</a> , <a href="http://blog.fenbi.com/assets/fenbi-arch.pdf">第二部分</a> 。</p>
 ]]></content>
   </entry>
   

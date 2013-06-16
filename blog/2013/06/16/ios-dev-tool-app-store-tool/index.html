@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>iOS开发工具篇-AppStore统计工具 - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="本文首发于InfoQ，本文版权归InfoQ所有，转载请保留原文链接。 前言 随着iOS开发的流行，针对iOS开发涉及的方方面面，早有一些公司提供了专门的解决方案或工具。这些解决方案或工具包括：用户行为统计工具（友盟，Flurry，Google Analytics等), App &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2013/06/16/ios-dev-tool-app-store-tool">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">所有文章</a></li>
+  <li><a href="/blog/categories/ios/">iOS开发专题</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">iOS开发工具篇-AppStore统计工具</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-16T12:26:00+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>本文首发于InfoQ，本文版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/appstore-statistical-tool">原文链接</a>。</p>
+
+<h2>前言</h2>
+
+<p>随着iOS开发的流行，针对iOS开发涉及的方方面面，早有一些公司提供了专门的解决方案或工具。这些解决方案或工具包括：用户行为统计工具（友盟，Flurry，Google Analytics等),  App Store销售分析工具（例如App annie)， App crash收集工具（例如Crashlytics)，App测试发布工具（Test Flight）, App Push服务等。</p>
+
+<p>这些解决方案或工具节省了iOS开发者大量的开发时间，但是由于相关介绍文章的缺乏，许多开发者都在重复着自己一次又一次重新造轮子。所以我希望，将我自己使用和调研的相关的第三方服务使用经验，整理成一系列文章，以便广大开发者能够省去大量的重复性工作。</p>
+
+<p>今天介绍AppStore统计工具：App Annie和苹果的命令行统计工具。</p>
+
+<!-- more -->
+
+
+<h2>App Annie介绍</h2>
+
+<p><img src="/images/app-annie-homepage.jpg"></p>
+
+<p>苹果官方的iTunes Connect提供的销售数据统计功能比较弱，例如只能保存最近30天的详细销售数据，界面丑陋，
+无法查看App的排名历史变化情况等。</p>
+
+<p><a href="http://www.appannie.com/">AppAnnie</a>是一个专门为开发者提供的，针对AppStore相关数据的统计分析工具。
+该工具可以统计App在AppStore的下载量，排名变化，销售收入情况以及用户评价等信息。</p>
+
+<h3>原理</h3>
+
+<p>AppAnnie实现的原理是：通过你配置的管理账号，向itunes connect请求获得你的App的相关数据，包括每日下载量，用户的评分数据，以及销售数据。</p>
+
+<h3>注册Sales类型的账号</h3>
+
+<p>使用AppAnnie，首先需要在苹果官方的itunes connect中配置一个Sales类型的账号。
+因为默认的开发者账号是Admin级的权限，该权限是非常高的，可以修改App的价格或者直接下架商品。
+如果将这个账号直接配置在AppAnnie中，虽然不影响其获得相关数据，但是有一定的账号安全风险。</p>
+
+<p>配置该账号的详细步骤如下：</p>
+
+<p>1、登录itunes connect，选择Manager Users</p>
+
+<p><img src="/images/itunes-connect-add-user-1.jpg"></p>
+
+<p>2、选择iTunes Connect User</p>
+
+<p><img src="/images/itunes-connect-add-user-2.jpg"></p>
+
+<p>3、点击Add new User</p>
+
+<p><img src="/images/itunes-connect-add-user-3.jpg"></p>
+
+<p>4、填写新用户的相关信息</p>
+
+<p><img src="/images/itunes-connect-add-user-4.jpg"></p>
+
+<p>5、勾选用户类型为Sales</p>
+
+<p><img src="/images/itunes-connect-add-user-5.jpg"></p>
+
+<p>6、选择Notifications为All Notifications。点击图中所指的位置即可全选。</p>
+
+<p><img src="/images/itunes-connect-add-user-6.jpg"></p>
+
+<p>7、之后，邮箱中会收到iTunes Connect发来的激活邮件。
+点击邮件中的激活链接，即可进入到账号注册界面，之后注册账号即可激活。如果该邮箱已经注册过Apple Id，则会进入到登录界面，登录后即可激活。</p>
+
+<p><img src="/images/itunes-connect-add-user-7.jpg"></p>
+
+<h2>注册 App Annie账号及配置</h2>
+
+<p>打开App Annie的官方网站:<a href="http://www.appannie.com/">http://www.appannie.com/</a>，
+注册步骤和一般网站的步骤一样，我就不介绍了，注册完成之后的配置步骤如下：</p>
+
+<p>1、在设置页面中增加iTunes Connect账号</p>
+
+<p><img src="/images/app-annie-1.jpg"></p>
+
+<p>2、填写你的之前在iTunes Connect中增加的Sales类型的账号及密码</p>
+
+<p><img src="/images/app-annie-2.jpg"></p>
+
+<p>3、在User Setting中勾选上接收每日Report</p>
+
+<p><img src="/images/app-annie-3.jpg"></p>
+
+<p>4、这样，每天就可以收到AppAnnie发来的相关统计邮件了。如下是一封粉笔网的销售报告邮件截图：</p>
+
+<p><img src="/images/app-annie-4.jpg"></p>
+
+<h2>官方的命令行工具</h2>
+
+<p>如果你觉得将自己的销售数据交给第三方统计服务商，有一些不太安全。可以考虑使用苹果官方提供的Autoingestion.class工具来获得每天的销售数据，然后存到本地的数据库中。</p>
+
+<p>该工具的下载地址是<a href="http://www.apple.com/itunesnews/docs/Autoingestion.class.zip">这里</a>，
+苹果对于该用户的帮助文档在<a href="http://www.apple.com/itunesnews/docs/AppStoreReportingInstructions.pdf">这里</a>。</p>
+
+<p>下面介绍一下这个工具的使用，将Autoingestion.class下载下来后，切换到class文件所在目录，执行如下命令，即可获得对应的统计数据：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>java Autoingestion &lt;帐号名&gt; &lt;密码&gt; &lt;vendorId&gt; &lt;报告类型&gt; &lt;时间类型&gt; &lt;报告子类型&gt; &lt;时间&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中vendor Id在iTunes Connect的如下图所示位置获得，是一个数字8开头的序列。</p>
+
+<p><img src="/images/itunes-connect-vendor-id.jpg"></p>
+
+<p>&lt;报告类型>可选的值是：Sales 或 Newsstand</p>
+
+<p>&lt;时间类型>可选的值是：Daily, Weekly, Monthly 或 Yearly</p>
+
+<p>&lt;报告子类型>可选的值是：Summary, Detailed 或 Opt-In</p>
+
+<p>&lt;时间>以如下的格式给出：YYYYMMDD</p>
+
+<p>以下是一个示例，它将获得2013年5月8日的日销售摘要数据。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>java Autoingestion username@fenbi.com password 85587619 Sales Daily Summary 20130508</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我试用了一下该工具，觉得还是太糙了一些，仅仅能够将销售数据备份下来，如果要做AppAnnie那样的统计报表，还需要写不少代码。而且，该工具并不象App Annie那样，还提供应用在App Store的排名变化情况。虽然可以自己再做抓取，但也是需要工作量的。</p>
+
+<h2>其它类似App Annie的服务</h2>
+
+<p>类似App Annie这样的服务还有：<a href="http://appfigures.com">AppFigures</a>。我试用过之后，发现它不如App Annie功能强大。不过作为一个替代方案，也一并介绍给大家。</p>
+
+<p>在Github上也有一些开源的<a href="https://github.com/alexvollmer/itunes-connect">统计工具</a>，感兴趣的朋友也可以尝试一下。这些工具基本上也就是对苹果的命令行工具的增强，例如增加了将数据导入到数据库中等功能。</p>
+
+<h2>功能对比</h2>
+
+<p>App Annie和苹果本身提供的命令行工具虽然都能统计App Store的数据，但是二者功能相差悬殊。苹果的命令行工具仅仅能提供销售数据的按日、周、月、年等方式的统计和备份。而App Annie除了以更加良好的界面和交互提供这些功能外，还能跟踪App的排名变化，以及App在苹果的各种榜单中所处位置的情况。</p>
+
+<p>建议大家都可以尝试使用App Annie或AppFigures这类统计工具，帮助你方便地查看App的销售和排名情况。</p>
+</div>
+
+
+  <footer>
+   <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-16T12:26:00+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/iosdevtool/'>iOSDevTool</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/18/goodbye-viewdidunload/" title="Previous Post: 再见，viewDidUnload方法">&laquo; 再见，viewDidUnload方法</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/16/ios-dev-tool-app-store-tool/">iOS开发工具篇-AppStore统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/18/goodbye-viewdidunload/">再见，viewDidUnload方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/08/git-submodule-issues/">Git submodule的坑</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/07/tricks-in-iap/">iOS应用内支付(IAP)的那些坑</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/27/should-we-use-arc/">是否应该使用ARC?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/21/introduction-of-weixin-public-account/">分享iOS开发技巧的微信公共账号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/23/set-ios-system-ui-language/">设置应用内的系统控件语言</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/13/two-stage-creation-on-cocoa/">谈ObjC对象的两段构造模式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/01/2012-summary/">2012年个人总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/23/use-zxing-library/">在iOS中使用ZXing库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/15/do-not-use-storyboard/">StoryBoard--看上去很美</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/09/iap-crack-issue/">关于IAP的破解</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/09/in-app-purchase-check-list/">iOS应用内付费(IAP)开发步骤列表</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/08/use-privoxy/">使用Privoxy做智能代理切换</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/">使用CocoaPods来做iOS程序的包依赖管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/16/drop-ios4-enbrace-ios5/">放弃iOS4，拥抱iOS5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/14/make-stack-trace-more-readable/">让XCode的 stack trace信息可读</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">粉笔网的架构和项目管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/09/3rd-libs-used-in-fenbi-app/">粉笔网iPhone端使用的第三方开源库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/05/upgrade-your-app-to-support-iphone5/">让你的APP支持iPhone5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/05/use-modern-objective-c/">Objective-C的新特性</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/24/enhance-uiactionsheet/">封装同步的UIActionSheet</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/05/do-not-use-sbjson/">不要使用SBJSON(json-framework)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/22/use-fmdb/">在iOS开发中使用FMDB</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>  前网易有道员工，现在在粉笔网创业中。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记、粉笔网、猿题库。
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

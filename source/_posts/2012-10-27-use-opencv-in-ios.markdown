@@ -16,11 +16,13 @@ categories: [iOS, OpenCV]
 
 可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。
 
+更新: 我在XCode4.6.2 和 OpenCV 2.4.5版本的时候重新进行了一次环境搭建，如下内容应该也有效。
+
 <!-- more -->
 
 ##MacOS系统中使用OpenCV
 
-###安装OpenCV
+###在Mac OS Lion中安装OpenCV
 
 相信大部分Mac用户都安装了brew或port，如果你没有装，那么首先安装一下brew吧。使用如下命令安装brew:
 
@@ -37,12 +39,33 @@ brew install opencv
 
 安装成功后，你应该可以在“/usr/local/include"目录下找到名为opencv和opencv2的目录，这里面是OpenCV相关的头文件。你也可以在“/usr/local/lib"目录下找到许多以libopencv_开头的.dylib文件，这些是OpenCV的链接库文件。
 
+###在Mac OS Mountain Lion中安装OpenCV
+
+按照[该教程](http://tilomitra.com/opencv-on-mac-osx/)，先用brew安装cmake，然后将源码解压后，在控制台中切换到源码目录，执行如下操作：
+
+``` bash
+# make a separate directory for building
+mkdir build
+cd build
+cmake -G "Unix Makefiles" ..
+
+# Now, we can make OpenCV. Type the following in:
+make -j8
+sudo make install
+```
+
+上面的命令在执行时要注意，整个源码目录的路径不能带空格。否则编译会报错找不到一些文件。
+
+安装成功后，你应该可以在“/usr/local/include"目录下找到名为opencv和opencv2的目录，这里面是OpenCV相关的头文件。
+
 ###在MacOS系统中使用OpenCV
 接着我们可以试着在Xcode工程中使用OpenCV。
 
-新建一个Cocoa Application的工程。工程建好后，选中工程的Target，在Build Settings一样，找到“Header Search Paths"这一个选项，将它的值改为“/usr/local/include"。如下所示：
+新建一个Cocoa Application的工程。工程建好后，选中工程的Target，在Build Settings一样，找到“Header Search Paths"这一个选项，将它的值改为“/usr/local/include"。
 
-{% img /images/use-opencv-in-mac-1.png %}
+同样还需要设置的还有"Lib Search Paths"这一项，将它的值改为"/usr/local/lib/**", 如下所示：
+
+{% img /images/use-opencv-in-mac-1.jpg %}
 
 接着切换到Build Phases这个tab，在“Link Binary With Libraries"中，选项+号，然后将弹出的文件选择对话框目录切换到“/usr/local/lib"目录下，选择你需要使用的OpenCV链接库（通常情况下，你至少会需要core、highgui和imgproc库)，如下图所示：
 

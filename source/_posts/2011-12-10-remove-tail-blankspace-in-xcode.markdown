@@ -21,3 +21,31 @@ find . -name "*.[hm]" | xargs sed -Ee 's/ +$//g' -i ""
 顺便说一下，我打算把这些小脚本工具总结出来，放到github上，地址是 <https://github.com/tangqiaoboy/xcode_tool>，感兴趣的同学可以把它clone下来。
 
 祝玩得开心～
+
+## 2013年6月22日更新
+
+上文写于2011年末，在2012年在WWDC大会上，苹果推出了XCode4。从XCode4开始，XCode会自动去掉源码末尾的空格。所以上面提到的脚本基本没用了。不过对于工程中的html或js文件，XCode的去末尾空格功能并没有打开，所以在某些时候才能有一些小用处。
+
+另外，每次记得敲命令来去掉空格是一件很恶心的事情，最好是由程序自动完成。考虑到现在git已经很普及了，在这里介绍另一种在git仓库中创建钩子(hook)的方法来去掉所有提交文件的末尾空格，具体做法如下：
+
+在工程目录的 .git/hooks/目录下，创建一个名为 pre-commit的文件，输入如下内容
+
+``` bash
+#!/bin/sh
+if git-rev-parse --verify HEAD >/dev/null 2>&1 ; then
+   against=HEAD
+else
+   # Initial commit: diff against an empty tree object
+   against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+# Find files with trailing whitespace
+for FILE in `exec git diff-index --check --cached $against -- | sed '/^[+-]/d' | sed -E 's/:[0-9]+:.*//' | uniq` ; do
+    # Fix them!
+    sed -i '' -E 's/[[:space:]]*$//' "$FILE"
+    git add "$FILE"
+done
+
+```
+
+然后用 `chmod +x pre-commit` 给该文件加上执行权限。这样，每次在git提交文件的时候，该脚本就会被自动执行并且将提交文件末尾的空格去掉。
+

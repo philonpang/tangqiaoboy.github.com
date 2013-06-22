@@ -14,9 +14,11 @@ categories: [iOS, OpenCV]
 
 最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。有些问题费了我很多时间，在此总结分享给大家，希望后来人少走些弯路。
 
-可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。
+可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。
 
-更新: 我在XCode4.6.2 和 OpenCV 2.4.5版本的时候重新进行了一次环境搭建，如下内容应该也有效。
+所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。
+
+（2013-6-22）更新: 我在XCode4.6.2 和 OpenCV 2.4.5版本的时候重新进行了一次环境搭建，以下内容做了相应调整，应该也是有效的。
 
 <!-- more -->
 
@@ -41,7 +43,9 @@ brew install opencv
 
 ###在Mac OS Mountain Lion中安装OpenCV
 
-按照[该教程](http://tilomitra.com/opencv-on-mac-osx/)，先用brew安装cmake，然后将源码解压后，在控制台中切换到源码目录，执行如下操作：
+按照[该教程](http://tilomitra.com/opencv-on-mac-osx/)，先用brew安装cmake.
+
+去[OpenCV官网](source/_posts/2012-10-27-use-opencv-in-ios.markdown)下载Linux/Mac版的源码，将源码解压后，在控制台中切换到源码目录，执行如下操作：
 
 ``` bash
 # make a separate directory for building
@@ -56,7 +60,7 @@ sudo make install
 
 上面的命令在执行时要注意，整个源码目录的路径不能带空格。否则编译会报错找不到一些文件。
 
-安装成功后，你应该可以在“/usr/local/include"目录下找到名为opencv和opencv2的目录，这里面是OpenCV相关的头文件。
+安装成功后，你应该可以在“/usr/local/include"目录下找到名为opencv和opencv2的目录，这里面是OpenCV相关的头文件。你也可以在“/usr/local/lib"目录下找到许多以libopencv_开头的.dylib文件，这些是OpenCV的链接库文件。
 
 ###在MacOS系统中使用OpenCV
 接着我们可以试着在Xcode工程中使用OpenCV。
@@ -67,7 +71,7 @@ sudo make install
 
 {% img /images/use-opencv-in-mac-1.jpg %}
 
-接着切换到Build Phases这个tab，在“Link Binary With Libraries"中，选项+号，然后将弹出的文件选择对话框目录切换到“/usr/local/lib"目录下，选择你需要使用的OpenCV链接库（通常情况下，你至少会需要core、highgui和imgproc库)，如下图所示：
+接着切换到Build Phases这个tab，在“Link Binary With Libraries"中，选项+号，然后将弹出的文件选择对话框目录切换到“/usr/local/lib"目录下，选择你需要使用的OpenCV链接库（通常情况下，你至少会需要core、highgui和imgproc库)，如下图所示（截图中的OpenCV版本号可能和你的有差别，但应该不影响）：
 
 {% img /images/use-opencv-in-mac-2.png %}
 
@@ -75,7 +79,7 @@ sudo make install
 
 {% img /images/use-opencv-in-mac-3.png %}
 
-下一步是我自己试出来的，你需要在Build Settings中，将“C++ Language Dialect”设置成C++11，将“C++ Standard Library”设置成libstdc++ ，如下图所示。个人感觉是由于XCode默认设置的GNU++11、libc++与OpenCV库有一些兼容性问题，我在更改该设置前老是出现编译错误。如果后续版本解决了这个问题，就不用进行这一步了。
+下一步是我自己试出来的，对于Lion操作系统，你需要在Build Settings中，将“C++ Language Dialect”设置成C++11，将“C++ Standard Library”设置成libstdc++ ，如下图所示。个人感觉是由于XCode默认设置的GNU++11、libc++与OpenCV库有一些兼容性问题，我在更改该设置前老是出现编译错误。后续版本在Montain Lion系统中解决了这个问题，不用进行这一步了。
 
 {% img /images/use-opencv-in-mac-4.png %}
 

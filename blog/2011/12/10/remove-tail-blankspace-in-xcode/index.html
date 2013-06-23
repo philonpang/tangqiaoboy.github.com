@@ -117,6 +117,45 @@
 <p>顺便说一下，我打算把这些小脚本工具总结出来，放到github上，地址是 <a href="https://github.com/tangqiaoboy/xcode_tool">https://github.com/tangqiaoboy/xcode_tool</a>，感兴趣的同学可以把它clone下来。</p>
 
 <p>祝玩得开心～</p>
+
+<h2>2013年6月22日更新</h2>
+
+<p>上文写于2011年末，在2012年在WWDC大会上，苹果推出了XCode4。从XCode4开始，XCode会自动去掉源码末尾的空格。所以上面提到的脚本基本没用了。不过对于工程中的html或js文件，XCode的去末尾空格功能并没有打开，所以在某些时候才能有一些小用处。</p>
+
+<p>另外，每次记得敲命令来去掉空格是一件很恶心的事情，最好是由程序自动完成。考虑到现在git已经很普及了，在这里介绍另一种在git仓库中创建钩子(hook)的方法来去掉所有提交文件的末尾空格，具体做法如下：</p>
+
+<p>在工程目录的 .git/hooks/目录下，创建一个名为 pre-commit的文件，输入如下内容</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="k">if </span>git-rev-parse --verify HEAD &gt;/dev/null 2&gt;&amp;1 ; <span class="k">then</span>
+</span><span class='line'><span class="k">   </span><span class="nv">against</span><span class="o">=</span>HEAD
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>   <span class="c"># Initial commit: diff against an empty tree object</span>
+</span><span class='line'>   <span class="nv">against</span><span class="o">=</span>4b825dc642cb6eb9a060e54bf8d69288fbee4904
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="c"># Find files with trailing whitespace</span>
+</span><span class='line'><span class="k">for </span>FILE in <span class="sb">`</span><span class="nb">exec </span>git diff-index --check --cached <span class="nv">$against</span> -- | sed <span class="s1">&#39;/^[+-]/d&#39;</span> | sed -E <span class="s1">&#39;s/:[0-9]+:.*//&#39;</span> | uniq<span class="sb">`</span> ; <span class="k">do</span>
+</span><span class='line'>    <span class="c"># Fix them!</span>
+</span><span class='line'>    sed -i <span class="s1">&#39;&#39;</span> -E <span class="s1">&#39;s/[[:space:]]*$//&#39;</span> <span class="s2">&quot;$FILE&quot;</span>
+</span><span class='line'>    git add <span class="s2">&quot;$FILE&quot;</span>
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后用 <code>chmod +x pre-commit</code> 给该文件加上执行权限。这样，每次在git提交文件的时候，该脚本就会被自动执行并且将提交文件末尾的空格去掉。</p>
 </div>
 
 
@@ -216,6 +255,10 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/17/startup-anniversary-note/">写在创业一周年</a>
       </li>
     
@@ -249,10 +292,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2013/02/21/introduction-of-weixin-public-account/">分享iOS开发技巧的微信公共账号</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/23/set-ios-system-ui-language/">设置应用内的系统控件语言</a>
       </li>
     
   </ul>

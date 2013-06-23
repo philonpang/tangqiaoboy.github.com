@@ -108,14 +108,18 @@
 
 <p>最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。有些问题费了我很多时间，在此总结分享给大家，希望后来人少走些弯路。</p>
 
-<p>可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。</p>
+<p>可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。</p>
+
+<p>所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。</p>
+
+<p>（2013-6-22）更新: 我在XCode4.6.2 和 OpenCV 2.4.5版本的时候重新进行了一次环境搭建，以下内容做了相应调整，应该也是有效的。</p>
 
 <!-- more -->
 
 
 <h2>MacOS系统中使用OpenCV</h2>
 
-<h3>安装OpenCV</h3>
+<h3>在Mac OS Lion中安装OpenCV</h3>
 
 <p>相信大部分Mac用户都安装了brew或port，如果你没有装，那么首先安装一下brew吧。使用如下命令安装brew:</p>
 
@@ -135,15 +139,46 @@
 
 <p>安装成功后，你应该可以在“/usr/local/include&#8221;目录下找到名为opencv和opencv2的目录，这里面是OpenCV相关的头文件。你也可以在“/usr/local/lib&#8221;目录下找到许多以libopencv_开头的.dylib文件，这些是OpenCV的链接库文件。</p>
 
+<h3>在Mac OS Mountain Lion中安装OpenCV</h3>
+
+<p>按照<a href="http://tilomitra.com/opencv-on-mac-osx/">该教程</a>，先用brew安装cmake.</p>
+
+<p>去<a href="source/_posts/2012-10-27-use-opencv-in-ios.markdown">OpenCV官网</a>下载Linux/Mac版的源码，将源码解压后，在控制台中切换到源码目录，执行如下操作：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># make a separate directory for building</span>
+</span><span class='line'>mkdir build
+</span><span class='line'><span class="nb">cd </span>build
+</span><span class='line'>cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> ..
+</span><span class='line'>
+</span><span class='line'><span class="c"># Now, we can make OpenCV. Type the following in:</span>
+</span><span class='line'>make -j8
+</span><span class='line'>sudo make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的命令在执行时要注意，整个源码目录的路径不能带空格。否则编译会报错找不到一些文件。</p>
+
+<p>安装成功后，你应该可以在“/usr/local/include&#8221;目录下找到名为opencv和opencv2的目录，这里面是OpenCV相关的头文件。你也可以在“/usr/local/lib&#8221;目录下找到许多以libopencv_开头的.dylib文件，这些是OpenCV的链接库文件。</p>
+
 <h3>在MacOS系统中使用OpenCV</h3>
 
 <p>接着我们可以试着在Xcode工程中使用OpenCV。</p>
 
-<p>新建一个Cocoa Application的工程。工程建好后，选中工程的Target，在Build Settings一样，找到“Header Search Paths&#8221;这一个选项，将它的值改为“/usr/local/include&#8221;。如下所示：</p>
+<p>新建一个Cocoa Application的工程。工程建好后，选中工程的Target，在Build Settings一样，找到“Header Search Paths&#8221;这一个选项，将它的值改为“/usr/local/include&#8221;。</p>
 
-<p><img src="/images/use-opencv-in-mac-1.png"></p>
+<p>同样还需要设置的还有&#8221;Lib Search Paths&#8221;这一项，将它的值改为&#8221;/usr/local/lib/**&#8221;, 如下所示：</p>
 
-<p>接着切换到Build Phases这个tab，在“Link Binary With Libraries&#8221;中，选项+号，然后将弹出的文件选择对话框目录切换到“/usr/local/lib&#8221;目录下，选择你需要使用的OpenCV链接库（通常情况下，你至少会需要core、highgui和imgproc库)，如下图所示：</p>
+<p><img src="/images/use-opencv-in-mac-1.jpg"></p>
+
+<p>接着切换到Build Phases这个tab，在“Link Binary With Libraries&#8221;中，选项+号，然后将弹出的文件选择对话框目录切换到“/usr/local/lib&#8221;目录下，选择你需要使用的OpenCV链接库（通常情况下，你至少会需要core、highgui和imgproc库)，如下图所示（截图中的OpenCV版本号可能和你的有差别，但应该不影响）：</p>
 
 <p><img src="/images/use-opencv-in-mac-2.png"></p>
 
@@ -151,7 +186,7 @@
 
 <p><img src="/images/use-opencv-in-mac-3.png"></p>
 
-<p>下一步是我自己试出来的，你需要在Build Settings中，将“C++ Language Dialect”设置成C++11，将“C++ Standard Library”设置成libstdc++ ，如下图所示。个人感觉是由于XCode默认设置的GNU++11、libc++与OpenCV库有一些兼容性问题，我在更改该设置前老是出现编译错误。如果后续版本解决了这个问题，就不用进行这一步了。</p>
+<p>下一步是我自己试出来的，对于Lion操作系统，你需要在Build Settings中，将“C++ Language Dialect”设置成C++11，将“C++ Standard Library”设置成libstdc++ ，如下图所示。个人感觉是由于XCode默认设置的GNU++11、libc++与OpenCV库有一些兼容性问题，我在更改该设置前老是出现编译错误。后续版本在Montain Lion系统中解决了这个问题，不用进行这一步了。</p>
 
 <p><img src="/images/use-opencv-in-mac-4.png"></p>
 
@@ -924,6 +959,10 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/17/startup-anniversary-note/">写在创业一周年</a>
       </li>
     
@@ -957,10 +996,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2013/02/21/introduction-of-weixin-public-account/">分享iOS开发技巧的微信公共账号</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/23/set-ios-system-ui-language/">设置应用内的系统控件语言</a>
       </li>
     
   </ul>

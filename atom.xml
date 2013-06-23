@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-06-17T22:06:43+08:00</updated>
+  <updated>2013-06-23T14:33:10+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,110 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[分析支付宝客户端的插件机制]]></title>
+    <link href="http://blog.devtang.com/blog/2013/06/23/alipay-plugin-mechanism/"/>
+    <updated>2013-06-23T12:39:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/06/23/alipay-plugin-mechanism</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/alipay-plugin-1.jpg"></p>
+
+<h2>前言</h2>
+
+<p>因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是：</p>
+
+<pre><code>请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码?
+</code></pre>
+
+<p>我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下，将支付宝客户端的插件机制具体实现方式介绍给大家。</p>
+
+<p>先介绍一下该插件机制，如上图所示，支付宝客户端在安装后，对于像“彩票”、“爱心捐赠”这类功能，需要再点击安装一次，然后才可以使用。有些时候该插件功能进行了升级，需要点击升级才可以继续使用。插件的方式有利于软件动态增加新的功能或升级功能，而不用再一次向AppStore提交审核。另外，由于用户不需要的插件可以不用安装，也缩小了应用本身的体积大小，节省了下载流量。</p>
+
+<!-- more -->
+
+
+<h2>分析过程</h2>
+
+<h3>截取网络请求</h3>
+
+<p>分析第一步，截取网络请求。截取网络请求可以查看当用户点击“彩票”进行安装的时候，客户端到底做了什么事情。使用Charles的代理设置功能，启动一个http代理，然后在iPhone上设置连接此代理，则可以看到，当点击“彩票”插件时，客户端下载了一个名为 10000011.amr的文件。如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/alipay-plugin-2.jpg"></p>
+
+<h3>下载插件文件</h3>
+
+<p>尝试用wget将文件下载下来，发现其没有验证cookie，下载成功，命令如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget http://download.alipay.com/mobilecsprod/alipay.mobile/20130601021432806/xlarge/10000011.amr
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>amr本意表示是一个音频文件，明显不对，尝试将其后缀名改成zip，成功将其解压。用itools连接上支付宝的客户端，同样能看到客户端将其下载后，也是解压到document目录下的。解压后的内容与应用内新增加的内容一致，如图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/alipay-plugin-3.jpg"></p>
+
+<h3>分析文件内容</h3>
+
+<p>大概浏览了一下解压后的文件，主要包括html、css和js文件。可见支付宝的插件机器是通过UIWebView来展示内容的方式来实现的，那为什么要先下载安装这些内容而不通过UIWebView实时下载html呢？这主要应该是为了节省相应的流量。我看了一下，10000011.amr文件整个有将近1M大小，如果不通过插件机制预先下载，则只能依赖系统对于UIWebView的缓存来节省流量，这相对来说没有前者靠谱。</p>
+
+<p>另外，使用基于UIWebView的方式来展示插件，也有利于代码的复用。因为这些逻辑都是用js来写的，可以同样应用于Android平台，在Config.js文件中，明显可以看到对于各类平台的判断逻辑。如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/alipay-plugin-4.jpg"></p>
+
+<p>另外，/www/demo/index-alipay-native.html 文件即该插件的首页，用浏览器打开就可以看到和手机端一样的内容。如下载图所示（左半边是手机上的应用截图，右半边是浏览器打开该html文件的截图）：</p>
+
+<p><img src="http://blog.devtang.com/images/alipay-plugin-5.jpg"></p>
+
+<h3>插件的网络通讯</h3>
+
+<p>接下来感兴趣的是该插件是如何完成和支付宝后台的网络通讯的。可以想到有两种可能的方式：</p>
+
+<ol>
+<li>直接和支付宝后台通讯</li>
+<li>和Native端通讯，然后Native端和服务器通讯。</li>
+</ol>
+
+
+<p>要验证这个需要读该插件的js源代码，整个js源码逻辑还是比较干净的，主要用了玉伯写的<a href="http://seajs.org/docs/">seajs</a>做模块化加载，<a href="http://backbonejs.org/">backbone.js</a>是一个前端的MVC框架，<a href="http://zeptojs.com/">zepto.js</a>是一个更适合于移动端使用的&#8221;JQuery&#8221;。</p>
+
+<p>大概扫了一下，感觉更可能是用的方法一：直接和支付宝后台通讯, 因为Config.js中都明确将网络通讯的地址写下来了。另一个证据是，利用下面的脚本扫描整个js源码，只能在backbone中搜到对于iframe的使用。而在iOS开发中，如果js端和native端要通讯，是需要用到iframe的，详细原理可以参见我的另一篇文章<a href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">《关于UIWebView和PhoneGap的总结》</a>。不过我不能完全确认，因为我还没有找到相应控制页面切换和跳转的js代码，如果你找到了，麻烦告诉我。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>find . -type f -name <span class="s2">&quot;*.js&quot;</span> | xargs grep <span class="s2">&quot;iframe&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>交易的安全</h3>
+
+<p>用Charles可以截取到，当有网络交易时，应用会另外启动一个https的安全链接，完成整个交易过程的加密。如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/alipay-plugin-6.jpg"></p>
+
+<h2>总结</h2>
+
+<p>支付宝的插件机制整体上就是通过html和javascript方式实现的，主要的好处是：</p>
+
+<ol>
+<li>跨平台(可以同时用在iOS和Android客户端）</li>
+<li>省流量（不需要的插件不用下载，插件本地缓存长期存在不会过期，自己管理插件更新逻辑）</li>
+<li>更新方便（不用每次提交AppStore审核）</li>
+</ol>
+
+
+<p>坏处如果非要说有的话，就是用javascript写iOS界面，无法提供非常炫的UI交互以及利用到iOS的所有平台特性。不过象支付宝这种工具类应用，也不需要很复杂的UI交互效果。</p>
+
+<p>另外教大家一个小技巧，如果你不确定某个页面是不是UIWebView做的，直接在那个页面长按，如果弹出&#8221;拷贝，定义，学习&#8221;这种菜单，那就是确定无疑是UIWebView的界面了。如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/ios-menu-2.jpg"></p>
+
+<h2>相关工具</h2>
+
+<p>欢迎关注我的技术微博 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 和微信公共账号 <a href="http://chuansong.me/account/iosDevTips">iOSDevTips</a> ，每天收获一些关于iOS开发的学习资料和技巧心得。</p>
+
+<p>我在研究时使用了<a href="http://www.charlesproxy.com/">Charles</a>来截获支付宝客户端的网络请求，用<a href="http://itools.hk/">iTools</a>来查看支付宝客户端的本地内容。如果你想自行验证本文内容，请先下载上述工具。在此就不额外介绍它们的使用了。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[写在创业一周年]]></title>
@@ -2171,146 +2275,6 @@ g. AddressBookUI
 <p>GameKit, Core Data, NewsstandKit, GLKit在iOS5中都有更新。可惜我都没有具体使用过，所以不便做更多介绍。</p>
 
 <p>Have fun!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[让XCode的 stack trace信息可读]]></title>
-    <link href="http://blog.devtang.com/blog/2012/11/14/make-stack-trace-more-readable/"/>
-    <updated>2012-11-14T20:19:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/11/14/make-stack-trace-more-readable</id>
-    <content type="html"><![CDATA[<p>昨天在写iOS代码的时候，调试的时候模拟器崩溃了。异常停在了如下整个main函数的入口处：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// 异常停在了下面这行，毫无提示作用</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">UIApplicationMain</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="nb">nil</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">MyClass</span> <span class="n">class</span><span class="p">]));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<!-- more -->
-
-
-<p>XCode的Console界面报出了一些出错信息, 如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/stacktrace-1.jpg"></p>
-
-<p>我根据Console里面的文字提示信息，猜出应该是出现了空指针nil的操作。但是具体出错在哪一行，却不知道。最终虽然找到了bug，但是debug的过程确实费了些时间。考虑到这个stace trace信息应该对我挺有帮助才对的，所以我就查了一下如何让这原本一堆16进制的调用栈信息更可读。于是在stackoverflow上找到了2个比较好的解决办法，在这里分享给大家。</p>
-
-<h2>方法一</h2>
-
-<p>该<a href="http://stackoverflow.com/questions/7841610/xcode-4-2-debug-doesnt-symbolicate-stack-call">方法</a>的步骤是，首先在你的AppDelegate中定义一个方法, 用于处理异常：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">uncaughtExceptionHandler</span><span class="p">(</span><span class="n">NSException</span> <span class="o">*</span><span class="n">exception</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;CRASH: %@&quot;</span><span class="p">,</span> <span class="n">exception</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Stack Trace: %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">exception</span> <span class="n">callStackSymbols</span><span class="p">]);</span>
-</span><span class='line'>    <span class="c1">// Internal error reporting</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后在应用启动时，设置这个方法作为自己的自定义异常回调：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">NSSetUncaughtExceptionHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">uncaughtExceptionHandler</span><span class="p">);</span>
-</span><span class='line'>    <span class="c1">// Normal launch stuff</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>完成之后，当对于上面的异常，在定义了这个回调之后，Log信息变成如下所示，出错行一目了然，根据下面的可读的stack trace，我一下就可以找到是QuestionParser这个类的第378行导致的异常，进而可以跳到出错行分析原因，很容易就把bug修复了。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Ape</span><span class="p">[</span><span class="mi">2711</span><span class="o">:</span><span class="mi">11303</span><span class="p">]</span> <span class="nl">CRASH:</span> <span class="o">***</span> <span class="o">-</span><span class="p">[</span><span class="n">__NSPlaceholderDictionary</span> <span class="nl">initWithObjects:forKeys:count:</span><span class="p">]</span><span class="o">:</span> <span class="n">attempt</span> <span class="n">to</span> <span class="n">insert</span> <span class="nb">nil</span> <span class="n">object</span> <span class="n">from</span> <span class="n">objects</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-</span><span class='line'><span class="n">Ape</span><span class="p">[</span><span class="mi">2711</span><span class="o">:</span><span class="mi">11303</span><span class="p">]</span> <span class="n">Stack</span> <span class="nl">Trace:</span> <span class="p">(</span>
-</span><span class='line'>  <span class="mi">0</span>   <span class="n">CoreFoundation</span>                      <span class="mh">0x0209402e</span> <span class="n">__exceptionPreprocess</span> <span class="o">+</span> <span class="mi">206</span>
-</span><span class='line'>  <span class="mi">1</span>   <span class="n">libobjc</span><span class="p">.</span><span class="n">A</span><span class="p">.</span><span class="n">dylib</span>                     <span class="mh">0x01a71e7e</span> <span class="n">objc_exception_throw</span> <span class="o">+</span> <span class="mi">44</span>
-</span><span class='line'>  <span class="mi">2</span>   <span class="n">CoreFoundation</span>                      <span class="mh">0x0205aa95</span> <span class="o">-</span><span class="p">[</span><span class="n">__NSPlaceholderDictionary</span> <span class="nl">initWithObjects:forKeys:count:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">165</span>
-</span><span class='line'>  <span class="mi">3</span>   <span class="n">CoreFoundation</span>                      <span class="mh">0x020874e9</span> <span class="o">+</span><span class="p">[</span><span class="n">NSDictionary</span> <span class="nl">dictionaryWithObjects:forKeys:count:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">73</span>
-</span><span class='line'>  <span class="mi">4</span>   <span class="n">Ape</span>                                 <span class="mh">0x00096a0a</span> <span class="o">+</span><span class="p">[</span><span class="n">QuestionParser</span> <span class="nl">parseToDictionary:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">378</span>
-</span><span class='line'>  <span class="mi">5</span>   <span class="n">Ape</span>                                 <span class="mh">0x00096434</span> <span class="o">-</span><span class="p">[</span><span class="n">QuestionStore</span> <span class="nl">putQuestion:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">308</span>
-</span><span class='line'>  <span class="mi">6</span>   <span class="n">Ape</span>                                 <span class="mh">0x00089ddf</span> <span class="o">-</span><span class="p">[</span><span class="n">QuestionViewController</span> <span class="nl">requestFinished:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">303</span>
-</span><span class='line'>  <span class="mi">7</span>   <span class="n">Ape</span>                                 <span class="mh">0x000869dd</span> <span class="o">-</span><span class="p">[</span><span class="n">NetworkAgent</span> <span class="nl">requestFinished:</span><span class="p">]</span> <span class="o">+</span> <span class="mi">653</span>
-</span><span class='line'>  <span class="mi">8</span>   <span class="n">Ape</span>                                 <span class="mh">0x00085d33</span> <span class="n">__27</span><span class="o">-</span><span class="p">[</span><span class="n">NetworkAgent</span> <span class="nl">addRequest:</span><span class="p">]</span><span class="n">_block_invoke_0</span> <span class="o">+</span> <span class="mi">131</span>
-</span><span class='line'>  <span class="mi">9</span>   <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cf153f</span> <span class="n">_dispatch_call_block_and_release</span> <span class="o">+</span> <span class="mi">15</span>
-</span><span class='line'>  <span class="mi">10</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01d03014</span> <span class="n">_dispatch_client_callout</span> <span class="o">+</span> <span class="mi">14</span>
-</span><span class='line'>  <span class="mi">11</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cf2fd6</span> <span class="n">_dispatch_after_timer_callback</span> <span class="o">+</span> <span class="mi">28</span>
-</span><span class='line'>  <span class="mi">12</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01d03014</span> <span class="n">_dispatch_client_callout</span> <span class="o">+</span> <span class="mi">14</span>
-</span><span class='line'>  <span class="mi">13</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cfa8b7</span> <span class="n">_dispatch_source_latch_and_call</span> <span class="o">+</span> <span class="mi">219</span>
-</span><span class='line'>  <span class="mi">14</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cf6405</span> <span class="n">_dispatch_source_invoke</span> <span class="o">+</span> <span class="mi">322</span>
-</span><span class='line'>  <span class="mi">15</span>  <span class="n">libdispatch</span><span class="p">.</span><span class="n">dylib</span>                   <span class="mh">0x01cf3768</span> <span class="n">_dispatch_main_queue_callback_4CF</span> <span class="o">+</span> <span class="mi">187</span>
-</span><span class='line'>  <span class="mi">16</span>  <span class="n">CoreFoundation</span>                      <span class="mh">0x0203aaf5</span> <span class="n">__CFRunLoopRun</span> <span class="o">+</span> <span class="mi">1925</span>
-</span><span class='line'>  <span class="mi">17</span>  <span class="n">CoreFoundation</span>                      <span class="mh">0x02039f44</span> <span class="n">CFRunLoopRunSpecific</span> <span class="o">+</span> <span class="mi">276</span>
-</span><span class='line'>  <span class="mi">18</span>  <span class="n">CoreFoundation</span>                      <span class="mh">0x02039e1b</span> <span class="n">CFRunLoopRunInMode</span> <span class="o">+</span> <span class="mi">123</span>
-</span><span class='line'>  <span class="mi">19</span>  <span class="n">GraphicsServices</span>                    <span class="mh">0x0282b7e3</span> <span class="n">GSEventRunModal</span> <span class="o">+</span> <span class="mi">88</span>
-</span><span class='line'>  <span class="mi">20</span>  <span class="n">GraphicsServices</span>                    <span class="mh">0x0282b668</span> <span class="n">GSEventRun</span> <span class="o">+</span> <span class="mi">104</span>
-</span><span class='line'>  <span class="mi">21</span>  <span class="n">UIKit</span>                               <span class="mh">0x00be265c</span> <span class="n">UIApplicationMain</span> <span class="o">+</span> <span class="mi">1211</span>
-</span><span class='line'>  <span class="mi">22</span>  <span class="n">Ape</span>                                 <span class="mh">0x00016c5d</span> <span class="n">main</span> <span class="o">+</span> <span class="mi">141</span>
-</span><span class='line'>  <span class="mi">23</span>  <span class="n">Ape</span>                                 <span class="mh">0x00002b05</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">53</span>
-</span><span class='line'>  <span class="mi">24</span>  <span class="o">???</span>                                 <span class="mh">0x00000001</span> <span class="mh">0x0</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>方法二</h2>
-
-<p>方法二相比方法一更加简单，具体做法是在XCode界面中按cmd + 6跳到Breakpoint的tab，然后点击左下角的+号，增加一个Exception的断点，如下图所示。这样，当异常出现时，会自动停在异常处，而不会抛出到UIApplicationMain。拿我的有bug的程序来说，代码会自动断在QuestionParser这个类的第378行。</p>
-
-<p><img src="http://blog.devtang.com/images/stacktrace-2.png"></p>
-
-<h2>总结</h2>
-
-<p>其实以前XCode是能显示出可读的stack trace信息的，似乎到了XCode4.2以后就出问题了。所以上面提到的2个办法相当于walk around解决了XCode4.2以后出现的bug。如果该文章对你有用，希望你能帮我点击下面的分享按钮，分享给更多朋友，同时也帮我宣传一下博客，这将有助于我分享更多的心得给大家，Have fun!</p>
 ]]></content>
   </entry>
   

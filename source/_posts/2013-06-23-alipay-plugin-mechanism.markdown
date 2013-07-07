@@ -92,3 +92,12 @@ find . -type f -name "*.js" | xargs grep "iframe"
 欢迎关注我的技术微博 [@唐巧_boy](http://weibo.com/tangqiaoboy) 和微信公共账号 [iOSDevTips](http://chuansong.me/account/iosDevTips) ，每天收获一些关于iOS开发的学习资料和技巧心得。
 
 我在研究时使用了[Charles](http://www.charlesproxy.com/)来截获支付宝客户端的网络请求，用[iTools](http://itools.hk/)来查看支付宝客户端的本地内容。如果你想自行验证本文内容，请先下载上述工具。在此就不额外介绍它们的使用了。
+
+##后记（2013-7-7）
+
+ 1. 在完成上文后，Allen在他的博客上先后分享了两篇更深入分析的文章[《浅析支付宝钱包插件》](http://imallen.com/blog/2013/06/26/inside-alipay-plugin.html) 和 [《再谈支付宝钱包插件和说好的 Demo》](http://imallen.com/blog/2013/07/06/about-alipay-plugin-and-phonegap.html)。 这两篇文章都比本文深入得多，值得大家阅读。
+
+ 2. 写完上文，居然收到了来自支付宝卫朴（花名）的工作邀请。不过我现在创业正在努力当中，所以我拒绝了邀请。看来这也是一种找工作的办法啊，比投简历管用，呵呵。
+
+ 3. 从一些朋友那儿了解到，支付宝因为本文而会在以后的版本中加强安全性，至少不会像现在这样，所有逻辑都在写在javascript中，并且还带有注释，这也是我希望看到的结果。愿支付宝越做越好。
+

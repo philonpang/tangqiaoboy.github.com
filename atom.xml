@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-07-07T15:21:44+08:00</updated>
+  <updated>2013-07-24T21:04:42+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,128 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用Crashlytics来保存应用崩溃信息]]></title>
+    <link href="http://blog.devtang.com/blog/2013/07/24/use-crashlytics/"/>
+    <updated>2013-07-24T20:56:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/07/24/use-crashlytics</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/crashlytics-logo.jpg"></p>
+
+<p>本文首发于InfoQ，版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">原文链接</a>。</p>
+
+<h2>简介</h2>
+
+<p><a href="http://try.crashlytics.com/">Crashlytic</a> 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, 团购应用GroupOn等移动应用。</p>
+
+<p>2013年1月，Crashlytics<a href="http://www.crashlytics.com/blog/crashlytics-is-joining-forces-with-twitter/">被Twitter收购</a>，成为又一个成功的创业产品。被收购之后，由于没有了创业公司的不稳定因素，我们更有理由使用它来分析应用崩溃信息。</p>
+
+<!-- more -->
+
+
+<p>使用Crashlytics的好处有：</p>
+
+<p>1、Crashlytics不会漏掉任何应用崩溃信息。拿我的应用举例来说，在iTunes Connect的后台查看不到任何崩溃信息。但是用户确实会通过微博或者客服电话反馈应用崩溃的情况。而这些在Crashlytics中都可以统计到。如下截图分别显示了我的某应用在苹果iTunes Connect后台和Crashlytics中的差别：</p>
+
+<p><img src="http://blog.devtang.com/images/crashlytics-vs-itunes-1.jpg">
+<img src="http://blog.devtang.com/images/crashlytics-vs-itunes-2.jpg"></p>
+
+<p>2、Crashlytics可以象Bug管理工具那样，管理这些崩溃日志。例如：Crashlytics会根据每种类型的Crash的出现频率以及影响的用户量来自动设置优先级。对于每种类型的Crash，Crashlytics会除了象一般的工具提供Call Stack外，还会显示更多相关的有助于诊断的信息例如设备是否越狱，当时的内存量，当时的iOS版本等。对于修复掉的Crash日志，可以在Crashlytics的后台将其关掉。下图所示的是一个我的早期应用的崩溃记录，在我修复后，我将其更新为已修复状态。</p>
+
+<p><img src="http://blog.devtang.com/images/crashlytics-close-issue.jpg"></p>
+
+<p>3、Crashlytics可以每天和每周将崩溃信息汇总发到你的邮箱，所有信息一目了然。</p>
+
+<p>下面我就给大家介绍如何使用Crashlytics。</p>
+
+<h2>使用介绍</h2>
+
+<h3>申请帐号</h3>
+
+<p>Crashlytics的服务是免费提供的，但是并不能直接注册使用，需要先申请，打开<a href="http://try.crashlytics.com/">Crashlytic的官网</a> ，输入自己的邮箱申请使用。如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/crashlytics-1.jpg"></p>
+
+<p>提交完邮箱之后，你的申请会放在Crashlytics的申请队列中，网页跳转到如下界面。在这个界面的右侧，你可以提供更多有效信息来让Crashlytics优先处理你的申请，建议大家都填上更多自己的信息。</p>
+
+<p><img src="http://blog.devtang.com/images/crashlytics-2.jpg"></p>
+
+<p>如果顺利，通常1-2天左右，你就会收到Crashlytics发来的申请通过邮件，如下图所示，通过邮件链接跳转到注册界面，填写密码即可完成注册。</p>
+
+<p><img src="http://blog.devtang.com/images/crashlytics-3.jpg"></p>
+
+<h3>设置工程</h3>
+
+<p>在使用Crashlytics前需要对原有的XCode工程进行配置，在这一点上，Crashlytics做得比其它任何我见过的SDK提供商都体贴。因为Crashlytics专门做了一个Mac端的App来帮助你进行配置，所以，在配置前你先需要去<a href="https://www.crashlytics.com/downloads/xcode">这里</a>下载该应用。</p>
+
+<p>应用下载后，运行该应用并登录帐号。然后选择应用中的&#8221;New App&#8221;按钮，然后选择自己要增加Crashlytics的工程，然后Crashlytics的应用会提示你为工程增加一个Run Script，如果你不知道如何添加，这里有一个<a href="http://www.runscriptbuildphase.com/?utm_source=desktopapp&amp;utm_medium=setup&amp;utm_campaign=mac">帮助的文档</a>。添加好之后的工程截图如下所示</p>
+
+<p><img src="http://blog.devtang.com/images/crashlytics-4.jpg"></p>
+
+<p>接着，Crashlytics的本地应用会提示你将Crashlytics相关的framework拖到工程中。如下所示：</p>
+
+<p><img src="http://blog.devtang.com/images/crashlytics-5.jpg"></p>
+
+<p>按照提示做完之后，就到了最后一步了，在<code>AppDelegate</code>的<code>didFinishLaunchingWithOptions</code>方法中加入如下代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;Crashlytics/Crashlytics.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
+</span><span class='line'>    <span class="nf">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span> <span class="p">{</span>
+</span><span class='line'>   <span class="p">[</span><span class="n">Crashlytics</span> <span class="nl">startWithAPIKey:</span><span class="s">@&quot;your identify code&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>之后，运行一下程序，Crashlytics就会检测到你设置成功。如果你感兴趣，可以自己手工触发一个崩溃记录，看Crashlytics能否帮你收集到。使用如下代码即可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[[</span><span class="n">Crashlytics</span> <span class="n">sharedInstance</span><span class="p">]</span> <span class="n">crash</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果你想测试一个Exception导致的崩溃，可以使用如下代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">NSObject</span> <span class="n">doesNotRecognizeSelector</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">arrayWithOnlyTwoElements</span> <span class="nl">objectAtIndex:</span><span class="mi">3</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>应用对外发布后，就可以在Crashlytics后台查看和修改相关的记录。另外，Crashlytics还支持将数据导入到其它项目管理工具（例如Redmine或Jira）如下所示，配置都非常简单。</p>
+
+<p><img src="http://blog.devtang.com/images/crashlytics-6.jpg"></p>
+
+<h2>实现原理和使用体会</h2>
+
+<h3>实现原理</h3>
+
+<p>在原理上，Crashlytics的通过以下2步完成崩溃日志的上传和分析：</p>
+
+<ol>
+<li>提供应用SDK，你需要在应用启动时调用其SDK来设置你的应用。SDK会集成到你的应用中，完成Crash信息的收集和上传。</li>
+<li>修改工程的编译配置，加入一段代码，在你每次工程编译完成后，上传该工程对应的dSYM文件。研究过手工分析Crash日志的同学应该知道，只有通过该文件，才能将Crash日志还原成可读的Call Stack信息。</li>
+</ol>
+
+
+<h3>使用体会</h3>
+
+<p>为了更加方便开发者设置相应的工程，Crashlytics提供了mac端的应用程序，帮助你检测相关工程是否正确设置并且提供相应的帮助信息。后来我还发现，该程序还会自动帮你升级Crashlytics的SDK文件。虽然这一点很体贴，但是我个人觉得还是不太友好。因为毕竟修改SDK会影响应用编译后的内部逻辑，在没有任何通知的情况下升级，我都无法确定Crashlytics有没有干坏事。不过国外的服务，特别是象Twitter这种相对较大知名度公司提供的服务要有节操得多，所以在这一点上我还是比较放心的。</p>
+
+<p>使用Crashlytics可以让你摆脱管理应用崩溃记录的烦恼。并且帮助你找出应用的一些重大隐藏性Bug。例如我之前写的一个应用就过一个缓存过期的问题，只有当缓存过期时才会触发这个Bug，这样的问题在测试人员那边很难触发，因为他们不可能了解你的应用内部实现细节。通过Crashlytics，使我清楚了解到应用Crash的数量和位置，结合自己的开发经验，就很容易找到问题所在了。</p>
+
+<p>值得一提的是，Crashlytics本身的<a href="http://support.crashlytics.com/knowledgebase/topics/14721-crashlytics-sdk-for-ios">官方文档</a>也非常健全，如果你在使用中遇到任何问题，也可以上去查看详细的文档。</p>
+
+<p>愿Crashlytics能让大家的应用都更加健壮～</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[分析支付宝客户端的插件机制]]></title>
@@ -2156,132 +2278,6 @@ g. AddressBookUI
 <li>CocoaPods通过一个名为Pods.xcconfig的文件来在编译时设置所有的依赖和参数。</li>
 </ol>
 
-
-<p>Have fun!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[放弃iOS4，拥抱iOS5]]></title>
-    <link href="http://blog.devtang.com/blog/2012/11/16/drop-ios4-enbrace-ios5/"/>
-    <updated>2012-11-16T20:47:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/11/16/drop-ios4-enbrace-ios5</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/ios5.jpg"></p>
-
-<h2>前言</h2>
-
-<p>苹果在2011年的WWDC大会上发布了iOS5，不过考虑到要支持iOS4.x的系统，大多数App都无法使用iOS5的新特性。现在将近1年半过去了，从我们自己的App后台的统计数据、一些第三方的统计数据和一些业界的朋友告知我的数据都显示，iOS4.x的系统所占比例已经小于5%了，并且还在持续下降。所以，我们有必要放弃对iOS4.x的支持，全面拥抱iOS5。</p>
-
-<p>只支持iOS5.0以上版本使得我们可以使用iOS5带来的诸多新特性，有些新特性可以极大地方便我们的开发，我将这些新特性列举如下。</p>
-
-<!-- more -->
-
-
-<h2>Storyboard</h2>
-
-<p>Storyboard（故事板）是XCode4和iOS5提供的一个用于控制View Controller之间跳转关系的新概念。你可以把它理解成以前一堆Nib文件的集合。在这个集合里面，每个Nib文件被称作scene（场景），scene之间的跳转关系被称作segue。segue代表着传统的界面间切换的方式，通常是Push方式和Modal方式，当然，你也可以自定义自己的Segue。如下示例图是一个Storyboard的界面：</p>
-
-<p><img src="http://blog.devtang.com/images/enbrace-ios5-1.png"></p>
-
-<p>使用Storyboard的好处有以下几点：</p>
-
-<ol>
-<li>你可以从storyboard中很方便地梳理出所有View Controller的界面间的调用关系。比如上面那个storyboard示例图，我们就可以很清楚地了解到4个View Controller相互之间是怎么调用的。而这在以前，这些调用关系，都是隐藏在每个View Controller的代码中的，你需要一点一点读代码，才可以将整个调用逻辑整理清楚。</li>
-<li>使用Storyboard可以使用Table View Controller的Static Cell功能。简单来说，对于象设置页面等固定内容的TableView，可以直接在Storyboard中通过拖拽就可以设置其界面了，而不是象以前那样需要写一堆table view的delegate和data source回调函数。</li>
-<li>通过实现 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 方法，每个View Controller的跳转逻辑都聚集在一处，这方便我们统一管理界面跳转和传递数据，这相当于多了一个编程约定。</li>
-<li>Storyboard可以方便将一些常用功能模块化和复用。例如WWDC2011年介绍Storyboard的视频就将微博分享功能模块化成一个单独的Storyboard。我在开发App时，也将例如通过第三方注册登录模块做成一个单独的Storyboard，便于以后复用。</li>
-</ol>
-
-
-<p>另外，在iOS6中，storyboard又新增了如exit segue, container view等新功能，这些功能都非常体贴，我们向新的技术方案迁移可以在未来更加方便地使用iOS和XCode的新特性，方便我们的开发。</p>
-
-<p>当然，Storyboard也有它的问题。比如，如果2个人同时编译storyboard，在版本管理中出现冲突时会比较麻烦。虽然storyboard是XML格式的，但是里面的信息有些时候还是不太清晰，当冲突发生时，合并冲突可能会比较麻烦。解决办法是，将Storyboard按功能拆分，每个人尽量负责一个单独的Storyboard，如果实在需要2个人都修改它，避免同时修改。</p>
-
-<h2>ARC</h2>
-
-<p>因为ARC是在编译期做的，所以虽然是与iOS5.0同时推出的Objective-C特性，但是其实ARC是支持iOS4的。只是在iOS4中，不能使用ARC的weak关键字。</p>
-
-<p>由于不需要支持iOS4，我们可以将原本的 __unsafe_unretained 关键字换成weak。这样当这个弱引用对象被回收时，weak指针会被智能地设置成nil，防止“野指针”的产生。</p>
-
-<p>很多人说ARC有这样那样的问题，其实他们是没有真正用好ARC。我在开发粉笔网iPhone客户端时，由于使用了ARC，花三个月开发完的应用，用instruments检测后，没有发现任何内存泄漏问题。这在没有使用ARC的工程中是不可想象的。苹果在推出ARC两年后，今年正式将ARC引入到Mac OS操作系统的SDK中，并且正式将原有的GC deprecated掉，这也说明了ARC技术方案已经是非常成熟的了。</p>
-
-<h2>UIKit</h2>
-
-<p>UIKit在iOS5进行了大量更新。除了新增了如UIStepper控件外，也为以前的控件增加了更多的定制接口。我们可以方便地定义UINavigationBar, UITabBar, UIToolBar等常用控件。</p>
-
-<p>苹果在iOS5中给UIViewController新增加的5方法以及一个属性。关于这个新特性我在<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">这篇文章</a>中详细介绍过。新增的方法主要解决的是让 view的load/unLoad/appear/disappear的相关回调可以传递到子view controller中。</p>
-
-<h2>CoreImage</h2>
-
-<p>苹果从iOS5开始，引入了新的图象类CIImage。CIImage相比以前的UIImage类，更加适合于图象处理和图象分析。</p>
-
-<p>在图象处理方法，苹果内置了CIFilter类，方便开发者对图形进行各种各样的特效处理，在iOS5中，苹果提供了48种Filter，而在iOS6中，内置的Filter达到了93种。可以使用如下代码，查询到当前系统中提供的Filter列表：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">logAllFilters</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span> <span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="n">CIFilter</span> <span class="nl">filterNamesInCategory:</span><span class="n">kCICategoryBuiltIn</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">properties</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">filterName</span> <span class="k">in</span> <span class="n">properties</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">CIFilter</span> <span class="o">*</span> <span class="n">fltr</span> <span class="o">=</span> <span class="p">[</span><span class="n">CIFilter</span> <span class="nl">filterWithName:</span><span class="n">filterName</span><span class="p">];</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">fltr</span> <span class="n">attributes</span><span class="p">]);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这些内置的Filter在分类上，包括：</p>
-
-<ol>
-<li>颜色效果类。例如黄昏效果，曝光度调整等。</li>
-<li>组合效果类。把2张图片按各种规则混合成一张图。</li>
-<li>几何变形类。例如把照片倾斜或者翻转。</li>
-<li>重复效果类。如平铺，折叠，镜象等。</li>
-<li>失真扭曲类。如把图片中心做成漩涡效果等。</li>
-<li>模糊和锐化类。</li>
-<li>Stylize效果。</li>
-<li>Halftone效果。</li>
-</ol>
-
-
-<p>以上所有效果可以叠加作用在一起，最终你可以创造出自己的图片处理效果。最终你可以通过CIContext，将处理过的CIImage转换成UIImage输出。有了Core Image，你可以方便地开发图象处理相关的应用，而不用关心图象处理算法的细节。</p>
-
-<h2>NSJSONSerialization</h2>
-
-<p>在我的<a href="http://blog.devtang.com/blog/2012/05/05/do-not-use-sbjson/">《不要使用SBJSON(json-framework)》</a> 一文中，我提到了关于JSON解析库的性能测试。测试结果表明，苹果从iOS5开始提供的 <a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40010946">NSJSONSerialization</a> 类有着最好的性能表现。所以，从iOS5以后，你可以扔掉那些第三方JSON解析库了。</p>
-
-<h2>ViewController切换</h2>
-
-<p>iOS提供了如下新的接口来切换ViewController，而以前的presentModalViewController和dismissModalViewControllerAnimated被Deprecated掉了。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 新的接口</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">presentViewController:</span><span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewControllerToPresent</span> <span class="nf">animated:</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">flag</span> <span class="nf">completion:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dismissViewControllerAnimated:</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">flag</span> <span class="nf">completion:</span> <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// 被Deprecated的接口</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">presentModalViewController:</span><span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">modalViewController</span> <span class="nf">animated:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dismissModalViewControllerAnimated:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>新接口的差别是提供了一个completion参数，允许你传入一个block，来定义该操作结束时的回调。使用新的函数后，可以方便同时Dismiss或Present多个View Controller，也可以方便做多个UI效果之间的衔接。</p>
-
-<h2>其它</h2>
-
-<p>GameKit, Core Data, NewsstandKit, GLKit在iOS5中都有更新。可惜我都没有具体使用过，所以不便做更多介绍。</p>
 
 <p>Have fun!</p>
 ]]></content>

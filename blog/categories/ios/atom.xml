@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-07-07T15:21:44+08:00</updated>
+  <updated>2013-07-24T21:04:42+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,123 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用Crashlytics来保存应用崩溃信息]]></title>
+    <link href="http://blog.devtang.com/blog/2013/07/24/use-crashlytics/"/>
+    <updated>2013-07-24T20:56:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/07/24/use-crashlytics</id>
+    <content type="html"><![CDATA[<p><img src="/images/crashlytics-logo.jpg"></p>
+
+<p>本文首发于InfoQ，版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">原文链接</a>。</p>
+
+<h2>简介</h2>
+
+<p><a href="http://try.crashlytics.com/">Crashlytic</a> 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, 团购应用GroupOn等移动应用。</p>
+
+<p>2013年1月，Crashlytics<a href="http://www.crashlytics.com/blog/crashlytics-is-joining-forces-with-twitter/">被Twitter收购</a>，成为又一个成功的创业产品。被收购之后，由于没有了创业公司的不稳定因素，我们更有理由使用它来分析应用崩溃信息。</p>
+
+<!-- more -->
+
+
+<p>使用Crashlytics的好处有：</p>
+
+<p>1、Crashlytics不会漏掉任何应用崩溃信息。拿我的应用举例来说，在iTunes Connect的后台查看不到任何崩溃信息。但是用户确实会通过微博或者客服电话反馈应用崩溃的情况。而这些在Crashlytics中都可以统计到。如下截图分别显示了我的某应用在苹果iTunes Connect后台和Crashlytics中的差别：</p>
+
+<p><img src="/images/crashlytics-vs-itunes-1.jpg">
+<img src="/images/crashlytics-vs-itunes-2.jpg"></p>
+
+<p>2、Crashlytics可以象Bug管理工具那样，管理这些崩溃日志。例如：Crashlytics会根据每种类型的Crash的出现频率以及影响的用户量来自动设置优先级。对于每种类型的Crash，Crashlytics会除了象一般的工具提供Call Stack外，还会显示更多相关的有助于诊断的信息例如设备是否越狱，当时的内存量，当时的iOS版本等。对于修复掉的Crash日志，可以在Crashlytics的后台将其关掉。下图所示的是一个我的早期应用的崩溃记录，在我修复后，我将其更新为已修复状态。</p>
+
+<p><img src="/images/crashlytics-close-issue.jpg"></p>
+
+<p>3、Crashlytics可以每天和每周将崩溃信息汇总发到你的邮箱，所有信息一目了然。</p>
+
+<p>下面我就给大家介绍如何使用Crashlytics。</p>
+
+<h2>使用介绍</h2>
+
+<h3>申请帐号</h3>
+
+<p>Crashlytics的服务是免费提供的，但是并不能直接注册使用，需要先申请，打开<a href="http://try.crashlytics.com/">Crashlytic的官网</a> ，输入自己的邮箱申请使用。如下图所示：</p>
+
+<p><img src="/images/crashlytics-1.jpg"></p>
+
+<p>提交完邮箱之后，你的申请会放在Crashlytics的申请队列中，网页跳转到如下界面。在这个界面的右侧，你可以提供更多有效信息来让Crashlytics优先处理你的申请，建议大家都填上更多自己的信息。</p>
+
+<p><img src="/images/crashlytics-2.jpg"></p>
+
+<p>如果顺利，通常1-2天左右，你就会收到Crashlytics发来的申请通过邮件，如下图所示，通过邮件链接跳转到注册界面，填写密码即可完成注册。</p>
+
+<p><img src="/images/crashlytics-3.jpg"></p>
+
+<h3>设置工程</h3>
+
+<p>在使用Crashlytics前需要对原有的XCode工程进行配置，在这一点上，Crashlytics做得比其它任何我见过的SDK提供商都体贴。因为Crashlytics专门做了一个Mac端的App来帮助你进行配置，所以，在配置前你先需要去<a href="https://www.crashlytics.com/downloads/xcode">这里</a>下载该应用。</p>
+
+<p>应用下载后，运行该应用并登录帐号。然后选择应用中的"New App"按钮，然后选择自己要增加Crashlytics的工程，然后Crashlytics的应用会提示你为工程增加一个Run Script，如果你不知道如何添加，这里有一个<a href="http://www.runscriptbuildphase.com/?utm_source=desktopapp&amp;utm_medium=setup&amp;utm_campaign=mac">帮助的文档</a>。添加好之后的工程截图如下所示</p>
+
+<p><img src="/images/crashlytics-4.jpg"></p>
+
+<p>接着，Crashlytics的本地应用会提示你将Crashlytics相关的framework拖到工程中。如下所示：</p>
+
+<p><img src="/images/crashlytics-5.jpg"></p>
+
+<p>按照提示做完之后，就到了最后一步了，在<code>AppDelegate</code>的<code>didFinishLaunchingWithOptions</code>方法中加入如下代码：</p>
+
+<p>``` objc</p>
+
+<h1>import &lt;Crashlytics/Crashlytics.h></h1>
+
+<ul>
+<li>(BOOL)application:(UIApplication <em>)application
+  didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {
+ [Crashlytics startWithAPIKey:@"your identify code"];
+}
+```</li>
+</ul>
+
+
+<p>之后，运行一下程序，Crashlytics就会检测到你设置成功。如果你感兴趣，可以自己手工触发一个崩溃记录，看Crashlytics能否帮你收集到。使用如下代码即可</p>
+
+<p><code>objc
+[[Crashlytics sharedInstance] crash];
+</code></p>
+
+<p>如果你想测试一个Exception导致的崩溃，可以使用如下代码：</p>
+
+<p><code>objc
+[NSObject doesNotRecognizeSelector];
+[arrayWithOnlyTwoElements objectAtIndex:3];
+</code></p>
+
+<p>应用对外发布后，就可以在Crashlytics后台查看和修改相关的记录。另外，Crashlytics还支持将数据导入到其它项目管理工具（例如Redmine或Jira）如下所示，配置都非常简单。</p>
+
+<p><img src="/images/crashlytics-6.jpg"></p>
+
+<h2>实现原理和使用体会</h2>
+
+<h3>实现原理</h3>
+
+<p>在原理上，Crashlytics的通过以下2步完成崩溃日志的上传和分析：</p>
+
+<ol>
+<li>提供应用SDK，你需要在应用启动时调用其SDK来设置你的应用。SDK会集成到你的应用中，完成Crash信息的收集和上传。</li>
+<li>修改工程的编译配置，加入一段代码，在你每次工程编译完成后，上传该工程对应的dSYM文件。研究过手工分析Crash日志的同学应该知道，只有通过该文件，才能将Crash日志还原成可读的Call Stack信息。</li>
+</ol>
+
+
+<h3>使用体会</h3>
+
+<p>为了更加方便开发者设置相应的工程，Crashlytics提供了mac端的应用程序，帮助你检测相关工程是否正确设置并且提供相应的帮助信息。后来我还发现，该程序还会自动帮你升级Crashlytics的SDK文件。虽然这一点很体贴，但是我个人觉得还是不太友好。因为毕竟修改SDK会影响应用编译后的内部逻辑，在没有任何通知的情况下升级，我都无法确定Crashlytics有没有干坏事。不过国外的服务，特别是象Twitter这种相对较大知名度公司提供的服务要有节操得多，所以在这一点上我还是比较放心的。</p>
+
+<p>使用Crashlytics可以让你摆脱管理应用崩溃记录的烦恼。并且帮助你找出应用的一些重大隐藏性Bug。例如我之前写的一个应用就过一个缓存过期的问题，只有当缓存过期时才会触发这个Bug，这样的问题在测试人员那边很难触发，因为他们不可能了解你的应用内部实现细节。通过Crashlytics，使我清楚了解到应用Crash的数量和位置，结合自己的开发经验，就很容易找到问题所在了。</p>
+
+<p>值得一提的是，Crashlytics本身的<a href="http://support.crashlytics.com/knowledgebase/topics/14721-crashlytics-sdk-for-ios">官方文档</a>也非常健全，如果你在使用中遇到任何问题，也可以上去查看详细的文档。</p>
+
+<p>愿Crashlytics能让大家的应用都更加健壮～</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[分析支付宝客户端的插件机制]]></title>
@@ -387,112 +504,6 @@ CABackingStore类型的内存区会被标记成volatile类型（这里的volatil
 <p>2分钟售空。期待。</p>
 
 <p><img src="http://blog.devtang.com/images/wwdc-2013.jpg" width="500px" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[那些被遗漏的Objective-C保留字]]></title>
-    <link href="http://blog.devtang.com/blog/2013/04/29/the-missing-objc-keywords/"/>
-    <updated>2013-04-29T20:22:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/04/29/the-missing-objc-keywords</id>
-    <content type="html"><![CDATA[<p><img src="/images/forget.jpeg"></p>
-
-<p>今天翻到很久以前自己在网易博客上写的<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201110133108545/">这篇文章</a>，惊奇地发现自己都忘记了里面的一些内容。所以我又重新学习了一下，然后改了改内容，挪到这里。</p>
-
-<h2>前言</h2>
-
-<p><a href="http://www.amazon.cn/s?ie=UTF8&amp;search-alias=books&amp;field-author=Steffen%20Itterheim">Steffen Itterheim</a>是<a href="http://www.amazon.cn/Learn-Iphone-and-Ipad-Cocos2d-Game-Development-The-Leading-Framework-for-Building-2D-Graphical-and-Interactive-Applications-Itterheim-Steffen/dp/1430233036/ref=sr_1_1?ie=UTF8&amp;qid=1321168092&amp;sr=8-1">《Learn Iphone and Ipad Cocos2d Game Development》</a>作者。cocos2d和cocos2d-x现在已成为著名的游戏开发引擎。在AppStore上有超过100个游戏是基于Cocos2D。</p>
-
-<p>Steffen Itterheim在<a href="http://www.learn-cocos2d.com/2011/10/complete-list-objectivec-20-compiler-directives">他的博客</a>中总结了 Objective-C 2.0 所有的编译器保留字，并且对这些保留字做了介绍和使用示例。这些保留字如下：</p>
-
-<pre>
-@class
-@defs
-@protocol @required @optional @end
-@interface @public @package @protected @private @property @end
-@implementation @synthesize @dynamic @end
-@throw @try @catch @finally
-@synchronized @autoreleasepool
-@selector @encode
-@compatibility_alias
-@”string”
-</pre>
-
-
-<p>我把这些保留字过了一遍，发现很少用到的有 @dynamic @defs @encode @compatibility_alis，所以就给大家介绍一下这几个关键字吧。</p>
-
-<!-- more -->
-
-
-<h2>@dynamic</h2>
-
-<p>@dynamic 是相对于 @synthesize的，它们用样用于修饰 @property，用于生成对应的的getter和setter方法。但是@ dynamic表示这个成员变量的getter和setter方法并不是直接由编译器生成，而是手工生成或者运行时生成。</p>
-
-<p>示例如下：</p>
-
-<p>``` objc
-@implementation ClassName
-@synthesize aProperty, bProperty;
-@synthesize cProperty=instanceVariableName;
-@dynamic anotherProperty;</p>
-
-<p>// method implementations
-@end
-```</p>
-
-<h2>@defs</h2>
-
-<p>@defs 用于返回一个Objective-C类的struct结构，这个struct与原Objective-C类具有相同的内存布局。就象你所知的那样，Objective-C类可以理解成由基本的C struct加上额外的方法构成。</p>
-
-<p>示例代码如下：</p>
-
-<p><code>objc
-struct { @defs( NSObject) }
-</code></p>
-
-<p>你可能会想，什么情况下才会需要使用这个关键字。答案是涉及非常底层的操作或优化的时候才会用到。像如这篇讨论<a href="http://www.mulle-kybernetik.com/artikel/Optimization/opti-3-imp-deluxe.html">Objective-C如何做缓存优化</a>的文章中，就用到了该关键字。</p>
-
-<h2>@encode</h2>
-
-<p>@encode 是用于表示一个类型的字符串，对此，苹果有专门的<a href="http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">介绍文档</a></p>
-
-<p>示例如下：</p>
-
-<p>``` objc
--(void) aMethod
-{</p>
-
-<pre><code>char *enc1 = @encode(int);                 // enc1 = "i"
-char *enc2 = @encode(id);                  // enc2 = "@"
-char *enc3 = @encode(@selector(aMethod));  // enc3 = ":"
-
-// practical example:
-CGRect rect = CGRectMake(0, 0, 100, 100);
-NSValue *v = [NSValue value:&amp;rect withObjCType:@encode(CGRect)];
-</code></pre>
-
-<p>}
-```</p>
-
-<h2>@compatibility_alis</h2>
-
-<p>@compatibility_alis 是用于给一个类设置一个别名。这样就不用重构以前的类文件就可以用新的名字来替代原有名字。</p>
-
-<p>示例如下：</p>
-
-<p><code>objc
-@compatibility_alias AliasClassName ExistingClassName
-</code></p>
-
-<h2>@autoreleasepool</h2>
-
-<p>@autoreleasepool 是用于ARC下代替 NSAutoreleasePool的保留字，我把它写在这里，是想告诉那些以为ARC慢的同学，在苹果的<a href="http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html">这篇官方文档</a>中有提到， @autoreleasepool 比 NSAutoreleasePool快6倍。当然，文档中也提到，ARC下不止Autorelease Pool的实现变快了，retain和release也快很多。如果你还没有在工程中使用ARC，推荐看看我的<a href="http://blog.devtang.com/blog/2013/03/27/should-we-use-arc/">《是否应该使用ARC》</a>。</p>
-
-<h2>Cheat Sheet</h2>
-
-<p>有一个热心者根据他的博文，制作了一张<a href="http://maniacdev.com/cheatsheetobjccd.pdf">《Objective-C 2.0保留字速查表》</a>，对于新手来说，把这张速查表打印出来，对于熟悉现在的保留字还是很有用的，它的下载地址是：<a href="http://maniacdev.com/cheatsheetobjccd.pdf">http://maniacdev.com/cheatsheetobjccd.pdf</a></p>
-
-<p>五一节到了，祝大家节日快乐！</p>
 ]]></content>
   </entry>
   

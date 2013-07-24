@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>使用Crashlytics来保存应用崩溃信息 - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="本文首发于InfoQ，版权归InfoQ所有，转载请保留原文链接。 简介 Crashlytic 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2013/07/24/use-crashlytics">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">所有文章</a></li>
+  <li><a href="/blog/categories/ios/">iOS开发专题</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">使用Crashlytics来保存应用崩溃信息</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-24T20:56:00+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="/images/crashlytics-logo.jpg"></p>
+
+<p>本文首发于InfoQ，版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">原文链接</a>。</p>
+
+<h2>简介</h2>
+
+<p><a href="http://try.crashlytics.com/">Crashlytic</a> 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, 团购应用GroupOn等移动应用。</p>
+
+<p>2013年1月，Crashlytics<a href="http://www.crashlytics.com/blog/crashlytics-is-joining-forces-with-twitter/">被Twitter收购</a>，成为又一个成功的创业产品。被收购之后，由于没有了创业公司的不稳定因素，我们更有理由使用它来分析应用崩溃信息。</p>
+
+<!-- more -->
+
+
+<p>使用Crashlytics的好处有：</p>
+
+<p>1、Crashlytics不会漏掉任何应用崩溃信息。拿我的应用举例来说，在iTunes Connect的后台查看不到任何崩溃信息。但是用户确实会通过微博或者客服电话反馈应用崩溃的情况。而这些在Crashlytics中都可以统计到。如下截图分别显示了我的某应用在苹果iTunes Connect后台和Crashlytics中的差别：</p>
+
+<p><img src="/images/crashlytics-vs-itunes-1.jpg">
+<img src="/images/crashlytics-vs-itunes-2.jpg"></p>
+
+<p>2、Crashlytics可以象Bug管理工具那样，管理这些崩溃日志。例如：Crashlytics会根据每种类型的Crash的出现频率以及影响的用户量来自动设置优先级。对于每种类型的Crash，Crashlytics会除了象一般的工具提供Call Stack外，还会显示更多相关的有助于诊断的信息例如设备是否越狱，当时的内存量，当时的iOS版本等。对于修复掉的Crash日志，可以在Crashlytics的后台将其关掉。下图所示的是一个我的早期应用的崩溃记录，在我修复后，我将其更新为已修复状态。</p>
+
+<p><img src="/images/crashlytics-close-issue.jpg"></p>
+
+<p>3、Crashlytics可以每天和每周将崩溃信息汇总发到你的邮箱，所有信息一目了然。</p>
+
+<p>下面我就给大家介绍如何使用Crashlytics。</p>
+
+<h2>使用介绍</h2>
+
+<h3>申请帐号</h3>
+
+<p>Crashlytics的服务是免费提供的，但是并不能直接注册使用，需要先申请，打开<a href="http://try.crashlytics.com/">Crashlytic的官网</a> ，输入自己的邮箱申请使用。如下图所示：</p>
+
+<p><img src="/images/crashlytics-1.jpg"></p>
+
+<p>提交完邮箱之后，你的申请会放在Crashlytics的申请队列中，网页跳转到如下界面。在这个界面的右侧，你可以提供更多有效信息来让Crashlytics优先处理你的申请，建议大家都填上更多自己的信息。</p>
+
+<p><img src="/images/crashlytics-2.jpg"></p>
+
+<p>如果顺利，通常1-2天左右，你就会收到Crashlytics发来的申请通过邮件，如下图所示，通过邮件链接跳转到注册界面，填写密码即可完成注册。</p>
+
+<p><img src="/images/crashlytics-3.jpg"></p>
+
+<h3>设置工程</h3>
+
+<p>在使用Crashlytics前需要对原有的XCode工程进行配置，在这一点上，Crashlytics做得比其它任何我见过的SDK提供商都体贴。因为Crashlytics专门做了一个Mac端的App来帮助你进行配置，所以，在配置前你先需要去<a href="https://www.crashlytics.com/downloads/xcode">这里</a>下载该应用。</p>
+
+<p>应用下载后，运行该应用并登录帐号。然后选择应用中的&#8221;New App&#8221;按钮，然后选择自己要增加Crashlytics的工程，然后Crashlytics的应用会提示你为工程增加一个Run Script，如果你不知道如何添加，这里有一个<a href="http://www.runscriptbuildphase.com/?utm_source=desktopapp&amp;utm_medium=setup&amp;utm_campaign=mac">帮助的文档</a>。添加好之后的工程截图如下所示</p>
+
+<p><img src="/images/crashlytics-4.jpg"></p>
+
+<p>接着，Crashlytics的本地应用会提示你将Crashlytics相关的framework拖到工程中。如下所示：</p>
+
+<p><img src="/images/crashlytics-5.jpg"></p>
+
+<p>按照提示做完之后，就到了最后一步了，在<code>AppDelegate</code>的<code>didFinishLaunchingWithOptions</code>方法中加入如下代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;Crashlytics/Crashlytics.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
+</span><span class='line'>    <span class="nf">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span> <span class="p">{</span>
+</span><span class='line'>   <span class="p">[</span><span class="n">Crashlytics</span> <span class="nl">startWithAPIKey:</span><span class="s">@&quot;your identify code&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>之后，运行一下程序，Crashlytics就会检测到你设置成功。如果你感兴趣，可以自己手工触发一个崩溃记录，看Crashlytics能否帮你收集到。使用如下代码即可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[[</span><span class="n">Crashlytics</span> <span class="n">sharedInstance</span><span class="p">]</span> <span class="n">crash</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果你想测试一个Exception导致的崩溃，可以使用如下代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">NSObject</span> <span class="n">doesNotRecognizeSelector</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">arrayWithOnlyTwoElements</span> <span class="nl">objectAtIndex:</span><span class="mi">3</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>应用对外发布后，就可以在Crashlytics后台查看和修改相关的记录。另外，Crashlytics还支持将数据导入到其它项目管理工具（例如Redmine或Jira）如下所示，配置都非常简单。</p>
+
+<p><img src="/images/crashlytics-6.jpg"></p>
+
+<h2>实现原理和使用体会</h2>
+
+<h3>实现原理</h3>
+
+<p>在原理上，Crashlytics的通过以下2步完成崩溃日志的上传和分析：</p>
+
+<ol>
+<li>提供应用SDK，你需要在应用启动时调用其SDK来设置你的应用。SDK会集成到你的应用中，完成Crash信息的收集和上传。</li>
+<li>修改工程的编译配置，加入一段代码，在你每次工程编译完成后，上传该工程对应的dSYM文件。研究过手工分析Crash日志的同学应该知道，只有通过该文件，才能将Crash日志还原成可读的Call Stack信息。</li>
+</ol>
+
+
+<h3>使用体会</h3>
+
+<p>为了更加方便开发者设置相应的工程，Crashlytics提供了mac端的应用程序，帮助你检测相关工程是否正确设置并且提供相应的帮助信息。后来我还发现，该程序还会自动帮你升级Crashlytics的SDK文件。虽然这一点很体贴，但是我个人觉得还是不太友好。因为毕竟修改SDK会影响应用编译后的内部逻辑，在没有任何通知的情况下升级，我都无法确定Crashlytics有没有干坏事。不过国外的服务，特别是象Twitter这种相对较大知名度公司提供的服务要有节操得多，所以在这一点上我还是比较放心的。</p>
+
+<p>使用Crashlytics可以让你摆脱管理应用崩溃记录的烦恼。并且帮助你找出应用的一些重大隐藏性Bug。例如我之前写的一个应用就过一个缓存过期的问题，只有当缓存过期时才会触发这个Bug，这样的问题在测试人员那边很难触发，因为他们不可能了解你的应用内部实现细节。通过Crashlytics，使我清楚了解到应用Crash的数量和位置，结合自己的开发经验，就很容易找到问题所在了。</p>
+
+<p>值得一提的是，Crashlytics本身的<a href="http://support.crashlytics.com/knowledgebase/topics/14721-crashlytics-sdk-for-ios">官方文档</a>也非常健全，如果你在使用中遇到任何问题，也可以上去查看详细的文档。</p>
+
+<p>愿Crashlytics能让大家的应用都更加健壮～</p>
+</div>
+
+
+  <footer>
+   <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-24T20:56:00+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/06/23/alipay-plugin-mechanism/" title="Previous Post: 分析支付宝客户端的插件机制">&laquo; 分析支付宝客户端的插件机制</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/24/use-crashlytics/">使用Crashlytics来保存应用崩溃信息</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/17/startup-anniversary-note/">写在创业一周年</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/16/ios-dev-tool-app-store-tool/">iOS开发工具篇-AppStore统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/18/goodbye-viewdidunload/">再见，viewDidUnload方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/08/git-submodule-issues/">Git submodule的坑</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/07/tricks-in-iap/">iOS应用内支付(IAP)的那些坑</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/27/should-we-use-arc/">是否应该使用ARC?</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>  前网易有道员工，现在在粉笔网创业中。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记、粉笔网、猿题库。
+      <br/>
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+      <br />我的<strong>"iOS开发"</strong>微信公众账号:
+      <br/><img width="220px" src="/images/weixin-qr.jpg" />
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

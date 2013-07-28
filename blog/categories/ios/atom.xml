@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-07-24T21:04:42+08:00</updated>
+  <updated>2013-07-28T19:36:06+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,496 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[谈Objective-C block的实现]]></title>
+    <link href="http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/"/>
+    <updated>2013-07-28T10:42:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p><a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">这里</a>有关于block的5道测试题，建议你阅读本文之前先做一下测试。</p>
+
+<p>先介绍一下什么是闭包。在wikipedia上，<a href="http://en.wikipedia.org/wiki/Closure_(computer_science">闭包的定义</a>)是:</p>
+
+<p><blockquote><p>In programming languages, a closure is a function or reference to a function together with a referencing environment—a table storing a reference to each of the non-local variables (also called free variables or upvalues) of that function.</p></blockquote></p>
+
+<p>翻译过来，闭包是一个函数（或指向函数的指针），再加上该函数执行的外部的上下文变量（有时候也称作自由变量）。</p>
+
+<p>block实际上就是Objective-C语言对于闭包的实现。
+block配合上dispatch_queue，可以方便地实现简单的多线程编程和异步编程，关于这个，我之前写过一篇文章介绍：<a href="http://blog.devtang.com/blog/2012/02/22/use-gcd/">《使用GCD》</a>。</p>
+
+<p>本文主要介绍Objective-C语言的block在编译器中的实现方式。主要包括：</p>
+
+<ol>
+<li>block的内部实现数据结构介绍</li>
+<li>block的三种类型及其相关的内存管理方式</li>
+<li>block如何通过capture变量来达到访问函数外的变量</li>
+</ol>
+
+
+<!-- more -->
+
+
+<h2>实现方式</h2>
+
+<h3>数据结构定义</h3>
+
+<p>block的数据结构定义如下（图片来自<a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/">这里</a>)：</p>
+
+<p><img src="/images/block-struct.jpg"></p>
+
+<p>对应的结构体定义如下：</p>
+
+<p>``` objc
+struct Block_descriptor {</p>
+
+<pre><code>unsigned long int reserved;
+unsigned long int size;
+void (*copy)(void *dst, void *src);
+void (*dispose)(void *);
+</code></pre>
+
+<p>};</p>
+
+<p>struct Block_layout {</p>
+
+<pre><code>void *isa;
+int flags;
+int reserved;
+void (*invoke)(void *, ...);
+struct Block_descriptor *descriptor;
+/* Imported variables. */
+</code></pre>
+
+<p>};
+```</p>
+
+<p>通过该图，我们可以知道，一个block实例实际上由6部分构成：</p>
+
+<ol>
+<li>isa指针，所有对象都有该指针，用于实现对象相关的功能。</li>
+<li>flags，用于按bit位表示一些block的附加信息，本文后面介绍block copy的实现代码可以看到对该变量的使用。</li>
+<li>reserved，保留变量。</li>
+<li>invoke，函数指针，指向具体的block实现的函数调用地址。</li>
+<li>descriptor， 表示该block的附加描述信息，主要是size大小，以及copy和dispose函数的指针。</li>
+<li>variables，capture过来的变量，block能够访问它外部的局部变量，就是因为将这些变量（或变量的地址）复制到了结构体中。</li>
+</ol>
+
+
+<p>该数据结构和后面的clang分析出来的结构实际是一样的，不过仅是结构体的嵌套方式不一样。但这一点我一开始没有想明白，所以也给大家解释一下，如下2个结构体SampleA和SampleB在内存上是完全一样的，原因是结构体本身并不带有任何额外的附加信息。</p>
+
+<p>``` c
+struct SampleA {</p>
+
+<pre><code>int a;
+int b;
+int c;
+</code></pre>
+
+<p>};</p>
+
+<p>struct SampleB {</p>
+
+<pre><code>int a;
+struct Part1 {
+    int b;
+};
+struct Part2 {
+    int c;
+};
+</code></pre>
+
+<p>};</p>
+
+<p>```</p>
+
+<p>在Objective-C语言中，一共有3种类型的block：</p>
+
+<ol>
+<li>_NSConcreteGlobalBlock 全局的静态block，不会访问任何外部变量。</li>
+<li>_NSConcreteStackBlock  保存在栈中的block，当函数返回时会被销毁。</li>
+<li>_NSConcreteMallocBlock 保存在堆中的block，当引用计数为0时会被销毁。</li>
+</ol>
+
+
+<p>我们在下面会分别来查看它们各自的实现方式上的差别。</p>
+
+<h3>研究工具：clang</h3>
+
+<p>为了研究编译器是如何实现block的，我们需要使用clang。clang提供一个命令，可以将Objetive-C的源码改写成c语言的，借此可以研究block具体的源码实现方式。该命令是</p>
+
+<p><code>c
+clang -rewrite-objc block.c
+</code></p>
+
+<h3>NSConcreteGlobalBlock 类型的block的实现</h3>
+
+<p>我们先新建一个名为block1.c的源文件：</p>
+
+<p>``` objc</p>
+
+<h1>include &lt;stdio.h></h1>
+
+<p>int main()
+{</p>
+
+<pre><code>^{ printf("Hello, World!\n"); } ();
+return 0;
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<p>然后在命令行中输入<code>clang -rewrite-objc block1.c</code>即可在目录中看到clang输出了一个名为block1.cpp的文件。该文件就是block在c语言实现，我将block1.cpp中一些无关的代码去掉，将关键代码引用如下：</p>
+
+<p>``` objc
+struct __block_impl {</p>
+
+<pre><code>void *isa;
+int Flags;
+int Reserved;
+void *FuncPtr;
+</code></pre>
+
+<p>};</p>
+
+<p>struct __main_block_impl_0 {</p>
+
+<pre><code>struct __block_impl impl;
+struct __main_block_desc_0* Desc;
+__main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags=0) {
+    impl.isa = &amp;_NSConcreteStackBlock;
+    impl.Flags = flags;
+    impl.FuncPtr = fp;
+    Desc = desc;
+}
+</code></pre>
+
+<p>};
+static void <strong>main_block_func_0(struct </strong>main_block_impl_0 *__cself) {</p>
+
+<pre><code>printf("Hello, World!\n");
+</code></pre>
+
+<p>}</p>
+
+<p>static struct __main_block_desc_0 {</p>
+
+<pre><code>size_t reserved;
+size_t Block_size;
+</code></pre>
+
+<p>} <strong>main_block_desc_0_DATA = { 0, sizeof(struct </strong>main_block_impl_0) };</p>
+
+<p>int main()
+{</p>
+
+<pre><code>(void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA) ();
+return 0;
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<p>下面我们就具体看一下是如何实现的。__main_block_impl_0就是该block的实现，从中我们可以看出：</p>
+
+<ol>
+<li>一个block实际是一个对象，它主要由一个 isa 和 一个 impl 和 一个descriptor组成。</li>
+<li>在本例中，isa指向 _NSConcreteGlobalBlock， 主要是为了实现对象的所有特性，在此我们就不展开讨论了。</li>
+<li>impl是实际的函数指针，本例中，它指向__main_block_func_0。这里的impl相当于之前提到的invoke变量，只是clang编译器对变量的命名不一样而已。</li>
+<li>descriptor是用于描述当前这个block的附加信息的，包括结构体的大小，需要capture和dispose的变量列表等。结构体大小需要保存是因为，每个block因为会capture一些变量，这些变量会加到__main_block_impl_0这个结构体中，使其体积变大。在该例子中我们还看不到相关capture的代码，后面将会看到。</li>
+</ol>
+
+
+<h3>NSConcreteStackBlock 类型的block的实现</h3>
+
+<p>我们另外新建一个名为block2.c的文件，输入以下内容：</p>
+
+<p>``` objc</p>
+
+<h1>include &lt;stdio.h></h1>
+
+<p>int main() {</p>
+
+<pre><code>int a = 100;
+void (^block2)(void) = ^{
+    printf("%d\n", a);
+};
+block2();
+
+return 0;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>用之前提到的clang工具，转换后的关键代码如下：</p>
+
+<p>``` c
+struct __main_block_impl_0 {</p>
+
+<pre><code>struct __block_impl impl;
+struct __main_block_desc_0* Desc;
+int a;
+__main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int _a, int flags=0) : a(_a) {
+    impl.isa = &amp;_NSConcreteStackBlock;
+    impl.Flags = flags;
+    impl.FuncPtr = fp;
+    Desc = desc;
+}
+</code></pre>
+
+<p>};
+static void <strong>main_block_func_0(struct </strong>main_block_impl_0 *__cself) {</p>
+
+<pre><code>int a = __cself-&gt;a; // bound by copy
+printf("%d\n", a);
+</code></pre>
+
+<p>}</p>
+
+<p>static struct __main_block_desc_0 {</p>
+
+<pre><code>size_t reserved;
+size_t Block_size;
+</code></pre>
+
+<p>} <strong>main_block_desc_0_DATA = { 0, sizeof(struct </strong>main_block_impl_0)};</p>
+
+<p>int main()
+{</p>
+
+<pre><code>int a = 100;
+void (*block2)(void) = (void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, a);
+((void (*)(__block_impl *))((__block_impl *)block2)-&gt;FuncPtr)((__block_impl *)block2);
+
+return 0;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>在本例中，我们可以看到：</p>
+
+<ol>
+<li>本例中，isa指向_NSConcreteStackBlock，说明这是一个分配在栈上的实例。</li>
+<li><strong>main_block_impl_0 中增加了一个变量a，在block中引用的变量a实际是在申明block时，被复制到</strong>main_block_impl_0结构体中的那个变量a。因为这样，我们就能理解，在block内部修改变量a的内容，不会影响外部的实际变量a。</li>
+<li><strong>main_block_impl_0 中由于增加了一个变量a，所以结构体的大小变大了，该结构体大小被写在了</strong>main_block_desc_0中。</li>
+</ol>
+
+
+<p>我们修改上面的源码，在变量前面增加__block关键字：</p>
+
+<p>``` c</p>
+
+<h1>include &lt;stdio.h></h1>
+
+<p>int main()
+{</p>
+
+<pre><code>__block int i = 1024;
+void (^block1)(void) = ^{
+    printf("%d\n", i);
+    i = 1023;
+};
+block1();
+return 0;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>生成的关键代码如下，可以看到，差异相当大：</p>
+
+<p>``` c</p>
+
+<p>struct __Block_byref_i_0 {</p>
+
+<pre><code>void *__isa;
+__Block_byref_i_0 *__forwarding;
+int __flags;
+int __size;
+int i;
+</code></pre>
+
+<p>};</p>
+
+<p>struct __main_block_impl_0 {</p>
+
+<pre><code>struct __block_impl impl;
+struct __main_block_desc_0* Desc;
+__Block_byref_i_0 *i; // by ref
+__main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, __Block_byref_i_0 *_i, int flags=0) : i(_i-&gt;__forwarding) {
+    impl.isa = &amp;_NSConcreteStackBlock;
+    impl.Flags = flags;
+    impl.FuncPtr = fp;
+    Desc = desc;
+}
+</code></pre>
+
+<p>};
+static void <strong>main_block_func_0(struct </strong>main_block_impl_0 *__cself) {</p>
+
+<pre><code>__Block_byref_i_0 *i = __cself-&gt;i; // bound by ref
+
+printf("%d\n", (i-&gt;__forwarding-&gt;i));
+(i-&gt;__forwarding-&gt;i) = 1023;
+</code></pre>
+
+<p>}</p>
+
+<p>static void <strong>main_block_copy_0(struct </strong>main_block_impl_0<em>dst, struct __main_block_impl_0</em>src) {_Block_object_assign((void<em>)&amp;dst->i, (void</em>)src->i, 8/<em>BLOCK_FIELD_IS_BYREF</em>/);}</p>
+
+<p>static void <strong>main_block_dispose_0(struct </strong>main_block_impl_0<em>src) {_Block_object_dispose((void</em>)src->i, 8/<em>BLOCK_FIELD_IS_BYREF</em>/);}</p>
+
+<p>static struct __main_block_desc_0 {</p>
+
+<pre><code>size_t reserved;
+size_t Block_size;
+void (*copy)(struct __main_block_impl_0*, struct __main_block_impl_0*);
+void (*dispose)(struct __main_block_impl_0*);
+</code></pre>
+
+<p>} <strong>main_block_desc_0_DATA = { 0, sizeof(struct </strong>main_block_impl_0), <strong>main_block_copy_0, </strong>main_block_dispose_0};</p>
+
+<p>int main()
+{</p>
+
+<pre><code>__attribute__((__blocks__(byref))) __Block_byref_i_0 i = {(void*)0,(__Block_byref_i_0 *)&amp;i, 0, sizeof(__Block_byref_i_0), 1024};
+void (*block1)(void) = (void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, (__Block_byref_i_0 *)&amp;i, 570425344);
+((void (*)(__block_impl *))((__block_impl *)block1)-&gt;FuncPtr)((__block_impl *)block1);
+return 0;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>从代码中我们可以看到：</p>
+
+<ol>
+<li>源码中增加一个名为__Block_byref_i_0 的结构体，用来保存我们要capture并且修改的变量i。</li>
+<li><strong>main_block_impl_0 中引用的是</strong>Block_byref_i_0的结构体指针，这样就可以达到修改外部变量的作用。</li>
+<li>__Block_byref_i_0结构体中带有isa，说明它也是一个对象。</li>
+<li>我们需要负责<strong>Block_byref_i_0结构体相关的内存管理，所以</strong>main_block_desc_0中增加了copy和dispose函数指针，对于在调用前后修改相应变量的引用计数。</li>
+</ol>
+
+
+<h2>NSConcreteMallocBlock 类型的block的实现</h2>
+
+<p>NSConcreteMallocBlock类型的block通常不会在源码中直接出现，因为默认它是当一个block被copy的时候，才会将这个block复制到堆中。以下是一个block被copy时的示例代码(来自<a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/">这里</a>)，可以看到，在第8步，目标的block类型被修改为_NSConcreteMallocBlock。</p>
+
+<p>``` objc
+static void <em>_Block_copy_internal(const void </em>arg, const int flags) {</p>
+
+<pre><code>struct Block_layout *aBlock;
+const bool wantsOne = (WANTS_ONE &amp; flags) == WANTS_ONE;
+
+// 1
+if (!arg) return NULL;
+
+// 2
+aBlock = (struct Block_layout *)arg;
+
+// 3
+if (aBlock-&gt;flags &amp; BLOCK_NEEDS_FREE) {
+    // latches on high
+    latching_incr_int(&amp;aBlock-&gt;flags);
+    return aBlock;
+}
+
+// 4
+else if (aBlock-&gt;flags &amp; BLOCK_IS_GLOBAL) {
+    return aBlock;
+}
+
+// 5
+struct Block_layout *result = malloc(aBlock-&gt;descriptor-&gt;size);
+if (!result) return (void *)0;
+
+// 6
+memmove(result, aBlock, aBlock-&gt;descriptor-&gt;size); // bitcopy first
+
+// 7
+result-&gt;flags &amp;= ~(BLOCK_REFCOUNT_MASK);    // XXX not needed
+result-&gt;flags |= BLOCK_NEEDS_FREE | 1;
+
+// 8
+result-&gt;isa = _NSConcreteMallocBlock;
+
+// 9
+if (result-&gt;flags &amp; BLOCK_HAS_COPY_DISPOSE) {
+    (*aBlock-&gt;descriptor-&gt;copy)(result, aBlock); // do fixup
+}
+
+return result;
+</code></pre>
+
+<p>}
+```</p>
+
+<h3>变量的复制</h3>
+
+<p>对于block外的变量引用，block默认是将其复制到其数据结构中来实现访问的，如下图所示（图片来自<a href="http://rypress.com/tutorials/objective-c/blocks.html">这里</a>）：</p>
+
+<p><img src="/images/block-capture-1.jpg"></p>
+
+<p>对于用__block修饰的外部变量引用，block是复制其引用地址来实现访问的，如下图所示（图片来自<a href="http://rypress.com/tutorials/objective-c/blocks.html">这里</a>）：</p>
+
+<p><img src="/images/block-capture-2.jpg"></p>
+
+<h3>LLVM源码</h3>
+
+<p>在LLVM开源的关于<a href="https://llvm.org/svn/llvm-project/compiler-rt/trunk/BlocksRuntime/Block_private.h">block的实现源码</a>，其内容也和我们用clang改写得到的内容相似，印证了我们对于block内部数据结构的推测。</p>
+
+<h3>ARC对block类型的影响</h3>
+
+<p>在ARC开启的情况下，将只会有 NSConcreteGlobalBlock和 NSConcreteMallocBlock类型的block。</p>
+
+<p>原本的NSConcreteStackBlock的block会被NSConcreteMallocBlock类型的block替代。证明方式是以下代码在XCode中，会输出 <code>&lt;__NSMallocBlock__: 0x100109960&gt;</code>。在苹果的<a href="http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html">官方文档</a>中也提到，当把栈中的block返回时，不需要调用copy方法了。</p>
+
+<p>``` objc</p>
+
+<h1>import &lt;Foundation/Foundation.h></h1>
+
+<p>int main(int argc, const char * argv[])
+{</p>
+
+<pre><code>@autoreleasepool {
+    int i = 1024;
+    void (^block1)(void) = ^{
+        printf("%d\n", i);
+    };
+    block1();
+    NSLog(@"%@", block1);
+}
+return 0;
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<p>我个人认为这么做的原因是，由于ARC已经能很好地处理对象的生命周期的管理，这样所有对象都放到堆上管理，对于编译器实现来说，会比较方便。</p>
+
+<h3>参考链接</h3>
+
+<p>希望本文能加深你对于block的理解。我在学习中，查阅了以下文章，一并分享给大家。祝大家玩得开心～</p>
+
+<ul>
+<li><a href="http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-1/">A look inside blocks: Episode 1</a></li>
+<li><a href="http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-2/">A look inside blocks: Episode 2</a></li>
+<li><a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/">A look inside blocks: Episode 3</a></li>
+<li><a href="http://www.cnblogs.com/biosli/archive/2013/05/29/iOS_Objective-C_Block.html">对Objective-C中Block的追探</a></li>
+<li><a href="https://llvm.org/svn/llvm-project/compiler-rt/trunk/BlocksRuntime/Block_private.h">LLVM中block实现源码</a></li>
+<li><a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">objective-c-blocks-quiz</a></li>
+<li><a href="http://rypress.com/tutorials/objective-c/blocks.html">Blocks</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用Crashlytics来保存应用崩溃信息]]></title>
@@ -38,7 +528,7 @@
 <p><img src="/images/crashlytics-vs-itunes-1.jpg">
 <img src="/images/crashlytics-vs-itunes-2.jpg"></p>
 
-<p>2、Crashlytics可以象Bug管理工具那样，管理这些崩溃日志。例如：Crashlytics会根据每种类型的Crash的出现频率以及影响的用户量来自动设置优先级。对于每种类型的Crash，Crashlytics会除了象一般的工具提供Call Stack外，还会显示更多相关的有助于诊断的信息例如设备是否越狱，当时的内存量，当时的iOS版本等。对于修复掉的Crash日志，可以在Crashlytics的后台将其关掉。下图所示的是一个我的早期应用的崩溃记录，在我修复后，我将其更新为已修复状态。</p>
+<p>2、Crashlytics可以象Bug管理工具那样，管理这些崩溃日志。例如：Crashlytics会根据每种类型的Crash的出现频率以及影响的用户量来自动设置优先级。对于每种类型的Crash，Crashlytics除了会像一般的工具提供Call Stack外，还会显示更多相关的有助于诊断的信息例如设备是否越狱，当时的内存量，当时的iOS版本等。对于修复掉的Crash日志，可以在Crashlytics的后台将其关掉。下图所示的是一个我的早期应用的崩溃记录，在我修复后，我将其更新为已修复状态。</p>
 
 <p><img src="/images/crashlytics-close-issue.jpg"></p>
 
@@ -459,51 +949,6 @@ CABackingStore类型的内存区会被标记成volatile类型（这里的volatil
 <li><a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CALayer Internals: Contents</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[历史上的WWDC门票售空图片]]></title>
-    <link href="http://blog.devtang.com/blog/2013/04/30/the-history-of-wwdc/"/>
-    <updated>2013-04-30T22:40:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/04/30/the-history-of-wwdc</id>
-    <content type="html"><![CDATA[<h2>2008年</h2>
-
-<p>62天售空。介绍了iPhone 3G。</p>
-
-<p><img src="http://blog.devtang.com/images/wwdc-2008.jpg" width="500px" /></p>
-
-<h2>2009年</h2>
-
-<p>33天售空。介绍了iPhone 3GS。</p>
-
-<p><img src="http://blog.devtang.com/images/wwdc-2009.png" width="500px" /></p>
-
-<h2>2010年</h2>
-
-<p>8天售空。介绍了iPhone 4。</p>
-
-<p><img src="http://blog.devtang.com/images/wwdc-2010.png" width="500px" /></p>
-
-<h2>2011年</h2>
-
-<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
-
-<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
-
-<p><img src="http://blog.devtang.com/images/wwdc-2011.jpg" width="500px" /></p>
-
-<h2>2012年</h2>
-
-<p>2小时售空。介绍了iOS6。</p>
-
-<p><img src="http://blog.devtang.com/images/wwdc-2012.jpg" width="500px" /></p>
-
-<h2>2013年</h2>
-
-<p>2分钟售空。期待。</p>
-
-<p><img src="http://blog.devtang.com/images/wwdc-2013.jpg" width="500px" /></p>
 ]]></content>
   </entry>
   

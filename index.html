@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 这里有关于block的5道测试题，建议你阅读本文之前先做一下测试。 先介绍一下什么是闭包。在wikipedia上，闭包的定义)是: In programming languages, a closure is a function or reference to a function &hellip;">
+  <meta name="description" content="引言 在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于： 1、字体文件通常比较大，10M - 20M是一个常见的字体库的大小。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +74,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-11T16:00:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/wawati-sample.jpg"></p>
+
+<h2>引言</h2>
+
+<p>在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于：</p>
+
+<p>1、字体文件通常比较大，10M - 20M是一个常见的字体库的大小。大部分的非游戏的app体积都集中在10M以内，因为字体文件的加入而造成应用体积翻倍让人感觉有些不值。如果只是很少量的按钮字体需要设置，可以用一些工具把使用到的汉字字体编码从字体库中抽取出来，以节省体积。但如果是一些变化的内容需要自定义的字体，那就只有打包整个字体库了。</p>
+
+<p>2、中文的字体通常都是有版权的。在应用中加入特殊中文字体还需要处理相应的版权问题。对于一些小公司或个人开发者来说，这是一笔不小的开销。</p>
+
+<p>以上两点造成App Store里面使用特殊中文字库的iOS应用较少。现在通常只有阅读类的应用才会使用特殊中文字库。</p>
+
+<p>但其实从iOS6开始，苹果就支持动态下载中文字体到系统中。只是苹果一直没有公开相应的API。最终，相应的API在今年的WWDC大会上公开，接下来就让我们来一起了解这个功能。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/08/11/ios-asian-font-download-introduction/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -563,57 +616,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/07/tricks-in-iap/">iOS应用内支付(IAP)的那些坑</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-07T20:14:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/iap-icon.jpg"></p>
-
-<h2>前言</h2>
-
-<!--
-[udacity](https://www.udacity.com/)中的在线课程[《How to build a startup》](https://www.udacity.com/course/ep245)中提到，所谓创业，就是尝试寻找新的赢利模式。正因为这是一种尝试，所以不可避免地需要调整产品方向，寻找市场中还未被发现的用户需求，给用户创造价值，进而获得收入。最近很火的[精益创业](http://book.douban.com/subject/10945606/)的观点，则是强调将这种尝试成本降到最小，使得自己可以根据市场反馈迅速调整产品。-->
-
-
-<p>我们在今年春节后上线了新的在线智能题库：<a href="http://yuantiku.com/">猿题库</a>。<!-- 这应该是我们在互联网教育这个创业领域的早已计划好的第二个方向。--></p>
-
-<p>猿题库现在推出了公务员考试行测和申论2个产品，均包括web, iOS和Android三个平台。这次我们尝试做一个收费的产品，所以在iOS端集成了应用内支付（IAP）功能。在开发过程中和上线后，我们遇到了IAP中的一些坑，在此分享给各位。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/04/07/tricks-in-iap/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -627,6 +629,10 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/07/28/a-look-inside-blocks/">谈Objective-C block的实现</a>
@@ -662,10 +668,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     
       <li class="post">
         <a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/07/tricks-in-iap/">iOS应用内支付(IAP)的那些坑</a>
       </li>
     
   </ul>

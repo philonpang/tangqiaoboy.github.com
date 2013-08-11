@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="苹果在今年的WWDC2012大会上介绍了大量Objective-C的新特性，能够帮助iOS程序员更加高效地编写代码。在不久前更新的XCode4.4版本中，这些新特性已经可以使用了。让我们看看这些新特性有哪些： ">
+  <meta name="description" content="问题 我们知道，在iOS开发中，为了使我们的app能够同时支持iPhone的Retina屏幕和普通屏幕，美术同学需要对UI设计稿中的每个元素进行2次切图。苹果要求对图片元素的命名分别为 name.png 和 name@2x.png，带@2x的表示是Retina屏幕的贴图，不带@ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +74,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-26T20:34:00+08:00" pubdate data-updated="true">Aug 26<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>问题</h2>
+
+<p>我们知道，在iOS开发中，为了使我们的app能够同时支持iPhone的Retina屏幕和普通屏幕，美术同学需要对UI设计稿中的每个元素进行2次切图。苹果要求对图片元素的命名分别为 name.png 和 name@2x.png，带@2x的表示是Retina屏幕的贴图，不带@2x的同名文件为普通屏幕的贴图。</p>
+
+<p>我在开发的时候发现很难要求美术同学按照开发的要求来对图片命名。她们通常对于切图的命名是例如 <em>登录按钮大.png</em> ，<em>登录按钮小.png</em>, <em>登录按钮按下大.png</em> <em>登录按钮按下小.png</em> 这样的形式。于是，对这些文件按照苹果的要求进行重命名就成了我这个码农的一个体力活。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/26/use-script-to-power-up-ui-work/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -489,49 +534,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/22/use-gcd/">使用GCD</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-22T20:44:00+08:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>什么是GCD</h2>
-
-<p>Grand Central Dispatch (GCD)是Apple开发的一个多核编程的解决方法。该方法在Mac OS X 10.6雪豹中首次推出，并随后被引入到了iOS4.0中。GCD是一个替代诸如NSThread, NSOperationQueue, NSInvocationOperation等技术的很高效和强大的技术，它看起来象就其它语言的闭包(Closure)一样，但苹果把它叫做blocks。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/22/use-gcd/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -547,6 +549,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/07/28/a-look-inside-blocks/">谈Objective-C block的实现</a>
@@ -582,10 +588,6 @@
     
       <li class="post">
         <a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/07/tricks-in-iap/">iOS应用内支付(IAP)的那些坑</a>
       </li>
     
   </ul>

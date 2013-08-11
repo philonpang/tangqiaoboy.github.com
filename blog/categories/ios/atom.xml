@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-07-28T19:36:06+08:00</updated>
+  <updated>2013-08-11T16:19:08+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,144 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[动态下载苹果提供的多种中文字体]]></title>
+    <link href="http://blog.devtang.com/blog/2013/08/11/ios-asian-font-download-introduction/"/>
+    <updated>2013-08-11T16:00:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/08/11/ios-asian-font-download-introduction</id>
+    <content type="html"><![CDATA[<p><img src="/images/wawati-sample.jpg"></p>
+
+<h2>引言</h2>
+
+<p>在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于：</p>
+
+<p>1、字体文件通常比较大，10M - 20M是一个常见的字体库的大小。大部分的非游戏的app体积都集中在10M以内，因为字体文件的加入而造成应用体积翻倍让人感觉有些不值。如果只是很少量的按钮字体需要设置，可以用一些工具把使用到的汉字字体编码从字体库中抽取出来，以节省体积。但如果是一些变化的内容需要自定义的字体，那就只有打包整个字体库了。</p>
+
+<p>2、中文的字体通常都是有版权的。在应用中加入特殊中文字体还需要处理相应的版权问题。对于一些小公司或个人开发者来说，这是一笔不小的开销。</p>
+
+<p>以上两点造成App Store里面使用特殊中文字库的iOS应用较少。现在通常只有阅读类的应用才会使用特殊中文字库。</p>
+
+<p>但其实从iOS6开始，苹果就支持动态下载中文字体到系统中。只是苹果一直没有公开相应的API。最终，相应的API在今年的WWDC大会上公开，接下来就让我们来一起了解这个功能。</p>
+
+<!-- more -->
+
+
+<h2>功能介绍</h2>
+
+<p>使用动态下载中文字体的API可以动态地向iOS系统中添加字体文件，这些字体文件都是下载到系统的目录中（目录是<code>/private/var/mobile/Library/Assets/com_apple_MobileAsset_Font/</code>），所以并不会造成应用体积的增加。并且，由于字体文件是iOS系统提供的，也免去了字体使用版权的问题。虽然第一次下载相关的中文字体需要一些网络开销和下载时间，但是这些字体文件下载后可以在所有应用间共享，所以可以遇见到，随着该API使用的普及，大部分应用都不需要提示用户下载字体，因为很可能这些字体在之前就被其它应用下载下来了。</p>
+
+<h2>字体列表</h2>
+
+<p>在<a href="http://support.apple.com/kb/HT5484?viewlocale=zh_CN">这个链接</a>中，苹果列出了提供动态下载和使用中文字体文件列表。不过，由于下载的时候需要使用的名字是PostScript名称，所以如果你真正要动态下载相应的字体的话，还需要使用Mac内自带的应用“字体册“来获得相应字体的PostScript名称。如下显示了从”字体册“中获取《兰亭黑-简 特黑》字体的PostScript名称的截图：</p>
+
+<p><img src="/images/font-postscript-name.jpg"></p>
+
+<h2>API介绍</h2>
+
+<p>苹果提供的动态下载代码的<a href="http://developer.apple.com/library/ios/#samplecode/DownloadFont/Listings/DownloadFont_ViewController_m.html">Demo工程</a> 链接在这里。将此Demo工程下载下来，即可学习相应API的使用。下面我对该工程中相应API做简单的介绍。</p>
+
+<p>假如我们现在要下载娃娃体字体，它的PostScript名称为<code>DFWaWaSC-W5</code>。具体的步骤如下：</p>
+
+<p>1、我们先判断该字体是否已经被下载下来了，代码如下：</p>
+
+<p>``` objc</p>
+
+<ul>
+<li>(BOOL)isFontDownloaded:(NSString <em>)fontName {
+  UIFont</em> aFont = [UIFont fontWithName:fontName size:12.0];
+  if (aFont &amp;&amp; ([aFont.fontName compare:fontName] == NSOrderedSame
+
+<pre><code>         || [aFont.familyName compare:fontName] == NSOrderedSame)) {
+  return YES;
+</code></pre>
+
+  } else {
+
+<pre><code>  return NO;
+</code></pre>
+
+<p>  }
+}</p></li>
+</ul>
+
+
+<p>```</p>
+
+<p>2、如果该字体下载过了，则可以直接使用。否则我们需要先准备下载字体API需要的一些参数，如下所示：</p>
+
+<p>``` objc</p>
+
+<p>// 用字体的PostScript名字创建一个Dictionary
+NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithObjectsAndKeys:fontName, kCTFontNameAttribute, nil];</p>
+
+<p>// 创建一个字体描述对象CTFontDescriptorRef
+CTFontDescriptorRef desc = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef)attrs);</p>
+
+<p>// 将字体描述对象放到一个NSMutableArray中
+NSMutableArray *descs = [NSMutableArray arrayWithCapacity:0];
+[descs addObject:(__bridge id)desc];
+CFRelease(desc);</p>
+
+<p>```</p>
+
+<p>3、准备好上面的<code>descs</code>变量后，则可以进行字体的下载了，代码如下：</p>
+
+<p>``` objc</p>
+
+<p>__block BOOL errorDuringDownload = NO;</p>
+
+<p>CTFontDescriptorMatchFontDescriptorsWithProgressHandler( (__bridge CFArrayRef)descs, NULL,  ^(CTFontDescriptorMatchingState state, CFDictionaryRef progressParameter) {</p>
+
+<pre><code>double progressValue = [[(__bridge NSDictionary *)progressParameter objectForKey:(id)kCTFontDescriptorMatchingPercentage] doubleValue];
+
+if (state == kCTFontDescriptorMatchingDidBegin) {
+    NSLog(@"字体已经匹配");
+} else if (state == kCTFontDescriptorMatchingDidFinish) {    
+    if (!errorDuringDownload) {
+        NSLog(@"字体%@ 下载完成", fontName);
+    }
+} else if (state == kCTFontDescriptorMatchingWillBeginDownloading) {
+    NSLog(@"字体开始下载");
+} else if (state == kCTFontDescriptorMatchingDidFinishDownloading) {
+    NSLog(@"字体下载完成");
+    dispatch_async( dispatch_get_main_queue(), ^ {
+        // 可以在这里修改UI控件的字体
+    });
+} else if (state == kCTFontDescriptorMatchingDownloading) {
+    NSLog(@"下载进度 %.0f%% ", progressValue);
+} else if (state == kCTFontDescriptorMatchingDidFailWithError) {
+    NSError *error = [(__bridge NSDictionary *)progressParameter objectForKey:(id)kCTFontDescriptorMatchingError];
+    if (error != nil) {
+        _errorMessage = [error description];
+    } else {
+        _errorMessage = @"ERROR MESSAGE IS NOT AVAILABLE!";
+    }
+    // 设置标志
+    errorDuringDownload = YES;
+    NSLog(@"下载错误: %@", _errorMessage);
+}
+
+return (BOOL)YES;
+</code></pre>
+
+<p>});</p>
+
+<p>```</p>
+
+<p>通常需要在下载完字体后开始使用字体，一般是将相应代码放到 kCTFontDescriptorMatchingDidFinish 那个条件中做，可以象苹果官网的示例代码上那样，用GCD来改UI的逻辑，也可以发Notification来通知相应的Controller。</p>
+
+<p>以下是通过以上示例代码下载下来的娃娃体字体截图：</p>
+
+<p><img src="/images/wawati-sample.jpg"></p>
+
+<h2>iOS版本限制</h2>
+
+<p>以上代码只能运行在iOS6以上的系统，但当前还有不少用户是iOS5的系统。不过，随着苹果在WWDC2013中推出iOS7的beta版，很多人都期待着使用iOS7。从历史数据上看，苹果iOS新版本推出后，通常3个月内就可以达到50%以上的使用比例。所以，可以遇见到在今年年底，iOS5的用户将所剩无几。如果我们打算在年底只支持iOS6以上的系统，那么就可以通过上面介绍的方法使用大量中文字体来美化你的应用。</p>
+
+<p>愿新的API能让大家的应用更加美观，have fun!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[谈Objective-C block的实现]]></title>
@@ -865,90 +1003,6 @@ java Autoingestion username@fenbi.com password 85587619 Sales Daily Summary 2013
 <p>App Annie和苹果本身提供的命令行工具虽然都能统计App Store的数据，但是二者功能相差悬殊。苹果的命令行工具仅仅能提供销售数据的按日、周、月、年等方式的统计和备份。而App Annie除了以更加良好的界面和交互提供这些功能外，还能跟踪App的排名变化，以及App在苹果的各种榜单中所处位置的情况。</p>
 
 <p>建议大家都可以尝试使用App Annie或AppFigures这类统计工具，帮助你方便地查看App的销售和排名情况。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[再见，viewDidUnload方法]]></title>
-    <link href="http://blog.devtang.com/blog/2013/05/18/goodbye-viewdidunload/"/>
-    <updated>2013-05-18T17:37:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/05/18/goodbye-viewdidunload</id>
-    <content type="html"><![CDATA[<h3>前言</h3>
-
-<p>我在去年的一篇文章<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">《iOS5中UIViewController的新方法》</a>中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中，viewDidUnload回调方法被Deprecated掉了。查看苹果的文档，可以看到如下的说明。</p>
-
-<p><img src="/images/viewdidunload-1.jpg"></p>
-
-<p>那么，原本在viewDidUnload中的代码应该怎么处理？在iOS6中，又应该怎么处理内存警告？带着这些问题，我查找了一些资料，在此分享给大家。</p>
-
-<!-- more -->
-
-
-<h3>分析</h3>
-
-<p>在iOS4和iOS5系统中，当内存不足，应用收到Memory warning时，系统会自动调用当前没在界面上的ViewController的viewDidUnload方法。
-通常情况下，这些未显示在界面上的ViewController是UINavigationController Push栈中未在栈顶的ViewController，以及UITabBarViewController中未显示的子ViewController。这些View Controller都会在Memory Warning事件发生时，被系统自动调用viewDidUnload方法。</p>
-
-<p>在iOS6中，由于viewDidUnload事件在iOS6下任何情况都不会被触发，所以苹果在文档中建议，应该将回收内存的相关操作移到另一个回调函数：didReceiveMemoryWarning 中。但是如果你仅仅是把以前写到viewDidUnload函数中的代码移动到didReceiveMemoryWarning函数中，那么你就错了。以下是一个 <font color=red>错误的示例代码</font> ：</p>
-
-<p>``` objc</p>
-
-<ul>
-<li>(void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  if([self isViewLoaded] &amp;&amp; ![[self view] window]) {
-
-<pre><code>  [self setView:nil];
-</code></pre>
-
-<p>  }
-}</p></li>
-</ul>
-
-
-<p>```</p>
-
-<p><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">这篇文章</a>解释了iOS6不推荐你将view置为nil的原因（链接打开需要翻墙）, 翻译过来如下：</p>
-
-<ol>
-<li><p>UIView有一个CALayer的成员变量，CALayer是具体用于将自己画到屏幕上的。如下图所示：</p>
-
-<p><img src="/images/viewdidunload-2.jpg"></p></li>
-<li><p>CALayer是一个bitmap图象的容器类，当UIView调用自身的drawRect时，CALayer才会创建这个bitmap图象类。</p></li>
-<li><p>具体占内存的其实是一个bitmap图象类，CALayer只占48bytes, UIView只占96bytes。而一个iPad的全屏UIView的bitmap类会占到12M的大小！</p></li>
-<li><p>在iOS6时，当系统发出MemoryWarning时，系统会自动回收bitmap类。但是不回收UIView和CALayer类。这样即回收了大部分内存，又能在需要bitmap类时，通过调用UIView的drawRect: 方法重建。</p></li>
-</ol>
-
-
-<h3>内存优化</h3>
-
-<p>另外文章中还提到苹果的操作系统对此做的一个内存优化技巧，解释如下：</p>
-
-<ol>
-<li><p>当一段内存被分配时，它会被标记成“In use“, 以防止被重复使用。当内存被释放时，这段内存会被标记成"Not in use"，这样，在有新的内存申请时，这块内存就可能被分配给其它变量。</p></li>
-<li><p>CALayer包括的具体的bitmap内容的私有成员变量类型为<a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CABackingStore</a>， 当收到MemroyWarning时，
-CABackingStore类型的内存区会被标记成volatile类型（这里的volatile和 C以及Java语言的volatile不是一个意思），volatile表示，这块内存可能被再次被原变量重用。</p></li>
-</ol>
-
-
-<p>这样，有了上面的优化后，当收到Memoy Warning时，虽然所有的CALayer所包含的bitmap内存都被标记成volatile了，但是只要这块内存没有再次被复用，那么当需要重建bitmap内存时，
-它就可以直接被复用，而避免了再次调用 UIView的 drawRect: 方法。</p>
-
-<h3>总结</h3>
-
-<p>所以，简单来说，对于iOS6，你不需要做任何以前viewDidUnload的事情，更不需要把以前viewDidUnload的代码移动到 didReceiveMemoryWarning方法中。</p>
-
-<p>引用WWDC 2012 中的一段话来给viewDidUnload说再见：</p>
-
-<p><blockquote><p></p></p><p><p>The method viewWillUnload and viewDidUnload. We're not going to call them anymore. I mean, there's kind of a cost-benifit equation and analysis that we went through. In the early days, there was a real performance need for us to ensure that on memory warnings we unloaded views. There was all kinds of graphics and backing stores and so forth that would also get unloaded. We now unload those independently of the view, so it isn't that big of a deal for us for those to be unloaded, and there were so many bugs where there would be pointers into。</p></p><p><p></p></blockquote></p>
-
-<h3>参考链接</h3>
-
-<ul>
-<li><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">View Controller Lifecycle in iOS 6</a></li>
-<li><a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CALayer Internals: Contents</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

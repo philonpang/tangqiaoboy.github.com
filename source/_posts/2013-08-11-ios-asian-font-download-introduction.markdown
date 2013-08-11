@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "动态下载苹果提供的多种中文字体"
-date: 2013-07-06 10:58
+date: 2013-08-11 16:00
 comments: true
 categories: iOS
 ---

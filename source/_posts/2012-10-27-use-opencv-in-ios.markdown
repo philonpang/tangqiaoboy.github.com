@@ -45,7 +45,7 @@ brew install opencv
 
 按照[该教程](http://tilomitra.com/opencv-on-mac-osx/)，先用brew安装cmake.
 
-去[OpenCV官网](source/_posts/2012-10-27-use-opencv-in-ios.markdown)下载Linux/Mac版的源码，将源码解压后，在控制台中切换到源码目录，执行如下操作：
+去[OpenCV官网](http://opencv.org/)下载Linux/Mac版的源码，将源码解压后，在控制台中切换到源码目录，执行如下操作：
 
 ``` bash
 # make a separate directory for building

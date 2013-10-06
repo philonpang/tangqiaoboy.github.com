@@ -159,7 +159,8 @@ int main()
 下面我们就具体看一下是如何实现的。__main_block_impl_0就是该block的实现，从中我们可以看出：
 
  1. 一个block实际是一个对象，它主要由一个 isa 和 一个 impl 和 一个descriptor组成。
- 2. 在本例中，isa指向 _NSConcreteGlobalBlock， 主要是为了实现对象的所有特性，在此我们就不展开讨论了。
+ 2. <del>在本例中，isa指向 _NSConcreteGlobalBlock， 主要是为了实现对象的所有特性，在此我们就不展开讨论了。</del> 
+ 3. 由于clang改写的具体实现方式和LLVM不太一样，并且这里没有开启ARC。所以这里我们看到isa指向的还是`_NSConcreteStackBlock`。但在LLVM的实现中，开启ARC时，block应该是_NSConcreteGlobalBlock类型，具体可以看[《objective-c-blocks-quiz》](http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/)第二题的解释。
  3. impl是实际的函数指针，本例中，它指向__main_block_func_0。这里的impl相当于之前提到的invoke变量，只是clang编译器对变量的命名不一样而已。
  4. descriptor是用于描述当前这个block的附加信息的，包括结构体的大小，需要capture和dispose的变量列表等。结构体大小需要保存是因为，每个block因为会capture一些变量，这些变量会加到__main_block_impl_0这个结构体中，使其体积变大。在该例子中我们还看不到相关capture的代码，后面将会看到。
 

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-10-07T15:38:30+08:00</updated>
+  <updated>2013-10-15T20:51:17+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,361 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Objective-C对象模型及应用]]></title>
+    <link href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/"/>
+    <updated>2013-10-15T20:31:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/10/15/objective-c-object-model</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>原创文章，转载请注明出自<a href="http://blog.devtang.com">唐巧的技术博客</a>。</p>
+
+<p>本文主要介绍Objective-C对象模型的实现细节，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。希望本文能加深你对Objective-C对象的理解。</p>
+
+<h2>ISA指针</h2>
+
+<p>Objective-C是一门面向对象的编程语言。每一个对象都是一个类的实例。在Objective-C语言的内部，每一个对象都有一个名为isa的指针，指向该对象的类。每一个类描述了一系列它的实例的特点，包括成员变量的列表，成员函数的列表等。每一个对象都可以接受消息，而对象能够接收的消息列表是保存在它所对应的类中。</p>
+
+<p>在XCode中按<code>Shift + Command + O</code>, 然后输入NSObject.h和objc.h，可以打开NSObject的定义头文件，通过头文件我们可以看到，NSObject就是一个包含isa指针的结构体，如下图所示：</p>
+
+<!-- more -->
+
+
+<p><img src="http://blog.devtang.com/images/class-nsobject-isa.jpg">
+<img src="http://blog.devtang.com/images/class-objc-object-isa.jpg"></p>
+
+<p>按照面向对象语言的设计原则，所有事物都应该是对象（严格来说Objective-C并没有完全做到这一点，因为它有象int, double这样的简单变量类型）。在Objective-C语言中，每一个类实际上也是一个对象。每一个类也有一个名为isa的指针。每一个类也可以接受消息，例如<code>[NSObject alloc]</code>，就是向NSObject这个类发送名为<code>alloc</code>消息。</p>
+
+<p>在XCode中按<code>Shift + Command + O</code>, 然后输入runtime.h，可以打开Class的定义头文件，通过头文件我们可以看到，Class也是一个包含isa指针的结构体，如下图所示。（图中除了isa外还有其它成员变量，但那是为了兼容非2.0版的Objective-C的遗留逻辑，大家可以忽略它。）</p>
+
+<p><img src="http://blog.devtang.com/images/class-objc-class-isa.jpg"></p>
+
+<p>因为类也是一个对象，那它也必须是另一个类的实列，这个类就是元类(<code>metaclass</code>)。元类保存了类方法的列表。当一个类方法被调用时，元类会首先查找它本身是否有该类方法的实现，如果没有，则该元类会向它的父类查找该方法，直到一直找到继承链的头。</p>
+
+<p>元类(<code>metaclass</code>)也是一个对象，那么元类的isa指针又指向哪里呢？为了设计上的完整，所有的元类的isa指针都会指向一个根元类(root <code>metaclass</code>)。根元类(root metaclass)本身的isa指针指向自己，这样就行成了一个闭环。上面提到，一个对象能够接收的消息列表是保存在它所对应的类中的。在实际编程中，我们几乎不会遇到向元类发消息的情况，那它的isa指针在实际上很少用到。不过这么设计保证了面向对象的干净，即所有事物都是对象，都有isa指针。</p>
+
+<p>我们再来看看继承关系，由于类方法的定义是保存在元类(<code>metaclass</code>)中，而方法调用的规则是，如果该类没有一个方法的实现，则向它的父类继续查找。所以，为了保证父类的类方法可以在子类中可以被调用，所以子类的元类会继承父类的元类，换而言之，类对象和元类对象有着同样的继承关系。</p>
+
+<p>我很想把关系说清楚一些，但是这块儿确实有点绕，下面这张图或许能够让大家对isa和继承的关系清楚一些（该图片来自<a href="http://www.sealiesoftware.com/blog/class%20diagram.pdf">这里</a>）</p>
+
+<p><img src="http://blog.devtang.com/images/class-diagram.jpg"></p>
+
+<p>该图中，最让人困惑的莫过于Root Class了。在实现中，Root Class是指NSObject，我们可以从图中看出：</p>
+
+<ol>
+<li>NSObject类包括它的对象实例方法。</li>
+<li>NSObject的元类包括它的类方法，例如alloc方法。</li>
+<li>NSObject的元类继承自NSObject类。</li>
+<li>一个NSObject的类中的方法同时也会被NSObject的子类在查找方法时找到。</li>
+</ol>
+
+
+<h2>类的成员变量</h2>
+
+<p>如果把类的实例看成一个C语言的结构体（struct），上面说的isa指针就是这个结构体的第一个成员变量，而类的其它成员变量依次排列在结构体中。排列顺序如下图所示（图片来自《iOS 6 Programming Pushing the Limits》）：</p>
+
+<p><img src="http://blog.devtang.com/images/class-member.jpg"></p>
+
+<p>为了验证该说法，我们在XCode中新建一个工程，在main.m中运行如下代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@interface</span> <span class="nc">Father</span> : <span class="nc">NSObject</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">_father</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">@</span><span class="n">implementation</span> <span class="n">Father</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">@</span><span class="n">interface</span> <span class="n">Child</span> <span class="o">:</span> <span class="n">Father</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">_child</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">@</span><span class="n">implementation</span> <span class="n">Child</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">Child</span> <span class="o">*</span> <span class="n">child</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Child</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// ...</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们将断点下在 <code>@autoreleasepool</code> 处，然后在Console中输入<code>p *child</code>,则可以看到Xcode输出如下内容，这与我们上面的说法一致。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">(</span><span class="n">lldb</span><span class="p">)</span> <span class="n">p</span> <span class="o">*</span><span class="n">child</span>
+</span><span class='line'><span class="p">(</span><span class="n">Child</span><span class="p">)</span> <span class="n">$0</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">Father</span><span class="p">)</span> <span class="n">Father</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">(</span><span class="n">NSObject</span><span class="p">)</span> <span class="n">NSObject</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="p">(</span><span class="n">Class</span><span class="p">)</span> <span class="n">isa</span> <span class="o">=</span> <span class="n">Child</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">_father</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">_child</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>可变与不可变</h2>
+
+<p>因为对象在内存中的排布可以看成一个结构体，该结构体的大小并不能动态变化。所以无法在运行时动态给对象增加成员变量。</p>
+
+<p>相对的，对象的方法定义都保存在类的可变区域中。Objective-C 2.0并未在头文件中将实现暴露出来，但在Objective-C 1.0中，我们可以看到方法的定义列表是一个名为 <code>methodLists</code>的指针的指针（如下图所示）。通过修改该指针指向的指针的值，就可以实现动态地为某一个类增加成员方法。这也是<code>Category</code>实现的原理。同时也说明了为什么<code>Category</code>只可为对象增加成员方法，却不能增加成员变量。</p>
+
+<p><img src="http://blog.devtang.com/images/class-objc-class-isa.jpg"></p>
+
+<p>需要特别说明一下，通过<code>objc_setAssociatedObject</code> 和 <code>objc_getAssociatedObject</code>方法可以变相地给对象增加成员变量，但由于实现机制不一样，所以并不是真正改变了对象的内存结构。</p>
+
+<p>除了对象的方法可以动态修改，因为isa本身也只是一个指针，所以我们也可以在运行时动态地修改isa指针的值，达到替换对象整个行为的目的。不过该应用场景较少。</p>
+
+<h2>系统相关API及应用</h2>
+
+<h3>isa swizzling的应用</h3>
+
+<p>系统提供的KVO的实现，就利用了动态地修改isa指针的值的技术。在<a href="https://developer.apple.com/library/ios/documentation/cocoa/conceptual/KeyValueObserving/Articles/KVOImplementation.html">苹果的文档</a>中可以看到如下描述：</p>
+
+<blockquote><p>Key-Value Observing Implementation Details</p><p>Automatic key-value observing is implemented using a technique called isa-swizzling.</p><p>The isa pointer, as the name suggests, points to the object&#8217;s class which maintains a dispatch table. This dispatch table essentially contains pointers to the methods the class implements, among other data.</p><p>When an observer is registered for an attribute of an object the isa pointer of the observed object is modified, pointing to an intermediate class rather than at the true class. As a result the value of the isa pointer does not necessarily reflect the actual class of the instance.</p><p>You should never rely on the isa pointer to determine class membership. Instead, you should use the class method to determine the class of an object instance.</p></blockquote>
+
+
+<p>类似的，使用isa swizzling的技术的还有系统提供的Key-Value Coding（KVC）。</p>
+
+<h3>Method Swizzling API说明</h3>
+
+<p>Objective-C提供了以下API来动态替换类方法或实例方法的实现：</p>
+
+<ul>
+<li><code>class_replaceMethod</code> 替换类方法的定义</li>
+<li><code>method_exchangeImplementations</code> 交换2个方法的实现</li>
+<li><code>method_setImplementation</code> 设置1个方法的实现</li>
+</ul>
+
+
+<p>这3个方法有一些细微的差别，给大家介绍如下：</p>
+
+<ul>
+<li><code>class_replaceMethod</code>在苹果的文档（如下图所示）中能看到，它有两种不同的行为。当类中没有想替换的原方法时，该方法会调用<code>class_addMethod</code>来为该类增加一个新方法，也因为如此，<code>class_replaceMethod</code>在调用时需要传入<code>types</code>参数，而<code>method_exchangeImplementations</code>和<code>method_setImplementation</code>却不需要。</li>
+</ul>
+
+
+<p><img src="http://blog.devtang.com/images/class-replace-method.jpg"></p>
+
+<ul>
+<li><code>method_exchangeImplementations</code> 的内部实现其实是调用了2次<code>method_setImplementation</code>方法，从苹果的文档中能清晰地了解到（如下图所示）</li>
+</ul>
+
+
+<p><img src="http://blog.devtang.com/images/class-method-exchange-imp.jpg"></p>
+
+<p>从以上的区别我们可以总结出这3个API的使用场景:</p>
+
+<ul>
+<li><code>class_replaceMethod</code>, 当需要替换的方法可能有不存在的情况时，可以考虑使用该方法。</li>
+<li><code>method_exchangeImplementations</code>，当需要交换2个方法的实现时使用。</li>
+<li><code>method_setImplementation</code> 最简单的用法，当仅仅需要为一个方法设置其实现方式时使用。</li>
+</ul>
+
+
+<h3>使用示例</h3>
+
+<p>我们在开发<a href="http://yuantiku.com">猿题库</a>客户端的笔记功能时，需要使用系统的<code>UIImagePickerController</code>。但是，我们发现，在iOS6.0.2系统下，系统提供的<code>UIImagePickerController</code>在iPad横屏下有转屏的Bug，造成其方向错误。具体的Bug详情可以见<a href="http://stackoverflow.com/questions/12522491/crash-on-presenting-uiimagepickercontroller-under-ios-6-0">这里</a>。</p>
+
+<p>为了修复该Bug，我们需要替换<code>UIImagePickerController</code>的如下2个方法</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">shouldAutorotate</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nf">preferredInterfaceOrientationForPresentation</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们先实现了一个名为<code>ImagePickerReplaceMethodsHolder</code>的类，用于定义替换后的方法和实现。如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// ImagePickerReplaceMethodsHolder.h</span>
+</span><span class='line'><span class="k">@interface</span> <span class="nc">ImagePickerReplaceMethodsHolder</span> : <span class="nc">NSObject</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">shouldAutorotate</span><span class="p">;</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nf">preferredInterfaceOrientationForPresentation</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// ImagePickerReplaceMethodsHolder.m</span>
+</span><span class='line'><span class="k">@implementation</span> <span class="nc">ImagePickerReplaceMethodsHolder</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">shouldAutorotate</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nf">preferredInterfaceOrientationForPresentation</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">UIInterfaceOrientationPortrait</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后，我们在调用处，判断当前的iOS版本，对于[iOS6.0, iOS6.1)之间的版本，我们将<code>UIImagePickerController</code>的有问题的方法替换。具体代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)</span>
+</span><span class='line'><span class="cp">#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">load</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">static</span> <span class="n">dispatch_once_t</span> <span class="n">onceToken</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="n">hackForImagePicker</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">hackForImagePicker</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// fix bug of image picker under iOS 6.0</span>
+</span><span class='line'>    <span class="c1">// http://stackoverflow.com/questions/12522491/crash-on-presenting-uiimagepickercontroller-under-ios-6-0</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO</span><span class="p">(</span><span class="s">@&quot;6.0&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="o">&amp;&amp;</span> <span class="n">SYSTEM_VERSION_LESS_THAN</span><span class="p">(</span><span class="s">@&quot;6.1&quot;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">Method</span> <span class="n">oldMethod1</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">([</span><span class="n">UIImagePickerController</span> <span class="n">class</span><span class="p">],</span> <span class="k">@selector</span><span class="p">(</span><span class="n">shouldAutorotate</span><span class="p">));</span>
+</span><span class='line'>        <span class="n">Method</span> <span class="n">newMethod1</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">([</span><span class="n">ImagePickerReplaceMethodsHolder</span> <span class="n">class</span><span class="p">],</span> <span class="k">@selector</span><span class="p">(</span><span class="n">shouldAutorotate</span><span class="p">));</span>
+</span><span class='line'>        <span class="n">method_setImplementation</span><span class="p">(</span><span class="n">oldMethod1</span><span class="p">,</span> <span class="n">method_getImplementation</span><span class="p">(</span><span class="n">newMethod1</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">Method</span> <span class="n">oldMethod2</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">([</span><span class="n">UIImagePickerController</span> <span class="n">class</span><span class="p">],</span> <span class="k">@selector</span><span class="p">(</span><span class="n">preferredInterfaceOrientationForPresentation</span><span class="p">));</span>
+</span><span class='line'>        <span class="n">Method</span> <span class="n">newMethod2</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">([</span><span class="n">ImagePickerReplaceMethodsHolder</span> <span class="n">class</span><span class="p">],</span> <span class="k">@selector</span><span class="p">(</span><span class="n">preferredInterfaceOrientationForPresentation</span><span class="p">));</span>
+</span><span class='line'>        <span class="n">method_setImplementation</span><span class="p">(</span><span class="n">oldMethod2</span><span class="p">,</span> <span class="n">method_getImplementation</span><span class="p">(</span><span class="n">newMethod2</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通过如上代码，我们就针对iOS特定版本的有问题的系统库函数打了Patch，使问题得到解决。</p>
+
+<h3>开源界的使用</h3>
+
+<p>有少量不明真相的同学以为苹果在审核时会拒绝App使用以上API，这其实是对苹果的误解。使用如上API是安全的。另外，开源界也对以上方法都适当的使用。例如：</p>
+
+<ul>
+<li>著名的网络库<a href="https://github.com/AFNetworking/AFNetworking">AFNetworking</a>。AFNetworking网络库(v1.x版本)使用了class_replaceMethod方法（AFHTTPRequestOperation.m文件第105行）</li>
+<li><a href="https://github.com/jverkoey/nimbus">Nimbus</a>。Nimbus是著名的工具类库，它在其core模块中提供了<code>NIRuntimeClassModifications.h</code>文件，用于提供上述API的封装。</li>
+<li>国内的大众点评iOS客户端。该客户端使用了他们自己开发的基于Wax修改而来的<a href="https://github.com/mmin18/WaxPatch">WaxPatch</a>，WaxPatch可以实现通过服务器更新来动态修改客户端的逻辑。而WaxPatch主要是修改了wax中的wax_instance.m文件，在其中加入了class_replaceMethod来替换原始实现，从而实现修改客户端的原有行为。</li>
+</ul>
+
+
+<h2>总结</h2>
+
+<p>通过本文，我们了解到了Objective-C语言的对象模型，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。本文也通过具体的实例代码和开源项目，让我们对该对象模型提供的动态性有了更加深刻的认识。</p>
+
+<h3>参考链接</h3>
+
+<ul>
+<li><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html">https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html</a></li>
+<li><a href="http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html">http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html</a></li>
+<li><a href="http://www.devalot.com/articles/2011/11/objc-object-model.html">http://www.devalot.com/articles/2011/11/objc-object-model.html</a></li>
+<li><a href="http://www.cocoawithlove.com/2010/01/what-is-meta-class-in-objective-c.html">http://www.cocoawithlove.com/2010/01/what-is-meta-class-in-objective-c.html</a></li>
+<li><a href="http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html">http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html</a></li>
+<li><a href="http://wwwmain.gnustep.org/resources/downloads.php">gunstep的实现源码</a></li>
+<li><a href="http://algorithm.com.au/downloads/talks/objective-c-internals/objective-c-internals.pdf">http://algorithm.com.au/downloads/talks/objective-c-internals/objective-c-internals.pdf</a></li>
+<li><a href="http://opensource.apple.com/source/objc4/objc4-532/runtime/">http://opensource.apple.com/source/objc4/objc4-532/runtime/</a></li>
+<li><a href="https://github.com/AFNetworking/AFNetworking">https://github.com/AFNetworking/AFNetworking</a></li>
+<li><a href="https://github.com/jverkoey/nimbus">https://github.com/jverkoey/nimbus</a></li>
+<li><a href="https://github.com/mmin18/WaxPatch">https://github.com/mmin18/WaxPatch</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[动态下载苹果提供的多种中文字体]]></title>
@@ -2441,275 +2796,6 @@ g. AddressBookUI
 <p>对于这件事，我们只能期望于：因为我们的应用用户量不大，验证协议又不是通用的，所以破解者需要专门针对我们的通讯协议进行破解，这需要他本身有动力做这个事情，并且要花费他一些时间。所以可能他觉得做这个事情没什么挑战和意义，就不破解我们了。在这件事情上，“希望他不要破解”，好象也是我们唯一能做的事情。</p>
 
 <p>乐观一点讲，AppStore上有上百万的应用，如果所有应用都采用服务器验证购买凭证，黑客一一针对破解，确实也太不可能了，所以这件事情还是很有必要的。另外随着iOS6的普及，该漏洞也将被修补掉，所以大家也不用过于悲观。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS应用内付费(IAP)开发步骤列表]]></title>
-    <link href="http://blog.devtang.com/blog/2012/12/09/in-app-purchase-check-list/"/>
-    <updated>2012-12-09T12:55:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/12/09/in-app-purchase-check-list</id>
-    <content type="html"><![CDATA[<p>前两天和服务端同事一起，完成了应用内付费（以下简称IAP, In app purchase）的开发工作。步骤繁多，在此把开发步骤列表整理如下。因为只是步骤列表，所以并不含详细的说明教程，需要看教程的新手，可以看我附在最后的一些参考链接。</p>
-
-<!-- more -->
-
-
-<h3>配置Developer.apple.com</h3>
-
-<p>登录到<a href="https://developer.apple.com/">Developer.apple.com</a>，然后进行以下步骤：</p>
-
-<ol>
-<li>为应用建立建立一个不带通配符的App ID</li>
-<li>用该App ID生成和安装相应的Provisioning Profile文件。</li>
-</ol>
-
-
-<h3>配置iTunes Connect</h3>
-
-<p>登录到<a href="https://itunesconnect.apple.com/">iTunes Connet</a>，然后进行以下步骤：</p>
-
-<ol>
-<li>用该App ID创建一个新的应用。</li>
-<li><p>在该应用中，创建应用内付费项目，选择付费类型，通常可选的是可重复消费(Consumable)的或是永久有效(Non-Consumable)的2种，然后设置好价格和Product ID以及购买介绍和截图即可，这里的Product ID是需要记住的，后面开发的时候需要。如下图所示：
-<img src="http://blog.devtang.com/images/iap-add-product-id.png"></p></li>
-<li><p>添加一个用于在sandbox付费的测试用户，如下图所示。注意苹果对该测试用户的密码要求
-和正式账号一样，必须是至少8位，并且同时包含数字和大小写字母：
-<img src="http://blog.devtang.com/images/iap-adduser-1.png">
-<img src="http://blog.devtang.com/images/iap-adduser-2.png"></p></li>
-<li><p>填写相关的税务，银行，联系人信息。如下图所示：
-<img src="http://blog.devtang.com/images/iap-tax-info.png"></p></li>
-</ol>
-
-
-<h3>开发工作(ios端)</h3>
-
-<p>1、 在工程中引入 storekit.framework 和 #import &lt;StoreKit/StoreKit.h></p>
-
-<p>2、 获得所有的付费Product ID列表。这个可以用常量存储在本地，也可以由自己的服务器返回。</p>
-
-<p>3、 制作一个界面，展示所有的应用内付费项目。这些应用内付费项目的价格和介绍信息可以是自己的服务器返回。但如果是不带服务器的单机游戏应用或工具类应用，则可以通过向App Store查询获得。我在测试时发现，向App Store查询速度非常慢，通常需要2-3秒钟，所以不建议这么做，最好还是搞个自己的服务器吧。</p>
-
-<p>4、当用户点击了一个IAP项目，我们先查询用户是否允许应用内付费，如果不允许则不用进行以下步骤了。代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">if</span> <span class="p">([</span><span class="n">SKPaymentQueue</span> <span class="n">canMakePayments</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// 执行下面提到的第5步：</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">self</span> <span class="n">getProductInfo</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;失败，用户禁止应用内付费购买.&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>5、 我们先通过该IAP的ProductID向AppStore查询，获得SKPayment实例，然后通过SKPaymentQueue的 addPayment方法发起一个购买的操作。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 下面的ProductId应该是事先在itunesConnect中添加好的，已存在的付费项目。否则查询会失败。</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">getProductInfo</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">NSSet</span> <span class="o">*</span> <span class="n">set</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSSet</span> <span class="nl">setWithArray:</span><span class="err">@</span><span class="p">[</span><span class="s">@&quot;ProductId&quot;</span><span class="p">]];</span>
-</span><span class='line'>  <span class="n">SKProductsRequest</span> <span class="o">*</span> <span class="n">request</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SKProductsRequest</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithProductIdentifiers:</span><span class="n">set</span><span class="p">];</span>
-</span><span class='line'>  <span class="n">request</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">request</span> <span class="n">start</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// 以上查询的回调函数</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">productsRequest:</span><span class="p">(</span><span class="n">SKProductsRequest</span> <span class="o">*</span><span class="p">)</span><span class="nv">request</span> <span class="nf">didReceiveResponse:</span><span class="p">(</span><span class="n">SKProductsResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">myProduct</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">products</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">myProduct</span><span class="p">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;无法获取产品信息，购买失败。&quot;</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">SKPayment</span> <span class="o">*</span> <span class="n">payment</span> <span class="o">=</span> <span class="p">[</span><span class="n">SKPayment</span> <span class="nl">paymentWithProduct:</span><span class="n">myProduct</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
-</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">addPayment:</span><span class="n">payment</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>6、 在viewDidLoad方法中，将购买页面设置成购买的Observer。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
-</span><span class='line'>    <span class="c1">// 监听购买结果</span>
-</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">addTransactionObserver:</span><span class="n">self</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidUnload</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidUnload</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">removeTransactionObserver:</span><span class="n">self</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>7、 当用户购买的操作有结果时，就会触发下面的回调函数，相应进行处理即可。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">paymentQueue:</span><span class="p">(</span><span class="n">SKPaymentQueue</span> <span class="o">*</span><span class="p">)</span><span class="nv">queue</span> <span class="nf">updatedTransactions:</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">transactions</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">SKPaymentTransaction</span> <span class="o">*</span><span class="n">transaction</span> <span class="k">in</span> <span class="n">transactions</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="k">switch</span> <span class="p">(</span><span class="n">transaction</span><span class="p">.</span><span class="n">transactionState</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="nl">SKPaymentTransactionStatePurchased:</span><span class="c1">//交易完成</span>
-</span><span class='line'>                <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;transactionIdentifier = %@&quot;</span><span class="p">,</span> <span class="n">transaction</span><span class="p">.</span><span class="n">transactionIdentifier</span><span class="p">);</span>
-</span><span class='line'>                <span class="p">[</span><span class="n">self</span> <span class="nl">completeTransaction:</span><span class="n">transaction</span><span class="p">];</span>
-</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>            <span class="k">case</span> <span class="nl">SKPaymentTransactionStateFailed:</span><span class="c1">//交易失败</span>
-</span><span class='line'>                <span class="p">[</span><span class="n">self</span> <span class="nl">failedTransaction:</span><span class="n">transaction</span><span class="p">];</span>
-</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>            <span class="k">case</span> <span class="nl">SKPaymentTransactionStateRestored:</span><span class="c1">//已经购买过该商品</span>
-</span><span class='line'>                <span class="p">[</span><span class="n">self</span> <span class="nl">restoreTransaction:</span><span class="n">transaction</span><span class="p">];</span>
-</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>            <span class="k">case</span> <span class="nl">SKPaymentTransactionStatePurchasing:</span>      <span class="c1">//商品添加进列表</span>
-</span><span class='line'>                <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;商品添加进列表&quot;</span><span class="p">);</span>
-</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>            <span class="k">default</span><span class="o">:</span>
-</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">completeTransaction:</span><span class="p">(</span><span class="n">SKPaymentTransaction</span> <span class="o">*</span><span class="p">)</span><span class="nv">transaction</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// Your application should implement these two methods.</span>
-</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span> <span class="n">productIdentifier</span> <span class="o">=</span> <span class="n">transaction</span><span class="p">.</span><span class="n">payment</span><span class="p">.</span><span class="n">productIdentifier</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span> <span class="n">receipt</span> <span class="o">=</span> <span class="p">[</span><span class="n">transaction</span><span class="p">.</span><span class="n">transactionReceipt</span> <span class="n">base64EncodedString</span><span class="p">];</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">([</span><span class="n">productIdentifier</span> <span class="n">length</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// 向自己的服务器验证购买凭证</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Remove the transaction from the payment queue.</span>
-</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">finishTransaction:</span> <span class="n">transaction</span><span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">failedTransaction:</span><span class="p">(</span><span class="n">SKPaymentTransaction</span> <span class="o">*</span><span class="p">)</span><span class="nv">transaction</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">transaction</span><span class="p">.</span><span class="n">error</span><span class="p">.</span><span class="n">code</span> <span class="o">!=</span> <span class="n">SKErrorPaymentCancelled</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;购买失败&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;用户取消交易&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">finishTransaction:</span> <span class="n">transaction</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">restoreTransaction:</span><span class="p">(</span><span class="n">SKPaymentTransaction</span> <span class="o">*</span><span class="p">)</span><span class="nv">transaction</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// 对于已购商品，处理恢复购买的逻辑</span>
-</span><span class='line'>    <span class="p">[[</span><span class="n">SKPaymentQueue</span> <span class="n">defaultQueue</span><span class="p">]</span> <span class="nl">finishTransaction:</span> <span class="n">transaction</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>8、服务器验证凭证(Optional)。如果购买成功，我们需要将凭证发送到服务器上进行验证。考虑到网络异常情况，iOS端的发送凭证操作应该进行持久化，如果程序退出，崩溃或网络异常，可以恢复重试。</p>
-
-<h3>开发工作(服务端)</h3>
-
-<p>服务端的工作比较简单，分4步：</p>
-
-<ol>
-<li>接收ios端发过来的购买凭证。</li>
-<li>判断凭证是否已经存在或验证过，然后存储该凭证。</li>
-<li>将该凭证发送到苹果的服务器验证，并将验证结果返回给客户端。</li>
-<li>如果需要，修改用户相应的会员权限。</li>
-</ol>
-
-
-<p>考虑到网络异常情况，服务器的验证应该是一个可恢复的队列，如果网络失败了，应该进行重试。</p>
-
-<p>与苹果的验证接口文档在<a href="https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/StoreKitGuide/VerifyingStoreReceipts/VerifyingStoreReceipts.html#//apple_ref/doc/uid/TP40008267-CH104-SW3">这里</a>。简单来说就是将该购买凭证用Base64编码，然后POST给苹果的验证服务器，苹果将验证结果以JSON形式返回。</p>
-
-<p>苹果AppStore线上的购买凭证验证地址是<a href="https://buy.itunes.apple.com/verifyReceipt">https://buy.itunes.apple.com/verifyReceipt</a> ，测试的验证地址是：<a href="https://sandbox.itunes.apple.com/verifyReceipt">https://sandbox.itunes.apple.com/verifyReceipt</a></p>
-
-<h2>参考链接</h2>
-
-<p>以下参考链接详细说明了完成应用内付费开发的步骤：</p>
-
-<ol>
-<li><a href="https://developer.apple.com/appstore/in-app-purchase/index.html">https://developer.apple.com/appstore/in-app-purchase/index.html</a></li>
-<li><a href="http://www.himigame.com/iphone-cocos2d/550.html">http://www.himigame.com/iphone-cocos2d/550.html</a></li>
-<li><a href="http://www.cocoachina.com/iphonedev/sdk/2011/1028/3435.html">http://www.cocoachina.com/iphonedev/sdk/2011/1028/3435.html</a></li>
-<li><a href="http://www.cocoachina.com/newbie/basic/2012/0214/3976.html">http://www.cocoachina.com/newbie/basic/2012/0214/3976.html</a></li>
-</ol>
-
 ]]></content>
   </entry>
   

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="引言 在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于： 1、字体文件通常比较大，10M - 20M是一个常见的字体库的大小。 &hellip;">
+  <meta name="description" content="前言 原创文章，转载请注明出自唐巧的技术博客。 本文主要介绍Objective-C对象模型的实现细节，以及Objective-C语言对象模型中对isa swizzling和method swizzling的支持。希望本文能加深你对Objective-C对象的理解。 ISA指针 Objective- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +74,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/15/objective-c-object-model/">Objective-C对象模型及应用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-15T20:31:00+08:00" pubdate data-updated="true">Oct 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>原创文章，转载请注明出自<a href="http://blog.devtang.com">唐巧的技术博客</a>。</p>
+
+<p>本文主要介绍Objective-C对象模型的实现细节，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。希望本文能加深你对Objective-C对象的理解。</p>
+
+<h2>ISA指针</h2>
+
+<p>Objective-C是一门面向对象的编程语言。每一个对象都是一个类的实例。在Objective-C语言的内部，每一个对象都有一个名为isa的指针，指向该对象的类。每一个类描述了一系列它的实例的特点，包括成员变量的列表，成员函数的列表等。每一个对象都可以接受消息，而对象能够接收的消息列表是保存在它所对应的类中。</p>
+
+<p>在XCode中按<code>Shift + Command + O</code>, 然后输入NSObject.h和objc.h，可以打开NSObject的定义头文件，通过头文件我们可以看到，NSObject就是一个包含isa指针的结构体，如下图所示：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/10/15/objective-c-object-model/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -551,71 +602,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-29T20:22:00+08:00" pubdate data-updated="true">Apr 29<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/forget.jpeg"></p>
-
-<p>今天翻到很久以前自己在网易博客上写的<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201110133108545/">这篇文章</a>，惊奇地发现自己都忘记了里面的一些内容。所以我又重新学习了一下，然后改了改内容，挪到这里。</p>
-
-<h2>前言</h2>
-
-<p><a href="http://www.amazon.cn/s?ie=UTF8&amp;search-alias=books&amp;field-author=Steffen%20Itterheim">Steffen Itterheim</a>是<a href="http://www.amazon.cn/Learn-Iphone-and-Ipad-Cocos2d-Game-Development-The-Leading-Framework-for-Building-2D-Graphical-and-Interactive-Applications-Itterheim-Steffen/dp/1430233036/ref=sr_1_1?ie=UTF8&amp;qid=1321168092&amp;sr=8-1">《Learn Iphone and Ipad Cocos2d Game Development》</a>作者。cocos2d和cocos2d-x现在已成为著名的游戏开发引擎。在AppStore上有超过100个游戏是基于Cocos2D。</p>
-
-<p>Steffen Itterheim在<a href="http://www.learn-cocos2d.com/2011/10/complete-list-objectivec-20-compiler-directives">他的博客</a>中总结了 Objective-C 2.0 所有的编译器保留字，并且对这些保留字做了介绍和使用示例。这些保留字如下：</p>
-
-<pre>
-@class
-@defs
-@protocol @required @optional @end
-@interface @public @package @protected @private @property @end
-@implementation @synthesize @dynamic @end
-@throw @try @catch @finally
-@synchronized @autoreleasepool
-@selector @encode
-@compatibility_alias
-@”string”
-</pre>
-
-
-<p>我把这些保留字过了一遍，发现很少用到的有 @dynamic @defs @encode @compatibility_alis，所以就给大家介绍一下这几个关键字吧。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/04/29/the-missing-objc-keywords/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -629,6 +615,10 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/10/15/objective-c-object-model/">Objective-C对象模型及应用</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a>
@@ -664,10 +654,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     
       <li class="post">
         <a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a>
       </li>
     
   </ul>

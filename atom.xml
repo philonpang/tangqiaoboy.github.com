@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-10-15T20:51:17+08:00</updated>
+  <updated>2013-10-16T10:19:37+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -181,7 +181,7 @@
 <blockquote><p>Key-Value Observing Implementation Details</p><p>Automatic key-value observing is implemented using a technique called isa-swizzling.</p><p>The isa pointer, as the name suggests, points to the object&#8217;s class which maintains a dispatch table. This dispatch table essentially contains pointers to the methods the class implements, among other data.</p><p>When an observer is registered for an attribute of an object the isa pointer of the observed object is modified, pointing to an intermediate class rather than at the true class. As a result the value of the isa pointer does not necessarily reflect the actual class of the instance.</p><p>You should never rely on the isa pointer to determine class membership. Instead, you should use the class method to determine the class of an object instance.</p></blockquote>
 
 
-<p>类似的，使用isa swizzling的技术的还有系统提供的Key-Value Coding（KVC）。</p>
+<p><del>类似的，使用isa swizzling的技术的还有系统提供的Key-Value Coding（KVC）。</del> (谢谢大家指出错误，KVC并没有使用到isa swizzling)</p>
 
 <h3>Method Swizzling API说明</h3>
 

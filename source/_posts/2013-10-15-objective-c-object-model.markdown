@@ -137,7 +137,7 @@ You should never rely on the isa pointer to determine class membership. Instead,
 
 {% endblockquote %}
 
-类似的，使用isa swizzling的技术的还有系统提供的Key-Value Coding（KVC）。
+<del>类似的，使用isa swizzling的技术的还有系统提供的Key-Value Coding（KVC）。</del> (谢谢大家指出错误，KVC并没有使用到isa swizzling)
 
 ### Method Swizzling API说明
 
@@ -250,6 +250,10 @@ Objective-C提供了以下API来动态替换类方法或实例方法的实现：
 ## 总结
 
 通过本文，我们了解到了Objective-C语言的对象模型，以及Objective-C语言对象模型中对`isa swizzling`和`method swizzling`的支持。本文也通过具体的实例代码和开源项目，让我们对该对象模型提供的动态性有了更加深刻的认识。
+
+## 后记
+
+文章发表后，一些同行指出在ARM64的CPU下，isa的内部结构有变化。这点我是知道的，不过希望以后再撰文讨论。感兴趣的同学可以查看苹果今年WWDC2013的视频：《Session 404 Advanced in Objective-C》。
 
 ### 参考链接
  

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-10-16T10:53:47+08:00</updated>
+  <updated>2013-10-17T09:06:44+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,153 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App]]></title>
+    <link href="http://blog.devtang.com/blog/2013/10/17/the-tech-detail-of-ape-client-1/"/>
+    <updated>2013-10-17T00:43:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/10/17/the-tech-detail-of-ape-client-1</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
+
+<p>这是本技术分享系列文章的第一篇。本文主要涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
+
+<!-- more -->
+
+
+<h3>问题描述</h3>
+
+<p>今年春节后，我们对外发布了应用<a href="http://yuantiku.com/m?courseSet=xingce">“猿题库-公务员考试行测”</a>，接着我们就开始一个个发布猿题库系列课程应用。到现在半年多过去了，我们一共对外发布了8款应用（如下图所示）。</p>
+
+<p><img src="/images/ape-arch-1.jpg"></p>
+
+<p>这些课程，随了<a href="http://yuantiku.com/m?courseSet=shenlun">"猿题库-公务员考试申论"</a>和其它课程不一样之外，另外7个课程都有着相似，但是又不完全相同的功能和界面。</p>
+
+<p>这些应用的相同点包括：</p>
+
+<ol>
+<li>基本相同的注册和登录以及首页逻辑和界面（只是背景图片不一样而已）。</li>
+<li>相同的做题逻辑和界面。</li>
+<li>基本相同的答题报告显示界面。</li>
+<li>基本相同的能力评估报告界面。</li>
+</ol>
+
+
+<p>不同点主要包括：</p>
+
+<ol>
+<li>应用图标，启动画面，应用启动后的首页都不一样。</li>
+<li>有些课程（例如公务员考试和高考）是有目标考试的概念，不同的目标考试大纲是不一样的。拿高考来举例，北京的高考和上海的高考，就有着完全不一样的考试大纲。高考的文科和理科，又有着完全不同的考试科目。</li>
+<li>有些课程会有一些自定义的界面，例如高考的应用可以设置昵称，有些课程的真题练习中是有推荐真题模块的，而有些课程又没有。</li>
+<li>有些课程有扫描答题卡功能，有些课程有考前冲刺功能，有些课程有大题专项查看功能，而有些课程又没有上述功能。另外还有一些微小细节，但是解决方法和类似，所以就不一一展开说明。</li>
+</ol>
+
+
+<h3>技术解决方案</h3>
+
+<p>我们的技术解决方案主要说来分三步：</p>
+
+<ol>
+<li>通过抽取子项目，构建可复用的大模块。</li>
+<li>通过多Target编译的方式，不同课程的在编译时，采用不同的资源文件和源文件。</li>
+<li>在第2步的基础上，在项目中创建配置用的Config类，然后在不同Target各自的配置文件中设置不同的Config值。实现课程的差异化界面。</li>
+<li>从不同的xib中加载界面。</li>
+</ol>
+
+
+<h4>抽取子项目</h4>
+
+<p>我们首先做的是抽取子项目，从<a href="http://yuantiku.com/m?courseSet=sikao">“猿题库司法考试客户端"</a>开始，我们将可以重用的模块一一抽取出来，以git submodule的形式组织到项目中。这个抽取过程在开发完猿题库司法考试客户端之后，基本成型了。我们抽取的submodule主要分为4部分：</p>
+
+<ol>
+<li>UI Common，涉及可复用的登录界面，注册界面，付费界面，NPS界面，意见反馈界面，关于界面，扫描答题卡界面。另外，我们将一些可复用的UI风格控件也抽取成了相应的静态工厂方法，用于生成统一风格的按钮、背景以及状态栏等。</li>
+<li>Core Common，涉及可复用的底层模块。包括网络请求模块，自己封装的Core Text渲染引擎，缓存模块，一些静态util方法等。</li>
+<li>Lib Common，所有第三方的开源库依赖，有部分代码根据我们的需求做了修改和定制。</li>
+<li>Scan Common, 答题卡扫描识别算法模块，实现核心的扫描算法。</li>
+</ol>
+
+
+<p>以上只是粗粒度划分，这些模块化的子项目可能在以后被重用，例如Core Common完全就可以复用在任何其它项目中。</p>
+
+<h4>构造多个编译Target</h4>
+
+<p>抽取完子项目以后，我们采用多target的方式，将不同课程中的同名资源文件打包进各自的Target中，最后所有课程在一个工程项目中，如下图所示：</p>
+
+<p><img src="/images/ape-targets.jpg"></p>
+
+<p>先简单介绍一下Xcode中target的概念，苹果在文档中写道：</p>
+
+<p><blockquote><p></p></p><p><p>Targets that define the products to build. A target organizes the files and instructions needed to build a product into a sequence of build actions that can be taken.”</p></p><p><p></p></blockquote></p>
+
+<p>在Xcode的一个项目中，可以允许建立多个编译的target，每个target代表着最终编译出来的一个App文件，在每个target中，可以添加不同的编译源文件和资源文件。最终，通过我们在不同target之间，修改其 <code>Copy Bundle Resources</code> 和 <code>Compile Sources</code> 配置，使课程之间的差异性得到实现。我们具体的配置方案如下：</p>
+
+<ol>
+<li><p>我们的每个课程的资源文件都具有相同的文件名，例如首页背景都叫 HomeBackgroundBg.png ，由于每个课程背景不一样，所以我们在工程中，每一个课程target下，通过修改<code>Copy Bundle Resources</code>，使其都配置有不同的（但是同名） HomeBackgroundBg.png 。这样的好处是，在代码逻辑层面，我们可以完全不用处理课程间资源文件的差异性问题。资源文件的差异性都是通过配置文件来保证的。</p></li>
+<li><p>对于文案一类的差别，我们通过修改<code>Compile Sources</code>，使不同的课程有着不同的文案定义文件。通过这样，我们使不同课程有了不同的文案。另外包括后台网络接口的差异性问题，统计项的差异性问题，也都是这样处理的。</p></li>
+</ol>
+
+
+<h4>Config类</h4>
+
+<p>最后，我们使用Config类来完成交互和页面UI组件差异性问题。拿能力评估报告页面来说，不同的课程的页面都有一些差异。我们在公共层的代码中将这些逻辑全部实现，具体的UI在呈现时，通过读取相关的Config类来决定具体如何展示。这样，我们只需要在第2步提供的各个课程的差异性源文件中，完成Config类的配置即可。</p>
+
+<h4>从不同的xib中加载界面</h4>
+
+<p>有些时候，我们仅仅需要的是UI界面排列方式不一样，其它交互逻辑完全一样。对于这种需求，我们尝试同一个view对应有多个xib，然后通过上一步的Config类的信息，来加载不同的xib界面。这样所有的差异性都在不同的xib中解决了，对controller层可以完全透明。</p>
+
+<p>下图是我们报告页面的xib界面，分为：高考课程、有目标考试的课程、没有目标考试的课程三种。由于这3个界面的后台逻辑和交互逻辑都一样，我们通过3个xib来实现它们之间差异性的部分。</p>
+
+<p><img src="/images/ape-xibs.jpg"></p>
+
+<p>以下是view加载对应的xib的代码逻辑：</p>
+
+<p>``` objc</p>
+
+<ul>
+<li>(IPadAbilityReportHeaderView <em>)loadFromNib:(IPadAbilityReportHeaderViewType)type {
+  NSString </em>nibFileName;
+  switch (type) {
+
+<pre><code>  case IPadAbilityReportHeaderViewTypeWithQuiz:
+      nibFileName = @"IPadAbilityReportHeaderViewWithQuiz";
+      break;
+  case IPadAbilityReportHeaderViewTypeWithoutQuiz:
+      nibFileName = @"IPadAbilityReportHeaderViewWithoutQuiz";
+      break;
+  case IPadAbilityReportHeaderViewTypeGaokao:
+      nibFileName = @"IPadAbilityReportHeaderViewInGaokao";
+      break;
+  default:
+      break;
+</code></pre>
+
+  }
+  NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:nibFileName owner:nil options:nil];
+  if (nibArray.count > 0) {
+
+<pre><code>  return [nibArray lastObject];
+</code></pre>
+
+  } else {
+
+<pre><code>  return nil;
+</code></pre>
+
+<p>  }
+}</p></li>
+</ul>
+
+
+<p>```</p>
+
+<h2>总结</h2>
+
+<p>通过多target编译方案，我们可以很方便的实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。同时，由于在一个工程中，我们也可以方便地测试新的代码逻辑在各个课程下是否正常。</p>
+
+<p>该方案可以用来解决“维护大量逻辑相似但是又有细微不同的应用”的需求，希望本文能给业界同行一些帮助。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Objective-C对象模型及应用]]></title>
@@ -1056,117 +1203,6 @@ return 0;
 <p>值得一提的是，Crashlytics本身的<a href="http://support.crashlytics.com/knowledgebase/topics/14721-crashlytics-sdk-for-ios">官方文档</a>也非常健全，如果你在使用中遇到任何问题，也可以上去查看详细的文档。</p>
 
 <p>愿Crashlytics能让大家的应用都更加健壮～</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[分析支付宝客户端的插件机制]]></title>
-    <link href="http://blog.devtang.com/blog/2013/06/23/alipay-plugin-mechanism/"/>
-    <updated>2013-06-23T12:39:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/06/23/alipay-plugin-mechanism</id>
-    <content type="html"><![CDATA[<p><img src="/images/alipay-plugin-1.jpg"></p>
-
-<h2>前言</h2>
-
-<p>因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是：</p>
-
-<pre><code>请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码?
-</code></pre>
-
-<p>我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下，将支付宝客户端的插件机制具体实现方式介绍给大家。</p>
-
-<p>先介绍一下该插件机制，如上图所示，支付宝客户端在安装后，对于像“彩票”、“爱心捐赠”这类功能，需要再点击安装一次，然后才可以使用。有些时候该插件功能进行了升级，需要点击升级才可以继续使用。插件的方式有利于软件动态增加新的功能或升级功能，而不用再一次向AppStore提交审核。另外，由于用户不需要的插件可以不用安装，也缩小了应用本身的体积大小，节省了下载流量。</p>
-
-<!-- more -->
-
-
-<h2>分析过程</h2>
-
-<h3>截取网络请求</h3>
-
-<p>分析第一步，截取网络请求。截取网络请求可以查看当用户点击“彩票”进行安装的时候，客户端到底做了什么事情。使用Charles的代理设置功能，启动一个http代理，然后在iPhone上设置连接此代理，则可以看到，当点击“彩票”插件时，客户端下载了一个名为 10000011.amr的文件。如下图所示：</p>
-
-<p><img src="/images/alipay-plugin-2.jpg"></p>
-
-<h3>下载插件文件</h3>
-
-<p>尝试用wget将文件下载下来，发现其没有验证cookie，下载成功，命令如下：</p>
-
-<p><code>bash
-wget http://download.alipay.com/mobilecsprod/alipay.mobile/20130601021432806/xlarge/10000011.amr
-</code></p>
-
-<p>amr本意表示是一个音频文件，明显不对，尝试将其后缀名改成zip，成功将其解压。用itools连接上支付宝的客户端，同样能看到客户端将其下载后，也是解压到document目录下的。解压后的内容与应用内新增加的内容一致，如图所示：</p>
-
-<p><img src="/images/alipay-plugin-3.jpg"></p>
-
-<h3>分析文件内容</h3>
-
-<p>大概浏览了一下解压后的文件，主要包括html、css和js文件。可见支付宝的插件机器是通过UIWebView来展示内容的方式来实现的，那为什么要先下载安装这些内容而不通过UIWebView实时下载html呢？这主要应该是为了节省相应的流量。我看了一下，10000011.amr文件整个有将近1M大小，如果不通过插件机制预先下载，则只能依赖系统对于UIWebView的缓存来节省流量，这相对来说没有前者靠谱。</p>
-
-<p>另外，使用基于UIWebView的方式来展示插件，也有利于代码的复用。因为这些逻辑都是用js来写的，可以同样应用于Android平台，在Config.js文件中，明显可以看到对于各类平台的判断逻辑。如下图所示：</p>
-
-<p><img src="/images/alipay-plugin-4.jpg"></p>
-
-<p>另外，/www/demo/index-alipay-native.html 文件即该插件的首页，用浏览器打开就可以看到和手机端一样的内容。如下载图所示（左半边是手机上的应用截图，右半边是浏览器打开该html文件的截图）：</p>
-
-<p><img src="/images/alipay-plugin-5.jpg"></p>
-
-<h3>插件的网络通讯</h3>
-
-<p>接下来感兴趣的是该插件是如何完成和支付宝后台的网络通讯的。可以想到有两种可能的方式：</p>
-
-<ol>
-<li>直接和支付宝后台通讯</li>
-<li>和Native端通讯，然后Native端和服务器通讯。</li>
-</ol>
-
-
-<p>要验证这个需要读该插件的js源代码，整个js源码逻辑还是比较干净的，主要用了玉伯写的<a href="http://seajs.org/docs/">seajs</a>做模块化加载，<a href="http://backbonejs.org/">backbone.js</a>是一个前端的MVC框架，<a href="http://zeptojs.com/">zepto.js</a>是一个更适合于移动端使用的"JQuery"。</p>
-
-<p>大概扫了一下，感觉更可能是用的方法一：直接和支付宝后台通讯, 因为Config.js中都明确将网络通讯的地址写下来了。另一个证据是，利用下面的脚本扫描整个js源码，只能在backbone中搜到对于iframe的使用。而在iOS开发中，如果js端和native端要通讯，是需要用到iframe的，详细原理可以参见我的另一篇文章<a href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">《关于UIWebView和PhoneGap的总结》</a>。不过我不能完全确认，因为我还没有找到相应控制页面切换和跳转的js代码，如果你找到了，麻烦告诉我。</p>
-
-<p><code>bash
-find . -type f -name "*.js" | xargs grep "iframe"
-</code></p>
-
-<h3>交易的安全</h3>
-
-<p>用Charles可以截取到，当有网络交易时，应用会另外启动一个https的安全链接，完成整个交易过程的加密。如下图所示：</p>
-
-<p><img src="/images/alipay-plugin-6.jpg"></p>
-
-<h2>总结</h2>
-
-<p>支付宝的插件机制整体上就是通过html和javascript方式实现的，主要的好处是：</p>
-
-<ol>
-<li>跨平台(可以同时用在iOS和Android客户端）</li>
-<li>省流量（不需要的插件不用下载，插件本地缓存长期存在不会过期，自己管理插件更新逻辑）</li>
-<li>更新方便（不用每次提交AppStore审核）</li>
-</ol>
-
-
-<p>坏处如果非要说有的话，就是用javascript写iOS界面，无法提供非常炫的UI交互以及利用到iOS的所有平台特性。不过象支付宝这种工具类应用，也不需要很复杂的UI交互效果。</p>
-
-<p>另外教大家一个小技巧，如果你不确定某个页面是不是UIWebView做的，直接在那个页面长按，如果弹出"拷贝，定义，学习"这种菜单，那就是确定无疑是UIWebView的界面了。如下图所示：</p>
-
-<p><img src="/images/ios-menu-2.jpg"></p>
-
-<h2>相关工具</h2>
-
-<p>欢迎关注我的技术微博 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 和微信公共账号 <a href="http://chuansong.me/account/iosDevTips">iOSDevTips</a> ，每天收获一些关于iOS开发的学习资料和技巧心得。</p>
-
-<p>我在研究时使用了<a href="http://www.charlesproxy.com/">Charles</a>来截获支付宝客户端的网络请求，用<a href="http://itools.hk/">iTools</a>来查看支付宝客户端的本地内容。如果你想自行验证本文内容，请先下载上述工具。在此就不额外介绍它们的使用了。</p>
-
-<h2>后记（2013-7-7）</h2>
-
-<ol>
-<li><p>在完成上文后，Allen在他的博客上先后分享了两篇更深入分析的文章<a href="http://imallen.com/blog/2013/06/26/inside-alipay-plugin.html">《浅析支付宝钱包插件》</a> 和 <a href="http://imallen.com/blog/2013/07/06/about-alipay-plugin-and-phonegap.html">《再谈支付宝钱包插件和说好的 Demo》</a>。 这两篇文章都比本文深入得多，值得大家阅读。</p></li>
-<li><p>写完上文，居然收到了来自支付宝卫朴（花名）的工作邀请。不过我现在创业正在努力当中，所以我拒绝了邀请。看来这也是一种找工作的办法啊，比投简历管用，呵呵。</p></li>
-<li><p>从一些朋友那儿了解到，支付宝因为本文而会在以后的版本中加强安全性，至少不会像现在这样，所有逻辑都在写在javascript中，并且还带有注释，这也是我希望看到的结果。愿支付宝越做越好。</p></li>
-</ol>
-
 ]]></content>
   </entry>
   

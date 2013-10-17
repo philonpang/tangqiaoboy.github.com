@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="前言 本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。 这是本技术分享系列文章的第一篇。本文主要涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。 问题描述 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2013/10/17/the-tech-detail-of-ape-client-1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">所有文章</a></li>
+  <li><a href="/blog/categories/ios/">iOS开发专题</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-17T00:43:00+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>前言</h2>
+
+<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
+
+<p>这是本技术分享系列文章的第一篇。本文主要涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
+
+<!-- more -->
+
+
+<h3>问题描述</h3>
+
+<p>今年春节后，我们对外发布了应用<a href="http://yuantiku.com/m?courseSet=xingce">“猿题库-公务员考试行测”</a>，接着我们就开始一个个发布猿题库系列课程应用。到现在半年多过去了，我们一共对外发布了8款应用（如下图所示）。</p>
+
+<p><img src="/images/ape-arch-1.jpg"></p>
+
+<p>这些课程，随了<a href="http://yuantiku.com/m?courseSet=shenlun">&#8220;猿题库-公务员考试申论&#8221;</a>和其它课程不一样之外，另外7个课程都有着相似，但是又不完全相同的功能和界面。</p>
+
+<p>这些应用的相同点包括：</p>
+
+<ol>
+<li>基本相同的注册和登录以及首页逻辑和界面（只是背景图片不一样而已）。</li>
+<li>相同的做题逻辑和界面。</li>
+<li>基本相同的答题报告显示界面。</li>
+<li>基本相同的能力评估报告界面。</li>
+</ol>
+
+
+<p>不同点主要包括：</p>
+
+<ol>
+<li>应用图标，启动画面，应用启动后的首页都不一样。</li>
+<li>有些课程（例如公务员考试和高考）是有目标考试的概念，不同的目标考试大纲是不一样的。拿高考来举例，北京的高考和上海的高考，就有着完全不一样的考试大纲。高考的文科和理科，又有着完全不同的考试科目。</li>
+<li>有些课程会有一些自定义的界面，例如高考的应用可以设置昵称，有些课程的真题练习中是有推荐真题模块的，而有些课程又没有。</li>
+<li>有些课程有扫描答题卡功能，有些课程有考前冲刺功能，有些课程有大题专项查看功能，而有些课程又没有上述功能。另外还有一些微小细节，但是解决方法和类似，所以就不一一展开说明。</li>
+</ol>
+
+
+<h3>技术解决方案</h3>
+
+<p>我们的技术解决方案主要说来分三步：</p>
+
+<ol>
+<li>通过抽取子项目，构建可复用的大模块。</li>
+<li>通过多Target编译的方式，不同课程的在编译时，采用不同的资源文件和源文件。</li>
+<li>在第2步的基础上，在项目中创建配置用的Config类，然后在不同Target各自的配置文件中设置不同的Config值。实现课程的差异化界面。</li>
+<li>从不同的xib中加载界面。</li>
+</ol>
+
+
+<h4>抽取子项目</h4>
+
+<p>我们首先做的是抽取子项目，从<a href="http://yuantiku.com/m?courseSet=sikao">“猿题库司法考试客户端&#8221;</a>开始，我们将可以重用的模块一一抽取出来，以git submodule的形式组织到项目中。这个抽取过程在开发完猿题库司法考试客户端之后，基本成型了。我们抽取的submodule主要分为4部分：</p>
+
+<ol>
+<li>UI Common，涉及可复用的登录界面，注册界面，付费界面，NPS界面，意见反馈界面，关于界面，扫描答题卡界面。另外，我们将一些可复用的UI风格控件也抽取成了相应的静态工厂方法，用于生成统一风格的按钮、背景以及状态栏等。</li>
+<li>Core Common，涉及可复用的底层模块。包括网络请求模块，自己封装的Core Text渲染引擎，缓存模块，一些静态util方法等。</li>
+<li>Lib Common，所有第三方的开源库依赖，有部分代码根据我们的需求做了修改和定制。</li>
+<li>Scan Common, 答题卡扫描识别算法模块，实现核心的扫描算法。</li>
+</ol>
+
+
+<p>以上只是粗粒度划分，这些模块化的子项目可能在以后被重用，例如Core Common完全就可以复用在任何其它项目中。</p>
+
+<h4>构造多个编译Target</h4>
+
+<p>抽取完子项目以后，我们采用多target的方式，将不同课程中的同名资源文件打包进各自的Target中，最后所有课程在一个工程项目中，如下图所示：</p>
+
+<p><img src="/images/ape-targets.jpg"></p>
+
+<p>先简单介绍一下Xcode中target的概念，苹果在文档中写道：</p>
+
+<blockquote><p>Targets that define the products to build. A target organizes the files and instructions needed to build a product into a sequence of build actions that can be taken.”</p></blockquote>
+
+
+<p>在Xcode的一个项目中，可以允许建立多个编译的target，每个target代表着最终编译出来的一个App文件，在每个target中，可以添加不同的编译源文件和资源文件。最终，通过我们在不同target之间，修改其 <code>Copy Bundle Resources</code> 和 <code>Compile Sources</code> 配置，使课程之间的差异性得到实现。我们具体的配置方案如下：</p>
+
+<ol>
+<li><p>我们的每个课程的资源文件都具有相同的文件名，例如首页背景都叫 HomeBackgroundBg.png ，由于每个课程背景不一样，所以我们在工程中，每一个课程target下，通过修改<code>Copy Bundle Resources</code>，使其都配置有不同的（但是同名） HomeBackgroundBg.png 。这样的好处是，在代码逻辑层面，我们可以完全不用处理课程间资源文件的差异性问题。资源文件的差异性都是通过配置文件来保证的。</p></li>
+<li><p>对于文案一类的差别，我们通过修改<code>Compile Sources</code>，使不同的课程有着不同的文案定义文件。通过这样，我们使不同课程有了不同的文案。另外包括后台网络接口的差异性问题，统计项的差异性问题，也都是这样处理的。</p></li>
+</ol>
+
+
+<h4>Config类</h4>
+
+<p>最后，我们使用Config类来完成交互和页面UI组件差异性问题。拿能力评估报告页面来说，不同的课程的页面都有一些差异。我们在公共层的代码中将这些逻辑全部实现，具体的UI在呈现时，通过读取相关的Config类来决定具体如何展示。这样，我们只需要在第2步提供的各个课程的差异性源文件中，完成Config类的配置即可。</p>
+
+<h4>从不同的xib中加载界面</h4>
+
+<p>有些时候，我们仅仅需要的是UI界面排列方式不一样，其它交互逻辑完全一样。对于这种需求，我们尝试同一个view对应有多个xib，然后通过上一步的Config类的信息，来加载不同的xib界面。这样所有的差异性都在不同的xib中解决了，对controller层可以完全透明。</p>
+
+<p>下图是我们报告页面的xib界面，分为：高考课程、有目标考试的课程、没有目标考试的课程三种。由于这3个界面的后台逻辑和交互逻辑都一样，我们通过3个xib来实现它们之间差异性的部分。</p>
+
+<p><img src="/images/ape-xibs.jpg"></p>
+
+<p>以下是view加载对应的xib的代码逻辑：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">+</span> <span class="p">(</span><span class="n">IPadAbilityReportHeaderView</span> <span class="o">*</span><span class="p">)</span><span class="nf">loadFromNib:</span><span class="p">(</span><span class="n">IPadAbilityReportHeaderViewType</span><span class="p">)</span><span class="nv">type</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span><span class="n">nibFileName</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="p">(</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="nl">IPadAbilityReportHeaderViewTypeWithQuiz:</span>
+</span><span class='line'>            <span class="n">nibFileName</span> <span class="o">=</span> <span class="s">@&quot;IPadAbilityReportHeaderViewWithQuiz&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="nl">IPadAbilityReportHeaderViewTypeWithoutQuiz:</span>
+</span><span class='line'>            <span class="n">nibFileName</span> <span class="o">=</span> <span class="s">@&quot;IPadAbilityReportHeaderViewWithoutQuiz&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="nl">IPadAbilityReportHeaderViewTypeGaokao:</span>
+</span><span class='line'>            <span class="n">nibFileName</span> <span class="o">=</span> <span class="s">@&quot;IPadAbilityReportHeaderViewInGaokao&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">nibArray</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">loadNibNamed:</span><span class="n">nibFileName</span> <span class="nl">owner:</span><span class="nb">nil</span> <span class="nl">options:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">nibArray</span><span class="p">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">[</span><span class="n">nibArray</span> <span class="n">lastObject</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>总结</h2>
+
+<p>通过多target编译方案，我们可以很方便的实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。同时，由于在一个工程中，我们也可以方便地测试新的代码逻辑在各个课程下是否正常。</p>
+
+<p>该方案可以用来解决“维护大量逻辑相似但是又有细微不同的应用”的需求，希望本文能给业界同行一些帮助。</p>
+</div>
+
+
+  <footer>
+   <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-17T00:43:00+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/10/15/objective-c-object-model/" title="Previous Post: Objective-C对象模型及应用">&laquo; Objective-C对象模型及应用</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/15/objective-c-object-model/">Objective-C对象模型及应用</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/28/a-look-inside-blocks/">谈Objective-C block的实现</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/24/use-crashlytics/">使用Crashlytics来保存应用崩溃信息</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/17/startup-anniversary-note/">写在创业一周年</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/16/ios-dev-tool-app-store-tool/">iOS开发工具篇-AppStore统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/18/goodbye-viewdidunload/">再见，viewDidUnload方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/08/git-submodule-issues/">Git submodule的坑</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>  前网易有道员工，现在在粉笔网创业中。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记、粉笔网、猿题库。
+      <br/>
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+      <br />我的<strong>"iOS开发"</strong>微信公众账号:
+      <br/><img width="220px" src="/images/weixin-qr.jpg" />
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

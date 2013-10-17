@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 原创文章，转载请注明出自唐巧的技术博客。 本文主要介绍Objective-C对象模型的实现细节，以及Objective-C语言对象模型中对isa swizzling和method swizzling的支持。希望本文能加深你对Objective-C对象的理解。 ISA指针 Objective- &hellip;">
+  <meta name="description" content="前言 本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。 这是本技术分享系列文章的第一篇。本文主要涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +74,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-17T00:43:00+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
+
+<p>这是本技术分享系列文章的第一篇。本文主要涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -530,78 +575,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>2008年</h2>
-
-<p>62天售空。介绍了iPhone 3G。</p>
-
-<p><img src="/images/wwdc-2008.jpg" width="500px" /></p>
-
-<h2>2009年</h2>
-
-<p>33天售空。介绍了iPhone 3GS。</p>
-
-<p><img src="/images/wwdc-2009.png" width="500px" /></p>
-
-<h2>2010年</h2>
-
-<p>8天售空。介绍了iPhone 4。</p>
-
-<p><img src="/images/wwdc-2010.png" width="500px" /></p>
-
-<h2>2011年</h2>
-
-<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
-
-<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
-
-<p><img src="/images/wwdc-2011.jpg" width="500px" /></p>
-
-<h2>2012年</h2>
-
-<p>2小时售空。介绍了iOS6。</p>
-
-<p><img src="/images/wwdc-2012.jpg" width="500px" /></p>
-
-<h2>2013年</h2>
-
-<p>2分钟售空。期待。</p>
-
-<p><img src="/images/wwdc-2013.jpg" width="500px" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -615,6 +588,10 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/10/15/objective-c-object-model/">Objective-C对象模型及应用</a>
@@ -650,10 +627,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     
       <li class="post">
         <a href="/blog/2013/05/08/git-submodule-issues/">Git submodule的坑</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a>
       </li>
     
   </ul>

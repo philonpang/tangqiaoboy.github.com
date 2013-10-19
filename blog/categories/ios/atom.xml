@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-10-17T09:06:44+08:00</updated>
+  <updated>2013-10-19T19:17:24+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[猿题库iOS客户端的技术细节（二）：答题卡扫描算法]]></title>
+    <link href="http://blog.devtang.com/blog/2013/10/19/the-tech-detail-of-ape-client-2/"/>
+    <updated>2013-10-19T11:10:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/10/19/the-tech-detail-of-ape-client-2</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
+
+<p>这是本技术分享系列文章的第二篇。本文涉及的技术细节是：答题卡扫描算法。</p>
+
+<!-- more -->
+
+
+<h3>问题描述</h3>
+
+<p>我们在调研用户需求的时候，发现有些用户很喜欢我们的猿题库产品，因为我们会根据用户对当前课程的知识点掌握情况，智能地给他出题。但是部分用户还是习惯在纸上做题，所以我们提供了试卷打印功能。</p>
+
+<p>但是，用户如果在纸上答题，无法方便地将答案上传到我们的服务器上。如果我们没有了用户做题数据，就无法根据他的成绩，做针对性的推荐和分析。所以，我们想到一种办法：<strong>用户像传统考试那样，将答题结果填涂在答题卡上，然后我们提供一种用手机摄像头采集填涂结果的答题卡扫描算法，方便用户上传答题数据。</strong></p>
+
+<p>上图是一个我们试验用的答题卡，通过手机摄像头获取，从中可以看到，该答题卡有以下问题：</p>
+
+<ol>
+<li>由于手机摄像头无法完全正对答题卡，拍照角度有偏曲，答题卡在拍照后并不是完全的矩形。</li>
+<li>用户填涂区域可能并不饱满和完整。</li>
+<li>答题纸边缘可能有用户的草稿或其它干扰识别的信息。</li>
+</ol>
+
+
+<h3>技术解决方案</h3>
+
+<p>我们尝试了多种识别方案，最终采用的方案如下：</p>
+
+<ol>
+<li>图象预处理，压缩图像大小，转彩色图像为灰度图像</li>
+<li>识别答题卡区域</li>
+<li>图象纠偏</li>
+<li>答案区域识别</li>
+</ol>
+
+
+<p>该方案及相关算法细节我们还在申请专利，由于专利还在申请过程中，所以我们这次仅展示上述主要步骤的示例图片。等专利完全申请结束后，我会在此将算法细节公开。</p>
+
+<p>上述主要步骤的示例图如下：</p>
+
+<h4>原始图</h4>
+
+<p><img src="/images/ape-card-1.jpg"></p>
+
+<h4>识别答题卡区域</h4>
+
+<p><img src="/images/ape-card-2.jpg"></p>
+
+<h4>图象纠偏</h4>
+
+<p><img src="/images/ape-card-3.jpg"></p>
+
+<h4>答案区域识别</h4>
+
+<p>答案已标注在图片每个题号的右边位置：</p>
+
+<p><img src="/images/ape-card-4.jpg"></p>
+
+<h3>算法质量</h3>
+
+<h4>算法正确率和召回率</h4>
+
+<p>我们用收集来的1000套样本数据对算法进行评测，最终结果是：扫描题目准确率达到99.67%，召回率达到99.14%。主要识别失败的样本是：页面严重扭曲弯折的答题卡。我们也在一直改进算法，希望能够给用户提供更加精准的扫描结果。</p>
+
+<h4>算法执行时间</h4>
+
+<p>我们觉得让用户直接对着答题卡用拍摄的方式动态识别，比先拍一张照片再识别的方式更加方便。所以我们对答题卡识别算法的执行时间进行了一系列优化，最终保证每次识别时间小于0.1秒，这样的识别时间非常快，基本上用户把手机摄像头对准答题卡，扫描结果就出来了。</p>
+
+<h2>算法的调试和移植</h2>
+
+<p>由于我们整个技术团队都使用Mac电脑进行开发，所以我们对于算法的调试都是在Mac平台上完成的，我使用了开源的图象处理库OpenCV，在搭建OpenCV环境时遇到一些问题，最终完成环境搭建后，我将相关的经验总结在博文<a href="http://blog.devtang.com/blog/2012/10/27/use-opencv-in-ios/">《在MacOS和iOS系统中使用OpenCV》</a>中。</p>
+
+<p>由于算法需要同时应用在iOS和Android平台，所以我主要用C++语言实现算法。Xcode可以很好地支持Objective-C语言和C++语言混编，只需要将相关的源文件扩展名从.m改为.mm即可。而Android平台所采用的Java语言，也支持通过<a href="http://en.wikipedia.org/wiki/Java_Native_Interface">JNI</a>的方式来调用C++的代码。这样就可以方便地将识别算法移植到手机中了。</p>
+
+<h2>总结</h2>
+
+<p>本文介绍了猿题库iOS客户端采用的答题卡扫描算法的大致步骤，以及算法的质量和移植方案。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App]]></title>
@@ -22,7 +107,7 @@
 
 <p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
 
-<p>这是本技术分享系列文章的第一篇。本文主要涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
+<p>这是本技术分享系列文章的第一篇。本文涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
 
 <!-- more -->
 
@@ -57,7 +142,7 @@
 
 <h3>技术解决方案</h3>
 
-<p>我们的技术解决方案主要说来分三步：</p>
+<p>我们的技术解决方案主要说来分4步：</p>
 
 <ol>
 <li>通过抽取子项目，构建可复用的大模块。</li>
@@ -1086,123 +1171,6 @@ return 0;
 <li><a href="http://rypress.com/tutorials/objective-c/blocks.html">Blocks</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用Crashlytics来保存应用崩溃信息]]></title>
-    <link href="http://blog.devtang.com/blog/2013/07/24/use-crashlytics/"/>
-    <updated>2013-07-24T20:56:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/07/24/use-crashlytics</id>
-    <content type="html"><![CDATA[<p><img src="/images/crashlytics-logo.jpg"></p>
-
-<p>本文首发于InfoQ，版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">原文链接</a>。</p>
-
-<h2>简介</h2>
-
-<p><a href="http://try.crashlytics.com/">Crashlytic</a> 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, 团购应用GroupOn等移动应用。</p>
-
-<p>2013年1月，Crashlytics<a href="http://www.crashlytics.com/blog/crashlytics-is-joining-forces-with-twitter/">被Twitter收购</a>，成为又一个成功的创业产品。被收购之后，由于没有了创业公司的不稳定因素，我们更有理由使用它来分析应用崩溃信息。</p>
-
-<!-- more -->
-
-
-<p>使用Crashlytics的好处有：</p>
-
-<p>1、Crashlytics不会漏掉任何应用崩溃信息。拿我的应用举例来说，在iTunes Connect的后台查看不到任何崩溃信息。但是用户确实会通过微博或者客服电话反馈应用崩溃的情况。而这些在Crashlytics中都可以统计到。如下截图分别显示了我的某应用在苹果iTunes Connect后台和Crashlytics中的差别：</p>
-
-<p><img src="/images/crashlytics-vs-itunes-1.jpg">
-<img src="/images/crashlytics-vs-itunes-2.jpg"></p>
-
-<p>2、Crashlytics可以象Bug管理工具那样，管理这些崩溃日志。例如：Crashlytics会根据每种类型的Crash的出现频率以及影响的用户量来自动设置优先级。对于每种类型的Crash，Crashlytics除了会像一般的工具提供Call Stack外，还会显示更多相关的有助于诊断的信息例如设备是否越狱，当时的内存量，当时的iOS版本等。对于修复掉的Crash日志，可以在Crashlytics的后台将其关掉。下图所示的是一个我的早期应用的崩溃记录，在我修复后，我将其更新为已修复状态。</p>
-
-<p><img src="/images/crashlytics-close-issue.jpg"></p>
-
-<p>3、Crashlytics可以每天和每周将崩溃信息汇总发到你的邮箱，所有信息一目了然。</p>
-
-<p>下面我就给大家介绍如何使用Crashlytics。</p>
-
-<h2>使用介绍</h2>
-
-<h3>申请帐号</h3>
-
-<p>Crashlytics的服务是免费提供的，但是并不能直接注册使用，需要先申请，打开<a href="http://try.crashlytics.com/">Crashlytic的官网</a> ，输入自己的邮箱申请使用。如下图所示：</p>
-
-<p><img src="/images/crashlytics-1.jpg"></p>
-
-<p>提交完邮箱之后，你的申请会放在Crashlytics的申请队列中，网页跳转到如下界面。在这个界面的右侧，你可以提供更多有效信息来让Crashlytics优先处理你的申请，建议大家都填上更多自己的信息。</p>
-
-<p><img src="/images/crashlytics-2.jpg"></p>
-
-<p>如果顺利，通常1-2天左右，你就会收到Crashlytics发来的申请通过邮件，如下图所示，通过邮件链接跳转到注册界面，填写密码即可完成注册。</p>
-
-<p><img src="/images/crashlytics-3.jpg"></p>
-
-<h3>设置工程</h3>
-
-<p>在使用Crashlytics前需要对原有的XCode工程进行配置，在这一点上，Crashlytics做得比其它任何我见过的SDK提供商都体贴。因为Crashlytics专门做了一个Mac端的App来帮助你进行配置，所以，在配置前你先需要去<a href="https://www.crashlytics.com/downloads/xcode">这里</a>下载该应用。</p>
-
-<p>应用下载后，运行该应用并登录帐号。然后选择应用中的"New App"按钮，然后选择自己要增加Crashlytics的工程，然后Crashlytics的应用会提示你为工程增加一个Run Script，如果你不知道如何添加，这里有一个<a href="http://www.runscriptbuildphase.com/?utm_source=desktopapp&amp;utm_medium=setup&amp;utm_campaign=mac">帮助的文档</a>。添加好之后的工程截图如下所示</p>
-
-<p><img src="/images/crashlytics-4.jpg"></p>
-
-<p>接着，Crashlytics的本地应用会提示你将Crashlytics相关的framework拖到工程中。如下所示：</p>
-
-<p><img src="/images/crashlytics-5.jpg"></p>
-
-<p>按照提示做完之后，就到了最后一步了，在<code>AppDelegate</code>的<code>didFinishLaunchingWithOptions</code>方法中加入如下代码：</p>
-
-<p>``` objc</p>
-
-<h1>import &lt;Crashlytics/Crashlytics.h></h1>
-
-<ul>
-<li>(BOOL)application:(UIApplication <em>)application
-  didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {
- [Crashlytics startWithAPIKey:@"your identify code"];
-}
-```</li>
-</ul>
-
-
-<p>之后，运行一下程序，Crashlytics就会检测到你设置成功。如果你感兴趣，可以自己手工触发一个崩溃记录，看Crashlytics能否帮你收集到。使用如下代码即可</p>
-
-<p><code>objc
-[[Crashlytics sharedInstance] crash];
-</code></p>
-
-<p>如果你想测试一个Exception导致的崩溃，可以使用如下代码：</p>
-
-<p><code>objc
-[NSObject doesNotRecognizeSelector];
-[arrayWithOnlyTwoElements objectAtIndex:3];
-</code></p>
-
-<p>应用对外发布后，就可以在Crashlytics后台查看和修改相关的记录。另外，Crashlytics还支持将数据导入到其它项目管理工具（例如Redmine或Jira）如下所示，配置都非常简单。</p>
-
-<p><img src="/images/crashlytics-6.jpg"></p>
-
-<h2>实现原理和使用体会</h2>
-
-<h3>实现原理</h3>
-
-<p>在原理上，Crashlytics的通过以下2步完成崩溃日志的上传和分析：</p>
-
-<ol>
-<li>提供应用SDK，你需要在应用启动时调用其SDK来设置你的应用。SDK会集成到你的应用中，完成Crash信息的收集和上传。</li>
-<li>修改工程的编译配置，加入一段代码，在你每次工程编译完成后，上传该工程对应的dSYM文件。研究过手工分析Crash日志的同学应该知道，只有通过该文件，才能将Crash日志还原成可读的Call Stack信息。</li>
-</ol>
-
-
-<h3>使用体会</h3>
-
-<p>为了更加方便开发者设置相应的工程，Crashlytics提供了mac端的应用程序，帮助你检测相关工程是否正确设置并且提供相应的帮助信息。后来我还发现，该程序还会自动帮你升级Crashlytics的SDK文件。虽然这一点很体贴，但是我个人觉得还是不太友好。因为毕竟修改SDK会影响应用编译后的内部逻辑，在没有任何通知的情况下升级，我都无法确定Crashlytics有没有干坏事。不过国外的服务，特别是象Twitter这种相对较大知名度公司提供的服务要有节操得多，所以在这一点上我还是比较放心的。</p>
-
-<p>使用Crashlytics可以让你摆脱管理应用崩溃记录的烦恼。并且帮助你找出应用的一些重大隐藏性Bug。例如我之前写的一个应用就过一个缓存过期的问题，只有当缓存过期时才会触发这个Bug，这样的问题在测试人员那边很难触发，因为他们不可能了解你的应用内部实现细节。通过Crashlytics，使我清楚了解到应用Crash的数量和位置，结合自己的开发经验，就很容易找到问题所在了。</p>
-
-<p>值得一提的是，Crashlytics本身的<a href="http://support.crashlytics.com/knowledgebase/topics/14721-crashlytics-sdk-for-ios">官方文档</a>也非常健全，如果你在使用中遇到任何问题，也可以上去查看详细的文档。</p>
-
-<p>愿Crashlytics能让大家的应用都更加健壮～</p>
 ]]></content>
   </entry>
   

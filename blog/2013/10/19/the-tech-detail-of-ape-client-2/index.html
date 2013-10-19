@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>设置应用内的系统控件语言 - 唐巧的技术博客</title>
+  <title>猿题库iOS客户端的技术细节（二）：答题卡扫描算法 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="在iOS应用中，有时候会需要调用系统的一些UI控件，例如： 在UIWebView中长按会弹出系统的上下文菜单
-在UIImagePickerController中会使用系统的照相机界面
-在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。 以上这些UI控件中， &hellip;">
+  <meta name="description" content="前言 本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。 这是本技术分享系列文章的第二篇。本文涉及的技术细节是：答题卡扫描算法。 问题描述 我们在调研用户需求的时候，发现有些用户很喜欢我们的猿题库产品， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2013/10/19/the-tech-detail-of-ape-client-2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +77,7 @@
   
   <header>
     
-      <h1 class="entry-title">设置应用内的系统控件语言</h1>
+      <h1 class="entry-title">猿题库iOS客户端的技术细节（二）：答题卡扫描算法</h1>
     
     
       <p class="meta">
@@ -95,55 +93,90 @@
   
 
 
-<time datetime="2013-01-23T21:05:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time>
+<time datetime="2013-10-19T11:10:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p><img src="/images/bdj-rank.jpg"></p>
+<div class="entry-content"><h2>前言</h2>
 
-<p>在iOS应用中，有时候会需要调用系统的一些UI控件，例如：</p>
+<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
 
-<ol>
-<li>在UIWebView中长按会弹出系统的上下文菜单</li>
-<li>在UIImagePickerController中会使用系统的照相机界面</li>
-<li>在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。</li>
-</ol>
-
-
-<p>以上这些UI控件中，其显示的语言并不是和你当前手机的系统语言一致的。而是根据你的App内部的语言设置来显示。结果就是，如果你没有设置恰当的话，你的中文App可能会出现一些英文的控件文字。</p>
+<p>这是本技术分享系列文章的第二篇。本文涉及的技术细节是：答题卡扫描算法。</p>
 
 <!-- more -->
 
 
-<p>例如下图中，一个名为“百思不得姐”的应用，其在AppStore免费总榜中排名前100，图书类分类榜排名第一的应用，就闹出了系统控件显示成了英文的笑话，在其软件界面中长按，就会出如下的菜单，可以看到，这个菜单的文字全是英文的：</p>
+<h3>问题描述</h3>
 
-<p><img src="/images/ios-menu-1.jpg"></p>
+<p>我们在调研用户需求的时候，发现有些用户很喜欢我们的猿题库产品，因为我们会根据用户对当前课程的知识点掌握情况，智能地给他出题。但是部分用户还是习惯在纸上做题，所以我们提供了试卷打印功能。</p>
 
-<p>而正常的菜单应该是中文的，如下是新浪微博的正文长按之后的效果：</p>
+<p>但是，用户如果在纸上答题，无法方便地将答案上传到我们的服务器上。如果我们没有了用户做题数据，就无法根据他的成绩，做针对性的推荐和分析。所以，我们想到一种办法：<strong>用户像传统考试那样，将答题结果填涂在答题卡上，然后我们提供一种用手机摄像头采集填涂结果的答题卡扫描算法，方便用户上传答题数据。</strong></p>
 
-<p><img src="/images/ios-menu-2.jpg"></p>
+<p>上图是一个我们试验用的答题卡，通过手机摄像头获取，从中可以看到，该答题卡有以下问题：</p>
 
-<p>如何解决这个问题呢？方法如下:</p>
-
-<p>用vim直接打开工程的Info.plist文件，在文件中增加如下内容即可：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'>   <span class="nt">&lt;key&gt;</span>CFBundleLocalizations<span class="nt">&lt;/key&gt;</span>
-</span><span class='line'>   <span class="nt">&lt;array&gt;</span>
-</span><span class='line'>           <span class="nt">&lt;string&gt;</span>zh_CN<span class="nt">&lt;/string&gt;</span>
-</span><span class='line'>           <span class="nt">&lt;string&gt;</span>en<span class="nt">&lt;/string&gt;</span>
-</span><span class='line'>   <span class="nt">&lt;/array&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+<ol>
+<li>由于手机摄像头无法完全正对答题卡，拍照角度有偏曲，答题卡在拍照后并不是完全的矩形。</li>
+<li>用户填涂区域可能并不饱满和完整。</li>
+<li>答题纸边缘可能有用户的草稿或其它干扰识别的信息。</li>
+</ol>
 
 
-<p>TO: 百思不得姐的开发者，不用谢：）你们应用的内容挺有意思的。</p>
+<h3>技术解决方案</h3>
+
+<p>我们尝试了多种识别方案，最终采用的方案如下：</p>
+
+<ol>
+<li>图象预处理，压缩图像大小，转彩色图像为灰度图像</li>
+<li>识别答题卡区域</li>
+<li>图象纠偏</li>
+<li>答案区域识别</li>
+</ol>
+
+
+<p>该方案及相关算法细节我们还在申请专利，由于专利还在申请过程中，所以我们这次仅展示上述主要步骤的示例图片。等专利完全申请结束后，我会在此将算法细节公开。</p>
+
+<p>上述主要步骤的示例图如下：</p>
+
+<h4>原始图</h4>
+
+<p><img src="/images/ape-card-1.jpg"></p>
+
+<h4>识别答题卡区域</h4>
+
+<p><img src="/images/ape-card-2.jpg"></p>
+
+<h4>图象纠偏</h4>
+
+<p><img src="/images/ape-card-3.jpg"></p>
+
+<h4>答案区域识别</h4>
+
+<p>答案已标注在图片每个题号的右边位置：</p>
+
+<p><img src="/images/ape-card-4.jpg"></p>
+
+<h3>算法质量</h3>
+
+<h4>算法正确率和召回率</h4>
+
+<p>我们用收集来的1000套样本数据对算法进行评测，最终结果是：扫描题目准确率达到99.67%，召回率达到99.14%。主要识别失败的样本是：页面严重扭曲弯折的答题卡。我们也在一直改进算法，希望能够给用户提供更加精准的扫描结果。</p>
+
+<h4>算法执行时间</h4>
+
+<p>我们觉得让用户直接对着答题卡用拍摄的方式动态识别，比先拍一张照片再识别的方式更加方便。所以我们对答题卡识别算法的执行时间进行了一系列优化，最终保证每次识别时间小于0.1秒，这样的识别时间非常快，基本上用户把手机摄像头对准答题卡，扫描结果就出来了。</p>
+
+<h2>算法的调试和移植</h2>
+
+<p>由于我们整个技术团队都使用Mac电脑进行开发，所以我们对于算法的调试都是在Mac平台上完成的，我使用了开源的图象处理库OpenCV，在搭建OpenCV环境时遇到一些问题，最终完成环境搭建后，我将相关的经验总结在博文<a href="http://blog.devtang.com/blog/2012/10/27/use-opencv-in-ios/">《在MacOS和iOS系统中使用OpenCV》</a>中。</p>
+
+<p>由于算法需要同时应用在iOS和Android平台，所以我主要用C++语言实现算法。Xcode可以很好地支持Objective-C语言和C++语言混编，只需要将相关的源文件扩展名从.m改为.mm即可。而Android平台所采用的Java语言，也支持通过<a href="http://en.wikipedia.org/wiki/Java_Native_Interface">JNI</a>的方式来调用C++的代码。这样就可以方便地将识别算法移植到手机中了。</p>
+
+<h2>总结</h2>
+
+<p>本文介绍了猿题库iOS客户端采用的答题卡扫描算法的大致步骤，以及算法的质量和移植方案。</p>
 </div>
 
 
@@ -166,7 +199,7 @@
   
 
 
-<time datetime="2013-01-23T21:05:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time>
+<time datetime="2013-10-19T11:10:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time>
       
 
 <span class="categories">
@@ -225,10 +258,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/13/two-stage-creation-on-cocoa/" title="Previous Post: 谈ObjC对象的两段构造模式">&laquo; 谈ObjC对象的两段构造模式</a>
+        <a class="basic-alignment left" href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/" title="Previous Post: 猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App">&laquo; 猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/02/21/introduction-of-weixin-public-account/" title="next Post: 分享iOS开发技巧的微信公共账号">分享iOS开发技巧的微信公共账号 &raquo;</a>
       
     </p>
   </footer>

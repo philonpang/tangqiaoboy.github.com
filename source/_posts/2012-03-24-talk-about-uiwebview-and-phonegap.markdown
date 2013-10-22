@@ -127,6 +127,8 @@ AMD规范需要用目录层级当作包层次，这一点就象java一样。之�
 
 但终究，它是现在业界现存的唯一相对可用的调试工具了。本次的PhoneGap讲座的第一位演讲者董龙飞有一篇博客很好地介绍了weinre的使用，地址是[这里](http://www.donglongfei.com/2012/03/debug-phonegap-app-using-weinre/)，推荐感兴趣的同学看看。即使不用PhoneGap，weinre也能给你在移动设备上设计网页带来方便。
 
+（2013年10月22日更新）：关于调试这一块儿，从WWDC2012开始，苹果已经支持用safari来连接iPhone模拟器里面的UIWebView进行调试了，所以调试上已经方便了很多。详细的教程可以查看: WWDC2012 Session 600《Debuging UIWebViews and Websites on iOS》
+
 ## 我对PhoneGap的看法
 今天的大会上，2位演讲者把PhoneGap吹得相当牛。但是其实真正用过的人才能知道，PhoneGap还是有相当多的问题的。至少我知道在网易就有一个使用PhoneGap而失败的项目，所以我认为PhoneGap还是有它相当大的局限性的。
 

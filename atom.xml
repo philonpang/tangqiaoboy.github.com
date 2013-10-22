@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-10-19T19:17:24+08:00</updated>
+  <updated>2013-10-22T13:53:42+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,374 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎]]></title>
+    <link href="http://blog.devtang.com/blog/2013/10/21/the-tech-detail-of-ape-client-3/"/>
+    <updated>2013-10-21T16:15:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/10/21/the-tech-detail-of-ape-client-3</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
+
+<p>这是本技术分享系列文章的第三篇。本文涉及的技术细节是：基于CoreText的排版引擎。</p>
+
+<!-- more -->
+
+
+<h2>CoreText概述</h2>
+
+<p>因为猿题库的做题和解析界面需要复杂的排版，所以我们基于CoreText实现了自己的富文本排版引擎。我们的排版引擎对公式、图片和链接有着良好支持，并且支持各种字体效果混排。对于内容中的图片，支持点击查看大图功能，对于内容中的链接，支持点击操作。</p>
+
+<p>下图是我们应用的一个截图，可以看到公式，图片与文字混排良好。</p>
+
+<p><img src="http://blog.devtang.com/images/ape-coretext-1.png"></p>
+
+<p>对于富文本排版，除了可以用CoreText实现外，还可以用UIWebView实现。我以前写过一篇介绍如何用UIWebView进行复杂内容显示和交互的文章<a href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">《关于UIWebView和PhoneGap的总结》</a>，里面介绍了使用UIWebView如何处理参数传递，同步与异步等问题，感兴趣的同学也可以翻看。</p>
+
+<p>基于CoreText来实现和基于UIWebView来实现相比，前者有以下好处：</p>
+
+<ol>
+<li>CoreText占用的内存更少，UIWebView占用的内存更多。</li>
+<li>CoreText在渲染界面前就可以精确地获得显示内容的高度（只要有了CTFrame即可），而UIWebView只有渲染出内容后，才能获得内容的高度（而且还需要用javascript代码来获取）</li>
+<li>CoreText的CTFrame可以在后台线程渲染，UIWebView的内容只能在主线程（UI线程）渲染。</li>
+<li>基于CoreText可以做更好的原生交互效果，交互效果可以更细腻。而UIWebView的交互效果都是用javascript来实现的，在交互效果上会有一些卡顿存在。例如，在UIWebView下，一个简单的按钮按下效果，都无法做到原生按钮的即时和细腻的按下效果。</li>
+</ol>
+
+
+<p>当然基于CoreText的方案也有一些劣势：</p>
+
+<ol>
+<li>CoreText渲染出来的内容不能像UIWebView那样方便地支持内容的复制。</li>
+<li>基于CoreText来排版，需要自己处理图片排版相关的逻辑，也需要自己处理链接点击操作的支持。</li>
+</ol>
+
+
+<p>我们最初的猿题库行测第一版采用了基于UIWebView来实现，但是做出来发现一些小的交互细节无法做到精致。所以后来的第二版我们就全部转成用CoreText实现，虽然实现成本上增加了不少，但是应用的交互效果好多了。</p>
+
+<p>使用CoreText也为我们后来的iPad版提供了技术积累，因为iPad版的页面排版更加复杂，用UIWebView是完全无法完成相应的交互和排版需求的。</p>
+
+<p>关于如何基于CoreText来做一个排版引擎，我主要参考的是这篇教程：<a href="http://www.raywenderlich.com/4147/core-text-tutorial-for-ios-making-a-magazine-app">《Core Text Tutorial for iOS: Making a Magazine App》</a> 以及<a href="https://github.com/jverkoey/nimbus">Nimbus</a> 中的<a href="https://github.com/jverkoey/nimbus/blob/master/src/attributedlabel/src/NIAttributedLabel.m">NIAttributeLabel.m</a> 的实现，在这里我就不重复教程中的内容了，我主要讲一些实现细节。</p>
+
+<h2>实现细节</h2>
+
+<h3>服务端接口</h3>
+
+<p>我们在后台实现了一个基于<a href="http://baike.baidu.com/view/168792.htm">UBB</a> 的富文本编译器。使用UBB的原因是：</p>
+
+<ol>
+<li>UBB相对于HTML来说，虽然功能较简单，但是能完全满足我们对于富文本排版的需求。</li>
+<li>做一个UBB的语法解析器比较简单，便于我们将UBB渲染到各个平台上。</li>
+</ol>
+
+
+<p>为了简化iOS端的实现，我们将UBB的语法解析在服务器端完成。服务器端提供了接口，可以直接获得将UBB解析成类似HTML的<a href="http://baike.baidu.com/subview/14806/8904138.htm?fromId=14806&amp;from=rdtself">文件对象模型(DOM)</a> 的树型数据结构。有了这个树型数据结构，iOS端渲染就简单多了，无非就是递归遍历树型节点，将相关的内容转换成 NSAttributeString即可，之后将NSAttrubiteString转成CoreText的CTFrame即可用于界面的绘制。</p>
+
+<h3>支持图文混排</h3>
+
+<p>支持图文混排在教程：<a href="http://www.raywenderlich.com/4147/core-text-tutorial-for-ios-making-a-magazine-app">《Core Text Tutorial for iOS: Making a Magazine App》</a> 中有介绍，我们在解析DOM树遇到图片节点时，则将该内容转成一个空格，随后设置该空格在绘制时，需要我们自己指定宽高相关信息，而宽高信息在图片节点中都有提供。这样，CoreText引擎在绘制时，就会把相关的图片位置留空，之后我们将图片异步下来下来后，使用CoreGraph相关的API将图片再画在界面上，就实现了图文混排功能。</p>
+
+<p>下面的相关的示例代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cm">/* Callbacks */</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span> <span class="n">deallocCallback</span><span class="p">(</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ref</span> <span class="p">){</span>
+</span><span class='line'>    <span class="p">[(</span><span class="kt">id</span><span class="p">)</span><span class="n">ref</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">static</span> <span class="n">CGFloat</span> <span class="n">ascentCallback</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ref</span> <span class="p">){</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)[(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="p">)</span><span class="n">ref</span> <span class="nl">objectForKey:</span><span class="s">@&quot;height&quot;</span><span class="p">]</span> <span class="n">floatValue</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="p">[</span><span class="n">FrameParserConfig</span> <span class="n">sharedInstance</span><span class="p">].</span><span class="n">baselineFromMid</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">static</span> <span class="n">CGFloat</span> <span class="n">descentCallback</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ref</span> <span class="p">){</span>
+</span><span class='line'>    <span class="n">CGFloat</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)[(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="p">)</span><span class="n">ref</span> <span class="nl">objectForKey:</span><span class="s">@&quot;height&quot;</span><span class="p">]</span> <span class="n">floatValue</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="p">[</span><span class="n">FrameParserConfig</span> <span class="n">sharedInstance</span><span class="p">].</span><span class="n">baselineFromMid</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">static</span> <span class="n">CGFloat</span> <span class="n">widthCallback</span><span class="p">(</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ref</span> <span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)[(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="p">)</span><span class="n">ref</span> <span class="nl">objectForKey:</span><span class="s">@&quot;width&quot;</span><span class="p">]</span> <span class="n">floatValue</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">appendDelegateData:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">delegateData</span> <span class="nl">ToString:</span><span class="p">(</span><span class="n">NSMutableAttributedString</span><span class="o">*</span><span class="p">)</span><span class="n">contentString</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">//render empty space for drawing the image in the text //1</span>
+</span><span class='line'>    <span class="n">CTRunDelegateCallbacks</span> <span class="n">callbacks</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">callbacks</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">kCTRunDelegateCurrentVersion</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">callbacks</span><span class="p">.</span><span class="n">getAscent</span> <span class="o">=</span> <span class="n">ascentCallback</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">callbacks</span><span class="p">.</span><span class="n">getDescent</span> <span class="o">=</span> <span class="n">descentCallback</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">callbacks</span><span class="p">.</span><span class="n">getWidth</span> <span class="o">=</span> <span class="n">widthCallback</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">callbacks</span><span class="p">.</span><span class="n">dealloc</span> <span class="o">=</span> <span class="n">deallocCallback</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">CTRunDelegateRef</span> <span class="n">delegate</span> <span class="o">=</span> <span class="n">CTRunDelegateCreate</span><span class="p">(</span><span class="o">&amp;</span><span class="n">callbacks</span><span class="p">,</span> <span class="n">delegateData</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">delegateData</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">// Character to use as recommended by kCTRunDelegateAttributeName documentation.</span>
+</span><span class='line'>    <span class="c1">// use &quot; &quot; will lead to wrong width in CTFramesetterSuggestFrameSizeWithConstraints</span>
+</span><span class='line'>    <span class="n">unichar</span> <span class="n">objectReplacementChar</span> <span class="o">=</span> <span class="mh">0xFFFC</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span> <span class="n">objectReplacementString</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithCharacters:</span><span class="o">&amp;</span><span class="n">objectReplacementChar</span> <span class="nl">length:</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">NSDictionary</span> <span class="o">*</span> <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">getAttributesWithStyleArray:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">//try to apply linespacing attributes to this placeholder</span>
+</span><span class='line'>    <span class="n">NSMutableAttributedString</span> <span class="o">*</span> <span class="n">space</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableAttributedString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithString:</span><span class="n">objectReplacementString</span> <span class="nl">attributes:</span><span class="n">attributes</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">CFAttributedStringSetAttribute</span><span class="p">((</span><span class="n">CFMutableAttributedStringRef</span><span class="p">)</span><span class="n">space</span><span class="p">,</span> <span class="n">CFRangeMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">kCTRunDelegateAttributeName</span><span class="p">,</span> <span class="n">delegate</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CFRelease</span><span class="p">(</span><span class="n">delegate</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">contentString</span> <span class="nl">appendAttributedString:</span><span class="n">space</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">space</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里需要注意的是，用来代替图片的占位符使用空格会带来排版上的异常，具体原因未知，我们猜测是CoreText的bug，参考<a href="https://github.com/jverkoey/nimbus">Nimbus</a> 的实现后，我们使用 <code>0xFFFC</code>作为占位符，就没有遇到问题了。</p>
+
+<h3>支持链接</h3>
+
+<p>支持链接点击的主要实现的方式是：</p>
+
+<ol>
+<li>在解析DOM树的时候，记录下链接串在整个富文本中的位置信息（包括offset和length)。</li>
+<li>在CoreText渲染到的view上，监听用户操作事件，使用 <code>CTLineGetStringIndexForPosition</code>函数来获得用户点击的位置对应 <code>NSAttributedString</code> 字符串上的位置信息（index)
+3.判断第2步得到的index是否在第一步记录的各个链接的区间范围内，如果在范围内，则表示用户点击了某一个链接。</li>
+</ol>
+
+
+<p>这段逻辑的关键代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// test touch point is on link or not</span>
+</span><span class='line'><span class="k">+</span> <span class="p">(</span><span class="n">LinkData</span> <span class="o">*</span><span class="p">)</span><span class="nf">touchLinkInView:</span><span class="p">(</span><span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">view</span> <span class="nf">atPoint:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">point</span> <span class="nf">data:</span><span class="p">(</span><span class="n">CTTableViewCellData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">CTFrameRef</span> <span class="n">textFrame</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">ctFrame</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">CFArrayRef</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">CTFrameGetLines</span><span class="p">(</span><span class="n">textFrame</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">lines</span><span class="p">)</span> <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">CFIndex</span> <span class="n">count</span> <span class="o">=</span> <span class="n">CFArrayGetCount</span><span class="p">(</span><span class="n">lines</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">LinkData</span> <span class="o">*</span><span class="n">foundLink</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGPoint</span> <span class="n">origins</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">CTFrameGetLineOrigins</span><span class="p">(</span><span class="n">textFrame</span><span class="p">,</span> <span class="n">CFRangeMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">origins</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// CoreText context coordinates are the opposite to UIKit so we flip the bounds</span>
+</span><span class='line'>    <span class="n">CGAffineTransform</span> <span class="n">transform</span> <span class="o">=</span>  <span class="n">CGAffineTransformScale</span><span class="p">(</span><span class="n">CGAffineTransformMakeTranslation</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">view</span><span class="p">.</span><span class="n">bounds</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">),</span> <span class="mf">1.f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.f</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">CGPoint</span> <span class="n">linePoint</span> <span class="o">=</span> <span class="n">origins</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span><span class='line'>        <span class="n">CTLineRef</span> <span class="n">line</span> <span class="o">=</span> <span class="n">CFArrayGetValueAtIndex</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">CGRect</span> <span class="n">flippedRect</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">getLineBounds:</span><span class="n">line</span> <span class="nl">point:</span><span class="n">linePoint</span><span class="p">];</span>
+</span><span class='line'>        <span class="n">CGRect</span> <span class="n">rect</span> <span class="o">=</span> <span class="n">CGRectApplyAffineTransform</span><span class="p">(</span><span class="n">flippedRect</span><span class="p">,</span> <span class="n">transform</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">CGRectContainsPoint</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">point</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">CGPoint</span> <span class="n">relativePoint</span> <span class="o">=</span> <span class="n">CGPointMake</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">x</span><span class="o">-</span><span class="n">CGRectGetMinX</span><span class="p">(</span><span class="n">rect</span><span class="p">),</span>
+</span><span class='line'>                                                <span class="n">point</span><span class="p">.</span><span class="n">y</span><span class="o">-</span><span class="n">CGRectGetMinY</span><span class="p">(</span><span class="n">rect</span><span class="p">));</span>
+</span><span class='line'>            <span class="n">CFIndex</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">CTLineGetStringIndexForPosition</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">relativePoint</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">foundLink</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">linkAtIndex:</span><span class="n">idx</span> <span class="nl">linkArray:</span><span class="n">data</span><span class="p">.</span><span class="n">linkArray</span><span class="p">];</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">foundLink</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>基于CoreText的内容省略</h3>
+
+<p>我们在使用CoreText时，还遇到一个具体排版上的问题。正常情况下，在生成CTFrame之后，只需要调用：<code>CTFrameDraw(self.data.ctFrame, context);</code>即可完成界面的绘制。但是产品提出了一个需求，对于某些界面，当显示不下的时候，需要将多余内容用<code>...</code>来表示。这让我们的绘制逻辑需要特别处理，以下是具体的实现：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">static</span> <span class="n">NSString</span><span class="o">*</span> <span class="k">const</span> <span class="n">kEllipsesCharacter</span> <span class="o">=</span> <span class="s">@&quot;\u2026&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="n">CGPathRef</span> <span class="n">path</span> <span class="o">=</span> <span class="n">CTFrameGetPath</span><span class="p">(</span><span class="n">_data</span><span class="p">.</span><span class="n">ctFrame</span><span class="p">);</span>
+</span><span class='line'><span class="n">CGRect</span> <span class="n">rect</span> <span class="o">=</span> <span class="n">CGPathGetBoundingBox</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+</span><span class='line'><span class="n">CFArrayRef</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">CTFrameGetLines</span><span class="p">(</span><span class="n">_data</span><span class="p">.</span><span class="n">ctFrame</span><span class="p">);</span>
+</span><span class='line'><span class="n">CFIndex</span> <span class="n">lineCount</span> <span class="o">=</span> <span class="n">CFArrayGetCount</span><span class="p">(</span><span class="n">lines</span><span class="p">);</span>
+</span><span class='line'><span class="n">NSInteger</span> <span class="n">numberOfLines</span> <span class="o">=</span> <span class="n">MIN</span><span class="p">(</span><span class="n">_numberOfLines</span><span class="p">,</span> <span class="n">lineCount</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">CGPoint</span> <span class="n">lineOrigins</span><span class="p">[</span><span class="n">numberOfLines</span><span class="p">];</span>
+</span><span class='line'><span class="n">CTFrameGetLineOrigins</span><span class="p">(</span><span class="n">_data</span><span class="p">.</span><span class="n">ctFrame</span><span class="p">,</span> <span class="n">CFRangeMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numberOfLines</span><span class="p">),</span> <span class="n">lineOrigins</span><span class="p">);</span>
+</span><span class='line'><span class="n">NSAttributedString</span> <span class="o">*</span><span class="n">attributedString</span> <span class="o">=</span> <span class="n">_data</span><span class="p">.</span><span class="n">attributedString</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="n">CFIndex</span> <span class="n">lineIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">lineIndex</span> <span class="o">&lt;</span> <span class="n">numberOfLines</span><span class="p">;</span> <span class="n">lineIndex</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">CGPoint</span> <span class="n">lineOrigin</span> <span class="o">=</span> <span class="n">lineOrigins</span><span class="p">[</span><span class="n">lineIndex</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">lineOrigin</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span>  <span class="n">self</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">+</span> <span class="p">(</span><span class="n">lineOrigin</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">rect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGContextSetTextPosition</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">lineOrigin</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">lineOrigin</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CTLineRef</span> <span class="n">line</span> <span class="o">=</span> <span class="n">CFArrayGetValueAtIndex</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">lineIndex</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">BOOL</span> <span class="n">shouldDrawLine</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">lineIndex</span> <span class="o">==</span> <span class="n">numberOfLines</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">CFRange</span> <span class="n">lastLineRange</span> <span class="o">=</span> <span class="n">CTLineGetStringRange</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">lastLineRange</span><span class="p">.</span><span class="n">location</span> <span class="o">+</span> <span class="n">lastLineRange</span><span class="p">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">CFIndex</span><span class="p">)</span><span class="n">attributedString</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">CTLineTruncationType</span> <span class="n">truncationType</span> <span class="o">=</span> <span class="n">kCTLineTruncationEnd</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">NSUInteger</span> <span class="n">truncationAttributePosition</span> <span class="o">=</span> <span class="n">lastLineRange</span><span class="p">.</span><span class="n">location</span> <span class="o">+</span> <span class="n">lastLineRange</span><span class="p">.</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">tokenAttributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">attributedString</span> <span class="nl">attributesAtIndex:</span><span class="n">truncationAttributePosition</span>
+</span><span class='line'>                                                                 <span class="nl">effectiveRange:</span><span class="nb">NULL</span><span class="p">];</span>
+</span><span class='line'>            <span class="n">NSAttributedString</span> <span class="o">*</span><span class="n">tokenString</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSAttributedString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithString:</span><span class="n">kEllipsesCharacter</span>
+</span><span class='line'>                                                                              <span class="nl">attributes:</span><span class="n">tokenAttributes</span><span class="p">];</span>
+</span><span class='line'>            <span class="n">CTLineRef</span> <span class="n">truncationToken</span> <span class="o">=</span> <span class="n">CTLineCreateWithAttributedString</span><span class="p">((</span><span class="n">__bridge</span> <span class="n">CFAttributedStringRef</span><span class="p">)</span><span class="n">tokenString</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">NSMutableAttributedString</span> <span class="o">*</span><span class="n">truncationString</span> <span class="o">=</span> <span class="p">[[</span><span class="n">attributedString</span> <span class="nl">attributedSubstringFromRange:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="n">lastLineRange</span><span class="p">.</span><span class="n">location</span><span class="p">,</span> <span class="n">lastLineRange</span><span class="p">.</span><span class="n">length</span><span class="p">)]</span> <span class="n">mutableCopy</span><span class="p">];</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">lastLineRange</span><span class="p">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="c1">// Remove any whitespace at the end of the line.</span>
+</span><span class='line'>                <span class="n">unichar</span> <span class="n">lastCharacter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">truncationString</span> <span class="n">string</span><span class="p">]</span> <span class="nl">characterAtIndex:</span><span class="n">lastLineRange</span><span class="p">.</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">([[</span><span class="n">NSCharacterSet</span> <span class="n">whitespaceAndNewlineCharacterSet</span><span class="p">]</span> <span class="nl">characterIsMember:</span><span class="n">lastCharacter</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="p">[</span><span class="n">truncationString</span> <span class="nl">deleteCharactersInRange:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="n">lastLineRange</span><span class="p">.</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)];</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="p">[</span><span class="n">truncationString</span> <span class="nl">appendAttributedString:</span><span class="n">tokenString</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">CTLineRef</span> <span class="n">truncationLine</span> <span class="o">=</span> <span class="n">CTLineCreateWithAttributedString</span><span class="p">((</span><span class="n">__bridge</span> <span class="n">CFAttributedStringRef</span><span class="p">)</span><span class="n">truncationString</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">CTLineRef</span> <span class="n">truncatedLine</span> <span class="o">=</span> <span class="n">CTLineCreateTruncatedLine</span><span class="p">(</span><span class="n">truncationLine</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">truncationType</span><span class="p">,</span> <span class="n">truncationToken</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">truncatedLine</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="c1">// If the line is not as wide as the truncationToken, truncatedLine is NULL</span>
+</span><span class='line'>                <span class="n">truncatedLine</span> <span class="o">=</span> <span class="n">CFRetain</span><span class="p">(</span><span class="n">truncationToken</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="n">CFRelease</span><span class="p">(</span><span class="n">truncationLine</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">CFRelease</span><span class="p">(</span><span class="n">truncationToken</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">CTLineDraw</span><span class="p">(</span><span class="n">truncatedLine</span><span class="p">,</span> <span class="n">context</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">CFRelease</span><span class="p">(</span><span class="n">truncatedLine</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">shouldDrawLine</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">shouldDrawLine</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">CTLineDraw</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">context</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>后记</h2>
+
+<p>以上源码很多都参考了<a href="https://github.com/jverkoey/nimbus">Nimbus</a>的实现，在此再一次表达一下对开源社区的感谢。</p>
+
+<p>在大约2年前，CoreText还是一个新玩意。那时候微博的界面都还是用控件组合得到的。慢慢的，大家都开始接受CoreText，很多应用都广泛地将CoreText应用于自己的界面中，做出来了更加复杂的排版、交互效果。在iOS7之后，苹果推出了更加易于使用的TextKit，使得富文本排版更加容易，相信以后的iOS应用界面会更加美观，交互更加绚丽。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[猿题库iOS客户端的技术细节（二）：答题卡扫描算法]]></title>
@@ -32,6 +400,8 @@
 <p>我们在调研用户需求的时候，发现有些用户很喜欢我们的猿题库产品，因为我们会根据用户对当前课程的知识点掌握情况，智能地给他出题。但是部分用户还是习惯在纸上做题，所以我们提供了试卷打印功能。</p>
 
 <p>但是，用户如果在纸上答题，无法方便地将答案上传到我们的服务器上。如果我们没有了用户做题数据，就无法根据他的成绩，做针对性的推荐和分析。所以，我们想到一种办法：<strong>用户像传统考试那样，将答题结果填涂在答题卡上，然后我们提供一种用手机摄像头采集填涂结果的答题卡扫描算法，方便用户上传答题数据。</strong></p>
+
+<p><img src="http://blog.devtang.com/images/ape-card-1.jpg"></p>
 
 <p>上图是一个我们试验用的答题卡，通过手机摄像头获取，从中可以看到，该答题卡有以下问题：</p>
 
@@ -2733,219 +3103,6 @@ CABackingStore类型的内存区会被标记成volatile类型（这里的volatil
 <li>2012-5-10 离职创业</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[在iOS中使用ZXing库]]></title>
-    <link href="http://blog.devtang.com/blog/2012/12/23/use-zxing-library/"/>
-    <updated>2012-12-23T17:03:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2012/12/23/use-zxing-library</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/zxing-icon.png"></p>
-
-<h2>前言</h2>
-
-<p><a href="https://code.google.com/p/zxing/">ZXing</a>(<a href="https://github.com/zxing/zxing">Github镜像地址</a>)是一个开源的条码生成和扫描库（开源协议为<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache2.0</a>)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。</p>
-
-<p>我上周在iOS项目开发中使用了ZXing的扫描二维码功能。在此总结一下如何将ZXing集成到已有的iOS工程中，分享给大家。</p>
-
-<!-- more -->
-
-
-<h2>集成步骤</h2>
-
-<p>首先去Google Code或Github将ZXing的代码下载下来，整个工程比较大，我们只需要其中涉及iOS的部分，所以最好做一些裁剪。简单来说，我们只需要保留cpp和iphone这2个文件夹，其余的全部删掉。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/zxing-step-1.png"></p>
-
-<p>接着我们继续裁剪，对于cpp这个目录，只保留cpp/core/src/zxing下面的内容，其余内容也可以删掉了。但是整个目录结构必须保持原样。裁剪完后，整个目录结构如下所示：</p>
-
-<p><img src="http://blog.devtang.com/images/zxing-step-2.png"></p>
-
-<p>接下来，我们把裁剪后的zxing目录整个移动到我们的iOS项目的目录下，并且把上图中可以看到的ZXingWidget.xcodeproj文件拖动到我们的iOS工程中。</p>
-
-<p>下一步，我们需要设置ZXing项目和我们原本的iOS项目之间的依赖关系。在我们的iOS项目的设置中，点击build phases tab，然后增加 Target Dependencies 和 Link binary，并且增加这些framework依赖：</p>
-
-<pre><code>a. AVFoundation
-b. AudioToolbox
-c. CoreVideo
-d. CoreMedia
-e. libiconv
-f. AddressBook
-g. AddressBookUI
-</code></pre>
-
-<p>完成之后如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/zxing-step-3.jpg"></p>
-
-<p>最后一步，在设置中增加如下2个header search path:</p>
-
-<ul>
-<li>./zxing/iphone/ZXingWidget/Classes</li>
-<li>./zxing/cpp/core/src</li>
-</ul>
-
-
-<p>需要注意的是，第一个path要设置成循环查找子目录，而第二个不循环查找，如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/zxing-step-4.png"></p>
-
-<p>恭喜你，完成这步之后，你就已经完成ZXing库的集成了。下面谈谈如何使用ZXing库来做二维码识别。</p>
-
-<h2>二维码识别</h2>
-
-<p>ZXing的iOS版本提供2种方法来做二维码识别功能，第一种方法比较简单，第二种方法比较复杂。我在做Demo时使用了第一种方法，做真正项目开发的时候使用了第二种方法，所以都给大家介绍一下。</p>
-
-<h3>使用方法一</h3>
-
-<p>ZXing直接提供了一个扫描二维码的View Controller，即ZXingWidgetController。在需要使用的界面代码中，加入文件依赖：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;ZXingWidgetController.h&gt;</span>
-</span><span class='line'><span class="cp">#import &lt;QRCodeReader.h&gt; </span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-然后在需要扫描的时候，调用如下代码即可：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">scanPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">ZXingWidgetController</span> <span class="o">*</span><span class="n">widController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ZXingWidgetController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithDelegate:</span><span class="n">self</span> <span class="nl">showCancel:</span><span class="n">YES</span> <span class="nl">OneDMode:</span><span class="n">NO</span><span class="p">];</span>
-</span><span class='line'>  <span class="n">NSMutableSet</span> <span class="o">*</span><span class="n">readers</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableSet</span> <span class="n">alloc</span> <span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</span><span class='line'>  <span class="n">QRCodeReader</span><span class="o">*</span> <span class="n">qrcodeReader</span> <span class="o">=</span> <span class="p">[[</span><span class="n">QRCodeReader</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">readers</span> <span class="nl">addObject:</span><span class="n">qrcodeReader</span><span class="p">];</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">qrcodeReader</span> <span class="n">release</span><span class="p">];</span>
-</span><span class='line'>  <span class="n">widController</span><span class="p">.</span><span class="n">readers</span> <span class="o">=</span> <span class="n">readers</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">readers</span> <span class="n">release</span><span class="p">];</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">self</span> <span class="nl">presentModalViewController:</span><span class="n">widController</span> <span class="nl">animated:</span><span class="n">YES</span><span class="p">];</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">widController</span> <span class="n">release</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在ZXing扫描有结果时，会调用如下回调函数：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@protocol</span> <span class="nc">ZXingDelegate</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">zxingController:</span><span class="p">(</span><span class="n">ZXingWidgetController</span><span class="o">*</span><span class="p">)</span><span class="nv">controller</span> <span class="nf">didScanResult:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">result</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">zxingControllerDidCancel:</span><span class="p">(</span><span class="n">ZXingWidgetController</span><span class="o">*</span><span class="p">)</span><span class="nv">controller</span><span class="p">;</span>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>使用方法二</h3>
-
-<p>方法二与方法一的区别就相当于AVFoundation和UIImagePickerController的区别一样。简单来说，就是使用方法二比方法一更加麻烦，但是获得的可定制性更高。</p>
-
-<p>使用方法二时，你需要自己用AVFoundation获得Camera返回的实时图象，然后转成UIImage，最后传给ZXing的Decoder类完成二维码的识别。由于使用AVFoundation涉及的代码略多，我写的示意代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;Decoder.h&quot;</span>
-</span><span class='line'><span class="cp">#import &quot;TwoDDecoderResult.h&quot;</span>
-</span><span class='line'><span class="cp">#import &quot;QRCodeReader.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// setup QR reader</span>
-</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">qrReader</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableSet</span> <span class="n">alloc</span> <span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</span><span class='line'>  <span class="n">QRCodeReader</span><span class="o">*</span> <span class="n">qrcodeReader</span> <span class="o">=</span> <span class="p">[[</span><span class="n">QRCodeReader</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">qrReader</span> <span class="nl">addObject:</span><span class="n">qrcodeReader</span><span class="p">];</span>
-</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">scanningQR</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">STEP_QR</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// AVFoundation的回调函数</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">captureOutput:</span><span class="p">(</span><span class="n">AVCaptureOutput</span> <span class="o">*</span><span class="p">)</span><span class="nv">captureOutput</span> <span class="nf">didOutputSampleBuffer:</span><span class="p">(</span><span class="n">CMSampleBufferRef</span><span class="p">)</span><span class="nv">sampleBuffer</span> <span class="nf">fromConnection:</span><span class="p">(</span><span class="n">AVCaptureConnection</span> <span class="o">*</span><span class="p">)</span><span class="nv">connection</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// 第一步，将sampleBuffer转成UIImage</span>
-</span><span class='line'>  <span class="n">UIImage</span> <span class="o">*</span><span class="n">image</span><span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">getCaptureImage:</span><span class="n">sampleBuffer</span><span class="p">];</span>
-</span><span class='line'>  <span class="c1">// 第二步，用Decoder识别图象</span>
-</span><span class='line'>  <span class="n">Decoder</span> <span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Decoder</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</span><span class='line'>  <span class="n">d</span><span class="p">.</span><span class="n">readers</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">qrReader</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">d</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">scanningQR</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="nl">decodeImage:</span><span class="n">image</span><span class="p">]</span> <span class="o">==</span> <span class="n">YES</span> <span class="o">?</span> <span class="n">NO</span> <span class="o">:</span> <span class="n">YES</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ZXing的Decoder类提供了以下回调函数获得识别结果：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@protocol</span> <span class="nc">DecoderDelegate</span><span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-</span><span class='line'><span class="err">@</span><span class="n">optional</span>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="n">decoder</span> <span class="nl">willDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">image</span> <span class="nl">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">subset</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">didDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">image</span> <span class="nf">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">subset</span> <span class="nf">withResult:</span><span class="p">(</span><span class="n">TwoDDecoderResult</span> <span class="o">*</span><span class="p">)</span><span class="nv">result</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;result = %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">result</span> <span class="n">text</span><span class="p">]);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">failedToDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">image</span> <span class="nf">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">subset</span> <span class="nf">reason:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">reason</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">foundPossibleResultPoint:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">point</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Trouble Shoot &amp; Tips</h2>
-
-<p>我在使用中遇到了一些问题，主要是编译的问题。</p>
-
-<ol>
-<li>一个是找不到 <iostream> 头文件。解决方法：把用到ZXing的源文件扩展名由.m改成.mm。</li>
-<li>报错：Undefined symbols for architecture armv7s，<a href="http://stackoverflow.com/questions/12968369/undefined-symbols-for-architecture-armv7-when-using-zxing-library-in-xcode-4-5">解决方法</a>：把ZXingWidget的一个build target参数：&#8221;Build Active Architecture Only&#8221; 修改成 &#8220;NO&#8221;.</li>
-<li>报错：No such file or directory，出现该错误可能是你的Header Search Path写错了，或者就是你的zxing库的目录结构不是我上面强调的，好好检查一下吧。</li>
-<li>如果你需要生成二维码做测试，推荐一个不错的在线生成二维码的网站：<a href="http://cli.im/">http://cli.im/</a></li>
-</ol>
-
-
-<h2>ZXing和OpenCV的兼容问题</h2>
-
-<p>ZXing 2.1 和OpenCV 2.4.3的iOS库有一些兼容问题，他们对C++标准库的版本和编译器版本都有一些需求，造成满足一方了，另一方就编译不通过了。Stackoverflow上有人终于找到了一个让它们和平共处的方法，但是只适用于iOS5.0以上版本。正好我们的App只支持iOS5.0+，所以就搞定了。所以如果你也正好遇到这个问题，可以参考<a href="http://stackoverflow.com/questions/13498581/opencv-zxing-incompatibility-on-ios">这个贴子</a>。</p>
-
-<p>希望本文对大家有用，Have Fun~</p>
 ]]></content>
   </entry>
   

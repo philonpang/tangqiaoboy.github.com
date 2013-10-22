@@ -5,13 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>设置应用内的系统控件语言 - 唐巧的技术博客</title>
+  <title>唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="在iOS应用中，有时候会需要调用系统的一些UI控件，例如： 在UIWebView中长按会弹出系统的上下文菜单
-在UIImagePickerController中会使用系统的照相机界面
-在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。 以上这些UI控件中， &hellip;">
+  <meta name="description" content="Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language">
+  <link rel="canonical" href="http://blog.devtang.com/blog/page/7">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -74,12 +73,15 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">设置应用内的系统控件语言</h1>
+      <h1 class="entry-title"><a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a></h1>
     
     
       <p class="meta">
@@ -95,147 +97,46 @@
   
 
 
-<time datetime="2013-01-23T21:05:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time>
+<time datetime="2011-08-10T17:32:00+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p><img src="/images/bdj-rank.jpg"></p>
-
-<p>在iOS应用中，有时候会需要调用系统的一些UI控件，例如：</p>
-
-<ol>
-<li>在UIWebView中长按会弹出系统的上下文菜单</li>
-<li>在UIImagePickerController中会使用系统的照相机界面</li>
-<li>在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。</li>
-</ol>
-
-
-<p>以上这些UI控件中，其显示的语言并不是和你当前手机的系统语言一致的。而是根据你的App内部的语言设置来显示。结果就是，如果你没有设置恰当的话，你的中文App可能会出现一些英文的控件文字。</p>
-
-<!-- more -->
-
-
-<p>例如下图中，一个名为“百思不得姐”的应用，其在AppStore免费总榜中排名前100，图书类分类榜排名第一的应用，就闹出了系统控件显示成了英文的笑话，在其软件界面中长按，就会出如下的菜单，可以看到，这个菜单的文字全是英文的：</p>
-
-<p><img src="/images/ios-menu-1.jpg"></p>
-
-<p>而正常的菜单应该是中文的，如下是新浪微博的正文长按之后的效果：</p>
-
-<p><img src="/images/ios-menu-2.jpg"></p>
-
-<p>如何解决这个问题呢？方法如下:</p>
-
-<p>用vim直接打开工程的Info.plist文件，在文件中增加如下内容即可：</p>
+  <div class="entry-content"><p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'>   <span class="nt">&lt;key&gt;</span>CFBundleLocalizations<span class="nt">&lt;/key&gt;</span>
-</span><span class='line'>   <span class="nt">&lt;array&gt;</span>
-</span><span class='line'>           <span class="nt">&lt;string&gt;</span>zh_CN<span class="nt">&lt;/string&gt;</span>
-</span><span class='line'>           <span class="nt">&lt;string&gt;</span>en<span class="nt">&lt;/string&gt;</span>
-</span><span class='line'>   <span class="nt">&lt;/array&gt;</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>TO: 百思不得姐的开发者，不用谢：）你们应用的内容挺有意思的。</p>
+
+
 </div>
-
-
-  <footer>
-   <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
-
-      
-
-
-
-
-
-
-
-
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">阅读 &rarr;</a>
+    </footer>
   
 
 
-<time datetime="2013-01-23T21:05:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
-  
-</span>
-
-
-    </p>
-    <p class="meta">
-      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  
-  
-  
-    <style>
-    .flash-video{display:none;}
-</style>
-<!-- JiaThis Button BEGIN -->
-<div id="ckepop">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_tsina">新浪微博</a>
-<a class="jiathis_button_t163">网易微博</a>
-<a class="jiathis_button_tqq">腾讯微博</a>
-<a class="jiathis_button_renren">人人网</a>
-<a class="jiathis_button_douban">豆瓣</a>
-
-<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-    data_track_clickback:true,
-    sm:"t163,tsina,tqq,renren,douban",
-    summary:"",
-    hideMore:false
-}
-</script>
-<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-<br />
-<!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
-<!-- UY END -->
-
-  
-</div>
-
+    <a href="/blog/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/01/13/two-stage-creation-on-cocoa/" title="Previous Post: 谈ObjC对象的两段构造模式">&laquo; 谈ObjC对象的两段构造模式</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/02/21/introduction-of-weixin-public-account/" title="next Post: 分享iOS开发技巧的微信公共账号">分享iOS开发技巧的微信公共账号 &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
+    <a class="next" href="/blog/page/6/">Newer &rarr;</a>
+    
+  </div>
 </div>
-
 <aside class="sidebar">
   
     <section>
@@ -292,14 +193,13 @@ var jiathis_config={
       <br/>
       <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
       <span id="wb_follow_btn"></span>
-      <br />我的<strong>"iOS开发"</strong>微信公众账号:
+      <br />我的<strong>&#8220;iOS开发&#8221;</strong>微信公众账号:
       <br/><img width="220px" src="/images/weixin-qr.jpg" />
   </p>
 </section>
 
   
 </aside>
-
 
     </div>
   </div>

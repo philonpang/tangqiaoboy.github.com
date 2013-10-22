@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-10-19T19:17:24+08:00</updated>
+  <updated>2013-10-22T13:53:42+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -158,6 +158,8 @@ iFrame = null;
 <p>我们在开发时主要采用的是<a href="http://phonegap.github.com/weinre/">weinre</a>这个框架。用这个框架，可以做一些基本的调试工作，但是它现在功能还没有象pc上的js调试器那么强大，例如它不能下断点，另外如果有js执行错误，它也无法正确的将错误信息报出。它还有一些bug，例如在mac机下，如果你同时连接了有线网和无线网，那么weinre将无法正确地连接到调试页面。</p>
 
 <p>但终究，它是现在业界现存的唯一相对可用的调试工具了。本次的PhoneGap讲座的第一位演讲者董龙飞有一篇博客很好地介绍了weinre的使用，地址是<a href="http://www.donglongfei.com/2012/03/debug-phonegap-app-using-weinre/">这里</a>，推荐感兴趣的同学看看。即使不用PhoneGap，weinre也能给你在移动设备上设计网页带来方便。</p>
+
+<p>（2013年10月22日更新）：关于调试这一块儿，从WWDC2012开始，苹果已经支持用safari来连接iPhone模拟器里面的UIWebView进行调试了，所以调试上已经方便了很多。详细的教程可以查看: WWDC2012 Session 600《Debuging UIWebViews and Websites on iOS》</p>
 
 <h2>我对PhoneGap的看法</h2>
 

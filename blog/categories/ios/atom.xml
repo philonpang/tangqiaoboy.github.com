@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-10-19T19:17:24+08:00</updated>
+  <updated>2013-10-22T13:53:42+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -32,6 +32,8 @@
 <p>我们在调研用户需求的时候，发现有些用户很喜欢我们的猿题库产品，因为我们会根据用户对当前课程的知识点掌握情况，智能地给他出题。但是部分用户还是习惯在纸上做题，所以我们提供了试卷打印功能。</p>
 
 <p>但是，用户如果在纸上答题，无法方便地将答案上传到我们的服务器上。如果我们没有了用户做题数据，就无法根据他的成绩，做针对性的推荐和分析。所以，我们想到一种办法：<strong>用户像传统考试那样，将答题结果填涂在答题卡上，然后我们提供一种用手机摄像头采集填涂结果的答题卡扫描算法，方便用户上传答题数据。</strong></p>
+
+<p><img src="/images/ape-card-1.jpg"></p>
 
 <p>上图是一个我们试验用的答题卡，通过手机摄像头获取，从中可以看到，该答题卡有以下问题：</p>
 

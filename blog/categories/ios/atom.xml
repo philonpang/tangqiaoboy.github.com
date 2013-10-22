@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-10-22T13:53:42+08:00</updated>
+  <updated>2013-10-22T13:54:54+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,265 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎]]></title>
+    <link href="http://blog.devtang.com/blog/2013/10/21/the-tech-detail-of-ape-client-3/"/>
+    <updated>2013-10-21T16:15:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/10/21/the-tech-detail-of-ape-client-3</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
+
+<p>这是本技术分享系列文章的第三篇。本文涉及的技术细节是：基于CoreText的排版引擎。</p>
+
+<!-- more -->
+
+
+<h2>CoreText概述</h2>
+
+<p>因为猿题库的做题和解析界面需要复杂的排版，所以我们基于CoreText实现了自己的富文本排版引擎。我们的排版引擎对公式、图片和链接有着良好支持，并且支持各种字体效果混排。对于内容中的图片，支持点击查看大图功能，对于内容中的链接，支持点击操作。</p>
+
+<p>下图是我们应用的一个截图，可以看到公式，图片与文字混排良好。</p>
+
+<p><img src="/images/ape-coretext-1.png"></p>
+
+<p>对于富文本排版，除了可以用CoreText实现外，还可以用UIWebView实现。我以前写过一篇介绍如何用UIWebView进行复杂内容显示和交互的文章<a href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">《关于UIWebView和PhoneGap的总结》</a>，里面介绍了使用UIWebView如何处理参数传递，同步与异步等问题，感兴趣的同学也可以翻看。</p>
+
+<p>基于CoreText来实现和基于UIWebView来实现相比，前者有以下好处：</p>
+
+<ol>
+<li>CoreText占用的内存更少，UIWebView占用的内存更多。</li>
+<li>CoreText在渲染界面前就可以精确地获得显示内容的高度（只要有了CTFrame即可），而UIWebView只有渲染出内容后，才能获得内容的高度（而且还需要用javascript代码来获取）</li>
+<li>CoreText的CTFrame可以在后台线程渲染，UIWebView的内容只能在主线程（UI线程）渲染。</li>
+<li>基于CoreText可以做更好的原生交互效果，交互效果可以更细腻。而UIWebView的交互效果都是用javascript来实现的，在交互效果上会有一些卡顿存在。例如，在UIWebView下，一个简单的按钮按下效果，都无法做到原生按钮的即时和细腻的按下效果。</li>
+</ol>
+
+
+<p>当然基于CoreText的方案也有一些劣势：</p>
+
+<ol>
+<li>CoreText渲染出来的内容不能像UIWebView那样方便地支持内容的复制。</li>
+<li>基于CoreText来排版，需要自己处理图片排版相关的逻辑，也需要自己处理链接点击操作的支持。</li>
+</ol>
+
+
+<p>我们最初的猿题库行测第一版采用了基于UIWebView来实现，但是做出来发现一些小的交互细节无法做到精致。所以后来的第二版我们就全部转成用CoreText实现，虽然实现成本上增加了不少，但是应用的交互效果好多了。</p>
+
+<p>使用CoreText也为我们后来的iPad版提供了技术积累，因为iPad版的页面排版更加复杂，用UIWebView是完全无法完成相应的交互和排版需求的。</p>
+
+<p>关于如何基于CoreText来做一个排版引擎，我主要参考的是这篇教程：<a href="http://www.raywenderlich.com/4147/core-text-tutorial-for-ios-making-a-magazine-app">《Core Text Tutorial for iOS: Making a Magazine App》</a> 以及<a href="https://github.com/jverkoey/nimbus">Nimbus</a> 中的<a href="https://github.com/jverkoey/nimbus/blob/master/src/attributedlabel/src/NIAttributedLabel.m">NIAttributeLabel.m</a> 的实现，在这里我就不重复教程中的内容了，我主要讲一些实现细节。</p>
+
+<h2>实现细节</h2>
+
+<h3>服务端接口</h3>
+
+<p>我们在后台实现了一个基于<a href="http://baike.baidu.com/view/168792.htm">UBB</a> 的富文本编译器。使用UBB的原因是：</p>
+
+<ol>
+<li>UBB相对于HTML来说，虽然功能较简单，但是能完全满足我们对于富文本排版的需求。</li>
+<li>做一个UBB的语法解析器比较简单，便于我们将UBB渲染到各个平台上。</li>
+</ol>
+
+
+<p>为了简化iOS端的实现，我们将UBB的语法解析在服务器端完成。服务器端提供了接口，可以直接获得将UBB解析成类似HTML的<a href="http://baike.baidu.com/subview/14806/8904138.htm?fromId=14806&amp;from=rdtself">文件对象模型(DOM)</a> 的树型数据结构。有了这个树型数据结构，iOS端渲染就简单多了，无非就是递归遍历树型节点，将相关的内容转换成 NSAttributeString即可，之后将NSAttrubiteString转成CoreText的CTFrame即可用于界面的绘制。</p>
+
+<h3>支持图文混排</h3>
+
+<p>支持图文混排在教程：<a href="http://www.raywenderlich.com/4147/core-text-tutorial-for-ios-making-a-magazine-app">《Core Text Tutorial for iOS: Making a Magazine App》</a> 中有介绍，我们在解析DOM树遇到图片节点时，则将该内容转成一个空格，随后设置该空格在绘制时，需要我们自己指定宽高相关信息，而宽高信息在图片节点中都有提供。这样，CoreText引擎在绘制时，就会把相关的图片位置留空，之后我们将图片异步下来下来后，使用CoreGraph相关的API将图片再画在界面上，就实现了图文混排功能。</p>
+
+<p>下面的相关的示例代码：</p>
+
+<p>``` objc
+/<em> Callbacks </em>/
+static void deallocCallback( void* ref ){</p>
+
+<pre><code>[(id)ref release];
+</code></pre>
+
+<p>}
+static CGFloat ascentCallback( void *ref ){</p>
+
+<pre><code>CGFloat height = [(NSString*)[(NSDictionary*)ref objectForKey:@"height"] floatValue];
+return height/2 + [FrameParserConfig sharedInstance].baselineFromMid;
+</code></pre>
+
+<p>}
+static CGFloat descentCallback( void *ref ){</p>
+
+<pre><code>CGFloat height = [(NSString*)[(NSDictionary*)ref objectForKey:@"height"] floatValue];
+return height/2 - [FrameParserConfig sharedInstance].baselineFromMid;
+</code></pre>
+
+<p>}
+static CGFloat widthCallback( void* ref ){</p>
+
+<pre><code>return [(NSString*)[(NSDictionary*)ref objectForKey:@"width"] floatValue];
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li>(void)appendDelegateData:(NSDictionary <em>)delegateData ToString:(NSMutableAttributedString</em>)contentString {
+  //render empty space for drawing the image in the text //1
+  CTRunDelegateCallbacks callbacks;
+  callbacks.version = kCTRunDelegateCurrentVersion;
+  callbacks.getAscent = ascentCallback;
+  callbacks.getDescent = descentCallback;
+  callbacks.getWidth = widthCallback;
+  callbacks.dealloc = deallocCallback;
+  CTRunDelegateRef delegate = CTRunDelegateCreate(&amp;callbacks, delegateData);
+  [delegateData retain];
+  // Character to use as recommended by kCTRunDelegateAttributeName documentation.
+  // use " " will lead to wrong width in CTFramesetterSuggestFrameSizeWithConstraints
+  unichar objectReplacementChar = 0xFFFC;
+  NSString * objectReplacementString = [NSString stringWithCharacters:&amp;objectReplacementChar length:1];
+  NSDictionary * attributes = [self getAttributesWithStyleArray:nil];
+  //try to apply linespacing attributes to this placeholder
+  NSMutableAttributedString * space = [[NSMutableAttributedString alloc] initWithString:objectReplacementString attributes:attributes];
+  CFAttributedStringSetAttribute((CFMutableAttributedStringRef)space, CFRangeMake(0, 1), kCTRunDelegateAttributeName, delegate);
+  CFRelease(delegate);
+  [contentString appendAttributedString:space];
+  [space release];</li>
+</ul>
+
+
+<p>}</p>
+
+<p>```</p>
+
+<p>这里需要注意的是，用来代替图片的占位符使用空格会带来排版上的异常，具体原因未知，我们猜测是CoreText的bug，参考<a href="https://github.com/jverkoey/nimbus">Nimbus</a> 的实现后，我们使用 <code>0xFFFC</code>作为占位符，就没有遇到问题了。</p>
+
+<h3>支持链接</h3>
+
+<p>支持链接点击的主要实现的方式是：</p>
+
+<ol>
+<li>在解析DOM树的时候，记录下链接串在整个富文本中的位置信息（包括offset和length)。</li>
+<li>在CoreText渲染到的view上，监听用户操作事件，使用 <code>CTLineGetStringIndexForPosition</code>函数来获得用户点击的位置对应 <code>NSAttributedString</code> 字符串上的位置信息（index)
+3.判断第2步得到的index是否在第一步记录的各个链接的区间范围内，如果在范围内，则表示用户点击了某一个链接。</li>
+</ol>
+
+
+<p>这段逻辑的关键代码如下：</p>
+
+<p>``` objc
+// test touch point is on link or not
++ (LinkData <em>)touchLinkInView:(UIView </em>)view atPoint:(CGPoint)point data:(CTTableViewCellData *)data {</p>
+
+<pre><code>CTFrameRef textFrame = data.ctFrame;
+CFArrayRef lines = CTFrameGetLines(textFrame);
+if (!lines) return nil;
+CFIndex count = CFArrayGetCount(lines);
+LinkData *foundLink = nil;
+
+CGPoint origins[count];
+CTFrameGetLineOrigins(textFrame, CFRangeMake(0,0), origins);
+
+// CoreText context coordinates are the opposite to UIKit so we flip the bounds
+CGAffineTransform transform =  CGAffineTransformScale(CGAffineTransformMakeTranslation(0, view.bounds.size.height), 1.f, -1.f);
+
+for (int i = 0; i &lt; count; i++) {
+    CGPoint linePoint = origins[i];
+    CTLineRef line = CFArrayGetValueAtIndex(lines, i);
+    CGRect flippedRect = [self getLineBounds:line point:linePoint];
+    CGRect rect = CGRectApplyAffineTransform(flippedRect, transform);
+
+    if (CGRectContainsPoint(rect, point)) {
+        CGPoint relativePoint = CGPointMake(point.x-CGRectGetMinX(rect),
+                                            point.y-CGRectGetMinY(rect));
+        CFIndex idx = CTLineGetStringIndexForPosition(line, relativePoint);
+        foundLink = [self linkAtIndex:idx linkArray:data.linkArray];
+        return foundLink;
+    }
+}
+return nil;
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<h3>基于CoreText的内容省略</h3>
+
+<p>我们在使用CoreText时，还遇到一个具体排版上的问题。正常情况下，在生成CTFrame之后，只需要调用：<code>CTFrameDraw(self.data.ctFrame, context);</code>即可完成界面的绘制。但是产品提出了一个需求，对于某些界面，当显示不下的时候，需要将多余内容用<code>...</code>来表示。这让我们的绘制逻辑需要特别处理，以下是具体的实现：</p>
+
+<p>``` objc</p>
+
+<p>static NSString* const kEllipsesCharacter = @"\u2026";
+CGPathRef path = CTFrameGetPath(<em>data.ctFrame);
+CGRect rect = CGPathGetBoundingBox(path);
+CFArrayRef lines = CTFrameGetLines(</em>data.ctFrame);
+CFIndex lineCount = CFArrayGetCount(lines);
+NSInteger numberOfLines = MIN(_numberOfLines, lineCount);</p>
+
+<p>CGPoint lineOrigins[numberOfLines];
+CTFrameGetLineOrigins(<em>data.ctFrame, CFRangeMake(0, numberOfLines), lineOrigins);
+NSAttributedString *attributedString = </em>data.attributedString;</p>
+
+<p>for (CFIndex lineIndex = 0; lineIndex &lt; numberOfLines; lineIndex++) {</p>
+
+<pre><code>CGPoint lineOrigin = lineOrigins[lineIndex];
+lineOrigin.y =  self.frame.size.height + (lineOrigin.y - rect.size.height);
+CGContextSetTextPosition(context, lineOrigin.x, lineOrigin.y);
+CTLineRef line = CFArrayGetValueAtIndex(lines, lineIndex);
+
+BOOL shouldDrawLine = YES;
+
+if (lineIndex == numberOfLines - 1) {
+    CFRange lastLineRange = CTLineGetStringRange(line);
+    if (lastLineRange.location + lastLineRange.length &lt; (CFIndex)attributedString.length) {
+        CTLineTruncationType truncationType = kCTLineTruncationEnd;
+        NSUInteger truncationAttributePosition = lastLineRange.location + lastLineRange.length - 1;
+
+        NSDictionary *tokenAttributes = [attributedString attributesAtIndex:truncationAttributePosition
+                                                             effectiveRange:NULL];
+        NSAttributedString *tokenString = [[NSAttributedString alloc] initWithString:kEllipsesCharacter
+                                                                          attributes:tokenAttributes];
+        CTLineRef truncationToken = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)tokenString);
+
+        NSMutableAttributedString *truncationString = [[attributedString attributedSubstringFromRange:NSMakeRange(lastLineRange.location, lastLineRange.length)] mutableCopy];
+        if (lastLineRange.length &gt; 0) {
+            // Remove any whitespace at the end of the line.
+            unichar lastCharacter = [[truncationString string] characterAtIndex:lastLineRange.length - 1];
+            if ([[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:lastCharacter]) {
+                [truncationString deleteCharactersInRange:NSMakeRange(lastLineRange.length - 1, 1)];
+            }
+        }
+        [truncationString appendAttributedString:tokenString];
+
+        CTLineRef truncationLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)truncationString);
+        CTLineRef truncatedLine = CTLineCreateTruncatedLine(truncationLine, self.size.width, truncationType, truncationToken);
+        if (!truncatedLine) {
+            // If the line is not as wide as the truncationToken, truncatedLine is NULL
+            truncatedLine = CFRetain(truncationToken);
+        }
+        CFRelease(truncationLine);
+        CFRelease(truncationToken);
+
+        CTLineDraw(truncatedLine, context);
+        CFRelease(truncatedLine);
+
+        shouldDrawLine = NO;
+    }
+}
+
+if (shouldDrawLine) {
+    CTLineDraw(line, context);
+}
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<h2>后记</h2>
+
+<p>以上源码很多都参考了<a href="https://github.com/jverkoey/nimbus">Nimbus</a>的实现，在此再一次表达一下对开源社区的感谢。</p>
+
+<p>在大约2年前，CoreText还是一个新玩意。那时候微博的界面都还是用控件组合得到的。慢慢的，大家都开始接受CoreText，很多应用都广泛地将CoreText应用于自己的界面中，做出来了更加复杂的排版、交互效果。在iOS7之后，苹果推出了更加易于使用的TextKit，使得富文本排版更加容易，相信以后的iOS应用界面会更加美观，交互更加绚丽。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[猿题库iOS客户端的技术细节（二）：答题卡扫描算法]]></title>
@@ -682,497 +941,6 @@ return (BOOL)YES;
 <p>以上代码只能运行在iOS6以上的系统，但当前还有不少用户是iOS5的系统。不过，随着苹果在WWDC2013中推出iOS7的beta版，很多人都期待着使用iOS7。从历史数据上看，苹果iOS新版本推出后，通常3个月内就可以达到50%以上的使用比例。所以，可以遇见到在今年年底，iOS5的用户将所剩无几。如果我们打算在年底只支持iOS6以上的系统，那么就可以通过上面介绍的方法使用大量中文字体来美化你的应用。</p>
 
 <p>愿新的API能让大家的应用更加美观，have fun!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[谈Objective-C block的实现]]></title>
-    <link href="http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/"/>
-    <updated>2013-07-28T10:42:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p><a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">这里</a>有关于block的5道测试题，建议你阅读本文之前先做一下测试。</p>
-
-<p>先介绍一下什么是闭包。在wikipedia上，<a href="http://en.wikipedia.org/wiki/Closure_(computer_science">闭包的定义</a>)是:</p>
-
-<p><blockquote><p>In programming languages, a closure is a function or reference to a function together with a referencing environment—a table storing a reference to each of the non-local variables (also called free variables or upvalues) of that function.</p></blockquote></p>
-
-<p>翻译过来，闭包是一个函数（或指向函数的指针），再加上该函数执行的外部的上下文变量（有时候也称作自由变量）。</p>
-
-<p>block实际上就是Objective-C语言对于闭包的实现。
-block配合上dispatch_queue，可以方便地实现简单的多线程编程和异步编程，关于这个，我之前写过一篇文章介绍：<a href="http://blog.devtang.com/blog/2012/02/22/use-gcd/">《使用GCD》</a>。</p>
-
-<p>本文主要介绍Objective-C语言的block在编译器中的实现方式。主要包括：</p>
-
-<ol>
-<li>block的内部实现数据结构介绍</li>
-<li>block的三种类型及其相关的内存管理方式</li>
-<li>block如何通过capture变量来达到访问函数外的变量</li>
-</ol>
-
-
-<!-- more -->
-
-
-<h2>实现方式</h2>
-
-<h3>数据结构定义</h3>
-
-<p>block的数据结构定义如下（图片来自<a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/">这里</a>)：</p>
-
-<p><img src="/images/block-struct.jpg"></p>
-
-<p>对应的结构体定义如下：</p>
-
-<p>``` objc
-struct Block_descriptor {</p>
-
-<pre><code>unsigned long int reserved;
-unsigned long int size;
-void (*copy)(void *dst, void *src);
-void (*dispose)(void *);
-</code></pre>
-
-<p>};</p>
-
-<p>struct Block_layout {</p>
-
-<pre><code>void *isa;
-int flags;
-int reserved;
-void (*invoke)(void *, ...);
-struct Block_descriptor *descriptor;
-/* Imported variables. */
-</code></pre>
-
-<p>};
-```</p>
-
-<p>通过该图，我们可以知道，一个block实例实际上由6部分构成：</p>
-
-<ol>
-<li>isa指针，所有对象都有该指针，用于实现对象相关的功能。</li>
-<li>flags，用于按bit位表示一些block的附加信息，本文后面介绍block copy的实现代码可以看到对该变量的使用。</li>
-<li>reserved，保留变量。</li>
-<li>invoke，函数指针，指向具体的block实现的函数调用地址。</li>
-<li>descriptor， 表示该block的附加描述信息，主要是size大小，以及copy和dispose函数的指针。</li>
-<li>variables，capture过来的变量，block能够访问它外部的局部变量，就是因为将这些变量（或变量的地址）复制到了结构体中。</li>
-</ol>
-
-
-<p>该数据结构和后面的clang分析出来的结构实际是一样的，不过仅是结构体的嵌套方式不一样。但这一点我一开始没有想明白，所以也给大家解释一下，如下2个结构体SampleA和SampleB在内存上是完全一样的，原因是结构体本身并不带有任何额外的附加信息。</p>
-
-<p>``` c
-struct SampleA {</p>
-
-<pre><code>int a;
-int b;
-int c;
-</code></pre>
-
-<p>};</p>
-
-<p>struct SampleB {</p>
-
-<pre><code>int a;
-struct Part1 {
-    int b;
-};
-struct Part2 {
-    int c;
-};
-</code></pre>
-
-<p>};</p>
-
-<p>```</p>
-
-<p>在Objective-C语言中，一共有3种类型的block：</p>
-
-<ol>
-<li>_NSConcreteGlobalBlock 全局的静态block，不会访问任何外部变量。</li>
-<li>_NSConcreteStackBlock  保存在栈中的block，当函数返回时会被销毁。</li>
-<li>_NSConcreteMallocBlock 保存在堆中的block，当引用计数为0时会被销毁。</li>
-</ol>
-
-
-<p>我们在下面会分别来查看它们各自的实现方式上的差别。</p>
-
-<h3>研究工具：clang</h3>
-
-<p>为了研究编译器是如何实现block的，我们需要使用clang。clang提供一个命令，可以将Objetive-C的源码改写成c语言的，借此可以研究block具体的源码实现方式。该命令是</p>
-
-<p><code>c
-clang -rewrite-objc block.c
-</code></p>
-
-<h3>NSConcreteGlobalBlock 类型的block的实现</h3>
-
-<p>我们先新建一个名为block1.c的源文件：</p>
-
-<p>``` objc</p>
-
-<h1>include &lt;stdio.h></h1>
-
-<p>int main()
-{</p>
-
-<pre><code>^{ printf("Hello, World!\n"); } ();
-return 0;
-</code></pre>
-
-<p>}</p>
-
-<p>```</p>
-
-<p>然后在命令行中输入<code>clang -rewrite-objc block1.c</code>即可在目录中看到clang输出了一个名为block1.cpp的文件。该文件就是block在c语言实现，我将block1.cpp中一些无关的代码去掉，将关键代码引用如下：</p>
-
-<p>``` objc
-struct __block_impl {</p>
-
-<pre><code>void *isa;
-int Flags;
-int Reserved;
-void *FuncPtr;
-</code></pre>
-
-<p>};</p>
-
-<p>struct __main_block_impl_0 {</p>
-
-<pre><code>struct __block_impl impl;
-struct __main_block_desc_0* Desc;
-__main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags=0) {
-    impl.isa = &amp;_NSConcreteStackBlock;
-    impl.Flags = flags;
-    impl.FuncPtr = fp;
-    Desc = desc;
-}
-</code></pre>
-
-<p>};
-static void <strong>main_block_func_0(struct </strong>main_block_impl_0 *__cself) {</p>
-
-<pre><code>printf("Hello, World!\n");
-</code></pre>
-
-<p>}</p>
-
-<p>static struct __main_block_desc_0 {</p>
-
-<pre><code>size_t reserved;
-size_t Block_size;
-</code></pre>
-
-<p>} <strong>main_block_desc_0_DATA = { 0, sizeof(struct </strong>main_block_impl_0) };</p>
-
-<p>int main()
-{</p>
-
-<pre><code>(void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA) ();
-return 0;
-</code></pre>
-
-<p>}</p>
-
-<p>```</p>
-
-<p>下面我们就具体看一下是如何实现的。__main_block_impl_0就是该block的实现，从中我们可以看出：</p>
-
-<ol>
-<li>一个block实际是一个对象，它主要由一个 isa 和 一个 impl 和 一个descriptor组成。</li>
-<li><del>在本例中，isa指向 _NSConcreteGlobalBlock， 主要是为了实现对象的所有特性，在此我们就不展开讨论了。</del></li>
-<li>由于clang改写的具体实现方式和LLVM不太一样，并且这里没有开启ARC。所以这里我们看到isa指向的还是<code>_NSConcreteStackBlock</code>。但在LLVM的实现中，开启ARC时，block应该是_NSConcreteGlobalBlock类型，具体可以看<a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">《objective-c-blocks-quiz》</a>第二题的解释。</li>
-<li>impl是实际的函数指针，本例中，它指向__main_block_func_0。这里的impl相当于之前提到的invoke变量，只是clang编译器对变量的命名不一样而已。</li>
-<li>descriptor是用于描述当前这个block的附加信息的，包括结构体的大小，需要capture和dispose的变量列表等。结构体大小需要保存是因为，每个block因为会capture一些变量，这些变量会加到__main_block_impl_0这个结构体中，使其体积变大。在该例子中我们还看不到相关capture的代码，后面将会看到。</li>
-</ol>
-
-
-<h3>NSConcreteStackBlock 类型的block的实现</h3>
-
-<p>我们另外新建一个名为block2.c的文件，输入以下内容：</p>
-
-<p>``` objc</p>
-
-<h1>include &lt;stdio.h></h1>
-
-<p>int main() {</p>
-
-<pre><code>int a = 100;
-void (^block2)(void) = ^{
-    printf("%d\n", a);
-};
-block2();
-
-return 0;
-</code></pre>
-
-<p>}
-```</p>
-
-<p>用之前提到的clang工具，转换后的关键代码如下：</p>
-
-<p>``` c
-struct __main_block_impl_0 {</p>
-
-<pre><code>struct __block_impl impl;
-struct __main_block_desc_0* Desc;
-int a;
-__main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int _a, int flags=0) : a(_a) {
-    impl.isa = &amp;_NSConcreteStackBlock;
-    impl.Flags = flags;
-    impl.FuncPtr = fp;
-    Desc = desc;
-}
-</code></pre>
-
-<p>};
-static void <strong>main_block_func_0(struct </strong>main_block_impl_0 *__cself) {</p>
-
-<pre><code>int a = __cself-&gt;a; // bound by copy
-printf("%d\n", a);
-</code></pre>
-
-<p>}</p>
-
-<p>static struct __main_block_desc_0 {</p>
-
-<pre><code>size_t reserved;
-size_t Block_size;
-</code></pre>
-
-<p>} <strong>main_block_desc_0_DATA = { 0, sizeof(struct </strong>main_block_impl_0)};</p>
-
-<p>int main()
-{</p>
-
-<pre><code>int a = 100;
-void (*block2)(void) = (void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, a);
-((void (*)(__block_impl *))((__block_impl *)block2)-&gt;FuncPtr)((__block_impl *)block2);
-
-return 0;
-</code></pre>
-
-<p>}
-```</p>
-
-<p>在本例中，我们可以看到：</p>
-
-<ol>
-<li>本例中，isa指向_NSConcreteStackBlock，说明这是一个分配在栈上的实例。</li>
-<li><strong>main_block_impl_0 中增加了一个变量a，在block中引用的变量a实际是在申明block时，被复制到</strong>main_block_impl_0结构体中的那个变量a。因为这样，我们就能理解，在block内部修改变量a的内容，不会影响外部的实际变量a。</li>
-<li><strong>main_block_impl_0 中由于增加了一个变量a，所以结构体的大小变大了，该结构体大小被写在了</strong>main_block_desc_0中。</li>
-</ol>
-
-
-<p>我们修改上面的源码，在变量前面增加__block关键字：</p>
-
-<p>``` c</p>
-
-<h1>include &lt;stdio.h></h1>
-
-<p>int main()
-{</p>
-
-<pre><code>__block int i = 1024;
-void (^block1)(void) = ^{
-    printf("%d\n", i);
-    i = 1023;
-};
-block1();
-return 0;
-</code></pre>
-
-<p>}
-```</p>
-
-<p>生成的关键代码如下，可以看到，差异相当大：</p>
-
-<p>``` c</p>
-
-<p>struct __Block_byref_i_0 {</p>
-
-<pre><code>void *__isa;
-__Block_byref_i_0 *__forwarding;
-int __flags;
-int __size;
-int i;
-</code></pre>
-
-<p>};</p>
-
-<p>struct __main_block_impl_0 {</p>
-
-<pre><code>struct __block_impl impl;
-struct __main_block_desc_0* Desc;
-__Block_byref_i_0 *i; // by ref
-__main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, __Block_byref_i_0 *_i, int flags=0) : i(_i-&gt;__forwarding) {
-    impl.isa = &amp;_NSConcreteStackBlock;
-    impl.Flags = flags;
-    impl.FuncPtr = fp;
-    Desc = desc;
-}
-</code></pre>
-
-<p>};
-static void <strong>main_block_func_0(struct </strong>main_block_impl_0 *__cself) {</p>
-
-<pre><code>__Block_byref_i_0 *i = __cself-&gt;i; // bound by ref
-
-printf("%d\n", (i-&gt;__forwarding-&gt;i));
-(i-&gt;__forwarding-&gt;i) = 1023;
-</code></pre>
-
-<p>}</p>
-
-<p>static void <strong>main_block_copy_0(struct </strong>main_block_impl_0<em>dst, struct __main_block_impl_0</em>src) {_Block_object_assign((void<em>)&amp;dst->i, (void</em>)src->i, 8/<em>BLOCK_FIELD_IS_BYREF</em>/);}</p>
-
-<p>static void <strong>main_block_dispose_0(struct </strong>main_block_impl_0<em>src) {_Block_object_dispose((void</em>)src->i, 8/<em>BLOCK_FIELD_IS_BYREF</em>/);}</p>
-
-<p>static struct __main_block_desc_0 {</p>
-
-<pre><code>size_t reserved;
-size_t Block_size;
-void (*copy)(struct __main_block_impl_0*, struct __main_block_impl_0*);
-void (*dispose)(struct __main_block_impl_0*);
-</code></pre>
-
-<p>} <strong>main_block_desc_0_DATA = { 0, sizeof(struct </strong>main_block_impl_0), <strong>main_block_copy_0, </strong>main_block_dispose_0};</p>
-
-<p>int main()
-{</p>
-
-<pre><code>__attribute__((__blocks__(byref))) __Block_byref_i_0 i = {(void*)0,(__Block_byref_i_0 *)&amp;i, 0, sizeof(__Block_byref_i_0), 1024};
-void (*block1)(void) = (void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, (__Block_byref_i_0 *)&amp;i, 570425344);
-((void (*)(__block_impl *))((__block_impl *)block1)-&gt;FuncPtr)((__block_impl *)block1);
-return 0;
-</code></pre>
-
-<p>}
-```</p>
-
-<p>从代码中我们可以看到：</p>
-
-<ol>
-<li>源码中增加一个名为__Block_byref_i_0 的结构体，用来保存我们要capture并且修改的变量i。</li>
-<li><strong>main_block_impl_0 中引用的是</strong>Block_byref_i_0的结构体指针，这样就可以达到修改外部变量的作用。</li>
-<li>__Block_byref_i_0结构体中带有isa，说明它也是一个对象。</li>
-<li>我们需要负责<strong>Block_byref_i_0结构体相关的内存管理，所以</strong>main_block_desc_0中增加了copy和dispose函数指针，对于在调用前后修改相应变量的引用计数。</li>
-</ol>
-
-
-<h2>NSConcreteMallocBlock 类型的block的实现</h2>
-
-<p>NSConcreteMallocBlock类型的block通常不会在源码中直接出现，因为默认它是当一个block被copy的时候，才会将这个block复制到堆中。以下是一个block被copy时的示例代码(来自<a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/">这里</a>)，可以看到，在第8步，目标的block类型被修改为_NSConcreteMallocBlock。</p>
-
-<p>``` objc
-static void <em>_Block_copy_internal(const void </em>arg, const int flags) {</p>
-
-<pre><code>struct Block_layout *aBlock;
-const bool wantsOne = (WANTS_ONE &amp; flags) == WANTS_ONE;
-
-// 1
-if (!arg) return NULL;
-
-// 2
-aBlock = (struct Block_layout *)arg;
-
-// 3
-if (aBlock-&gt;flags &amp; BLOCK_NEEDS_FREE) {
-    // latches on high
-    latching_incr_int(&amp;aBlock-&gt;flags);
-    return aBlock;
-}
-
-// 4
-else if (aBlock-&gt;flags &amp; BLOCK_IS_GLOBAL) {
-    return aBlock;
-}
-
-// 5
-struct Block_layout *result = malloc(aBlock-&gt;descriptor-&gt;size);
-if (!result) return (void *)0;
-
-// 6
-memmove(result, aBlock, aBlock-&gt;descriptor-&gt;size); // bitcopy first
-
-// 7
-result-&gt;flags &amp;= ~(BLOCK_REFCOUNT_MASK);    // XXX not needed
-result-&gt;flags |= BLOCK_NEEDS_FREE | 1;
-
-// 8
-result-&gt;isa = _NSConcreteMallocBlock;
-
-// 9
-if (result-&gt;flags &amp; BLOCK_HAS_COPY_DISPOSE) {
-    (*aBlock-&gt;descriptor-&gt;copy)(result, aBlock); // do fixup
-}
-
-return result;
-</code></pre>
-
-<p>}
-```</p>
-
-<h3>变量的复制</h3>
-
-<p>对于block外的变量引用，block默认是将其复制到其数据结构中来实现访问的，如下图所示（图片来自<a href="http://rypress.com/tutorials/objective-c/blocks.html">这里</a>）：</p>
-
-<p><img src="/images/block-capture-1.jpg"></p>
-
-<p>对于用__block修饰的外部变量引用，block是复制其引用地址来实现访问的，如下图所示（图片来自<a href="http://rypress.com/tutorials/objective-c/blocks.html">这里</a>）：</p>
-
-<p><img src="/images/block-capture-2.jpg"></p>
-
-<h3>LLVM源码</h3>
-
-<p>在LLVM开源的关于<a href="https://llvm.org/svn/llvm-project/compiler-rt/trunk/BlocksRuntime/Block_private.h">block的实现源码</a>，其内容也和我们用clang改写得到的内容相似，印证了我们对于block内部数据结构的推测。</p>
-
-<h3>ARC对block类型的影响</h3>
-
-<p>在ARC开启的情况下，将只会有 NSConcreteGlobalBlock和 NSConcreteMallocBlock类型的block。</p>
-
-<p>原本的NSConcreteStackBlock的block会被NSConcreteMallocBlock类型的block替代。证明方式是以下代码在XCode中，会输出 <code>&lt;__NSMallocBlock__: 0x100109960&gt;</code>。在苹果的<a href="http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html">官方文档</a>中也提到，当把栈中的block返回时，不需要调用copy方法了。</p>
-
-<p>``` objc</p>
-
-<h1>import &lt;Foundation/Foundation.h></h1>
-
-<p>int main(int argc, const char * argv[])
-{</p>
-
-<pre><code>@autoreleasepool {
-    int i = 1024;
-    void (^block1)(void) = ^{
-        printf("%d\n", i);
-    };
-    block1();
-    NSLog(@"%@", block1);
-}
-return 0;
-</code></pre>
-
-<p>}</p>
-
-<p>```</p>
-
-<p>我个人认为这么做的原因是，由于ARC已经能很好地处理对象的生命周期的管理，这样所有对象都放到堆上管理，对于编译器实现来说，会比较方便。</p>
-
-<h3>参考链接</h3>
-
-<p>希望本文能加深你对于block的理解。我在学习中，查阅了以下文章，一并分享给大家。祝大家玩得开心～</p>
-
-<ul>
-<li><a href="http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-1/">A look inside blocks: Episode 1</a></li>
-<li><a href="http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-2/">A look inside blocks: Episode 2</a></li>
-<li><a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/">A look inside blocks: Episode 3</a></li>
-<li><a href="http://www.cnblogs.com/biosli/archive/2013/05/29/iOS_Objective-C_Block.html">对Objective-C中Block的追探</a></li>
-<li><a href="https://llvm.org/svn/llvm-project/compiler-rt/trunk/BlocksRuntime/Block_private.h">LLVM中block实现源码</a></li>
-<li><a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">objective-c-blocks-quiz</a></li>
-<li><a href="http://rypress.com/tutorials/objective-c/blocks.html">Blocks</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

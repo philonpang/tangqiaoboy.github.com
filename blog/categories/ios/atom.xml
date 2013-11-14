@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-10-22T13:54:54+08:00</updated>
+  <updated>2013-11-15T07:55:40+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,162 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用Flurry来统计和分析用户行为]]></title>
+    <link href="http://blog.devtang.com/blog/2013/10/24/use-flurry-to-analyse-data/"/>
+    <updated>2013-10-24T13:51:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/10/24/use-flurry-to-analyse-data</id>
+    <content type="html"><![CDATA[<h2>简介</h2>
+
+<p><img src="/images/flurry-logo.png"></p>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/use-flurry-to-statistics-and-analysis-user-behavior">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<p><a href="http://www.flurry.com/">Flurry</a>是一家专门为移动应用提供数据统计和分析的公司。他们的数据统计分析SDK支持的平台包括iPhone, iPad, Android, Windows Phone, Java ME和BlackBerry。使用Flurry服务的公司包括eBay、Yahoo、Hulu和Skype等超过11万家公司，涉及的应用超过36万个。</p>
+
+<p>利用Flurry提供的分析平台，我们可以很容易地自动统计出应用的使用情况，例如：</p>
+
+<ol>
+<li>每天（每周或每月）登录用户数，应用使用次数</li>
+<li>每天（每周或每月）新用户数，活跃用户数</li>
+<li>用户的所在地、年龄、性别的分布情况</li>
+</ol>
+
+
+<p>Flurry也可以自动统计出移动设备的分类情况，例如：</p>
+
+<ol>
+<li>使用3G，Wifi的会话比例</li>
+<li>使用iOS系统各版本(例如iOS6.0, iOS7.0等)的比例</li>
+<li>使用iOS各种设备（例如iPhone4, iPhone5等)的比例</li>
+</ol>
+
+
+<p>除了上面介绍的自动统计项目，Flurry SDK也提供了统计用的相关API，便于我们针对自己产品的特点，做针对性的统计。例如统计应用中某个按钮的按下次数，或者网络请求的平均响应时间等。</p>
+
+<!-- more -->
+
+
+<h2>Flurry的基本使用</h2>
+
+<h3>注册和下载对应SDK</h3>
+
+<p>使用Flurry前，需要先到官方网站<a href="http://www.flurry.com/">http://www.flurry.com/</a>注册账号。然后登录到Flurry后台，依次选择 <code>"Applications" -&gt; “Add a New Application"</code> ，增加一个需要统计分析的应用。如下图所示：</p>
+
+<p><img src="/images/flurry-create-app-1.png"></p>
+
+<p>然后，在接下来的界面之后根据你的应用类型，选择iPhone或iPad应用。如下图所示：</p>
+
+<p><img src="/images/flurry-create-app-2.png"></p>
+
+<p>接着，填入应用的名字和分类（名字仅用作在Flurry后台和自己的其它应用区分，不需要和应用的真实名字相同），之后点击"Create App"，如下所示：</p>
+
+<p><img src="/images/flurry-create-app-3.png"></p>
+
+<p>到此，我们就成功在后台创建了一个新的应用统计和分析项目。点击下图中的"Download"，可以下载需要集成在应用中的SDK。而下图中的提示2中的Key：<code>X28BBKTNZ9H3VYTBDBG3</code>则是我们在集成时用于标识自己应用的ID。</p>
+
+<p><img src="/images/flurry-create-app-4.png"></p>
+
+<h3>集成SDK</h3>
+
+<p>我们将下载后的SDK解压，可以看到文件列表如下。列表中对我们最重要的文件是Flurry目录下的<code>flurry.h</code>文件和<code>libFlurry_4.3.0.a</code>文件。这2个文件需要复制到Xcode的工程中去。</p>
+
+<p>而<code>ProjectApiKey.txt</code>文件中记录了我们之前创建的应用ID，在在代码中调用SDK初使化时需要使用。</p>
+
+<p><img src="/images/flurry-sdk-files.png"></p>
+
+<p>接着我们打开Xcode工程，将之前下载解压的Flurry目录拖动添加到工程中，同时在工程的.pch文件中加上 <code>#import "Flurry.h"</code>，如下图所示：</p>
+
+<p><img src="/images/flurry-setup-in-xcode.png"></p>
+
+<p>接着我们在<code>Link Binary With Libraries</code>中加入如下2个依赖的framework:</p>
+
+<ul>
+<li>Security.framework</li>
+<li>SystemConfiguration.framework。</li>
+</ul>
+
+
+<p><img src="/images/flurry-link-library.png"></p>
+
+<p>接着我们打开 <code>AppDelegate.m</code>，在<code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</code>方法中，加入代码<code>[Flurry startSession:@"X28BBKTNZ9H3VYTBDBG3"];</code>，如下图所示：</p>
+
+<p><img src="/images/flurry-set-api-key.png"></p>
+
+<p>这样，就完成了Flurry最简单的集成。通过以上短短几步，Flurry就可以帮我们完成应用的基本使用数据的统计和分析。</p>
+
+<h3>自定义统计项</h3>
+
+<p>Flurry提供了<code>logEvent</code>函数，用于实现自定义的统计项。默认情况下，该函数接受一个参数，用于表示当前统计项的名字。</p>
+
+<p>例如我们的界面中有2个按钮，我们想统计它们各自被用户的点击次数，则可以如下代码实现。在该代码中，我们定义了2个自定义的统计项，名字分别为<code>First Button Pressed</code>和<code>Second Button Pressed</code>。</p>
+
+<p><img src="/images/flurry-logevent.png"></p>
+
+<p><code>logEvent</code>函数也支持添加各种参数，用于做更加精细的统计，例如，我们想在统计用户在同一个页面，点击时不同按钮的次数分布，看哪些按钮更加常用，则统计代码可以如下实现：</p>
+
+<p><img src="/images/flurry-logevent-with-parameters.png"></p>
+
+<p><code>logEvent</code>函数也支持统计时间，常常用来统计某个复杂的网络操作的耗时或者用户对于某些界面的响应时间。例如，我们想统计用户停留在某个提示界面的时间，则可以用如下代码完成：</p>
+
+<p><img src="/images/flurry-log-event-time.png"></p>
+
+<h3>查看统计结果</h3>
+
+<p>完成上面的自定义统计的代码后，待应用发布后，我们就可以从后台的<code>Events</code>栏中看到相应的统计结果了。如下图所示：</p>
+
+<p><img src="/images/flurry-view-events.png"></p>
+
+<h3>统计Crashlog</h3>
+
+<p>Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在<code>AppDelegate.m</code>文件 中，调用完<code>startSession</code>方法后，再调用如下代码即可：</p>
+
+<p><code>
+[Flurry setCrashReportingEnabled:YES];
+</code></p>
+
+<p>之后就可以从后台的<code>Errors</code>项中，获得应用的Crashlog信息。</p>
+
+<h2>和其它统计分析平台的对比</h2>
+
+<p>和著名的统计工具<a href="http://www.google.com/analytics/">Google Analytics</a>相比，Flurry的优点是：</p>
+
+<ol>
+<li>Flurry专门针对移动端做了许多优化，例如统计流量就小很多。</li>
+<li>Flurry没有被墙的问题。</li>
+</ol>
+
+
+<p>Flurry缺点是:</p>
+
+<ol>
+<li>Google Analytics的统计功能相对更强大一些。</li>
+<li>Google Analytics可以和网页版的统计数据做整合。</li>
+</ol>
+
+
+<p>和国内的分析平台<a href="http://www.umeng.com/">友盟</a>相比，Flurry的优点是：</p>
+
+<ol>
+<li>使用Flurry的应用相对更多。根据Flurry和友盟的官方数据，有超过36万应用使用Flurry<sup><a href="http://www.flurry.com/big-data.html">1</a> </sup>，有超过18万应用使用友盟<sup><a href="http://www.umeng.com/analytics">2</a></sup>。</li>
+<li>Flurry是国外的公司，保持独立和专注，数据安全性更高；友盟现在已经<a href="http://tech.163.com/13/0426/16/8TDB6H1N00094MOK.html">被阿里收购</a>，当用户的应用涉及领域和阿里有类似或重合的时候，那么该统计数据有潜在的安全性问题。</li>
+</ol>
+
+
+<p>Flurry的缺点是：</p>
+
+<ol>
+<li>友盟因为是中国公司，所以对国内开发者非常友善，相关的文档或界面都是中文的。而Flurry并不提供中文的后台管理界面或相关文档。</li>
+<li>Flurry的服务器在国外，在响应速度上应该相对比友盟慢一些。但在测试中，Flurry服务器都保证了500ms左右的响应时间，还是比较好的。</li>
+</ol>
+
+
+<h2>总结</h2>
+
+<p>本文介绍了Flurry的基本功能以及如何做自定义的统计，最后与业界其它同类工具做了对比。我也将相关示例代码整理到github上，地址是：<a href="https://github.com/tangqiaoboy/FlurryUsageSample">https://github.com/tangqiaoboy/FlurryUsageSample</a>，愿本文能帮助你更加方法地做应用的统计和分析工作。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎]]></title>
@@ -803,144 +959,6 @@ if (shouldDrawLine) {
 <li><a href="https://github.com/mmin18/WaxPatch">https://github.com/mmin18/WaxPatch</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[动态下载苹果提供的多种中文字体]]></title>
-    <link href="http://blog.devtang.com/blog/2013/08/11/ios-asian-font-download-introduction/"/>
-    <updated>2013-08-11T16:00:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/08/11/ios-asian-font-download-introduction</id>
-    <content type="html"><![CDATA[<p><img src="/images/wawati-sample.jpg"></p>
-
-<h2>引言</h2>
-
-<p>在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于：</p>
-
-<p>1、字体文件通常比较大，10M - 20M是一个常见的字体库的大小。大部分的非游戏的app体积都集中在10M以内，因为字体文件的加入而造成应用体积翻倍让人感觉有些不值。如果只是很少量的按钮字体需要设置，可以用一些工具把使用到的汉字字体编码从字体库中抽取出来，以节省体积。但如果是一些变化的内容需要自定义的字体，那就只有打包整个字体库了。</p>
-
-<p>2、中文的字体通常都是有版权的。在应用中加入特殊中文字体还需要处理相应的版权问题。对于一些小公司或个人开发者来说，这是一笔不小的开销。</p>
-
-<p>以上两点造成App Store里面使用特殊中文字库的iOS应用较少。现在通常只有阅读类的应用才会使用特殊中文字库。</p>
-
-<p>但其实从iOS6开始，苹果就支持动态下载中文字体到系统中。只是苹果一直没有公开相应的API。最终，相应的API在今年的WWDC大会上公开，接下来就让我们来一起了解这个功能。</p>
-
-<!-- more -->
-
-
-<h2>功能介绍</h2>
-
-<p>使用动态下载中文字体的API可以动态地向iOS系统中添加字体文件，这些字体文件都是下载到系统的目录中（目录是<code>/private/var/mobile/Library/Assets/com_apple_MobileAsset_Font/</code>），所以并不会造成应用体积的增加。并且，由于字体文件是iOS系统提供的，也免去了字体使用版权的问题。虽然第一次下载相关的中文字体需要一些网络开销和下载时间，但是这些字体文件下载后可以在所有应用间共享，所以可以遇见到，随着该API使用的普及，大部分应用都不需要提示用户下载字体，因为很可能这些字体在之前就被其它应用下载下来了。</p>
-
-<h2>字体列表</h2>
-
-<p>在<a href="http://support.apple.com/kb/HT5484?viewlocale=zh_CN">这个链接</a>中，苹果列出了提供动态下载和使用中文字体文件列表。不过，由于下载的时候需要使用的名字是PostScript名称，所以如果你真正要动态下载相应的字体的话，还需要使用Mac内自带的应用“字体册“来获得相应字体的PostScript名称。如下显示了从”字体册“中获取《兰亭黑-简 特黑》字体的PostScript名称的截图：</p>
-
-<p><img src="/images/font-postscript-name.jpg"></p>
-
-<h2>API介绍</h2>
-
-<p>苹果提供的动态下载代码的<a href="http://developer.apple.com/library/ios/#samplecode/DownloadFont/Listings/DownloadFont_ViewController_m.html">Demo工程</a> 链接在这里。将此Demo工程下载下来，即可学习相应API的使用。下面我对该工程中相应API做简单的介绍。</p>
-
-<p>假如我们现在要下载娃娃体字体，它的PostScript名称为<code>DFWaWaSC-W5</code>。具体的步骤如下：</p>
-
-<p>1、我们先判断该字体是否已经被下载下来了，代码如下：</p>
-
-<p>``` objc</p>
-
-<ul>
-<li>(BOOL)isFontDownloaded:(NSString <em>)fontName {
-  UIFont</em> aFont = [UIFont fontWithName:fontName size:12.0];
-  if (aFont &amp;&amp; ([aFont.fontName compare:fontName] == NSOrderedSame
-
-<pre><code>         || [aFont.familyName compare:fontName] == NSOrderedSame)) {
-  return YES;
-</code></pre>
-
-  } else {
-
-<pre><code>  return NO;
-</code></pre>
-
-<p>  }
-}</p></li>
-</ul>
-
-
-<p>```</p>
-
-<p>2、如果该字体下载过了，则可以直接使用。否则我们需要先准备下载字体API需要的一些参数，如下所示：</p>
-
-<p>``` objc</p>
-
-<p>// 用字体的PostScript名字创建一个Dictionary
-NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithObjectsAndKeys:fontName, kCTFontNameAttribute, nil];</p>
-
-<p>// 创建一个字体描述对象CTFontDescriptorRef
-CTFontDescriptorRef desc = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef)attrs);</p>
-
-<p>// 将字体描述对象放到一个NSMutableArray中
-NSMutableArray *descs = [NSMutableArray arrayWithCapacity:0];
-[descs addObject:(__bridge id)desc];
-CFRelease(desc);</p>
-
-<p>```</p>
-
-<p>3、准备好上面的<code>descs</code>变量后，则可以进行字体的下载了，代码如下：</p>
-
-<p>``` objc</p>
-
-<p>__block BOOL errorDuringDownload = NO;</p>
-
-<p>CTFontDescriptorMatchFontDescriptorsWithProgressHandler( (__bridge CFArrayRef)descs, NULL,  ^(CTFontDescriptorMatchingState state, CFDictionaryRef progressParameter) {</p>
-
-<pre><code>double progressValue = [[(__bridge NSDictionary *)progressParameter objectForKey:(id)kCTFontDescriptorMatchingPercentage] doubleValue];
-
-if (state == kCTFontDescriptorMatchingDidBegin) {
-    NSLog(@"字体已经匹配");
-} else if (state == kCTFontDescriptorMatchingDidFinish) {    
-    if (!errorDuringDownload) {
-        NSLog(@"字体%@ 下载完成", fontName);
-    }
-} else if (state == kCTFontDescriptorMatchingWillBeginDownloading) {
-    NSLog(@"字体开始下载");
-} else if (state == kCTFontDescriptorMatchingDidFinishDownloading) {
-    NSLog(@"字体下载完成");
-    dispatch_async( dispatch_get_main_queue(), ^ {
-        // 可以在这里修改UI控件的字体
-    });
-} else if (state == kCTFontDescriptorMatchingDownloading) {
-    NSLog(@"下载进度 %.0f%% ", progressValue);
-} else if (state == kCTFontDescriptorMatchingDidFailWithError) {
-    NSError *error = [(__bridge NSDictionary *)progressParameter objectForKey:(id)kCTFontDescriptorMatchingError];
-    if (error != nil) {
-        _errorMessage = [error description];
-    } else {
-        _errorMessage = @"ERROR MESSAGE IS NOT AVAILABLE!";
-    }
-    // 设置标志
-    errorDuringDownload = YES;
-    NSLog(@"下载错误: %@", _errorMessage);
-}
-
-return (BOOL)YES;
-</code></pre>
-
-<p>});</p>
-
-<p>```</p>
-
-<p>通常需要在下载完字体后开始使用字体，一般是将相应代码放到 kCTFontDescriptorMatchingDidFinish 那个条件中做，可以象苹果官网的示例代码上那样，用GCD来改UI的逻辑，也可以发Notification来通知相应的Controller。</p>
-
-<p>以下是通过以上示例代码下载下来的娃娃体字体截图：</p>
-
-<p><img src="/images/wawati-sample.jpg"></p>
-
-<h2>iOS版本限制</h2>
-
-<p>以上代码只能运行在iOS6以上的系统，但当前还有不少用户是iOS5的系统。不过，随着苹果在WWDC2013中推出iOS7的beta版，很多人都期待着使用iOS7。从历史数据上看，苹果iOS新版本推出后，通常3个月内就可以达到50%以上的使用比例。所以，可以遇见到在今年年底，iOS5的用户将所剩无几。如果我们打算在年底只支持iOS6以上的系统，那么就可以通过上面介绍的方法使用大量中文字体来美化你的应用。</p>
-
-<p>愿新的API能让大家的应用更加美观，have fun!</p>
 ]]></content>
   </entry>
   

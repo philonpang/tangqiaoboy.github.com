@@ -203,15 +203,19 @@
 
 <h3>统计Crashlog</h3>
 
-<p>Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在<code>AppDelegate.m</code>文件 中，调用完<code>startSession</code>方法后，再调用如下代码即可：</p>
+<p>Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在<code>AppDelegate.m</code>文件中，在调用<code>startSession</code>方法之前，调用<code>setCrashReportingEnabled:YES</code>即可：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[Flurry setCrashReportingEnabled:YES];</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[Flurry setCrashReportingEnabled:YES];
+</span><span class='line'>[Flurry startSession:@"YOUR_API_KEY"];</span></code></pre></td></tr></table></div></figure>
 
 
 <p></p>
 
-<p>之后就可以从后台的<code>Errors</code>项中，获得应用的Crashlog信息。</p>
+<p>这里注意，<font color='red'>一定要在startSession之前调用setCrashReportingEnabled，否则将无法记录Crashlog信息！切记！！</font></p>
+
+<p>之后你就可以从后台管理界面的<code>Errors</code>项中，获得应用的Crashlog信息。</p>
 
 <h2>和其它统计分析平台的对比</h2>
 

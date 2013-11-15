@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-11-15T08:37:34+08:00</updated>
+  <updated>2013-11-15T20:29:47+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -121,13 +121,16 @@
 
 <h3>统计Crashlog</h3>
 
-<p>Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在<code>AppDelegate.m</code>文件 中，调用完<code>startSession</code>方法后，再调用如下代码即可：</p>
+<p>Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在<code>AppDelegate.m</code>文件中，在调用<code>startSession</code>方法之前，调用<code>setCrashReportingEnabled:YES</code>即可：</p>
 
 <p><code>
 [Flurry setCrashReportingEnabled:YES];
+[Flurry startSession:@"YOUR_API_KEY"];
 </code></p>
 
-<p>之后就可以从后台的<code>Errors</code>项中，获得应用的Crashlog信息。</p>
+<p>这里注意，<font color='red'>一定要在startSession之前调用setCrashReportingEnabled，否则将无法记录Crashlog信息！切记！！</font></p>
+
+<p>之后你就可以从后台管理界面的<code>Errors</code>项中，获得应用的Crashlog信息。</p>
 
 <h2>和其它统计分析平台的对比</h2>
 

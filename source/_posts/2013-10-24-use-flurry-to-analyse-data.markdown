@@ -103,13 +103,16 @@ Flurry提供了`logEvent`函数，用于实现自定义的统计项。默认情�
 
 ### 统计Crashlog
 
-Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在`AppDelegate.m`文件 中，调用完`startSession`方法后，再调用如下代码即可：
+Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在`AppDelegate.m`文件中，在调用`startSession`方法之前，调用`setCrashReportingEnabled:YES`即可：
 
 ```
 [Flurry setCrashReportingEnabled:YES];
+[Flurry startSession:@"YOUR_API_KEY"];
 ``` 
 
-之后就可以从后台的`Errors`项中，获得应用的Crashlog信息。
+这里注意，<font color='red'>一定要在startSession之前调用setCrashReportingEnabled，否则将无法记录Crashlog信息！切记！！</font>
+
+之后你就可以从后台管理界面的`Errors`项中，获得应用的Crashlog信息。
 
 ## 和其它统计分析平台的对比
 
@@ -136,7 +139,7 @@ Flurry的缺点是：
 
 ##总结
 
-本文介绍了Flurry的基本功能以及如何做自定义的统计，最后与业界其它同类工具做了对比。我也将相关示例代码整理到github上，地址是：<https://github.com/tangqiaoboy/FlurryUsageSample>，愿本文能帮助你更加方法地做应用的统计和分析工作。
+本文介绍了Flurry的基本功能以及如何做自定义的统计，最后与业界其它同类工具做了对比。我也将相关示例代码整理到github上，地址是：<https://github.com/tangqiaoboy/FlurryUsageSample>，愿本文能帮助你更加方便地做应用的统计和分析工作。
 
 
 

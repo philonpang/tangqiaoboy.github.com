@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "使用Flurry来统计和分析用户行为"
-date: 2013-10-24 13:51
+date: 2013-11-14 13:51
 comments: true
 categories: iOS
 ---
@@ -84,16 +84,67 @@ Flurry提供了`logEvent`函数，用于实现自定义的统计项。默认情�
 
 例如我们的界面中有2个按钮，我们想统计它们各自被用户的点击次数，则可以如下代码实现。在该代码中，我们定义了2个自定义的统计项，名字分别为`First Button Pressed`和`Second Button Pressed`。
 
-{% img /images/flurry-logevent.png %}
+``` objc
+- (IBAction)firstButtonPressed:(id)sender {
+    [Flurry logEvent:@"First Button Pressed"];
+}
+
+
+- (IBAction)secondButtonPressed:(id)sender {
+    [Flurry logEvent:@"Second Button Pressed"];
+}
+
+```
 
 `logEvent`函数也支持添加各种参数，用于做更加精细的统计，例如，我们想在统计用户在同一个页面，点击时不同按钮的次数分布，看哪些按钮更加常用，则统计代码可以如下实现：
 
-{% img /images/flurry-logevent-with-parameters.png %}
+``` objc
+- (IBAction)firstButtonPressed:(id)sender {
+    [Flurry logEvent:@"Button Pressed"
+      withParameters:@{@"target": @"first"}];
+}
+
+
+- (IBAction)secondButtonPressed:(id)sender {
+    [Flurry logEvent:@"Button Pressed"
+      withParameters:@{@"target": @"second"}];
+}
+```
 
 
 `logEvent`函数也支持统计时间，常常用来统计某个复杂的网络操作的耗时或者用户对于某些界面的响应时间。例如，我们想统计用户停留在某个提示界面的时间，则可以用如下代码完成：
 
-{% img /images/flurry-log-event-time.png %}
+``` objc
+//
+//  FirstViewController.m
+//  FlurryUsageSample
+//
+//  Created by TangQiao on 13-10-25.
+//  Copyright (c) 2013年 TangQiao. All rights reserved.
+//
+
+#import "FirstViewController.h"
+
+#define FLURRY_EVENT_KEY @"First View Controller"
+
+@implementation FirstViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // 开始统计时间
+    [Flurry logEvent:FLURRY_EVENT_KEY timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // 结束统计时间
+    [Flurry endTimedEvent:FLURRY_EVENT_KEY withParameters:nil];
+}
+
+@end
+
+
+```
 
 ### 查看统计结果
 

@@ -10,6 +10,9 @@ categories: iOS
 
 ##简介
 
+本文为InfoQ中文站特供稿件，首发地址为：[文章链接](http://www.infoq.com/cn/articles/network-packet-analysis-tool-charles)。如需转载，请与InfoQ中文站联系。
+
+
 [Charles](http://www.charlesproxy.com/)是在Mac下常用的截取网络封包的工具，在做iOS开发时，我们为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析。Charles通过将自己设置成系统的网络访问代理服务器，使得所有的网络访问请求都通过它来完成，从而实现了网络封包的截取和分析。
 
 Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时。

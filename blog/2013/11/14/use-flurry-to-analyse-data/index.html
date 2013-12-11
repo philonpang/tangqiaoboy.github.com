@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2013/10/24/use-flurry-to-analyse-data">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2013/11/14/use-flurry-to-analyse-data">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -93,7 +93,7 @@
   
 
 
-<time datetime="2013-10-24T13:51:00+08:00" pubdate data-updated="true">Oct 24<span>th</span>, 2013</time>
+<time datetime="2013-11-14T13:51:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time>
         
       </p>
     
@@ -185,15 +185,108 @@
 
 <p>例如我们的界面中有2个按钮，我们想统计它们各自被用户的点击次数，则可以如下代码实现。在该代码中，我们定义了2个自定义的统计项，名字分别为<code>First Button Pressed</code>和<code>Second Button Pressed</code>。</p>
 
-<p><img src="/images/flurry-logevent.png"></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">firstButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;First Button Pressed&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">secondButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;Second Button Pressed&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><code>logEvent</code>函数也支持添加各种参数，用于做更加精细的统计，例如，我们想在统计用户在同一个页面，点击时不同按钮的次数分布，看哪些按钮更加常用，则统计代码可以如下实现：</p>
 
-<p><img src="/images/flurry-logevent-with-parameters.png"></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">firstButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;Button Pressed&quot;</span>
+</span><span class='line'>      <span class="nl">withParameters:</span><span class="err">@</span><span class="p">{</span><span class="s">@&quot;target&quot;</span><span class="o">:</span> <span class="s">@&quot;first&quot;</span><span class="p">}];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">secondButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;Button Pressed&quot;</span>
+</span><span class='line'>      <span class="nl">withParameters:</span><span class="err">@</span><span class="p">{</span><span class="s">@&quot;target&quot;</span><span class="o">:</span> <span class="s">@&quot;second&quot;</span><span class="p">}];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><code>logEvent</code>函数也支持统计时间，常常用来统计某个复杂的网络操作的耗时或者用户对于某些界面的响应时间。例如，我们想统计用户停留在某个提示界面的时间，则可以用如下代码完成：</p>
 
-<p><img src="/images/flurry-log-event-time.png"></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  FirstViewController.m</span>
+</span><span class='line'><span class="cp">//  FlurryUsageSample</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  Created by TangQiao on 13-10-25.</span>
+</span><span class='line'><span class="cp">//  Copyright (c) 2013年 TangQiao. All rights reserved.</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#import &quot;FirstViewController.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#define FLURRY_EVENT_KEY @&quot;First View Controller&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@implementation</span> <span class="nc">FirstViewController</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillAppear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="nl">viewWillAppear:</span><span class="n">animated</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">// 开始统计时间</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="n">FLURRY_EVENT_KEY</span> <span class="nl">timed:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="nl">viewWillDisappear:</span><span class="n">animated</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">// 结束统计时间</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">endTimedEvent:</span><span class="n">FLURRY_EVENT_KEY</span> <span class="nl">withParameters:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h3>查看统计结果</h3>
 
@@ -205,10 +298,11 @@
 
 <p>Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在<code>AppDelegate.m</code>文件中，在调用<code>startSession</code>方法之前，调用<code>setCrashReportingEnabled:YES</code>即可：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[Flurry setCrashReportingEnabled:YES];
-</span><span class='line'>[Flurry startSession:@"YOUR_API_KEY"];</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">Flurry</span> <span class="nl">setCrashReportingEnabled:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">Flurry</span> <span class="nl">startSession:</span><span class="s">@&quot;YOUR_API_KEY&quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p></p>
@@ -276,7 +370,7 @@
   
 
 
-<time datetime="2013-10-24T13:51:00+08:00" pubdate data-updated="true">Oct 24<span>th</span>, 2013</time>
+<time datetime="2013-11-14T13:51:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time>
       
 
 <span class="categories">
@@ -338,6 +432,8 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2013/10/21/the-tech-detail-of-ape-client-3/" title="Previous Post: 猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎">&laquo; 猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎</a>
       
       
+        <a class="basic-alignment right" href="/blog/2013/12/11/network-tool-charles-intr/" title="next Post: iOS开发工具-网络封包分析工具Charles">iOS开发工具-网络封包分析工具Charles &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -351,7 +447,11 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/10/24/use-flurry-to-analyse-data/">使用Flurry来统计和分析用户行为</a>
+        <a href="/blog/2013/12/11/network-tool-charles-intr/">iOS开发工具-网络封包分析工具Charles</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/14/use-flurry-to-analyse-data/">使用Flurry来统计和分析用户行为</a>
       </li>
     
       <li class="post">
@@ -384,10 +484,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/17/startup-anniversary-note/">写在创业一周年</a>
       </li>
     
   </ul>

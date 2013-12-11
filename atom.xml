@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-11-15T20:29:47+08:00</updated>
+  <updated>2013-12-11T14:17:24+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -14,10 +14,164 @@
 
   
   <entry>
+    <title type="html"><![CDATA[iOS开发工具-网络封包分析工具Charles]]></title>
+    <link href="http://blog.devtang.com/blog/2013/12/11/network-tool-charles-intr/"/>
+    <updated>2013-12-11T14:03:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/12/11/network-tool-charles-intr</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/charles-logo.png"></p>
+
+<h2>简介</h2>
+
+<p><a href="http://www.charlesproxy.com/">Charles</a>是在Mac下常用的截取网络封包的工具，在做iOS开发时，我们为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析。Charles通过将自己设置成系统的网络访问代理服务器，使得所有的网络访问请求都通过它来完成，从而实现了网络封包的截取和分析。</p>
+
+<p>Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时。</p>
+
+<p>因此，该付费方案对广大用户还是相当友好的，即使你长期不付费，也能使用完整的软件功能。只是当你需要长时间进行封包调试时，会因为Charles强制关闭而遇到影响。</p>
+
+<p>Charles主要的功能包括：</p>
+
+<ol>
+<li>支持SSL代理。可以截取分析<a href="http://zh.wikipedia.org/wiki/%E5%AE%89%E5%85%A8%E5%A5%97%E6%8E%A5%E5%B1%82">SSL</a>的请求。</li>
+<li>支持流量控制。可以模拟慢速网络以及等待时间（latency）较长的请求。</li>
+<li>支持AJAX调试。可以自动将json或xml数据格式化，方便查看。</li>
+<li>支持AMF调试。可以将Flash Remoting 或 Flex Remoting信息格式化，方便查看。</li>
+<li>支持重发网络请求，方便后端调试。</li>
+<li>支持修改网络请求参数。</li>
+<li>支持网络请求的截获并动态修改。</li>
+<li>检查HTML，CSS和RSS内容是否符合<a href="http://validator.w3.org/">W3C标准</a>。</li>
+</ol>
+
+
+<!-- more -->
+
+
+<h2>安装Charles</h2>
+
+<p>去Charles的官方网站（<a href="http://www.charlesproxy.com">http://www.charlesproxy.com</a>）下载最新版的Charles安装包，是一个dmg后缀的文件。打开后将Charles拖到Application目录 下即完成安装。</p>
+
+<h2>安装SSL证书</h2>
+
+<p>如果你需要截取分析SSL协议相关的内容。那么需要安装Charles的CA证书。具体步骤如下：</p>
+
+<ol>
+<li>去 <a href="http://www.charlesproxy.com/ssl.zip">http://www.charlesproxy.com/ssl.zip</a> 下载CA证书文件。</li>
+<li>解压该zip文件后，双击其中的.crt文件，这时候在弹出的菜单中选择“总是信任”，如下所示：<img src="http://blog.devtang.com/images/charles-ca-1.png"></li>
+<li>从钥匙串访问中即可看到添加成功的证书。如下所示：
+<img src="http://blog.devtang.com/images/charles-ca-2.png"></li>
+</ol>
+
+
+<h2>将Charles设置成系统代理</h2>
+
+<p>之前提到，Charles是通过将自己设置成代理服务器来完成封包截取的，所以使用Charles的第一步是将其设置成系统的代理服务器。</p>
+
+<p>启动Charles后，第一次Charles会请求你给它设置系统代理的权限。你可以输入登录密码授予Charles该权限。你也可以忽略该请求，然后在需要将Charles设置成系统代理时，选择菜单中的 &#8220;Proxy&#8221; -> &#8220;Mac OS X Proxy&#8221;来将Charles设置成系统代理。如下所示：</p>
+
+<p><img src="http://blog.devtang.com/images/charles-set-system-proxy.png"></p>
+
+<p>之后，你就可以看到源源不断的网络请求出现在Charles的界面中。</p>
+
+<h2>Charles主界面介绍</h2>
+
+<p><img src="http://blog.devtang.com/images/charles-home.jpg"></p>
+
+<p>Charles主要提供2种查看封包的视图，分别名为“Structure”和&#8221;Sequence&#8221;。</p>
+
+<ol>
+<li>Structure视图将网络请求按访问的域名分类。</li>
+<li>Sequence视图将网络请求按访问的时间排序。</li>
+</ol>
+
+
+<p>大家可以根据具体的需要在这两种视图之前来回切换。</p>
+
+<p>对于某一个具体的网络请求，你可以查看其详细的请求内容和响应内容。如果响应内容是JSON格式的，那么Charles可以自动帮你将JSON内容格式化，方便你查看。</p>
+
+<h2>过滤网络请求</h2>
+
+<p>通常情况下，我们需要对网络请求进行过滤，只监控向指定目录服务器上发送的请求。对于这种需求，我们有2种办法。</p>
+
+<ol>
+<li><p>在主界面的中部的Filter栏中填入需要过滤出来的关键字。例如我们的服务器的地址是：http://yuantiku.com，那么只需要在Filter栏中填入yuantiku即可。</p></li>
+<li><p>在Charles的菜单栏选择&#8221;Proxy&#8221;->&#8221;Recording Settings&#8221;，然后选择Include栏，选择添加一个项目，然后填入需要监控的协议，主机地址，端口号。这样就可以只截取目标网站的封包了。如下图所示：</p></li>
+</ol>
+
+
+<p><img src="http://blog.devtang.com/images/charles-filter-setting.jpg"></p>
+
+<p>通常情况下，我们使用方法1做一些临时性的封包过滤，使用方法2做一些经常性的封包过滤。</p>
+
+<h2>截取iPhone上的网络封包</h2>
+
+<p>Charles通常用来截取本地上的网络封包，但是当我们需要时，我们也可以用来截取其它设备上的网络请求。下面我就以iPhone为例，讲解如何进行相应操作。</p>
+
+<h4>Charles上的设置</h4>
+
+<p>要截取iPhone上的网络请求，我们首先需要将Charles的代理功能打开。在Charles的菜单栏上选择“Proxy”->&#8221;Proxy Settings&#8221;，填入代理端口8888，并且勾上&#8221;Enable transparent HTTP proxying&#8221; 就完成了在Charles上的设置。如下图所示:</p>
+
+<p><img src="http://blog.devtang.com/images/charles-proxy-setting.jpg"></p>
+
+<h4>iPhone上的设置</h4>
+
+<p>首先我们需要获取Charles运行所在电脑的IP地址，打开Terminal，输入<code>ifconfig en0</code>, 即可获得该电脑的IP，如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/charles-ifconfig.jpg"></p>
+
+<p>在iPhone的 “设置”->“无线局域网“中，可以看到当前连接的wifi名，通过点击右边的详情键，可以看到当前连接上的wifi的详细信息，包括IP地址，子网掩码等信息。在其最底部有“HTTP代理”一项，我们将其切换成手动，然后填上Charles运行所在的电脑的IP，以及端口号8888，如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/charles-iphone-setting.jpg"></p>
+
+<p>设置好之后，我们打开iPhone上的任意需要网络通讯的程序，就可以看到Charles弹出iPhone请求连接的确认菜单（如下图所示），点击“Allow”即可完成设置。</p>
+
+<p><img src="http://blog.devtang.com/images/charles-proxy-confirm.jpg"></p>
+
+<h2>截取SSL信息</h2>
+
+<p>Charles默认并不截取SSL的信息，如果你想对截取某个网站上的所有SSL网络请求，可以在该请求上右击，选择SSL proxy，如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/charles-ssl-add-host.jpg"></p>
+
+<p>这样，对于该Host的所有SSL请求可以被截取到了。</p>
+
+<h2>模拟慢速网络</h2>
+
+<p>在做iPhone开发的时候，我们常常需要模拟慢速网络或者高延迟的网络，以测试在移动网络下，应用的表现是否正常。Charles对此需求提供了很好的支持。</p>
+
+<p>在Charles的菜单上，选择&#8221;Proxy&#8221;->&#8221;Throttle Setting&#8221;项，在之后弹出的对话框中，我们可以勾选上“Enable Throttling”，并且可以设置Throttle Preset的类型。如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/charles-throttle-setting.jpg"></p>
+
+<p>如果我们只想模拟指定网站的慢速网络，可以再勾选上图中的&#8221;Only for selected hosts&#8221;项，然后在对话框的下半部分设置中增加指定的hosts项即可。</p>
+
+<h2>修改网络请求内容</h2>
+
+<p>有些时候为了调试服务器的接口，我们需要反复尝试不同参数的网络请求。Charles可以方便地提供网络请求的修改和重发功能。只需要在以往的网络请求上点击右键，选择“Edit”，即可创建一个可编辑的网络请求。如下所示：</p>
+
+<p><img src="http://blog.devtang.com/images/charles-edit.jpg"></p>
+
+<p>我们可以修改该请求的任何信息，包括url地址，端口，参数等，之后点击“Execute”即可发送该修改后的网络请求（如下图所示）。Charles支持我们多次修改和发送该请求，这对于我们和服务器端调试接口非常方便。</p>
+
+<p><img src="http://blog.devtang.com/images/charles-execute-request.jpg"></p>
+
+<h2>总结</h2>
+
+<p>通过Charles软件，我们可以很方便地在日常开发中，截取和调试网络请求内容，分析封包协议以及模拟慢速网络。用好Charles可以极大的方便我们对于带有网络请求的App的开发和调试。</p>
+
+<p>参考链接：</p>
+
+<ol>
+<li><a href="http://www.charlesproxy.com/overview/about-charles/">Charles主要的功能列表</a></li>
+<li><a href="http://www.charlesproxy.com/">Charles官网</a></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[使用Flurry来统计和分析用户行为]]></title>
-    <link href="http://blog.devtang.com/blog/2013/10/24/use-flurry-to-analyse-data/"/>
-    <updated>2013-10-24T13:51:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/10/24/use-flurry-to-analyse-data</id>
+    <link href="http://blog.devtang.com/blog/2013/11/14/use-flurry-to-analyse-data/"/>
+    <updated>2013-11-14T13:51:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/11/14/use-flurry-to-analyse-data</id>
     <content type="html"><![CDATA[<h2>简介</h2>
 
 <p><img src="http://blog.devtang.com/images/flurry-logo.png"></p>
@@ -103,15 +257,108 @@
 
 <p>例如我们的界面中有2个按钮，我们想统计它们各自被用户的点击次数，则可以如下代码实现。在该代码中，我们定义了2个自定义的统计项，名字分别为<code>First Button Pressed</code>和<code>Second Button Pressed</code>。</p>
 
-<p><img src="http://blog.devtang.com/images/flurry-logevent.png"></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">firstButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;First Button Pressed&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">secondButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;Second Button Pressed&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><code>logEvent</code>函数也支持添加各种参数，用于做更加精细的统计，例如，我们想在统计用户在同一个页面，点击时不同按钮的次数分布，看哪些按钮更加常用，则统计代码可以如下实现：</p>
 
-<p><img src="http://blog.devtang.com/images/flurry-logevent-with-parameters.png"></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">firstButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;Button Pressed&quot;</span>
+</span><span class='line'>      <span class="nl">withParameters:</span><span class="err">@</span><span class="p">{</span><span class="s">@&quot;target&quot;</span><span class="o">:</span> <span class="s">@&quot;first&quot;</span><span class="p">}];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">secondButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;Button Pressed&quot;</span>
+</span><span class='line'>      <span class="nl">withParameters:</span><span class="err">@</span><span class="p">{</span><span class="s">@&quot;target&quot;</span><span class="o">:</span> <span class="s">@&quot;second&quot;</span><span class="p">}];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><code>logEvent</code>函数也支持统计时间，常常用来统计某个复杂的网络操作的耗时或者用户对于某些界面的响应时间。例如，我们想统计用户停留在某个提示界面的时间，则可以用如下代码完成：</p>
 
-<p><img src="http://blog.devtang.com/images/flurry-log-event-time.png"></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  FirstViewController.m</span>
+</span><span class='line'><span class="cp">//  FlurryUsageSample</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'><span class="cp">//  Created by TangQiao on 13-10-25.</span>
+</span><span class='line'><span class="cp">//  Copyright (c) 2013年 TangQiao. All rights reserved.</span>
+</span><span class='line'><span class="cp">//</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#import &quot;FirstViewController.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#define FLURRY_EVENT_KEY @&quot;First View Controller&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@implementation</span> <span class="nc">FirstViewController</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillAppear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="nl">viewWillAppear:</span><span class="n">animated</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">// 开始统计时间</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="n">FLURRY_EVENT_KEY</span> <span class="nl">timed:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="nl">viewWillDisappear:</span><span class="n">animated</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">// 结束统计时间</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">endTimedEvent:</span><span class="n">FLURRY_EVENT_KEY</span> <span class="nl">withParameters:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h3>查看统计结果</h3>
 
@@ -123,10 +370,11 @@
 
 <p>Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在<code>AppDelegate.m</code>文件中，在调用<code>startSession</code>方法之前，调用<code>setCrashReportingEnabled:YES</code>即可：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[Flurry setCrashReportingEnabled:YES];
-</span><span class='line'>[Flurry startSession:@"YOUR_API_KEY"];</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">Flurry</span> <span class="nl">setCrashReportingEnabled:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">Flurry</span> <span class="nl">startSession:</span><span class="s">@&quot;YOUR_API_KEY&quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p></p>
@@ -3081,108 +3329,6 @@ CABackingStore类型的内存区会被标记成volatile类型（这里的volatil
 
 
 <p>TO: 百思不得姐的开发者，不用谢：）你们应用的内容挺有意思的。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[谈ObjC对象的两段构造模式]]></title>
-    <link href="http://blog.devtang.com/blog/2013/01/13/two-stage-creation-on-cocoa/"/>
-    <updated>2013-01-13T10:15:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/01/13/two-stage-creation-on-cocoa</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>Objective-c语言在申请对象的时，需要使用两段构造(<a href="http://volonbolon.net/post/634999801/two-stage-creation-in-cocoa">Two Stage Creation</a>)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithString:</span><span class="s">@&quot;http://blog.devtang.com&quot;</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>由于该语言的对象创建方法和大多数其它语言（如C、C++、Java、JavaScript）都不一样，所以引起了我的好奇。是什么原因促使Objective-C做了这种设计，而又是什么原因促使大多数其它语言都采用&#8221;new&#8221;方法来一次性创建对象呢？</p>
-
-<p>在看了<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书（顺便吐槽一下该书中文版翻译质量不高，建议看英文版），并且做了一些调研之后，我将总结分享给大家，欢迎大家讨论。</p>
-
-<!-- more -->
-
-
-<h2>对象的创建</h2>
-
-<p>我们先来看看在对象的创建过程中，alloc和init到底做了哪些事情。</p>
-
-<h3>alloc方法</h3>
-
-<p>根据苹果的<a href="https://developer.apple.com/library/mac/#documentation/cocoa/conceptual/CocoaFundamentals/CocoaObjects/CocoaObjects.html#//apple_ref/doc/uid/TP40002974-CH4-SW54">官方文档</a>。当对象创建时，cocoa会从应用程序的虚拟地址空间上为该对象分配足够的内存。cocoa会遍历该对象所有的成员变量，通过成员变量的类型来计算所需占用的内存。</p>
-
-<p>当我们通过alloc或allocWithZone方法创建对象时，cocoa会返回一个未”初使化“过的对象。在这个过程中，cocoa除了上面提到的申请了一块足够大的内存外，还做了以下3件事：</p>
-
-<ol>
-<li>将该新对象的引用计数(Retain Count)设置成1。</li>
-<li>将该新对象的isa成员变量指向它的类对象。</li>
-<li>将该新对象的所有其它成员变量的值设置成零。（根据成员变量类型，零有可能是指nil或Nil或0.0）</li>
-</ol>
-
-
-<p>isa成员变量是在<a href="https://developer.apple.com/library/mac/#documentation/cocoa/Reference/Foundation/Classes/NSObject_Class/Reference/Reference.html#//apple_ref/occ/cl/NSObject">NSObject</a>中定义的，所以保证Cocoa的所有对象都带有此成员变量。借助该变量可以实现Cocoa对象在运行时的自省(Introspection)功能。</p>
-
-<h3>init方法</h3>
-
-<p>大部分情况下，我们都不希望所有成员变量都是零，所以init方法会做真正的初使化工作，让对象的成员变量的值符合我们程序逻辑中的初始化状态。例如，NSMutableString可能就会额外再申请一块字符数组，用于动态修改字符串。</p>
-
-<p>init还有一个需要注意的问题。某些情况下，init会造成alloc的原本空间不够用，而第二次分配内存空间。所以下面的写法是错的：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">];</span>
-</span><span class='line'><span class="p">[</span><span class="n">s</span> <span class="n">init</span><span class="p">];</span> <span class="c1">// 这儿init返回的地址可能会变。s原本的指针地址可能是无效的地址。</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>为此，苹果引入了一个编程规范，让大家写的时候将alloc 和init写在一行。所以上面的代码正确的写法是</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">s</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>new</h3>
-
-<p>在后来，苹果也引入了类方法：new。但是由于历史原因，init方法是实例方法而非类方法，所以作为类方法的new，只能简单地等价于 alloc + init，不能指定init的参数，所以用处不大。苹果在设计上也禁止多次调用init方法，例如如下代码会抛出 NSInvalidArgumentException。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="n">new</span><span class="p">];</span>
-</span><span class='line'><span class="n">str</span> <span class="o">=</span> <span class="p">[</span><span class="n">str</span> <span class="nl">initWithString:</span><span class="s">@&quot;Bar&quot;</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>为什么这么设计</h2>
-
-<p>说回来文章开始时提出来问题，为什么苹果要这么设计而其它语言不这么设计？</p>
-
-<p>上面提到，alloc其实不只干了申请内存的事情，还做了：
- 1. 内存管理的事情，设置Retain Count。
- 2. 运行时自省的功能，设置isa变量。
- 3. 非逻辑性的初使化功能，设置所有成员变量为零。</p>
-
-<p>简单看来，根据设计模式的Single Responsibility的设计原则，苹果觉得alloc和init是做的2件不同的事情，把这两件事情分开放在2个函数中，对于程序员更加清楚明了。更详细查阅文档后，我觉得这是由于历史原因，让苹果觉得alloc方法过于复杂，在历史上，alloc不仅仅是分配内存，还可以详细的指定该内存所在的内存分区（用NSZone表示）。这就是下面要提到的allocWithZone方法。</p>
-
-<p>在<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书也提到，早期苹果是建议程序员使用 allocWithZone来管理内存分配的，每个NSZone表示一块内存分区，allowWithZone方法可以允许对象从指定分区分配内存。了解到这段历史后，也不难理解苹果这么设计的原因了。因为在这种情况下，alloc要处理的情况复杂，和init放到一起不合适。</p>
-
-<p>而对于大多数出生在90年代的语言来说(例如Java,JavaScript,C#)，由于内存具体的分配方案都不需要程序员操心了，所以就不需要单独为内存分配实现一个alloc方法了。</p>
-
-<h2>后记</h2>
-
-<h3>allocWithZone被废弃</h3>
-
-<p>自从Mac OS X 10.5上引入了垃圾回收机制后，苹果就不建议程序员使用allocWithZone了，事实上，cocoa框架也会忽略allocWithZone指定的分区。苹果在文档中也<a href="https://developer.apple.com/library/mac/#documentation/cocoa/Reference/Foundation/Classes/NSObject_Class/Reference/Reference.html#//apple_ref/occ/clm/NSObject/allocWithZone:">提到</a>，allocWithZone仅仅是一个历史遗留设计了。下图是苹果的文档截图：</p>
-
-<p><img src="http://blog.devtang.com/images/allocWithZone.png" title="" ></p>
-
-<h3>Objective-C的历史</h3>
-
-<p>Objective-C是一门非常老的语言。如果你查阅文档，你会发现它和C++出生在同一时代（两种语言的发行年份都是<a href="http://en.wikipedia.org/wiki/Stepstone">1983年</a>），都是作为C语言的面向对象的接班人被推出。当然，最终C++胜出。由于历史久远，Objective-C也无法有太多优秀的语言做参考，所以，有很多历史遗留的设计。在2007年苹果公司发布了Obj-C 2.0, 对其进行了大量改进。</p>
-
-<p>在最近几年的WWDC大会上，每年苹果都会对Objective-C和其对应的LLVM编译器进行改进，例如WWDC2011推出的ARC，WWDC2012推出的Object Literals等。所以现在使用Objective-C做开发已经非常舒服了。期待苹果给开发者带来更多惊喜。</p>
 ]]></content>
   </entry>
   

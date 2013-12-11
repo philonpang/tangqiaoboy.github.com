@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-11-15T20:29:47+08:00</updated>
+  <updated>2013-12-11T14:17:24+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -14,10 +14,164 @@
 
   
   <entry>
+    <title type="html"><![CDATA[iOS开发工具-网络封包分析工具Charles]]></title>
+    <link href="http://blog.devtang.com/blog/2013/12/11/network-tool-charles-intr/"/>
+    <updated>2013-12-11T14:03:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/12/11/network-tool-charles-intr</id>
+    <content type="html"><![CDATA[<p><img src="/images/charles-logo.png"></p>
+
+<h2>简介</h2>
+
+<p><a href="http://www.charlesproxy.com/">Charles</a>是在Mac下常用的截取网络封包的工具，在做iOS开发时，我们为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析。Charles通过将自己设置成系统的网络访问代理服务器，使得所有的网络访问请求都通过它来完成，从而实现了网络封包的截取和分析。</p>
+
+<p>Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时。</p>
+
+<p>因此，该付费方案对广大用户还是相当友好的，即使你长期不付费，也能使用完整的软件功能。只是当你需要长时间进行封包调试时，会因为Charles强制关闭而遇到影响。</p>
+
+<p>Charles主要的功能包括：</p>
+
+<ol>
+<li>支持SSL代理。可以截取分析<a href="http://zh.wikipedia.org/wiki/%E5%AE%89%E5%85%A8%E5%A5%97%E6%8E%A5%E5%B1%82">SSL</a>的请求。</li>
+<li>支持流量控制。可以模拟慢速网络以及等待时间（latency）较长的请求。</li>
+<li>支持AJAX调试。可以自动将json或xml数据格式化，方便查看。</li>
+<li>支持AMF调试。可以将Flash Remoting 或 Flex Remoting信息格式化，方便查看。</li>
+<li>支持重发网络请求，方便后端调试。</li>
+<li>支持修改网络请求参数。</li>
+<li>支持网络请求的截获并动态修改。</li>
+<li>检查HTML，CSS和RSS内容是否符合<a href="http://validator.w3.org/">W3C标准</a>。</li>
+</ol>
+
+
+<!-- more -->
+
+
+<h2>安装Charles</h2>
+
+<p>去Charles的官方网站（<a href="http://www.charlesproxy.com">http://www.charlesproxy.com</a>）下载最新版的Charles安装包，是一个dmg后缀的文件。打开后将Charles拖到Application目录 下即完成安装。</p>
+
+<h2>安装SSL证书</h2>
+
+<p>如果你需要截取分析SSL协议相关的内容。那么需要安装Charles的CA证书。具体步骤如下：</p>
+
+<ol>
+<li>去 <a href="http://www.charlesproxy.com/ssl.zip">http://www.charlesproxy.com/ssl.zip</a> 下载CA证书文件。</li>
+<li>解压该zip文件后，双击其中的.crt文件，这时候在弹出的菜单中选择“总是信任”，如下所示：<img src="/images/charles-ca-1.png"></li>
+<li>从钥匙串访问中即可看到添加成功的证书。如下所示：
+<img src="/images/charles-ca-2.png"></li>
+</ol>
+
+
+<h2>将Charles设置成系统代理</h2>
+
+<p>之前提到，Charles是通过将自己设置成代理服务器来完成封包截取的，所以使用Charles的第一步是将其设置成系统的代理服务器。</p>
+
+<p>启动Charles后，第一次Charles会请求你给它设置系统代理的权限。你可以输入登录密码授予Charles该权限。你也可以忽略该请求，然后在需要将Charles设置成系统代理时，选择菜单中的 "Proxy" -> "Mac OS X Proxy"来将Charles设置成系统代理。如下所示：</p>
+
+<p><img src="/images/charles-set-system-proxy.png"></p>
+
+<p>之后，你就可以看到源源不断的网络请求出现在Charles的界面中。</p>
+
+<h2>Charles主界面介绍</h2>
+
+<p><img src="/images/charles-home.jpg"></p>
+
+<p>Charles主要提供2种查看封包的视图，分别名为“Structure”和"Sequence"。</p>
+
+<ol>
+<li>Structure视图将网络请求按访问的域名分类。</li>
+<li>Sequence视图将网络请求按访问的时间排序。</li>
+</ol>
+
+
+<p>大家可以根据具体的需要在这两种视图之前来回切换。</p>
+
+<p>对于某一个具体的网络请求，你可以查看其详细的请求内容和响应内容。如果响应内容是JSON格式的，那么Charles可以自动帮你将JSON内容格式化，方便你查看。</p>
+
+<h2>过滤网络请求</h2>
+
+<p>通常情况下，我们需要对网络请求进行过滤，只监控向指定目录服务器上发送的请求。对于这种需求，我们有2种办法。</p>
+
+<ol>
+<li><p>在主界面的中部的Filter栏中填入需要过滤出来的关键字。例如我们的服务器的地址是：http://yuantiku.com，那么只需要在Filter栏中填入yuantiku即可。</p></li>
+<li><p>在Charles的菜单栏选择"Proxy"->"Recording Settings"，然后选择Include栏，选择添加一个项目，然后填入需要监控的协议，主机地址，端口号。这样就可以只截取目标网站的封包了。如下图所示：</p></li>
+</ol>
+
+
+<p><img src="/images/charles-filter-setting.jpg"></p>
+
+<p>通常情况下，我们使用方法1做一些临时性的封包过滤，使用方法2做一些经常性的封包过滤。</p>
+
+<h2>截取iPhone上的网络封包</h2>
+
+<p>Charles通常用来截取本地上的网络封包，但是当我们需要时，我们也可以用来截取其它设备上的网络请求。下面我就以iPhone为例，讲解如何进行相应操作。</p>
+
+<h4>Charles上的设置</h4>
+
+<p>要截取iPhone上的网络请求，我们首先需要将Charles的代理功能打开。在Charles的菜单栏上选择“Proxy”->"Proxy Settings"，填入代理端口8888，并且勾上"Enable transparent HTTP proxying" 就完成了在Charles上的设置。如下图所示:</p>
+
+<p><img src="/images/charles-proxy-setting.jpg"></p>
+
+<h4>iPhone上的设置</h4>
+
+<p>首先我们需要获取Charles运行所在电脑的IP地址，打开Terminal，输入<code>ifconfig en0</code>, 即可获得该电脑的IP，如下图所示：</p>
+
+<p><img src="/images/charles-ifconfig.jpg"></p>
+
+<p>在iPhone的 “设置”->“无线局域网“中，可以看到当前连接的wifi名，通过点击右边的详情键，可以看到当前连接上的wifi的详细信息，包括IP地址，子网掩码等信息。在其最底部有“HTTP代理”一项，我们将其切换成手动，然后填上Charles运行所在的电脑的IP，以及端口号8888，如下图所示：</p>
+
+<p><img src="/images/charles-iphone-setting.jpg"></p>
+
+<p>设置好之后，我们打开iPhone上的任意需要网络通讯的程序，就可以看到Charles弹出iPhone请求连接的确认菜单（如下图所示），点击“Allow”即可完成设置。</p>
+
+<p><img src="/images/charles-proxy-confirm.jpg"></p>
+
+<h2>截取SSL信息</h2>
+
+<p>Charles默认并不截取SSL的信息，如果你想对截取某个网站上的所有SSL网络请求，可以在该请求上右击，选择SSL proxy，如下图所示：</p>
+
+<p><img src="/images/charles-ssl-add-host.jpg"></p>
+
+<p>这样，对于该Host的所有SSL请求可以被截取到了。</p>
+
+<h2>模拟慢速网络</h2>
+
+<p>在做iPhone开发的时候，我们常常需要模拟慢速网络或者高延迟的网络，以测试在移动网络下，应用的表现是否正常。Charles对此需求提供了很好的支持。</p>
+
+<p>在Charles的菜单上，选择"Proxy"->"Throttle Setting"项，在之后弹出的对话框中，我们可以勾选上“Enable Throttling”，并且可以设置Throttle Preset的类型。如下图所示：</p>
+
+<p><img src="/images/charles-throttle-setting.jpg"></p>
+
+<p>如果我们只想模拟指定网站的慢速网络，可以再勾选上图中的"Only for selected hosts"项，然后在对话框的下半部分设置中增加指定的hosts项即可。</p>
+
+<h2>修改网络请求内容</h2>
+
+<p>有些时候为了调试服务器的接口，我们需要反复尝试不同参数的网络请求。Charles可以方便地提供网络请求的修改和重发功能。只需要在以往的网络请求上点击右键，选择“Edit”，即可创建一个可编辑的网络请求。如下所示：</p>
+
+<p><img src="/images/charles-edit.jpg"></p>
+
+<p>我们可以修改该请求的任何信息，包括url地址，端口，参数等，之后点击“Execute”即可发送该修改后的网络请求（如下图所示）。Charles支持我们多次修改和发送该请求，这对于我们和服务器端调试接口非常方便。</p>
+
+<p><img src="/images/charles-execute-request.jpg"></p>
+
+<h2>总结</h2>
+
+<p>通过Charles软件，我们可以很方便地在日常开发中，截取和调试网络请求内容，分析封包协议以及模拟慢速网络。用好Charles可以极大的方便我们对于带有网络请求的App的开发和调试。</p>
+
+<p>参考链接：</p>
+
+<ol>
+<li><a href="http://www.charlesproxy.com/overview/about-charles/">Charles主要的功能列表</a></li>
+<li><a href="http://www.charlesproxy.com/">Charles官网</a></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[使用Flurry来统计和分析用户行为]]></title>
-    <link href="http://blog.devtang.com/blog/2013/10/24/use-flurry-to-analyse-data/"/>
-    <updated>2013-10-24T13:51:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/10/24/use-flurry-to-analyse-data</id>
+    <link href="http://blog.devtang.com/blog/2013/11/14/use-flurry-to-analyse-data/"/>
+    <updated>2013-11-14T13:51:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/11/14/use-flurry-to-analyse-data</id>
     <content type="html"><![CDATA[<h2>简介</h2>
 
 <p><img src="/images/flurry-logo.png"></p>
@@ -103,15 +257,80 @@
 
 <p>例如我们的界面中有2个按钮，我们想统计它们各自被用户的点击次数，则可以如下代码实现。在该代码中，我们定义了2个自定义的统计项，名字分别为<code>First Button Pressed</code>和<code>Second Button Pressed</code>。</p>
 
-<p><img src="/images/flurry-logevent.png"></p>
+<p>``` objc
+- (IBAction)firstButtonPressed:(id)sender {</p>
+
+<pre><code>[Flurry logEvent:@"First Button Pressed"];
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li>(IBAction)secondButtonPressed:(id)sender {
+  [Flurry logEvent:@"Second Button Pressed"];
+}</li>
+</ul>
+
+
+<p>```</p>
 
 <p><code>logEvent</code>函数也支持添加各种参数，用于做更加精细的统计，例如，我们想在统计用户在同一个页面，点击时不同按钮的次数分布，看哪些按钮更加常用，则统计代码可以如下实现：</p>
 
-<p><img src="/images/flurry-logevent-with-parameters.png"></p>
+<p>``` objc
+- (IBAction)firstButtonPressed:(id)sender {</p>
+
+<pre><code>[Flurry logEvent:@"Button Pressed"
+  withParameters:@{@"target": @"first"}];
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li>(IBAction)secondButtonPressed:(id)sender {
+  [Flurry logEvent:@"Button Pressed"
+
+<pre><code>withParameters:@{@"target": @"second"}];
+</code></pre>
+
+<p>}
+```</p></li>
+</ul>
+
 
 <p><code>logEvent</code>函数也支持统计时间，常常用来统计某个复杂的网络操作的耗时或者用户对于某些界面的响应时间。例如，我们想统计用户停留在某个提示界面的时间，则可以用如下代码完成：</p>
 
-<p><img src="/images/flurry-log-event-time.png"></p>
+<p>``` objc
+//
+//  FirstViewController.m
+//  FlurryUsageSample
+//
+//  Created by TangQiao on 13-10-25.
+//  Copyright (c) 2013年 TangQiao. All rights reserved.
+//</p>
+
+<h1>import "FirstViewController.h"</h1>
+
+<h1>define FLURRY_EVENT_KEY @"First View Controller"</h1>
+
+<p>@implementation FirstViewController</p>
+
+<ul>
+<li><p>(void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  // 开始统计时间
+  [Flurry logEvent:FLURRY_EVENT_KEY timed:YES];
+}</p></li>
+<li><p>(void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  // 结束统计时间
+  [Flurry endTimedEvent:FLURRY_EVENT_KEY withParameters:nil];
+}</p></li>
+</ul>
+
+
+<p>@end</p>
+
+<p>```</p>
 
 <h3>查看统计结果</h3>
 
@@ -662,306 +881,6 @@ if (shouldDrawLine) {
 <p>通过多target编译方案，我们可以很方便的实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。同时，由于在一个工程中，我们也可以方便地测试新的代码逻辑在各个课程下是否正常。</p>
 
 <p>该方案可以用来解决“维护大量逻辑相似但是又有细微不同的应用”的需求，希望本文能给业界同行一些帮助。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Objective-C对象模型及应用]]></title>
-    <link href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/"/>
-    <updated>2013-10-15T20:31:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/10/15/objective-c-object-model</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>原创文章，转载请注明出自<a href="http://blog.devtang.com">唐巧的技术博客</a>。</p>
-
-<p>本文主要介绍Objective-C对象模型的实现细节，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。希望本文能加深你对Objective-C对象的理解。</p>
-
-<h2>ISA指针</h2>
-
-<p>Objective-C是一门面向对象的编程语言。每一个对象都是一个类的实例。在Objective-C语言的内部，每一个对象都有一个名为isa的指针，指向该对象的类。每一个类描述了一系列它的实例的特点，包括成员变量的列表，成员函数的列表等。每一个对象都可以接受消息，而对象能够接收的消息列表是保存在它所对应的类中。</p>
-
-<p>在XCode中按<code>Shift + Command + O</code>, 然后输入NSObject.h和objc.h，可以打开NSObject的定义头文件，通过头文件我们可以看到，NSObject就是一个包含isa指针的结构体，如下图所示：</p>
-
-<!-- more -->
-
-
-<p><img src="/images/class-nsobject-isa.jpg">
-<img src="/images/class-objc-object-isa.jpg"></p>
-
-<p>按照面向对象语言的设计原则，所有事物都应该是对象（严格来说Objective-C并没有完全做到这一点，因为它有象int, double这样的简单变量类型）。在Objective-C语言中，每一个类实际上也是一个对象。每一个类也有一个名为isa的指针。每一个类也可以接受消息，例如<code>[NSObject alloc]</code>，就是向NSObject这个类发送名为<code>alloc</code>消息。</p>
-
-<p>在XCode中按<code>Shift + Command + O</code>, 然后输入runtime.h，可以打开Class的定义头文件，通过头文件我们可以看到，Class也是一个包含isa指针的结构体，如下图所示。（图中除了isa外还有其它成员变量，但那是为了兼容非2.0版的Objective-C的遗留逻辑，大家可以忽略它。）</p>
-
-<p><img src="/images/class-objc-class-isa.jpg"></p>
-
-<p>因为类也是一个对象，那它也必须是另一个类的实列，这个类就是元类(<code>metaclass</code>)。元类保存了类方法的列表。当一个类方法被调用时，元类会首先查找它本身是否有该类方法的实现，如果没有，则该元类会向它的父类查找该方法，直到一直找到继承链的头。</p>
-
-<p>元类(<code>metaclass</code>)也是一个对象，那么元类的isa指针又指向哪里呢？为了设计上的完整，所有的元类的isa指针都会指向一个根元类(root <code>metaclass</code>)。根元类(root metaclass)本身的isa指针指向自己，这样就行成了一个闭环。上面提到，一个对象能够接收的消息列表是保存在它所对应的类中的。在实际编程中，我们几乎不会遇到向元类发消息的情况，那它的isa指针在实际上很少用到。不过这么设计保证了面向对象的干净，即所有事物都是对象，都有isa指针。</p>
-
-<p>我们再来看看继承关系，由于类方法的定义是保存在元类(<code>metaclass</code>)中，而方法调用的规则是，如果该类没有一个方法的实现，则向它的父类继续查找。所以，为了保证父类的类方法可以在子类中可以被调用，所以子类的元类会继承父类的元类，换而言之，类对象和元类对象有着同样的继承关系。</p>
-
-<p>我很想把关系说清楚一些，但是这块儿确实有点绕，下面这张图或许能够让大家对isa和继承的关系清楚一些（该图片来自<a href="http://www.sealiesoftware.com/blog/class%20diagram.pdf">这里</a>）</p>
-
-<p><img src="/images/class-diagram.jpg"></p>
-
-<p>该图中，最让人困惑的莫过于Root Class了。在实现中，Root Class是指NSObject，我们可以从图中看出：</p>
-
-<ol>
-<li>NSObject类包括它的对象实例方法。</li>
-<li>NSObject的元类包括它的类方法，例如alloc方法。</li>
-<li>NSObject的元类继承自NSObject类。</li>
-<li>一个NSObject的类中的方法同时也会被NSObject的子类在查找方法时找到。</li>
-</ol>
-
-
-<h2>类的成员变量</h2>
-
-<p>如果把类的实例看成一个C语言的结构体（struct），上面说的isa指针就是这个结构体的第一个成员变量，而类的其它成员变量依次排列在结构体中。排列顺序如下图所示（图片来自《iOS 6 Programming Pushing the Limits》）：</p>
-
-<p><img src="/images/class-member.jpg"></p>
-
-<p>为了验证该说法，我们在XCode中新建一个工程，在main.m中运行如下代码：</p>
-
-<p>``` objc</p>
-
-<h1>import &lt;UIKit/UIKit.h></h1>
-
-<p>@interface Father : NSObject {</p>
-
-<pre><code>int _father;
-</code></pre>
-
-<p>}</p>
-
-<p>@end</p>
-
-<p>@implementation Father</p>
-
-<p>@end</p>
-
-<p>@interface Child : Father {</p>
-
-<pre><code>int _child;
-</code></pre>
-
-<p>}</p>
-
-<p>@end</p>
-
-<p>@implementation Child</p>
-
-<p>@end</p>
-
-<p>int main(int argc, char * argv[])
-{</p>
-
-<p>  Child * child = [[Child alloc] init];  <br/>
-  @autoreleasepool {</p>
-
-<pre><code>  // ...
-</code></pre>
-
-<p>  }
-}
-```</p>
-
-<p>我们将断点下在 <code>@autoreleasepool</code> 处，然后在Console中输入<code>p *child</code>,则可以看到Xcode输出如下内容，这与我们上面的说法一致。</p>
-
-<p>```
-(lldb) p *child
-(Child) $0 = {
-  (Father) Father = {</p>
-
-<pre><code>(NSObject) NSObject = {
-  (Class) isa = Child
-}
-(int) _father = 0
-</code></pre>
-
-<p>  }
-  (int) _child = 0
-}
-```</p>
-
-<h2>可变与不可变</h2>
-
-<p>因为对象在内存中的排布可以看成一个结构体，该结构体的大小并不能动态变化。所以无法在运行时动态给对象增加成员变量。</p>
-
-<p>相对的，对象的方法定义都保存在类的可变区域中。Objective-C 2.0并未在头文件中将实现暴露出来，但在Objective-C 1.0中，我们可以看到方法的定义列表是一个名为 <code>methodLists</code>的指针的指针（如下图所示）。通过修改该指针指向的指针的值，就可以实现动态地为某一个类增加成员方法。这也是<code>Category</code>实现的原理。同时也说明了为什么<code>Category</code>只可为对象增加成员方法，却不能增加成员变量。</p>
-
-<p><img src="/images/class-objc-class-isa.jpg"></p>
-
-<p>需要特别说明一下，通过<code>objc_setAssociatedObject</code> 和 <code>objc_getAssociatedObject</code>方法可以变相地给对象增加成员变量，但由于实现机制不一样，所以并不是真正改变了对象的内存结构。</p>
-
-<p>除了对象的方法可以动态修改，因为isa本身也只是一个指针，所以我们也可以在运行时动态地修改isa指针的值，达到替换对象整个行为的目的。不过该应用场景较少。</p>
-
-<h2>系统相关API及应用</h2>
-
-<h3>isa swizzling的应用</h3>
-
-<p>系统提供的KVO的实现，就利用了动态地修改isa指针的值的技术。在<a href="https://developer.apple.com/library/ios/documentation/cocoa/conceptual/KeyValueObserving/Articles/KVOImplementation.html">苹果的文档</a>中可以看到如下描述：</p>
-
-<p><blockquote><p></p></p><p><p>Key-Value Observing Implementation Details</p></p><p><p>Automatic key-value observing is implemented using a technique called isa-swizzling.</p></p><p><p>The isa pointer, as the name suggests, points to the object's class which maintains a dispatch table. This dispatch table essentially contains pointers to the methods the class implements, among other data.</p></p><p><p>When an observer is registered for an attribute of an object the isa pointer of the observed object is modified, pointing to an intermediate class rather than at the true class. As a result the value of the isa pointer does not necessarily reflect the actual class of the instance.</p></p><p><p>You should never rely on the isa pointer to determine class membership. Instead, you should use the class method to determine the class of an object instance.</p></p><p><p></p></blockquote></p>
-
-<p><del>类似的，使用isa swizzling的技术的还有系统提供的Key-Value Coding（KVC）。</del> (谢谢大家指出错误，KVC并没有使用到isa swizzling)</p>
-
-<h3>Method Swizzling API说明</h3>
-
-<p>Objective-C提供了以下API来动态替换类方法或实例方法的实现：</p>
-
-<ul>
-<li><code>class_replaceMethod</code> 替换类方法的定义</li>
-<li><code>method_exchangeImplementations</code> 交换2个方法的实现</li>
-<li><code>method_setImplementation</code> 设置1个方法的实现</li>
-</ul>
-
-
-<p>这3个方法有一些细微的差别，给大家介绍如下：</p>
-
-<ul>
-<li><code>class_replaceMethod</code>在苹果的文档（如下图所示）中能看到，它有两种不同的行为。当类中没有想替换的原方法时，该方法会调用<code>class_addMethod</code>来为该类增加一个新方法，也因为如此，<code>class_replaceMethod</code>在调用时需要传入<code>types</code>参数，而<code>method_exchangeImplementations</code>和<code>method_setImplementation</code>却不需要。</li>
-</ul>
-
-
-<p><img src="/images/class-replace-method.jpg"></p>
-
-<ul>
-<li><code>method_exchangeImplementations</code> 的内部实现其实是调用了2次<code>method_setImplementation</code>方法，从苹果的文档中能清晰地了解到（如下图所示）</li>
-</ul>
-
-
-<p><img src="/images/class-method-exchange-imp.jpg"></p>
-
-<p>从以上的区别我们可以总结出这3个API的使用场景:</p>
-
-<ul>
-<li><code>class_replaceMethod</code>, 当需要替换的方法可能有不存在的情况时，可以考虑使用该方法。</li>
-<li><code>method_exchangeImplementations</code>，当需要交换2个方法的实现时使用。</li>
-<li><code>method_setImplementation</code> 最简单的用法，当仅仅需要为一个方法设置其实现方式时使用。</li>
-</ul>
-
-
-<h3>使用示例</h3>
-
-<p>我们在开发<a href="http://yuantiku.com">猿题库</a>客户端的笔记功能时，需要使用系统的<code>UIImagePickerController</code>。但是，我们发现，在iOS6.0.2系统下，系统提供的<code>UIImagePickerController</code>在iPad横屏下有转屏的Bug，造成其方向错误。具体的Bug详情可以见<a href="http://stackoverflow.com/questions/12522491/crash-on-presenting-uiimagepickercontroller-under-ios-6-0">这里</a>。</p>
-
-<p>为了修复该Bug，我们需要替换<code>UIImagePickerController</code>的如下2个方法</p>
-
-<p>``` objc
-- (BOOL)shouldAutorotate;
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation;</p>
-
-<p>```</p>
-
-<p>我们先实现了一个名为<code>ImagePickerReplaceMethodsHolder</code>的类，用于定义替换后的方法和实现。如下所示：</p>
-
-<p>``` objc</p>
-
-<p>// ImagePickerReplaceMethodsHolder.h
-@interface ImagePickerReplaceMethodsHolder : NSObject</p>
-
-<ul>
-<li>(BOOL)shouldAutorotate;</li>
-<li>(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation;</li>
-</ul>
-
-
-<p>@end</p>
-
-<p>// ImagePickerReplaceMethodsHolder.m
-@implementation ImagePickerReplaceMethodsHolder</p>
-
-<ul>
-<li><p>(BOOL)shouldAutorotate {
-  return NO;
-}</p></li>
-<li><p>(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-  return UIInterfaceOrientationPortrait;
-}</p></li>
-</ul>
-
-
-<p>@end</p>
-
-<p>```</p>
-
-<p>然后，我们在调用处，判断当前的iOS版本，对于[iOS6.0, iOS6.1)之间的版本，我们将<code>UIImagePickerController</code>的有问题的方法替换。具体代码如下：</p>
-
-<p>``` objc</p>
-
-<h1>define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)</h1>
-
-<h1>define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)</h1>
-
-<ul>
-<li><p>(void)load {
-  static dispatch_once_t onceToken;
-  dispatch_once(&amp;onceToken, ^{</p>
-
-<pre><code>  [self hackForImagePicker];
-</code></pre>
-
-<p>  });
-}</p></li>
-<li><p>(void)hackForImagePicker {
-  // fix bug of image picker under iOS 6.0
-  // http://stackoverflow.com/questions/12522491/crash-on-presenting-uiimagepickercontroller-under-ios-6-0
-  if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0")</p>
-
-<pre><code>  &amp;&amp; SYSTEM_VERSION_LESS_THAN(@"6.1")) {
-  Method oldMethod1 = class_getInstanceMethod([UIImagePickerController class], @selector(shouldAutorotate));
-  Method newMethod1 = class_getInstanceMethod([ImagePickerReplaceMethodsHolder class], @selector(shouldAutorotate));
-  method_setImplementation(oldMethod1, method_getImplementation(newMethod1));
-
-  Method oldMethod2 = class_getInstanceMethod([UIImagePickerController class], @selector(preferredInterfaceOrientationForPresentation));
-  Method newMethod2 = class_getInstanceMethod([ImagePickerReplaceMethodsHolder class], @selector(preferredInterfaceOrientationForPresentation));
-  method_setImplementation(oldMethod2, method_getImplementation(newMethod2));
-</code></pre>
-
-<p>  }
-}</p></li>
-</ul>
-
-
-<p>```</p>
-
-<p>通过如上代码，我们就针对iOS特定版本的有问题的系统库函数打了Patch，使问题得到解决。</p>
-
-<h3>开源界的使用</h3>
-
-<p>有少量不明真相的同学以为苹果在审核时会拒绝App使用以上API，这其实是对苹果的误解。使用如上API是安全的。另外，开源界也对以上方法都适当的使用。例如：</p>
-
-<ul>
-<li>著名的网络库<a href="https://github.com/AFNetworking/AFNetworking">AFNetworking</a>。AFNetworking网络库(v1.x版本)使用了class_replaceMethod方法（AFHTTPRequestOperation.m文件第105行）</li>
-<li><a href="https://github.com/jverkoey/nimbus">Nimbus</a>。Nimbus是著名的工具类库，它在其core模块中提供了<code>NIRuntimeClassModifications.h</code>文件，用于提供上述API的封装。</li>
-<li>国内的大众点评iOS客户端。该客户端使用了他们自己开发的基于Wax修改而来的<a href="https://github.com/mmin18/WaxPatch">WaxPatch</a>，WaxPatch可以实现通过服务器更新来动态修改客户端的逻辑。而WaxPatch主要是修改了wax中的wax_instance.m文件，在其中加入了class_replaceMethod来替换原始实现，从而实现修改客户端的原有行为。</li>
-</ul>
-
-
-<h2>总结</h2>
-
-<p>通过本文，我们了解到了Objective-C语言的对象模型，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。本文也通过具体的实例代码和开源项目，让我们对该对象模型提供的动态性有了更加深刻的认识。</p>
-
-<h2>后记</h2>
-
-<p>文章发表后，一些同行指出在ARM64的CPU下，isa的内部结构有变化。这点我是知道的，不过希望以后再撰文讨论。感兴趣的同学可以查看苹果今年WWDC2013的视频：《Session 404 Advanced in Objective-C》。</p>
-
-<h3>参考链接</h3>
-
-<ul>
-<li><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html">https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html</a></li>
-<li><a href="http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html">http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html</a></li>
-<li><a href="http://www.devalot.com/articles/2011/11/objc-object-model.html">http://www.devalot.com/articles/2011/11/objc-object-model.html</a></li>
-<li><a href="http://www.cocoawithlove.com/2010/01/what-is-meta-class-in-objective-c.html">http://www.cocoawithlove.com/2010/01/what-is-meta-class-in-objective-c.html</a></li>
-<li><a href="http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html">http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html</a></li>
-<li><a href="http://wwwmain.gnustep.org/resources/downloads.php">gunstep的实现源码</a></li>
-<li><a href="http://algorithm.com.au/downloads/talks/objective-c-internals/objective-c-internals.pdf">http://algorithm.com.au/downloads/talks/objective-c-internals/objective-c-internals.pdf</a></li>
-<li><a href="http://opensource.apple.com/source/objc4/objc4-532/runtime/">http://opensource.apple.com/source/objc4/objc4-532/runtime/</a></li>
-<li><a href="https://github.com/AFNetworking/AFNetworking">https://github.com/AFNetworking/AFNetworking</a></li>
-<li><a href="https://github.com/jverkoey/nimbus">https://github.com/jverkoey/nimbus</a></li>
-<li><a href="https://github.com/mmin18/WaxPatch">https://github.com/mmin18/WaxPatch</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-12-11T22:22:02+08:00</updated>
+  <updated>2013-12-22T19:49:54+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,57 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[XCode Debugger中的Icon符号的意义]]></title>
+    <link href="http://blog.devtang.com/blog/2013/12/22/the-secret-of-xcode-debugger-icon/"/>
+    <updated>2013-12-22T19:23:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/12/22/the-secret-of-xcode-debugger-icon</id>
+    <content type="html"><![CDATA[<p>你注意到了吗？在Xcode中，当你点击查看调用栈的时候，调用栈的每个方法前面都有一个Icon，而且还有好几种不同的样子，如下图所示，你知道它们代表什么意思吗？</p>
+
+<p><img src="/images/debugger-icon.png"></p>
+
+<!-- more -->
+
+
+<p>其实它们代表的意义如下：</p>
+
+<ul>
+<li>Person icon is User</li>
+<li>Mug icon is AppKit (or UIKit)</li>
+<li>Briefcase icon is Frameworks</li>
+<li>Gear icon is System</li>
+<li>Morse code icon is Foundation</li>
+<li>Spider web looking icon is Web</li>
+</ul>
+
+
+<p>另外，Debuger中的图标（如下图所示）也是有意义：</p>
+
+<p><img src="/images/debugger-icon2.jpg"></p>
+
+<p>具体意义如下：</p>
+
+<ul>
+<li>L = Local variable</li>
+<li>A = Argument</li>
+<li>S = Static variable</li>
+<li>V = global Variable</li>
+<li>R = register</li>
+<li>i = Instance variable</li>
+<li>E = Expression</li>
+</ul>
+
+
+<p>或许你觉得以上内容没什么实用价值，那再分享一个实用的。</p>
+
+<p>在XCode5中，点击一个小眼镜图标，就直接预览UIImage的内容，如下图所示：</p>
+
+<p><img src="/images/debugger-preview-image.png"></p>
+
+<p>这个有用吧，祝大家玩得开心～</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS开发工具-网络封包分析工具Charles]]></title>
@@ -736,153 +787,6 @@ if (shouldDrawLine) {
 <h2>总结</h2>
 
 <p>本文介绍了猿题库iOS客户端采用的答题卡扫描算法的大致步骤，以及算法的质量和移植方案。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App]]></title>
-    <link href="http://blog.devtang.com/blog/2013/10/17/the-tech-detail-of-ape-client-1/"/>
-    <updated>2013-10-17T00:43:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/10/17/the-tech-detail-of-ape-client-1</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第一篇。本文涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
-
-<!-- more -->
-
-
-<h3>问题描述</h3>
-
-<p>今年春节后，我们对外发布了应用<a href="http://yuantiku.com/m?courseSet=xingce">“猿题库-公务员考试行测”</a>，接着我们就开始一个个发布猿题库系列课程应用。到现在半年多过去了，我们一共对外发布了8款应用（如下图所示）。</p>
-
-<p><img src="/images/ape-arch-1.jpg"></p>
-
-<p>这些课程，随了<a href="http://yuantiku.com/m?courseSet=shenlun">"猿题库-公务员考试申论"</a>和其它课程不一样之外，另外7个课程都有着相似，但是又不完全相同的功能和界面。</p>
-
-<p>这些应用的相同点包括：</p>
-
-<ol>
-<li>基本相同的注册和登录以及首页逻辑和界面（只是背景图片不一样而已）。</li>
-<li>相同的做题逻辑和界面。</li>
-<li>基本相同的答题报告显示界面。</li>
-<li>基本相同的能力评估报告界面。</li>
-</ol>
-
-
-<p>不同点主要包括：</p>
-
-<ol>
-<li>应用图标，启动画面，应用启动后的首页都不一样。</li>
-<li>有些课程（例如公务员考试和高考）是有目标考试的概念，不同的目标考试大纲是不一样的。拿高考来举例，北京的高考和上海的高考，就有着完全不一样的考试大纲。高考的文科和理科，又有着完全不同的考试科目。</li>
-<li>有些课程会有一些自定义的界面，例如高考的应用可以设置昵称，有些课程的真题练习中是有推荐真题模块的，而有些课程又没有。</li>
-<li>有些课程有扫描答题卡功能，有些课程有考前冲刺功能，有些课程有大题专项查看功能，而有些课程又没有上述功能。另外还有一些微小细节，但是解决方法和类似，所以就不一一展开说明。</li>
-</ol>
-
-
-<h3>技术解决方案</h3>
-
-<p>我们的技术解决方案主要说来分4步：</p>
-
-<ol>
-<li>通过抽取子项目，构建可复用的大模块。</li>
-<li>通过多Target编译的方式，不同课程的在编译时，采用不同的资源文件和源文件。</li>
-<li>在第2步的基础上，在项目中创建配置用的Config类，然后在不同Target各自的配置文件中设置不同的Config值。实现课程的差异化界面。</li>
-<li>从不同的xib中加载界面。</li>
-</ol>
-
-
-<h4>抽取子项目</h4>
-
-<p>我们首先做的是抽取子项目，从<a href="http://yuantiku.com/m?courseSet=sikao">“猿题库司法考试客户端"</a>开始，我们将可以重用的模块一一抽取出来，以git submodule的形式组织到项目中。这个抽取过程在开发完猿题库司法考试客户端之后，基本成型了。我们抽取的submodule主要分为4部分：</p>
-
-<ol>
-<li>UI Common，涉及可复用的登录界面，注册界面，付费界面，NPS界面，意见反馈界面，关于界面，扫描答题卡界面。另外，我们将一些可复用的UI风格控件也抽取成了相应的静态工厂方法，用于生成统一风格的按钮、背景以及状态栏等。</li>
-<li>Core Common，涉及可复用的底层模块。包括网络请求模块，自己封装的Core Text渲染引擎，缓存模块，一些静态util方法等。</li>
-<li>Lib Common，所有第三方的开源库依赖，有部分代码根据我们的需求做了修改和定制。</li>
-<li>Scan Common, 答题卡扫描识别算法模块，实现核心的扫描算法。</li>
-</ol>
-
-
-<p>以上只是粗粒度划分，这些模块化的子项目可能在以后被重用，例如Core Common完全就可以复用在任何其它项目中。</p>
-
-<h4>构造多个编译Target</h4>
-
-<p>抽取完子项目以后，我们采用多target的方式，将不同课程中的同名资源文件打包进各自的Target中，最后所有课程在一个工程项目中，如下图所示：</p>
-
-<p><img src="/images/ape-targets.jpg"></p>
-
-<p>先简单介绍一下Xcode中target的概念，苹果在文档中写道：</p>
-
-<p><blockquote><p></p></p><p><p>Targets that define the products to build. A target organizes the files and instructions needed to build a product into a sequence of build actions that can be taken.”</p></p><p><p></p></blockquote></p>
-
-<p>在Xcode的一个项目中，可以允许建立多个编译的target，每个target代表着最终编译出来的一个App文件，在每个target中，可以添加不同的编译源文件和资源文件。最终，通过我们在不同target之间，修改其 <code>Copy Bundle Resources</code> 和 <code>Compile Sources</code> 配置，使课程之间的差异性得到实现。我们具体的配置方案如下：</p>
-
-<ol>
-<li><p>我们的每个课程的资源文件都具有相同的文件名，例如首页背景都叫 HomeBackgroundBg.png ，由于每个课程背景不一样，所以我们在工程中，每一个课程target下，通过修改<code>Copy Bundle Resources</code>，使其都配置有不同的（但是同名） HomeBackgroundBg.png 。这样的好处是，在代码逻辑层面，我们可以完全不用处理课程间资源文件的差异性问题。资源文件的差异性都是通过配置文件来保证的。</p></li>
-<li><p>对于文案一类的差别，我们通过修改<code>Compile Sources</code>，使不同的课程有着不同的文案定义文件。通过这样，我们使不同课程有了不同的文案。另外包括后台网络接口的差异性问题，统计项的差异性问题，也都是这样处理的。</p></li>
-</ol>
-
-
-<h4>Config类</h4>
-
-<p>最后，我们使用Config类来完成交互和页面UI组件差异性问题。拿能力评估报告页面来说，不同的课程的页面都有一些差异。我们在公共层的代码中将这些逻辑全部实现，具体的UI在呈现时，通过读取相关的Config类来决定具体如何展示。这样，我们只需要在第2步提供的各个课程的差异性源文件中，完成Config类的配置即可。</p>
-
-<h4>从不同的xib中加载界面</h4>
-
-<p>有些时候，我们仅仅需要的是UI界面排列方式不一样，其它交互逻辑完全一样。对于这种需求，我们尝试同一个view对应有多个xib，然后通过上一步的Config类的信息，来加载不同的xib界面。这样所有的差异性都在不同的xib中解决了，对controller层可以完全透明。</p>
-
-<p>下图是我们报告页面的xib界面，分为：高考课程、有目标考试的课程、没有目标考试的课程三种。由于这3个界面的后台逻辑和交互逻辑都一样，我们通过3个xib来实现它们之间差异性的部分。</p>
-
-<p><img src="/images/ape-xibs.jpg"></p>
-
-<p>以下是view加载对应的xib的代码逻辑：</p>
-
-<p>``` objc</p>
-
-<ul>
-<li>(IPadAbilityReportHeaderView <em>)loadFromNib:(IPadAbilityReportHeaderViewType)type {
-  NSString </em>nibFileName;
-  switch (type) {
-
-<pre><code>  case IPadAbilityReportHeaderViewTypeWithQuiz:
-      nibFileName = @"IPadAbilityReportHeaderViewWithQuiz";
-      break;
-  case IPadAbilityReportHeaderViewTypeWithoutQuiz:
-      nibFileName = @"IPadAbilityReportHeaderViewWithoutQuiz";
-      break;
-  case IPadAbilityReportHeaderViewTypeGaokao:
-      nibFileName = @"IPadAbilityReportHeaderViewInGaokao";
-      break;
-  default:
-      break;
-</code></pre>
-
-  }
-  NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:nibFileName owner:nil options:nil];
-  if (nibArray.count > 0) {
-
-<pre><code>  return [nibArray lastObject];
-</code></pre>
-
-  } else {
-
-<pre><code>  return nil;
-</code></pre>
-
-<p>  }
-}</p></li>
-</ul>
-
-
-<p>```</p>
-
-<h2>总结</h2>
-
-<p>通过多target编译方案，我们可以很方便的实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。同时，由于在一个工程中，我们也可以方便地测试新的代码逻辑在各个课程下是否正常。</p>
-
-<p>该方案可以用来解决“维护大量逻辑相似但是又有细微不同的应用”的需求，希望本文能给业界同行一些帮助。</p>
 ]]></content>
   </entry>
   

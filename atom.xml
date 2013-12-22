@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2013-12-11T22:22:02+08:00</updated>
+  <updated>2013-12-22T19:49:54+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,57 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[XCode Debugger中的Icon符号的意义]]></title>
+    <link href="http://blog.devtang.com/blog/2013/12/22/the-secret-of-xcode-debugger-icon/"/>
+    <updated>2013-12-22T19:23:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/12/22/the-secret-of-xcode-debugger-icon</id>
+    <content type="html"><![CDATA[<p>你注意到了吗？在Xcode中，当你点击查看调用栈的时候，调用栈的每个方法前面都有一个Icon，而且还有好几种不同的样子，如下图所示，你知道它们代表什么意思吗？</p>
+
+<p><img src="http://blog.devtang.com/images/debugger-icon.png"></p>
+
+<!-- more -->
+
+
+<p>其实它们代表的意义如下：</p>
+
+<ul>
+<li>Person icon is User</li>
+<li>Mug icon is AppKit (or UIKit)</li>
+<li>Briefcase icon is Frameworks</li>
+<li>Gear icon is System</li>
+<li>Morse code icon is Foundation</li>
+<li>Spider web looking icon is Web</li>
+</ul>
+
+
+<p>另外，Debuger中的图标（如下图所示）也是有意义：</p>
+
+<p><img src="http://blog.devtang.com/images/debugger-icon2.jpg"></p>
+
+<p>具体意义如下：</p>
+
+<ul>
+<li>L = Local variable</li>
+<li>A = Argument</li>
+<li>S = Static variable</li>
+<li>V = global Variable</li>
+<li>R = register</li>
+<li>i = Instance variable</li>
+<li>E = Expression</li>
+</ul>
+
+
+<p>或许你觉得以上内容没什么实用价值，那再分享一个实用的。</p>
+
+<p>在XCode5中，点击一个小眼镜图标，就直接预览UIImage的内容，如下图所示：</p>
+
+<p><img src="http://blog.devtang.com/images/debugger-preview-image.png"></p>
+
+<p>这个有用吧，祝大家玩得开心～</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS开发工具-网络封包分析工具Charles]]></title>
@@ -3281,56 +3332,6 @@ CABackingStore类型的内存区会被标记成volatile类型（这里的volatil
 <p>所以我希望群里面的人都足够精通iOS开发，对于在群里面提出来的问题，都是值得讨论的问题。通过讨论，大家都有了收获，才不致于觉得这个群太打扰而把它屏蔽掉。</p>
 
 <p>因此，我不希望群里面加太多的人，现在人数基本上有讨论的气氛，对于技术问题的讨论也都会有结果。所以，<font color="red">暂时不接受任何加群申请。</font></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[设置应用内的系统控件语言]]></title>
-    <link href="http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language/"/>
-    <updated>2013-01-23T21:05:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/01/23/set-ios-system-ui-language</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/bdj-rank.jpg"></p>
-
-<p>在iOS应用中，有时候会需要调用系统的一些UI控件，例如：</p>
-
-<ol>
-<li>在UIWebView中长按会弹出系统的上下文菜单</li>
-<li>在UIImagePickerController中会使用系统的照相机界面</li>
-<li>在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。</li>
-</ol>
-
-
-<p>以上这些UI控件中，其显示的语言并不是和你当前手机的系统语言一致的。而是根据你的App内部的语言设置来显示。结果就是，如果你没有设置恰当的话，你的中文App可能会出现一些英文的控件文字。</p>
-
-<!-- more -->
-
-
-<p>例如下图中，一个名为“百思不得姐”的应用，其在AppStore免费总榜中排名前100，图书类分类榜排名第一的应用，就闹出了系统控件显示成了英文的笑话，在其软件界面中长按，就会出如下的菜单，可以看到，这个菜单的文字全是英文的：</p>
-
-<p><img src="http://blog.devtang.com/images/ios-menu-1.jpg"></p>
-
-<p>而正常的菜单应该是中文的，如下是新浪微博的正文长按之后的效果：</p>
-
-<p><img src="http://blog.devtang.com/images/ios-menu-2.jpg"></p>
-
-<p>如何解决这个问题呢？方法如下:</p>
-
-<p>用vim直接打开工程的Info.plist文件，在文件中增加如下内容即可：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'>   <span class="nt">&lt;key&gt;</span>CFBundleLocalizations<span class="nt">&lt;/key&gt;</span>
-</span><span class='line'>   <span class="nt">&lt;array&gt;</span>
-</span><span class='line'>           <span class="nt">&lt;string&gt;</span>zh_CN<span class="nt">&lt;/string&gt;</span>
-</span><span class='line'>           <span class="nt">&lt;string&gt;</span>en<span class="nt">&lt;/string&gt;</span>
-</span><span class='line'>   <span class="nt">&lt;/array&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>TO: 百思不得姐的开发者，不用谢：）你们应用的内容挺有意思的。</p>
 ]]></content>
   </entry>
   

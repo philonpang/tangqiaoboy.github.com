@@ -9,7 +9,15 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="功能设计 先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，设计的“升级提示功能”都不太友好。在此分享一下我的想法，欢迎大家讨论。 这些App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题， &hellip;">
+  <meta name="description" content="昨天在写iOS代码的时候，调试的时候模拟器崩溃了。异常停在了如下整个main函数的入口处： 1
+2
+3
+4
+5
+6
+7
+int main(int argc, char *argv[])
+{ @autoreleasepool { // 异常停在了下面这行，毫无提示作用 return &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +82,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/14/make-stack-trace-more-readable/">让XCode的 Stack Trace信息可读</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T20:19:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天在写iOS代码的时候，调试的时候模拟器崩溃了。异常停在了如下整个main函数的入口处：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// 异常停在了下面这行，毫无提示作用</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">UIApplicationMain</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="nb">nil</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">MyClass</span> <span class="n">class</span><span class="p">]));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/11/14/make-stack-trace-more-readable/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -507,47 +575,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/05/do-not-use-sbjson/">不要使用SBJSON(json-framework)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-05T09:35:00+08:00" pubdate data-updated="true">May 5<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>不知道为什么，在iOS开发中，有很多人使用 <a href="https://github.com/stig/json-framework">SBJSON</a> （又被称作json-framework)来做JSON解析库。我想这是因为SBJSON是最早在iOS上出现的JSON解析库。但是随着iOS开发的流行，越来越多优秀的JSON解析库也涌现出来, SBJSON和它们相比，性能上有很大的差距。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/05/05/do-not-use-sbjson/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -563,6 +590,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/">XCode Debugger中的Icon符号的意义</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/12/11/network-tool-charles-intr/">iOS开发工具-网络封包分析工具Charles</a>
@@ -598,10 +629,6 @@
     
       <li class="post">
         <a href="/blog/2013/07/24/use-crashlytics/">使用Crashlytics来保存应用崩溃信息</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a>
       </li>
     
   </ul>

@@ -38,9 +38,26 @@ CocoaPods是一个负责管理iOS项目中第三方开源代码的工具。Cocoa
 ###安装
 
 安装方式异常简单, Mac下都自带ruby，使用ruby的gem命令即可下载安装：
+
 ``` bash
-$ gem install cocoapods
+$ sudo gem install cocoapods
 $ pod setup
+```
+
+上面第二行执行时，会输出`Setting up CocoaPods master repo`，但是会等待比较久的时间。这步其实是Cocoapods在将它的信息下载到 `~/.cocoapods`目录下，如果你等太久，可以试着cd到那个目录，用`du -sh *`来查看下载进度。
+
+如果你的gem太老，可能也会有问题，可以尝试用如下命令升级gem:
+
+``` bash
+sudo gem update --system
+```
+
+另外，ruby的软件源rubygems.org因为使用的亚马逊的云服务，所以被墙了，需要更新一下ruby的源：
+
+```
+gem sources --remove https://rubygems.org/
+gem sources -a http://ruby.taobao.org/
+gem sources -l
 ```
 
 ###使用

@@ -145,8 +145,28 @@ Nodejs: npm 随着iOS开发者的增多，业界也出现了为iOS程序提供�
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>gem install cocoapods
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo gem install cocoapods
 </span><span class='line'><span class="nv">$ </span>pod setup
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面第二行执行时，会输出<code>Setting up CocoaPods master repo</code>，但是会等待比较久的时间。这步其实是Cocoapods在将它的信息下载到 <code>~/.cocoapods</code>目录下，如果你等太久，可以试着cd到那个目录，用<code>du -sh *</code>来查看下载进度。</p>
+
+<p>如果你的gem太老，可能也会有问题，可以尝试用如下命令升级gem:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo gem update --system
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>另外，ruby的软件源rubygems.org因为使用的亚马逊的云服务，所以被墙了，需要更新一下ruby的源：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem sources --remove https://rubygems.org/
+</span><span class='line'>gem sources -a http://ruby.taobao.org/
+</span><span class='line'>gem sources -l
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -401,6 +421,10 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/01/2013-summary/">2013年个人总结</a>
       </li>
     
@@ -434,10 +458,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2013/10/15/objective-c-object-model/">Objective-C对象模型及应用</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a>
       </li>
     
   </ul>

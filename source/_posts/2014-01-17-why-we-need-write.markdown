@@ -52,5 +52,7 @@ categories: summary
 
 在坚持写作一段时间，你将收获`影响力`和`传递知识的乐趣`。
 
+另外，[《暗时间》](http://book.douban.com/subject/6709809/)的作者刘未鹏在[他的文章](http://blog.csdn.net/pongba/article/details/3896311)，也总结了很多写作的好处，大家也可以看看。
+
 看了写作的这么多好处，你是否心动？那赶快创建一个博客，开始你的技术写作之旅吧！
 

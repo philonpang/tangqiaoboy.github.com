@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-01-17T23:17:58+08:00</updated>
+  <updated>2014-01-23T18:06:20+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[非换行空格在CoreText排版上的问题]]></title>
+    <link href="http://blog.devtang.com/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/"/>
+    <updated>2014-01-23T17:36:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext</id>
+    <content type="html"><![CDATA[<p>分享一个在使用Core Text时遇到的问题。</p>
+
+<h2>问题描述</h2>
+
+<p>我们的猿题库界面因为有图片、公式需要混排，所以用的是Core Text实现的排版。</p>
+
+<p>在使用中，发现一些英文题目的换行方式不对，
+我们设置的是按单词换行，但是总是有些题目的换行并不是按单词的，造成显示上比较错乱，如下图所示。图中unchangeable, study, falls 三个单词都被生生截断了，造成阅读上的不适。</p>
+
+<!-- more -->
+
+
+<p><img src="http://blog.devtang.com/images/non-breaking-space-1.png"></p>
+
+<h2>解决方案</h2>
+
+<p>经过我们的分析，我们最终发现这是由于题目内容中有<a href="http://en.wikipedia.org/wiki/Non-breaking_space">非换行空格</a>（<code>non-breaking-space</code>）造成的。根据<a href="(http://en.wikipedia.org/wiki/Non-breaking_space">wikipedia</a>)上的介绍，该字符的ASCII码为160，主要做用如下：</p>
+
+<blockquote><p>Text-processing software typically assumes that an automatic line break may be inserted anywhere a space character occurs; a non-breaking space prevents this from happening (provided the software recognizes the character). For example, if the text &#8220;100 km&#8221; will not quite fit at the end of a line, the software may insert a line break between &#8220;100&#8221; and &#8220;km&#8221;. To avoid this undesirable behaviour, the editor may choose to use a non-breaking space between &#8220;100&#8221; and &#8220;km&#8221;. This guarantees that the text &#8220;100 km&#8221; will not be broken: if it does not fit at the end of a line it is moved in its entirety to the next line.</p></blockquote>
+
+<p>于是我们大概知道整个原因了：编辑在后台录入题目时，是在网页做的富文本编辑器里面，里面的空格输入的是 <code>&amp;nbsp;</code>，然后这个空格转存到数据库中会转成 非换行空格（<code>non-breaking-space</code>），也就是ASCII为160的空格。最后传到iPhone这边，用Core Text排版时，Core Text认为遇到这个空白符不应该换行，于是就一直不换行，直到显示不了了才强制换行，就造成了单词被截断。</p>
+
+<p>解决办法是在客户端上用以下代码将这种空格替换成普通的空格，普通的空格ASCII码为32。（附：<a href="http://www.weste.net/tools/ASCII.asp">ASCII码表</a>）：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 因为显示效果原因，从直观上看不出2个空格在编码上的差异，不过代码复制到Xcode中能看出来。</span>
+</span><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">content</span> <span class="o">=</span> <span class="p">...</span>
+</span><span class='line'><span class="n">content</span> <span class="o">=</span> <span class="p">[</span><span class="n">content</span> <span class="nl">stringByReplacingOccurrencesOfString:</span><span class="s">@&quot; &quot;</span> <span class="nl">withString:</span><span class="s">@&quot; &quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最终改好的效果如下所示：</p>
+
+<p><img src="http://blog.devtang.com/images/non-breaking-space-2.png"></p>
+
+<h2>其它</h2>
+
+<p>感谢 <a href="http://weibo.com/onevcat">@onevcat</a> 提供信息，让我找到问题的根源。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[作为码农，我们为什么要写作]]></title>
@@ -3353,128 +3401,6 @@ CABackingStore类型的内存区会被标记成volatile类型（这里的volatil
 <p>2分钟售空。期待。</p>
 
 <p><img src="http://blog.devtang.com/images/wwdc-2013.jpg" width="500px" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[那些被遗漏的Objective-C保留字]]></title>
-    <link href="http://blog.devtang.com/blog/2013/04/29/the-missing-objc-keywords/"/>
-    <updated>2013-04-29T20:22:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/04/29/the-missing-objc-keywords</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/forget.jpeg"></p>
-
-<p>今天翻到很久以前自己在网易博客上写的<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201110133108545/">这篇文章</a>，惊奇地发现自己都忘记了里面的一些内容。所以我又重新学习了一下，然后改了改内容，挪到这里。</p>
-
-<h2>前言</h2>
-
-<p><a href="http://www.amazon.cn/s?ie=UTF8&amp;search-alias=books&amp;field-author=Steffen%20Itterheim">Steffen Itterheim</a>是<a href="http://www.amazon.cn/Learn-Iphone-and-Ipad-Cocos2d-Game-Development-The-Leading-Framework-for-Building-2D-Graphical-and-Interactive-Applications-Itterheim-Steffen/dp/1430233036/ref=sr_1_1?ie=UTF8&amp;qid=1321168092&amp;sr=8-1">《Learn Iphone and Ipad Cocos2d Game Development》</a>作者。cocos2d和cocos2d-x现在已成为著名的游戏开发引擎。在AppStore上有超过100个游戏是基于Cocos2D。</p>
-
-<p>Steffen Itterheim在<a href="http://www.learn-cocos2d.com/2011/10/complete-list-objectivec-20-compiler-directives">他的博客</a>中总结了 Objective-C 2.0 所有的编译器保留字，并且对这些保留字做了介绍和使用示例。这些保留字如下：</p>
-
-<pre>
-@class
-@defs
-@protocol @required @optional @end
-@interface @public @package @protected @private @property @end
-@implementation @synthesize @dynamic @end
-@throw @try @catch @finally
-@synchronized @autoreleasepool
-@selector @encode
-@compatibility_alias
-@”string”
-</pre>
-
-
-<p>我把这些保留字过了一遍，发现很少用到的有 @dynamic @defs @encode @compatibility_alis，所以就给大家介绍一下这几个关键字吧。</p>
-
-<!-- more -->
-
-
-<h2>@dynamic</h2>
-
-<p>@dynamic 是相对于 @synthesize的，它们用样用于修饰 @property，用于生成对应的的getter和setter方法。但是@ dynamic表示这个成员变量的getter和setter方法并不是直接由编译器生成，而是手工生成或者运行时生成。</p>
-
-<p>示例如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@implementation</span> <span class="nc">ClassName</span>
-</span><span class='line'><span class="k">@synthesize</span> <span class="n">aProperty</span><span class="p">,</span> <span class="n">bProperty</span><span class="p">;</span>
-</span><span class='line'><span class="k">@synthesize</span> <span class="n">cProperty</span><span class="o">=</span><span class="n">instanceVariableName</span><span class="p">;</span>
-</span><span class='line'><span class="k">@dynamic</span> <span class="n">anotherProperty</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// method implementations</span>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>@defs</h2>
-
-<p>@defs 用于返回一个Objective-C类的struct结构，这个struct与原Objective-C类具有相同的内存布局。就象你所知的那样，Objective-C类可以理解成由基本的C struct加上额外的方法构成。</p>
-
-<p>示例代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">struct</span> <span class="p">{</span> <span class="err">@</span><span class="n">defs</span><span class="p">(</span> <span class="n">NSObject</span><span class="p">)</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>你可能会想，什么情况下才会需要使用这个关键字。答案是涉及非常底层的操作或优化的时候才会用到。像如这篇讨论<a href="http://www.mulle-kybernetik.com/artikel/Optimization/opti-3-imp-deluxe.html">Objective-C如何做缓存优化</a>的文章中，就用到了该关键字。</p>
-
-<h2>@encode</h2>
-
-<p>@encode 是用于表示一个类型的字符串，对此，苹果有专门的<a href="http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">介绍文档</a></p>
-
-<p>示例如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">aMethod</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="kt">char</span> <span class="o">*</span><span class="n">enc1</span> <span class="o">=</span> <span class="k">@encode</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>                 <span class="c1">// enc1 = &quot;i&quot;</span>
-</span><span class='line'>    <span class="kt">char</span> <span class="o">*</span><span class="n">enc2</span> <span class="o">=</span> <span class="k">@encode</span><span class="p">(</span><span class="kt">id</span><span class="p">);</span>                  <span class="c1">// enc2 = &quot;@&quot;</span>
-</span><span class='line'>    <span class="kt">char</span> <span class="o">*</span><span class="n">enc3</span> <span class="o">=</span> <span class="k">@encode</span><span class="p">(</span><span class="k">@selector</span><span class="p">(</span><span class="n">aMethod</span><span class="p">));</span>  <span class="c1">// enc3 = &quot;:&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// practical example:</span>
-</span><span class='line'>    <span class="n">CGRect</span> <span class="n">rect</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">NSValue</span> <span class="o">*</span><span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSValue</span> <span class="nl">value:</span><span class="o">&amp;</span><span class="n">rect</span> <span class="nl">withObjCType:</span><span class="k">@encode</span><span class="p">(</span><span class="n">CGRect</span><span class="p">)];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>@compatibility_alis</h2>
-
-<p>@compatibility_alis 是用于给一个类设置一个别名。这样就不用重构以前的类文件就可以用新的名字来替代原有名字。</p>
-
-<p>示例如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="err">@</span><span class="n">compatibility_alias</span> <span class="n">AliasClassName</span> <span class="n">ExistingClassName</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>@autoreleasepool</h2>
-
-<p>@autoreleasepool 是用于ARC下代替 NSAutoreleasePool的保留字，我把它写在这里，是想告诉那些以为ARC慢的同学，在苹果的<a href="http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html">这篇官方文档</a>中有提到， @autoreleasepool 比 NSAutoreleasePool快6倍。当然，文档中也提到，ARC下不止Autorelease Pool的实现变快了，retain和release也快很多。如果你还没有在工程中使用ARC，推荐看看我的<a href="http://blog.devtang.com/blog/2013/03/27/should-we-use-arc/">《是否应该使用ARC》</a>。</p>
-
-<h2>Cheat Sheet</h2>
-
-<p>有一个热心者根据他的博文，制作了一张<a href="http://maniacdev.com/cheatsheetobjccd.pdf">《Objective-C 2.0保留字速查表》</a>，对于新手来说，把这张速查表打印出来，对于熟悉现在的保留字还是很有用的，它的下载地址是：<a href="http://maniacdev.com/cheatsheetobjccd.pdf">http://maniacdev.com/cheatsheetobjccd.pdf</a></p>
-
-<p>五一节到了，祝大家节日快乐！</p>
 ]]></content>
   </entry>
   

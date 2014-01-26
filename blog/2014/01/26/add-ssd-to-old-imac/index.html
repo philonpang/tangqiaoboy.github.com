@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>我们必须自学 - 唐巧的技术博客</title>
+  <title>自己动手给iMac换SSD - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前两天看到一个文章，题名为《所有的程序员都是自学成才》。当时没有什么特别的想法，只是觉得自己也确实是基本上靠自学来掌握新的知识的。但是今天在公车上没事好好想了一想，想明白了，原来对于程序员来说，只能自学才能成才。 这个道理似乎有点奇怪，因为我们从小都是由老师教授新知识的。我自己也实验过， &hellip;">
+  <meta name="description" content="公司的iMac是2011年款的，经过2年的使用，现在已经变得比较慢了，用htop看了一下，其实cpu占用率一直不高，主要是磁盘IO比较慢，所以考虑自己动手给iMac换一个SSD。在此将整个过程分享给大家。 如果你需要备份系统，可以拿一个移动硬盘，使用Time &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/01/20/we-must-self-learning">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2014/01/26/add-ssd-to-old-imac">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,7 +77,7 @@
   
   <header>
     
-      <h1 class="entry-title">我们必须自学</h1>
+      <h1 class="entry-title">自己动手给iMac换SSD</h1>
     
     
       <p class="meta">
@@ -93,33 +93,72 @@
   
 
 
-<time datetime="2012-01-20T23:53:00+08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
+<time datetime="2014-01-26T22:06:00+08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>前两天看到一个文章，题名为<a href="http://www.aqee.net/all-programmers-are-self-taught/">《所有的程序员都是自学成才》</a>。当时没有什么特别的想法，只是觉得自己也确实是基本上靠自学来掌握新的知识的。但是今天在公车上没事好好想了一想，想明白了，原来对于程序员来说，只能自学才能成才。</p>
+<div class="entry-content"><p>公司的iMac是2011年款的，经过2年的使用，现在已经变得比较慢了，用<code>htop</code>看了一下，其实cpu占用率一直不高，主要是磁盘IO比较慢，所以考虑自己动手给iMac换一个SSD。在此将整个过程分享给大家。</p>
 
-<!--more-->
+<!-- more -->
 
 
-<p>这个道理似乎有点奇怪，因为我们从小都是由老师教授新知识的。我自己也实验过，掌握同样的高中课本上的知识，自己自学的速度通常比老师讲授的速度要慢一倍的时间。即一个知识点，如果你自己要看2小时的书才能理解的话，有好的老师给你讲解的话，只需要一个小时就够了。所以，我一直希望在学习各种东西的时候都能去听一些课程，因为我认为这样节省了我学习的时间。</p>
+<p>如果你需要备份系统，可以拿一个移动硬盘，使用<code>Time Machine</code>功能将需要的内容备份到移动硬盘上。</p>
 
-<p>但是这个道理在程序员这一行行不通，为什么这么说呢？原因有2点：</p>
+<p>另外你还需要准备一些工具，我是借同事的<a href="http://www.amazon.cn/%E5%8F%B0%E6%B9%BE%E8%80%81A-38%E5%90%881%E6%89%8B%E6%9C%BA%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%BB%B4%E4%BF%AE%E7%B2%BE%E5%AF%86%E8%9E%BA%E4%B8%9D%E5%88%80%E5%A5%97%E8%A3%85-%E8%8B%B9%E6%9E%9C%E6%8B%86%E6%9C%BA%E5%B7%A5%E5%85%B7%E7%BB%84%E5%90%88-LA613138/dp/B00E7ICEXM/ref=sr_1_2?ie=UTF8&amp;qid=1390717853&amp;sr=8-2&amp;keywords=%E8%80%81A">老A苹果拆机工具组合</a>，这个工具箱可以拆苹果的各种设备，上次还用它拆了一次iPhone4s。</p>
+
+<h2>硬件更换步骤</h2>
+
+<p>换SSD的步骤主要参考自：<a href="http://www.ifixit.com/Guide/iMac+Intel+21.5-Inch+EMC+2428+Hard+Drive+Replacement/5954">ifixit上的教程</a>。感兴趣的朋友可以一试。其实步骤相当简单，简单说一下：</p>
 
 <ol>
-<li>计算机编程相关的知识更新速度很快。同时，国内的IT类资料的翻译质量相当差，原创的优秀书籍也很少。所以，我们通常需要靠阅读英文才能掌握最新的资料。</li>
-<li>计算机编程知识需要较多的专业知识积累和实践。</li>
+<li>把iMac平放，用吸盘吸开屏幕盖。</li>
+<li>取下屏幕左右各4个螺丝，然后轻轻抬起屏幕（注意不要抬太高，因为后面连着线）。</li>
+<li>把屏幕与主版连接的4根线拆下来，之后将屏幕移除。</li>
+<li>取下硬盘上的2个螺丝，然后将硬盘的数据线和电源线拔掉，将硬盘轻轻取出来。</li>
+<li>将SSD接上数据线和电源线。</li>
+<li>做步骤3的逆向过程，把屏幕接上4根线，然后将屏幕左右各4个螺丝拧上。</li>
+<li>盖上屏幕盖，这个磁力很强，要小心手不要被夹住。</li>
 </ol>
 
 
-<p>如果一个培训机构有一个老师，他强到能够通过自己做一些项目来积累很多专业知识和实践，并且不断地从国外资料上学习最新的技术。那么这个人在企业里面会比在国内的培训机构更有施展自己能力的空间。国内的培训机构因为受众面的原因，基本上还是培养那种没有自学能力，只能做低级技术活的代码民工，所以对老师的技术要求不会那么高，自然也不会给出很诱人的薪水。但是企业就不一样了，企业需要不停地利用新技术来增强自己的产品竞争力，所以对于IT企业来说，产品的竞争就是人才的竞争，所以给优秀的人能够开出很高的薪水。</p>
+<p>换好之后，接通电源听到正常的启动声音的话，就表示硬件自检没问题了。</p>
 
-<p>所以，我们不能期望从IT类培训机构中学习到最新的技术，一切只能通过我们自学。当然，自学之后在同行之间相互交流，对于我们的技术成长也是很有用的。</p>
+<h2>安装操作系统</h2>
 
-<p>所以，各位同行，别想有人能够教你，一切还是靠自己吧。</p>
+<p>SSD上没有带Mac系统，所以要先把系统装上去。将苹果最新的系统刻录在U盘或SD卡上，然后接到iMac上。启动时按住<code>Option</code>键，等一段时间，就可以选择启动磁盘，我们选择从U盘启动。</p>
+
+<p>U盘启动之后，先进入<code>Disk Utility</code>，将刚刚装上的SSD分区格式化成<code>Mac OS扩展（日志式）</code>。然后返回，选择安装Mac操作系统。</p>
+
+<p>这个比较坑的一点是系统显示的<code>估计安装时间</code>只有大约15分钟，但是进行到最后1分钟时，却大概要再等15分钟才能结束，这个时候不要太心急。安装完成之后会进入第一次重启，然后再次显示正在安装，这个时候大概又需要等20分钟，不过不用任何操作，只用看着就行了。20分钟后会第二次重启，重启之后就进入到欢迎界面了。</p>
+
+<p>进入欢迎界面后，先简单设置一下进入系统，安装2个小软件：</p>
+
+<ol>
+<li><a href="http://exirion.net/ssdfanctrl/">SSD fan control</a></li>
+<li><a href="http://www.groths.org/software/trimenabler/">Trim Enabler</a></li>
+</ol>
+
+
+<p>这主要是因为iMac的温度感应模块在原有的硬盘上，换下来之后，风扇就会狂转，只能用第三方软件来控制其转速。另一个工具是朋友推荐我安装的，没有仔细研究用处。</p>
+
+<h2>迁移数据</h2>
+
+<p>之后，你可以用<code>Time machine</code>或<code>迁移助理</code>，将这台电脑的数据从备份中恢复。我是使用的<code>迁移助理</code>，将我另一台Macbook Air的系统恢复过去的。</p>
+
+<h2>其它</h2>
+
+<ol>
+<li>我换的是21.5寸的iMac，如果是27寸的iMac，因为内部空间足够，所以可以尝试将SSD和原有的硬盘都保留，这样就可以自己组<code>fusion drive</code>。不过更换方式就要相对麻烦一些，感觉兴趣的可以自己在ifixit上找相关的教程。</li>
+<li>显示屏上的连接线都很脆弱，更换的时候要小心，我在尝试能否象27寸iMac一样同时将原有硬盘和SSD保留的时候，就不小心压坏了显示屏上的连接线的一根针角。于是花了80块钱在<a href="http://item.taobao.com/item.htm?id=20038464332">淘宝</a>上重新买了一根线才安好。所以大家一定别着急，换的时候小心一些。附一张损坏的连接线照片。</li>
+</ol>
+
+
+<p><img src="/images/imac-broken-cable.jpg"></p>
+
+<p>总之，自动动手换SSD不是那么复杂，胆大心细一些就可以轻松搞定。</p>
 </div>
 
 
@@ -142,12 +181,12 @@
   
 
 
-<time datetime="2012-01-20T23:53:00+08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
+<time datetime="2014-01-26T22:06:00+08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/summary/'>summary</a>
+    <a class='category' href='/blog/categories/fun/'>fun</a>
   
 </span>
 
@@ -201,10 +240,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/01/01/2011-summary/" title="Previous Post: 2011年个人总结">&laquo; 2011年个人总结</a>
+        <a class="basic-alignment left" href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/" title="Previous Post: 非换行空格在CoreText排版上的问题">&laquo; 非换行空格在CoreText排版上的问题</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/01/23/use-javascript-to-import-pictures/" title="next Post: 用javascript协助导入图片">用javascript协助导入图片 &raquo;</a>
       
     </p>
   </footer>

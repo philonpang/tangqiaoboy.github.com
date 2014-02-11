@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-02-11T12:00:45+08:00</updated>
+  <updated>2014-02-11T14:35:28+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -172,6 +172,10 @@
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// KVO</span>
 </span><span class='line'><span class="p">[</span><span class="n">RACObserve</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span> <span class="nl">subscribeNext:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;成员变量 username 被修改成了：%@&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
@@ -184,9 +188,13 @@
 </span><span class='line'><span class="p">}];</span>
 </span><span class='line'>
 </span><span class='line'><span class="c1">// Notification</span>
-</span><span class='line'><span class="p">[</span><span class="n">NSNotificationCenter</span><span class="p">.</span><span class="n">defaultCenter</span> <span class="nl">addObserver:</span><span class="n">self</span>
-</span><span class='line'>        <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">keyboardDidChangeFrameNotificationHandler:</span><span class="p">)</span>
-</span><span class='line'>        <span class="nl">name:</span><span class="n">UIKeyboardDidChangeFrameNotification</span> <span class="nl">object:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'><span class="p">[[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span>
+</span><span class='line'>    <span class="nl">rac_addObserverForName:</span><span class="n">UIKeyboardDidChangeFrameNotification</span>
+</span><span class='line'>                    <span class="nl">object:</span><span class="nb">nil</span><span class="p">]</span>
+</span><span class='line'>    <span class="nl">subscribeNext:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;键盘Frame改变&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">];</span>
 </span><span class='line'>
 </span><span class='line'><span class="c1">// Delegate</span>
 </span><span class='line'><span class="p">[[</span><span class="n">self</span> <span class="nl">rac_signalForSelector:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">viewWillAppear:</span><span class="p">)]</span> <span class="nl">subscribeNext:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>

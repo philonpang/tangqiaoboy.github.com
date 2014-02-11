@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-02-11T12:00:45+08:00</updated>
+  <updated>2014-02-11T14:35:28+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -156,11 +156,16 @@ return [RACSignal empty];
 <p>}];</p>
 
 <p>// Notification
-[NSNotificationCenter.defaultCenter addObserver:self</p>
+[[[NSNotificationCenter defaultCenter]</p>
 
-<pre><code>    selector:@selector(keyboardDidChangeFrameNotificationHandler:) 
-    name:UIKeyboardDidChangeFrameNotification object:nil];
+<pre><code>rac_addObserverForName:UIKeyboardDidChangeFrameNotification         
+                object:nil] 
+subscribeNext:^(id x) {
+    NSLog(@"键盘Frame改变");
+}
 </code></pre>
+
+<p>];</p>
 
 <p>// Delegate
 [[self rac_signalForSelector:@selector(viewWillAppear:)] subscribeNext:<sup>(id</sup> x) {</p>

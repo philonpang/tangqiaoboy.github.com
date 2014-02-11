@@ -299,6 +299,10 @@ Nodejs: npm 随着iOS开发者的增多，业界也出现了为iOS程序提供�
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h3>关于.gitignore</h3>
+
+<p>当你执行<code>pod install</code>之后，除了Podfile外，cocoapods还会生成一个名为<code>Podfile.lock</code>的文件，你不应该把这个文件加入到<code>.gitignore</code>中。因为<code>Podfile.lock</code>会锁定当前各依赖库的版本，之后如果多次执行<code>pod install</code> 不会更改版本，要<code>pod update</code>才会改<code>Podfile.lock</code>了。这样多人协作的时候，可以防止第三方库升级把程序搞挂。</p>
+
 <h3>生成第三方库的帮助文档</h3>
 
 <p>如果你想让CococaPods帮你生成第三方库的帮助文档，并集成到XCode中，那么用brew安装appledoc即可：</p>

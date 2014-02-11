@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-01-26T14:42:08+08:00</updated>
+  <updated>2014-02-11T12:00:45+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,260 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ReactiveCocoa - iOS开发的新框架]]></title>
+    <link href="http://blog.devtang.com/blog/2014/02/11/reactivecocoa-introduction/"/>
+    <updated>2014-02-11T18:47:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/02/11/reactivecocoa-introduction</id>
+    <content type="html"><![CDATA[<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/reactivecocoa-ios-new-develop-framework">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h2>什么是ReactiveCocoa</h2>
+
+<p><a href="https://github.com/ReactiveCocoa/ReactiveCocoa">ReactiveCocoa</a>（其简称为RAC）是由<a href="https://github.com/blog/1107-reactivecocoa-for-a-better-world">Github</a> 开源的一个应用于iOS和OS X开发的新框架。RAC具有函数式编程和响应式编程的特性。它主要吸取了.Net的 <a href="http://msdn.microsoft.com/en-us/data/gg577609">Reactive Extensions</a>的设计和实现。</p>
+
+<h2>ReactiveCocoa试图解决什么问题</h2>
+
+<p>经过一段时间的研究，我认为ReactiveCocoa试图解决以下3个问题：</p>
+
+<ol>
+<li>传统iOS开发过程中，状态以及状态之间依赖过多的问题</li>
+<li>传统MVC架构的问题：Controller比较复杂，可测试性差</li>
+<li>提供统一的消息传递机制</li>
+</ol>
+
+
+<!-- more -->
+
+
+<h3>传统iOS开发过程中，状态以及状态之间依赖过多的问题</h3>
+
+<p>我们在开发iOS应用时，一个界面元素的状态很可能受多个其它界面元素或后台状态的影响。</p>
+
+<p>例如，在用户帐户的登录界面，通常会有2个输入框（分别输入帐号和密码）和一个登录按钮。如果我们要加入一个限制条件：当用户输入完帐号和密码，并且登录的网络请求还未发出时，确定按钮才可以点击。通常情况下，我们需要监听这两个输入框的状态变化以及登录的网络请求状态，然后修改另一个控件的<code>enabled</code>状态。</p>
+
+<p>传统的写法如下（该示例代码修改自<a href="https://github.com/ReactiveCocoa/ReactiveCocoa">ReactiveCocoa官网</a> ） ：</p>
+
+<p>``` objc</p>
+
+<p>static void *ObservationContext = &ObservationContext;</p>
+
+<ul>
+<li><p>(void)viewDidLoad {
+  [super viewDidLoad];</p>
+
+<p>  [LoginManager.sharedManager addObserver:self</p>
+
+<pre><code>                           forKeyPath:@"loggingIn"
+                              options:NSKeyValueObservingOptionInitial
+                              context:&amp;ObservationContext];
+</code></pre>
+
+  [self.usernameTextField addTarget:self action:@selector(updateLogInButton)
+
+<pre><code>               forControlEvents:UIControlEventEditingChanged];
+</code></pre>
+
+  [self.passwordTextField addTarget:self action:@selector(updateLogInButton)
+
+<pre><code>               forControlEvents:UIControlEventEditingChanged];
+</code></pre>
+
+<p>}</p></li>
+<li><p>(void)updateLogInButton {
+  BOOL textFieldsNonEmpty = self.usernameTextField.text.length > 0 &amp;&amp; self.passwordTextField.text.length > 0;
+  BOOL readyToLogIn = !LoginManager.sharedManager.isLoggingIn &amp;&amp; !self.loggedIn;
+  self.logInButton.enabled = textFieldsNonEmpty &amp;&amp; readyToLogIn;
+}</p></li>
+<li><p>(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object</p>
+
+<pre><code>                  change:(NSDictionary *)change context:(void *)context {
+</code></pre>
+
+  if (context == ObservationContext) {
+
+<pre><code>  [self updateLogInButton];
+</code></pre>
+
+  } else {
+
+<pre><code>  [super observeValueForKeyPath:keyPath ofObject:object
+                         change:change context:context];
+</code></pre>
+
+<p>  }
+}</p></li>
+</ul>
+
+
+<p>```</p>
+
+<p>RAC通过引入信号（Signal）的概念，来代替传统iOS开发中对于控件状态变化检查的代理（delegate）模式或target-action模式。因为RAC的信号是可以组合（combine）的，所以可以轻松地构造出另一个新的信号出来，然后将按钮的<code>enabled</code>状态与新的信号绑定。如下所示：</p>
+
+<p>``` objc</p>
+
+<p>RAC(self.logInButton, enabled) = [RACSignal</p>
+
+<pre><code>combineLatest:@[
+    self.usernameTextField.rac_textSignal,
+    self.passwordTextField.rac_textSignal,
+    RACObserve(LoginManager.sharedManager, loggingIn),
+    RACObserve(self, loggedIn)
+] reduce:^(NSString *username, NSString *password, NSNumber *loggingIn, NSNumber *loggedIn) {
+    return @(username.length &gt; 0 &amp;&amp; password.length &gt; 0 &amp;&amp; !loggingIn.boolValue &amp;&amp; !loggedIn.boolValue);
+}];
+</code></pre>
+
+<p>```</p>
+
+<p>可以看到，在引入RAC之后，以前散落在<code>action-target</code>或KVO的回调函数中的判断逻辑被统一到了一起，从而使得登录按钮的<code>enabled</code>状态被更加清晰地表达了出来。</p>
+
+<p>除了组合（combine）之外，RAC的信号还支持链式（chaining）和过滤（filter)，以方便将信号进行进一步处理。</p>
+
+<h3>试图解决MVC框架的问题</h3>
+
+<p>对于传统的<a href="http://zh.wikipedia.org/zh-cn/MVC">Model-View-Controller</a>的框架，Controller很容易变得比较庞大和复杂。由于Controller承担了Model和View之间的桥梁作用，所以Controller常常与对应的View和Model的耦合度非常高，这同时也造成对其做单元测试非常不容易，对iOS工程的单元测试大多都只在一些工具类或与界面无关的逻辑类中进行。</p>
+
+<p>RAC的信号机制很容易将某一个Model变量的变化与界面关联，所以非常容易应用<a href="http://en.wikipedia.org/wiki/Model_View_ViewModel">Model-View-ViewModel</a> 框架。通过引入ViewModel层，然后用RAC将ViewModel与View关联，View层的变化可以直接响应ViewModel层的变化，这使得Controller变得更加简单，由于View不再与Model绑定，也增加了View的可重用性。</p>
+
+<p>因为引入了ViewModel层，所以单元测试可以在ViewModel层进行，iOS工程的可测试性也大大增强了。InfoQ也曾撰文介绍过MVVM：<a href="http://www.infoq.com/cn/articles/mvvm-revelation/">《MVVM启示录》</a> 。</p>
+
+<h3>统一消息传递机制</h3>
+
+<p>iOS开发中有着各种消息传递机制，包括KVO、Notification、delegation、block以及target-action方式。各种消息传递机制使得开发者在做具体选择时感到困惑，例如在objc.io上就有<a href="http://www.objc.io/issue-7/communication-patterns.html">专门撰文</a>（<a href="http://beyondvincent.com/blog/2013/12/14/124-communication-patterns/">破船的翻译</a> ），介绍各种消息传递机制之间的差异性。</p>
+
+<p>RAC将传统的UI控件事件进行了封装，使得以上各种消息传递机制都可以用RAC来完成。示例代码如下：</p>
+
+<p>``` objc</p>
+
+<p>// KVO
+[RACObserve(self, username) subscribeNext:<sup>(id</sup> x) {</p>
+
+<pre><code>NSLog(@"成员变量 username 被修改成了：%@", x);
+</code></pre>
+
+<p>}];</p>
+
+<p>// target-action
+self.button.rac_command = [[RACCommand alloc] initWithSignalBlock:<sup>RACSignal</sup> *(id input) {</p>
+
+<pre><code>NSLog(@"按钮被点击");
+return [RACSignal empty];
+</code></pre>
+
+<p>}];</p>
+
+<p>// Notification
+[NSNotificationCenter.defaultCenter addObserver:self</p>
+
+<pre><code>    selector:@selector(keyboardDidChangeFrameNotificationHandler:) 
+    name:UIKeyboardDidChangeFrameNotification object:nil];
+</code></pre>
+
+<p>// Delegate
+[[self rac_signalForSelector:@selector(viewWillAppear:)] subscribeNext:<sup>(id</sup> x) {</p>
+
+<pre><code>debugLog(@"viewWillAppear方法被调用 %@", x);
+</code></pre>
+
+<p>}];</p>
+
+<p>```</p>
+
+<p>RAC的<code>RACSignal</code> 类也提供了<code>createSignal</code>方法来让用户创建自定义的信号，如下代码创建了一个下载指定网站内容的信号。</p>
+
+<p>``` objc</p>
+
+<p>-(RACSignal *)urlResults {</p>
+
+<pre><code>return [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) {
+    NSError *error;
+    NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://www.devtang.com"]
+                                                encoding:NSUTF8StringEncoding
+                                                   error:&amp;error];
+    NSLog(@"download");
+    if (!result) {
+        [subscriber sendError:error];
+    } else {
+        [subscriber sendNext:result];
+        [subscriber sendCompleted];
+    }
+    return [RACDisposable disposableWithBlock:^{
+        NSLog(@"clean up");
+    }];
+}];
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<h2>如何使用ReactiveCocoa</h2>
+
+<p>ReactiveCocoa可以在iOS和OS X的应用开发中使用，对于iOS开发者，可以将<a href="https://github.com/ReactiveCocoa/ReactiveCocoa.git">RAC源码</a>下载编译后，使用编译好的<code>libReactiveCocoa-iOS.a</code>文件。</p>
+
+<p>开发者也可以用<a href="http://cocoapods.org/">CocoaPods</a>来设置目标工程对ReactiveCocoa的依赖，只需要编辑Podfile文件，增加如下内容即可：</p>
+
+<p>```
+pod 'ReactiveCocoa'</p>
+
+<p>```</p>
+
+<h2>ReactiveCocoa的特点</h2>
+
+<p>RAC在应用中大量使用了block，由于Objective-C语言的内存管理是基于<a href="http://zh.wikipedia.org/zh-cn/%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0">引用计数</a> 的，为了避免循环引用问题，在block中如果要引用self，需要使用<code>@weakify(self)</code>和<code>@strongify(self)</code>来避免强引用。另外，在使用时应该注意block的嵌套层数，不恰当的滥用多层嵌套block可能给程序的可维护性带来灾难。</p>
+
+<p>RAC的编程方式和传统的MVC方式差异巨大，所以需要较长的学习时间。并且，业界内对于RAC并没有广泛应用，这造成可供参考的项目和教程比较欠缺。
+另外，RAC项目本身也还在快速演进当中，1.x版本和2.x版本API改动了许多，3.0版本也正在快速开发中，对它的使用也需要考虑后期的升级维护问题。</p>
+
+<p>作为一个iOS开发领域的新开源框架，ReactiveCocoa带来了函数式编程和响应式编程的思想，值得大家关注并且学习。</p>
+
+<h2>一些学习资源</h2>
+
+<h3>博客&amp;教程</h3>
+
+<ul>
+<li><a href="http://spin.atomicobject.com/2014/02/03/objective-c-delegate-pattern/">http://spin.atomicobject.com/2014/02/03/objective-c-delegate-pattern/</a></li>
+<li><a href="http://blog.bignerdranch.com/4549-data-driven-ios-development-reactivecocoa/">http://blog.bignerdranch.com/4549-data-driven-ios-development-reactivecocoa/</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Functional_reactive_programming">http://en.wikipedia.org/wiki/Functional_reactive_programming</a></li>
+<li><a href="http://www.teehanlax.com/blog/reactivecocoa/">http://www.teehanlax.com/blog/reactivecocoa/</a></li>
+<li><a href="http://www.teehanlax.com/blog/getting-started-with-reactivecocoa/">http://www.teehanlax.com/blog/getting-started-with-reactivecocoa/</a></li>
+<li><a href="http://nshipster.com/reactivecocoa/">http://nshipster.com/reactivecocoa/</a></li>
+<li><a href="http://cocoasamurai.blogspot.com/2013/03/basic-mvvm-with-reactivecocoa.html">http://cocoasamurai.blogspot.com/2013/03/basic-mvvm-with-reactivecocoa.html</a></li>
+<li><a href="http://iiiyu.com/2013/09/11/learning-ios-notes-twenty-eight/">http://iiiyu.com/2013/09/11/learning-ios-notes-twenty-eight/</a></li>
+<li><a href="https://speakerdeck.com/andrewsardone/reactivecocoa-at-mobidevday-2013">https://speakerdeck.com/andrewsardone/reactivecocoa-at-mobidevday-2013</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/hh848246.aspx">http://msdn.microsoft.com/en-us/library/hh848246.aspx</a></li>
+<li><a href="http://www.itiger.me/?p=38">http://www.itiger.me/?p=38</a></li>
+<li><a href="http://blog.leezhong.com/ios/2013/12/27/reactivecocoa-2.html">http://blog.leezhong.com/ios/2013/12/27/reactivecocoa-2.html</a></li>
+<li><a href="https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/Documentation/FrameworkOverview.md">https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/Documentation/FrameworkOverview.md</a></li>
+<li><a href="http://www.haskell.org/haskellwiki/Functional_Reactive_Programming">http://www.haskell.org/haskellwiki/Functional_Reactive_Programming</a></li>
+<li><a href="http://blog.zhaojie.me/2009/09/functional-reactive-programming-for-csharp.html">http://blog.zhaojie.me/2009/09/functional-reactive-programming-for-csharp.html</a></li>
+</ul>
+
+
+<h3>代码</h3>
+
+<ul>
+<li><a href="https://github.com/Machx/MVVM-IOS-Example">https://github.com/Machx/MVVM-IOS-Example</a></li>
+<li><a href="https://github.com/ReactiveCocoa/RACiOSDemo">https://github.com/ReactiveCocoa/RACiOSDemo</a></li>
+</ul>
+
+
+<h3>书籍</h3>
+
+<ul>
+<li><a href="https://leanpub.com/iosfrp">https://leanpub.com/iosfrp</a></li>
+</ul>
+
+
+<h3>视频</h3>
+
+<ul>
+<li><a href="http://vimeo.com/65637501">http://vimeo.com/65637501</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[非换行空格在CoreText排版上的问题]]></title>
@@ -488,265 +742,6 @@ content = [content stringByReplacingOccurrencesOfString:@" " withString:@" "];<
 <h2>总结</h2>
 
 <p>本文介绍了Flurry的基本功能以及如何做自定义的统计，最后与业界其它同类工具做了对比。我也将相关示例代码整理到github上，地址是：<a href="https://github.com/tangqiaoboy/FlurryUsageSample">https://github.com/tangqiaoboy/FlurryUsageSample</a>，愿本文能帮助你更加方便地做应用的统计和分析工作。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎]]></title>
-    <link href="http://blog.devtang.com/blog/2013/10/21/the-tech-detail-of-ape-client-3/"/>
-    <updated>2013-10-21T16:15:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/10/21/the-tech-detail-of-ape-client-3</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第三篇。本文涉及的技术细节是：基于CoreText的排版引擎。</p>
-
-<!-- more -->
-
-
-<h2>CoreText概述</h2>
-
-<p>因为猿题库的做题和解析界面需要复杂的排版，所以我们基于CoreText实现了自己的富文本排版引擎。我们的排版引擎对公式、图片和链接有着良好支持，并且支持各种字体效果混排。对于内容中的图片，支持点击查看大图功能，对于内容中的链接，支持点击操作。</p>
-
-<p>下图是我们应用的一个截图，可以看到公式，图片与文字混排良好。</p>
-
-<p><img src="/images/ape-coretext-1.png"></p>
-
-<p>对于富文本排版，除了可以用CoreText实现外，还可以用UIWebView实现。我以前写过一篇介绍如何用UIWebView进行复杂内容显示和交互的文章<a href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">《关于UIWebView和PhoneGap的总结》</a>，里面介绍了使用UIWebView如何处理参数传递，同步与异步等问题，感兴趣的同学也可以翻看。</p>
-
-<p>基于CoreText来实现和基于UIWebView来实现相比，前者有以下好处：</p>
-
-<ol>
-<li>CoreText占用的内存更少，UIWebView占用的内存更多。</li>
-<li>CoreText在渲染界面前就可以精确地获得显示内容的高度（只要有了CTFrame即可），而UIWebView只有渲染出内容后，才能获得内容的高度（而且还需要用javascript代码来获取）</li>
-<li>CoreText的CTFrame可以在后台线程渲染，UIWebView的内容只能在主线程（UI线程）渲染。</li>
-<li>基于CoreText可以做更好的原生交互效果，交互效果可以更细腻。而UIWebView的交互效果都是用javascript来实现的，在交互效果上会有一些卡顿存在。例如，在UIWebView下，一个简单的按钮按下效果，都无法做到原生按钮的即时和细腻的按下效果。</li>
-</ol>
-
-
-<p>当然基于CoreText的方案也有一些劣势：</p>
-
-<ol>
-<li>CoreText渲染出来的内容不能像UIWebView那样方便地支持内容的复制。</li>
-<li>基于CoreText来排版，需要自己处理图片排版相关的逻辑，也需要自己处理链接点击操作的支持。</li>
-</ol>
-
-
-<p>我们最初的猿题库行测第一版采用了基于UIWebView来实现，但是做出来发现一些小的交互细节无法做到精致。所以后来的第二版我们就全部转成用CoreText实现，虽然实现成本上增加了不少，但是应用的交互效果好多了。</p>
-
-<p>使用CoreText也为我们后来的iPad版提供了技术积累，因为iPad版的页面排版更加复杂，用UIWebView是完全无法完成相应的交互和排版需求的。</p>
-
-<p>关于如何基于CoreText来做一个排版引擎，我主要参考的是这篇教程：<a href="http://www.raywenderlich.com/4147/core-text-tutorial-for-ios-making-a-magazine-app">《Core Text Tutorial for iOS: Making a Magazine App》</a> 以及<a href="https://github.com/jverkoey/nimbus">Nimbus</a> 中的<a href="https://github.com/jverkoey/nimbus/blob/master/src/attributedlabel/src/NIAttributedLabel.m">NIAttributeLabel.m</a> 的实现，在这里我就不重复教程中的内容了，我主要讲一些实现细节。</p>
-
-<h2>实现细节</h2>
-
-<h3>服务端接口</h3>
-
-<p>我们在后台实现了一个基于<a href="http://baike.baidu.com/view/168792.htm">UBB</a> 的富文本编译器。使用UBB的原因是：</p>
-
-<ol>
-<li>UBB相对于HTML来说，虽然功能较简单，但是能完全满足我们对于富文本排版的需求。</li>
-<li>做一个UBB的语法解析器比较简单，便于我们将UBB渲染到各个平台上。</li>
-</ol>
-
-
-<p>为了简化iOS端的实现，我们将UBB的语法解析在服务器端完成。服务器端提供了接口，可以直接获得将UBB解析成类似HTML的<a href="http://baike.baidu.com/subview/14806/8904138.htm?fromId=14806&amp;from=rdtself">文件对象模型(DOM)</a> 的树型数据结构。有了这个树型数据结构，iOS端渲染就简单多了，无非就是递归遍历树型节点，将相关的内容转换成 NSAttributeString即可，之后将NSAttrubiteString转成CoreText的CTFrame即可用于界面的绘制。</p>
-
-<h3>支持图文混排</h3>
-
-<p>支持图文混排在教程：<a href="http://www.raywenderlich.com/4147/core-text-tutorial-for-ios-making-a-magazine-app">《Core Text Tutorial for iOS: Making a Magazine App》</a> 中有介绍，我们在解析DOM树遇到图片节点时，则将该内容转成一个空格，随后设置该空格在绘制时，需要我们自己指定宽高相关信息，而宽高信息在图片节点中都有提供。这样，CoreText引擎在绘制时，就会把相关的图片位置留空，之后我们将图片异步下来下来后，使用CoreGraph相关的API将图片再画在界面上，就实现了图文混排功能。</p>
-
-<p>下面的相关的示例代码：</p>
-
-<p>``` objc
-/<em> Callbacks </em>/
-static void deallocCallback( void* ref ){</p>
-
-<pre><code>[(id)ref release];
-</code></pre>
-
-<p>}
-static CGFloat ascentCallback( void *ref ){</p>
-
-<pre><code>CGFloat height = [(NSString*)[(NSDictionary*)ref objectForKey:@"height"] floatValue];
-return height/2 + [FrameParserConfig sharedInstance].baselineFromMid;
-</code></pre>
-
-<p>}
-static CGFloat descentCallback( void *ref ){</p>
-
-<pre><code>CGFloat height = [(NSString*)[(NSDictionary*)ref objectForKey:@"height"] floatValue];
-return height/2 - [FrameParserConfig sharedInstance].baselineFromMid;
-</code></pre>
-
-<p>}
-static CGFloat widthCallback( void* ref ){</p>
-
-<pre><code>return [(NSString*)[(NSDictionary*)ref objectForKey:@"width"] floatValue];
-</code></pre>
-
-<p>}</p>
-
-<ul>
-<li>(void)appendDelegateData:(NSDictionary <em>)delegateData ToString:(NSMutableAttributedString</em>)contentString {
-  //render empty space for drawing the image in the text //1
-  CTRunDelegateCallbacks callbacks;
-  callbacks.version = kCTRunDelegateCurrentVersion;
-  callbacks.getAscent = ascentCallback;
-  callbacks.getDescent = descentCallback;
-  callbacks.getWidth = widthCallback;
-  callbacks.dealloc = deallocCallback;
-  CTRunDelegateRef delegate = CTRunDelegateCreate(&amp;callbacks, delegateData);
-  [delegateData retain];
-  // Character to use as recommended by kCTRunDelegateAttributeName documentation.
-  // use " " will lead to wrong width in CTFramesetterSuggestFrameSizeWithConstraints
-  unichar objectReplacementChar = 0xFFFC;
-  NSString * objectReplacementString = [NSString stringWithCharacters:&amp;objectReplacementChar length:1];
-  NSDictionary * attributes = [self getAttributesWithStyleArray:nil];
-  //try to apply linespacing attributes to this placeholder
-  NSMutableAttributedString * space = [[NSMutableAttributedString alloc] initWithString:objectReplacementString attributes:attributes];
-  CFAttributedStringSetAttribute((CFMutableAttributedStringRef)space, CFRangeMake(0, 1), kCTRunDelegateAttributeName, delegate);
-  CFRelease(delegate);
-  [contentString appendAttributedString:space];
-  [space release];</li>
-</ul>
-
-
-<p>}</p>
-
-<p>```</p>
-
-<p>这里需要注意的是，用来代替图片的占位符使用空格会带来排版上的异常，具体原因未知，我们猜测是CoreText的bug，参考<a href="https://github.com/jverkoey/nimbus">Nimbus</a> 的实现后，我们使用 <code>0xFFFC</code>作为占位符，就没有遇到问题了。</p>
-
-<h3>支持链接</h3>
-
-<p>支持链接点击的主要实现的方式是：</p>
-
-<ol>
-<li>在解析DOM树的时候，记录下链接串在整个富文本中的位置信息（包括offset和length)。</li>
-<li>在CoreText渲染到的view上，监听用户操作事件，使用 <code>CTLineGetStringIndexForPosition</code>函数来获得用户点击的位置对应 <code>NSAttributedString</code> 字符串上的位置信息（index)
-3.判断第2步得到的index是否在第一步记录的各个链接的区间范围内，如果在范围内，则表示用户点击了某一个链接。</li>
-</ol>
-
-
-<p>这段逻辑的关键代码如下：</p>
-
-<p>``` objc
-// test touch point is on link or not
-+ (LinkData <em>)touchLinkInView:(UIView </em>)view atPoint:(CGPoint)point data:(CTTableViewCellData *)data {</p>
-
-<pre><code>CTFrameRef textFrame = data.ctFrame;
-CFArrayRef lines = CTFrameGetLines(textFrame);
-if (!lines) return nil;
-CFIndex count = CFArrayGetCount(lines);
-LinkData *foundLink = nil;
-
-CGPoint origins[count];
-CTFrameGetLineOrigins(textFrame, CFRangeMake(0,0), origins);
-
-// CoreText context coordinates are the opposite to UIKit so we flip the bounds
-CGAffineTransform transform =  CGAffineTransformScale(CGAffineTransformMakeTranslation(0, view.bounds.size.height), 1.f, -1.f);
-
-for (int i = 0; i &lt; count; i++) {
-    CGPoint linePoint = origins[i];
-    CTLineRef line = CFArrayGetValueAtIndex(lines, i);
-    CGRect flippedRect = [self getLineBounds:line point:linePoint];
-    CGRect rect = CGRectApplyAffineTransform(flippedRect, transform);
-
-    if (CGRectContainsPoint(rect, point)) {
-        CGPoint relativePoint = CGPointMake(point.x-CGRectGetMinX(rect),
-                                            point.y-CGRectGetMinY(rect));
-        CFIndex idx = CTLineGetStringIndexForPosition(line, relativePoint);
-        foundLink = [self linkAtIndex:idx linkArray:data.linkArray];
-        return foundLink;
-    }
-}
-return nil;
-</code></pre>
-
-<p>}</p>
-
-<p>```</p>
-
-<h3>基于CoreText的内容省略</h3>
-
-<p>我们在使用CoreText时，还遇到一个具体排版上的问题。正常情况下，在生成CTFrame之后，只需要调用：<code>CTFrameDraw(self.data.ctFrame, context);</code>即可完成界面的绘制。但是产品提出了一个需求，对于某些界面，当显示不下的时候，需要将多余内容用<code>...</code>来表示。这让我们的绘制逻辑需要特别处理，以下是具体的实现：</p>
-
-<p>``` objc</p>
-
-<p>static NSString* const kEllipsesCharacter = @"\u2026";
-CGPathRef path = CTFrameGetPath(<em>data.ctFrame);
-CGRect rect = CGPathGetBoundingBox(path);
-CFArrayRef lines = CTFrameGetLines(</em>data.ctFrame);
-CFIndex lineCount = CFArrayGetCount(lines);
-NSInteger numberOfLines = MIN(_numberOfLines, lineCount);</p>
-
-<p>CGPoint lineOrigins[numberOfLines];
-CTFrameGetLineOrigins(<em>data.ctFrame, CFRangeMake(0, numberOfLines), lineOrigins);
-NSAttributedString *attributedString = </em>data.attributedString;</p>
-
-<p>for (CFIndex lineIndex = 0; lineIndex &lt; numberOfLines; lineIndex++) {</p>
-
-<pre><code>CGPoint lineOrigin = lineOrigins[lineIndex];
-lineOrigin.y =  self.frame.size.height + (lineOrigin.y - rect.size.height);
-CGContextSetTextPosition(context, lineOrigin.x, lineOrigin.y);
-CTLineRef line = CFArrayGetValueAtIndex(lines, lineIndex);
-
-BOOL shouldDrawLine = YES;
-
-if (lineIndex == numberOfLines - 1) {
-    CFRange lastLineRange = CTLineGetStringRange(line);
-    if (lastLineRange.location + lastLineRange.length &lt; (CFIndex)attributedString.length) {
-        CTLineTruncationType truncationType = kCTLineTruncationEnd;
-        NSUInteger truncationAttributePosition = lastLineRange.location + lastLineRange.length - 1;
-
-        NSDictionary *tokenAttributes = [attributedString attributesAtIndex:truncationAttributePosition
-                                                             effectiveRange:NULL];
-        NSAttributedString *tokenString = [[NSAttributedString alloc] initWithString:kEllipsesCharacter
-                                                                          attributes:tokenAttributes];
-        CTLineRef truncationToken = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)tokenString);
-
-        NSMutableAttributedString *truncationString = [[attributedString attributedSubstringFromRange:NSMakeRange(lastLineRange.location, lastLineRange.length)] mutableCopy];
-        if (lastLineRange.length &gt; 0) {
-            // Remove any whitespace at the end of the line.
-            unichar lastCharacter = [[truncationString string] characterAtIndex:lastLineRange.length - 1];
-            if ([[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:lastCharacter]) {
-                [truncationString deleteCharactersInRange:NSMakeRange(lastLineRange.length - 1, 1)];
-            }
-        }
-        [truncationString appendAttributedString:tokenString];
-
-        CTLineRef truncationLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)truncationString);
-        CTLineRef truncatedLine = CTLineCreateTruncatedLine(truncationLine, self.size.width, truncationType, truncationToken);
-        if (!truncatedLine) {
-            // If the line is not as wide as the truncationToken, truncatedLine is NULL
-            truncatedLine = CFRetain(truncationToken);
-        }
-        CFRelease(truncationLine);
-        CFRelease(truncationToken);
-
-        CTLineDraw(truncatedLine, context);
-        CFRelease(truncatedLine);
-
-        shouldDrawLine = NO;
-    }
-}
-
-if (shouldDrawLine) {
-    CTLineDraw(line, context);
-}
-</code></pre>
-
-<p>}</p>
-
-<p>```</p>
-
-<h2>后记</h2>
-
-<p>以上源码很多都参考了<a href="https://github.com/jverkoey/nimbus">Nimbus</a>的实现，在此再一次表达一下对开源社区的感谢。</p>
-
-<p>在大约2年前，CoreText还是一个新玩意。那时候微博的界面都还是用控件组合得到的。慢慢的，大家都开始接受CoreText，很多应用都广泛地将CoreText应用于自己的界面中，做出来了更加复杂的排版、交互效果。在iOS7之后，苹果推出了更加易于使用的TextKit，使得富文本排版更加容易，相信以后的iOS应用界面会更加美观，交互更加绚丽。</p>
 ]]></content>
   </entry>
   

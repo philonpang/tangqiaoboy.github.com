@@ -117,9 +117,13 @@ self.button.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(i
 }];
 
 // Notification
-[NSNotificationCenter.defaultCenter addObserver:self 
-        selector:@selector(keyboardDidChangeFrameNotificationHandler:) 
-        name:UIKeyboardDidChangeFrameNotification object:nil];
+[[[NSNotificationCenter defaultCenter] 
+    rac_addObserverForName:UIKeyboardDidChangeFrameNotification         
+                    object:nil] 
+    subscribeNext:^(id x) {
+        NSLog(@"键盘Frame改变");
+    }
+];
 
 // Delegate
 [[self rac_signalForSelector:@selector(viewWillAppear:)] subscribeNext:^(id x) {

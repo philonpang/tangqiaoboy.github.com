@@ -134,6 +134,11 @@ $ pod search json
    - Versions: 1.0 [master repo]
 ```
 
+###关于.gitignore
+
+当你执行`pod install`之后，除了Podfile外，cocoapods还会生成一个名为`Podfile.lock`的文件，你不应该把这个文件加入到`.gitignore`中。因为`Podfile.lock`会锁定当前各依赖库的版本，之后如果多次执行`pod install` 不会更改版本，要`pod update`才会改`Podfile.lock`了。这样多人协作的时候，可以防止第三方库升级把程序搞挂。
+
+
 ###生成第三方库的帮助文档
 如果你想让CococaPods帮你生成第三方库的帮助文档，并集成到XCode中，那么用brew安装appledoc即可：
 

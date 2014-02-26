@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mac | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-02-11T14:35:28+08:00</updated>
+  <updated>2014-02-26T22:21:56+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,69 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用brew cask来安装Mac应用]]></title>
+    <link href="http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/"/>
+    <updated>2014-02-26T21:38:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask</id>
+    <content type="html"><![CDATA[<h2>简介</h2>
+
+<p><a href="https://github.com/phinze/homebrew-cask"><code>brew cask</code></a>是一个用命令行管理Mac下应用的工具，它是基于<a href="http://brew.sh/"><code>homebrew</code></a>的一个增强工具。</p>
+
+<p><code>homebrew</code>可以管理Mac下的命令行工具，例如<code>imagemagick</code>, <code>nodejs</code>，如下所示：</p>
+
+<p>```
+brew install imagemagick
+brew install node</p>
+
+<p>```</p>
+
+<p>而使用上<code>brew cask</code>之后，你还可以用它来管理Mac下的Gui程序，例如<code>qq</code>, <code>chrome</code>, <code>evernote</code>等，如下所示：</p>
+
+<p>```
+brew cask install qq
+brew cask install google-chrome
+brew cask install evernote</p>
+
+<p>```</p>
+
+<h2>安装</h2>
+
+<h3>安装homebrew</h3>
+
+<p>用以下一行命令即可安装homebrew
+<code>
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+</code></p>
+
+<p>之后执行 <code>brew doctor</code> 命令可以看看<code>homebrew</code>的环境是否正常。通常第一次安装完brew之后，还需要安装苹果的<code>Command Line Tools</code>。</p>
+
+<h3>安装cask</h3>
+
+<p>用如下命令来安装cask:</p>
+
+<p><code>
+brew tap phinze/cask
+brew install brew-cask
+</code></p>
+
+<h2>LaunchRocket</h2>
+
+<p><a href="https://github.com/jimbojsb/launchrocket">LaunchRocket</a>是一个管理brew安装的service的工具，安装之后可以看所有的service的运行状态，如下图所示：</p>
+
+<p><img src="https://raw2.github.com/jimbojsb/launchrocket/master/screenshots/LaunchRocket.png" alt="" /></p>
+
+<p>安装<code>LaunchRocket</code>就要用到我刚刚提的<code>brew cask</code>，用如下命令即可：</p>
+
+<p><code>
+brew tap jimbojsb/launchrocket
+brew cask install launchrocket
+</code></p>
+
+<p>大家玩得开心～</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用Privoxy做智能代理切换]]></title>

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了， &hellip;">
+  <meta name="description" content="前言 我在去年的一篇文章《iOS5中UIViewController的新方法》中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +74,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/goodbye-viewdidunload/">再见，viewDidUnload方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T17:37:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>我在去年的一篇文章<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">《iOS5中UIViewController的新方法》</a>中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中，viewDidUnload回调方法被Deprecated掉了。查看苹果的文档，可以看到如下的说明。</p>
+
+<p><img src="/images/viewdidunload-1.jpg"></p>
+
+<p>那么，原本在viewDidUnload中的代码应该怎么处理？在iOS6中，又应该怎么处理内存警告？带着这些问题，我查找了一些资料，在此分享给大家。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/05/18/goodbye-viewdidunload/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -543,53 +590,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/23/use-zxing-library/">在iOS中使用ZXing库</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-23T17:03:00+08:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/zxing-icon.png"></p>
-
-<h2>前言</h2>
-
-<p><a href="https://code.google.com/p/zxing/">ZXing</a>(<a href="https://github.com/zxing/zxing">Github镜像地址</a>)是一个开源的条码生成和扫描库（开源协议为<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache2.0</a>)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。</p>
-
-<p>我上周在iOS项目开发中使用了ZXing的扫描二维码功能。在此总结一下如何将ZXing集成到已有的iOS工程中，分享给大家。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/12/23/use-zxing-library/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -605,6 +605,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">使用brew cask来安装Mac应用</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/02/11/reactivecocoa-introduction/">ReactiveCocoa - iOS开发的新框架</a>
@@ -640,10 +644,6 @@
     
       <li class="post">
         <a href="/blog/2013/11/14/use-flurry-to-analyse-data/">使用Flurry来统计和分析用户行为</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/21/the-tech-detail-of-ape-client-3/">猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎</a>
       </li>
     
   </ul>

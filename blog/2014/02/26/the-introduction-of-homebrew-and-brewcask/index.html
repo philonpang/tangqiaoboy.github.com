@@ -5,11 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>分享iOS开发技巧的微信公共账号 - 唐巧的技术博客</title>
+  <title>使用brew cask来安装Mac应用 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。 后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。 &hellip;">
+  <meta name="description" content="简介 brew cask是一个用命令行管理Mac下应用的工具，它是基于homebrew的一个增强工具。 homebrew可以管理Mac下的命令行工具，例如imagemagick, nodejs，如下所示： 1
+2
+brew install imagemagick
+brew install node &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2013/02/21/introduction-of-weixin-public-account">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">分享iOS开发技巧的微信公共账号</h1>
+      <h1 class="entry-title">使用brew cask来安装Mac应用</h1>
     
     
       <p class="meta">
@@ -93,71 +96,74 @@
   
 
 
-<time datetime="2013-02-21T20:02:00+08:00" pubdate data-updated="true">Feb 21<span>st</span>, 2013</time>
+<time datetime="2014-02-26T21:38:00+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p><img src="/images/weixin-why.jpg" width="300px" /></p>
+<div class="entry-content"><h2>简介</h2>
 
-<p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
+<p><a href="https://github.com/phinze/homebrew-cask"><code>brew cask</code></a>是一个用命令行管理Mac下应用的工具，它是基于<a href="http://brew.sh/"><code>homebrew</code></a>的一个增强工具。</p>
 
-<p>后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。现在群里面加入了包括网易，腾讯，百度，新浪，搜狐，美团，豆瓣等公司的iOS程序员以及一些自由职业者。因为大家都是比较有经验的开发者，所以每天大家的讨论不太多，但是都很有价值。</p>
+<p><code>homebrew</code>可以管理Mac下的命令行工具，例如<code>imagemagick</code>, <code>nodejs</code>，如下所示：</p>
 
-<!-- more -->
-
-
-<p>但是，我发现QQ群对于讨论的归档性太弱。很多有代表意义的讨论，对于其他人可能是有用的，但是由于群的归档性太差，随着时间流逝，这些信息无法被有效沉淀。</p>
-
-<p>所以我想做一个尝试。我想把这个QQ群里面有价值的讨论信息整理归档到这个公共账号上。希望大部分iOS同行每天都能得到少量的，但是有价值的信息。对于特别有价值的信息，我也会在后期整理成博客，发表在博客上。</p>
-
-<p>希望这能对你平时的工作有所帮助。</p>
-
-<p>如果你感兴趣，那么可以扫描以下二维码加该账号为好友，或者在微信中搜索“iOS开发”。</p>
-
-<p><img src="/images/weixin-qr.jpg"></p>
-
-<hr>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install imagemagick
+</span><span class='line'>brew install node
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h1>后记1（2013年3月27日）</h1>
+<p>而使用上<code>brew cask</code>之后，你还可以用它来管理Mac下的Gui程序，例如<code>qq</code>, <code>chrome</code>, <code>evernote</code>等，如下所示：</p>
 
-<h3>微信公共账号的运营感受</h3>
-
-<p>上面的提到的公共账号，我尝试运营了半个月，有如下感受：</p>
-
-<ol>
-<li>微信公共平台实时性太高，文章归档性弱，微信4.5才增加查看所有历史消息的功能，而且很多人还不知道从哪儿查看历史消息。</li>
-<li>微信公共平台相对微博或RSS订阅，对订阅人的干扰强度更大。因为消息会实时推送到订阅人手机上，并且有消息收到提醒。</li>
-<li>微信公共平台上的消息因为是在手机上阅读，不适合作长篇的，深度的技术讲解，但适合作简单入门的技术介绍</li>
-<li>微信公共平台的后台管理太弱，不适宜代码的排版。</li>
-<li>微信公共平台上的消息不能被搜索引擎检索，阻碍了有价值的信息的传播。</li>
-</ol>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew cask install qq
+</span><span class='line'>brew cask install google-chrome
+</span><span class='line'>brew cask install evernote
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>综上所述，微信公共平台更适合于发表新闻类或漫谈的文章（例如Fenng的小道消息），或者入门性技术介绍（例如池建强的Mac技巧）。不适合长篇的技术深入讨论，更不适合贴代码，也不适合归档文章（要归档得自己另外整理）。</p>
+<h2>安装</h2>
 
-<p>另外，每天通过公共账号发表文章相当费时间精力，至少需要1个小时的时间。对于我这个身处于创业公司的人来说，实在没有那么多时间花在这上面。所以现在该公共账号已经基本处于停止更新状态。</p>
+<h3>安装homebrew</h3>
 
-<h1>后记2（2013年6月16日）</h1>
+<p>用以下一行命令即可安装homebrew</p>
 
-<p>维护这个微信号刚开始很难，原因一方面是整理信息的成本很高，写成微信很花时间。另一方面，我也没有那么多时间来写微信。不过我坚持了一段时间后，渐渐发现有一些牛人会被吸引到我们的QQ群里面，这样就行成了一个良性循环。QQ群不断有牛人加入贡献高质量的讨论，讨论内容通过微信发出去后，又吸引更多牛人要求加入。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"</span></code></pre></td></tr></table></div></figure>
 
-<p>所以，该微信公共账号经过近四个月的坚持，最终不但度过了最艰难的时期，还引吸了大量牛人加入到我们的讨论群中。现在每天群里都有足够多的内容分享出来组织成文。我自己也慢慢找到了该微信公众号的定位，即给大家分享一些信息，而不是进行知识的长篇大论。很多时候，提供一些链接给大家就足够了，感兴趣的人自然会去深入阅读。</p>
 
-<p>另外，6月6日，本微信公共账号同时得到了<a href="http://hutu.me/">@Fenng</a>和<a href="http://macshuo.com/">@池建强</a>在各自的微信公共账号上的<a href="http://macshuo.com/?p=529">推荐</a>，关注人数也暴涨。很高兴自己最终坚持下来了。</p>
+<p>之后执行 <code>brew doctor</code> 命令可以看看<code>homebrew</code>的环境是否正常。通常第一次安装完brew之后，还需要安装苹果的<code>Command Line Tools</code>。</p>
 
-<h3>如何申请加群？</h3>
+<h3>安装cask</h3>
 
-<p>有很多朋友留言问我们的QQ群号并想申请加入，在此我统一回复一下。</p>
+<p>用如下命令来安装cask:</p>
 
-<p>QQ群由于实时性太强，所以一旦有讨论，就会对平时的工作造成影响。所以QQ群里面的讨论不应该太热烈，否则每天就没法干活了。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew tap phinze/cask
+</span><span class='line'>brew install brew-cask</span></code></pre></td></tr></table></div></figure>
 
-<p>所以我希望群里面的人都足够精通iOS开发，对于在群里面提出来的问题，都是值得讨论的问题。通过讨论，大家都有了收获，才不致于觉得这个群太打扰而把它屏蔽掉。</p>
 
-<p>因此，我不希望群里面加太多的人，现在人数基本上有讨论的气氛，对于技术问题的讨论也都会有结果。所以，<font color="red">暂时不接受任何加群申请。</font></p>
+<h2>LaunchRocket</h2>
+
+<p><a href="https://github.com/jimbojsb/launchrocket">LaunchRocket</a>是一个管理brew安装的service的工具，安装之后可以看所有的service的运行状态，如下图所示：</p>
+
+<p><img src="https://raw2.github.com/jimbojsb/launchrocket/master/screenshots/LaunchRocket.png" alt="" /></p>
+
+<p>安装<code>LaunchRocket</code>就要用到我刚刚提的<code>brew cask</code>，用如下命令即可：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew tap jimbojsb/launchrocket
+</span><span class='line'>brew cask install launchrocket</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大家玩得开心～</p>
 </div>
 
 
@@ -180,12 +186,12 @@
   
 
 
-<time datetime="2013-02-21T20:02:00+08:00" pubdate data-updated="true">Feb 21<span>st</span>, 2013</time>
+<time datetime="2014-02-26T21:38:00+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
+    <a class='category' href='/blog/categories/mac/'>mac</a>
   
 </span>
 
@@ -239,10 +245,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/23/set-ios-system-ui-language/" title="Previous Post: 设置应用内的系统控件语言">&laquo; 设置应用内的系统控件语言</a>
+        <a class="basic-alignment left" href="/blog/2014/02/11/reactivecocoa-introduction/" title="Previous Post: ReactiveCocoa - iOS开发的新框架">&laquo; ReactiveCocoa - iOS开发的新框架</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/03/27/should-we-use-arc/" title="next Post: 是否应该使用ARC?">是否应该使用ARC? &raquo;</a>
       
     </p>
   </footer>

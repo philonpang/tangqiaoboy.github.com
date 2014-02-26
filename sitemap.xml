@@ -291,11 +291,17 @@
         <lastmod>2014-02-11T14:28:52+08:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/
+        </loc>
+        <lastmod>2014-02-26T22:21:23+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://blog.devtang.com/blog/archives/</loc>
-        <lastmod>2014-02-11T14:33:12+08:00</lastmod>
+        <lastmod>2014-02-26T22:21:23+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/</loc>
-        <lastmod>2014-02-11T14:33:12+08:00</lastmod>
+        <lastmod>2014-02-26T22:21:23+08:00</lastmod>
     </url>
 </urlset>

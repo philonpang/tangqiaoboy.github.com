@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-02-11T14:35:28+08:00</updated>
+  <updated>2014-02-26T22:21:56+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用brew cask来安装Mac应用]]></title>
+    <link href="http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/"/>
+    <updated>2014-02-26T21:38:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask</id>
+    <content type="html"><![CDATA[<h2>简介</h2>
+
+<p><a href="https://github.com/phinze/homebrew-cask"><code>brew cask</code></a>是一个用命令行管理Mac下应用的工具，它是基于<a href="http://brew.sh/"><code>homebrew</code></a>的一个增强工具。</p>
+
+<p><code>homebrew</code>可以管理Mac下的命令行工具，例如<code>imagemagick</code>, <code>nodejs</code>，如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install imagemagick
+</span><span class='line'>brew install node
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而使用上<code>brew cask</code>之后，你还可以用它来管理Mac下的Gui程序，例如<code>qq</code>, <code>chrome</code>, <code>evernote</code>等，如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew cask install qq
+</span><span class='line'>brew cask install google-chrome
+</span><span class='line'>brew cask install evernote
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>安装</h2>
+
+<h3>安装homebrew</h3>
+
+<p>用以下一行命令即可安装homebrew</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>之后执行 <code>brew doctor</code> 命令可以看看<code>homebrew</code>的环境是否正常。通常第一次安装完brew之后，还需要安装苹果的<code>Command Line Tools</code>。</p>
+
+<h3>安装cask</h3>
+
+<p>用如下命令来安装cask:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew tap phinze/cask
+</span><span class='line'>brew install brew-cask</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>LaunchRocket</h2>
+
+<p><a href="https://github.com/jimbojsb/launchrocket">LaunchRocket</a>是一个管理brew安装的service的工具，安装之后可以看所有的service的运行状态，如下图所示：</p>
+
+<p><img src="https://raw2.github.com/jimbojsb/launchrocket/master/screenshots/LaunchRocket.png" alt="" /></p>
+
+<p>安装<code>LaunchRocket</code>就要用到我刚刚提的<code>brew cask</code>，用如下命令即可：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew tap jimbojsb/launchrocket
+</span><span class='line'>brew cask install launchrocket</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大家玩得开心～</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ReactiveCocoa - iOS开发的新框架]]></title>
@@ -3506,89 +3575,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
 <p>App Annie和苹果本身提供的命令行工具虽然都能统计App Store的数据，但是二者功能相差悬殊。苹果的命令行工具仅仅能提供销售数据的按日、周、月、年等方式的统计和备份。而App Annie除了以更加良好的界面和交互提供这些功能外，还能跟踪App的排名变化，以及App在苹果的各种榜单中所处位置的情况。</p>
 
 <p>建议大家都可以尝试使用App Annie或AppFigures这类统计工具，帮助你方便地查看App的销售和排名情况。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[再见，viewDidUnload方法]]></title>
-    <link href="http://blog.devtang.com/blog/2013/05/18/goodbye-viewdidunload/"/>
-    <updated>2013-05-18T17:37:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/05/18/goodbye-viewdidunload</id>
-    <content type="html"><![CDATA[<h3>前言</h3>
-
-<p>我在去年的一篇文章<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">《iOS5中UIViewController的新方法》</a>中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中，viewDidUnload回调方法被Deprecated掉了。查看苹果的文档，可以看到如下的说明。</p>
-
-<p><img src="http://blog.devtang.com/images/viewdidunload-1.jpg"></p>
-
-<p>那么，原本在viewDidUnload中的代码应该怎么处理？在iOS6中，又应该怎么处理内存警告？带着这些问题，我查找了一些资料，在此分享给大家。</p>
-
-<!-- more -->
-
-
-<h3>分析</h3>
-
-<p>在iOS4和iOS5系统中，当内存不足，应用收到Memory warning时，系统会自动调用当前没在界面上的ViewController的viewDidUnload方法。
-通常情况下，这些未显示在界面上的ViewController是UINavigationController Push栈中未在栈顶的ViewController，以及UITabBarViewController中未显示的子ViewController。这些View Controller都会在Memory Warning事件发生时，被系统自动调用viewDidUnload方法。</p>
-
-<p>在iOS6中，由于viewDidUnload事件在iOS6下任何情况都不会被触发，所以苹果在文档中建议，应该将回收内存的相关操作移到另一个回调函数：didReceiveMemoryWarning 中。但是如果你仅仅是把以前写到viewDidUnload函数中的代码移动到didReceiveMemoryWarning函数中，那么你就错了。以下是一个 <font color=red>错误的示例代码</font> ：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">didReceiveMemoryWarning</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">didReceiveMemoryWarning</span><span class="p">];</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">([</span><span class="n">self</span> <span class="n">isViewLoaded</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">[[</span><span class="n">self</span> <span class="n">view</span><span class="p">]</span> <span class="n">window</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="nl">setView:</span><span class="nb">nil</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">这篇文章</a>解释了iOS6不推荐你将view置为nil的原因（链接打开需要翻墙）, 翻译过来如下：</p>
-
-<ol>
-<li><p>UIView有一个CALayer的成员变量，CALayer是具体用于将自己画到屏幕上的。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/viewdidunload-2.jpg"></p></li>
-<li><p>CALayer是一个bitmap图象的容器类，当UIView调用自身的drawRect时，CALayer才会创建这个bitmap图象类。</p></li>
-<li><p>具体占内存的其实是一个bitmap图象类，CALayer只占48bytes, UIView只占96bytes。而一个iPad的全屏UIView的bitmap类会占到12M的大小！</p></li>
-<li><p>在iOS6时，当系统发出MemoryWarning时，系统会自动回收bitmap类。但是不回收UIView和CALayer类。这样即回收了大部分内存，又能在需要bitmap类时，通过调用UIView的drawRect: 方法重建。</p></li>
-</ol>
-
-
-<h3>内存优化</h3>
-
-<p>另外文章中还提到苹果的操作系统对此做的一个内存优化技巧，解释如下：</p>
-
-<ol>
-<li><p>当一段内存被分配时，它会被标记成“In use“, 以防止被重复使用。当内存被释放时，这段内存会被标记成&#8221;Not in use&#8221;，这样，在有新的内存申请时，这块内存就可能被分配给其它变量。</p></li>
-<li><p>CALayer包括的具体的bitmap内容的私有成员变量类型为<a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CABackingStore</a>， 当收到MemroyWarning时，
-CABackingStore类型的内存区会被标记成volatile类型（这里的volatile和 C以及Java语言的volatile不是一个意思），volatile表示，这块内存可能被再次被原变量重用。</p></li>
-</ol>
-
-
-<p>这样，有了上面的优化后，当收到Memoy Warning时，虽然所有的CALayer所包含的bitmap内存都被标记成volatile了，但是只要这块内存没有再次被复用，那么当需要重建bitmap内存时，
-它就可以直接被复用，而避免了再次调用 UIView的 drawRect: 方法。</p>
-
-<h3>总结</h3>
-
-<p>所以，简单来说，对于iOS6，你不需要做任何以前viewDidUnload的事情，更不需要把以前viewDidUnload的代码移动到 didReceiveMemoryWarning方法中。</p>
-
-<p>引用WWDC 2012 中的一段话来给viewDidUnload说再见：</p>
-
-<blockquote><p>The method viewWillUnload and viewDidUnload. We&#8217;re not going to call them anymore. I mean, there&#8217;s kind of a cost-benifit equation and analysis that we went through. In the early days, there was a real performance need for us to ensure that on memory warnings we unloaded views. There was all kinds of graphics and backing stores and so forth that would also get unloaded. We now unload those independently of the view, so it isn&#8217;t that big of a deal for us for those to be unloaded, and there were so many bugs where there would be pointers into。</p></blockquote>
-
-
-<h3>参考链接</h3>
-
-<ul>
-<li><a href="http://thejoeconwayblog.wordpress.com/2012/10/04/view-controller-lifecycle-in-ios-6/">View Controller Lifecycle in iOS 6</a></li>
-<li><a href="http://blog.spacemanlabs.com/2011/08/calayer-internals-contents/">CALayer Internals: Contents</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

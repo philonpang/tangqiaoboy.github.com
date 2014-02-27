@@ -9,8 +9,10 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
-因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是： 1 &hellip;">
+  <meta name="description" content="前言 让我们回想一下手工提交review请求的过程: 首先得用 svn diff > filename.diff 生成diff文件。
+然后输入review board的网址，可能是 rb.companyname.com
+然后需要输入你的账号密码进行登录验证。
+然后你需要填写你的svn &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +83,59 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2011/08/25/use-rbtool-to-post-review-request/">使用RBTool自动提交code Review请求</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-25T18:13:00+08:00" pubdate data-updated="true">Aug 25<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>让我们回想一下手工提交review请求的过程:</p>
+
+<ol>
+<li>首先得用 svn diff > filename.diff 生成diff文件。</li>
+<li>然后输入review board的网址，可能是 rb.companyname.com</li>
+<li>然后需要输入你的账号密码进行登录验证。</li>
+<li>然后你需要填写你的svn repository 地址，然后上传diff文件。</li>
+<li>然后你进到review请求的详细页面，填写summary, description, test-done, group和people项，而通常情况下，你的group是固定的，review你的people也就是那么几个人来回变。</li>
+<li>最后你填完这些内容，点击 publish 来发布你的review请求。</li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/25/use-rbtool-to-post-review-request/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a></h1>
     
     
@@ -144,6 +199,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/02/27/ios-weekly-1/">iOS移动开发周报-第1期</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">使用brew cask来安装Mac应用</a>
       </li>
     
@@ -177,10 +236,6 @@
     
       <li class="post">
         <a href="/blog/2013/12/11/network-tool-charles-intr/">iOS开发工具-网络封包分析工具Charles</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/14/use-flurry-to-analyse-data/">使用Flurry来统计和分析用户行为</a>
       </li>
     
   </ul>

@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>mac下的top命令 - 唐巧的技术博客</title>
+  <title>iOS移动开发周报-第1期 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="以前只是在linux机器上使用top命令。常用的快键键是: p键 - 按cpu使用率排序
-m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应的是，先输入o，然后输入cpu则按cpu使用量排序，输入rsize则按内存使用量排序。 如果记不清了，可以在top的界面上按?， &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 新闻 《 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应�
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2011/12/27/mac-top">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2014/02/27/ios-weekly-1">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -78,7 +77,7 @@ m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应�
   
   <header>
     
-      <h1 class="entry-title">Mac下的top命令</h1>
+      <h1 class="entry-title">iOS移动开发周报-第1期</h1>
     
     
       <p class="meta">
@@ -94,27 +93,56 @@ m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应�
   
 
 
-<time datetime="2011-12-27T13:30:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2011</time>
+<time datetime="2014-02-27T17:23:00+08:00" pubdate data-updated="true">Feb 27<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>以前只是在linux机器上使用top命令。常用的快键键是:</p>
+<div class="entry-content"><h3>版权说明</h3>
 
-<ul>
-<li>p键 - 按cpu使用率排序</li>
-<li>m键 - 按内存使用量排序</li>
-</ul>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/02/apple-ssl-bug">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-02-22/08379183001.shtml">《苹果收购iOS测试平台TestFlight的开发商》</a>，苹果公司确认收购知名iOS测试平台TestFlight的开发商Burstly。与此同时，TestFlight表示将停止提供Android平台产品，不再面向新用户销售Android版测试软件开发包(SDK)，而当前用户仍可以继续使用。</p></li>
+<li><p><a href="http://coolshell.cn/articles/11112.html">《由苹果的低级Bug想到的》</a>: 2月22日苹果修复了SSL连接验证的一个bug，该bug会引起中间人攻击。文章作者详细分析了Bug产生的潜在原因和一些思考，包括代码风格、测试、以及goto语句的使用。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/02/11/baidu-interview/">《百度面试》</a>：作者在文章中分享了百度移动云可穿戴部门iOS开发职位的面试经历，其中多个技术问题值得大家深入学习。</p></li>
+<li><p><a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">《Facebook Paper使用的第三方库》</a>：作者在文章中分享了facebook paper使用的第三方库。该列表中的第三方库对广大iOS开发者来说，具有很好的参考意义。</p></li>
+</ol>
 
 
-<p>这2个快捷键在mac上都不一样。对应的是，先输入o，然后输入cpu则按cpu使用量排序，输入rsize则按内存使用量排序。</p>
+<h2>教程</h2>
 
-<!--more-->
+<ol>
+<li><p><a href="http://blog.xcodev.com/archives/iphone-baseband-intro/">《初识iPhone基带通讯》</a>：基带（Baseband）是手机的通讯模块，它负责移动网络的调制与解调工作，它与手机核心通讯功能息息相关。作者在文章中介绍了，如何在越狱的iPhone中，用基带进行通讯。</p></li>
+<li><p><a href="http://sjpsega.com/blog/2014/02/11/yi--ios-7-best-practices-part-1/">《[译]iOS7最佳实践：一个天气App案例(一)》</a>和<a href="http://sjpsega.com/blog/2014/02/15/yi--ios-7-best-practices-part-2/">《[译]iOS7最佳实践：一个天气App案例(二)》</a>：在这篇来自raywenderlich的教程中，作者详细介绍了如何使用依赖管理工具Cocoapods、纯代码布局、响应式编程框架ReactiveCocoa以及OpenWeatherMap完成一个天气应用，具有很高的学习价值。</p></li>
+<li><p><a href="http://blog.csdn.net/yiyaaixuexi/article/details/19642621">《基于脚本实现动态库注入》</a>：作者分享了她在越狱手机上，基于脚本向某个应用动态注入动态库的想法和实践。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/02/21/xcode-plugin-fun/">《Xcode5 Plugins 开发简介》</a>：作者在文章中介绍了如何给Xcode5开发插件。最后作为示例，开发了一个简单的插件，记录Xcode开发中Building的时间。</p></li>
+<li><p><a href="http://onevcat.com/2014/02/ios-test-with-kiwi/">《TDD的iOS开发初步以及Kiwi使用入门》</a>：测试驱动开发(Test Driven Development，简称为TDD)是保证代码质量的一种程序开发方法。作者介绍了在iOS开发中使用TDD及Kiwi的方法。</p></li>
+<li><p><a href="http://iosinit.com/?p=787">《objc.io系列文章中文翻译汇总》</a>：objc.io是国外的一个iOS教程网站，它每一期的教程会有一个主题，在这个主题下会有6篇左右的文章（有时由浅入深，有时侧重点不同），实属iOS学习中的精品资源。因此，每一期objc.io文章出来的时候，都会有一些热心的读者将文章翻译成中文。作者将网上的翻译汇总在文章中，方便大家阅读。</p></li>
+</ol>
 
 
-<p>如果记不清了，可以在top的界面上按?，在弹出的帮助界面中即可看到。</p>
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://itunes.apple.com/cn/app/crash-manager/id806327079?mt=8">Crash Manager</a>：Crash Manager是Crashlytics的非官方iPhone客户端，而且在AppStore上免费。InfoQ也曾撰文介绍过Crashlytics的使用：<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">《统计Crash的工具Crashlytics》</a>。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/DyCI/dyci-main">DyCI</a> ：DyCI是一个动态注入工具，用于向iOS应用中注入代码而不用重新启动应用。</li>
+</ol>
+
 </div>
 
 
@@ -137,12 +165,12 @@ m键 - 按内存使用量排序 这2个快捷键在mac上都不一样。对应�
   
 
 
-<time datetime="2011-12-27T13:30:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2011</time>
+<time datetime="2014-02-27T17:23:00+08:00" pubdate data-updated="true">Feb 27<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/mac/'>mac</a>
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
   
 </span>
 
@@ -196,10 +224,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/" title="Previous Post: 去掉xcode源码末尾的空格">&laquo; 去掉xcode源码末尾的空格</a>
+        <a class="basic-alignment left" href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/" title="Previous Post: 使用brew cask来安装Mac应用">&laquo; 使用brew cask来安装Mac应用</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/01/01/2011-summary/" title="next Post: 2011年个人总结">2011年个人总结 &raquo;</a>
       
     </p>
   </footer>

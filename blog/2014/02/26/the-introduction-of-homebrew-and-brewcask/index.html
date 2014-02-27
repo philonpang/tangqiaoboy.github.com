@@ -127,6 +127,11 @@ brew install node &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
+
+
+<!-- more -->
+
+
 <h2>安装</h2>
 
 <h3>安装homebrew</h3>
@@ -151,9 +156,11 @@ brew install node &hellip;">
 
 <h2>LaunchRocket</h2>
 
+<p>另外再附带推荐一个工具。</p>
+
 <p><a href="https://github.com/jimbojsb/launchrocket">LaunchRocket</a>是一个管理brew安装的service的工具，安装之后可以看所有的service的运行状态，如下图所示：</p>
 
-<p><img src="https://raw2.github.com/jimbojsb/launchrocket/master/screenshots/LaunchRocket.png" alt="" /></p>
+<p><img src="/images/LaunchRocketUI.png"></p>
 
 <p>安装<code>LaunchRocket</code>就要用到我刚刚提的<code>brew cask</code>，用如下命令即可：</p>
 
@@ -162,6 +169,26 @@ brew install node &hellip;">
 </pre></td><td class='code'><pre><code class=''><span class='line'>brew tap jimbojsb/launchrocket
 </span><span class='line'>brew cask install launchrocket</span></code></pre></td></tr></table></div></figure>
 
+
+<p>之后LauchRocket设置页面找到（如下图所示），它的启动项同时也保存在<code>/opt/homebrew-cask/Caskroom/launchrocket</code>目录中。</p>
+
+<p><img src="/images/launchRocket.jpg"></p>
+
+<p>启动LauchRocket有点麻烦，需要切换设置页面去手工启动。我自己想到一个办法，方法是把 <code>/opt/homebrew-cask</code>增加到 alfred 的search目录中，然后就可以用alfred来启动了，如下所示：</p>
+
+<ol>
+<li>设置alfred</li>
+</ol>
+
+
+<p><img src="/images/launch-cask-1.jpg"></p>
+
+<ol>
+<li>用alfred启动LauchRocket</li>
+</ol>
+
+
+<p><img src="/images/launch-cask-2.jpg"></p>
 
 <p>大家玩得开心～</p>
 </div>

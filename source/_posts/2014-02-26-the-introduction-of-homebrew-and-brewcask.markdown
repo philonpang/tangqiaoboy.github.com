@@ -27,6 +27,8 @@ brew cask install evernote
 
 ```
 
+<!-- more -->
+
 ##安装
 
 ###安装homebrew
@@ -50,9 +52,11 @@ brew install brew-cask
 
 ##LaunchRocket
 
+另外再附带推荐一个工具。
+
 [LaunchRocket](https://github.com/jimbojsb/launchrocket)是一个管理brew安装的service的工具，安装之后可以看所有的service的运行状态，如下图所示：
 
-![](https://raw2.github.com/jimbojsb/launchrocket/master/screenshots/LaunchRocket.png)
+{% img /images/LaunchRocketUI.png %}
 
 安装`LaunchRocket`就要用到我刚刚提的`brew cask`，用如下命令即可：
 
@@ -60,5 +64,19 @@ brew install brew-cask
 brew tap jimbojsb/launchrocket
 brew cask install launchrocket
 ```
+
+之后LauchRocket设置页面找到（如下图所示），它的启动项同时也保存在`/opt/homebrew-cask/Caskroom/launchrocket`目录中。
+
+{% img /images/launchRocket.jpg %}
+
+启动LauchRocket有点麻烦，需要切换设置页面去手工启动。我自己想到一个办法，方法是把 `/opt/homebrew-cask`增加到 alfred 的search目录中，然后就可以用alfred来启动了，如下所示：
+
+ 1. 设置alfred
+
+{% img /images/launch-cask-1.jpg %}
+
+ 2. 用alfred启动LauchRocket
+
+{% img /images/launch-cask-2.jpg %}
 
 大家玩得开心～

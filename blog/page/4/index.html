@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="和去年一样，记录一下今年的成长和收获。 ">
+  <meta name="description" content="前言 Objective-c语言在申请对象的时，需要使用两段构造(Two Stage Creation)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +74,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/13/two-stage-creation-on-cocoa/">谈ObjC对象的两段构造模式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-13T10:15:00+08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>Objective-c语言在申请对象的时，需要使用两段构造(<a href="http://volonbolon.net/post/634999801/two-stage-creation-in-cocoa">Two Stage Creation</a>)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithString:</span><span class="s">@&quot;http://blog.devtang.com&quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>由于该语言的对象创建方法和大多数其它语言（如C、C++、Java、JavaScript）都不一样，所以引起了我的好奇。是什么原因促使Objective-C做了这种设计，而又是什么原因促使大多数其它语言都采用&#8221;new&#8221;方法来一次性创建对象呢？</p>
+
+<p>在看了<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书（顺便吐槽一下该书中文版翻译质量不高，建议看英文版），并且做了一些调研之后，我将总结分享给大家，欢迎大家讨论。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/13/two-stage-creation-on-cocoa/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -500,55 +552,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-10T18:42:00+08:00" pubdate data-updated="true">Nov 10<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>功能设计</h2>
-
-<p>先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，设计的“升级提示功能”都不太友好。在此分享一下我的想法，欢迎大家讨论。</p>
-
-<p>这些App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题，一句话描述起来就是：“这些App都会在用户刚刚使用它的时候，提示有新版本，让用户去AppStore上下载最新的版本”。下面是某个应用的升级提示截图：</p>
-
-<p><img src="/images/app-upgrade-1.jpg"></p>
-
-<p>为什么我认为这是一个糟糕的设计呢？因为用户刚刚打开你的App，明显就是想使用你的功能。例如刚刚打开新浪微博，可能就是想看一下最新的消息或回复。刚刚打开网易新闻客户端，可能就是想看看最新的新闻。这个时候，你告诉用户有新版本，是想让用户暂时放弃使用该App吗？我不知道有多少用户会去点“升级”这个按钮，反正我每次看到这个提示都很郁闷，因为我如果点了，我就暂时不能使用该应用了（升级时原版本的App是无法使用的）。所以我在想，这个提示升级的时间能不能做得更友好一些？</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/11/10/how-to-design-upgrade-notice/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -564,6 +567,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/05/use-alcatraz-to-manage-xcode-plugins/">使用Alcatraz来管理Xcode插件</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/02/27/ios-weekly-1/">iOS移动开发周报-第1期</a>
@@ -599,10 +606,6 @@
     
       <li class="post">
         <a href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/">XCode Debugger中的Icon符号的意义</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/11/network-tool-charles-intr/">iOS开发工具-网络封包分析工具Charles</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content=" 前言 大约在去年这个时候，我离开网易有道，开始了自己的创业不归路。一年过去了，总是在忙碌，在最忙的时候，我连博客都没有时间更新了。但是这一年的经历对我的成长重大，还是挺值得写下来的，在此将我的故事分享给那些一同走在创业路上的朋友。 ">
+  <meta name="description" content="前言 因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是： 请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码? 我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +74,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-23T12:39:00+08:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/alipay-plugin-1.jpg"></p>
+
+<h2>前言</h2>
+
+<p>因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是：</p>
+
+<pre><code>请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码?
+</code></pre>
+
+<p>我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下，将支付宝客户端的插件机制具体实现方式介绍给大家。</p>
+
+<p>先介绍一下该插件机制，如上图所示，支付宝客户端在安装后，对于像“彩票”、“爱心捐赠”这类功能，需要再点击安装一次，然后才可以使用。有些时候该插件功能进行了升级，需要点击升级才可以继续使用。插件的方式有利于软件动态增加新的功能或升级功能，而不用再一次向AppStore提交审核。另外，由于用户不需要的插件可以不用安装，也缩小了应用本身的体积大小，节省了下载流量。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/06/23/alipay-plugin-mechanism/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -539,58 +591,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/23/set-ios-system-ui-language/">设置应用内的系统控件语言</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-23T21:05:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/bdj-rank.jpg"></p>
-
-<p>在iOS应用中，有时候会需要调用系统的一些UI控件，例如：</p>
-
-<ol>
-<li>在UIWebView中长按会弹出系统的上下文菜单</li>
-<li>在UIImagePickerController中会使用系统的照相机界面</li>
-<li>在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。</li>
-</ol>
-
-
-<p>以上这些UI控件中，其显示的语言并不是和你当前手机的系统语言一致的。而是根据你的App内部的语言设置来显示。结果就是，如果你没有设置恰当的话，你的中文App可能会出现一些英文的控件文字。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/23/set-ios-system-ui-language/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -606,6 +606,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/07/ios-weekly-2/">iOS移动开发周报-第2期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/05/use-alcatraz-to-manage-xcode-plugins/">使用Alcatraz来管理Xcode插件</a>
@@ -641,10 +645,6 @@
     
       <li class="post">
         <a href="/blog/2013/12/22/how-to-write-resume-for-it-company/">如何写面向互联网公司的求职简历</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/">XCode Debugger中的Icon符号的意义</a>
       </li>
     
   </ul>

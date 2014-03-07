@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-03-05T23:39:01+08:00</updated>
+  <updated>2014-03-07T20:22:58+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第2期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/03/07/ios-weekly-2/"/>
+    <updated>2014-03-07T21:44:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/03/07/ios-weekly-2</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/apple-store-gray-chain">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://daily.zhihu.com/story/3350426">《利用苹果商店规则漏洞的灰色地下产业链》</a>：作者在文章中介绍了一些投机分子，利用苹果商店在汇率上的漏洞，借助汇率和实际汇率的差价来倒卖商品。据文中介绍，一款不错的手游产品，每月的账面销售额为700万元，但可能真正到账的只有550万元，其余的150万元中约有50万元的黑卡耗损，而剩余的100万则被这些汇率倒卖者攫取。</p></li>
+<li><p><a href="http://www.guomii.com/posts/37790">《Apple即将推出CarPlay功能》</a>：Apple宣布几大顶级汽车制造商即将推出CarPlay。据苹果介绍，CarPlay是一种更智能、更安全且更有意思的在车中使用iPhone的方式。</p></li>
+<li><p><a href="http://djt.qq.com/mobile/article/1073">《2013移动行业分析》</a> 腾讯移动分析发布了2013年移动行业数据分析报告，报告介绍了iOS的用户比例和版本分布。根据文中的统计，国内移动终端iOS市场份额为24.7%。另外不同于国外的情况是，国内iOS5的用户比例仍然高达12%。</p></li>
+<li><p><a href="http://images.apple.com/iphone/business/docs/iOS_Security_Feb14.pdf">《iOS Security》</a>：苹果发布官方的安全方面的文档，介绍了iOS系统从硬件，文件系统到网络等各方面的安全细节。</p></li>
+<li><p><a href="http://highscalability.com/blog/2014/2/26/the-whatsapp-architecture-facebook-bought-for-19-billion.html">《WhatsApp 架构设计》</a>: 作者在文章中分享了最近被Facebook收购的WhatsApp的架构，包括它使用到的前后端技术框架以及硬件，文章中也分享了一些提高服务器并发连接数和可扩展性的经验。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://blog.csdn.net/wzzvictory/article/details/20067595">《CocoaPods详解之&#8212;-制作篇》</a>：作者详细介绍了CocoaPods依赖库的创建过程，这对于开源项目作者来说很有帮助。</p></li>
+<li><p><a href="http://blog.jobbole.com/61101/">《通过实现一个TableView来理解iOS UI编程》</a>：作者通过实现一遍TableView来理解UIKit的一些技术细节，包括几何布局框架、UI的层次架构、子类化UIScrollView、Cell的重用、响应和处理事件和可扩展性等技术细节。</p></li>
+<li><p><a href="http://www.yidianzixun.com/article/news_eaf23f7ff41d4862ecbf0d10441cf5f5?s=1">《iOS 开发者应该知道的 ARM 结构》</a>：到目前为止，所有的 iOS 设备都使用 ARM 结构处理器。作者在文章中介绍了ARM处理器的各种特点，包括条件执行、Thumb 指令集、内存对齐和除法等技术细节。</p></li>
+<li><p><a href="http://segmentfault.com/a/1190000000390012">《iOS 开发：绘制像素到屏幕》</a>：像素是如何绘制到屏幕上面的？把数据输出到屏幕的方法有很多，通过调用很多不同的framework和不同的函数。作者在文章中介绍了这个过程背后的东西，这能够帮助大家在遇到性能问题时调试解决问题。</p></li>
+<li><p><a href="http://iosinit.com/?p=854">《玩转字符串》</a> 和 <a href="http://iosinit.com/?p=880">《字符串渲染》</a>: 作者翻译了objc.io第九期关于字符串的系列文章。《玩转字符串》中介绍了字符串的比较、搜索、排序以及格式化等功能。《字符串渲染》中介绍了字符串在UILabel、UITextField以及Core Text中的渲染细节。</p></li>
+<li><p><a href="http://iosdevelopertips.com/general/object-encoding-and-decoding-with-nssecurecoding.html">《Object Encoding and Decoding with NSSecureCoding Protocol》</a>：作者在文章中介绍了如何使用NSSecureCoding来序列化和反序列化对象。文章最后，作者提供了一个名为<a href="https://github.com/nicklockwood/AutoCoding">AutoCoding</a>的开源项目来帮助大家实现相关的功能。</p></li>
+<li><p><a href="https://developer.apple.com/design/">《苹果最新的设计指南》</a>: 苹果发布了其最新的设计指南，试图帮助开发者更好地学习iOS7风格的应用和游戏设计。新版指南提供了大量的视频和文档，内容涵盖应用和游戏开发的各个方面。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="http://koofrank.com/blog/2014/02/28/my-first-article/">《四个iOS开发的小工具》</a>：作者在文章中介绍了4个有助于iOS开发的小工具。不过笔者并不同意文章后半部分的关于Blocks内联的内容。</p></li>
+<li><p>著名的Xcode插件：<a href="https://github.com/supermarin/Alcatraz">Alcatraz</a> 完成了对Xcode 5的适配，大家可以用它方便地管理XCode的相关第三方插件。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p>QFish分享了一个小项目：<a href="https://github.com/qfish/xproj">xproj</a>，可以帮iOS开发者批量地为工程文件添加编译参数 <code>-fno-objc-arc</code> 或 <code>-fobjc-arc</code>。</p></li>
+<li><p><a href="https://github.com/GeekZooStudio/ECMobile_iOS">ECMobile 3.0.0</a>发布，完全基于 BeeFramework 0.5.0 开发，它可以作为使用BeeFramework的参考项目。</p></li>
+<li><p><a href="http://weibo.com/ranwj">移动开发小冉</a>写了一个类似虾米音乐的iOS App首页左右滑动效果的示例程序，代码质量很高，项目地址在<a href="https://github.com/nonstriater/NTSlidingViewController">这里</a>。</p></li>
+<li><p><a href="https://github.com/5sw/SWParallaxScrollView">SWParallaxScrollView</a>：SWParallaxScrollView是一个具有多个层次的可滑动视图，可以实现不同层之间不同的滑动速度。该技术常常用来做应用初次启动时的介绍。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用Alcatraz来管理Xcode插件]]></title>
@@ -22,7 +79,7 @@
 
 <h2>简介</h2>
 
-<p>Alcatraz是一个帮你管理XCode插件、模版以及颜色配置的工具。它可以直接集成到Xcode的图形界面中，让你感觉就像在使用Xcode自带的功能一样。</p>
+<p>Alcatraz是一个帮你管理Xcode插件、模版以及颜色配置的工具。它可以直接集成到Xcode的图形界面中，让你感觉就像在使用Xcode自带的功能一样。</p>
 
 <h2>安装和删除</h2>
 
@@ -3358,119 +3415,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
 <p>值得一提的是，Crashlytics本身的<a href="http://support.crashlytics.com/knowledgebase/topics/14721-crashlytics-sdk-for-ios">官方文档</a>也非常健全，如果你在使用中遇到任何问题，也可以上去查看详细的文档。</p>
 
 <p>愿Crashlytics能让大家的应用都更加健壮～</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[分析支付宝客户端的插件机制]]></title>
-    <link href="http://blog.devtang.com/blog/2013/06/23/alipay-plugin-mechanism/"/>
-    <updated>2013-06-23T12:39:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/06/23/alipay-plugin-mechanism</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/alipay-plugin-1.jpg"></p>
-
-<h2>前言</h2>
-
-<p>因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是：</p>
-
-<pre><code>请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码?
-</code></pre>
-
-<p>我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下，将支付宝客户端的插件机制具体实现方式介绍给大家。</p>
-
-<p>先介绍一下该插件机制，如上图所示，支付宝客户端在安装后，对于像“彩票”、“爱心捐赠”这类功能，需要再点击安装一次，然后才可以使用。有些时候该插件功能进行了升级，需要点击升级才可以继续使用。插件的方式有利于软件动态增加新的功能或升级功能，而不用再一次向AppStore提交审核。另外，由于用户不需要的插件可以不用安装，也缩小了应用本身的体积大小，节省了下载流量。</p>
-
-<!-- more -->
-
-
-<h2>分析过程</h2>
-
-<h3>截取网络请求</h3>
-
-<p>分析第一步，截取网络请求。截取网络请求可以查看当用户点击“彩票”进行安装的时候，客户端到底做了什么事情。使用Charles的代理设置功能，启动一个http代理，然后在iPhone上设置连接此代理，则可以看到，当点击“彩票”插件时，客户端下载了一个名为 10000011.amr的文件。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/alipay-plugin-2.jpg"></p>
-
-<h3>下载插件文件</h3>
-
-<p>尝试用wget将文件下载下来，发现其没有验证cookie，下载成功，命令如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget http://download.alipay.com/mobilecsprod/alipay.mobile/20130601021432806/xlarge/10000011.amr
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>amr本意表示是一个音频文件，明显不对，尝试将其后缀名改成zip，成功将其解压。用itools连接上支付宝的客户端，同样能看到客户端将其下载后，也是解压到document目录下的。解压后的内容与应用内新增加的内容一致，如图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/alipay-plugin-3.jpg"></p>
-
-<h3>分析文件内容</h3>
-
-<p>大概浏览了一下解压后的文件，主要包括html、css和js文件。可见支付宝的插件机器是通过UIWebView来展示内容的方式来实现的，那为什么要先下载安装这些内容而不通过UIWebView实时下载html呢？这主要应该是为了节省相应的流量。我看了一下，10000011.amr文件整个有将近1M大小，如果不通过插件机制预先下载，则只能依赖系统对于UIWebView的缓存来节省流量，这相对来说没有前者靠谱。</p>
-
-<p>另外，使用基于UIWebView的方式来展示插件，也有利于代码的复用。因为这些逻辑都是用js来写的，可以同样应用于Android平台，在Config.js文件中，明显可以看到对于各类平台的判断逻辑。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/alipay-plugin-4.jpg"></p>
-
-<p>另外，/www/demo/index-alipay-native.html 文件即该插件的首页，用浏览器打开就可以看到和手机端一样的内容。如下载图所示（左半边是手机上的应用截图，右半边是浏览器打开该html文件的截图）：</p>
-
-<p><img src="http://blog.devtang.com/images/alipay-plugin-5.jpg"></p>
-
-<h3>插件的网络通讯</h3>
-
-<p>接下来感兴趣的是该插件是如何完成和支付宝后台的网络通讯的。可以想到有两种可能的方式：</p>
-
-<ol>
-<li>直接和支付宝后台通讯</li>
-<li>和Native端通讯，然后Native端和服务器通讯。</li>
-</ol>
-
-
-<p>要验证这个需要读该插件的js源代码，整个js源码逻辑还是比较干净的，主要用了玉伯写的<a href="http://seajs.org/docs/">seajs</a>做模块化加载，<a href="http://backbonejs.org/">backbone.js</a>是一个前端的MVC框架，<a href="http://zeptojs.com/">zepto.js</a>是一个更适合于移动端使用的&#8221;JQuery&#8221;。</p>
-
-<p>大概扫了一下，感觉更可能是用的方法一：直接和支付宝后台通讯, 因为Config.js中都明确将网络通讯的地址写下来了。另一个证据是，利用下面的脚本扫描整个js源码，只能在backbone中搜到对于iframe的使用。而在iOS开发中，如果js端和native端要通讯，是需要用到iframe的，详细原理可以参见我的另一篇文章<a href="http://blog.devtang.com/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">《关于UIWebView和PhoneGap的总结》</a>。不过我不能完全确认，因为我还没有找到相应控制页面切换和跳转的js代码，如果你找到了，麻烦告诉我。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>find . -type f -name <span class="s2">&quot;*.js&quot;</span> | xargs grep <span class="s2">&quot;iframe&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>交易的安全</h3>
-
-<p>用Charles可以截取到，当有网络交易时，应用会另外启动一个https的安全链接，完成整个交易过程的加密。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/alipay-plugin-6.jpg"></p>
-
-<h2>总结</h2>
-
-<p>支付宝的插件机制整体上就是通过html和javascript方式实现的，主要的好处是：</p>
-
-<ol>
-<li>跨平台(可以同时用在iOS和Android客户端）</li>
-<li>省流量（不需要的插件不用下载，插件本地缓存长期存在不会过期，自己管理插件更新逻辑）</li>
-<li>更新方便（不用每次提交AppStore审核）</li>
-</ol>
-
-
-<p>坏处如果非要说有的话，就是用javascript写iOS界面，无法提供非常炫的UI交互以及利用到iOS的所有平台特性。不过象支付宝这种工具类应用，也不需要很复杂的UI交互效果。</p>
-
-<p>另外教大家一个小技巧，如果你不确定某个页面是不是UIWebView做的，直接在那个页面长按，如果弹出&#8221;拷贝，定义，学习&#8221;这种菜单，那就是确定无疑是UIWebView的界面了。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/ios-menu-2.jpg"></p>
-
-<h2>相关工具</h2>
-
-<p>欢迎关注我的技术微博 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 和微信公共账号 <a href="http://chuansong.me/account/iosDevTips">iOSDevTips</a> ，每天收获一些关于iOS开发的学习资料和技巧心得。</p>
-
-<p>我在研究时使用了<a href="http://www.charlesproxy.com/">Charles</a>来截获支付宝客户端的网络请求，用<a href="http://itools.hk/">iTools</a>来查看支付宝客户端的本地内容。如果你想自行验证本文内容，请先下载上述工具。在此就不额外介绍它们的使用了。</p>
-
-<h2>后记（2013-7-7）</h2>
-
-<ol>
-<li><p>在完成上文后，Allen在他的博客上先后分享了两篇更深入分析的文章<a href="http://imallen.com/blog/2013/06/26/inside-alipay-plugin.html">《浅析支付宝钱包插件》</a> 和 <a href="http://imallen.com/blog/2013/07/06/about-alipay-plugin-and-phonegap.html">《再谈支付宝钱包插件和说好的 Demo》</a>。 这两篇文章都比本文深入得多，值得大家阅读。</p></li>
-<li><p>写完上文，居然收到了来自支付宝卫朴（花名）的工作邀请。不过我现在创业正在努力当中，所以我拒绝了邀请。看来这也是一种找工作的办法啊，比投简历管用，呵呵。</p></li>
-<li><p>从一些朋友那儿了解到，支付宝因为本文而会在以后的版本中加强安全性，至少不会像现在这样，所有逻辑都在写在javascript中，并且还带有注释，这也是我希望看到的结果。愿支付宝越做越好。</p></li>
-</ol>
-
 ]]></content>
   </entry>
   

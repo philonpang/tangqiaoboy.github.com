@@ -10,7 +10,7 @@ categories: iOS
 
 ##简介
 
-Alcatraz是一个帮你管理XCode插件、模版以及颜色配置的工具。它可以直接集成到Xcode的图形界面中，让你感觉就像在使用Xcode自带的功能一样。
+Alcatraz是一个帮你管理Xcode插件、模版以及颜色配置的工具。它可以直接集成到Xcode的图形界面中，让你感觉就像在使用Xcode自带的功能一样。
 
 ##安装和删除
 

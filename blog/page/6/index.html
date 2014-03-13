@@ -9,7 +9,17 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="不知道为什么，在iOS开发中，有很多人使用 SBJSON （又被称作json-framework)来做JSON解析库。我想这是因为SBJSON是最早在iOS上出现的JSON解析库。但是随着iOS开发的流行，越来越多优秀的JSON解析库也涌现出来, SBJSON和它们相比，性能上有很大的差距。 ">
+  <meta name="description" content="问题 做iOS开发的同学想必都用过UIActionSheet。UIActionSheet可以弹出一个选择列表，让用户选择列表中的某一项操作。使用UIActionSheet非常简单，以下是一个简单的示例代码： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+- (void) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +84,74 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/06/24/enhance-uiactionsheet/">封装同步的UIActionSheet</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-24T21:51:00+08:00" pubdate data-updated="true">Jun 24<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>问题</h2>
+
+<p>做iOS开发的同学想必都用过UIActionSheet。UIActionSheet可以弹出一个选择列表，让用户选择列表中的某一项操作。使用UIActionSheet非常简单，以下是一个简单的示例代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">someButtonClicked</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">UIActionSheet</span> <span class="o">*</span> <span class="n">sheet</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIActionSheet</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="nb">nil</span> <span class="nl">delegate:</span><span class="n">self</span> <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;ddd&quot;</span> <span class="nl">destructiveButtonTitle:</span><span class="s">@&quot;aaa&quot;</span> <span class="nl">otherButtonTitles:</span><span class="s">@&quot;bbb&quot;</span><span class="p">,</span> <span class="s">@&quot;ccc&quot;</span><span class="p">,</span> <span class="s">@&quot;ddd&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">sheet</span><span class="p">.</span><span class="n">destructiveButtonIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">sheet</span> <span class="nl">showInView:</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">actionSheet:</span><span class="p">(</span><span class="n">UIActionSheet</span> <span class="o">*</span><span class="p">)</span><span class="nv">actionSheet</span> <span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">buttonIndex</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;result = %d&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但我个人在使用时，感觉UIActionSheet有以下2个问题：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/06/24/enhance-uiactionsheet/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -474,52 +552,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/14/nsstring-java-like-wrapper/">给NSString增加Java风格的方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-14T17:17:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">self</span> <span class="nl">stringByTrimmingCharactersInSet:</span><span class="p">[</span><span class="n">NSCharacterSet</span> <span class="n">whitespaceAndNewlineCharacterSet</span><span class="p">]];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/14/nsstring-java-like-wrapper/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -535,6 +567,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/14/ios-weekly-3/">iOS移动开发周报-第3期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/07/ios-weekly-2/">iOS移动开发周报-第2期</a>
@@ -570,10 +606,6 @@
     
       <li class="post">
         <a href="/blog/2014/01/01/2013-summary/">2013年个人总结</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/22/how-to-write-resume-for-it-company/">如何写面向互联网公司的求职简历</a>
       </li>
     
   </ul>

@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>谈weak对象、对象缓存以及Tagged Pointer - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="这是一次和 @onevcat 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括： weak对象什么时候释放
+系统对象的缓存
+Tagged Pointer对象 讨论一：关于weak对象什么时候释放 讨论源于一位叫 @caoping 的同学在iOS开发的slack群上的提问： &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">所有文章</a></li>
+  <li><a href="/blog/categories/ios/">iOS开发专题</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">谈weak对象、对象缓存以及Tagged Pointer</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T21:09:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>这是一次和 <a href="http://onevcat.com/">@onevcat</a> 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括：</p>
+
+<ol>
+<li>weak对象什么时候释放</li>
+<li>系统对象的缓存</li>
+<li><code>Tagged Pointer</code>对象</li>
+</ol>
+
+
+<h3>讨论一：关于weak对象什么时候释放</h3>
+
+<p>讨论源于一位叫 @caoping 的同学在iOS开发的<a href="iosdev.slack.com">slack群</a>上的提问：</p>
+
+<blockquote><p>问一个问题，__weak NSArray *arr = [NSArray new];这么声明一个弱引用变量，常理来说arr应该为nil,但实际不是这样的。我发现所有不可变类型这么使用，都是有值的，包括NSString,NSArray,NSDictionary,是否和存储的内存区域有关？</p></blockquote>
+
+
+<p>对于这个问题，我也实验了一下，如下代码，确实能够正常输出100：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于这个问题，<a href="http://onevcat.com/">@onevcat</a> 提供了一个来自stackoverflow上的合理的<a href="http://stackoverflow.com/questions/15266367/why-isnt-my-weak-reference-cleared-right-after-the-strong-ones-are-gone">解答</a>：</p>
+
+<p>从汇编代码中看，以上代码在创建<code>number</code>变量时，是通过<code>objc_loadWeak</code>方法进行的。而根据 <a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#arc-runtime-objc-loadweak">Clang的官方文档</a>，<code>objc_loadWeak</code>方法会<code>retain</code>并<code>autorelease</code>这个对象。所以给一个weak对象赋值，它并不会马上释放，而是会放到<code>autorelease pool</code>中，与<code>autorelease pool</code>一起释放。</p>
+
+<p>如下是<code>objc_loadWeak</code>的代码示例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">id</span> <span class="nf">objc_loadWeak</span><span class="p">(</span><span class="kt">id</span> <span class="o">*</span><span class="n">object</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">objc_autorelease</span><span class="p">(</span><span class="n">objc_loadWeakRetained</span><span class="p">(</span><span class="n">object</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>为了验证这个回答，我们又做了一个有趣的例子来验证，如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
+</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在上面这个例子中，果然如我们所料，<code>number</code>变成在NSLog时，变成了nil。</p>
+
+<h3>讨论二：关于NSNumber对象的缓存</h3>
+
+<p>我们在做以上实验时，发现一个有趣的现象，如果你把100变成了10，则<code>number</code>变成在NSLog时，就能够输出值来，不再是nil了。如下是测试代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
+</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>经过 onevcat 的实验，从-1 ～ 12都是可以输出的，而其它值却会变成nil。于是我们猜测是系统对这些常见值的对象做了缓存，于是我们写了如下代码来验证。</p>
+
+<p>结果果然是这样，多次创建值为10的<code>NSNumber</code>对象，其地址都是<font color=red>一样的</font>。而多次创建值为100的<code>NSNumber</code>对象，每次创建获得的对象地址都是<font color=red>不一样的</font>。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>讨论三：64位系统与Tagged Pointer对象</h3>
+
+<p>讨论本来已经结束了，结果我在写这篇博客的时候，手贱又测试了一下，发现在64位的模拟器下，无论是怎么样，所有的<code>NSNumber</code>对象地址都是一样的！</p>
+
+<p>这个时候我突然想起WWDC中介绍的64位系统引放的<code>Tagged Pointer</code>，恍然大悟。</p>
+
+<p>在WWDC2013的《Session 404 Advanced in Objective-C》视频中，苹果介绍了<code>Tagged Pointer</code>。<code>Tagged Pointer</code>的存在主要是为了节省内存。我们知道，对象的指针大小一般是与机器字长有关，在32位系统中，一个指针的大小是32位（4字节），而在64位系统中，一个指针的大小将是64位（8字节）。</p>
+
+<p>在64位系统中，如果我们真正使用一个指针来存储<code>NSNumber</code>实例，那么我们首先需要一个8字节的指针，另外需要一块内存存储<code>NSNumber</code>实例，这通常又是8字节。这样的内存开销是比较大的。苹果对于<code>NSNumber</code>和<code>NSDate</code>对象，改成了用<code>Tagged Pointer</code>来存储。</p>
+
+<p><code>Tagged Pointer</code>主要有以下3个特点：</p>
+
+<ol>
+<li><code>Tagged Pointer</code>专门用来存储小的对象，例如<code>NSNumber</code>和<code>NSDate</code></li>
+<li><code>Tagged Pointer</code>指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已！所以，它的内存并不存储在堆中，也不需要malloc和free。</li>
+<li>在内存读取上有着3倍的效率（以前是寻址->发消息->获取值，现在直接获取值），创建时比以前快106倍。</li>
+</ol>
+
+
+<p> 相关英文文档截图如下：</p>
+
+<p> <img src="/images/tagged_pointer_1.jpg"></p>
+
+<p>但<code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 isa 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。</p>
+
+<p>所以你直接访问<code>Tagged Pointer</code>的isa成员的话，在编译时将会有如下警告：</p>
+
+<p> <img src="/images/tagged_pointer_2.jpg"></p>
+
+<p>应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>，如下图所示：</p>
+
+<p> <img src="/images/tagged_pointer_3.jpg"></p>
+
+<p>至此，所有疑问都已经解决，开心～</p>
+
+<h2>One More Thing</h2>
+
+<p>我建了一个神秘的QQ群，里面汇聚了大量国内iOS原创技术博客作者和iOS开源项目作者，欢迎和我们一样有写作爱好或开源爱好的朋友加入一起讨论。加入方式请私信联系 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 并提供博客和开源项目地址。</p>
+
+<p>如果你没有原创的技术博客，也没有开源代码，但是知道提问的艺术，iOS开发已经入门至少半年了，会用google、stackoverflow和github解决基本问题，但是遇到一些更复杂的问题时没有地方找人讨论，那么欢迎你申请加入我创建的slack群组。本次讨论也是由slack群组里的@caoping同学的提问引起的。</p>
+
+<p><a href="iosdev.slack.com">iOS开发的slack群组</a>经过2个月试运营，现在已经聚集了300个有经验的iOS开发者，现在开始接受申请加入，申请地址是（需翻墙）： <a href="https://docs.google.com/forms/d/1eWH_jjDIIV5kpSV0BUPBAIboHEj0ZrgBrZHWsdJqkDU/viewform">https://docs.google.com/forms/d/1eWH_jjDIIV5kpSV0BUPBAIboHEj0ZrgBrZHWsdJqkDU/viewform</a> 。如果你不会翻墙，不会用google和stackoverflow以及github，那么我劝你还是别加入了。</p>
+</div>
+
+
+  <footer>
+   <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T21:09:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/03/21/ios-weekly-4/" title="Previous Post: iOS移动开发周报-第4期">&laquo; iOS移动开发周报-第4期</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">谈weak对象、对象缓存以及Tagged Pointer</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/21/ios-weekly-4/">iOS移动开发周报-第4期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/14/ios-weekly-3/">iOS移动开发周报-第3期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/07/ios-weekly-2/">iOS移动开发周报-第2期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/05/use-alcatraz-to-manage-xcode-plugins/">使用Alcatraz来管理Xcode插件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/27/ios-weekly-1/">iOS移动开发周报-第1期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">使用brew cask来安装Mac应用</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/11/reactivecocoa-introduction/">ReactiveCocoa - iOS开发的新框架</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/26/add-ssd-to-old-imac/">自己动手给iMac换SSD</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p> Blogger, InfoQ编辑, iOS开发, 创业者。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记、粉笔网、猿题库。
+      <br/>
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+      <br />我的<strong>"iOSDevTips"</strong>微信公众账号:
+      <br/><img width="220px" src="/images/weixin-qr.jpg" />
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - 唐巧 -
+  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

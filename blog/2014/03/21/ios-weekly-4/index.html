@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>用Git进行协同开发 - 唐巧的技术博客</title>
+  <title>iOS移动开发周报-第4期 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="问题场景描述 常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。 对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。 在这种方式下，大家各自写自己的代码， &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 本周iOS移动开发周报， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/29/collaboration-with-git">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2014/03/21/ios-weekly-4">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,7 +77,7 @@
   
   <header>
     
-      <h1 class="entry-title">用Git进行协同开发</h1>
+      <h1 class="entry-title">iOS移动开发周报-第4期</h1>
     
     
       <p class="meta">
@@ -93,72 +93,45 @@
   
 
 
-<time datetime="2012-02-29T19:08:00+08:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+<time datetime="2014-03-21T20:23:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>问题场景描述</h2>
+<div class="entry-content"><h3>版权说明</h3>
 
-<p>常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/lldb-debug-command">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<p>对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。</p>
+<h3>前言</h3>
 
-<p>在这种方式下，大家各自写自己的代码，提交到svn上，然后用svn up获得对方的代码。在调试问题的时候，大家可能不停地更新代码，然后让对方用svn up来更新。最终，虽然开发能够顺利进行，但是svn上会积累大量调试中的代码历史。所以，这样把svn当作代码中转站是一个很山寨的行为。</p>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>在开发<a href="http://note.youdao.com">有道云笔记</a>新的<a href="http://itunes.apple.com/cn/app/id483995181">iPad版</a>时，我和前端同事zyc尝试用git进行了协同开发。在这里把具体方案分享给大家，欢迎大家讨论。</p>
+<p>本周iOS移动开发周报，带来一系列iOS开发教程以及2个开源项目。这期中的2个开源项目都比较值得关注，一个是VVebo写的GIF解决方案，另一个是用OC实现的QQ自动回复机器人。后者的作者是图书<a href="http://item.jd.com/11389860.html">《iOS应用逆向工程》</a>的作者，这本书也是一本不错的安全方面的入门图书，一并推荐给大家。</p>
 
-<!--More-->
+<h2>教程</h2>
 
-
-<h2>Git相关协议介绍</h2>
-
-<p>Git对于你本机的代码项目，允许用很方便的方式进行非授权的只读访问,<a href="http://progit.org/book/zh/ch4-9.html">相关介绍链接</a>。简单来说，就是可以用Git自带的Git daemon命令在本机的9418端口启动一个守护进程，然后其它机器就可以以只读方式访问你开放出来的项目代码。</p>
-
-<p>具体步骤如下：</p>
-
-<ul>
-<li>在你的Git工程下新建一个名为git-daemon-export-ok的文件放到.git目录下，表明该工程允许非授权访问。示例代码如下：</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /path/to/project.git
-</span><span class='line'>touch git-daemon-export-ok
-</span></code></pre></td></tr></table></div></figure>
+<ol>
+<li><p><a href="http://wufawei.com/2014/03/symbolicating-ios-crash-logs/">《分析iOS Crash文件：符号化iOS Crash文件的3种方法》</a>：文章介绍了拿到用户的<code>.crash</code>文件之后，如何符合化（Symbolicating）crash文件的3种方法。它们分别是：使用Xcode、使用命令行工具symbolicatecrash，以及使用命令行工具atos。这些方法可以帮助开发者尽快找到应用crash的原因。</p></li>
+<li><p><a href="http://objcio.com/blog/2014/03/10/custom-controls/">《自定义控件》</a>：本文翻译自objc.io的《Custom Controls》，讨论了一些自定义视图和控件的诀窍和技巧。文章先对UIKit已经提供的控件做了一个概览，介绍一些渲染技巧，随后深入到视图和它们的所有者之间的通信策略，并简略探讨了辅助功能、本地化和测试。</p></li>
+<li><p><a href="http://nshipster.cn/dictionary-services/">《关于字典的介绍》</a>：文章介绍了OS X和iOS里面系统提供的字典服务以及调用方法。其中OS X中介绍的是使用私有API的方法，而iOS中介绍的是使用公开的<code>UIReferenceLibraryViewController</code>的方法。</p></li>
+<li><p><a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">《Android Development Tips For iOS Devs》</a>：写给iOS开发者看的Android开发技巧，适合有iOS开发背景的朋友学习Android开发。</p></li>
+<li><p><a href="http://iosinit.com/?p=1022">《iOS 7之UICollectionView与UIKit Dynamics》</a>：<code>UIKit Dynamics</code> 是 iOS 7 中基于物理动画引擎的一个新功能–它被特别设计使其能很好地与 <code>CollectionView</code> 配合工作。本文介绍了如何将这两个特性结合在一起。文章翻译自objc.io第5期。</p></li>
+<li><p><a href="http://www.starfelix.com/blog/2014/03/17/lldbdiao-shi-ming-ling-chu-tan/">《LLDB调试命令初探》</a>：LLDB是LLVM下的调试器，Xcode从4.0开始编译器开始改用LLVM，相应的调试器也从gdb改为LLDB。而从 Xcode5.0开始所有工程也被自动设置为使用LLDB。本文从初学者的角度讲解了在日常的开发中如何使用LLDB以及LLDB常用的命令。</p></li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/19/18-tips-for-working-effectively-with-interface-builder/">《提高Interface Builder高效工作的8个技巧》</a>：文章介绍了Xcode的界面编辑器Interface Builder的8个使用技巧，可以提高工作效率。</p></li>
+<li><p><a href="http://imtx.me/archives/1885.html">《自由地控制 Xcode Open Quickly 打开方式》</a>：文章介绍了Xcode Open Quickly使用的一则技巧，可以方便地控制打开方式。</p></li>
+<li><p><a href="http://blog.csdn.net/yiyaaixuexi/article/details/21469769">《static和被裁的符号表》</a>：作者念茜这次从安全防御角度出发，讲解利用static关键字裁掉函数符号，以便不让攻击者理清自己程序的敏感业务逻辑，提高应用的逆向门槛。</p></li>
+</ol>
 
 
-<ul>
-<li>执行git daemon命令，设置你要Export出的项目目录的父目录，例如工程的代码地址是：/opt/git/project的话，则示例代码如下：</li>
-</ul>
+<h2>开源项目</h2>
 
+<ol>
+<li><p>微博客户端 <a href="http://weibo.com/appsupport">VVebo</a> 的作者开源了他自己为VVebo写的GIF解决方案 <a href="https://github.com/johnil/VVeboImageView">VVeboImageView</a>， 占用内存很小。</p></li>
+<li><p><a href="https://github.com/iosre/Skua">《iOS客户端自动回复机器人源码》</a>：作者实现了一个QQ的自动回复机器人。</p></li>
+</ol>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git daemon --reuseaddr --base-path<span class="o">=</span>/opt/git/ /opt/git/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>告知对方你的机器的IP，然后在对方的机器，用下列命令即可检出你的代码：</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git checkout git://your_ip_address/project
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>如果对方有更新，只需要 git pull 一下。</li>
-</ul>
-
-
-<h2>协作</h2>
-
-<p>对于这种基于Git的协作，我们可以在本地随意的提交代码，让对方用git pull更新。当开发完成，需要push到公共仓库的时候，再用git rebase -i将本地的提交进行清理即可。并且由于大家都是在机器间互拷，不依赖svn公共服务器，更新代码的速度也要快得多。</p>
 </div>
 
 
@@ -181,12 +154,12 @@
   
 
 
-<time datetime="2012-02-29T19:08:00+08:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+<time datetime="2014-03-21T20:23:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/shell/'>shell</a>
+    <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
   
 </span>
 
@@ -240,10 +213,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/22/use-gcd/" title="Previous Post: 使用GCD">&laquo; 使用GCD</a>
+        <a class="basic-alignment left" href="/blog/2014/03/14/ios-weekly-3/" title="Previous Post: iOS移动开发周报-第3期">&laquo; iOS移动开发周报-第3期</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/03/10/xcode4-tips/" title="next Post: xcode4使用技巧">xcode4使用技巧 &raquo;</a>
       
     </p>
   </footer>

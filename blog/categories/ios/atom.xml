@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-03-21T23:16:53+08:00</updated>
+  <updated>2014-03-22T10:45:39+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -33,7 +33,7 @@
 
 <p><blockquote><p></p></p><p><p>问一个问题，__weak NSArray *arr = [NSArray new];这么声明一个弱引用变量，常理来说arr应该为nil,但实际不是这样的。我发现所有不可变类型这么使用，都是有值的，包括NSString,NSArray,NSDictionary,是否和存储的内存区域有关？</p></p><p><p></p></blockquote></p>
 
-<p>对于这个问题，我也实验了一下，如下代码，确实能够正常输出100：</p>
+<p>对于他的问题，我也实验了一下，如下代码，确实能够正常输出100：</p>
 
 <p>``` objc
 __weak NSNumber *number = [NSNumber numberWithInt:100];
@@ -66,7 +66,7 @@ __weak NSNumber *number;
 NSLog(@"number = %@", number);
 ```</p>
 
-<p>在上面这个例子中，果然如我们所料，<code>number</code>变成在NSLog时，变成了nil。</p>
+<p>在上面这个例子中，果然如我们所料，<code>number</code>在通过NSLog查看值时，变成了nil。</p>
 
 <h3>讨论二：关于NSNumber对象的缓存</h3>
 
@@ -99,13 +99,13 @@ NSLog(@"%p %p", number, another);
 
 <h3>讨论三：64位系统与Tagged Pointer对象</h3>
 
-<p>讨论本来已经结束了，结果我在写这篇博客的时候，手贱又测试了一下，发现在64位的模拟器下，无论是怎么样，所有的<code>NSNumber</code>对象地址都是一样的！</p>
+<p>讨论本来已经结束了，结果我在写这篇博客的时候，手贱又测试了一下，发现在64位的模拟器下，无论创建多少次，也无论int的值是多少，所有相同int值的<code>NSNumber</code>对象地址都是一样的！</p>
 
-<p>这个时候我突然想起WWDC中介绍的64位系统引放的<code>Tagged Pointer</code>，恍然大悟。</p>
+<p>疑惑了几分钟，我突然想起WWDC中介绍的64位系统引放的<code>Tagged Pointer</code>，恍然大悟。</p>
 
 <p>在WWDC2013的《Session 404 Advanced in Objective-C》视频中，苹果介绍了<code>Tagged Pointer</code>。<code>Tagged Pointer</code>的存在主要是为了节省内存。我们知道，对象的指针大小一般是与机器字长有关，在32位系统中，一个指针的大小是32位（4字节），而在64位系统中，一个指针的大小将是64位（8字节）。</p>
 
-<p>在64位系统中，如果我们真正使用一个指针来存储<code>NSNumber</code>实例，那么我们首先需要一个8字节的指针，另外需要一块内存存储<code>NSNumber</code>实例，这通常又是8字节。这样的内存开销是比较大的。苹果对于<code>NSNumber</code>和<code>NSDate</code>对象，改成了用<code>Tagged Pointer</code>来存储。</p>
+<p>在64位系统中，如果我们真正使用一个指针来存储<code>NSNumber</code>实例，那么我们首先需要一个8字节的指针，另外需要一块内存存储<code>NSNumber</code>实例，这通常又是8字节。这样的内存开销是比较大的。苹果对于<code>NSNumber</code>和<code>NSDate</code>对象，改成了用<code>Tagged Pointer</code>来存储，简单来说，<code>Tagged Pointer</code>是一个假的指针，它的值不再是另一个地址，而就是对应变量的值。</p>
 
 <p><code>Tagged Pointer</code>主要有以下3个特点：</p>
 
@@ -120,13 +120,13 @@ NSLog(@"%p %p", number, another);
 
 <p> <img src="/images/tagged_pointer_1.jpg"></p>
 
-<p>但<code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 isa 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。</p>
+<p>但<code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 <code>isa</code> 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。</p>
 
-<p>所以你直接访问<code>Tagged Pointer</code>的isa成员的话，在编译时将会有如下警告：</p>
+<p>因为不是真正的对象，所以如果你直接访问<code>Tagged Pointer</code>的<code>isa</code>成员的话，在编译时将会有如下警告：</p>
 
 <p> <img src="/images/tagged_pointer_2.jpg"></p>
 
-<p>应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>，如下图所示：</p>
+<p>对于上面的写法，应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>，如下图所示：</p>
 
 <p> <img src="/images/tagged_pointer_3.jpg"></p>
 

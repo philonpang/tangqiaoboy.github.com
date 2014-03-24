@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "谈weak对象、对象缓存以及Tagged Pointer"
+title: "NSNumber对象缓存以及Tagged Pointer"
 date: 2014-03-21 21:09
 comments: true
 categories: iOS
@@ -8,30 +8,18 @@ categories: iOS
 
 这是一次和 [@onevcat](http://onevcat.com/) 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括：
 
- 1. weak对象什么时候释放
  1. 系统对象的缓存
  1. `Tagged Pointer`对象
 
-###讨论一：关于weak对象什么时候释放
+## autorelase对象
 
-讨论源于一位叫 @caoping 的同学在iOS开发的[slack群](iosdev.slack.com)上的提问：
-
-{% blockquote %}
-
-问一个问题，__weak NSArray *arr = [NSArray new];这么声明一个弱引用变量，常理来说arr应该为nil,但实际不是这样的。我发现所有不可变类型这么使用，都是有值的，包括NSString,NSArray,NSDictionary,是否和存储的内存区域有关？
-
-{% endblockquote %}
-
-
-对于他的问题，我也实验了一下，如下代码，确实能够正常输出100：
+按照苹果的编程约定，由非`alloc`,`copy`返回的对象都是`autorelease`的，所以对于以下代码，虽然变量`number`是`__weak`的，但是由于`[NSNumber numberWithInt:100]`返回的对象是`autorelase`的，所以仍然能通过NSLog打印出来。
 
 ``` objc
 __weak NSNumber *number = [NSNumber numberWithInt:100];
 NSLog(@"number = %@", number);
 
 ```
-
-对于这个问题，[@onevcat](http://onevcat.com/) 提供了一个来自stackoverflow上的合理的[解答](http://stackoverflow.com/questions/15266367/why-isnt-my-weak-reference-cleared-right-after-the-strong-ones-are-gone)：
 
 从汇编代码中看，以上代码在创建`number`变量时，是通过`objc_loadWeak`方法进行的。而根据 [Clang的官方文档](http://clang.llvm.org/docs/AutomaticReferenceCounting.html#arc-runtime-objc-loadweak)，`objc_loadWeak`方法会`retain`并`autorelease`这个对象。所以给一个weak对象赋值，它并不会马上释放，而是会放到`autorelease pool`中，与`autorelease pool`一起释放。
 

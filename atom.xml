@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-03-22T23:35:44+08:00</updated>
+  <updated>2014-03-25T07:44:18+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -14,27 +14,21 @@
 
   
   <entry>
-    <title type="html"><![CDATA[谈weak对象、对象缓存以及Tagged Pointer]]></title>
+    <title type="html"><![CDATA[NSNumber对象缓存以及Tagged Pointer]]></title>
     <link href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/"/>
     <updated>2014-03-21T21:09:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer</id>
     <content type="html"><![CDATA[<p>这是一次和 <a href="http://onevcat.com/">@onevcat</a> 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括：</p>
 
 <ol>
-<li>weak对象什么时候释放</li>
 <li>系统对象的缓存</li>
 <li><code>Tagged Pointer</code>对象</li>
 </ol>
 
 
-<h3>讨论一：关于weak对象什么时候释放</h3>
+<h2>autorelase对象</h2>
 
-<p>讨论源于一位叫 @caoping 的同学在iOS开发的<a href="iosdev.slack.com">slack群</a>上的提问：</p>
-
-<blockquote><p>问一个问题，__weak NSArray *arr = [NSArray new];这么声明一个弱引用变量，常理来说arr应该为nil,但实际不是这样的。我发现所有不可变类型这么使用，都是有值的，包括NSString,NSArray,NSDictionary,是否和存储的内存区域有关？</p></blockquote>
-
-
-<p>对于他的问题，我也实验了一下，如下代码，确实能够正常输出100：</p>
+<p>按照苹果的编程约定，由非<code>alloc</code>,<code>copy</code>返回的对象都是<code>autorelease</code>的，所以对于以下代码，虽然变量<code>number</code>是<code>__weak</code>的，但是由于<code>[NSNumber numberWithInt:100]</code>返回的对象是<code>autorelase</code>的，所以仍然能通过NSLog打印出来。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -42,8 +36,6 @@
 </span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<p>对于这个问题，<a href="http://onevcat.com/">@onevcat</a> 提供了一个来自stackoverflow上的合理的<a href="http://stackoverflow.com/questions/15266367/why-isnt-my-weak-reference-cleared-right-after-the-strong-ones-are-gone">解答</a>：</p>
 
 <p>从汇编代码中看，以上代码在创建<code>number</code>变量时，是通过<code>objc_loadWeak</code>方法进行的。而根据 <a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#arc-runtime-objc-loadweak">Clang的官方文档</a>，<code>objc_loadWeak</code>方法会<code>retain</code>并<code>autorelease</code>这个对象。所以给一个weak对象赋值，它并不会马上释放，而是会放到<code>autorelease pool</code>中，与<code>autorelease pool</code>一起释放。</p>
 

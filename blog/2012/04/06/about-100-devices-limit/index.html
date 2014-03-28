@@ -21,10 +21,11 @@
   <link rel="canonical" href="http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28029597-1']);
@@ -142,7 +143,7 @@
 
 <p>假如第一年，你增加了70个设备，同时删除了10个设备，这个时候，虽然你的设备数是60，但是可用的增加测试机的名额却只有30个了。</p>
 
-<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 - 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
+<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 &ndash; 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
 
 <h2>总结</h2>
 
@@ -155,7 +156,7 @@
 
 
   <footer>
-   <p class="meta">
+    <p class="meta">
       
   
 
@@ -235,7 +236,7 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/" title="Previous Post: 关于UIWebView和PhoneGap的总结">&laquo; 关于UIWebView和PhoneGap的总结</a>
       
       
-        <a class="basic-alignment right" href="/blog/2012/04/22/use-fmdb/" title="next Post: 在iOS开发中使用FMDB">在iOS开发中使用FMDB &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2012/04/22/use-fmdb/" title="Next Post: 在iOS开发中使用FMDB">在iOS开发中使用FMDB &raquo;</a>
       
     </p>
   </footer>
@@ -248,6 +249,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a>
@@ -287,6 +292,10 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
       </li>
     
   </ul>

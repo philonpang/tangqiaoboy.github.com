@@ -21,10 +21,11 @@
   <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/05/mvc-in-ios-develop">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28029597-1']);
@@ -214,9 +215,9 @@
 
 <p>Nib文件实际上内部格式是XML，而它本身并不编译成任何二进制代码。所以你如果用iFile之类的软件在iPhone上查看一些安装好的软件的目录，可以看到很多的以nib结尾的文件，这些就是该软件的界面文件。虽然这些XML经过了一些压缩转换，但是我们还是可以看到一些信息，例如它使用了哪些系统控件等。</p>
 
-<p>Nib文件刚开始给我的感觉很神秘，后来发现它其实就是用于可视化的编辑View类用的。其中的 File&#8217;s Owner一栏，用于表示这个View对应的Controller类。通常情况下，Controller类会有一个名为view的变量，指向这个view的实例，我们也可以建立多个IBOutlet变量，指向这个view上的控件，以便做一些界面上的控制。</p>
+<p>Nib文件刚开始给我的感觉很神秘，后来发现它其实就是用于可视化的编辑View类用的。其中的 File&rsquo;s Owner一栏，用于表示这个View对应的Controller类。通常情况下，Controller类会有一个名为view的变量，指向这个view的实例，我们也可以建立多个IBOutlet变量，指向这个view上的控件，以便做一些界面上的控制。</p>
 
-<p>在Interface Builder上还有一个好处，是可以方便的将View的事件与Controller的IBAction绑定。只需要按住Ctrl键，从控件往File&#8217;s Owner一栏拖拽，即可看到可以绑定的方法列表。其实这些只是简化了我们的工作，如果完全抛开Interface Builder，我们一样可以完成这些工作。我所知道业界的一些iOS开发部门，为了多人协作更加方便，更是强制不允许使用Interface Builder，一切界面工作都在代码中完成。如果你用文本编辑器打开Nib文件看过，就能理解这样做是有道理的。因为如果2个同时编辑一个界面文件，那么冲突的可能性是100%，而且，从svn结出的冲突信息上看，你根本无法修正它。下面的代码演示了如何不用Interface Builder来添加控件以及绑定UI事件。</p>
+<p>在Interface Builder上还有一个好处，是可以方便的将View的事件与Controller的IBAction绑定。只需要按住Ctrl键，从控件往File&rsquo;s Owner一栏拖拽，即可看到可以绑定的方法列表。其实这些只是简化了我们的工作，如果完全抛开Interface Builder，我们一样可以完成这些工作。我所知道业界的一些iOS开发部门，为了多人协作更加方便，更是强制不允许使用Interface Builder，一切界面工作都在代码中完成。如果你用文本编辑器打开Nib文件看过，就能理解这样做是有道理的。因为如果2个同时编辑一个界面文件，那么冲突的可能性是100%，而且，从svn结出的冲突信息上看，你根本无法修正它。下面的代码演示了如何不用Interface Builder来添加控件以及绑定UI事件。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -254,7 +255,7 @@
 
 
   <footer>
-   <p class="meta">
+    <p class="meta">
       
   
 
@@ -334,7 +335,7 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2012/02/04/use-git-to-manage-code-snippets/" title="Previous Post: 使用Github来管理xcode4中的代码片段">&laquo; 使用Github来管理xcode4中的代码片段</a>
       
       
-        <a class="basic-alignment right" href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/" title="next Post: iOS5中UIViewController的新方法">iOS5中UIViewController的新方法 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/" title="Next Post: iOS5中UIViewController的新方法">iOS5中UIViewController的新方法 &raquo;</a>
       
     </p>
   </footer>
@@ -347,6 +348,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a>
@@ -386,6 +391,10 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
       </li>
     
   </ul>

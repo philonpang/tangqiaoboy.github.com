@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Git submodule的坑 - 唐巧的技术博客</title>
+  <title>Git Submodule的坑 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
@@ -21,10 +21,11 @@
   <link rel="canonical" href="http://blog.devtang.com/blog/2013/05/08/git-submodule-issues">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28029597-1']);
@@ -129,7 +130,7 @@
 
 <p>有些时候你需要对submodule做一些修改，很常见的做法就是切到submodule的目录，然后做修改，然后commit和push。</p>
 
-<p>这里的坑在于，默认git submodule update并不会将submodule切到任何branch，所以，默认下submodule的HEAD是处于游离状态的(&#8216;detached HEAD&#8217; state)。所以在修改前，记得一定要用git checkout master将当前的submodule分支切换到master，然后才能做修改和提交。</p>
+<p>这里的坑在于，默认git submodule update并不会将submodule切到任何branch，所以，默认下submodule的HEAD是处于游离状态的(&lsquo;detached HEAD&rsquo; state)。所以在修改前，记得一定要用git checkout master将当前的submodule分支切换到master，然后才能做修改和提交。</p>
 
 <p>如果你不慎忘记切换到master分支，又做了提交，可以用cherry-pick命令挽救。具体做法如下：</p>
 
@@ -230,7 +231,7 @@
 
 
   <footer>
-   <p class="meta">
+    <p class="meta">
       
   
 
@@ -310,7 +311,7 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2013/04/30/the-history-of-wwdc/" title="Previous Post: 历史上的WWDC门票售空图片">&laquo; 历史上的WWDC门票售空图片</a>
       
       
-        <a class="basic-alignment right" href="/blog/2013/05/18/goodbye-viewdidunload/" title="next Post: 再见，viewDidUnload方法">再见，viewDidUnload方法 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2013/05/18/goodbye-viewdidunload/" title="Next Post: 再见，viewDidUnload方法">再见，viewDidUnload方法 &raquo;</a>
       
     </p>
   </footer>
@@ -323,6 +324,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a>
@@ -362,6 +367,10 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
       </li>
     
   </ul>

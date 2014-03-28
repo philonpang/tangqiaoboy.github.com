@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>XCode Debugger中的Icon符号的意义 - 唐巧的技术博客</title>
+  <title>iOS移动开发周报-第5期 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="你注意到了吗？在Xcode中，当你点击查看调用栈的时候，调用栈的每个方法前面都有一个Icon，而且还有好几种不同的样子，如下图所示，你知道它们代表什么意思吗？ 其实它们代表的意义如下： Person icon is User
-Mug icon is AppKit (or UIKit) &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本期移动开发周报带来如下内容 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ Mug icon is AppKit (or UIKit) &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2013/12/22/the-secret-of-xcode-debugger-icon">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2014/03/28/ios-weekly-5">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
@@ -79,7 +78,7 @@ Mug icon is AppKit (or UIKit) &hellip;">
   
   <header>
     
-      <h1 class="entry-title">XCode Debugger中的Icon符号的意义</h1>
+      <h1 class="entry-title">iOS移动开发周报-第5期</h1>
     
     
       <p class="meta">
@@ -95,56 +94,65 @@ Mug icon is AppKit (or UIKit) &hellip;">
   
 
 
-<time datetime="2013-12-22T19:23:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time>
+<time datetime="2014-03-28T23:52:29+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>你注意到了吗？在Xcode中，当你点击查看调用栈的时候，调用栈的每个方法前面都有一个Icon，而且还有好几种不同的样子，如下图所示，你知道它们代表什么意思吗？</p>
+<div class="entry-content"><h3>版权说明</h3>
 
-<p><img src="/images/debugger-icon.png"></p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/reduce-ios-size">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<!-- more -->
+<h3>前言</h3>
 
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>其实它们代表的意义如下：</p>
+<p>【摘要】：本期移动开发周报带来如下内容：减小iOS应用程序的大小，Quartz Composer的增强工具Origami的教程以及jQC工具等。</p>
 
-<ul>
-<li>Person icon is User</li>
-<li>Mug icon is AppKit (or UIKit)</li>
-<li>Briefcase icon is Frameworks</li>
-<li>Gear icon is System</li>
-<li>Morse code icon is Foundation</li>
-<li>Spider web looking icon is Web</li>
-</ul>
+<h2>新闻</h2>
 
-
-<p>另外，Debuger中的图标（如下图所示）也是有意义：</p>
-
-<p><img src="/images/debugger-icon2.jpg"></p>
-
-<p>具体意义如下：</p>
-
-<ul>
-<li>L = Local variable</li>
-<li>A = Argument</li>
-<li>S = Static variable</li>
-<li>V = global Variable</li>
-<li>R = register</li>
-<li>i = Instance variable</li>
-<li>E = Expression</li>
-</ul>
+<ol>
+<li><p><a href="https://deals.iphoneincanada.ca/sales/the-mac-freebie-bundle-3-0">《The Mac Freebie Bundle 3.0》</a>：该网站提供了7个原本收费的Mac App的免费购买。笔者试用了一下其中的X-Mirage，它可以把iPhone投到Mac上，并提供录象功能，适合将演示导出成视频。另外那个页面有Bug，在购买时信用卡信息不用填写，留空就可以直接购买成功。</p></li>
+<li><p><a href="http://www.macstories.net/news/apple-testing-related-search-suggestions-on-the-app-store/">《App Store 将增加匹配相关搜索关键字的新功能》</a>：新增加的功能有助于提高相关关键词的点击量。</p></li>
+</ol>
 
 
-<p>或许你觉得以上内容没什么实用价值，那再分享一个实用的。</p>
+<h2>教程</h2>
 
-<p>在XCode5中，点击一个小眼睛图标，就直接预览UIImage的内容，如下图所示：</p>
+<ol>
+<li><p><a href="http://nonomori.farbox.com/post/injection-plugin-for-xcode">《injection plugin for xcode》</a>：Injection Plugin For Xcode 是 Xcode 上的一个插件。利用它可以修改应用代码，实时在模拟器或实机上看到效果而不需要重启应用。作者介绍了该插件的详细使用方式。</p></li>
+<li><p><a href="http://www.pasanpremaratne.com/2014/03/15/UI-Prototyping-with-Quartz-Composer-and-Origami/">《UI Prototyping with Quartz Composer and Origami》</a>：由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集Origami，使得交互设计工作得到更好的辅助。不过另一方面，该工具仍然需要设计师具备一定的逻辑思维能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。本教程介绍了如何使用Quartz Composer 和 Origami来做交互设计。</p></li>
+<li><p>写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：</p>
 
-<p><img src="/images/debugger-preview-image.png"></p>
+<ol>
+<li><a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">Android篇</a></li>
+<li><a href="http://t.cn/8sbXyOH">C++ 篇1</a>和<a href="http://t.cn/8sbXLyg">C++ 篇2</a></li>
+<li><a href="http://t.cn/8FpEP4x">Go 篇</a></li>
+</ol>
+</li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/26/cookbook-moving-table-view-cells-with-a-long-press-gesture/">《利用长按手势移动 Table View Cells》</a>：本教程中介绍了如何通过长按手势来移动 table view中的cell，这种操作方式就像苹果自家的天气 App 一样。</p></li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/24/reducing-the-size-of-my-app/">《减小iOS应用程序的大小》</a>：本文收集了一些减小程序安装包大小的相关技巧(当第一次下载和安装程序时)。如果是针对升级程序的话，可以看这篇文章: <a href="https://developer.apple.com/library/ios/qa/qa1779/">《减小iOS应用程序升级时所需下载的大小》</a>，这与第一次安装使用的工作原理有所不同。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">《NSNumber对象缓存以及Tagged Pointer》</a>：本文讨论了<code>NSNumber</code>对象的缓存以及苹果在64位系统引入的<code>Tagged Pointer</code>对象。</p></li>
+</ol>
 
-<p>这个有用吧，祝大家玩得开心～</p>
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>：jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。Quartz Composer是苹果提供的一个交互设计工具。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/gbammc/WechatPayDemo">WechatPayDemo</a>: WechatPayDemo是一个非官方的微信支付Demo，基于微信SDK1.4.1构建。由于微信官方并没有提供支付功能的iOS Demo，加上官方的文档错误，使得本文作者花了较大精力调试。他希望开源这个工程来帮助其他iOS开发者少有一些弯路。</p></li>
+<li><p><a href="http://trawor.farbox.com/post/vz">微转iOS客户端和服务端</a>：微转是一个基于微博的数码设备平台，客户端和后台全部基于AVOSCloud服务实现。作者将其iOS客户端和服务端代码全部开源。</p></li>
+<li><p><a href="https://github.com/facebook/Tweaks">Tweaks</a>：Tweaks让开发者可以方便地对特定事物进行标记——比如动画效果的时间，或者是按钮的颜色，或者是图片的透明度——并在使用设备实际运行应用时让开发者方便地进行实时调整。</p></li>
+</ol>
+
 </div>
 
 
@@ -167,12 +175,12 @@ Mug icon is AppKit (or UIKit) &hellip;">
   
 
 
-<time datetime="2013-12-22T19:23:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time>
+<time datetime="2014-03-28T23:52:29+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
   
 </span>
 
@@ -226,10 +234,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/12/11/network-tool-charles-intr/" title="Previous Post: iOS开发工具-网络封包分析工具Charles">&laquo; iOS开发工具-网络封包分析工具Charles</a>
+        <a class="basic-alignment left" href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/" title="Previous Post: NSNumber对象缓存以及Tagged Pointer">&laquo; NSNumber对象缓存以及Tagged Pointer</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/12/22/how-to-write-resume-for-it-company/" title="Next Post: 如何写面向互联网公司的求职简历">如何写面向互联网公司的求职简历 &raquo;</a>
       
     </p>
   </footer>

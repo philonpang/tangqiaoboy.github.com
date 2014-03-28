@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mac | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-03-25T07:44:18+08:00</updated>
+  <updated>2014-03-29T00:13:08+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -106,7 +106,7 @@ brew cask install launchrocket
     <link href="http://blog.devtang.com/blog/2012/12/08/use-privoxy/"/>
     <updated>2012-12-08T16:47:00+08:00</updated>
     <id>http://blog.devtang.com/blog/2012/12/08/use-privoxy</id>
-    <content type="html"><![CDATA[<p><blockquote><p></p></p><p><p>You take the blue pill, the story ends, you wake up in your bed, and believe whatever you want to believe.</p></p><p><p>You take the red pill, you stay in Wonderland, and I show you just how deep the rabbit hole goes.</p></p><p><p>-- 《黑客帝国》</p></p><p><p></p></blockquote></p>
+    <content type="html"><![CDATA[<p><blockquote><p></p></p><p><p>You take the blue pill, the story ends, you wake up in your bed, and believe whatever you want to believe.</p></p><p><p>You take the red pill, you stay in Wonderland, and I show you just how deep the rabbit hole goes.</p></p><p><p>&mdash; 《黑客帝国》</p></p><p><p></p></blockquote></p>
 
 <p>如果你不知道什么是“墙”，那么应该祝福你继续活在美丽的Matrix里。但如果你选择服用红色药丸，那么在享受了墙外的信息流畅之后，你就再也无法忍受墙内的世界了。</p>
 
@@ -144,8 +144,8 @@ brew install privoxy
 <p>切换到/Library/LaunchAgents目录，用sudo vim新建一个名为local.privoxy.plist的文件，文件内容如下所示：</p>
 
 <p>``` xml
-&lt;?xml version="1.0" encoding="UTF-8"?>
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+&lt;?xml version=&ldquo;1.0&rdquo; encoding=&ldquo;UTF-8&rdquo;?>
+&lt;!DOCTYPE plist PUBLIC &ldquo;&ndash;//Apple//DTD PLIST 1.0//EN&rdquo; &ldquo;<a href="http://www.apple.com/DTDs/PropertyList-1.0.dtd">http://www.apple.com/DTDs/PropertyList-1.0.dtd</a>&rdquo;>
 <plist version="1.0">
 <dict></p>
 
@@ -252,8 +252,8 @@ tcp4       0      0  127.0.0.1.8118         *.*                    LISTEN
     <content type="html"><![CDATA[<p>以前只是在linux机器上使用top命令。常用的快键键是:</p>
 
 <ul>
-<li>p键 - 按cpu使用率排序</li>
-<li>m键 - 按内存使用量排序</li>
+<li>p键 &ndash; 按cpu使用率排序</li>
+<li>m键 &ndash; 按内存使用量排序</li>
 </ul>
 
 

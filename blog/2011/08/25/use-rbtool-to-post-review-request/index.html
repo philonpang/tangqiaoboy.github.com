@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>使用RBTool自动提交code review请求 - 唐巧的技术博客</title>
+  <title>使用RBTool自动提交code Review请求 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
@@ -24,10 +24,11 @@
   <link rel="canonical" href="http://blog.devtang.com/blog/2011/08/25/use-rbtool-to-post-review-request">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28029597-1']);
@@ -158,16 +159,16 @@ post-review --target-groups=mygroup --target-people=friendname1,friendname2
 </pre>
 
 
-<p>post-review还可以更新以前提交的diff,方法是用 -r 指定review number即可。具体的可以用post-review &#8211;help来查看详细信息。也可以去review board官网查看详细的说明：<a href="http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools">http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools</a></p>
+<p>post-review还可以更新以前提交的diff,方法是用 -r 指定review number即可。具体的可以用post-review &mdash;help来查看详细信息。也可以去review board官网查看详细的说明：<a href="http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools">http://www.reviewboard.org/docs/codebase/dev/getting-started/#rbtools</a></p>
 
-<p>如果是用git svn管理的项目，另外加上参数：&#8211;parent git-svn 即可。</p>
+<p>如果是用git svn管理的项目，另外加上参数：&mdash;parent git-svn 即可。</p>
 
 <p>赶快用RBTool工具提高你的工作效率吧～</p>
 </div>
 
 
   <footer>
-   <p class="meta">
+    <p class="meta">
       
   
 
@@ -247,7 +248,7 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/" title="Previous Post: 不要在init和dealloc函数中使用accessor">&laquo; 不要在init和dealloc函数中使用accessor</a>
       
       
-        <a class="basic-alignment right" href="/blog/2011/11/20/set-uilabel-text-align-top/" title="next Post: 让UILabel的文字顶部对齐">让UILabel的文字顶部对齐 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2011/11/20/set-uilabel-text-align-top/" title="Next Post: 让UILabel的文字顶部对齐">让UILabel的文字顶部对齐 &raquo;</a>
       
     </p>
   </footer>
@@ -260,6 +261,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a>
@@ -299,6 +304,10 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
       </li>
     
   </ul>

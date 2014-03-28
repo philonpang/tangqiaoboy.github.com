@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-03-25T07:44:18+08:00</updated>
+  <updated>2014-03-29T00:13:08+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -48,7 +48,7 @@ NSString * htmlString = [NSString stringWithContentsOfFile:htmlFile encoding:(NS
 
 <p>``` objc
 // Objective-C语言
-- (BOOL)webView:(UIWebView *)webView</p>
+&ndash; (BOOL)webView:(UIWebView *)webView</p>
 
 <pre><code>shouldStartLoadWithRequest:(NSURLRequest *)request 
 navigationType:(UIWebViewNavigationType)navigationType {
@@ -243,19 +243,19 @@ iFrame = null;
 
 <p>第一段Javascript，取出相应的图片url和介绍文字，生成第二个Javascript代码</p>
 
-<p>``` javascript
-var ps = $('.lazyload');
-var ts = $('h5');
+<p>`&ldquo; javascript
+var ps = $(&lsquo;.lazyload&rsquo;);
+var ts = $(&lsquo;h5&rsquo;);
 for (var i = 0; i &lt; ps.length; ++i) {
-   console.log($(ps[i]).attr('original'));<br/>
+   console.log($(ps[i]).attr(&lsquo;original&rsquo;));<br/>
 }
-console.log($($('h2')[0]).text());
-console.log('');</p>
+console.log($($(&lsquo;h2&rsquo;)[0]).text());
+console.log(&rdquo;);</p>
 
 <p>for (var i = 0; i &lt; ps.length; ++i) {
-   console.log('document.getElementsByTagName("textarea")[' + i + '].value="\');
-   console.log("图片属性：" + $(ts[i<em>2]).find('p').text() + '\');
-   console.log(" 图片描述：" + $(ts[i</em>2+1]).find('p').text() + '";');
+   console.log(&lsquo;document.getElementsByTagName(&ldquo;textarea&rdquo;)[&rsquo; + i + &lsquo;].value=&ldquo;\&rsquo;);
+   console.log("图片属性：&rdquo; + $(ts[i<em>2]).find(&lsquo;p&rsquo;).text() + &lsquo;\&rsquo;);
+   console.log(&ldquo; 图片描述：&rdquo; + $(ts[i</em>2+1]).find(&lsquo;p&rsquo;).text() + &lsquo;&ldquo;;&rsquo;);
 }</p>
 
 <p>```

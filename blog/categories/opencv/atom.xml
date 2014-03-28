@@ -4,7 +4,7 @@
   <title><![CDATA[Category: OpenCV | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/opencv/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-03-25T07:44:18+08:00</updated>
+  <updated>2014-03-29T00:13:08+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -66,7 +66,7 @@ brew install opencv
 
 <p>mkdir build
 cd build
-cmake -G "Unix Makefiles" ..</p>
+cmake -G &ldquo;Unix Makefiles&rdquo; ..</p>
 
 <h1>Now, we can make OpenCV. Type the following in:</h1>
 
@@ -84,7 +84,7 @@ sudo make install
 
 <p>新建一个Cocoa Application的工程。工程建好后，选中工程的Target，在Build Settings一样，找到“Header Search Paths"这一个选项，将它的值改为“/usr/local/include"。</p>
 
-<p>同样还需要设置的还有"Lib Search Paths"这一项，将它的值改为"/usr/local/lib/**", 如下所示：</p>
+<p>同样还需要设置的还有"Lib Search Paths"这一项，将它的值改为"/usr/local/lib/**&ldquo;, 如下所示：</p>
 
 <p><img src="/images/use-opencv-in-mac-1.jpg"></p>
 
@@ -104,7 +104,7 @@ sudo make install
 
 <p>``` objc</p>
 
-<h1>import "opencv2/opencv.hpp"</h1>
+<h1>import &ldquo;opencv2/opencv.hpp&rdquo;</h1>
 
 <p>```</p>
 
@@ -122,12 +122,12 @@ sudo make install
 
 <h1>import &lt;Foundation/Foundation.h></h1>
 
-<h1>import "opencv2/opencv.hpp"</h1>
+<h1>import &ldquo;opencv2/opencv.hpp&rdquo;</h1>
 
 <p>@interface NSImage (OpenCV)</p>
 
 <p>+(NSImage*)imageWithCVMat:(const cv::Mat&amp;)cvMat;
--(id)initWithCVMat:(const cv::Mat&amp;)cvMat;</p>
+&ndash;(id)initWithCVMat:(const cv::Mat&amp;)cvMat;</p>
 
 <p>@property(nonatomic, readonly) cv::Mat CVMat;
 @property(nonatomic, readonly) cv::Mat CVGrayscaleMat;</p>
@@ -144,7 +144,7 @@ sudo make install
 //  Created by TangQiao on 12-10-26.
 //</p>
 
-<h1>import "NSImage+OpenCV.h"</h1>
+<h1>import &ldquo;NSImage+OpenCV.h&rdquo;</h1>
 
 <p>static void ProviderReleaseDataNOP(void <em>info, const void </em>data, size_t size)
 {</p>
@@ -156,7 +156,7 @@ sudo make install
 
 <p>@implementation NSImage (OpenCV)</p>
 
-<p>-(CGImageRef)CGImage
+<p>&ndash;(CGImageRef)CGImage
 {</p>
 
 <pre><code>CGContextRef bitmapCtx = CGBitmapContextCreate(NULL/*data - pass NULL to let CG allocate the memory*/,
@@ -180,7 +180,7 @@ return cgImage;
 
 <p>}</p>
 
-<p>-(cv::Mat)CVMat
+<p>&ndash;(cv::Mat)CVMat
 {</p>
 
 <pre><code>CGImageRef imageRef = [self CGImage];
@@ -206,7 +206,7 @@ return cvMat;
 
 <p>}</p>
 
-<p>-(cv::Mat)CVGrayscaleMat
+<p>&ndash;(cv::Mat)CVGrayscaleMat
 {</p>
 
 <pre><code>CGImageRef imageRef = [self CGImage];
@@ -244,35 +244,27 @@ return cvMat;
 <p>  CGColorSpaceRef colorSpace;</p>
 
 <p>  if (cvMat.elemSize() == 1)
-  {</p>
-
-<pre><code>  colorSpace = CGColorSpaceCreateDeviceGray();
-</code></pre>
-
+  {
+      colorSpace = CGColorSpaceCreateDeviceGray();
   }
   else
   {
-
-<pre><code>  colorSpace = CGColorSpaceCreateDeviceRGB();
-</code></pre>
-
-<p>  }</p>
+      colorSpace = CGColorSpaceCreateDeviceRGB();
+  }</p>
 
 <p>  CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);</p>
 
-<p>  CGImageRef imageRef = CGImageCreate(cvMat.cols,                                     // Width</p>
-
-<pre><code>                                  cvMat.rows,                                     // Height
-                                  8,                                              // Bits per component
-                                  8 * cvMat.elemSize(),                           // Bits per pixel
-                                  cvMat.step[0],                                  // Bytes per row
-                                  colorSpace,                                     // Colorspace
-                                  kCGImageAlphaNone | kCGBitmapByteOrderDefault,  // Bitmap info flags
-                                  provider,                                       // CGDataProviderRef
-                                  NULL,                                           // Decode
-                                  false,                                          // Should interpolate
-                                  kCGRenderingIntentDefault);                     // Intent
-</code></pre>
+<p>  CGImageRef imageRef = CGImageCreate(cvMat.cols,                                     // Width
+                                      cvMat.rows,                                     // Height
+                                      8,                                              // Bits per component
+                                      8 * cvMat.elemSize(),                           // Bits per pixel
+                                      cvMat.step[0],                                  // Bytes per row
+                                      colorSpace,                                     // Colorspace
+                                      kCGImageAlphaNone | kCGBitmapByteOrderDefault,  // Bitmap info flags
+                                      provider,                                       // CGDataProviderRef
+                                      NULL,                                           // Decode
+                                      false,                                          // Should interpolate
+                                      kCGRenderingIntentDefault);                     // Intent</p>
 
 <p>  NSBitmapImageRep <em>bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:imageRef];
   NSImage </em>image = [[NSImage alloc] init];
@@ -332,7 +324,7 @@ return cvMat;
 
 <p>``` objc</p>
 
-<h1>import "opencv2/opencv.hpp"</h1>
+<h1>import &ldquo;opencv2/opencv.hpp&rdquo;</h1>
 
 <p>```</p>
 
@@ -361,7 +353,7 @@ return cvMat;
 <p>@interface UIImage (UIImage_OpenCV)</p>
 
 <p>+(UIImage *)imageWithCVMat:(const cv::Mat&amp;)cvMat;
--(id)initWithCVMat:(const cv::Mat&amp;)cvMat;</p>
+&ndash;(id)initWithCVMat:(const cv::Mat&amp;)cvMat;</p>
 
 <p>@property(nonatomic, readonly) cv::Mat CVMat;
 @property(nonatomic, readonly) cv::Mat CVGrayscaleMat;</p>
@@ -386,7 +378,7 @@ return cvMat;
 //  appreciated but not required.
 //</p>
 
-<h1>import "UIImage+OpenCV.h"</h1>
+<h1>import &ldquo;UIImage+OpenCV.h&rdquo;</h1>
 
 <p>static void ProviderReleaseDataNOP(void <em>info, const void </em>data, size_t size)
 {</p>
@@ -399,7 +391,7 @@ return;
 
 <p>@implementation UIImage (UIImage_OpenCV)</p>
 
-<p>-(cv::Mat)CVMat
+<p>&ndash;(cv::Mat)CVMat
 {</p>
 
 <pre><code>CGColorSpaceRef colorSpace = CGImageGetColorSpace(self.CGImage);
@@ -425,7 +417,7 @@ return cvMat;
 
 <p>}</p>
 
-<p>-(cv::Mat)CVGrayscaleMat
+<p>&ndash;(cv::Mat)CVGrayscaleMat
 {</p>
 
 <pre><code>CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
@@ -464,35 +456,27 @@ return cvMat;
 <p>  CGColorSpaceRef colorSpace;</p>
 
 <p>  if (cvMat.elemSize() == 1)
-  {</p>
-
-<pre><code>  colorSpace = CGColorSpaceCreateDeviceGray();
-</code></pre>
-
+  {
+      colorSpace = CGColorSpaceCreateDeviceGray();
   }
   else
   {
-
-<pre><code>  colorSpace = CGColorSpaceCreateDeviceRGB();
-</code></pre>
-
-<p>  }</p>
+      colorSpace = CGColorSpaceCreateDeviceRGB();
+  }</p>
 
 <p>  CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);</p>
 
-<p>  CGImageRef imageRef = CGImageCreate(cvMat.cols,                                     // Width</p>
-
-<pre><code>                                  cvMat.rows,                                     // Height
-                                  8,                                              // Bits per component
-                                  8 * cvMat.elemSize(),                           // Bits per pixel
-                                  cvMat.step[0],                                  // Bytes per row
-                                  colorSpace,                                     // Colorspace
-                                  kCGImageAlphaNone | kCGBitmapByteOrderDefault,  // Bitmap info flags
-                                  provider,                                       // CGDataProviderRef
-                                  NULL,                                           // Decode
-                                  false,                                          // Should interpolate
-                                  kCGRenderingIntentDefault);                     // Intent   
-</code></pre>
+<p>  CGImageRef imageRef = CGImageCreate(cvMat.cols,                                     // Width
+                                      cvMat.rows,                                     // Height
+                                      8,                                              // Bits per component
+                                      8 * cvMat.elemSize(),                           // Bits per pixel
+                                      cvMat.step[0],                                  // Bytes per row
+                                      colorSpace,                                     // Colorspace
+                                      kCGImageAlphaNone | kCGBitmapByteOrderDefault,  // Bitmap info flags
+                                      provider,                                       // CGDataProviderRef
+                                      NULL,                                           // Decode
+                                      false,                                          // Should interpolate
+                                      kCGRenderingIntentDefault);                     // Intent</p>
 
 <p>  self = [self initWithCGImage:imageRef];
   CGImageRelease(imageRef);

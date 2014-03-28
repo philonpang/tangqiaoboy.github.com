@@ -22,10 +22,11 @@
   <link rel="canonical" href="http://blog.devtang.com/blog/2013/04/07/tricks-in-iap">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28029597-1']);
@@ -129,9 +130,9 @@
 <p>由于苹果在iOS5.0以下有IAP的bug，使得攻击者可以伪造支付成功的凭证。而iOS6.0的系统在越狱后同样可以伪造凭证，所以我们对于应用内支付，增加了服务器端的验证。
 服务器端会将支付凭证发给苹果的服务器进行二次验证，以保证凭证是真实有效的。</p>
 
-<p>在我们公司的测试服务器中，我们会连接苹果的测试服务器（https://sandbox.itunes.apple.com/verifyReceipt）验证。</p>
+<p>在我们公司的测试服务器中，我们会连接苹果的测试服务器（<a href="https://sandbox.itunes.apple.com/verifyReceipt%EF%BC%89%E9%AA%8C%E8%AF%81%E3%80%82">https://sandbox.itunes.apple.com/verifyReceipt%EF%BC%89%E9%AA%8C%E8%AF%81%E3%80%82</a></p>
 
-<p>在我们部署在线上的正式服务器中，我们会连接苹果的正式服务器（https://buy.itunes.apple.com/verifyReceipt ）验证。</p>
+<p>在我们部署在线上的正式服务器中，我们会连接苹果的正式服务器（<a href="https://buy.itunes.apple.com/verifyReceipt">https://buy.itunes.apple.com/verifyReceipt</a> ）验证。</p>
 
 <p>我们提交给苹果审核的是正式版，我们以为苹果审核时，我们应该连接苹果的线上验证服务器来验证购买凭证。结果我理解错了，苹果在审核App时，只会在sandbox环境购买，其产生的购买凭证，也只能连接苹果的测试验证服务器。但是审核的app又是连接的我们的线上服务器。所以我们这边的服务器无法验证通过IAP购买，造成我们app的又一次审核被拒。</p>
 
@@ -188,7 +189,7 @@
 
 
   <footer>
-   <p class="meta">
+    <p class="meta">
       
   
 
@@ -268,7 +269,7 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2013/03/27/should-we-use-arc/" title="Previous Post: 是否应该使用ARC?">&laquo; 是否应该使用ARC?</a>
       
       
-        <a class="basic-alignment right" href="/blog/2013/04/29/the-missing-objc-keywords/" title="next Post: 那些被遗漏的Objective-C保留字">那些被遗漏的Objective-C保留字 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2013/04/29/the-missing-objc-keywords/" title="Next Post: 那些被遗漏的Objective-C保留字">那些被遗漏的Objective-C保留字 &raquo;</a>
       
     </p>
   </footer>
@@ -281,6 +282,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a>
@@ -320,6 +325,10 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
       </li>
     
   </ul>

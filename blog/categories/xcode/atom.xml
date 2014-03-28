@@ -4,7 +4,7 @@
   <title><![CDATA[Category: xcode | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/xcode/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-03-25T07:44:18+08:00</updated>
+  <updated>2014-03-29T00:13:08+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -34,7 +34,7 @@
 
 <h3>设置公司（组织）</h3>
 
-<p>这里所指的公司也是指源文件头部注释中的”Copyright (c) xxx"中的公司名字。这个相对好找一些。
+<p>这里所指的公司也是指源文件头部注释中的”Copyright &copy; xxx"中的公司名字。这个相对好找一些。
 点击工程，在右边的工具栏中就可以找到"Organization"这一项。</p>
 
 <h3>模拟器</h3>
@@ -232,7 +232,7 @@ cd xcode_tool
 <code>
 appledoc -o ./doc --project-name ynote --project-company youdao .
 </code>
-appledoc会扫描当前路径下的所有文件，然后生成好文档放到doc目录下。你也可以用appledoc --help查看所有可用的参数。</p>
+appledoc会扫描当前路径下的所有文件，然后生成好文档放到doc目录下。你也可以用appledoc &mdash;help查看所有可用的参数。</p>
 
 <p>基本上使用起来还是比较方便的，详细的信息可以查看官方的文档：<a href="http://gentlebytes.com/appledoc/">http://gentlebytes.com/appledoc/</a></p>
 ]]></content>
@@ -272,7 +272,7 @@ find . -name "*.[hm]" | xargs sed -Ee 's/ +$//g' -i ""
 
 <h1>!/bin/sh</h1>
 
-<p>if git-rev-parse --verify HEAD >/dev/null 2>&amp;1 ; then
+<p>if git-rev-parse &mdash;verify HEAD >/dev/null 2>&amp;1 ; then
    against=HEAD
 else
    # Initial commit: diff against an empty tree object

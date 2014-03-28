@@ -22,10 +22,11 @@
   <link rel="canonical" href="http://blog.devtang.com/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28029597-1']);
@@ -119,7 +120,7 @@
 
 <p>经过我们的分析，我们最终发现这是由于题目内容中有<a href="http://en.wikipedia.org/wiki/Non-breaking_space">非换行空格</a>（<code>non-breaking-space</code>）造成的。根据<a href="(http://en.wikipedia.org/wiki/Non-breaking_space">wikipedia</a>)上的介绍，该字符的ASCII码为160，主要做用如下：</p>
 
-<blockquote><p>Text-processing software typically assumes that an automatic line break may be inserted anywhere a space character occurs; a non-breaking space prevents this from happening (provided the software recognizes the character). For example, if the text &#8220;100 km&#8221; will not quite fit at the end of a line, the software may insert a line break between &#8220;100&#8221; and &#8220;km&#8221;. To avoid this undesirable behaviour, the editor may choose to use a non-breaking space between &#8220;100&#8221; and &#8220;km&#8221;. This guarantees that the text &#8220;100 km&#8221; will not be broken: if it does not fit at the end of a line it is moved in its entirety to the next line.</p></blockquote>
+<blockquote><p>Text-processing software typically assumes that an automatic line break may be inserted anywhere a space character occurs; a non-breaking space prevents this from happening (provided the software recognizes the character). For example, if the text &ldquo;100 km&rdquo; will not quite fit at the end of a line, the software may insert a line break between &ldquo;100&rdquo; and &ldquo;km&rdquo;. To avoid this undesirable behaviour, the editor may choose to use a non-breaking space between &ldquo;100&rdquo; and &ldquo;km&rdquo;. This guarantees that the text &ldquo;100 km&rdquo; will not be broken: if it does not fit at the end of a line it is moved in its entirety to the next line.</p></blockquote>
 
 <p>于是我们大概知道整个原因了：编辑在后台录入题目时，是在网页做的富文本编辑器里面，里面的空格输入的是 <code>&amp;nbsp;</code>，然后这个空格转存到数据库中会转成 非换行空格（<code>non-breaking-space</code>），也就是ASCII为160的空格。最后传到iPhone这边，用Core Text排版时，Core Text认为遇到这个空白符不应该换行，于是就一直不换行，直到显示不了了才强制换行，就造成了单词被截断。</p>
 
@@ -145,7 +146,7 @@
 
 
   <footer>
-   <p class="meta">
+    <p class="meta">
       
   
 
@@ -225,7 +226,7 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2014/01/08/why-we-need-write/" title="Previous Post: 作为码农，我们为什么要写作">&laquo; 作为码农，我们为什么要写作</a>
       
       
-        <a class="basic-alignment right" href="/blog/2014/01/26/add-ssd-to-old-imac/" title="next Post: 自己动手给iMac换SSD">自己动手给iMac换SSD &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2014/01/26/add-ssd-to-old-imac/" title="Next Post: 自己动手给iMac换SSD">自己动手给iMac换SSD &raquo;</a>
       
     </p>
   </footer>
@@ -238,6 +239,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a>
@@ -277,6 +282,10 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
       </li>
     
   </ul>

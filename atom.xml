@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-03-25T07:44:18+08:00</updated>
+  <updated>2014-03-29T00:13:08+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第5期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/03/28/ios-weekly-5/"/>
+    <updated>2014-03-28T23:52:29+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/03/28/ios-weekly-5</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/reduce-ios-size">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期移动开发周报带来如下内容：减小iOS应用程序的大小，Quartz Composer的增强工具Origami的教程以及jQC工具等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="https://deals.iphoneincanada.ca/sales/the-mac-freebie-bundle-3-0">《The Mac Freebie Bundle 3.0》</a>：该网站提供了7个原本收费的Mac App的免费购买。笔者试用了一下其中的X-Mirage，它可以把iPhone投到Mac上，并提供录象功能，适合将演示导出成视频。另外那个页面有Bug，在购买时信用卡信息不用填写，留空就可以直接购买成功。</p></li>
+<li><p><a href="http://www.macstories.net/news/apple-testing-related-search-suggestions-on-the-app-store/">《App Store 将增加匹配相关搜索关键字的新功能》</a>：新增加的功能有助于提高相关关键词的点击量。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://nonomori.farbox.com/post/injection-plugin-for-xcode">《injection plugin for xcode》</a>：Injection Plugin For Xcode 是 Xcode 上的一个插件。利用它可以修改应用代码，实时在模拟器或实机上看到效果而不需要重启应用。作者介绍了该插件的详细使用方式。</p></li>
+<li><p><a href="http://www.pasanpremaratne.com/2014/03/15/UI-Prototyping-with-Quartz-Composer-and-Origami/">《UI Prototyping with Quartz Composer and Origami》</a>：由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集Origami，使得交互设计工作得到更好的辅助。不过另一方面，该工具仍然需要设计师具备一定的逻辑思维能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。本教程介绍了如何使用Quartz Composer 和 Origami来做交互设计。</p></li>
+<li><p>写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：</p>
+
+<ol>
+<li><a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">Android篇</a></li>
+<li><a href="http://t.cn/8sbXyOH">C++ 篇1</a>和<a href="http://t.cn/8sbXLyg">C++ 篇2</a></li>
+<li><a href="http://t.cn/8FpEP4x">Go 篇</a></li>
+</ol>
+</li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/26/cookbook-moving-table-view-cells-with-a-long-press-gesture/">《利用长按手势移动 Table View Cells》</a>：本教程中介绍了如何通过长按手势来移动 table view中的cell，这种操作方式就像苹果自家的天气 App 一样。</p></li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/24/reducing-the-size-of-my-app/">《减小iOS应用程序的大小》</a>：本文收集了一些减小程序安装包大小的相关技巧(当第一次下载和安装程序时)。如果是针对升级程序的话，可以看这篇文章: <a href="https://developer.apple.com/library/ios/qa/qa1779/">《减小iOS应用程序升级时所需下载的大小》</a>，这与第一次安装使用的工作原理有所不同。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">《NSNumber对象缓存以及Tagged Pointer》</a>：本文讨论了<code>NSNumber</code>对象的缓存以及苹果在64位系统引入的<code>Tagged Pointer</code>对象。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>：jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。Quartz Composer是苹果提供的一个交互设计工具。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/gbammc/WechatPayDemo">WechatPayDemo</a>: WechatPayDemo是一个非官方的微信支付Demo，基于微信SDK1.4.1构建。由于微信官方并没有提供支付功能的iOS Demo，加上官方的文档错误，使得本文作者花了较大精力调试。他希望开源这个工程来帮助其他iOS开发者少有一些弯路。</p></li>
+<li><p><a href="http://trawor.farbox.com/post/vz">微转iOS客户端和服务端</a>：微转是一个基于微博的数码设备平台，客户端和后台全部基于AVOSCloud服务实现。作者将其iOS客户端和服务端代码全部开源。</p></li>
+<li><p><a href="https://github.com/facebook/Tweaks">Tweaks</a>：Tweaks让开发者可以方便地对特定事物进行标记——比如动画效果的时间，或者是按钮的颜色，或者是图片的透明度——并在使用设备实际运行应用时让开发者方便地进行实时调整。</p></li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-28T23:52:29+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[NSNumber对象缓存以及Tagged Pointer]]></title>
@@ -147,7 +232,32 @@
 <p>如果知道提问的艺术，iOS开发已经入门至少半年了，会用google、stackoverflow和github解决基本问题，但是遇到一些更复杂的问题时没有地方找人讨论，那么欢迎你申请加入我创建的slack群组。本次讨论也是由slack群组里的@caoping同学的提问引起的。</p>
 
 <p><a href="iosdev.slack.com">iOS开发的slack群组</a>经过2个月试运营，现在已经聚集了300个有经验的iOS开发者，现在开始接受申请加入，申请地址是（需翻墙）： <a href="https://docs.google.com/forms/d/1eWH_jjDIIV5kpSV0BUPBAIboHEj0ZrgBrZHWsdJqkDU/viewform">https://docs.google.com/forms/d/1eWH_jjDIIV5kpSV0BUPBAIboHEj0ZrgBrZHWsdJqkDU/viewform</a> 。如果你不会翻墙，不会用google和stackoverflow以及github，那么我劝你还是别加入了。</p>
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T21:09:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -187,7 +297,32 @@
 <li><p><a href="https://github.com/iosre/Skua">《iOS客户端自动回复机器人源码》</a>：作者实现了一个QQ的自动回复机器人。</p></li>
 </ol>
 
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T20:23:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -248,7 +383,32 @@
 <li><p><a href="https://github.com/facebook/KVOController">KVOController</a>: Facebook开源了Key-Value Observing工具KVOController。KVO是一个在iOS应用程序开发中，用于模块间通讯的技术技术，常常用于保证界面对于模型数据变化的实时响应。</p></li>
 </ol>
 
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-14T15:10:00+08:00" pubdate data-updated="true">Mar 14<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -278,7 +438,7 @@
 <h2>教程</h2>
 
 <ol>
-<li><p><a href="http://blog.csdn.net/wzzvictory/article/details/20067595">《CocoaPods详解之&#8212;-制作篇》</a>：作者详细介绍了CocoaPods依赖库的创建过程，这对于开源项目作者来说很有帮助。</p></li>
+<li><p><a href="http://blog.csdn.net/wzzvictory/article/details/20067595">《CocoaPods详解之&mdash;&mdash;制作篇》</a>：作者详细介绍了CocoaPods依赖库的创建过程，这对于开源项目作者来说很有帮助。</p></li>
 <li><p><a href="http://blog.jobbole.com/61101/">《通过实现一个TableView来理解iOS UI编程》</a>：作者通过实现一遍TableView来理解UIKit的一些技术细节，包括几何布局框架、UI的层次架构、子类化UIScrollView、Cell的重用、响应和处理事件和可扩展性等技术细节。</p></li>
 <li><p><a href="http://www.yidianzixun.com/article/news_eaf23f7ff41d4862ecbf0d10441cf5f5?s=1">《iOS 开发者应该知道的 ARM 结构》</a>：到目前为止，所有的 iOS 设备都使用 ARM 结构处理器。作者在文章中介绍了ARM处理器的各种特点，包括条件执行、Thumb 指令集、内存对齐和除法等技术细节。</p></li>
 <li><p><a href="http://segmentfault.com/a/1190000000390012">《iOS 开发：绘制像素到屏幕》</a>：像素是如何绘制到屏幕上面的？把数据输出到屏幕的方法有很多，通过调用很多不同的framework和不同的函数。作者在文章中介绍了这个过程背后的东西，这能够帮助大家在遇到性能问题时调试解决问题。</p></li>
@@ -305,7 +465,32 @@
 <li><p><a href="https://github.com/5sw/SWParallaxScrollView">SWParallaxScrollView</a>：SWParallaxScrollView是一个具有多个层次的可滑动视图，可以实现不同层之间不同的滑动速度。该技术常常用来做应用初次启动时的介绍。</p></li>
 </ol>
 
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-07T21:44:00+08:00" pubdate data-updated="true">Mar 7<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -383,7 +568,32 @@
 <li><a href="http://joeyio.com/ios/2013/07/25/write_xcode4_plugin_of_your_own/">《写个自己的Xcode4插件》</a></li>
 </ul>
 
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-05T22:36:00+08:00" pubdate data-updated="true">Mar 5<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -434,7 +644,32 @@
 <li><a href="https://github.com/DyCI/dyci-main">DyCI</a> ：DyCI是一个动态注入工具，用于向iOS应用中注入代码而不用重新启动应用。</li>
 </ol>
 
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-27T17:23:00+08:00" pubdate data-updated="true">Feb 27<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -530,7 +765,32 @@
 <p><img src="http://blog.devtang.com/images/launch-cask-2.jpg"></p>
 
 <p>大家玩得开心～</p>
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-26T21:38:00+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mac/'>mac</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -830,7 +1090,32 @@
 <li><a href="http://vimeo.com/65637501">http://vimeo.com/65637501</a></li>
 </ul>
 
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-11T18:47:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -897,7 +1182,32 @@
 <p><img src="http://blog.devtang.com/images/imac-broken-cable.jpg"></p>
 
 <p>总之，自动动手换SSD不是那么复杂，胆大心细一些就可以轻松搞定。</p>
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-26T22:06:00+08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/fun/'>fun</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -923,7 +1233,7 @@
 
 <p>经过我们的分析，我们最终发现这是由于题目内容中有<a href="http://en.wikipedia.org/wiki/Non-breaking_space">非换行空格</a>（<code>non-breaking-space</code>）造成的。根据<a href="(http://en.wikipedia.org/wiki/Non-breaking_space">wikipedia</a>)上的介绍，该字符的ASCII码为160，主要做用如下：</p>
 
-<blockquote><p>Text-processing software typically assumes that an automatic line break may be inserted anywhere a space character occurs; a non-breaking space prevents this from happening (provided the software recognizes the character). For example, if the text &#8220;100 km&#8221; will not quite fit at the end of a line, the software may insert a line break between &#8220;100&#8221; and &#8220;km&#8221;. To avoid this undesirable behaviour, the editor may choose to use a non-breaking space between &#8220;100&#8221; and &#8220;km&#8221;. This guarantees that the text &#8220;100 km&#8221; will not be broken: if it does not fit at the end of a line it is moved in its entirety to the next line.</p></blockquote>
+<blockquote><p>Text-processing software typically assumes that an automatic line break may be inserted anywhere a space character occurs; a non-breaking space prevents this from happening (provided the software recognizes the character). For example, if the text &ldquo;100 km&rdquo; will not quite fit at the end of a line, the software may insert a line break between &ldquo;100&rdquo; and &ldquo;km&rdquo;. To avoid this undesirable behaviour, the editor may choose to use a non-breaking space between &ldquo;100&rdquo; and &ldquo;km&rdquo;. This guarantees that the text &ldquo;100 km&rdquo; will not be broken: if it does not fit at the end of a line it is moved in its entirety to the next line.</p></blockquote>
 
 <p>于是我们大概知道整个原因了：编辑在后台录入题目时，是在网页做的富文本编辑器里面，里面的空格输入的是 <code>&amp;nbsp;</code>，然后这个空格转存到数据库中会转成 非换行空格（<code>non-breaking-space</code>），也就是ASCII为160的空格。最后传到iPhone这边，用Core Text排版时，Core Text认为遇到这个空白符不应该换行，于是就一直不换行，直到显示不了了才强制换行，就造成了单词被截断。</p>
 
@@ -945,7 +1255,32 @@
 <h2>其它</h2>
 
 <p>感谢 <a href="http://weibo.com/onevcat">@onevcat</a> 提供信息，让我找到问题的根源。</p>
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-23T17:36:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -1002,7 +1337,32 @@
 <p>另外，<a href="http://book.douban.com/subject/6709809/">《暗时间》</a>的作者刘未鹏在<a href="http://blog.csdn.net/pongba/article/details/3896311">他的文章</a>，也总结了很多写作的好处，大家也可以看看。</p>
 
 <p>看了写作的这么多好处，你是否心动？那赶快创建一个博客，开始你的技术写作之旅吧！</p>
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-08T21:51:00+08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/summary/'>summary</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -1161,7 +1521,32 @@
 <li>创业得到了<a href="http://tech.sina.com.cn/i/2013-09-10/09528724637.shtml">B轮融资</a></li>
 </ul>
 
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-01T19:04:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/summary/'>summary</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -1283,11 +1668,36 @@
 <li><p>不要写你的政治面貌。你以为现在互联网公司还看重你是否是D员吗? 就算看重，你怎么知道他们认为这是加分还是减分? 我知道有一家公司，只要是D员的都直接拒掉。所以，除非你是面试的国企，在互联网公司，这一条最好不要写，写了有可能是平分，也有可能是减分，加分的可能性极小。</p></li>
 <li><p>不要写各种奇怪的爱好。喜欢打Dota，喝酒，这类可能带来负面印象的爱好最好不要写。的确有些公司会有这种一起联机玩游戏或者喝酒的文化，不过除非你明确清楚对于目标公司，写上会是加分项，否则还是不写为妙。（顺便说一句，据我了解，阿里的朋友特别喜欢喝酒，面试阿里写上这个可能是加分的，但如果你要是遇到阿里里面正好不喝酒的Team或面试官，不要怪我。）</p></li>
 <li><p>不要使用word格式的简历，使用PDF的格式。我在招iOS程序员时，好多人的简历都是Word格式的，mac下的office那么难用，公司好多人机器上都没有mac office。我真怀疑这些人真是的想投简历么? PDF格式的简历通常能展现出简历的专业性。</p></li>
-<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 tangqiao@qq.com 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
+<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x74;&#x61;&#110;&#103;&#x71;&#x69;&#97;&#x6f;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#109;">&#116;&#x61;&#x6e;&#x67;&#x71;&#105;&#97;&#x6f;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
 <li><p>不要写参加过某某培训公司的iOS培训，特别是那种一、两个月的速成培训。这对于我和身边很多面试官来说，绝对是负分。面试当中，经验是一个考查点，但是学习能力比经验重要多了，如果你是参加培训学习的iOS开发，很可能说明你没有自学能力。这一点似乎很多人都没有搞清楚，大家可以看看 <a href="http://weibo.com/jeffz">@老赵</a> 在他的个人博客上发表的 <a href="http://blog.zhaojie.me/2010/04/why-i-say-no-to-aptech.html">《为什么我要反对北大青鸟》</a>。 我在2年前也写过一篇博客<a href="http://blog.devtang.com/blog/2012/01/20/we-must-self-learning/">《我们必须自学》</a>，详细解释了我的看法。</p></li>
 </ol>
 
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-22T20:04:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/summary/'>summary</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -1338,7 +1748,32 @@
 <p><img src="http://blog.devtang.com/images/debugger-preview-image.png"></p>
 
 <p>这个有用吧，祝大家玩得开心～</p>
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-22T19:23:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -1395,7 +1830,7 @@
 
 <p>之前提到，Charles是通过将自己设置成代理服务器来完成封包截取的，所以使用Charles的第一步是将其设置成系统的代理服务器。</p>
 
-<p>启动Charles后，第一次Charles会请求你给它设置系统代理的权限。你可以输入登录密码授予Charles该权限。你也可以忽略该请求，然后在需要将Charles设置成系统代理时，选择菜单中的 &#8220;Proxy&#8221; -> &#8220;Mac OS X Proxy&#8221;来将Charles设置成系统代理。如下所示：</p>
+<p>启动Charles后，第一次Charles会请求你给它设置系统代理的权限。你可以输入登录密码授予Charles该权限。你也可以忽略该请求，然后在需要将Charles设置成系统代理时，选择菜单中的 &ldquo;Proxy&rdquo; &ndash;> &ldquo;Mac OS X Proxy&#8221;来将Charles设置成系统代理。如下所示：</p>
 
 <p><img src="http://blog.devtang.com/images/charles-set-system-proxy.png"></p>
 
@@ -1422,8 +1857,8 @@
 <p>通常情况下，我们需要对网络请求进行过滤，只监控向指定目录服务器上发送的请求。对于这种需求，我们有2种办法。</p>
 
 <ol>
-<li><p>在主界面的中部的Filter栏中填入需要过滤出来的关键字。例如我们的服务器的地址是：http://yuantiku.com，那么只需要在Filter栏中填入yuantiku即可。</p></li>
-<li><p>在Charles的菜单栏选择&#8221;Proxy&#8221;->&#8221;Recording Settings&#8221;，然后选择Include栏，选择添加一个项目，然后填入需要监控的协议，主机地址，端口号。这样就可以只截取目标网站的封包了。如下图所示：</p></li>
+<li><p>在主界面的中部的Filter栏中填入需要过滤出来的关键字。例如我们的服务器的地址是：<a href="http://yuantiku.com%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AA%E9%9C%80%E8%A6%81%E5%9C%A8Filter%E6%A0%8F%E4%B8%AD%E5%A1%AB%E5%85%A5yuantiku%E5%8D%B3%E5%8F%AF%E3%80%82">http://yuantiku.com%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AA%E9%9C%80%E8%A6%81%E5%9C%A8Filter%E6%A0%8F%E4%B8%AD%E5%A1%AB%E5%85%A5yuantiku%E5%8D%B3%E5%8F%AF%E3%80%82</a></p></li>
+<li><p>在Charles的菜单栏选择&#8221;Proxy&#8221;&ndash;>&ldquo;Recording Settings&#8221;，然后选择Include栏，选择添加一个项目，然后填入需要监控的协议，主机地址，端口号。这样就可以只截取目标网站的封包了。如下图所示：</p></li>
 </ol>
 
 
@@ -1437,7 +1872,7 @@
 
 <h4>Charles上的设置</h4>
 
-<p>要截取iPhone上的网络请求，我们首先需要将Charles的代理功能打开。在Charles的菜单栏上选择“Proxy”->&#8221;Proxy Settings&#8221;，填入代理端口8888，并且勾上&#8221;Enable transparent HTTP proxying&#8221; 就完成了在Charles上的设置。如下图所示:</p>
+<p>要截取iPhone上的网络请求，我们首先需要将Charles的代理功能打开。在Charles的菜单栏上选择“Proxy”->&ldquo;Proxy Settings&#8221;，填入代理端口8888，并且勾上&#8221;Enable transparent HTTP proxying&rdquo; 就完成了在Charles上的设置。如下图所示:</p>
 
 <p><img src="http://blog.devtang.com/images/charles-proxy-setting.jpg"></p>
 
@@ -1467,7 +1902,7 @@
 
 <p>在做iPhone开发的时候，我们常常需要模拟慢速网络或者高延迟的网络，以测试在移动网络下，应用的表现是否正常。Charles对此需求提供了很好的支持。</p>
 
-<p>在Charles的菜单上，选择&#8221;Proxy&#8221;->&#8221;Throttle Setting&#8221;项，在之后弹出的对话框中，我们可以勾选上“Enable Throttling”，并且可以设置Throttle Preset的类型。如下图所示：</p>
+<p>在Charles的菜单上，选择&#8221;Proxy&#8221;&ndash;>&ldquo;Throttle Setting&#8221;项，在之后弹出的对话框中，我们可以勾选上“Enable Throttling”，并且可以设置Throttle Preset的类型。如下图所示：</p>
 
 <p><img src="http://blog.devtang.com/images/charles-throttle-setting.jpg"></p>
 
@@ -1494,7 +1929,32 @@
 <li><a href="http://www.charlesproxy.com/">Charles官网</a></li>
 </ol>
 
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-11T14:03:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -1750,7 +2210,32 @@
 <h2>总结</h2>
 
 <p>本文介绍了Flurry的基本功能以及如何做自定义的统计，最后与业界其它同类工具做了对比。我也将相关示例代码整理到github上，地址是：<a href="https://github.com/tangqiaoboy/FlurryUsageSample">https://github.com/tangqiaoboy/FlurryUsageSample</a>，愿本文能帮助你更加方便地做应用的统计和分析工作。</p>
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-14T13:51:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -2118,7 +2603,32 @@
 <p>以上源码很多都参考了<a href="https://github.com/jverkoey/nimbus">Nimbus</a>的实现，在此再一次表达一下对开源社区的感谢。</p>
 
 <p>在大约2年前，CoreText还是一个新玩意。那时候微博的界面都还是用控件组合得到的。慢慢的，大家都开始接受CoreText，很多应用都广泛地将CoreText应用于自己的界面中，做出来了更加复杂的排版、交互效果。在iOS7之后，苹果推出了更加易于使用的TextKit，使得富文本排版更加容易，相信以后的iOS应用界面会更加美观，交互更加绚丽。</p>
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-21T16:15:00+08:00" pubdate data-updated="true">Oct 21<span>st</span>, 2013</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -2205,7 +2715,32 @@
 <h2>总结</h2>
 
 <p>本文介绍了猿题库iOS客户端采用的答题卡扫描算法的大致步骤，以及算法的质量和移植方案。</p>
-]]></content>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-19T11:10:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
   <entry>
@@ -2228,7 +2763,7 @@
 
 <p><img src="http://blog.devtang.com/images/ape-arch-1.jpg"></p>
 
-<p>这些课程，随了<a href="http://yuantiku.com/m?courseSet=shenlun">&#8220;猿题库-公务员考试申论&#8221;</a>和其它课程不一样之外，另外7个课程都有着相似，但是又不完全相同的功能和界面。</p>
+<p>这些课程，随了<a href="http://yuantiku.com/m?courseSet=shenlun">&ldquo;猿题库-公务员考试申论&rdquo;</a>和其它课程不一样之外，另外7个课程都有着相似，但是又不完全相同的功能和界面。</p>
 
 <p>这些应用的相同点包括：</p>
 
@@ -2361,366 +2896,32 @@
 <p>通过多target编译方案，我们可以很方便的实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。同时，由于在一个工程中，我们也可以方便地测试新的代码逻辑在各个课程下是否正常。</p>
 
 <p>该方案可以用来解决“维护大量逻辑相似但是又有细微不同的应用”的需求，希望本文能给业界同行一些帮助。</p>
-]]></content>
-  </entry>
+ <p class="meta"> 
   
-  <entry>
-    <title type="html"><![CDATA[Objective-C对象模型及应用]]></title>
-    <link href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/"/>
-    <updated>2013-10-15T20:31:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/10/15/objective-c-object-model</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
 
-<p>原创文章，转载请注明出自<a href="http://blog.devtang.com">唐巧的技术博客</a>。</p>
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
 
-<p>本文主要介绍Objective-C对象模型的实现细节，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。希望本文能加深你对Objective-C对象的理解。</p>
 
-<h2>ISA指针</h2>
 
-<p>Objective-C是一门面向对象的编程语言。每一个对象都是一个类的实例。在Objective-C语言的内部，每一个对象都有一个名为isa的指针，指向该对象的类。每一个类描述了一系列它的实例的特点，包括成员变量的列表，成员函数的列表等。每一个对象都可以接受消息，而对象能够接收的消息列表是保存在它所对应的类中。</p>
 
-<p>在XCode中按<code>Shift + Command + O</code>, 然后输入NSObject.h和objc.h，可以打开NSObject的定义头文件，通过头文件我们可以看到，NSObject就是一个包含isa指针的结构体，如下图所示：</p>
 
-<!-- more -->
 
 
-<p><img src="http://blog.devtang.com/images/class-nsobject-isa.jpg">
-<img src="http://blog.devtang.com/images/class-objc-object-isa.jpg"></p>
 
-<p>按照面向对象语言的设计原则，所有事物都应该是对象（严格来说Objective-C并没有完全做到这一点，因为它有象int, double这样的简单变量类型）。在Objective-C语言中，每一个类实际上也是一个对象。每一个类也有一个名为isa的指针。每一个类也可以接受消息，例如<code>[NSObject alloc]</code>，就是向NSObject这个类发送名为<code>alloc</code>消息。</p>
+  
 
-<p>在XCode中按<code>Shift + Command + O</code>, 然后输入runtime.h，可以打开Class的定义头文件，通过头文件我们可以看到，Class也是一个包含isa指针的结构体，如下图所示。（图中除了isa外还有其它成员变量，但那是为了兼容非2.0版的Objective-C的遗留逻辑，大家可以忽略它。）</p>
 
-<p><img src="http://blog.devtang.com/images/class-objc-class-isa.jpg"></p>
+<time datetime="2013-10-17T00:43:00+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2013</time> 
 
-<p>因为类也是一个对象，那它也必须是另一个类的实列，这个类就是元类(<code>metaclass</code>)。元类保存了类方法的列表。当一个类方法被调用时，元类会首先查找它本身是否有该类方法的实现，如果没有，则该元类会向它的父类查找该方法，直到一直找到继承链的头。</p>
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
 
-<p>元类(<code>metaclass</code>)也是一个对象，那么元类的isa指针又指向哪里呢？为了设计上的完整，所有的元类的isa指针都会指向一个根元类(root <code>metaclass</code>)。根元类(root metaclass)本身的isa指针指向自己，这样就行成了一个闭环。上面提到，一个对象能够接收的消息列表是保存在它所对应的类中的。在实际编程中，我们几乎不会遇到向元类发消息的情况，那它的isa指针在实际上很少用到。不过这么设计保证了面向对象的干净，即所有事物都是对象，都有isa指针。</p>
-
-<p>我们再来看看继承关系，由于类方法的定义是保存在元类(<code>metaclass</code>)中，而方法调用的规则是，如果该类没有一个方法的实现，则向它的父类继续查找。所以，为了保证父类的类方法可以在子类中可以被调用，所以子类的元类会继承父类的元类，换而言之，类对象和元类对象有着同样的继承关系。</p>
-
-<p>我很想把关系说清楚一些，但是这块儿确实有点绕，下面这张图或许能够让大家对isa和继承的关系清楚一些（该图片来自<a href="http://www.sealiesoftware.com/blog/class%20diagram.pdf">这里</a>）</p>
-
-<p><img src="http://blog.devtang.com/images/class-diagram.jpg"></p>
-
-<p>该图中，最让人困惑的莫过于Root Class了。在实现中，Root Class是指NSObject，我们可以从图中看出：</p>
-
-<ol>
-<li>NSObject类包括它的对象实例方法。</li>
-<li>NSObject的元类包括它的类方法，例如alloc方法。</li>
-<li>NSObject的元类继承自NSObject类。</li>
-<li>一个NSObject的类中的方法同时也会被NSObject的子类在查找方法时找到。</li>
-</ol>
-
-
-<h2>类的成员变量</h2>
-
-<p>如果把类的实例看成一个C语言的结构体（struct），上面说的isa指针就是这个结构体的第一个成员变量，而类的其它成员变量依次排列在结构体中。排列顺序如下图所示（图片来自《iOS 6 Programming Pushing the Limits》）：</p>
-
-<p><img src="http://blog.devtang.com/images/class-member.jpg"></p>
-
-<p>为了验证该说法，我们在XCode中新建一个工程，在main.m中运行如下代码：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@interface</span> <span class="nc">Father</span> : <span class="nc">NSObject</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">_father</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span><span class='line'>
-</span><span class='line'><span class="err">@</span><span class="n">implementation</span> <span class="n">Father</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span><span class='line'>
-</span><span class='line'><span class="err">@</span><span class="n">interface</span> <span class="n">Child</span> <span class="o">:</span> <span class="n">Father</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">_child</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span><span class='line'>
-</span><span class='line'><span class="err">@</span><span class="n">implementation</span> <span class="n">Child</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">Child</span> <span class="o">*</span> <span class="n">child</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Child</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</span><span class='line'>  <span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// ...</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们将断点下在 <code>@autoreleasepool</code> 处，然后在Console中输入<code>p *child</code>,则可以看到Xcode输出如下内容，这与我们上面的说法一致。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">(</span><span class="n">lldb</span><span class="p">)</span> <span class="n">p</span> <span class="o">*</span><span class="n">child</span>
-</span><span class='line'><span class="p">(</span><span class="n">Child</span><span class="p">)</span> <span class="n">$0</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>  <span class="p">(</span><span class="n">Father</span><span class="p">)</span> <span class="n">Father</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">(</span><span class="n">NSObject</span><span class="p">)</span> <span class="n">NSObject</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="p">(</span><span class="n">Class</span><span class="p">)</span> <span class="n">isa</span> <span class="o">=</span> <span class="n">Child</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">_father</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">_child</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>可变与不可变</h2>
-
-<p>因为对象在内存中的排布可以看成一个结构体，该结构体的大小并不能动态变化。所以无法在运行时动态给对象增加成员变量。</p>
-
-<p>相对的，对象的方法定义都保存在类的可变区域中。Objective-C 2.0并未在头文件中将实现暴露出来，但在Objective-C 1.0中，我们可以看到方法的定义列表是一个名为 <code>methodLists</code>的指针的指针（如下图所示）。通过修改该指针指向的指针的值，就可以实现动态地为某一个类增加成员方法。这也是<code>Category</code>实现的原理。同时也说明了为什么<code>Category</code>只可为对象增加成员方法，却不能增加成员变量。</p>
-
-<p><img src="http://blog.devtang.com/images/class-objc-class-isa.jpg"></p>
-
-<p>需要特别说明一下，通过<code>objc_setAssociatedObject</code> 和 <code>objc_getAssociatedObject</code>方法可以变相地给对象增加成员变量，但由于实现机制不一样，所以并不是真正改变了对象的内存结构。</p>
-
-<p>除了对象的方法可以动态修改，因为isa本身也只是一个指针，所以我们也可以在运行时动态地修改isa指针的值，达到替换对象整个行为的目的。不过该应用场景较少。</p>
-
-<h2>系统相关API及应用</h2>
-
-<h3>isa swizzling的应用</h3>
-
-<p>系统提供的KVO的实现，就利用了动态地修改isa指针的值的技术。在<a href="https://developer.apple.com/library/ios/documentation/cocoa/conceptual/KeyValueObserving/Articles/KVOImplementation.html">苹果的文档</a>中可以看到如下描述：</p>
-
-<blockquote><p>Key-Value Observing Implementation Details</p><p>Automatic key-value observing is implemented using a technique called isa-swizzling.</p><p>The isa pointer, as the name suggests, points to the object&#8217;s class which maintains a dispatch table. This dispatch table essentially contains pointers to the methods the class implements, among other data.</p><p>When an observer is registered for an attribute of an object the isa pointer of the observed object is modified, pointing to an intermediate class rather than at the true class. As a result the value of the isa pointer does not necessarily reflect the actual class of the instance.</p><p>You should never rely on the isa pointer to determine class membership. Instead, you should use the class method to determine the class of an object instance.</p></blockquote>
-
-
-<p><del>类似的，使用isa swizzling的技术的还有系统提供的Key-Value Coding（KVC）。</del> (谢谢大家指出错误，KVC并没有使用到isa swizzling)</p>
-
-<h3>Method Swizzling API说明</h3>
-
-<p>Objective-C提供了以下API来动态替换类方法或实例方法的实现：</p>
-
-<ul>
-<li><code>class_replaceMethod</code> 替换类方法的定义</li>
-<li><code>method_exchangeImplementations</code> 交换2个方法的实现</li>
-<li><code>method_setImplementation</code> 设置1个方法的实现</li>
-</ul>
-
-
-<p>这3个方法有一些细微的差别，给大家介绍如下：</p>
-
-<ul>
-<li><code>class_replaceMethod</code>在苹果的文档（如下图所示）中能看到，它有两种不同的行为。当类中没有想替换的原方法时，该方法会调用<code>class_addMethod</code>来为该类增加一个新方法，也因为如此，<code>class_replaceMethod</code>在调用时需要传入<code>types</code>参数，而<code>method_exchangeImplementations</code>和<code>method_setImplementation</code>却不需要。</li>
-</ul>
-
-
-<p><img src="http://blog.devtang.com/images/class-replace-method.jpg"></p>
-
-<ul>
-<li><code>method_exchangeImplementations</code> 的内部实现其实是调用了2次<code>method_setImplementation</code>方法，从苹果的文档中能清晰地了解到（如下图所示）</li>
-</ul>
-
-
-<p><img src="http://blog.devtang.com/images/class-method-exchange-imp.jpg"></p>
-
-<p>从以上的区别我们可以总结出这3个API的使用场景:</p>
-
-<ul>
-<li><code>class_replaceMethod</code>, 当需要替换的方法可能有不存在的情况时，可以考虑使用该方法。</li>
-<li><code>method_exchangeImplementations</code>，当需要交换2个方法的实现时使用。</li>
-<li><code>method_setImplementation</code> 最简单的用法，当仅仅需要为一个方法设置其实现方式时使用。</li>
-</ul>
-
-
-<h3>使用示例</h3>
-
-<p>我们在开发<a href="http://yuantiku.com">猿题库</a>客户端的笔记功能时，需要使用系统的<code>UIImagePickerController</code>。但是，我们发现，在iOS6.0.2系统下，系统提供的<code>UIImagePickerController</code>在iPad横屏下有转屏的Bug，造成其方向错误。具体的Bug详情可以见<a href="http://stackoverflow.com/questions/12522491/crash-on-presenting-uiimagepickercontroller-under-ios-6-0">这里</a>。</p>
-
-<p>为了修复该Bug，我们需要替换<code>UIImagePickerController</code>的如下2个方法</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">shouldAutorotate</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nf">preferredInterfaceOrientationForPresentation</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们先实现了一个名为<code>ImagePickerReplaceMethodsHolder</code>的类，用于定义替换后的方法和实现。如下所示：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// ImagePickerReplaceMethodsHolder.h</span>
-</span><span class='line'><span class="k">@interface</span> <span class="nc">ImagePickerReplaceMethodsHolder</span> : <span class="nc">NSObject</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">shouldAutorotate</span><span class="p">;</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nf">preferredInterfaceOrientationForPresentation</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// ImagePickerReplaceMethodsHolder.m</span>
-</span><span class='line'><span class="k">@implementation</span> <span class="nc">ImagePickerReplaceMethodsHolder</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">shouldAutorotate</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nf">preferredInterfaceOrientationForPresentation</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">UIInterfaceOrientationPortrait</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后，我们在调用处，判断当前的iOS版本，对于[iOS6.0, iOS6.1)之间的版本，我们将<code>UIImagePickerController</code>的有问题的方法替换。具体代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)</span>
-</span><span class='line'><span class="cp">#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">load</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">static</span> <span class="n">dispatch_once_t</span> <span class="n">onceToken</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="n">hackForImagePicker</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">hackForImagePicker</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// fix bug of image picker under iOS 6.0</span>
-</span><span class='line'>    <span class="c1">// http://stackoverflow.com/questions/12522491/crash-on-presenting-uiimagepickercontroller-under-ios-6-0</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO</span><span class="p">(</span><span class="s">@&quot;6.0&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="o">&amp;&amp;</span> <span class="n">SYSTEM_VERSION_LESS_THAN</span><span class="p">(</span><span class="s">@&quot;6.1&quot;</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">Method</span> <span class="n">oldMethod1</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">([</span><span class="n">UIImagePickerController</span> <span class="n">class</span><span class="p">],</span> <span class="k">@selector</span><span class="p">(</span><span class="n">shouldAutorotate</span><span class="p">));</span>
-</span><span class='line'>        <span class="n">Method</span> <span class="n">newMethod1</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">([</span><span class="n">ImagePickerReplaceMethodsHolder</span> <span class="n">class</span><span class="p">],</span> <span class="k">@selector</span><span class="p">(</span><span class="n">shouldAutorotate</span><span class="p">));</span>
-</span><span class='line'>        <span class="n">method_setImplementation</span><span class="p">(</span><span class="n">oldMethod1</span><span class="p">,</span> <span class="n">method_getImplementation</span><span class="p">(</span><span class="n">newMethod1</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">Method</span> <span class="n">oldMethod2</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">([</span><span class="n">UIImagePickerController</span> <span class="n">class</span><span class="p">],</span> <span class="k">@selector</span><span class="p">(</span><span class="n">preferredInterfaceOrientationForPresentation</span><span class="p">));</span>
-</span><span class='line'>        <span class="n">Method</span> <span class="n">newMethod2</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">([</span><span class="n">ImagePickerReplaceMethodsHolder</span> <span class="n">class</span><span class="p">],</span> <span class="k">@selector</span><span class="p">(</span><span class="n">preferredInterfaceOrientationForPresentation</span><span class="p">));</span>
-</span><span class='line'>        <span class="n">method_setImplementation</span><span class="p">(</span><span class="n">oldMethod2</span><span class="p">,</span> <span class="n">method_getImplementation</span><span class="p">(</span><span class="n">newMethod2</span><span class="p">));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>通过如上代码，我们就针对iOS特定版本的有问题的系统库函数打了Patch，使问题得到解决。</p>
-
-<h3>开源界的使用</h3>
-
-<p>有少量不明真相的同学以为苹果在审核时会拒绝App使用以上API，这其实是对苹果的误解。使用如上API是安全的。另外，开源界也对以上方法都适当的使用。例如：</p>
-
-<ul>
-<li>著名的网络库<a href="https://github.com/AFNetworking/AFNetworking">AFNetworking</a>。AFNetworking网络库(v1.x版本)使用了class_replaceMethod方法（AFHTTPRequestOperation.m文件第105行）</li>
-<li><a href="https://github.com/jverkoey/nimbus">Nimbus</a>。Nimbus是著名的工具类库，它在其core模块中提供了<code>NIRuntimeClassModifications.h</code>文件，用于提供上述API的封装。</li>
-<li>国内的大众点评iOS客户端。该客户端使用了他们自己开发的基于Wax修改而来的<a href="https://github.com/mmin18/WaxPatch">WaxPatch</a>，WaxPatch可以实现通过服务器更新来动态修改客户端的逻辑。而WaxPatch主要是修改了wax中的wax_instance.m文件，在其中加入了class_replaceMethod来替换原始实现，从而实现修改客户端的原有行为。</li>
-</ul>
-
-
-<h2>总结</h2>
-
-<p>通过本文，我们了解到了Objective-C语言的对象模型，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。本文也通过具体的实例代码和开源项目，让我们对该对象模型提供的动态性有了更加深刻的认识。</p>
-
-<h2>后记</h2>
-
-<p>文章发表后，一些同行指出在ARM64的CPU下，isa的内部结构有变化。这点我是知道的，不过希望以后再撰文讨论。感兴趣的同学可以查看苹果今年WWDC2013的视频：《Session 404 Advanced in Objective-C》。</p>
-
-<h3>参考链接</h3>
-
-<ul>
-<li><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html">https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html</a></li>
-<li><a href="http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html">http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html</a></li>
-<li><a href="http://www.devalot.com/articles/2011/11/objc-object-model.html">http://www.devalot.com/articles/2011/11/objc-object-model.html</a></li>
-<li><a href="http://www.cocoawithlove.com/2010/01/what-is-meta-class-in-objective-c.html">http://www.cocoawithlove.com/2010/01/what-is-meta-class-in-objective-c.html</a></li>
-<li><a href="http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html">http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html</a></li>
-<li><a href="http://wwwmain.gnustep.org/resources/downloads.php">gunstep的实现源码</a></li>
-<li><a href="http://algorithm.com.au/downloads/talks/objective-c-internals/objective-c-internals.pdf">http://algorithm.com.au/downloads/talks/objective-c-internals/objective-c-internals.pdf</a></li>
-<li><a href="http://opensource.apple.com/source/objc4/objc4-532/runtime/">http://opensource.apple.com/source/objc4/objc4-532/runtime/</a></li>
-<li><a href="https://github.com/AFNetworking/AFNetworking">https://github.com/AFNetworking/AFNetworking</a></li>
-<li><a href="https://github.com/jverkoey/nimbus">https://github.com/jverkoey/nimbus</a></li>
-<li><a href="https://github.com/mmin18/WaxPatch">https://github.com/mmin18/WaxPatch</a></li>
-</ul>
-
-]]></content>
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
   </entry>
   
 </feed>

@@ -21,10 +21,11 @@
   <link rel="canonical" href="http://blog.devtang.com/blog/2013/12/11/network-tool-charles-intr">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28029597-1']);
@@ -149,7 +150,7 @@
 
 <p>之前提到，Charles是通过将自己设置成代理服务器来完成封包截取的，所以使用Charles的第一步是将其设置成系统的代理服务器。</p>
 
-<p>启动Charles后，第一次Charles会请求你给它设置系统代理的权限。你可以输入登录密码授予Charles该权限。你也可以忽略该请求，然后在需要将Charles设置成系统代理时，选择菜单中的 &#8220;Proxy&#8221; -> &#8220;Mac OS X Proxy&#8221;来将Charles设置成系统代理。如下所示：</p>
+<p>启动Charles后，第一次Charles会请求你给它设置系统代理的权限。你可以输入登录密码授予Charles该权限。你也可以忽略该请求，然后在需要将Charles设置成系统代理时，选择菜单中的 &ldquo;Proxy&rdquo; &ndash;> &ldquo;Mac OS X Proxy&#8221;来将Charles设置成系统代理。如下所示：</p>
 
 <p><img src="/images/charles-set-system-proxy.png"></p>
 
@@ -176,8 +177,8 @@
 <p>通常情况下，我们需要对网络请求进行过滤，只监控向指定目录服务器上发送的请求。对于这种需求，我们有2种办法。</p>
 
 <ol>
-<li><p>在主界面的中部的Filter栏中填入需要过滤出来的关键字。例如我们的服务器的地址是：http://yuantiku.com，那么只需要在Filter栏中填入yuantiku即可。</p></li>
-<li><p>在Charles的菜单栏选择&#8221;Proxy&#8221;->&#8221;Recording Settings&#8221;，然后选择Include栏，选择添加一个项目，然后填入需要监控的协议，主机地址，端口号。这样就可以只截取目标网站的封包了。如下图所示：</p></li>
+<li><p>在主界面的中部的Filter栏中填入需要过滤出来的关键字。例如我们的服务器的地址是：<a href="http://yuantiku.com%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AA%E9%9C%80%E8%A6%81%E5%9C%A8Filter%E6%A0%8F%E4%B8%AD%E5%A1%AB%E5%85%A5yuantiku%E5%8D%B3%E5%8F%AF%E3%80%82">http://yuantiku.com%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AA%E9%9C%80%E8%A6%81%E5%9C%A8Filter%E6%A0%8F%E4%B8%AD%E5%A1%AB%E5%85%A5yuantiku%E5%8D%B3%E5%8F%AF%E3%80%82</a></p></li>
+<li><p>在Charles的菜单栏选择&#8221;Proxy&#8221;&ndash;>&ldquo;Recording Settings&#8221;，然后选择Include栏，选择添加一个项目，然后填入需要监控的协议，主机地址，端口号。这样就可以只截取目标网站的封包了。如下图所示：</p></li>
 </ol>
 
 
@@ -191,7 +192,7 @@
 
 <h4>Charles上的设置</h4>
 
-<p>要截取iPhone上的网络请求，我们首先需要将Charles的代理功能打开。在Charles的菜单栏上选择“Proxy”->&#8221;Proxy Settings&#8221;，填入代理端口8888，并且勾上&#8221;Enable transparent HTTP proxying&#8221; 就完成了在Charles上的设置。如下图所示:</p>
+<p>要截取iPhone上的网络请求，我们首先需要将Charles的代理功能打开。在Charles的菜单栏上选择“Proxy”->&ldquo;Proxy Settings&#8221;，填入代理端口8888，并且勾上&#8221;Enable transparent HTTP proxying&rdquo; 就完成了在Charles上的设置。如下图所示:</p>
 
 <p><img src="/images/charles-proxy-setting.jpg"></p>
 
@@ -221,7 +222,7 @@
 
 <p>在做iPhone开发的时候，我们常常需要模拟慢速网络或者高延迟的网络，以测试在移动网络下，应用的表现是否正常。Charles对此需求提供了很好的支持。</p>
 
-<p>在Charles的菜单上，选择&#8221;Proxy&#8221;->&#8221;Throttle Setting&#8221;项，在之后弹出的对话框中，我们可以勾选上“Enable Throttling”，并且可以设置Throttle Preset的类型。如下图所示：</p>
+<p>在Charles的菜单上，选择&#8221;Proxy&#8221;&ndash;>&ldquo;Throttle Setting&#8221;项，在之后弹出的对话框中，我们可以勾选上“Enable Throttling”，并且可以设置Throttle Preset的类型。如下图所示：</p>
 
 <p><img src="/images/charles-throttle-setting.jpg"></p>
 
@@ -252,7 +253,7 @@
 
 
   <footer>
-   <p class="meta">
+    <p class="meta">
       
   
 
@@ -332,7 +333,7 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2013/11/14/use-flurry-to-analyse-data/" title="Previous Post: 使用Flurry来统计和分析用户行为">&laquo; 使用Flurry来统计和分析用户行为</a>
       
       
-        <a class="basic-alignment right" href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/" title="next Post: XCode Debugger中的Icon符号的意义">XCode Debugger中的Icon符号的意义 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/" title="Next Post: XCode Debugger中的Icon符号的意义">XCode Debugger中的Icon符号的意义 &raquo;</a>
       
     </p>
   </footer>
@@ -345,6 +346,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a>
@@ -384,6 +389,10 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
       </li>
     
   </ul>

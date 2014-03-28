@@ -22,10 +22,11 @@
   <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/03/talk-about-svn-and-git">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28029597-1']);
@@ -120,7 +121,7 @@
 
 <ul>
 <li>git commit就是增加一个结点。</li>
-<li>git commit &#8211;amend就是改发一个结点。</li>
+<li>git commit &mdash;amend就是改发一个结点。</li>
 <li>git reset就是修改HEAD指向的结点。</li>
 </ul>
 
@@ -147,7 +148,7 @@
 
 <p>设置好忽略的文件，以免误把不应该加入版本管理的文件加进来。</p>
 
-<p>我唯一遇到的一次问题是这样的：我有一个目录要加入svn的版本库，但是目录里面的一些文件不想加入。如果直接输入svn add 目录名，就会把目录下所有文件都加入到版本管理中。如果cd到那个目录里面配置svn:ignore，又会因为当前目录还不在版本管理中，设置不了。最后找到的解决办法是在svn add的时候增加 &#8211;non-recursive 参数：</p>
+<p>我唯一遇到的一次问题是这样的：我有一个目录要加入svn的版本库，但是目录里面的一些文件不想加入。如果直接输入svn add 目录名，就会把目录下所有文件都加入到版本管理中。如果cd到那个目录里面配置svn:ignore，又会因为当前目录还不在版本管理中，设置不了。最后找到的解决办法是在svn add的时候增加 &mdash;non-recursive 参数：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -192,7 +193,7 @@
 
 
 <ul>
-<li>svn的svn revert filename 对应的其实是 git checkout &#8211; filename, 而git revert xxx是基于xxx提交所做的改动，做一次反向提交，和svn revert 完全不一样。</li>
+<li>svn的svn revert filename 对应的其实是 git checkout &mdash; filename, 而git revert xxx是基于xxx提交所做的改动，做一次反向提交，和svn revert 完全不一样。</li>
 </ul>
 
 
@@ -200,7 +201,7 @@
 
 <h3>强制推送</h3>
 
-<p> 一旦推送到远程仓库后，就不要用类似git reset, git ci &#8211;amend, git rebase等破坏性提交了，否则远程仓库会因为你的新推送不是Fast Forward而拒绝提交(关于什么是Fast Forward要讲的太多了，自已看书吧)。如果实在不小心做了。在确定别人没有检出前，用git push -f 可以强制推送到远程仓库中。如下图:</p>
+<p> 一旦推送到远程仓库后，就不要用类似git reset, git ci &mdash;amend, git rebase等破坏性提交了，否则远程仓库会因为你的新推送不是Fast Forward而拒绝提交(关于什么是Fast Forward要讲的太多了，自已看书吧)。如果实在不小心做了。在确定别人没有检出前，用git push -f 可以强制推送到远程仓库中。如下图:</p>
 
 <p><img src="/images/git_push_f.jpg"></p>
 
@@ -252,7 +253,7 @@
 
 <h3>搭建自己的远程仓库</h3>
 
-<p>搭建一个Git远程仓库相当简单，直接在一台带SSH的服务器上用git init &#8211;bare dirname即可。本地可以用git remote命令来设置多个远程分支。另外，第一次提交的时候，因为远程仓库中没有任何分支，需要用如下指令建立master分支：</p>
+<p>搭建一个Git远程仓库相当简单，直接在一台带SSH的服务器上用git init &mdash;bare dirname即可。本地可以用git remote命令来设置多个远程分支。另外，第一次提交的时候，因为远程仓库中没有任何分支，需要用如下指令建立master分支：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -448,7 +449,7 @@
 
 
   <footer>
-   <p class="meta">
+    <p class="meta">
       
   
 
@@ -528,7 +529,7 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/" title="Previous Post: 使用Objective-C的文档生成工具:appledoc">&laquo; 使用Objective-C的文档生成工具:appledoc</a>
       
       
-        <a class="basic-alignment right" href="/blog/2012/02/04/use-git-to-manage-code-snippets/" title="next Post: 使用Github来管理xcode4中的代码片段">使用Github来管理xcode4中的代码片段 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2012/02/04/use-git-to-manage-code-snippets/" title="Next Post: 使用Github来管理xcode4中的代码片段">使用Github来管理xcode4中的代码片段 &raquo;</a>
       
     </p>
   </footer>
@@ -541,6 +542,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a>
@@ -580,6 +585,10 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
       </li>
     
   </ul>

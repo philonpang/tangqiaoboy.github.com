@@ -21,10 +21,11 @@
   <link rel="canonical" href="http://blog.devtang.com/blog/2012/02/22/use-gcd">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28029597-1']);
@@ -122,7 +123,7 @@
 </ul>
 
 
-<p>这3个方法的代码如下。可以看到，虽然 开始下载 -> 下载中 -> 下载完成 这3个步骤是整个功能的三步。但是它们却被切分成了3块。他们之间因为是3个方法，所以还需要传递数据参数。如果是复杂的应用，数据参数很可能就不象本例子中的NSString那么简单了，另外，下载可能放到Model的类中来做，而界面的控制放到View Controller层来做，这使得本来就分开的代码变得更加散落。代码的可读性大大降低。</p>
+<p>这3个方法的代码如下。可以看到，虽然 开始下载 &ndash;> 下载中 &ndash;> 下载完成 这3个步骤是整个功能的三步。但是它们却被切分成了3块。他们之间因为是3个方法，所以还需要传递数据参数。如果是复杂的应用，数据参数很可能就不象本例子中的NSString那么简单了，另外，下载可能放到Model的类中来做，而界面的控制放到View Controller层来做，这使得本来就分开的代码变得更加散落。代码的可读性大大降低。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -444,7 +445,7 @@
 
 
   <footer>
-   <p class="meta">
+    <p class="meta">
       
   
 
@@ -524,7 +525,7 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2012/02/16/apply-daily-build-in-ios-project/" title="Previous Post: 给iOS工程增加Daily Build">&laquo; 给iOS工程增加Daily Build</a>
       
       
-        <a class="basic-alignment right" href="/blog/2012/02/29/collaboration-with-git/" title="next Post: 用Git进行协同开发">用Git进行协同开发 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2012/02/29/collaboration-with-git/" title="Next Post: 用Git进行协同开发">用Git进行协同开发 &raquo;</a>
       
     </p>
   </footer>
@@ -537,6 +538,10 @@ var jiathis_config={
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a>
@@ -576,6 +581,10 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a>
       </li>
     
   </ul>

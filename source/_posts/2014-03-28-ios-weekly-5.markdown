@@ -29,10 +29,7 @@ categories: iOS weekly
  1. [《UI Prototyping with Quartz Composer and Origami》](http://www.pasanpremaratne.com/2014/03/15/UI-Prototyping-with-Quartz-Composer-and-Origami/)：由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集Origami，使得交互设计工作得到更好的辅助。不过另一方面，该工具仍然需要设计师具备一定的逻辑思维能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。本教程介绍了如何使用Quartz Composer 和 Origami来做交互设计。
 
  1. 写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：
- 
-    1. [Android篇](http://stuartkhall.com/posts/android-development-tips-for-ios-devs)
-    2. [C++ 篇1](http://t.cn/8sbXyOH)和[C++ 篇2](http://t.cn/8sbXLyg)
-    3. [Go 篇](http://t.cn/8FpEP4x)
+  [Android篇](http://stuartkhall.com/posts/android-development-tips-for-ios-devs)，[C++ 篇1](http://t.cn/8sbXyOH)和[C++ 篇2](http://t.cn/8sbXLyg)，[Go 篇](http://t.cn/8FpEP4x)。
 
  1. [《利用长按手势移动 Table View Cells》](http://beyondvincent.com/blog/2014/03/26/cookbook-moving-table-view-cells-with-a-long-press-gesture/)：本教程中介绍了如何通过长按手势来移动 table view中的cell，这种操作方式就像苹果自家的天气 App 一样。
 

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-03-29T00:13:08+08:00</updated>
+  <updated>2014-04-03T21:49:41+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,83 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第6期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/04/03/ios-weekly-6/"/>
+    <updated>2014-04-03T21:37:15+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/04/03/ios-weekly-6</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-change-account-price">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果修改了中国区开发者帐号的付费价格、苹果调整了5个地区的AppStore应用价格以避免利用汇率的套利、iPhone版Office应用免费等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p>苹果在最近修改了中国区的开发者帐号（Developer Program）的付费方式，开始支持人民币支付并取消了美元支付。不过相对于以前99$每年的注册费用，现在需要使用688人民币。按现在的市场价汇率计算，相比以前，开发者需要多支付将近70元费用。</p></li>
+<li><p><a href="http://iosdevelopertips.com/app-store/microsoft-office-mobile-iphone-now-free.html">iPhone版Office免费</a>：微软将自己旗下的iPhone版Office的价格修改为免费，下载地址是<a href="https://itunes.apple.com/cn/app/microsoft-office-mobile/id541164041?mt=8">这里</a>。</p></li>
+<li><p>苹果于4月1日给开发者发邮件称：将会调整包括南非在内的5个地区的AppStore应用价格。在这之前，由于南非的货币持续贬值，一些投机分子，利用苹果商店在汇率上的漏洞，借助苹果商店汇率和实际汇率的差价来倒卖商品。<a href="http://daily.zhihu.com/story/3350426">《利用苹果商店规则漏洞的灰色地下产业链》</a>揭露了该行为。</p></li>
+<li><p><a href="https://github.com/showcases/projects-that-power-github-for-mac">《Projects that power GitHub for Mac》</a>：GitHub在其官方网站上分享了在开发Mac版GitHub客户端时使用的第三方库，共30个。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.objc.io/issue-11/">《面向iOS开发者的Android教程》</a>：著名的iOS原创教程网站objc.io最近推出了一期介绍Android的教程。由于作者都是具有iOS开发经验的，所以教程内容特别适合于已经有iOS开发经验的读者。文章许多知识的讲解也会拿iOS开发中已有的概念来做对比，加深读者理解。</p></li>
+<li><p><a href="http://billwang1990.github.io/blog/2014/03/26/nsassert-vc-nscassert/">《小心NSAssert》</a>：作者分享了在block中使用<code>NSAssert</code>时需要小心循环引用的问题。</p></li>
+<li><p><a href="http://blog.xcodev.com/archives/issus-2014-4-2/">《最近开发中遇到的问题汇总》</a>：文章依次介绍了最近开发中遇到的问题，包括：《UIButton在Disabled状态下标题混乱的问题》、《含软连字符的字符串计算显示长度的问题》和《UINavigationBar左右两边按钮可同时点击的问题》。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/03/22/corebluetooth/">《Core Bluetooth Concept》</a>：作者介绍了在iOS设备中使用<code>CoreBluetooth</code>API来实现基于蓝牙4.0通讯相关的基础知识和示例工程。</p></li>
+<li><p><a href="http://billwang1990.github.io/blog/2014/03/31/nshashtable-and-nsmaptable/">《NSHashTable &amp; NSMapTable》</a>：作者简单介绍了一下iOS开发中相对于<code>NSDictionary</code>和<code>NSSet</code>来说，不常被人使用的<code>NSHashTable</code>和<code>NSMapTable</code>的相关知识。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://github.com/Galeas/CocoaPodUI">CocoaPodUI</a>：<code>CocoaPodUI</code>是一个Xcode中的GUI插件，为iOS工程第三方依赖管理工具<code>CocoaPods</code>提供UI管理界面。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://gist.github.com/raven/8553761">Breakpoints_v2.xcbkptlist</a>：作者介绍了如何不修改工程设置和源码，将reveal集成到调试环境中的办法。<a href="http://revealapp.com/">reveal</a>是一个动态调试和修改界面的工具。</li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-03T21:37:15+08:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第5期]]></title>
@@ -41,14 +118,8 @@
 <ol>
 <li><p><a href="http://nonomori.farbox.com/post/injection-plugin-for-xcode">《injection plugin for xcode》</a>：Injection Plugin For Xcode 是 Xcode 上的一个插件。利用它可以修改应用代码，实时在模拟器或实机上看到效果而不需要重启应用。作者介绍了该插件的详细使用方式。</p></li>
 <li><p><a href="http://www.pasanpremaratne.com/2014/03/15/UI-Prototyping-with-Quartz-Composer-and-Origami/">《UI Prototyping with Quartz Composer and Origami》</a>：由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集Origami，使得交互设计工作得到更好的辅助。不过另一方面，该工具仍然需要设计师具备一定的逻辑思维能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。本教程介绍了如何使用Quartz Composer 和 Origami来做交互设计。</p></li>
-<li><p>写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：</p>
-
-<ol>
-<li><a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">Android篇</a></li>
-<li><a href="http://t.cn/8sbXyOH">C++ 篇1</a>和<a href="http://t.cn/8sbXLyg">C++ 篇2</a></li>
-<li><a href="http://t.cn/8FpEP4x">Go 篇</a></li>
-</ol>
-</li>
+<li><p>写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：
+<a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">Android篇</a>，<a href="http://t.cn/8sbXyOH">C++ 篇1</a>和<a href="http://t.cn/8sbXLyg">C++ 篇2</a>，<a href="http://t.cn/8FpEP4x">Go 篇</a>。</p></li>
 <li><p><a href="http://beyondvincent.com/blog/2014/03/26/cookbook-moving-table-view-cells-with-a-long-press-gesture/">《利用长按手势移动 Table View Cells》</a>：本教程中介绍了如何通过长按手势来移动 table view中的cell，这种操作方式就像苹果自家的天气 App 一样。</p></li>
 <li><p><a href="http://beyondvincent.com/blog/2014/03/24/reducing-the-size-of-my-app/">《减小iOS应用程序的大小》</a>：本文收集了一些减小程序安装包大小的相关技巧(当第一次下载和安装程序时)。如果是针对升级程序的话，可以看这篇文章: <a href="https://developer.apple.com/library/ios/qa/qa1779/">《减小iOS应用程序升级时所需下载的大小》</a>，这与第一次安装使用的工作原理有所不同。</p></li>
 <li><p><a href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">《NSNumber对象缓存以及Tagged Pointer》</a>：本文讨论了<code>NSNumber</code>对象的缓存以及苹果在64位系统引入的<code>Tagged Pointer</code>对象。</p></li>
@@ -1668,7 +1739,7 @@
 <li><p>不要写你的政治面貌。你以为现在互联网公司还看重你是否是D员吗? 就算看重，你怎么知道他们认为这是加分还是减分? 我知道有一家公司，只要是D员的都直接拒掉。所以，除非你是面试的国企，在互联网公司，这一条最好不要写，写了有可能是平分，也有可能是减分，加分的可能性极小。</p></li>
 <li><p>不要写各种奇怪的爱好。喜欢打Dota，喝酒，这类可能带来负面印象的爱好最好不要写。的确有些公司会有这种一起联机玩游戏或者喝酒的文化，不过除非你明确清楚对于目标公司，写上会是加分项，否则还是不写为妙。（顺便说一句，据我了解，阿里的朋友特别喜欢喝酒，面试阿里写上这个可能是加分的，但如果你要是遇到阿里里面正好不喝酒的Team或面试官，不要怪我。）</p></li>
 <li><p>不要使用word格式的简历，使用PDF的格式。我在招iOS程序员时，好多人的简历都是Word格式的，mac下的office那么难用，公司好多人机器上都没有mac office。我真怀疑这些人真是的想投简历么? PDF格式的简历通常能展现出简历的专业性。</p></li>
-<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x74;&#x61;&#110;&#103;&#x71;&#x69;&#97;&#x6f;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#109;">&#116;&#x61;&#x6e;&#x67;&#x71;&#105;&#97;&#x6f;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
+<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#116;&#97;&#110;&#103;&#x71;&#x69;&#x61;&#111;&#64;&#113;&#113;&#46;&#x63;&#x6f;&#x6d;">&#116;&#97;&#x6e;&#103;&#113;&#x69;&#x61;&#111;&#x40;&#113;&#113;&#46;&#99;&#111;&#109;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
 <li><p>不要写参加过某某培训公司的iOS培训，特别是那种一、两个月的速成培训。这对于我和身边很多面试官来说，绝对是负分。面试当中，经验是一个考查点，但是学习能力比经验重要多了，如果你是参加培训学习的iOS开发，很可能说明你没有自学能力。这一点似乎很多人都没有搞清楚，大家可以看看 <a href="http://weibo.com/jeffz">@老赵</a> 在他的个人博客上发表的 <a href="http://blog.zhaojie.me/2010/04/why-i-say-no-to-aptech.html">《为什么我要反对北大青鸟》</a>。 我在2年前也写过一篇博客<a href="http://blog.devtang.com/blog/2012/01/20/we-must-self-learning/">《我们必须自学》</a>，详细解释了我的看法。</p></li>
 </ol>
 
@@ -2732,187 +2803,6 @@
 
 
 <time datetime="2013-10-19T11:10:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App]]></title>
-    <link href="http://blog.devtang.com/blog/2013/10/17/the-tech-detail-of-ape-client-1/"/>
-    <updated>2013-10-17T00:43:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/10/17/the-tech-detail-of-ape-client-1</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第一篇。本文涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
-
-<!-- more -->
-
-
-<h3>问题描述</h3>
-
-<p>今年春节后，我们对外发布了应用<a href="http://yuantiku.com/m?courseSet=xingce">“猿题库-公务员考试行测”</a>，接着我们就开始一个个发布猿题库系列课程应用。到现在半年多过去了，我们一共对外发布了8款应用（如下图所示）。</p>
-
-<p><img src="http://blog.devtang.com/images/ape-arch-1.jpg"></p>
-
-<p>这些课程，随了<a href="http://yuantiku.com/m?courseSet=shenlun">&ldquo;猿题库-公务员考试申论&rdquo;</a>和其它课程不一样之外，另外7个课程都有着相似，但是又不完全相同的功能和界面。</p>
-
-<p>这些应用的相同点包括：</p>
-
-<ol>
-<li>基本相同的注册和登录以及首页逻辑和界面（只是背景图片不一样而已）。</li>
-<li>相同的做题逻辑和界面。</li>
-<li>基本相同的答题报告显示界面。</li>
-<li>基本相同的能力评估报告界面。</li>
-</ol>
-
-
-<p>不同点主要包括：</p>
-
-<ol>
-<li>应用图标，启动画面，应用启动后的首页都不一样。</li>
-<li>有些课程（例如公务员考试和高考）是有目标考试的概念，不同的目标考试大纲是不一样的。拿高考来举例，北京的高考和上海的高考，就有着完全不一样的考试大纲。高考的文科和理科，又有着完全不同的考试科目。</li>
-<li>有些课程会有一些自定义的界面，例如高考的应用可以设置昵称，有些课程的真题练习中是有推荐真题模块的，而有些课程又没有。</li>
-<li>有些课程有扫描答题卡功能，有些课程有考前冲刺功能，有些课程有大题专项查看功能，而有些课程又没有上述功能。另外还有一些微小细节，但是解决方法和类似，所以就不一一展开说明。</li>
-</ol>
-
-
-<h3>技术解决方案</h3>
-
-<p>我们的技术解决方案主要说来分4步：</p>
-
-<ol>
-<li>通过抽取子项目，构建可复用的大模块。</li>
-<li>通过多Target编译的方式，不同课程的在编译时，采用不同的资源文件和源文件。</li>
-<li>在第2步的基础上，在项目中创建配置用的Config类，然后在不同Target各自的配置文件中设置不同的Config值。实现课程的差异化界面。</li>
-<li>从不同的xib中加载界面。</li>
-</ol>
-
-
-<h4>抽取子项目</h4>
-
-<p>我们首先做的是抽取子项目，从<a href="http://yuantiku.com/m?courseSet=sikao">“猿题库司法考试客户端&#8221;</a>开始，我们将可以重用的模块一一抽取出来，以git submodule的形式组织到项目中。这个抽取过程在开发完猿题库司法考试客户端之后，基本成型了。我们抽取的submodule主要分为4部分：</p>
-
-<ol>
-<li>UI Common，涉及可复用的登录界面，注册界面，付费界面，NPS界面，意见反馈界面，关于界面，扫描答题卡界面。另外，我们将一些可复用的UI风格控件也抽取成了相应的静态工厂方法，用于生成统一风格的按钮、背景以及状态栏等。</li>
-<li>Core Common，涉及可复用的底层模块。包括网络请求模块，自己封装的Core Text渲染引擎，缓存模块，一些静态util方法等。</li>
-<li>Lib Common，所有第三方的开源库依赖，有部分代码根据我们的需求做了修改和定制。</li>
-<li>Scan Common, 答题卡扫描识别算法模块，实现核心的扫描算法。</li>
-</ol>
-
-
-<p>以上只是粗粒度划分，这些模块化的子项目可能在以后被重用，例如Core Common完全就可以复用在任何其它项目中。</p>
-
-<h4>构造多个编译Target</h4>
-
-<p>抽取完子项目以后，我们采用多target的方式，将不同课程中的同名资源文件打包进各自的Target中，最后所有课程在一个工程项目中，如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/ape-targets.jpg"></p>
-
-<p>先简单介绍一下Xcode中target的概念，苹果在文档中写道：</p>
-
-<blockquote><p>Targets that define the products to build. A target organizes the files and instructions needed to build a product into a sequence of build actions that can be taken.”</p></blockquote>
-
-
-<p>在Xcode的一个项目中，可以允许建立多个编译的target，每个target代表着最终编译出来的一个App文件，在每个target中，可以添加不同的编译源文件和资源文件。最终，通过我们在不同target之间，修改其 <code>Copy Bundle Resources</code> 和 <code>Compile Sources</code> 配置，使课程之间的差异性得到实现。我们具体的配置方案如下：</p>
-
-<ol>
-<li><p>我们的每个课程的资源文件都具有相同的文件名，例如首页背景都叫 HomeBackgroundBg.png ，由于每个课程背景不一样，所以我们在工程中，每一个课程target下，通过修改<code>Copy Bundle Resources</code>，使其都配置有不同的（但是同名） HomeBackgroundBg.png 。这样的好处是，在代码逻辑层面，我们可以完全不用处理课程间资源文件的差异性问题。资源文件的差异性都是通过配置文件来保证的。</p></li>
-<li><p>对于文案一类的差别，我们通过修改<code>Compile Sources</code>，使不同的课程有着不同的文案定义文件。通过这样，我们使不同课程有了不同的文案。另外包括后台网络接口的差异性问题，统计项的差异性问题，也都是这样处理的。</p></li>
-</ol>
-
-
-<h4>Config类</h4>
-
-<p>最后，我们使用Config类来完成交互和页面UI组件差异性问题。拿能力评估报告页面来说，不同的课程的页面都有一些差异。我们在公共层的代码中将这些逻辑全部实现，具体的UI在呈现时，通过读取相关的Config类来决定具体如何展示。这样，我们只需要在第2步提供的各个课程的差异性源文件中，完成Config类的配置即可。</p>
-
-<h4>从不同的xib中加载界面</h4>
-
-<p>有些时候，我们仅仅需要的是UI界面排列方式不一样，其它交互逻辑完全一样。对于这种需求，我们尝试同一个view对应有多个xib，然后通过上一步的Config类的信息，来加载不同的xib界面。这样所有的差异性都在不同的xib中解决了，对controller层可以完全透明。</p>
-
-<p>下图是我们报告页面的xib界面，分为：高考课程、有目标考试的课程、没有目标考试的课程三种。由于这3个界面的后台逻辑和交互逻辑都一样，我们通过3个xib来实现它们之间差异性的部分。</p>
-
-<p><img src="http://blog.devtang.com/images/ape-xibs.jpg"></p>
-
-<p>以下是view加载对应的xib的代码逻辑：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">+</span> <span class="p">(</span><span class="n">IPadAbilityReportHeaderView</span> <span class="o">*</span><span class="p">)</span><span class="nf">loadFromNib:</span><span class="p">(</span><span class="n">IPadAbilityReportHeaderViewType</span><span class="p">)</span><span class="nv">type</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span><span class="n">nibFileName</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">switch</span> <span class="p">(</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">case</span> <span class="nl">IPadAbilityReportHeaderViewTypeWithQuiz:</span>
-</span><span class='line'>            <span class="n">nibFileName</span> <span class="o">=</span> <span class="s">@&quot;IPadAbilityReportHeaderViewWithQuiz&quot;</span><span class="p">;</span>
-</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">case</span> <span class="nl">IPadAbilityReportHeaderViewTypeWithoutQuiz:</span>
-</span><span class='line'>            <span class="n">nibFileName</span> <span class="o">=</span> <span class="s">@&quot;IPadAbilityReportHeaderViewWithoutQuiz&quot;</span><span class="p">;</span>
-</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">case</span> <span class="nl">IPadAbilityReportHeaderViewTypeGaokao:</span>
-</span><span class='line'>            <span class="n">nibFileName</span> <span class="o">=</span> <span class="s">@&quot;IPadAbilityReportHeaderViewInGaokao&quot;</span><span class="p">;</span>
-</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">default</span><span class="o">:</span>
-</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">nibArray</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">loadNibNamed:</span><span class="n">nibFileName</span> <span class="nl">owner:</span><span class="nb">nil</span> <span class="nl">options:</span><span class="nb">nil</span><span class="p">];</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">nibArray</span><span class="p">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="p">[</span><span class="n">nibArray</span> <span class="n">lastObject</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>总结</h2>
-
-<p>通过多target编译方案，我们可以很方便的实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。同时，由于在一个工程中，我们也可以方便地测试新的代码逻辑在各个课程下是否正常。</p>
-
-<p>该方案可以用来解决“维护大量逻辑相似但是又有细微不同的应用”的需求，希望本文能给业界同行一些帮助。</p>
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-17T00:43:00+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2013</time> 
 
 <span class="categories">
   

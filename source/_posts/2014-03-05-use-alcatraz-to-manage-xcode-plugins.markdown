@@ -29,6 +29,8 @@ rm -rf ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/Alcatraz.x
 rm -rf ~/Library/Application\ Support/Alcatraz
 ```
 
+<!-- more -->
+
 ##使用
 
 安装成功后重启Xcode，就可以在Xcode的顶部菜单中找到Alcatraz，如下所示：

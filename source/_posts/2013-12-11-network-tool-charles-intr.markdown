@@ -71,7 +71,7 @@ Charles主要提供2种查看封包的视图，分别名为“Structure”和"Se
 
 通常情况下，我们需要对网络请求进行过滤，只监控向指定目录服务器上发送的请求。对于这种需求，我们有2种办法。
 
- 1. 在主界面的中部的Filter栏中填入需要过滤出来的关键字。例如我们的服务器的地址是：http://yuantiku.com，那么只需要在Filter栏中填入yuantiku即可。
+ 1. 在主界面的中部的Filter栏中填入需要过滤出来的关键字。例如我们的服务器的地址是：http://yuantiku.com ,那么只需要在Filter栏中填入yuantiku即可。
  
  2. 在Charles的菜单栏选择"Proxy"->"Recording Settings"，然后选择Include栏，选择添加一个项目，然后填入需要监控的协议，主机地址，端口号。这样就可以只截取目标网站的封包了。如下图所示：
 

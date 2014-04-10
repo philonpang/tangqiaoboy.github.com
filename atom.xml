@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-04-10T23:01:20+08:00</updated>
+  <updated>2014-04-10T23:44:12+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,83 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第7期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/04/10/ios-weekly-7/"/>
+    <updated>2014-04-10T23:34:02+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/04/10/ios-weekly-7</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-wwdc2014-ticket">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果WWDC2014门票开卖，
+ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://nb.zol.com.cn/445/4451916.html">苹果WWDC2014门票开卖，开发者需通过抽签的方式申请购买</a>：2014年苹果开发者大会（WWDC）将于6月2日至6日在旧金山Moscone West中心举行。而本次WWDC大会的门票将于旧金山当地时间4月7日上午十点开始发售，开发者需通过抽签的方式申请购买，下午五点到八点公布获得门票的名单。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://realmacsoftware.com/blog/dynamic-linking">《Dynamic Linking》</a>：文章详细解释了动态链接库在iOS程序中的加载过程，作者在也尝试自己实现了一个动态链接库并且在iOS程序中成功加载，不过文章最后指出，在AppStore上架的的应用，如果要加载动态链接库，该链接库需要得到苹果的签名才能加载成功，虽然这在技术上是可行的，但苹果现阶段的审核要求是不接受这种应用的。作者也将相关代码开源在 <a href="https://github.com/ddeville/Dynamic-iOS">Dynamic-iOS</a> 项目中。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/ios-7-jiao-hu-shi-guo-du">《iOS 7 交互式过渡》</a>：iOS 7 新加入了自定义 View Controller 之间的过渡效果的方法。本文介绍了如何利用相关的API实现自定义的过滤效果。文章的内容主要包括：实现自定义过渡、使用自定义过渡、让过渡变得可以交互。文中例子的工程文件也已上传至<a href="https://github.com/PeteC/InteractiveViewControllerTransitions">GitHub</a>。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/">《ARC下dealloc过程及.cxx_destruct的探究》</a>：在MRC时代，我们经常在<code>dealloc</code>方法将内部其他对象释放掉，申请的非Objc对象的内存当然也需要一并处理掉，最后调用super，继续将父类对象做析构。而在ARC时代，大部分的代码都不再需要了。这些相应的代码是如何由编译器完成的？带着这样的疑问，作者研究了LLVM的具体实现细节。</p></li>
+<li><p><a href="https://github.com/jspahrsummers/enemy-of-the-state/blob/master/Enemy%20of%20the%20State.pdf">《Enemy of the State》</a>：作者分享了程序架构中存在状态的坏处以及避免状态的一些方法：优先使用不可变对象、使用ReactiveCocoa框架、使用Model-View-ViewModel框架。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="http://chen.do/blog/2013/09/30/selectively-ignoring-objective-c-exceptions-in-xcode/">在Xcode调试时忽略部分异常</a>：作者提供了一些llvm增强脚本，用于方便地在调试时忽略掉部分异常。增强脚本的代码也开源在<a href="https://gist.github.com/chendo/6759305/raw/ignore_specified_objc_exceptions.py">这里</a>。</p></li>
+<li><p><a href="https://github.com/naotaka/ClipMenu">ClipMenu</a>：开源的Mac OS剪贴板管理工具。</p></li>
+<li><p><a href="https://github.com/kolinkrewinkel/Polychromatic">Polychromatic</a>：一个只高亮属性和变量的Xcode插件。</p></li>
+<li><p><a href="https://github.com/shjborage/Reveal-Plugin-for-XCode">Reveal-Plugin-for-XCode</a>：作者写了一个Reveal插件，可以使工程不作任何修改的情况下使用Reveal，该插件已在Alcatraz上架。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-10T23:34:02+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第6期]]></title>
@@ -1744,7 +1821,7 @@
 <li><p>不要写你的政治面貌。你以为现在互联网公司还看重你是否是D员吗? 就算看重，你怎么知道他们认为这是加分还是减分? 我知道有一家公司，只要是D员的都直接拒掉。所以，除非你是面试的国企，在互联网公司，这一条最好不要写，写了有可能是平分，也有可能是减分，加分的可能性极小。</p></li>
 <li><p>不要写各种奇怪的爱好。喜欢打Dota，喝酒，这类可能带来负面印象的爱好最好不要写。的确有些公司会有这种一起联机玩游戏或者喝酒的文化，不过除非你明确清楚对于目标公司，写上会是加分项，否则还是不写为妙。（顺便说一句，据我了解，阿里的朋友特别喜欢喝酒，面试阿里写上这个可能是加分的，但如果你要是遇到阿里里面正好不喝酒的Team或面试官，不要怪我。）</p></li>
 <li><p>不要使用word格式的简历，使用PDF的格式。我在招iOS程序员时，好多人的简历都是Word格式的，mac下的office那么难用，公司好多人机器上都没有mac office。我真怀疑这些人真是的想投简历么? PDF格式的简历通常能展现出简历的专业性。</p></li>
-<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#116;&#x61;&#110;&#103;&#113;&#x69;&#x61;&#x6f;&#x40;&#x71;&#x71;&#x2e;&#x63;&#111;&#109;">&#116;&#x61;&#110;&#x67;&#113;&#x69;&#97;&#x6f;&#x40;&#x71;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
+<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#x74;&#x61;&#x6e;&#x67;&#113;&#105;&#x61;&#x6f;&#x40;&#113;&#x71;&#x2e;&#x63;&#111;&#109;">&#116;&#x61;&#x6e;&#103;&#113;&#x69;&#x61;&#x6f;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
 <li><p>不要写参加过某某培训公司的iOS培训，特别是那种一、两个月的速成培训。这对于我和身边很多面试官来说，绝对是负分。面试当中，经验是一个考查点，但是学习能力比经验重要多了，如果你是参加培训学习的iOS开发，很可能说明你没有自学能力。这一点似乎很多人都没有搞清楚，大家可以看看 <a href="http://weibo.com/jeffz">@老赵</a> 在他的个人博客上发表的 <a href="http://blog.zhaojie.me/2010/04/why-i-say-no-to-aptech.html">《为什么我要反对北大青鸟》</a>。 我在2年前也写过一篇博客<a href="http://blog.devtang.com/blog/2012/01/20/we-must-self-learning/">《我们必须自学》</a>，详细解释了我的看法。</p></li>
 </ol>
 
@@ -2696,118 +2773,6 @@
 
 
 <time datetime="2013-10-21T16:15:00+08:00" pubdate data-updated="true">Oct 21<span>st</span>, 2013</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[猿题库iOS客户端的技术细节（二）：答题卡扫描算法]]></title>
-    <link href="http://blog.devtang.com/blog/2013/10/19/the-tech-detail-of-ape-client-2/"/>
-    <updated>2013-10-19T11:10:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/10/19/the-tech-detail-of-ape-client-2</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第二篇。本文涉及的技术细节是：答题卡扫描算法。</p>
-
-<!-- more -->
-
-
-<h3>问题描述</h3>
-
-<p>我们在调研用户需求的时候，发现有些用户很喜欢我们的猿题库产品，因为我们会根据用户对当前课程的知识点掌握情况，智能地给他出题。但是部分用户还是习惯在纸上做题，所以我们提供了试卷打印功能。</p>
-
-<p>但是，用户如果在纸上答题，无法方便地将答案上传到我们的服务器上。如果我们没有了用户做题数据，就无法根据他的成绩，做针对性的推荐和分析。所以，我们想到一种办法：<strong>用户像传统考试那样，将答题结果填涂在答题卡上，然后我们提供一种用手机摄像头采集填涂结果的答题卡扫描算法，方便用户上传答题数据。</strong></p>
-
-<p><img src="http://blog.devtang.com/images/ape-card-1.jpg"></p>
-
-<p>上图是一个我们试验用的答题卡，通过手机摄像头获取，从中可以看到，该答题卡有以下问题：</p>
-
-<ol>
-<li>由于手机摄像头无法完全正对答题卡，拍照角度有偏曲，答题卡在拍照后并不是完全的矩形。</li>
-<li>用户填涂区域可能并不饱满和完整。</li>
-<li>答题纸边缘可能有用户的草稿或其它干扰识别的信息。</li>
-</ol>
-
-
-<h3>技术解决方案</h3>
-
-<p>我们尝试了多种识别方案，最终采用的方案如下：</p>
-
-<ol>
-<li>图象预处理，压缩图像大小，转彩色图像为灰度图像</li>
-<li>识别答题卡区域</li>
-<li>图象纠偏</li>
-<li>答案区域识别</li>
-</ol>
-
-
-<p>该方案及相关算法细节我们还在申请专利，由于专利还在申请过程中，所以我们这次仅展示上述主要步骤的示例图片。等专利完全申请结束后，我会在此将算法细节公开。</p>
-
-<p>上述主要步骤的示例图如下：</p>
-
-<h4>原始图</h4>
-
-<p><img src="http://blog.devtang.com/images/ape-card-1.jpg"></p>
-
-<h4>识别答题卡区域</h4>
-
-<p><img src="http://blog.devtang.com/images/ape-card-2.jpg"></p>
-
-<h4>图象纠偏</h4>
-
-<p><img src="http://blog.devtang.com/images/ape-card-3.jpg"></p>
-
-<h4>答案区域识别</h4>
-
-<p>答案已标注在图片每个题号的右边位置：</p>
-
-<p><img src="http://blog.devtang.com/images/ape-card-4.jpg"></p>
-
-<h3>算法质量</h3>
-
-<h4>算法正确率和召回率</h4>
-
-<p>我们用收集来的1000套样本数据对算法进行评测，最终结果是：扫描题目准确率达到99.67%，召回率达到99.14%。主要识别失败的样本是：页面严重扭曲弯折的答题卡。我们也在一直改进算法，希望能够给用户提供更加精准的扫描结果。</p>
-
-<h4>算法执行时间</h4>
-
-<p>我们觉得让用户直接对着答题卡用拍摄的方式动态识别，比先拍一张照片再识别的方式更加方便。所以我们对答题卡识别算法的执行时间进行了一系列优化，最终保证每次识别时间小于0.1秒，这样的识别时间非常快，基本上用户把手机摄像头对准答题卡，扫描结果就出来了。</p>
-
-<h2>算法的调试和移植</h2>
-
-<p>由于我们整个技术团队都使用Mac电脑进行开发，所以我们对于算法的调试都是在Mac平台上完成的，我使用了开源的图象处理库OpenCV，在搭建OpenCV环境时遇到一些问题，最终完成环境搭建后，我将相关的经验总结在博文<a href="http://blog.devtang.com/blog/2012/10/27/use-opencv-in-ios/">《在MacOS和iOS系统中使用OpenCV》</a>中。</p>
-
-<p>由于算法需要同时应用在iOS和Android平台，所以我主要用C++语言实现算法。Xcode可以很好地支持Objective-C语言和C++语言混编，只需要将相关的源文件扩展名从.m改为.mm即可。而Android平台所采用的Java语言，也支持通过<a href="http://en.wikipedia.org/wiki/Java_Native_Interface">JNI</a>的方式来调用C++的代码。这样就可以方便地将识别算法移植到手机中了。</p>
-
-<h2>总结</h2>
-
-<p>本文介绍了猿题库iOS客户端采用的答题卡扫描算法的大致步骤，以及算法的质量和移植方案。</p>
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-19T11:10:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time> 
 
 <span class="categories">
   

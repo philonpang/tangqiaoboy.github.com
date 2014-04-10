@@ -4,7 +4,7 @@
   <title><![CDATA[Category: weekly | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/weekly/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-04-10T23:01:20+08:00</updated>
+  <updated>2014-04-10T23:44:12+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第7期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/04/10/ios-weekly-7/"/>
+    <updated>2014-04-10T23:34:02+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/04/10/ios-weekly-7</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-wwdc2014-ticket">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果WWDC2014门票开卖，
+ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://nb.zol.com.cn/445/4451916.html">苹果WWDC2014门票开卖，开发者需通过抽签的方式申请购买</a>：2014年苹果开发者大会（WWDC）将于6月2日至6日在旧金山Moscone West中心举行。而本次WWDC大会的门票将于旧金山当地时间4月7日上午十点开始发售，开发者需通过抽签的方式申请购买，下午五点到八点公布获得门票的名单。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://realmacsoftware.com/blog/dynamic-linking">《Dynamic Linking》</a>：文章详细解释了动态链接库在iOS程序中的加载过程，作者在也尝试自己实现了一个动态链接库并且在iOS程序中成功加载，不过文章最后指出，在AppStore上架的的应用，如果要加载动态链接库，该链接库需要得到苹果的签名才能加载成功，虽然这在技术上是可行的，但苹果现阶段的审核要求是不接受这种应用的。作者也将相关代码开源在 <a href="https://github.com/ddeville/Dynamic-iOS">Dynamic-iOS</a> 项目中。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/ios-7-jiao-hu-shi-guo-du">《iOS 7 交互式过渡》</a>：iOS 7 新加入了自定义 View Controller 之间的过渡效果的方法。本文介绍了如何利用相关的API实现自定义的过滤效果。文章的内容主要包括：实现自定义过渡、使用自定义过渡、让过渡变得可以交互。文中例子的工程文件也已上传至<a href="https://github.com/PeteC/InteractiveViewControllerTransitions">GitHub</a>。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/">《ARC下dealloc过程及.cxx_destruct的探究》</a>：在MRC时代，我们经常在<code>dealloc</code>方法将内部其他对象释放掉，申请的非Objc对象的内存当然也需要一并处理掉，最后调用super，继续将父类对象做析构。而在ARC时代，大部分的代码都不再需要了。这些相应的代码是如何由编译器完成的？带着这样的疑问，作者研究了LLVM的具体实现细节。</p></li>
+<li><p><a href="https://github.com/jspahrsummers/enemy-of-the-state/blob/master/Enemy%20of%20the%20State.pdf">《Enemy of the State》</a>：作者分享了程序架构中存在状态的坏处以及避免状态的一些方法：优先使用不可变对象、使用ReactiveCocoa框架、使用Model-View-ViewModel框架。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="http://chen.do/blog/2013/09/30/selectively-ignoring-objective-c-exceptions-in-xcode/">在Xcode调试时忽略部分异常</a>：作者提供了一些llvm增强脚本，用于方便地在调试时忽略掉部分异常。增强脚本的代码也开源在<a href="https://gist.github.com/chendo/6759305/raw/ignore_specified_objc_exceptions.py">这里</a>。</p></li>
+<li><p><a href="https://github.com/naotaka/ClipMenu">ClipMenu</a>：开源的Mac OS剪贴板管理工具。</p></li>
+<li><p><a href="https://github.com/kolinkrewinkel/Polychromatic">Polychromatic</a>：一个只高亮属性和变量的Xcode插件。</p></li>
+<li><p><a href="https://github.com/shjborage/Reveal-Plugin-for-XCode">Reveal-Plugin-for-XCode</a>：作者写了一个Reveal插件，可以使工程不作任何修改的情况下使用Reveal，该插件已在Alcatraz上架。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第6期]]></title>
@@ -215,63 +267,6 @@
 <li><p><a href="https://github.com/facebook/Shimmer">Shimmer</a>: Facebook 开源了他旗下应用 Paper 的加载效果，它使用了WWDC 2009中介绍的<code>-[CALayer mask]</code>的技术方案。</p></li>
 <li><p><a href="https://github.com/facebook/chisel">chisel</a>：Facebook开源了LLDB的增强工具chisel，其中的许多命令对于调试界面非常有帮助。</p></li>
 <li><p><a href="https://github.com/facebook/KVOController">KVOController</a>: Facebook开源了Key-Value Observing工具KVOController。KVO是一个在iOS应用程序开发中，用于模块间通讯的技术技术，常常用于保证界面对于模型数据变化的实时响应。</p></li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第2期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/03/07/ios-weekly-2/"/>
-    <updated>2014-03-07T21:44:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/03/07/ios-weekly-2</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/apple-store-gray-chain">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://daily.zhihu.com/story/3350426">《利用苹果商店规则漏洞的灰色地下产业链》</a>：作者在文章中介绍了一些投机分子，利用苹果商店在汇率上的漏洞，借助汇率和实际汇率的差价来倒卖商品。据文中介绍，一款不错的手游产品，每月的账面销售额为700万元，但可能真正到账的只有550万元，其余的150万元中约有50万元的黑卡耗损，而剩余的100万则被这些汇率倒卖者攫取。</p></li>
-<li><p><a href="http://www.guomii.com/posts/37790">《Apple即将推出CarPlay功能》</a>：Apple宣布几大顶级汽车制造商即将推出CarPlay。据苹果介绍，CarPlay是一种更智能、更安全且更有意思的在车中使用iPhone的方式。</p></li>
-<li><p><a href="http://djt.qq.com/mobile/article/1073">《2013移动行业分析》</a> 腾讯移动分析发布了2013年移动行业数据分析报告，报告介绍了iOS的用户比例和版本分布。根据文中的统计，国内移动终端iOS市场份额为24.7%。另外不同于国外的情况是，国内iOS5的用户比例仍然高达12%。</p></li>
-<li><p><a href="http://images.apple.com/iphone/business/docs/iOS_Security_Feb14.pdf">《iOS Security》</a>：苹果发布官方的安全方面的文档，介绍了iOS系统从硬件，文件系统到网络等各方面的安全细节。</p></li>
-<li><p><a href="http://highscalability.com/blog/2014/2/26/the-whatsapp-architecture-facebook-bought-for-19-billion.html">《WhatsApp 架构设计》</a>: 作者在文章中分享了最近被Facebook收购的WhatsApp的架构，包括它使用到的前后端技术框架以及硬件，文章中也分享了一些提高服务器并发连接数和可扩展性的经验。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://blog.csdn.net/wzzvictory/article/details/20067595">《CocoaPods详解之&mdash;&mdash;制作篇》</a>：作者详细介绍了CocoaPods依赖库的创建过程，这对于开源项目作者来说很有帮助。</p></li>
-<li><p><a href="http://blog.jobbole.com/61101/">《通过实现一个TableView来理解iOS UI编程》</a>：作者通过实现一遍TableView来理解UIKit的一些技术细节，包括几何布局框架、UI的层次架构、子类化UIScrollView、Cell的重用、响应和处理事件和可扩展性等技术细节。</p></li>
-<li><p><a href="http://www.yidianzixun.com/article/news_eaf23f7ff41d4862ecbf0d10441cf5f5?s=1">《iOS 开发者应该知道的 ARM 结构》</a>：到目前为止，所有的 iOS 设备都使用 ARM 结构处理器。作者在文章中介绍了ARM处理器的各种特点，包括条件执行、Thumb 指令集、内存对齐和除法等技术细节。</p></li>
-<li><p><a href="http://segmentfault.com/a/1190000000390012">《iOS 开发：绘制像素到屏幕》</a>：像素是如何绘制到屏幕上面的？把数据输出到屏幕的方法有很多，通过调用很多不同的framework和不同的函数。作者在文章中介绍了这个过程背后的东西，这能够帮助大家在遇到性能问题时调试解决问题。</p></li>
-<li><p><a href="http://iosinit.com/?p=854">《玩转字符串》</a> 和 <a href="http://iosinit.com/?p=880">《字符串渲染》</a>: 作者翻译了objc.io第九期关于字符串的系列文章。《玩转字符串》中介绍了字符串的比较、搜索、排序以及格式化等功能。《字符串渲染》中介绍了字符串在UILabel、UITextField以及Core Text中的渲染细节。</p></li>
-<li><p><a href="http://iosdevelopertips.com/general/object-encoding-and-decoding-with-nssecurecoding.html">《Object Encoding and Decoding with NSSecureCoding Protocol》</a>：作者在文章中介绍了如何使用NSSecureCoding来序列化和反序列化对象。文章最后，作者提供了一个名为<a href="https://github.com/nicklockwood/AutoCoding">AutoCoding</a>的开源项目来帮助大家实现相关的功能。</p></li>
-<li><p><a href="https://developer.apple.com/design/">《苹果最新的设计指南》</a>: 苹果发布了其最新的设计指南，试图帮助开发者更好地学习iOS7风格的应用和游戏设计。新版指南提供了大量的视频和文档，内容涵盖应用和游戏开发的各个方面。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="http://koofrank.com/blog/2014/02/28/my-first-article/">《四个iOS开发的小工具》</a>：作者在文章中介绍了4个有助于iOS开发的小工具。不过笔者并不同意文章后半部分的关于Blocks内联的内容。</p></li>
-<li><p>著名的Xcode插件：<a href="https://github.com/supermarin/Alcatraz">Alcatraz</a> 完成了对Xcode 5的适配，大家可以用它方便地管理XCode的相关第三方插件。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p>QFish分享了一个小项目：<a href="https://github.com/qfish/xproj">xproj</a>，可以帮iOS开发者批量地为工程文件添加编译参数 <code>-fno-objc-arc</code> 或 <code>-fobjc-arc</code>。</p></li>
-<li><p><a href="https://github.com/GeekZooStudio/ECMobile_iOS">ECMobile 3.0.0</a>发布，完全基于 BeeFramework 0.5.0 开发，它可以作为使用BeeFramework的参考项目。</p></li>
-<li><p><a href="http://weibo.com/ranwj">移动开发小冉</a>写了一个类似虾米音乐的iOS App首页左右滑动效果的示例程序，代码质量很高，项目地址在<a href="https://github.com/nonstriater/NTSlidingViewController">这里</a>。</p></li>
-<li><p><a href="https://github.com/5sw/SWParallaxScrollView">SWParallaxScrollView</a>：SWParallaxScrollView是一个具有多个层次的可滑动视图，可以实现不同层之间不同的滑动速度。该技术常常用来做应用初次启动时的介绍。</p></li>
 </ol>
 
 ]]></content>

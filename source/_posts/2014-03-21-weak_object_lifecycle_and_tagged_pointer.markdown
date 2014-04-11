@@ -110,7 +110,7 @@ NSLog(@"%p %p", number, another);
 
 如果知道提问的艺术，iOS开发已经入门至少半年了，会用google、stackoverflow和github解决基本问题，但是遇到一些更复杂的问题时没有地方找人讨论，那么欢迎你申请加入我创建的slack群组。本次讨论也是由slack群组里的@caoping同学的提问引起的。
 
-[iOS开发的slack群组](iosdev.slack.com)经过2个月试运营，现在已经聚集了300个有经验的iOS开发者，现在开始接受申请加入，申请地址是（需翻墙）： <https://docs.google.com/forms/d/1eWH_jjDIIV5kpSV0BUPBAIboHEj0ZrgBrZHWsdJqkDU/viewform> 。如果你不会翻墙，不会用google和stackoverflow以及github，那么我劝你还是别加入了。
+[iOS开发的slack群组](http://iosdev.slack.com)经过2个月试运营，现在已经聚集了300个有经验的iOS开发者，现在开始接受申请加入，申请地址是（需翻墙）： <https://docs.google.com/forms/d/1eWH_jjDIIV5kpSV0BUPBAIboHEj0ZrgBrZHWsdJqkDU/viewform> 。如果你不会翻墙，不会用google和stackoverflow以及github，那么我劝你还是别加入了。
 
 
 

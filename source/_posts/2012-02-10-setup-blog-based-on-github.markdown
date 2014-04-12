@@ -15,27 +15,27 @@ github真是无所不能。其[Pages功能](http://pages.github.com/)支持上�
 ##安装
 首先说说怎么安装相应的工具。其实这些内容在 <http://octopress.org/docs/setup/> 上都有，我只是把它大概翻译了一下。
 
-###安装rvm和ruby
-参考文档：<http://octopress.org/docs/setup/rvm/>，主要3步：
+###安装rbenv
 
-首先安装：
 ```
-bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)
-```
-然后设置classpath:
-```
-echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function' >> ~/.bash_profile
-source ~/.bash_profile
+brew update
+brew install rbenv
+brew install ruby-build
 
-# If using Zsh do this instead
-echo '[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm' >> ~/.zshrc
-source ~/.zshrc
+rbenv install 1.9.3-p0
+rbenv local 1.9.3-p0
+rbenv rehash
 ```
-最后安装ruby:
+
+你有可能需要安装老版本的GCC编译器才能顺利安装Ruby 1.9.3:
+
+``` bash
+
+brew tap homebrew/dupes 
+brew install apple-gcc42
+
 ```
-rvm install 1.9.2 && rvm use 1.9.2
-rvm rubygems latest
-```
+
 
 ###安装Octopress
 首先从github上将源码clone下来：
@@ -111,6 +111,10 @@ rake install
 * 在域名管理中，建立一个CNAME指向，将你的域名指向 yourname.github.com
 * 建一个名为CNAME的文件在source目录下，然后将自己的域名输入进去。
 * 将内容push到github后，第一次生效大概等1小时，之后你就可以用自己的域名访问了。
+
+#### 原理
+ * Octopress其实为你建立了2个分支，一个是master分支，用于存放生成的最终网页。另一个是source分支，用于存放最初的原始markdown文件。
+ * 平时写作和提交都在source分支下，当需要发布时，rake deploy命令会将内容生成到 public 这个目录，然后将这个目录的内容当作master分支的内容同步到github上面。
 
 ####参考
 这儿还有一些参考的文章：

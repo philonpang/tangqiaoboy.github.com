@@ -110,6 +110,7 @@ brew cask install xtrafinder
 brew cask install charles
 brew cask install reveal
 brew cask install xscope
+brew cask install sparrow
 
 ```
 

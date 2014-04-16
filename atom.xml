@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-04-13T00:11:54+08:00</updated>
+  <updated>2014-04-16T22:19:46+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[从Facebook看移动开发的发展]]></title>
+    <link href="http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook/"/>
+    <updated>2014-04-16T20:37:59+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/facebook-logo.jpg"></p>
+
+<h2>从Facebook谈起</h2>
+
+<p>Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式<a href="http://tech.ifeng.com/internet/special/fb-whatsapp/content-1/detail_2014_02/21/34032969_0.shtml">收购移动 IM 应用 WhatsApp</a>，总收购成本 190 亿美元。然后是继续发布了新产品：2014年2月，Facebook发布了一个新的移动端新闻阅读应用<a href="https://www.facebook.com/paper">Paper</a>。最后，Facebook最近还将自己使用的大量工具开源，包括开源了Paper的加载效果<a href="https://github.com/facebook/Shimmer">Shimmer</a>，LLDB的增强工具<a href="https://github.com/facebook/chisel">chisel</a>，以及Key-Value Observing工具<a href="https://github.com/facebook/KVOController">KVOController</a>，如果说这些开源工具让程序员如获至宝的话，那么Facebook将Paper的交互设计工具<a href="http://facebook.github.io/origami/">Origami</a>免费开放，则是对广大设计师的福音，极大地方便了移动交互设计工作的开展。</p>
+
+<p>2014年对于Facebook来说也是一个值得纪念的日子。因为从2004年2月4日Facebook产品上线到现在，Facebook刚刚走过10个年头。10年前，Facebook的创始人扎克伯格才19岁，是哈佛大学的一名学生。转眼间10年后，Facebook已经成长为全球最大的社交网络，月活跃用户达到12亿，市值约1200亿美元。</p>
+
+<p>业界内大多讨论的话题都围绕在Facebook收购WhatsApp这件事情上，而作为一个移动开发者，我更加看重Facebook 发布Paper这件事情。因为Paper并不是一个简单的应用，它有着非常优秀的交互效果，并且在产品设计和技术上都使用了许多前沿的技术，那就让我们看看，Paper的开发到底有何不同之处？</p>
+
+<h2>交互设计</h2>
+
+<p>我们首先从产品设计上看Paper的不同之处。Paper虽然只是一个新闻客户端，但从大家对Paper的评价上，我们发现优秀的交互再一次成为大家关注的焦点。回想那些成功的应用，大多都有着令人心动的交互效果，例如：Tweetie的下拉刷新，现在基本上成为iPhone上内容刷新的标准。Path跳出来的红心让人心动，很多朋友甚至会没事点那个红心，欣赏那流畅的按钮散开效果。还有Mailbox，用流畅的手势操作，将邮件管理与任务管理完美结合起来。</p>
+
+<p>国外成功的优秀应用也在影响着国内。交互设计不同于平面设计，不能简单地用Photoshop展现，而交互设计对于移动应用的成功又异常关键，所以需要花费不少时间来设计，因此产品经理很难兼顾地做交互设计。所以，在国内的一线互联网公司里，交互设计师这个职位慢慢成了移动应用的标配。但是在大部分的非一线互联网公司里面，移动开发的设计仍然停留在由产品经理简单潦草的完成阶段。所以，Facebook这次Paper的成功发布，再一次给移动开发的从业者指出了交互设计的重要性。</p>
+
+<p>回顾中国互联网产业的发展我们可以发现，产品经理（Product Manager）这个职位也是最近五、六年才成为互联网公司的标配的，想必在不远的将来，除着交互设计越来越重要，移动交互设计师也会成为每一个互联网公司重要的必备职位。</p>
+
+<p>另一方面，由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集<a href="http://facebook.github.io/origami/">Origami</a>，使得交互设计工作得到更好的辅助。而且在Facebook的带动下，<a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>也出现了。jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。</p>
+
+<p>不过另一方面，该工具仍然需要设计师具备一定的基础编码能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。</p>
+
+<h2>移动开发技术</h2>
+
+<p>随着iOS依赖管理工具Cocoapods和大量第三方开源库成熟起来，业界积累了大量的优秀开源项目。这次Facebook开发Paper使用了<a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">将近100个第三方开源库</a>，极大地减化了自己的应用开发任务。相信随着移动开发的发展，移动开发的生态圈会越来越成熟，基础的开源组件也将将越来越丰富，广大开发者都将从中受益。</p>
+
+<p>另一方面，Facebook的工程师在<a href="http://www.quora.com/What-exactly-did-Jason-Prado-mean-when-he-said-Xcode-cannot-handle-our-scale/answer/Scott-Goodson-1">Quora上反馈</a>说Paper在Xcode下打开需要40多分钟，编译一次需要4-5个小时。这反映出大量的开源库的使用也给iOS集成编译环境Xcode提出了新的挑战，相信苹果会花大力气解决Xcode的性能问题。</p>
+
+<h2>总结</h2>
+
+<p>Facebook发布的Paper让我看到了移动开发领域的快速发展，大量新的工具和开源技术给了设计师和程序员机会和挑战，相信在移动互联网快速发展的浪潮中，会涌现出越来越多优秀的移动应用。谁会是未来移动互联网的霸主？让我们拭目以待。</p>
+
+<h2>版权说明</h2>
+
+<p>本文已发表在《程序员》杂志2014年4月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-16/2819341">http://www.csdn.net/article/2014-04-16/2819341</a></p>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-16T20:37:59+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/summary/'>summary</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac重装记录]]></title>
@@ -127,6 +195,7 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
+<span class='line-number'>10</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>brew cask install iterm2
 </span><span class='line'>brew cask install dropbox
 </span><span class='line'>brew cask install google-chrome
@@ -136,6 +205,7 @@
 </span><span class='line'>brew cask install charles
 </span><span class='line'>brew cask install reveal
 </span><span class='line'>brew cask install xscope
+</span><span class='line'>brew cask install sparrow
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -2036,7 +2106,7 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 <li><p>不要写你的政治面貌。你以为现在互联网公司还看重你是否是D员吗? 就算看重，你怎么知道他们认为这是加分还是减分? 我知道有一家公司，只要是D员的都直接拒掉。所以，除非你是面试的国企，在互联网公司，这一条最好不要写，写了有可能是平分，也有可能是减分，加分的可能性极小。</p></li>
 <li><p>不要写各种奇怪的爱好。喜欢打Dota，喝酒，这类可能带来负面印象的爱好最好不要写。的确有些公司会有这种一起联机玩游戏或者喝酒的文化，不过除非你明确清楚对于目标公司，写上会是加分项，否则还是不写为妙。（顺便说一句，据我了解，阿里的朋友特别喜欢喝酒，面试阿里写上这个可能是加分的，但如果你要是遇到阿里里面正好不喝酒的Team或面试官，不要怪我。）</p></li>
 <li><p>不要使用word格式的简历，使用PDF的格式。我在招iOS程序员时，好多人的简历都是Word格式的，mac下的office那么难用，公司好多人机器上都没有mac office。我真怀疑这些人真是的想投简历么? PDF格式的简历通常能展现出简历的专业性。</p></li>
-<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#116;&#x61;&#x6e;&#x67;&#x71;&#105;&#x61;&#111;&#x40;&#113;&#x71;&#46;&#99;&#111;&#109;">&#116;&#x61;&#110;&#x67;&#113;&#105;&#97;&#111;&#64;&#113;&#113;&#46;&#99;&#x6f;&#x6d;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
+<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#116;&#x61;&#x6e;&#x67;&#113;&#105;&#x61;&#x6f;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#x6d;">&#116;&#97;&#x6e;&#x67;&#113;&#x69;&#97;&#111;&#64;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
 <li><p>不要写参加过某某培训公司的iOS培训，特别是那种一、两个月的速成培训。这对于我和身边很多面试官来说，绝对是负分。面试当中，经验是一个考查点，但是学习能力比经验重要多了，如果你是参加培训学习的iOS开发，很可能说明你没有自学能力。这一点似乎很多人都没有搞清楚，大家可以看看 <a href="http://weibo.com/jeffz">@老赵</a> 在他的个人博客上发表的 <a href="http://blog.zhaojie.me/2010/04/why-i-say-no-to-aptech.html">《为什么我要反对北大青鸟》</a>。 我在2年前也写过一篇博客<a href="http://blog.devtang.com/blog/2012/01/20/we-must-self-learning/">《我们必须自学》</a>，详细解释了我的看法。</p></li>
 </ol>
 
@@ -2314,287 +2384,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 
 
 <time datetime="2013-12-11T14:03:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用Flurry来统计和分析用户行为]]></title>
-    <link href="http://blog.devtang.com/blog/2013/11/14/use-flurry-to-analyse-data/"/>
-    <updated>2013-11-14T13:51:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/11/14/use-flurry-to-analyse-data</id>
-    <content type="html"><![CDATA[<h2>简介</h2>
-
-<p><img src="http://blog.devtang.com/images/flurry-logo.png"></p>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/use-flurry-to-statistics-and-analysis-user-behavior">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<p><a href="http://www.flurry.com/">Flurry</a>是一家专门为移动应用提供数据统计和分析的公司。他们的数据统计分析SDK支持的平台包括iPhone, iPad, Android, Windows Phone, Java ME和BlackBerry。使用Flurry服务的公司包括eBay、Yahoo、Hulu和Skype等超过11万家公司，涉及的应用超过36万个。</p>
-
-<p>利用Flurry提供的分析平台，我们可以很容易地自动统计出应用的使用情况，例如：</p>
-
-<ol>
-<li>每天（每周或每月）登录用户数，应用使用次数</li>
-<li>每天（每周或每月）新用户数，活跃用户数</li>
-<li>用户的所在地、年龄、性别的分布情况</li>
-</ol>
-
-
-<p>Flurry也可以自动统计出移动设备的分类情况，例如：</p>
-
-<ol>
-<li>使用3G，Wifi的会话比例</li>
-<li>使用iOS系统各版本(例如iOS6.0, iOS7.0等)的比例</li>
-<li>使用iOS各种设备（例如iPhone4, iPhone5等)的比例</li>
-</ol>
-
-
-<p>除了上面介绍的自动统计项目，Flurry SDK也提供了统计用的相关API，便于我们针对自己产品的特点，做针对性的统计。例如统计应用中某个按钮的按下次数，或者网络请求的平均响应时间等。</p>
-
-<!-- more -->
-
-
-<h2>Flurry的基本使用</h2>
-
-<h3>注册和下载对应SDK</h3>
-
-<p>使用Flurry前，需要先到官方网站<a href="http://www.flurry.com/">http://www.flurry.com/</a>注册账号。然后登录到Flurry后台，依次选择 <code>"Applications" -&gt; “Add a New Application"</code> ，增加一个需要统计分析的应用。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/flurry-create-app-1.png"></p>
-
-<p>然后，在接下来的界面之后根据你的应用类型，选择iPhone或iPad应用。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/flurry-create-app-2.png"></p>
-
-<p>接着，填入应用的名字和分类（名字仅用作在Flurry后台和自己的其它应用区分，不需要和应用的真实名字相同），之后点击&#8221;Create App&#8221;，如下所示：</p>
-
-<p><img src="http://blog.devtang.com/images/flurry-create-app-3.png"></p>
-
-<p>到此，我们就成功在后台创建了一个新的应用统计和分析项目。点击下图中的&#8221;Download&#8221;，可以下载需要集成在应用中的SDK。而下图中的提示2中的Key：<code>X28BBKTNZ9H3VYTBDBG3</code>则是我们在集成时用于标识自己应用的ID。</p>
-
-<p><img src="http://blog.devtang.com/images/flurry-create-app-4.png"></p>
-
-<h3>集成SDK</h3>
-
-<p>我们将下载后的SDK解压，可以看到文件列表如下。列表中对我们最重要的文件是Flurry目录下的<code>flurry.h</code>文件和<code>libFlurry_4.3.0.a</code>文件。这2个文件需要复制到Xcode的工程中去。</p>
-
-<p>而<code>ProjectApiKey.txt</code>文件中记录了我们之前创建的应用ID，在在代码中调用SDK初使化时需要使用。</p>
-
-<p><img src="http://blog.devtang.com/images/flurry-sdk-files.png"></p>
-
-<p>接着我们打开Xcode工程，将之前下载解压的Flurry目录拖动添加到工程中，同时在工程的.pch文件中加上 <code>#import "Flurry.h"</code>，如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/flurry-setup-in-xcode.png"></p>
-
-<p>接着我们在<code>Link Binary With Libraries</code>中加入如下2个依赖的framework:</p>
-
-<ul>
-<li>Security.framework</li>
-<li>SystemConfiguration.framework。</li>
-</ul>
-
-
-<p><img src="http://blog.devtang.com/images/flurry-link-library.png"></p>
-
-<p>接着我们打开 <code>AppDelegate.m</code>，在<code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</code>方法中，加入代码<code>[Flurry startSession:@"X28BBKTNZ9H3VYTBDBG3"];</code>，如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/flurry-set-api-key.png"></p>
-
-<p>这样，就完成了Flurry最简单的集成。通过以上短短几步，Flurry就可以帮我们完成应用的基本使用数据的统计和分析。</p>
-
-<h3>自定义统计项</h3>
-
-<p>Flurry提供了<code>logEvent</code>函数，用于实现自定义的统计项。默认情况下，该函数接受一个参数，用于表示当前统计项的名字。</p>
-
-<p>例如我们的界面中有2个按钮，我们想统计它们各自被用户的点击次数，则可以如下代码实现。在该代码中，我们定义了2个自定义的统计项，名字分别为<code>First Button Pressed</code>和<code>Second Button Pressed</code>。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">firstButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;First Button Pressed&quot;</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">secondButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;Second Button Pressed&quot;</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>logEvent</code>函数也支持添加各种参数，用于做更加精细的统计，例如，我们想在统计用户在同一个页面，点击时不同按钮的次数分布，看哪些按钮更加常用，则统计代码可以如下实现：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">firstButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;Button Pressed&quot;</span>
-</span><span class='line'>      <span class="nl">withParameters:</span><span class="err">@</span><span class="p">{</span><span class="s">@&quot;target&quot;</span><span class="o">:</span> <span class="s">@&quot;first&quot;</span><span class="p">}];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">secondButtonPressed:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="s">@&quot;Button Pressed&quot;</span>
-</span><span class='line'>      <span class="nl">withParameters:</span><span class="err">@</span><span class="p">{</span><span class="s">@&quot;target&quot;</span><span class="o">:</span> <span class="s">@&quot;second&quot;</span><span class="p">}];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>logEvent</code>函数也支持统计时间，常常用来统计某个复杂的网络操作的耗时或者用户对于某些界面的响应时间。例如，我们想统计用户停留在某个提示界面的时间，则可以用如下代码完成：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  FirstViewController.m</span>
-</span><span class='line'><span class="cp">//  FlurryUsageSample</span>
-</span><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  Created by TangQiao on 13-10-25.</span>
-</span><span class='line'><span class="cp">//  Copyright (c) 2013年 TangQiao. All rights reserved.</span>
-</span><span class='line'><span class="cp">//</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#import &quot;FirstViewController.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#define FLURRY_EVENT_KEY @&quot;First View Controller&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@implementation</span> <span class="nc">FirstViewController</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillAppear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="nl">viewWillAppear:</span><span class="n">animated</span><span class="p">];</span>
-</span><span class='line'>    <span class="c1">// 开始统计时间</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">logEvent:</span><span class="n">FLURRY_EVENT_KEY</span> <span class="nl">timed:</span><span class="n">YES</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="nl">viewWillDisappear:</span><span class="n">animated</span><span class="p">];</span>
-</span><span class='line'>    <span class="c1">// 结束统计时间</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">Flurry</span> <span class="nl">endTimedEvent:</span><span class="n">FLURRY_EVENT_KEY</span> <span class="nl">withParameters:</span><span class="nb">nil</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>查看统计结果</h3>
-
-<p>完成上面的自定义统计的代码后，待应用发布后，我们就可以从后台的<code>Events</code>栏中看到相应的统计结果了。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/flurry-view-events.png"></p>
-
-<h3>统计Crashlog</h3>
-
-<p>Flurry从4.2.3开始，支持应用的Crashlog统计。只需要在<code>AppDelegate.m</code>文件中，在调用<code>startSession</code>方法之前，调用<code>setCrashReportingEnabled:YES</code>即可：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">Flurry</span> <span class="nl">setCrashReportingEnabled:</span><span class="n">YES</span><span class="p">];</span>
-</span><span class='line'><span class="p">[</span><span class="n">Flurry</span> <span class="nl">startSession:</span><span class="s">@&quot;YOUR_API_KEY&quot;</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>这里注意，<font color='red'>一定要在startSession之前调用setCrashReportingEnabled，否则将无法记录Crashlog信息！切记！！</font></p>
-
-<p>之后你就可以从后台管理界面的<code>Errors</code>项中，获得应用的Crashlog信息。</p>
-
-<h2>和其它统计分析平台的对比</h2>
-
-<p>和著名的统计工具<a href="http://www.google.com/analytics/">Google Analytics</a>相比，Flurry的优点是：</p>
-
-<ol>
-<li>Flurry专门针对移动端做了许多优化，例如统计流量就小很多。</li>
-<li>Flurry没有被墙的问题。</li>
-</ol>
-
-
-<p>Flurry缺点是:</p>
-
-<ol>
-<li>Google Analytics的统计功能相对更强大一些。</li>
-<li>Google Analytics可以和网页版的统计数据做整合。</li>
-</ol>
-
-
-<p>和国内的分析平台<a href="http://www.umeng.com/">友盟</a>相比，Flurry的优点是：</p>
-
-<ol>
-<li>使用Flurry的应用相对更多。根据Flurry和友盟的官方数据，有超过36万应用使用Flurry<sup><a href="http://www.flurry.com/big-data.html">1</a> </sup>，有超过18万应用使用友盟<sup><a href="http://www.umeng.com/analytics">2</a></sup>。</li>
-<li>Flurry是国外的公司，保持独立和专注，数据安全性更高；友盟现在已经<a href="http://tech.163.com/13/0426/16/8TDB6H1N00094MOK.html">被阿里收购</a>，当用户的应用涉及领域和阿里有类似或重合的时候，那么该统计数据有潜在的安全性问题。</li>
-</ol>
-
-
-<p>Flurry的缺点是：</p>
-
-<ol>
-<li>友盟因为是中国公司，所以对国内开发者非常友善，相关的文档或界面都是中文的。而Flurry并不提供中文的后台管理界面或相关文档。</li>
-<li>Flurry的服务器在国外，在响应速度上应该相对比友盟慢一些。但在测试中，Flurry服务器都保证了500ms左右的响应时间，还是比较好的。</li>
-</ol>
-
-
-<h2>总结</h2>
-
-<p>本文介绍了Flurry的基本功能以及如何做自定义的统计，最后与业界其它同类工具做了对比。我也将相关示例代码整理到github上，地址是：<a href="https://github.com/tangqiaoboy/FlurryUsageSample">https://github.com/tangqiaoboy/FlurryUsageSample</a>，愿本文能帮助你更加方便地做应用的统计和分析工作。</p>
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-14T13:51:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time> 
 
 <span class="categories">
   

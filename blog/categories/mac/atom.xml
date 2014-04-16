@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mac | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-04-13T00:11:54+08:00</updated>
+  <updated>2014-04-16T22:19:46+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -121,7 +121,8 @@ brew cask install mou
 brew cask install xtrafinder
 brew cask install charles
 brew cask install reveal
-brew cask install xscope</p>
+brew cask install xscope
+brew cask install sparrow</p>
 
 <p>```</p>
 

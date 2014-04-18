@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-04-17T14:33:50+08:00</updated>
+  <updated>2014-04-18T22:03:14+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,78 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第8期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/04/18/ios-weekly-8/"/>
+    <updated>2014-04-18T21:58:29+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/04/18/ios-weekly-8</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/etag-improve-ios-url-function">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：SDWebImage缓存图片的机制、使用Etag增强iOS的URL缓存功能、从Facebook看移动开发的发展、FuzzyAutocomplete插件等。</p>
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.overcode.hk/?p=449">《SDWebImage缓存图片的机制》</a>：文章详细介绍了SDWebImage对于图片的缓存逻辑的实现细节。</p></li>
+<li><p><a href="http://shiningio.com/2014/04/12/ios-url-cache-with-etags/">《使用Etag增强iOS的URL缓存功能》</a>：iOS下对于缓存的支持有很多，比如Core Data，它可以很方便的建模和操作本地SQLite数据库， NSUserDefaults则可以用来缓存一些用户配置等等。本篇主要谈谈使用Etag标签来解决iOS下的URL缓存问题。服务端使用的是Tornado，原生支持Etag，而且默认处于开启状态，因此在应用层面基本不需要额外的代码处理。客户端使用NSURLCache配合AFNetworking进行网络请求。</p></li>
+<li><p><a href="http://www.cnblogs.com/biosli/p/NSObject_inherit.html">《初始化阶段 —— load 和 initialize》</a>：文章介绍了load函数和initialize函数各自的加载顺序。最后文章总结出：将针对于类修改放在intialize中，将针对Category的修改放在load中。假如是修改系统的类，一般会通过添加Category来添加功能，如果修改initialize会导致原生的intialize不会执行，所以放在load中会比较妥当。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/04/13/objc_dig_interface/">《ObjC @interface的设计哲学与设计技巧》</a>：学习Objective-C语言时，尤其是先学过其他编程语言再来看Objective-C时，总会对Objective-C的类声明的关键字interface感到有点奇怪，在其它面向对象的语言中通常由class关键字来表示，而interface在Java中表示的却大约相当于Objective-C的protocol，这个关键字的区别究竟代表了Objective-C语言的设计者怎样的思想呢，在Objective-C类设计中需要注意哪些问题呢？作者在文章中对这个问题进行一些思考和探究。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook/">《从Facebook看移动开发的发展》</a>：作者从Facebook的故事切入，分享了未来移动开发快速发展中，给设计师和程序员带来的挑战。</p></li>
+<li><p><a href="http://imtx.me/archives/1888.html">《CoreData Object 变成 Fault 的另一种方式》</a>：CoreData是一个架构庞大、学习曲线比较陡峭的 iOS 组件，每次遇到问题都会对其有新的认识。文章分享了关于错误认知 Object（NSManagedObject）与 Context（NSManagedContext）的引用关系而导致的 Fault 问题。</p></li>
+<li><p><a href="http://maoa.cn/?post=414">《关于 Mac 右键菜单》</a>：Mac OS X Lion 的 Launch Service 用于关联应用程序和文件并维护最近打开的项目列表。在文件关联和右键菜单方面，每当系统安装一个新的应用程序，都会调用 Launch Service 的 API 注册关联的文件类型。文章详细介绍了这其中的过程。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="https://fnd.io">fnd.io</a>: fnd.io 是一个App Store的网页版，搜索速度非常快，可以用来代替itunes进行应用的检索。</p></li>
+<li><p><a href="https://www.shortcutfoo.com/">Shortcut Foo</a>：Shortcut Foo是一个训练你记忆快捷键的网站，除了包括iOS的第三方IDE AppCode的内容外，还包括vim，emacs, git等内容。</p></li>
+<li><p><a href="https://github.com/FuzzyAutocomplete/FuzzyAutocompletePlugin">FuzzyAutocomplete</a>：FuzzyAutocomplete是一个Xcode自动补全插件，刚刚更新到了2.0版本。它可以让你不需要再遵循从头匹配的原则来补全代码，而是随便输入你记得的关键字来进行匹配，整个插件的响应速度也非常快。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/granoff/Lockbox">Lockbox</a>: Lockbox是一个帮助你方便地将数据保存到keychain中的开源工具类。</p></li>
+<li><p><a href="https://github.com/nolimits4web/framework7/">Framework7</a>： Framework7 是一个功能齐全的 HTML 框架，用来构建 iOS7 应用程序。Framework7 允许你使用Javascript代码来实现应用的列表，侧边栏，弹出框等控件。</p></li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-18T21:58:29+08:00" pubdate data-updated="true">Apr 18<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[从Facebook看移动开发的发展]]></title>
@@ -2106,7 +2178,7 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 <li><p>不要写你的政治面貌。你以为现在互联网公司还看重你是否是D员吗? 就算看重，你怎么知道他们认为这是加分还是减分? 我知道有一家公司，只要是D员的都直接拒掉。所以，除非你是面试的国企，在互联网公司，这一条最好不要写，写了有可能是平分，也有可能是减分，加分的可能性极小。</p></li>
 <li><p>不要写各种奇怪的爱好。喜欢打Dota，喝酒，这类可能带来负面印象的爱好最好不要写。的确有些公司会有这种一起联机玩游戏或者喝酒的文化，不过除非你明确清楚对于目标公司，写上会是加分项，否则还是不写为妙。（顺便说一句，据我了解，阿里的朋友特别喜欢喝酒，面试阿里写上这个可能是加分的，但如果你要是遇到阿里里面正好不喝酒的Team或面试官，不要怪我。）</p></li>
 <li><p>不要使用word格式的简历，使用PDF的格式。我在招iOS程序员时，好多人的简历都是Word格式的，mac下的office那么难用，公司好多人机器上都没有mac office。我真怀疑这些人真是的想投简历么? PDF格式的简历通常能展现出简历的专业性。</p></li>
-<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#116;&#97;&#110;&#103;&#x71;&#105;&#x61;&#111;&#64;&#113;&#x71;&#46;&#x63;&#x6f;&#x6d;">&#116;&#x61;&#110;&#103;&#x71;&#105;&#97;&#x6f;&#x40;&#x71;&#x71;&#x2e;&#99;&#x6f;&#x6d;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
+<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#x6d;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#116;&#x61;&#x6e;&#103;&#113;&#x69;&#97;&#111;&#x40;&#113;&#113;&#46;&#99;&#111;&#x6d;">&#x74;&#97;&#x6e;&#103;&#x71;&#105;&#x61;&#111;&#64;&#113;&#113;&#46;&#99;&#111;&#x6d;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
 <li><p>不要写参加过某某培训公司的iOS培训，特别是那种一、两个月的速成培训。这对于我和身边很多面试官来说，绝对是负分。面试当中，经验是一个考查点，但是学习能力比经验重要多了，如果你是参加培训学习的iOS开发，很可能说明你没有自学能力。这一点似乎很多人都没有搞清楚，大家可以看看 <a href="http://weibo.com/jeffz">@老赵</a> 在他的个人博客上发表的 <a href="http://blog.zhaojie.me/2010/04/why-i-say-no-to-aptech.html">《为什么我要反对北大青鸟》</a>。 我在2年前也写过一篇博客<a href="http://blog.devtang.com/blog/2012/01/20/we-must-self-learning/">《我们必须自学》</a>，详细解释了我的看法。</p></li>
 </ol>
 
@@ -2203,187 +2275,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 
 
 <time datetime="2013-12-22T19:23:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS开发工具-网络封包分析工具Charles]]></title>
-    <link href="http://blog.devtang.com/blog/2013/12/11/network-tool-charles-intr/"/>
-    <updated>2013-12-11T14:03:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2013/12/11/network-tool-charles-intr</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/charles-logo.png"></p>
-
-<h2>简介</h2>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/network-packet-analysis-tool-charles">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<p><a href="http://www.charlesproxy.com/">Charles</a>是在Mac下常用的截取网络封包的工具，在做iOS开发时，我们为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析。Charles通过将自己设置成系统的网络访问代理服务器，使得所有的网络访问请求都通过它来完成，从而实现了网络封包的截取和分析。</p>
-
-<p>Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时。</p>
-
-<p>因此，该付费方案对广大用户还是相当友好的，即使你长期不付费，也能使用完整的软件功能。只是当你需要长时间进行封包调试时，会因为Charles强制关闭而遇到影响。</p>
-
-<p>Charles主要的功能包括：</p>
-
-<ol>
-<li>支持SSL代理。可以截取分析<a href="http://zh.wikipedia.org/wiki/%E5%AE%89%E5%85%A8%E5%A5%97%E6%8E%A5%E5%B1%82">SSL</a>的请求。</li>
-<li>支持流量控制。可以模拟慢速网络以及等待时间（latency）较长的请求。</li>
-<li>支持AJAX调试。可以自动将json或xml数据格式化，方便查看。</li>
-<li>支持AMF调试。可以将Flash Remoting 或 Flex Remoting信息格式化，方便查看。</li>
-<li>支持重发网络请求，方便后端调试。</li>
-<li>支持修改网络请求参数。</li>
-<li>支持网络请求的截获并动态修改。</li>
-<li>检查HTML，CSS和RSS内容是否符合<a href="http://validator.w3.org/">W3C标准</a>。</li>
-</ol>
-
-
-<!-- more -->
-
-
-<h2>安装Charles</h2>
-
-<p>去Charles的官方网站（<a href="http://www.charlesproxy.com">http://www.charlesproxy.com</a>）下载最新版的Charles安装包，是一个dmg后缀的文件。打开后将Charles拖到Application目录 下即完成安装。</p>
-
-<h2>安装SSL证书</h2>
-
-<p>如果你需要截取分析SSL协议相关的内容。那么需要安装Charles的CA证书。具体步骤如下：</p>
-
-<ol>
-<li>去 <a href="http://www.charlesproxy.com/ssl.zip">http://www.charlesproxy.com/ssl.zip</a> 下载CA证书文件。</li>
-<li>解压该zip文件后，双击其中的.crt文件，这时候在弹出的菜单中选择“总是信任”，如下所示：<img src="http://blog.devtang.com/images/charles-ca-1.png"></li>
-<li>从钥匙串访问中即可看到添加成功的证书。如下所示：
-<img src="http://blog.devtang.com/images/charles-ca-2.png"></li>
-</ol>
-
-
-<h2>将Charles设置成系统代理</h2>
-
-<p>之前提到，Charles是通过将自己设置成代理服务器来完成封包截取的，所以使用Charles的第一步是将其设置成系统的代理服务器。</p>
-
-<p>启动Charles后，第一次Charles会请求你给它设置系统代理的权限。你可以输入登录密码授予Charles该权限。你也可以忽略该请求，然后在需要将Charles设置成系统代理时，选择菜单中的 &ldquo;Proxy&rdquo; &ndash;> &ldquo;Mac OS X Proxy&#8221;来将Charles设置成系统代理。如下所示：</p>
-
-<p><img src="http://blog.devtang.com/images/charles-set-system-proxy.png"></p>
-
-<p>之后，你就可以看到源源不断的网络请求出现在Charles的界面中。</p>
-
-<h2>Charles主界面介绍</h2>
-
-<p><img src="http://blog.devtang.com/images/charles-home.jpg"></p>
-
-<p>Charles主要提供2种查看封包的视图，分别名为“Structure”和&#8221;Sequence&#8221;。</p>
-
-<ol>
-<li>Structure视图将网络请求按访问的域名分类。</li>
-<li>Sequence视图将网络请求按访问的时间排序。</li>
-</ol>
-
-
-<p>大家可以根据具体的需要在这两种视图之前来回切换。</p>
-
-<p>对于某一个具体的网络请求，你可以查看其详细的请求内容和响应内容。如果响应内容是JSON格式的，那么Charles可以自动帮你将JSON内容格式化，方便你查看。</p>
-
-<h2>过滤网络请求</h2>
-
-<p>通常情况下，我们需要对网络请求进行过滤，只监控向指定目录服务器上发送的请求。对于这种需求，我们有2种办法。</p>
-
-<ol>
-<li><p>在主界面的中部的Filter栏中填入需要过滤出来的关键字。例如我们的服务器的地址是：<a href="http://yuantiku.com">http://yuantiku.com</a> ,那么只需要在Filter栏中填入yuantiku即可。</p></li>
-<li><p>在Charles的菜单栏选择&#8221;Proxy&#8221;&ndash;>&ldquo;Recording Settings&#8221;，然后选择Include栏，选择添加一个项目，然后填入需要监控的协议，主机地址，端口号。这样就可以只截取目标网站的封包了。如下图所示：</p></li>
-</ol>
-
-
-<p><img src="http://blog.devtang.com/images/charles-filter-setting.jpg"></p>
-
-<p>通常情况下，我们使用方法1做一些临时性的封包过滤，使用方法2做一些经常性的封包过滤。</p>
-
-<h2>截取iPhone上的网络封包</h2>
-
-<p>Charles通常用来截取本地上的网络封包，但是当我们需要时，我们也可以用来截取其它设备上的网络请求。下面我就以iPhone为例，讲解如何进行相应操作。</p>
-
-<h4>Charles上的设置</h4>
-
-<p>要截取iPhone上的网络请求，我们首先需要将Charles的代理功能打开。在Charles的菜单栏上选择“Proxy”->&ldquo;Proxy Settings&#8221;，填入代理端口8888，并且勾上&#8221;Enable transparent HTTP proxying&rdquo; 就完成了在Charles上的设置。如下图所示:</p>
-
-<p><img src="http://blog.devtang.com/images/charles-proxy-setting.jpg"></p>
-
-<h4>iPhone上的设置</h4>
-
-<p>首先我们需要获取Charles运行所在电脑的IP地址，打开Terminal，输入<code>ifconfig en0</code>, 即可获得该电脑的IP，如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/charles-ifconfig.jpg"></p>
-
-<p>在iPhone的 “设置”->“无线局域网“中，可以看到当前连接的wifi名，通过点击右边的详情键，可以看到当前连接上的wifi的详细信息，包括IP地址，子网掩码等信息。在其最底部有“HTTP代理”一项，我们将其切换成手动，然后填上Charles运行所在的电脑的IP，以及端口号8888，如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/charles-iphone-setting.jpg"></p>
-
-<p>设置好之后，我们打开iPhone上的任意需要网络通讯的程序，就可以看到Charles弹出iPhone请求连接的确认菜单（如下图所示），点击“Allow”即可完成设置。</p>
-
-<p><img src="http://blog.devtang.com/images/charles-proxy-confirm.jpg"></p>
-
-<h2>截取SSL信息</h2>
-
-<p>Charles默认并不截取SSL的信息，如果你想对截取某个网站上的所有SSL网络请求，可以在该请求上右击，选择SSL proxy，如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/charles-ssl-add-host.jpg"></p>
-
-<p>这样，对于该Host的所有SSL请求可以被截取到了。</p>
-
-<h2>模拟慢速网络</h2>
-
-<p>在做iPhone开发的时候，我们常常需要模拟慢速网络或者高延迟的网络，以测试在移动网络下，应用的表现是否正常。Charles对此需求提供了很好的支持。</p>
-
-<p>在Charles的菜单上，选择&#8221;Proxy&#8221;&ndash;>&ldquo;Throttle Setting&#8221;项，在之后弹出的对话框中，我们可以勾选上“Enable Throttling”，并且可以设置Throttle Preset的类型。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/charles-throttle-setting.jpg"></p>
-
-<p>如果我们只想模拟指定网站的慢速网络，可以再勾选上图中的&#8221;Only for selected hosts&#8221;项，然后在对话框的下半部分设置中增加指定的hosts项即可。</p>
-
-<h2>修改网络请求内容</h2>
-
-<p>有些时候为了调试服务器的接口，我们需要反复尝试不同参数的网络请求。Charles可以方便地提供网络请求的修改和重发功能。只需要在以往的网络请求上点击右键，选择“Edit”，即可创建一个可编辑的网络请求。如下所示：</p>
-
-<p><img src="http://blog.devtang.com/images/charles-edit.jpg"></p>
-
-<p>我们可以修改该请求的任何信息，包括url地址，端口，参数等，之后点击“Execute”即可发送该修改后的网络请求（如下图所示）。Charles支持我们多次修改和发送该请求，这对于我们和服务器端调试接口非常方便。</p>
-
-<p><img src="http://blog.devtang.com/images/charles-execute-request.jpg"></p>
-
-<h2>总结</h2>
-
-<p>通过Charles软件，我们可以很方便地在日常开发中，截取和调试网络请求内容，分析封包协议以及模拟慢速网络。用好Charles可以极大的方便我们对于带有网络请求的App的开发和调试。</p>
-
-<p>参考链接：</p>
-
-<ol>
-<li><a href="http://www.charlesproxy.com/overview/about-charles/">Charles主要的功能列表</a></li>
-<li><a href="http://www.charlesproxy.com/">Charles官网</a></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-11T14:03:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time> 
 
 <span class="categories">
   

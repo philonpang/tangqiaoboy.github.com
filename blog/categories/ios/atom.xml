@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-04-18T22:03:14+08:00</updated>
+  <updated>2014-04-19T01:03:14+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[专门针对越狱iOS设备的盗号木马出现]]></title>
+    <link href="http://blog.devtang.com/blog/2014/04/19/ios-jailbreak-trojan/"/>
+    <updated>2014-04-19T00:27:38+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/04/19/ios-jailbreak-trojan</id>
+    <content type="html"><![CDATA[<p><img src="/images/jailbreak-warning.jpg"></p>
+
+<h3>关于木马</h3>
+
+<p>今天，国外的iOS开发者 <a href="https://twitter.com/iOn1c">@iOn1c</a> 发现一个来自中国的开发者"WANG XIN"签名的iOS平台的木马插件，该插件是一个名为<code>Unflod.dylib</code>动态链接库，可以将越狱机器上的Apple ID用户名和密码盗取，并且发送到指定服务器上。<a href="http://pastebin.com/raw.php?i=QxVRd2ha">这里</a>有该恶意插件的反汇编代码。<a href="https://www.sektioneins.de/en/blog/14-04-18-iOS-malware-campaign-unflod-baby-panda.html">这里</a>有关于该木马插件的详细分析。</p>
+
+<h3>检测与原理</h3>
+
+<p>检查你的设备是否有该木马的方法：用<code>iFile</code>查看<code>/Library/MobileSubstrate/DynamicLibraries/Unflod.dylib</code> 文件是否存在，如果存在，请立即删除并且重新启动设备。</p>
+
+<p>国外的越狱开发者也分析了一下该插件的工作原理，它通过监听所有的SSL协议，来截取用户的帐号和密码。所以理论上，该技术方案其实不光可以监听Apple ID帐号，还可以用来监听支付宝、微信等应用的帐号和密码。</p>
+
+<h3>感想</h3>
+
+<p>自从2010年7月26日，美国版权局修改《千禧年数字版权法》中的豁免条款，认可了iOS越狱的合法性以后，国外越狱社区就一直在为了自由地使用iPhone设备努力。国外的Cydia商店不但提供了大量优秀的免费软件，也提供了付费的越狱软件的下载。越狱在国外，是与盗版严格划清界限的，大多数的越狱开发者，也都是为了更好的使用iPhone而开发相关软件。</p>
+
+<p>但是在国内，大部分的越狱用户的目的还是停留在使用盗版软件的上，这也反映出国人的版权意识薄弱以及法律对于知识产权保护的不力。相关的盗版软件渠道，不但能够堂堂正正的宣传<a href="http://weibo.com/2786069543/yxpdRrpGB?mod=weibotime">“海量正版软件游戏，全部免费安装”</a>，而且有些公司还能被大公司以<a href="http://tech.sina.com.cn/i/baidubuy91/">上亿美金收购</a>。只能说国内的环境实在是太奇葩。</p>
+
+<p>以下是某助手的广告截图，你相信这些海量正版软件游戏，本身就是免费的么？</p>
+
+<p><img src="/images/kuaiyong.jpg"></p>
+
+<p>这次由中国开发者"WANG XIN"签名的这个木马插件，实在是让中国人自“太极”事件之后再次蒙羞。简单来说，就是坏了规矩。以后来自中国越狱开发者开发的正常越狱软件，将会受到更多潜在的“歧视”和“关照”。而国外的开发者看中国市场，会更加坚定地认为这是一个盗版横行的市场，从而想办法特别“关照”中国用户或者直接像很多国外的游戏厂商那样，直接忽视中国市场。</p>
+
+<h3>建议</h3>
+
+<p>最后回说安全这件事，笔者作为一个资深iOS开发者，建议一般普通用户，如果是为了用盗版软件就别越狱了，各种国内的越狱渠道都非常不安全的。</p>
+
+<p>如果是开发者们为了研究安全而越狱的，最好也只是在专门研究用的iTouch上使用，以避免可能的安全风险。</p>
+
+<p>虽然感觉那一天还比较遥远，但真心希望有一天，国内对于版权的保护能够开展起来，这对于整个互联网产品的发展，将会是一个极大的促进。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第8期]]></title>
@@ -202,60 +241,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 
 <ol>
 <li><a href="https://gist.github.com/raven/8553761">Breakpoints_v2.xcbkptlist</a>：作者介绍了如何不修改工程设置和源码，将reveal集成到调试环境中的办法。<a href="http://revealapp.com/">reveal</a>是一个动态调试和修改界面的工具。</li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第5期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/03/28/ios-weekly-5/"/>
-    <updated>2014-03-28T23:52:29+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/03/28/ios-weekly-5</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/reduce-ios-size">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期移动开发周报带来如下内容：减小iOS应用程序的大小，Quartz Composer的增强工具Origami的教程以及jQC工具等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="https://deals.iphoneincanada.ca/sales/the-mac-freebie-bundle-3-0">《The Mac Freebie Bundle 3.0》</a>：该网站提供了7个原本收费的Mac App的免费购买。笔者试用了一下其中的X-Mirage，它可以把iPhone投到Mac上，并提供录象功能，适合将演示导出成视频。另外那个页面有Bug，在购买时信用卡信息不用填写，留空就可以直接购买成功。</p></li>
-<li><p><a href="http://www.macstories.net/news/apple-testing-related-search-suggestions-on-the-app-store/">《App Store 将增加匹配相关搜索关键字的新功能》</a>：新增加的功能有助于提高相关关键词的点击量。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://nonomori.farbox.com/post/injection-plugin-for-xcode">《injection plugin for xcode》</a>：Injection Plugin For Xcode 是 Xcode 上的一个插件。利用它可以修改应用代码，实时在模拟器或实机上看到效果而不需要重启应用。作者介绍了该插件的详细使用方式。</p></li>
-<li><p><a href="http://www.pasanpremaratne.com/2014/03/15/UI-Prototyping-with-Quartz-Composer-and-Origami/">《UI Prototyping with Quartz Composer and Origami》</a>：由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集Origami，使得交互设计工作得到更好的辅助。不过另一方面，该工具仍然需要设计师具备一定的逻辑思维能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。本教程介绍了如何使用Quartz Composer 和 Origami来做交互设计。</p></li>
-<li><p>写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：
-<a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">Android篇</a>，<a href="http://t.cn/8sbXyOH">C++ 篇1</a>和<a href="http://t.cn/8sbXLyg">C++ 篇2</a>，<a href="http://t.cn/8FpEP4x">Go 篇</a>。</p></li>
-<li><p><a href="http://beyondvincent.com/blog/2014/03/26/cookbook-moving-table-view-cells-with-a-long-press-gesture/">《利用长按手势移动 Table View Cells》</a>：本教程中介绍了如何通过长按手势来移动 table view中的cell，这种操作方式就像苹果自家的天气 App 一样。</p></li>
-<li><p><a href="http://beyondvincent.com/blog/2014/03/24/reducing-the-size-of-my-app/">《减小iOS应用程序的大小》</a>：本文收集了一些减小程序安装包大小的相关技巧(当第一次下载和安装程序时)。如果是针对升级程序的话，可以看这篇文章: <a href="https://developer.apple.com/library/ios/qa/qa1779/">《减小iOS应用程序升级时所需下载的大小》</a>，这与第一次安装使用的工作原理有所不同。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">《NSNumber对象缓存以及Tagged Pointer》</a>：本文讨论了<code>NSNumber</code>对象的缓存以及苹果在64位系统引入的<code>Tagged Pointer</code>对象。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>：jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。Quartz Composer是苹果提供的一个交互设计工具。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/gbammc/WechatPayDemo">WechatPayDemo</a>: WechatPayDemo是一个非官方的微信支付Demo，基于微信SDK1.4.1构建。由于微信官方并没有提供支付功能的iOS Demo，加上官方的文档错误，使得本文作者花了较大精力调试。他希望开源这个工程来帮助其他iOS开发者少有一些弯路。</p></li>
-<li><p><a href="http://trawor.farbox.com/post/vz">微转iOS客户端和服务端</a>：微转是一个基于微博的数码设备平台，客户端和后台全部基于AVOSCloud服务实现。作者将其iOS客户端和服务端代码全部开源。</p></li>
-<li><p><a href="https://github.com/facebook/Tweaks">Tweaks</a>：Tweaks让开发者可以方便地对特定事物进行标记——比如动画效果的时间，或者是按钮的颜色，或者是图片的透明度——并在使用设备实际运行应用时让开发者方便地进行实时调整。</p></li>
 </ol>
 
 ]]></content>

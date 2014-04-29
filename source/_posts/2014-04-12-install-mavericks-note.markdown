@@ -56,7 +56,7 @@ categories: mac
 接下来的基本上是命令行的安装，Mac下管理命令行工具首先得装homebrew了：
 
 ``` bash
-ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)”
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 ```
 
 

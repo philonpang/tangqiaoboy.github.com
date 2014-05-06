@@ -9,8 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 我在IT公司工作了六年，有着三年面试官的经历。在面试中，我发现很多人都不能写好一份求职简历，所以今天不谈iOS开发，谈谈如何写一份针对互联网公司的求职简历。 我主要想分享的内容包括： 简历的页数不要超过两页（最好一页） 删掉不必要的信息
-如果你实在太牛逼，最多写2页 重要的信息写在最前面 &hellip;">
+  <meta name="description" content="2013这一年值得总结的有两方面的事情：一是技术分享和收获，二是创业感悟。 技术分享 我这一年在技术分享上投入了更多的时间，也得到了非常大的收获。 我主要的技术分享渠道包括： 个人博客。今年一共完成了24篇原创博客。相比于去年的36篇，少了很多。主要是因为很多精力分散到微信公共帐号上去了。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +75,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/01/2013-summary/">2013年个人总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-01T19:04:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2013这一年值得总结的有两方面的事情：一是技术分享和收获，二是创业感悟。</p>
+
+<h2>技术分享</h2>
+
+<p>我这一年在技术分享上投入了更多的时间，也得到了非常大的收获。</p>
+
+<p>我主要的技术分享渠道包括：</p>
+
+<ol>
+<li><p>个人博客。今年一共完成了24篇原创博客。相比于去年的36篇，少了很多。主要是因为很多精力分散到微信公共帐号上去了。不过今年文章的质量相比去年更高了，写了包括<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>和<a href="http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/">《谈Objective-C Block的实现》</a>这类比较深入的文章。</p></li>
+<li><p><a href="http://www.infoq.com/cn/">InfoQ网站</a> 。今年一共完成了7篇发表在<a href="http://www.infoq.com/cn/">InfoQ</a> 上的<a href="http://www.infoq.com/cn/author/%E5%94%90%E5%B7%A7">稿件</a> , 其中原创技术文章4篇，翻译技术新闻1篇，采访稿2篇。</p></li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/01/2013-summary/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -579,68 +631,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/28/a-look-inside-blocks/">谈Objective-C Block的实现</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-28T10:42:00+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p><a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">这里</a>有关于block的5道测试题，建议你阅读本文之前先做一下测试。</p>
-
-<p>先介绍一下什么是闭包。在wikipedia上，<a href="http://en.wikipedia.org/wiki/Closure_(computer_science">闭包的定义</a>)是:</p>
-
-<blockquote><p>In programming languages, a closure is a function or reference to a function together with a referencing environment—a table storing a reference to each of the non-local variables (also called free variables or upvalues) of that function.</p></blockquote>
-
-
-<p>翻译过来，闭包是一个函数（或指向函数的指针），再加上该函数执行的外部的上下文变量（有时候也称作自由变量）。</p>
-
-<p>block实际上就是Objective-C语言对于闭包的实现。
-block配合上dispatch_queue，可以方便地实现简单的多线程编程和异步编程，关于这个，我之前写过一篇文章介绍：<a href="http://blog.devtang.com/blog/2012/02/22/use-gcd/">《使用GCD》</a>。</p>
-
-<p>本文主要介绍Objective-C语言的block在编译器中的实现方式。主要包括：</p>
-
-<ol>
-<li>block的内部实现数据结构介绍</li>
-<li>block的三种类型及其相关的内存管理方式</li>
-<li>block如何通过capture变量来达到访问函数外的变量</li>
-</ol>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/07/28/a-look-inside-blocks/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -656,6 +646,10 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/05/06/ios-weekly-10/">iOS移动开发周报-第10期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/04/25/ios-weekly-9/">iOS移动开发周报-第9期</a>
@@ -699,10 +693,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     
       <li class="post">
         <a href="/blog/2014/03/14/ios-weekly-3/">iOS移动开发周报-第3期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/07/ios-weekly-2/">iOS移动开发周报-第2期</a>
       </li>
     
   </ul>

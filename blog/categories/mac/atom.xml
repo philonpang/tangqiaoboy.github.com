@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mac | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-04-27T17:43:18+08:00</updated>
+  <updated>2014-05-06T21:59:17+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -75,7 +75,7 @@
 <p>接下来的基本上是命令行的安装，Mac下管理命令行工具首先得装homebrew了：</p>
 
 <p><code>bash
-ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)”
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 </code></p>
 
 <p>安装完之后执行一下<code>brew doctor</code>进行一下自检，看有没有什么异常。没问题就开始安装axel, imagemagick, autojump等命令行工具：</p>

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-04-27T17:43:18+08:00</updated>
+  <updated>2014-05-06T21:59:17+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第10期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/05/06/ios-weekly-10/"/>
+    <updated>2014-05-06T21:48:24+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/05/06/ios-weekly-10</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/facebook-pop-opensource">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果发布 2014 年第二季度财报，Facebook将神奇动画引擎Pop开源，Objc.io中文翻译站建成，iOS 7.1.1 更新可能造成升级失败等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://tech2ipo.com/64670">《Facebook 发布应用内深度链接技术：AppLinks》</a>：Facebook 刚刚在 f8 开发者大会上正式发布了 AppLinks 技术。该链接技术允许开发者在任何内容中植入链接，在点击后将用户带到应用内的其他地方，或是另一款应用内、或另一款应用的商城下载页面。<a href="http://vimeo.com/93018959">这里</a>有 AppLinks 技术的介绍视频。</p></li>
+<li><p><a href="http://blog.jetbrains.com/objc/2014/04/appcode-3-0-eap-opens-with-an-integrated-ui-designer-and-improved-project-settings/">《AppCode 3.0的改进》</a>：jetbrains公司在其官方博客上介绍了对于AppCode 3.0的改进，他们在EAP中集成了项目设置和UI编辑。使得AppCode对Xcode的依赖性更小。在此之前，iOS工程中的UI编辑必须在Xcode中进行。</p></li>
+<li><p><a href="http://geek.csdn.net/news/detail/7534">《Facebook将神奇动画引擎Pop开源》</a>：Facebook 2月发布的新闻类应用Paper，因为其灵动的用户界面和交互，成为近来最令人眼前一亮的移动产品之一，而POP是Paper使用到的动效引擎。</p></li>
+<li><p><a href="http://weibo.com/1708947107/B1grIt913?mod=weibotime">iOS 7.1.1 更新，但可能造成升级失败</a>：iOS7.1.1
+进一步改进了 Touch ID 的指纹识别，修复了可能影响键盘响应能力的错误，修复了启用 VoiceOver后使用蓝牙键盘时出现的问题。笔者发现非常多朋友的iPhone通过OTA升级iOS 7.1.1失败了，需要连接itunes恢复。他们的手机均未越狱。当然，也有升级成功的，大家小心，升级前一定先备份好资料。</p></li>
+<li><p><a href="http://tech.sina.com.cn/it/2014-04-24/05149341652.shtml">《苹果发布 2014 年第二季度财报，收入同比增长 5%，净利润同比增7%》</a>：苹果公司发布了2014财年第二财季业绩。报告显示，苹果公司第二财季营收为456.46亿美元，比去年同期的436.03亿美元增长5%；净利润为102.23亿美元，比去年同期的95.47亿美元增长7%。苹果公司第二财季营收和每股收益均超出华尔街分析师预期，推动其盘后股价大幅上涨逾7%。</p></li>
+<li><p><a href="http://money.21cbh.com/2014/4-24/1MMDA2NTVfMTE0NzI1Mg.html">《Facebook第一季度财报：净利润同比增193%》</a>：4月24日Facebook发布了截至3月31日的2014财年第一季度未经审计财报。报告显示，Facebook第一季度营收为25.02亿美元，比去年同期的14.58亿美元增长72%；净利润为6.42亿美元，比去年同期的2.19亿美元增长193%。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://objccn.io/">Objc.io中文翻译站建成</a>：<a href="http://onevcat.com/">@onevcat</a>和<a href="http://weibo.com/fangyixiong?topnav=1&amp;wvr=5&amp;topsug=1">@方一雄</a>、<a href="http://weibo.com/nixzhu">@nixzhu</a>等几十个译者一起努力，完成了objc.io上的所有文章的翻译，这是一个objc.io的完整、准确、优雅的中文翻译版本，为中国 Objective-C 社区带来最佳实践和先进技术。整个过程花费了一个多月。这是值得每一个iOS开发者学习的资料。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-26-make-swipeable-table-view-cell-actions-without-going-nuts-scroll-views.md">《制作一个可以滑动操作的 Table View Cell》</a>：Apple 通过 iOS 7 的邮件（Mail）应用介绍了一种新的用户界面方案——向左滑动以显示一个有着多个操作的菜单。本教程将会向你展示如何制作一个这样的 Table View Cell，而不用因嵌套的 Scroll View 陷入困境。</p></li>
+<li><p><a href="http://objcio.com/blog/2014/04/25/mastering-the-icloud-document-store/">《精通iCloud文档存储》</a>：即便已经推出了3年，iCloud 文档存储依然是一个充满神秘、误解和抱怨的话题。iCloud 同步经常被批评不可靠且速度慢。虽然在 iCloud 的早期有一些严重的 bug，开发者们还是不得不学习有关文件同步的课程。文件同步事关重大，为应用开发带来了新方向，一个经常被低估的方向，比如进行同步服务相关的合作时，对于处理文件异步更改的需要。
+本文会介绍几个创建支持 iCloud 的应用时可能会遇到的一些绊脚石。</p></li>
+<li><p><a href="http://www.v2ex.com/t/109496">《关于用 OS X 做网站服务器》</a>：V2EX的作者分享了关于用 OS X 做网站服务器的经验。</p></li>
+<li><p><a href="http://ios-blog.co.uk/getting-started/xcode-5-tips-and-tricks/">《Xcode 5 – Tips and tricks》</a>：文章介绍了Xcode 5相关的常用快捷键。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-22-ui-activity-viewcontroller.md">《研究 UIActivityViewController》</a>：UIActivityViewController出现于 iOS 6，在应用里为分享和操作数据提供了一个统一的服务接口。作者详细介绍了UIActivityViewController的使用以及如何创建一个自定义 UIActivity。</p></li>
+<li><p><a href="http://www.36kr.com/p/211441.html">《小细节大作为：提高iOS访问权限通过率有这几个办法》</a>：Brenden Mulligan是群组照片聚合应用Cluster的创始人之一，兼设计师。作为一名产品设计师和企业家，Brenden的作品包括 OneSheet和ArtistData等。在文章中，Brenden讲述了原生应用Cluster是如何提高iOS访问权限通过率的。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://itunes.apple.com/cn/app/touchcolor/id859727780?mt=8">TouchColor</a>：TouchColor是一个由<a href="http://tw.weibo.com/100mango">@方秋枋</a>开发的优雅简洁，功能完善的取色器。它提供照片取色，照相取色，实时取色三大功能，并且在AppStore上免费提供下载。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/facebook/pop">POP</a>：POP是Paper使用到的动效引擎。</p></li>
+<li><p><a href="https://github.com/jerols/PopTut">PopTut</a>：一个使用POP做动效的示例工程。除了示例代码外，作者也提供了<a href="https://www.youtube.com/watch?v=ErJ4FnPa_Qk">视频教程</a>。</p></li>
+<li><p><a href="http://wangzz.github.io/blog/2014/04/25/githubyou-xiu-xiang-mu-ios/">《github优秀开源项目大全-iOS》</a>：作者搜集了在github上的一些优秀的开源项目。</p></li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-06T21:48:24+08:00" pubdate data-updated="true">May 6<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第9期]]></title>
@@ -348,7 +433,7 @@
 <p>接下来的基本上是命令行的安装，Mac下管理命令行工具首先得装homebrew了：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ruby -e <span class="err">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install<span class="k">)</span>”
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1991,190 +2076,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 
 
 <time datetime="2014-01-08T21:51:00+08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/summary/'>summary</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2013年个人总结]]></title>
-    <link href="http://blog.devtang.com/blog/2014/01/01/2013-summary/"/>
-    <updated>2014-01-01T19:04:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/01/01/2013-summary</id>
-    <content type="html"><![CDATA[<p>2013这一年值得总结的有两方面的事情：一是技术分享和收获，二是创业感悟。</p>
-
-<h2>技术分享</h2>
-
-<p>我这一年在技术分享上投入了更多的时间，也得到了非常大的收获。</p>
-
-<p>我主要的技术分享渠道包括：</p>
-
-<ol>
-<li><p>个人博客。今年一共完成了24篇原创博客。相比于去年的36篇，少了很多。主要是因为很多精力分散到微信公共帐号上去了。不过今年文章的质量相比去年更高了，写了包括<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>和<a href="http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/">《谈Objective-C Block的实现》</a>这类比较深入的文章。</p></li>
-<li><p><a href="http://www.infoq.com/cn/">InfoQ网站</a> 。今年一共完成了7篇发表在<a href="http://www.infoq.com/cn/">InfoQ</a> 上的<a href="http://www.infoq.com/cn/author/%E5%94%90%E5%B7%A7">稿件</a> , 其中原创技术文章4篇，翻译技术新闻1篇，采访稿2篇。</p></li>
-</ol>
-
-
-<!-- more -->
-
-
-<ol>
-<li>我的微信公共帐号：iOSDevTips，从2013年2月21日起，我坚持在这个微博公共帐号中发表iOS开发相关的技巧和文章。有时候是发送自己的文章，但大多数时候，都是一些别处看到的不错的分享转发给大家。坚持到现在快一年了，该公共帐号积累了5600名粉丝。我个人通过该公众帐号推送了140条iOS开发相关的文章。如果你做iOS开发，欢迎扫描下面的二维码关注我的公共帐号。</li>
-</ol>
-
-
-<p><img src="http://blog.devtang.com/images/weixin-qr.jpg"></p>
-
-<ol>
-<li>我的微博<a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> ，基本保证了不谈别的，只谈iOS开发。粉丝虽然没怎么涨（现在4400多粉），但是现在我的微博常常可以转发上百。2013年发了996条微博，总共被转发10120次，平均每条微博被转10次。这让我有一种莫名的感觉：我这个算是大号么？</li>
-</ol>
-
-
-<p><img src="http://blog.devtang.com/images/2013-summary-weibo.jpg"></p>
-
-<ol>
-<li>技术分享会。主要做了3次：
-
-<ul>
-<li>5月25日，在CocoaChina举办的线下聚会，分享了<a href="http://www.cocoachina.com/gamedev/misc/2013/0527/6280.html">粉笔网的架构</a>。</li>
-<li>11月23日，在<a href="http://club.alibabatech.org/salon_detail.htm?salonId=44">阿里技术沙龙</a> 分享了 《iOS程序的逆向与安全》，这里有 <a href="http://v.youku.com/v_show/id_XNjQyNTQ0NjIw.html">视频录像</a> 和 <a href="http://vdisk.weibo.com/s/duH0zpCAy2T-">PDF版讲稿</a>。</li>
-<li>11月30日，在<a href="http://blog.segmentfault.com/sunny/1190000000348727">DIFF论坛</a>分享了《如何将微信公众账号运营到5000粉丝》。</li>
-</ul>
-</li>
-</ol>
-
-
-<p>我主要的收获包括：</p>
-
-<ol>
-<li><p>认识了大量的iOS开发同行，从他们身上我学到了很多知识。我再也没有刚刚创业时一个人做iOS开发的孤独感了。遇到问题时，除了google和stackoverflow外，实在不行也可以找小伙伴们求助。</p></li>
-<li><p>因为向InfoQ投稿的原因，我有幸成为了InfoQ的兼职编辑，也认识了包括池建强、张龙等喜欢写作的大牛，交际圈子一下子扩大了不少。InfoQ时不时组织的编辑聚会也让我获得了一个了解大家不同声音和意见的渠道。对于一些行业信息，这种聚会中的小道消息总是比官方新闻要真实和靠谱得多。</p></li>
-<li><p>InfoQ为编辑和讲师专门做了一次演讲培训，让我关注到自己从未注意到的领域，也珍惜起每次演讲的机会，努力提高自己的演讲技能。</p></li>
-<li><p>因为写博客的关系，今年还持续收到来自出版社的约稿邀请，其实我一直想写一本iOS进阶开发方面的书，也一直在通过博客积累书稿的素材，所以最终水到渠成。我选择了和电子工业出版社签约。出版社的张老师<a href="http://weibo.com/208686914?topnav=1&amp;wvr=5&amp;topsug=1">永恒的侠少</a> 也特别的开明，使我几乎没有写稿的压力，能够平衡好工作和写作的时间。希望在2014年，这本书能够和读者见面。</p></li>
-<li><p>影响力变大了。以前我发一条微博，没有人转，现在随便就超过10次转发。有了影响力之后，大家有什么iOS开发的消息都会主动@我来求转发，使得我可以获得第一手的iOS开发相关的推荐。另外，当我说错什么话或者犯傻的时候，马上就有人来纠正我，使得我能够很快进步。</p></li>
-</ol>
-
-
-<h2>创业</h2>
-
-<h3>创业流水帐</h3>
-
-<p><img src="http://blog.devtang.com/images/2013-summary-fenbi-close.jpg"></p>
-
-<p>2013年我们改变了方向，慢慢关停了粉笔网，然后专注地做猿题库相关的开发和运营。作为一个创业者，我一开始就有创业不顺利的预期，所以这次调整还是挺能接受的。不但能接受，我还非常佩服CEO李勇的果断，我们在粉笔网上几乎没有耗费什么过多的精力，就全力投到新项目猿题库上面了。</p>
-
-<p>因为猿题库这个方向被证明还可行，所以2013是忙碌的一年，找到目标之后就是赶紧开发，我们在2013年春节上线了猿题库行测后，又花2个月上线了猿题库司考，之后花1个半月上线了通用课程平台。通用课程在7月1日上线，我们通过通用课程平台发布了猿题库考研政治、证券从业、初级会计、法律顾问、一级建造师5门课程。</p>
-
-<p><img src="http://blog.devtang.com/images/ape-arch-1.jpg"></p>
-
-<p>之后我们又花了1个月完成了猿题库iPad版的开发。我们选择了将App做成Universal的形式来发布，使其能同时支持iPhone和iPad。</p>
-
-<p>9月份我们发布了猿题库高考，之后我们将之前单独定制的猿题库行测和猿题库司考客户端融入到通用课程的项目中，使我们最终只用维护一套代码。</p>
-
-<p>再之后，我们进入了功能改进阶段。其中比较大的事情包括增加夜间模式，字体调节，搜索功能，离线下载，数据缓存逻辑。</p>
-
-<p>我们还将之前花大力气做的扫描答题卡功能去掉了，因为我们认为用户如果有精力在纸上填涂答题卡的话，还不如直接在手机上录入答案更为方便一些。虽然我之前在这个功能上耗费了大量精力，但我还是挺支持这个决定的。</p>
-
-<p>最后，我们在年底前顺利拿到了<a href="http://tech.sina.com.cn/i/2013-09-10/09528724637.shtml">B轮融资</a>。</p>
-
-<h3>工作效率与身体</h3>
-
-<p>我感觉通过番茄工作法和<a href="https://www.rescuetime.com/">Rescue Time软件</a>等软件，我已经将个人效率提高到极致了。我常常可以保持在电脑前面连续coding几个小时不分神，有些时候眼睛都发酸了，才想起要休息。另外，由于长期运动较少，我的肩膀问题比较多，动起来都会响。所以我不打算再提高效率了，再提高的话可能也不能提多少效率，而且会伤害身体。</p>
-
-<p>我们团队也尽量保证晚上不加班的文化，所以身体还算吃得消，就是锻炼太少了。圣诞节的时候朋友回国，帮我带了一个Fitbit Force，希望通过它提醒我每天坚持运动。</p>
-
-<p><img src="http://blog.devtang.com/images/2013-summary-fitbit-force.jpg"></p>
-
-<h3>个人能力的提高</h3>
-
-<p>随着自己在iOS开发上的积累，在开发上的提高越来越慢，大部分的开发工作对我来说都不太有挑战了。而开发任务排得相当满，几乎没有留给我充电和学习的时间。我还是一个喜欢让自己一直处在学习状态的人，所以基本上就只有利用晚上和周末的时候来学习和积累了。</p>
-
-<p>写作和分享是一个很好的激励方式，促进我通过发表文章的方式完成新知识的学习。不过这其实挺不能长久的，我还是希望是在工作中学习和进步，因为每天分配给工作的时间是最多的，业余时间毕竟相对较少。</p>
-
-<p>我想对于创业的各种苦来说，这算是一个吧。对于这种苦，最好的解决方法就是努力让公司做大做强，只有公司做大了，你才有机会招更多人，同时做更多更有技术含量的事情。</p>
-
-<h3>拆分scrum团队</h3>
-
-<p>随着团队人数的扩张，我们尝试了一次全体参加的计划会议，结果发现效率很低，于是我们将原来的srcum团队拆分成了2个团队，一个客户端团队，一个服务器端团队。团队拆分保证了每个团队都在10人以内的规模，沟通和讨论的效率都高了很多。强烈建议有同样困扰的朋友们尝试一下拆分团队，确实能使得会议更加高效。</p>
-
-<h3>优化发布速度</h3>
-
-<p>我们从产品进入优化迭代期开始，尝试进行每周发布一个Beta版本的发布。Beta版本通过我们的论坛发布，越狱的iPhone用户以及Android用户可以通过论坛下载到最新的Beta版本。每完成4个Beta版，我们会将功能提交到AppStore审核。</p>
-
-<p>每周一个Beta版本发布有利于保证质量，因为相比以前一个月一个版本的提测速度，测试可以尽早介入到新功能的测试中，有助于提早发现和修复bug。</p>
-
-<p>但是每周一个Beta版本其实是压缩了开发时间，因为需要留时间给测试同事测试以及修复bug，以及最终要和服务器端配合上线。每周真正的开发时间通常只有3天半。</p>
-
-<p>大部分时候，我们都会由于时间紧迫造成提测时间较晚，最终又造成修复bug时间不够，于是每周都会有一两天工作到很晚，上线Beta版那天，常常会到晚上10点以后，把实在没精力修复的Bug Later掉，才能完成上线。这样的状态非常伤身体，这段时间也是我比较难受的时期。</p>
-
-<p>每周一个Beta版还有一个问题是无法保证那种大功能的开发，例如我们做离线下载功能，3天半根本无法完成，于是只能将这个功能在两周后的Beta版中提交。这又会涉及多分支的开发和管理，分支间来回切换，又会降低一些开发效率。</p>
-
-<p>整体来说，每周一个Beta版的发布有利于保证产品质量，但是会造成整体的开发进度稍慢于每2周或每月一个版本的发布。如果又要保证开发进度一样，每周的Beta版发布将带来更多的加班工作。</p>
-
-<h3>控制自己的情绪，找准自己的定位</h3>
-
-<p>我有一段时间过于有责任感了，感觉什么事情都应该关心，特别是项目进度。那段时间，我长期处于无法保证按时上线的焦虑状态，并且对产品和美术的调整异常敏感，因为他们的一句话，就表示我又要加班了。</p>
-
-<p>我花了很长时间去转变自己对于项目按时上线的态度，现在，我更加关注自己做为开发者的身份，而不再过多考虑项目在进度上的问题。</p>
-
-<p>当我发现我不再关注进度时，我的开发效率反而提高了，因为心情不再过多地受到进度或需求调整地影响了。这件事情也让我想清楚了要找到自己的位置，不应该为自己不能负责的事情而焦虑。专注于自己能改变和努力的地方，其它事情就应该相信对应的负责人，让他们来操心。</p>
-
-<p>创业对于人心智的磨练还是挺大的，我相信我以后会更加容易控制自己的情绪和行为。</p>
-
-<h2>其它</h2>
-
-<h3>读书</h3>
-
-<p>今年读的主要是iOS方面的书籍，包括如下这些，其中重点推荐<a href="http://as.wiley.com/WileyCDA/WileyTitle/productCd-1118818342.html">《iOS 7 Programming Pushing the Limits》</a></p>
-
-<ul>
-<li><a href="http://as.wiley.com/WileyCDA/WileyTitle/productCd-1118818342.html">《iOS 7 Programming Pushing the Limits》</a></li>
-<li>《OpenCV 2 Computer Vision Application Programming Cookbook》</li>
-<li>《Cocoa设计模式》</li>
-<li><a href="http://item.jd.com/11315341.html">《黑客攻防技术宝典·iOS实战篇》</a></li>
-<li><a href="http://item.jd.com/11329636.html">《Web之困：现代Web应用安全指南》</a></li>
-<li><a href="http://item.jd.com/11258970.html">《Objective-C高级编程：iOS与OS X多线程和内存管理》</a></li>
-<li><a href="http://book.douban.com/subject/10555435/">《七周七语言》</a></li>
-<li>《不抱怨的世界》</li>
-</ul>
-
-
-<h3>感谢</h3>
-
-<p>2013年有很多贵人帮助，自己才能快速成长，在此感谢2013年陪我一起走过的家人和朋友，和我一起努力的公司同事。</p>
-
-<p>特别要感谢的是：体贴的老婆和岳母大人，宽容细致的老大郭常圳，iOS开发群里的小伙伴（特别是<a href="http://lextang.com/">Lexrus</a>)，InfoQ的老大Kevin和编辑杨Sai、水哥，MacTalk作者<a href="http://weibo.com/idreamland?topnav=1&amp;wvr=5&amp;topsug=1">@池建强</a>，小道消息作者<a href="http://weibo.com/fenng?topnav=1&amp;wvr=5&amp;topsug=1">@Fenng</a>，<a href="http://weibo.com/208686914?topnav=1&amp;wvr=5&amp;topsug=1">@永恒的侠少</a>，<a href="http://weibo.com/jiajungao?topnav=1&amp;wvr=5&amp;topsug=1">@gaosboy</a>，<a href="http://weibo.com/neat9?topnav=1&amp;wvr=5&amp;topsug=1">@neat爷</a>，张兰。谢谢你们～</p>
-
-<h3>个人Milestone</h3>
-
-<ul>
-<li>开始写iOS开发的书</li>
-<li>创业得到了<a href="http://tech.sina.com.cn/i/2013-09-10/09528724637.shtml">B轮融资</a></li>
-</ul>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-01T19:04:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time> 
 
 <span class="categories">
   

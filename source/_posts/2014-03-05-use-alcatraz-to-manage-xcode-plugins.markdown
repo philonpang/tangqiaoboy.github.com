@@ -35,15 +35,17 @@ rm -rf ~/Library/Application\ Support/Alcatraz
 
 安装成功后重启Xcode，就可以在Xcode的顶部菜单中找到Alcatraz，如下所示：
 
-![](http://alcatraz.io/images/menu@2x.png)
+{% img /images/alcatraz-menu.jpg %}
 
 点击“Package Manager”，即可启动插件列表页面，如下所示：
 
-![](http://alcatraz.io/images/screenshot@2x.png)
+{% img /images/alcatraz-home.jpg %}
+
 
 之后你可以在右上角搜索插件，对于想安装的插件，点击其左边的图标，即可下载安装，如下所示，我正在安装`KImageNamed`插件：
 
 {% img /images/alcatraz-install.jpg %}
+
 
 安装完成后，再次点击插件左边的图标，可以将该插件删除。
 

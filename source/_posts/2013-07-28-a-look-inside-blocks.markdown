@@ -396,8 +396,8 @@ int main(int argc, const char * argv[])
 希望本文能加深你对于block的理解。我在学习中，查阅了以下文章，一并分享给大家。祝大家玩得开心～
 
  * [A look inside blocks: Episode 1](http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-1/)
- * [A look inside blocks: Episode 2](<http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-2/)
- * [A look inside blocks: Episode 3](<http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/)
+ * [A look inside blocks: Episode 2](http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-2/)
+ * [A look inside blocks: Episode 3](http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/)
  * [对Objective-C中Block的追探](http://www.cnblogs.com/biosli/archive/2013/05/29/iOS_Objective-C_Block.html)
  * [LLVM中block实现源码](https://llvm.org/svn/llvm-project/compiler-rt/trunk/BlocksRuntime/Block_private.h)
  * [objective-c-blocks-quiz](http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/)

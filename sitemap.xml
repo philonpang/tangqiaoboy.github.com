@@ -194,7 +194,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/04/07/tricks-in-iap/</loc>
-        <lastmod>2014-05-06T23:00:40+08:00</lastmod>
+        <lastmod>2014-05-10T09:44:24+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/04/29/the-missing-objc-keywords/</loc>
@@ -230,7 +230,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/</loc>
-        <lastmod>2014-05-06T23:00:40+08:00</lastmod>
+        <lastmod>2014-05-10T22:04:06+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/08/11/ios-asian-font-download-introduction/</loc>
@@ -302,7 +302,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2014/03/05/use-alcatraz-to-manage-xcode-plugins/</loc>
-        <lastmod>2014-05-06T23:00:40+08:00</lastmod>
+        <lastmod>2014-05-10T09:37:44+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2014/03/07/ios-weekly-2/</loc>
@@ -363,12 +363,16 @@
         <lastmod>2014-05-08T21:47:38+08:00</lastmod>
     </url>
     <url>
+        <loc>http://blog.devtang.com/blog/2014/05/16/ios-weekly-11/</loc>
+        <lastmod>2014-05-16T21:39:30+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://blog.devtang.com/blog/archives/</loc>
-        <lastmod>2014-05-08T21:47:38+08:00</lastmod>
+        <lastmod>2014-05-16T21:39:30+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/</loc>
-        <lastmod>2014-05-08T21:47:38+08:00</lastmod>
+        <lastmod>2014-05-16T21:39:30+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/robots.txt</loc>

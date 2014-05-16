@@ -4,7 +4,7 @@
   <title><![CDATA[Category: weekly | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/weekly/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-05-08T21:51:02+08:00</updated>
+  <updated>2014-05-16T21:48:28+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,61 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第11期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/05/16/ios-weekly-11/"/>
+    <updated>2014-05-16T21:36:16+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/05/16/ios-weekly-11</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/ios-app-security-development">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：iOS应用安全开发概述，Collection View 动画，可变参数列表的实现原理，XcodeBoost插件等。</p>
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security">《iOS应用安全开发，你不知道的那些事》</a>：iOS应用由于其直接运行在手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文从网络安全、本地文件和数据安全、源代码安全三个方面，阐述iOS应用在安全性上遇到的挑战。</p></li>
+<li><p><a href="http://objccn.io/issue-12-5/">《Collection View 动画》</a>：<code>UICollectionView</code> 和相关类的设置非常灵活和强大。但是灵活性一旦增强，某种程度上也增加了其复杂性： <code>UICollectionView</code> 比老式的 <code>UITableView</code> 更有深度，适用性也更强。本文的第一部分将集中讨论并举例说明如何用不同的类和方法来共同帮助实现一些常见的 <code>UICollectionView</code> 动画。在第二部分，我们将看一下带有 collection views 的 view controller 转场动画以及在 <code>useLayoutToLayoutNavigationTransitions</code> 可用时使用其进行转场，如果不可用时，我们会实现一个自定义转场动画。</p></li>
+<li><p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">《Variable Argument Lists》</a>：可变参数函数（Variadic Function），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的。本文讨论了其具体的实现内部原理。最后作者<a href="http://weibo.com/lancy1014">晨钰Lancy</a>介绍了其开源的一个能够接收block作为回调的自定义的<a href="https://github.com/lancy/cyalertview">AlertView组件</a>。</p></li>
+<li><p><a href="http://imoldman.github.io/blog/2014/04/30/why-assert-enabled-under-release-in-xcode/">《assert出问题了》</a>：作者分享了在Xcode中使用Assert时需要注意的问题。</p></li>
+<li><p><a href="http://stackoverflow.com/questions/7385439/exception-thrown-in-nsorderedset-generated-accessors">《CoreData的坑》</a>：<a href="http://weibo.com/pinxue">pinxue</a>分享了一个持续3年都没有修复的CoreData的Bug。</p></li>
+<li><p><a href="http://www.taofengping.com/2014/05/07/multi-similar-application/#.U3N25q2SyrJ">《使用cocoapods创建多个类似工程的尝试》</a>：因为业务的需要，作者做了一批类似无聊图的App，应用本身没有复杂的逻辑，所有类“无聊图”的应用都针对特定的用户群，设计了不同界面风格的，比如适合宅男的女神应用，适合吃货的美食应用等等诸如此类，大概一共七八个。作者介绍了其使用cocoapods创建多个类似工程的尝试。</p></li>
+<li><p><a href="http://miao.hu/2012/02/26/osx-exp-share/">《Mac 软件和学习经验分享》</a>：作者介绍了一些优秀的 Mac 软件和学习Mac的经验。</p></li>
+<li><p><a href="http://subjc.com/">subjc.com</a>：subjc.com是一个介绍iOS界面编程技巧的网站。网站中有动画实例分析以及实现的代码。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="https://github.com/fortinmike/XcodeBoost">XcodeBoost</a>：XcodeBoost包含多个辅助修改代码的小功能，比如：</p>
+
+<ol>
+<li>可以在.m文件中复制方法实现，然后将该方法的定义粘贴到对应的.h文件中</li>
+<li>可以在某一个源文件中直接输入正则表达式查找</li>
+<li>可以复制粘贴代码时不启用Xcode的自动缩进功能（Xcode的自动缩进经常出问题，造成已经调整好的代码缩进，因为粘贴时被Xcode调整坏了）</li>
+</ol>
+</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/monoclesociety/eggscellent">Eggscellent开源</a>：Eggscellent是Mac上的开源的番茄钟应用。</p></li>
+<li><p><a href="https://github.com/viewfinderco/viewfinder">Viewfinder</a>：移动支付公司 Square 将去年收购的照片应用 Viewfinder 开源了，包含服务端、iOS 和 Android 应用代码。<a href="http://corner.squareup.com/2014/05/open-sourcing-viewfinder.html">这里</a>有该项目的介绍。</p></li>
+<li><p><a href="https://github.com/kevinzhow/PNChart">PNChart</a>：作者<a href="http://weibo.com/kevinzhow">周楷雯Kevin</a>发布了PNChart 0.5版本，提供了一个更漂亮的Pie Chart界面。</p></li>
+<li><p><a href="https://atom.io/">文本编辑器Atom开源</a>：GitHub将其开发的文本编辑器Atom开源。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第10期]]></title>
@@ -211,58 +266,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 
 <ol>
 <li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第6期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/04/03/ios-weekly-6/"/>
-    <updated>2014-04-03T21:37:15+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/04/03/ios-weekly-6</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-change-account-price">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果修改了中国区开发者帐号的付费价格、苹果调整了5个地区的AppStore应用价格以避免利用汇率的套利、iPhone版Office应用免费等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p>苹果在最近修改了中国区的开发者帐号（Developer Program）的付费方式，开始支持人民币支付并取消了美元支付。不过相对于以前99$每年的注册费用，现在需要使用688人民币。按现在的市场价汇率计算，相比以前，开发者需要多支付将近70元费用。</p></li>
-<li><p><a href="http://iosdevelopertips.com/app-store/microsoft-office-mobile-iphone-now-free.html">iPhone版Office免费</a>：微软将自己旗下的iPhone版Office的价格修改为免费，下载地址是<a href="https://itunes.apple.com/cn/app/microsoft-office-mobile/id541164041?mt=8">这里</a>。</p></li>
-<li><p>苹果于4月1日给开发者发邮件称：将会调整包括南非在内的5个地区的AppStore应用价格。在这之前，由于南非的货币持续贬值，一些投机分子，利用苹果商店在汇率上的漏洞，借助苹果商店汇率和实际汇率的差价来倒卖商品。<a href="http://daily.zhihu.com/story/3350426">《利用苹果商店规则漏洞的灰色地下产业链》</a>揭露了该行为。</p></li>
-<li><p><a href="https://github.com/showcases/projects-that-power-github-for-mac">《Projects that power GitHub for Mac》</a>：GitHub在其官方网站上分享了在开发Mac版GitHub客户端时使用的第三方库，共30个。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://www.objc.io/issue-11/">《面向iOS开发者的Android教程》</a>：著名的iOS原创教程网站objc.io最近推出了一期介绍Android的教程。由于作者都是具有iOS开发经验的，所以教程内容特别适合于已经有iOS开发经验的读者。文章许多知识的讲解也会拿iOS开发中已有的概念来做对比，加深读者理解。</p></li>
-<li><p><a href="http://billwang1990.github.io/blog/2014/03/26/nsassert-vc-nscassert/">《小心NSAssert》</a>：作者分享了在block中使用<code>NSAssert</code>时需要小心循环引用的问题。</p></li>
-<li><p><a href="http://blog.xcodev.com/archives/issus-2014-4-2/">《最近开发中遇到的问题汇总》</a>：文章依次介绍了最近开发中遇到的问题，包括：《UIButton在Disabled状态下标题混乱的问题》、《含软连字符的字符串计算显示长度的问题》和《UINavigationBar左右两边按钮可同时点击的问题》。</p></li>
-<li><p><a href="http://studentdeng.github.io/blog/2014/03/22/corebluetooth/">《Core Bluetooth Concept》</a>：作者介绍了在iOS设备中使用<code>CoreBluetooth</code>API来实现基于蓝牙4.0通讯相关的基础知识和示例工程。</p></li>
-<li><p><a href="http://billwang1990.github.io/blog/2014/03/31/nshashtable-and-nsmaptable/">《NSHashTable &amp; NSMapTable》</a>：作者简单介绍了一下iOS开发中相对于<code>NSDictionary</code>和<code>NSSet</code>来说，不常被人使用的<code>NSHashTable</code>和<code>NSMapTable</code>的相关知识。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="https://github.com/Galeas/CocoaPodUI">CocoaPodUI</a>：<code>CocoaPodUI</code>是一个Xcode中的GUI插件，为iOS工程第三方依赖管理工具<code>CocoaPods</code>提供UI管理界面。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><a href="https://gist.github.com/raven/8553761">Breakpoints_v2.xcbkptlist</a>：作者介绍了如何不修改工程设置和源码，将reveal集成到调试环境中的办法。<a href="http://revealapp.com/">reveal</a>是一个动态调试和修改界面的工具。</li>
 </ol>
 
 ]]></content>

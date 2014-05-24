@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-05-16T21:48:28+08:00</updated>
+  <updated>2014-05-24T10:12:10+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第12期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/05/24/ios-weekly-12/"/>
+    <updated>2014-05-24T10:04:19+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/05/24/ios-weekly-12</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/apple-renew-wwdc2014-application">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果更新WWDC 2014应用、GCD 深入理解、objc.io第12期翻译等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-05-22/08099393630.shtml">《苹果更新WWDC 2014应用 公布主题演讲时间》</a>：2014年苹果公司全球开发者大会(WWDC)将于6月2日举行。5月21日，他们更新了iOS版WWDC官方应用，并将公布主题演讲时间。</p></li>
+<li><p><a href="https://github.com/orta/wwdc_parties_2014">《各种WWDC2014现场聚会》</a>：该项目列出了各种第三方公司或组织打算在WWDC时候进行的线下聚会。</p></li>
+<li><p><a href="http://weicdsq.lofter.com/post/20a5c5_13cc45e">《关于发现的一个流氓黑客恶意盗号插件的源头追踪》</a>：威锋技术组分享了追踪一个恶意盗号插件源头的过程。从中我们可以看到越狱手机市场有多么混乱和危险。笔者认为，如果不是研究安全为目的，就不要越狱，特别是不要为了装盗版而越狱。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-05-14-grand-central-dispatch-in-depth-part-2.md">《GCD 深入理解：第二部分》</a>：本文是由<a href="http://weibo.com/riven0951">Riven</a>和<a href="https://twitter.com/nixzhu">@nixzhu</a>共同翻译的GCD 深入理解的第二部分。文章更加深入地介绍了 GCD 的高级用法，包括 Dispatch Group 、并发的危害、正确的阻塞方式、信号量以及 Dispatch Source 等。</p></li>
+<li><p><a href="http://objccn.io/issue-12/">《objc.io第12期翻译：动画》</a>：本期翻译涵盖了iOS动画的方方面面——从 UIView 动画，Core Animation，一直到从零打造一个你自己定义的动画。文章还讨论了 View Controller 和 Collection View 有关的动画，以及如何让动画变得可以交互。</p></li>
+<li><p><a href="http://bomberstudios.com/post/54587126654/using-sketch-mirror-liveview-silkscreen-skala">《Using Sketch Mirror, LiveView, SilkScreen, Skala Preview, AirServer &amp; others via USB》</a>：文章介绍了用 USB 热点共享提高演示时 iPhone 画面帧数的技巧，该技巧可用于在使用AirServer或Sketch mirror等应用时，在wifi糟糕的环境下解决数据传输太慢的问题。</p></li>
+<li><p><a href="http://highperformancecoredata.com/">《High Performance Core Data》</a>：文章列出了讲Core Data 性能方面的各种资源，包括博客、Podcast以及开源代码。</p></li>
+<li><p> <a href="http://nsscreencast.com/">NSScreenCast</a>：NSScreenCast是一个风格有趣的iOS教程网站。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="https://github.com/ideo/avocado/">avocado</a>：avocado是一个基于Facebook Origami的交互设计工具集。其由<a href="http://www.ideo.com/">IDEO</a>开源，可用于做交互原型设计。</p></li>
+<li><p><a href="http://resolution.im/">resolution.im</a>：resolution.im是一个提问各种iOS设备尺寸信息以及设计模版的网站。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/Ciechan/BCMeshTransformView">BCMeshTransformView</a>：BCMeshTransformView是一个用于实现Mesh变换效果的开源库，关于Mesh变换，可以查阅<a href="http://ciechanowski.me/blog/2014/05/14/mesh-transforms/">这篇博文</a>。</p></li>
+<li><p><a href="https://github.com/hfossli/AGGeometryKit-POP">AGGeometryKit-POP</a>：AGGeometryKit-POP是一个基于facebook POP的动效框架，这里有一个它能提供的动效<a href="http://vimeo.com/95383807">演示视频</a>。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第11期]]></title>
@@ -356,45 +409,6 @@ objc_release(v9);
 <li><p><a href="https://github.com/intentkit/IntentKit">IntentKit</a>：IntentKit是一个方便你处理第三方的URL Scheme的工具。</p></li>
 </ol>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[专门针对越狱iOS设备的盗号木马出现]]></title>
-    <link href="http://blog.devtang.com/blog/2014/04/19/ios-jailbreak-trojan/"/>
-    <updated>2014-04-19T00:27:38+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/04/19/ios-jailbreak-trojan</id>
-    <content type="html"><![CDATA[<p><img src="/images/jailbreak-warning.jpg"></p>
-
-<h3>关于木马</h3>
-
-<p>今天，国外的iOS开发者 <a href="https://twitter.com/iOn1c">@iOn1c</a> 发现一个来自中国的开发者"WANG XIN"签名的iOS平台的木马插件，该插件是一个名为<code>Unflod.dylib</code>动态链接库，可以将越狱机器上的Apple ID用户名和密码盗取，并且发送到指定服务器上。<a href="http://pastebin.com/raw.php?i=QxVRd2ha">这里</a>有该恶意插件的反汇编代码。<a href="https://www.sektioneins.de/en/blog/14-04-18-iOS-malware-campaign-unflod-baby-panda.html">这里</a>有关于该木马插件的详细分析。</p>
-
-<h3>检测与原理</h3>
-
-<p>检查你的设备是否有该木马的方法：用<code>iFile</code>查看<code>/Library/MobileSubstrate/DynamicLibraries/Unflod.dylib</code> 文件是否存在，如果存在，请立即删除并且重新启动设备。</p>
-
-<p>国外的越狱开发者也分析了一下该插件的工作原理，它通过监听所有的SSL协议，来截取用户的帐号和密码。所以理论上，该技术方案其实不光可以监听Apple ID帐号，还可以用来监听支付宝、微信等应用的帐号和密码。</p>
-
-<h3>感想</h3>
-
-<p>自从2010年7月26日，美国版权局修改《千禧年数字版权法》中的豁免条款，认可了iOS越狱的合法性以后，国外越狱社区就一直在为了自由地使用iPhone设备努力。国外的Cydia商店不但提供了大量优秀的免费软件，也提供了付费的越狱软件的下载。越狱在国外，是与盗版严格划清界限的，大多数的越狱开发者，也都是为了更好的使用iPhone而开发相关软件。</p>
-
-<p>但是在国内，大部分的越狱用户的目的还是停留在使用盗版软件上，这也反映出国人的版权意识薄弱以及法律对于知识产权保护的不力。相关的盗版软件渠道，不但能够堂堂正正的宣传<a href="http://weibo.com/2786069543/yxpdRrpGB?mod=weibotime">“海量正版软件游戏，全部免费安装”</a>，而且有些公司还能被大公司以<a href="http://tech.sina.com.cn/i/baidubuy91/">上亿美金收购</a>。只能说国内的环境实在是太奇葩。</p>
-
-<p>以下是某助手的广告截图，你相信全部苹果游戏应用，本身就是免费的么？</p>
-
-<p><img src="/images/kuaiyong.jpg"></p>
-
-<p>这次由中国开发者"WANG XIN"签名的这个木马插件，实在是让中国人自“太极”事件之后再次蒙羞。简单来说，就是坏了规矩。以后来自中国越狱开发者开发的正常越狱软件，将会受到更多潜在的“歧视”和“关照”。而国外的开发者看中国市场，会更加坚定地认为这是一个盗版横行的市场，从而想办法特别“关照”中国用户或者直接像很多国外的游戏厂商那样，直接忽视中国市场。</p>
-
-<h3>建议</h3>
-
-<p>最后回说安全这件事，笔者作为一个资深iOS开发者，建议一般普通用户，如果是为了用盗版软件就别越狱了，各种国内的越狱渠道都非常不安全的。</p>
-
-<p>如果是开发者们为了研究安全而越狱的，最好也只是在专门研究用的iTouch上使用，以避免可能的安全风险。</p>
-
-<p>虽然感觉那一天还比较遥远，但真心希望有一天，国内对于版权的保护能够开展起来，这对于整个中国互联网产业的发展，将会是一个极大的促进。</p>
 ]]></content>
   </entry>
   

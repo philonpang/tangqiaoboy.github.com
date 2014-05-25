@@ -9,7 +9,8 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
+  <meta name="description" content="前言 上次将我的iMac硬盘换成SSD后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果： 启动时按住Shift键进入安全模式（没能进入）
+同时按下 Command、Option、P &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -75,6 +76,225 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/12/install-mavericks-note/">Mac重装记录</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-12T17:00:20+08:00" pubdate data-updated="true">Apr 12<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>上次将我的<a href="http://blog.devtang.com/blog/2014/01/26/add-ssd-to-old-imac/">iMac硬盘换成SSD</a>后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果：</p>
+
+<ol>
+<li>启动时按住Shift键进入安全模式（没能进入）</li>
+<li>同时按下 Command、Option、P 与 R 键不放（成功执行，但还是无法进入系统）</li>
+<li>按住 Command 键及 S 键，进入单用户模式（成功进入，但是把“/资源库/StartupItems”与“/系统/资源库/StartupItems”都清除，以及清除了<code>com.apple.loginwindow.plist</code> 和<code>com.apple.windowserver.plist</code>后，但还是无法通过正常启动进入系统）</li>
+<li>在单用户模式中修复磁盘，没有发现磁盘问题</li>
+</ol>
+
+
+<p>于是我做了一次覆盖安装，之后可以使用了，但昨天电脑又无法进入系统了。于是我打算格盘后做一次完全的重装，在此记录下自己的重装过程。</p>
+
+<h2>备份数据</h2>
+
+<p>由于我能够通过启动时按Command 键及 S 键，进入单用户模式，所以我首先把自己未提交的工程代码通过U盘备份出来了，具体步骤如下：</p>
+
+<ol>
+<li>按住 Command 键及 S 键不放，以“单一使用者模式”开机。</li>
+<li>加载磁盘：<code>mount -uw /</code></li>
+<li>新建一个U盘的加载目的文件夹： <code>mkdir /usb</code></li>
+<li>插入U盘，然后用如下命令加载U盘 <code>mount_msdos /dev/disk1s1 /usb</code> （如果你的U盘不是msdos格式，可以尝试在输入mount_后，按两次tab查看可用的其它格式）</li>
+<li>备份资料：<code>cp -r  ~/work/iphone /usb</code></li>
+<li>弹出U盘：<code>umount /dev/disk1s1</code></li>
+<li>将U盘资料放到别的电脑上，然后准备用来下一步制作安装盘</li>
+</ol>
+
+
+<h2>制作安装盘</h2>
+
+<p> 苹果的操作系统其实可以直接通过网络恢复，考虑到恢复时间实在太长，所以最好制作成安装盘，这样安装起来非常快。</p>
+
+<ol>
+<li>准备好一个8G以上的空白U盘，准备好另外一台Mac电脑用来制作安装盘。</li>
+<li>新的操作系统<code>Mavericks.app</code>可以在AppStore上直接下载。在另一台电脑上把文件下载好，下载后文件<code>Mavericks.app</code>应该在你的<code>/Applications</code>目录下。</li>
+<li>插入U盘，执行：<code>sudo /Applications/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia --volume /Volumes/Untitled --applicationpath /Applications/Install\ OS\ X\ Mavericks.app --nointeraction</code></li>
+<li>以上命令会将U盘先格式化，然后制作成安装盘，整个过程大概需要40分钟左右。</li>
+</ol>
+
+
+<h2>安装系统</h2>
+
+<ol>
+<li>插入上一步制作好的U盘</li>
+<li>启动时按住 option 键，然后选择通过U盘启动，之后先进入磁盘工具里面把硬盘格式化了（你也可以选择不格式化，这样就是覆盖安装）</li>
+<li>安装系统。整个安装过程大概要30分钟的样子。</li>
+</ol>
+
+
+<h2>安装软件</h2>
+
+<p> 安装好系统后，首先进入AppStore升级系统，把需要的更新补丁都装了。然后通过AppStore的”Purchases”页面，重新安装以前购买过的应用，我主要装的是 qq、evernote、Alfred、MplayerX、Xcode、Dash、Keynote、有道词典。另外通过网页另外下载了QQ的五笔输入法。</p>
+
+<p>接下来的基本上是命令行的安装，Mac下管理命令行工具首先得装homebrew了：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安装完之后执行一下<code>brew doctor</code>进行一下自检，看有没有什么异常。没问题就开始安装axel, imagemagick, autojump等命令行工具：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install wget
+</span><span class='line'>brew install axel
+</span><span class='line'>brew install imagemagick
+</span><span class='line'>brew install autojump
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>有些程序(例如老版本的ruby需要使用gcc来编译)，通过以下命令安装老版的gcc：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap homebrew/dupes
+</span><span class='line'>brew install apple-gcc42
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>使用brew cask来安装应用</h2>
+
+<p>之前专门<a href="http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">写文章介绍</a>过<code>brew cask</code>, 这次打算试试常用软件都用它来装，首先安装brew cask:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap phinze/cask
+</span><span class='line'>brew install brew-cask
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后设置alfred，把 <code>/opt/homebrew-cask</code>增加到 alfred 的search目录中，然后就可以用alfred来启动安装后的应用了。</p>
+
+<p>接下来用brew cask安装：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew cask install iterm2
+</span><span class='line'>brew cask install dropbox
+</span><span class='line'>brew cask install google-chrome
+</span><span class='line'>brew cask install sublime-text
+</span><span class='line'>brew cask install mou
+</span><span class='line'>brew cask install xtrafinder
+</span><span class='line'>brew cask install charles
+</span><span class='line'>brew cask install reveal
+</span><span class='line'>brew cask install xscope
+</span><span class='line'>brew cask install sparrow
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>使用zsh</h2>
+
+<p>然后是使用zsh，下载安装ohmyzsh:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -L http://install.ohmyz.sh | sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安装完成之后，<code>vim ~/.zshrc</code> ，除了git插件外，另外增加 osx 和 autojump 插件。然后把以下这行注释启用：<code>export LANG=en_US.UTF-8</code> ，否则命令行中的中文可能会乱码。</p>
+
+<h2>同步数据</h2>
+
+<p>挂上VPN之后，打开chrome，然后同步自己的所有信息，chrome的同步挺赞的，包括书签，插件，浏览历史记录以及保存的密码都同步过来了。</p>
+
+<p>打开evernote和dropbox，同步数据。由于我的个人文档都存在它们里面，所以同步过来还是挺方便的。</p>
+
+<p>打开QQ，将漫游的聊天记录同步过来。打开dash，恢复购买，然后把snippet从dropbox同步过来。</p>
+
+<p>将自己的ssh key从原来的机器上复制过来。</p>
+
+<h2>设置Ruby</h2>
+
+<p>由于我的博客使用Octopress搭建，所以需要安装Ruby：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew update
+</span><span class='line'>brew install rbenv
+</span><span class='line'>brew install ruby-build
+</span><span class='line'>
+</span><span class='line'>rbenv install 1.9.3-p0
+</span><span class='line'>rbenv <span class="nb">local </span>1.9.3-p0
+</span><span class='line'>rbenv rehash
+</span><span class='line'>
+</span><span class='line'>gem install bundler
+</span><span class='line'>rbenv rehash
+</span><span class='line'>bundle install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>结束语</h2>
+
+<p>一切完成之后，我写下了本文，希望能帮助大家快速地重装系统。简单来说：</p>
+
+<ol>
+<li>通过evernote、dropbox和chrome将个人数据保存在云端后，重装后能快速恢复环境。</li>
+<li>通过homebrew和基于homebrew的brew cask，可以方便地帮助你快速安装不在AppStore上销售的软件。</li>
+</ol>
+
+
+<p>其实正常情况下，Mac使用迁移助理或Time Machine恢复非常方便，如果不是万不得已，大家也不用像我这样重装系统。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -857,71 +1077,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">使用brew cask来安装Mac应用</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-26T21:38:00+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>简介</h2>
-
-<p><a href="https://github.com/phinze/homebrew-cask"><code>brew cask</code></a>是一个用命令行管理Mac下应用的工具，它是基于<a href="http://brew.sh/"><code>homebrew</code></a>的一个增强工具。</p>
-
-<p><code>homebrew</code>可以管理Mac下的命令行工具，例如<code>imagemagick</code>, <code>nodejs</code>，如下所示：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>brew install imagemagick
-</span><span class='line'>brew install node
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>而使用上<code>brew cask</code>之后，你还可以用它来管理Mac下的Gui程序，例如<code>qq</code>, <code>chrome</code>, <code>evernote</code>等，如下所示：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>brew cask install qq
-</span><span class='line'>brew cask install google-chrome
-</span><span class='line'>brew cask install evernote
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -937,6 +1092,10 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
@@ -980,10 +1139,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
     
       <li class="post">
         <a href="/blog/2014/04/10/ios-weekly-7/">iOS移动开发周报-第7期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/03/ios-weekly-6/">iOS移动开发周报-第6期</a>
       </li>
     
   </ul>

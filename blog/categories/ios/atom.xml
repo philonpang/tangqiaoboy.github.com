@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-05-25T20:52:05+08:00</updated>
+  <updated>2014-05-25T21:36:23+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -170,7 +170,7 @@ pod 'MyCommon', :podspec =&gt; 'https://yuantiku.com/common/myCommon.podspec'
 
 <h2>不更新podspec</h2>
 
-<p>CocoaPods在执行<code>pod install</code>和<code>pod update</code>时，会默认先更新一次<code>podspec</code>索引。使用<code>--no-repo-update</code>参数可以使其做索引更新操作。如下所示：</p>
+<p>CocoaPods在执行<code>pod install</code>和<code>pod update</code>时，会默认先更新一次<code>podspec</code>索引。使用<code>--no-repo-update</code>参数可以禁止其做索引更新操作。如下所示：</p>
 
 <p><code>
 pod install --no-repo-update
@@ -185,7 +185,7 @@ pod update --no-repo-update
 brew install appledoc
 </code></p>
 
-<p>关于appledoc，我在今年初的另一篇博客<a href="http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">《使用Objective-C的文档生成工具:appledoc》</a>中有专门介绍。它最大的优点是可以将帮助文档集成到XCode中，这样你在敲代码的时候，按住opt键单击类名或方法名，就可以显示出相应的帮助文档。</p>
+<p>关于appledoc，我在另一篇博客<a href="http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">《使用Objective-C的文档生成工具:appledoc》</a>中有专门介绍。它最大的优点是可以将帮助文档集成到Xcode中，这样你在敲代码的时候，按住opt键单击类名或方法名，就可以显示出相应的帮助文档。</p>
 
 <h2>原理</h2>
 

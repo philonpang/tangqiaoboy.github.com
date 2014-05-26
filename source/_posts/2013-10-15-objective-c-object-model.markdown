@@ -153,7 +153,7 @@ Objective-C提供了以下API来动态替换类方法或实例方法的实现：
 
 {% img /images/class-replace-method.jpg %}
 
- * `method_exchangeImplementations` 的内部实现其实是调用了2次`method_setImplementation`方法，从苹果的文档中能清晰地了解到（如下图所示）
+ * `method_exchangeImplementations` 的内部实现相当于调用了2次`method_setImplementation`方法，从苹果的文档中能清晰地了解到（如下图所示）
  
 {% img /images/class-method-exchange-imp.jpg %}
 
@@ -163,6 +163,8 @@ Objective-C提供了以下API来动态替换类方法或实例方法的实现：
  * `method_exchangeImplementations`，当需要交换2个方法的实现时使用。
  * `method_setImplementation` 最简单的用法，当仅仅需要为一个方法设置其实现方式时使用。
  
+以上3个方法的源码在[这里](https://www.opensource.apple.com/source/objc4/objc4-532/runtime/objc-runtime-new.mm)，感兴趣的同学可以读一读。
+
 ### 使用示例
 
 我们在开发[猿题库](http://yuantiku.com)客户端的笔记功能时，需要使用系统的`UIImagePickerController`。但是，我们发现，在iOS6.0.2系统下，系统提供的`UIImagePickerController`在iPad横屏下有转屏的Bug，造成其方向错误。具体的Bug详情可以见[这里](http://stackoverflow.com/questions/12522491/crash-on-presenting-uiimagepickercontroller-under-ios-6-0)。

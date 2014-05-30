@@ -90,7 +90,7 @@ typedef enum TableViewCellType : NSInteger {
 另外有2种特殊情况下，即使你没有写 @synthesize ，编辑器也不会自动帮你加上，这2种情况是：
 
 1. 你同时提供了该property的setter 和 getter方法。
-2. 你的这个property是 readonly 的。
+2. 你的这个property是 readonly 的，并且你提供了其getter方法。
 
 ##遍历元素
 

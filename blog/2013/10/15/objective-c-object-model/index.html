@@ -287,7 +287,7 @@
 <p><img src="/images/class-replace-method.jpg"></p>
 
 <ul>
-<li><code>method_exchangeImplementations</code> 的内部实现其实是调用了2次<code>method_setImplementation</code>方法，从苹果的文档中能清晰地了解到（如下图所示）</li>
+<li><code>method_exchangeImplementations</code> 的内部实现相当于调用了2次<code>method_setImplementation</code>方法，从苹果的文档中能清晰地了解到（如下图所示）</li>
 </ul>
 
 
@@ -301,6 +301,8 @@
 <li><code>method_setImplementation</code> 最简单的用法，当仅仅需要为一个方法设置其实现方式时使用。</li>
 </ul>
 
+
+<p>以上3个方法的源码在<a href="https://www.opensource.apple.com/source/objc4/objc4-532/runtime/objc-runtime-new.mm">这里</a>，感兴趣的同学可以读一读。</p>
 
 <h3>使用示例</h3>
 
@@ -551,6 +553,10 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
       </li>
     
@@ -592,10 +598,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/04/12/install-mavericks-note/">Mac重装记录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/10/ios-weekly-7/">iOS移动开发周报-第7期</a>
       </li>
     
   </ul>

@@ -108,7 +108,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/08/05/use-modern-objective-c/</loc>
-        <lastmod>2014-05-06T23:00:40+08:00</lastmod>
+        <lastmod>2014-05-30T22:14:57+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/08/26/use-script-to-power-up-ui-work/</loc>
@@ -232,7 +232,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/</loc>
-        <lastmod>2014-05-06T23:00:40+08:00</lastmod>
+        <lastmod>2014-05-29T21:07:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/10/17/the-tech-detail-of-ape-client-1/</loc>
@@ -362,25 +362,29 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2014/05/24/ios-weekly-12/</loc>
-        <lastmod>2014-05-24T10:08:01+08:00</lastmod>
+        <lastmod>2014-05-29T21:07:52+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2014/05/24/how-to-persist-writing/</loc>
-        <lastmod>2014-05-24T14:24:27+08:00</lastmod>
+        <lastmod>2014-05-29T21:07:52+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/
         </loc>
-        <lastmod>2014-05-25T21:35:45+08:00</lastmod>
+        <lastmod>2014-05-29T21:07:52+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.devtang.com/blog/2014/05/30/understand-tagged-pointer/</loc>
+        <lastmod>2014-05-30T22:22:30+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/archives/</loc>
-        <lastmod>2014-05-25T21:35:45+08:00</lastmod>
+        <lastmod>2014-05-30T22:22:30+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/</loc>
-        <lastmod>2014-05-25T21:35:45+08:00</lastmod>
+        <lastmod>2014-05-30T22:22:30+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/robots.txt</loc>

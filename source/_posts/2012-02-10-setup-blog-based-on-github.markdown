@@ -65,7 +65,7 @@ rake install
 
 
 ##设置github账号
-基于github的博客当然需要先注册github账号，Github的账号注册地址是：<https://github.com/signup/free> 。申请好github账号后，建一个名为 username.github.com 的代码仓库。这里注意username必须是和你的账号名一致。
+基于github的博客当然需要先注册github账号，Github的账号注册地址是：<https://github.com/signup/free> 。申请好github账号后，建一个名为 username.github.io 的代码仓库。这里注意username必须是和你的账号名一致。
 
 ##写博客方法
 然后就可以写博客啦～ 写博客主要是用以下几个命令，[这里](http://octopress.org/docs/blogging/)有详细介绍：
@@ -94,7 +94,8 @@ rake install
  * 访问 <http://www.jiathis.com/> ，获取分享的代码
  * 访问 <http://uyan.cc/> ，获得评论的代码
  * 将上面2步的代码都加入到weibo.html中即可
-
+ * 修改`sass/base/_typography.scss`，将其中的`article blockquote`的`font-style`由`italic`改为`normal`,因为中文的引用文字用斜体显示其实并不好看。再将其中的`ul, ol`
+的`margin-left: 1.3em;`修改为`margin-bottom: 0em;`。
 
 ##Tips
 
@@ -108,7 +109,7 @@ rake install
 ####域名
 如果你象我一样有自己的域名，可以将域名指向这个博客，具体步骤是：
 
-* 在域名管理中，建立一个CNAME指向，将你的域名指向 yourname.github.com
+* 在域名管理中，建立一个CNAME指向，将你的域名指向 yourname.github.io
 * 建一个名为CNAME的文件在source目录下，然后将自己的域名输入进去。
 * 将内容push到github后，第一次生效大概等1小时，之后你就可以用自己的域名访问了。
 

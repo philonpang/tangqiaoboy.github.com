@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 今天参加了Adobe和CSDN组织的一个关于PhoneGap的开发讲座 ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。 正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容， &hellip;">
+  <meta name="description" content="前言 SQLite (http://www.sqlite.org/docs.html) 是一个轻量级的关系数据库。iOS SDK很早就支持了SQLite，在使用时，只需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。但是，原生的SQLite &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -75,6 +75,92 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/22/use-fmdb/">在iOS开发中使用FMDB</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-22T14:11:00+08:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>SQLite (<a href="http://www.sqlite.org/docs.html">http://www.sqlite.org/docs.html</a>) 是一个轻量级的关系数据库。iOS SDK很早就支持了SQLite，在使用时，只需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。但是，原生的SQLite API在使用上相当不友好，在使用时，非常不便。于是，开源社区中就出现了一系列将SQLite API进行封装的库，而FMDB (<a href="https://github.com/ccgus/fmdb">https://github.com/ccgus/fmdb</a>) 则是开源社区中的优秀者。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/04/22/use-fmdb/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/06/about-100-devices-limit/">关于iOS测试机个数上限的详细规则</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/04/06/about-100-devices-limit/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -437,115 +523,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-06T21:19:00+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>前言</h3>
-
-<p>在苹果的WWDC2011大会视频的
-<a href="https://developer.apple.com/videos/wwdc/2011/?id=101">《Session 101 &ndash; What&rsquo;s New in Cocoa》</a> 和
-<a href="https://developer.apple.com/videos/wwdc/2011/?id=102">《Session 102 &ndash; Implementing UIViewController Containment》</a> 中介绍了苹果在iOS5中给UIViewController新增加的5方法以及一个属性:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 方法</span>
-</span><span class='line'><span class="nl">addChildViewController:</span>
-</span><span class='line'><span class="nl">removeFromParentViewController:</span>
-</span><span class='line'><span class="nl">transitionFromViewController:toViewController:duration:options:animations:completion:</span>
-</span><span class='line'><span class="nl">willMoveToParentViewController:</span>
-</span><span class='line'><span class="nl">didMoveToParentViewController:</span>
-</span><span class='line'><span class="c1">// 属性</span>
-</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">childViewControllers</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/05/mvc-in-ios-develop/">斯坦福大学iOS开发公开课总结</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-05T12:58:00+08:00" pubdate data-updated="true">Feb 5<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>前言</h3>
-
-<p>iphone开发相关的教程中最有名的，当数斯坦福大学发布的&#8221;iphone开发公开课&#8221;了。此公开课在以前叫做《iphone开发教程》，今年由于平板电脑的流行，所以也加入了ipad开发相关的课程。在<a href="http://v.163.com/special/opencourse/iphonekaifa.html">网易公开课</a>上，有<a href="http://v.163.com/special/opencourse/iphonekaifa.html">该教程</a>的2010年录象，并且前面15集带中文字幕文件，非常适合初学者学习。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/05/mvc-in-ios-develop/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -561,6 +538,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
@@ -602,14 +587,6 @@
         <a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/04/16/mobile-development-view-from-facebook/">从Facebook看移动开发的发展</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/12/install-mavericks-note/">Mac重装记录</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -631,8 +608,9 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - 唐巧 -
-  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+  &copy; 2014 - 唐巧 -
+  <span class="credit">基于 <a href="http://octopress.org" target="_blank">Octopress</a></span>
+  <span class="credit">, 感谢 <a href="http://gitcafe.com/signup?invited_by=tangqiaoboy" target="_blank">GitCafe</a> 为本站提供存储空间</span>
 </p>
 
 </footer>

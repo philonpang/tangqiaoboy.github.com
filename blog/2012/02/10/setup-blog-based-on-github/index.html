@@ -183,7 +183,7 @@
 
 <h2>设置github账号</h2>
 
-<p>基于github的博客当然需要先注册github账号，Github的账号注册地址是：<a href="https://github.com/signup/free">https://github.com/signup/free</a> 。申请好github账号后，建一个名为 username.github.com 的代码仓库。这里注意username必须是和你的账号名一致。</p>
+<p>基于github的博客当然需要先注册github账号，Github的账号注册地址是：<a href="https://github.com/signup/free">https://github.com/signup/free</a> 。申请好github账号后，建一个名为 username.github.io 的代码仓库。这里注意username必须是和你的账号名一致。</p>
 
 <h2>写博客方法</h2>
 
@@ -226,6 +226,8 @@
 <li>访问 <a href="http://www.jiathis.com/">http://www.jiathis.com/</a> ，获取分享的代码</li>
 <li>访问 <a href="http://uyan.cc/">http://uyan.cc/</a> ，获得评论的代码</li>
 <li>将上面2步的代码都加入到weibo.html中即可</li>
+<li>修改<code>sass/base/_typography.scss</code>，将其中的<code>article blockquote</code>的<code>font-style</code>由<code>italic</code>改为<code>normal</code>,因为中文的引用文字用斜体显示其实并不好看。再将其中的<code>ul, ol</code>
+的<code>margin-left: 1.3em;</code>修改为<code>margin-bottom: 0em;</code>。</li>
 </ul>
 
 
@@ -245,7 +247,7 @@
 <p>如果你象我一样有自己的域名，可以将域名指向这个博客，具体步骤是：</p>
 
 <ul>
-<li>在域名管理中，建立一个CNAME指向，将你的域名指向 yourname.github.com</li>
+<li>在域名管理中，建立一个CNAME指向，将你的域名指向 yourname.github.io</li>
 <li>建一个名为CNAME的文件在source目录下，然后将自己的域名输入进去。</li>
 <li>将内容push到github后，第一次生效大概等1小时，之后你就可以用自己的域名访问了。</li>
 </ul>
@@ -367,6 +369,14 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
       </li>
     
@@ -406,14 +416,6 @@ var jiathis_config={
         <a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/04/16/mobile-development-view-from-facebook/">从Facebook看移动开发的发展</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/12/install-mavericks-note/">Mac重装记录</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -436,8 +438,9 @@ var jiathis_config={
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - 唐巧 -
-  <span class="credit">Powered by <a href="http://octopress.org" target="_blank">Octopress</a></span>
+  &copy; 2014 - 唐巧 -
+  <span class="credit">基于 <a href="http://octopress.org" target="_blank">Octopress</a></span>
+  <span class="credit">, 感谢 <a href="http://gitcafe.com/signup?invited_by=tangqiaoboy" target="_blank">GitCafe</a> 为本站提供存储空间</span>
 </p>
 
 </footer>

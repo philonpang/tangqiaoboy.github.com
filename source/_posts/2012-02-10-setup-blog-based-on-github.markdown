@@ -97,6 +97,10 @@ rake install
  * 修改`sass/base/_typography.scss`，将其中的`article blockquote`的`font-style`由`italic`改为`normal`,因为中文的引用文字用斜体显示其实并不好看。再将其中的`ul, ol`
 的`margin-left: 1.3em;`修改为`margin-bottom: 0em;`。
 
+## 其它
+
+对于国内的用户来说，Github因为服务器在国外，访问速度上不可避免有些慢。我在2014年5月尝试将博客同时放到Github和GitCafe上（GitCafe提供博客服务，而Github作为备份服务器），使得国内访问速度非常理想，感兴趣的朋友可以参考这篇文章：[《将博客从GitHub迁移到GitCafe》](http://blog.devtang.com/blog/2014/06/02/use-gitcafe-to-host-blog/)
+
 ##Tips
 
 ####从wordpress迁移到github

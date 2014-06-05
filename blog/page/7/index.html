@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="功能设计 先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，设计的“升级提示功能”都不太友好。在此分享一下我的想法，欢迎大家讨论。 这些App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题， &hellip;">
+  <meta name="description" content="从Facebook谈起 Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式收购移动 IM 应用 WhatsApp，总收购成本 190 亿美元。然后是继续发布了新产品： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,9 +23,8 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <!-- googleapis is fucked by gfw ...
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  -->
+  <!-- googleapis is fucked by gfw -->
+  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -83,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/04/16/mobile-development-view-from-facebook/">从Facebook看移动开发的发展</a></h1>
     
     
       <p class="meta">
@@ -99,29 +98,50 @@
   
 
 
-<time datetime="2012-11-10T18:42:00+08:00" pubdate data-updated="true">Nov 10<span>th</span>, 2012</time>
+<time datetime="2014-04-16T20:37:59+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>功能设计</h2>
+  <div class="entry-content"><p><img src="/images/facebook-logo.jpg"></p>
 
-<p>先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，设计的“升级提示功能”都不太友好。在此分享一下我的想法，欢迎大家讨论。</p>
+<h2>从Facebook谈起</h2>
 
-<p>这些App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题，一句话描述起来就是：“这些App都会在用户刚刚使用它的时候，提示有新版本，让用户去AppStore上下载最新的版本”。下面是某个应用的升级提示截图：</p>
+<p>Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式<a href="http://tech.ifeng.com/internet/special/fb-whatsapp/content-1/detail_2014_02/21/34032969_0.shtml">收购移动 IM 应用 WhatsApp</a>，总收购成本 190 亿美元。然后是继续发布了新产品：2014年2月，Facebook发布了一个新的移动端新闻阅读应用<a href="https://www.facebook.com/paper">Paper</a>。最后，Facebook最近还将自己使用的大量工具开源，包括开源了Paper的加载效果<a href="https://github.com/facebook/Shimmer">Shimmer</a>，LLDB的增强工具<a href="https://github.com/facebook/chisel">chisel</a>，以及Key-Value Observing工具<a href="https://github.com/facebook/KVOController">KVOController</a>，如果说这些开源工具让程序员如获至宝的话，那么Facebook将Paper的交互设计工具<a href="http://facebook.github.io/origami/">Origami</a>免费开放，则是对广大设计师的福音，极大地方便了移动交互设计工作的开展。</p>
 
-<p><img src="/images/app-upgrade-1.jpg"></p>
+<p>2014年对于Facebook来说也是一个值得纪念的日子。因为从2004年2月4日Facebook产品上线到现在，Facebook刚刚走过10个年头。10年前，Facebook的创始人扎克伯格才19岁，是哈佛大学的一名学生。转眼间10年后，Facebook已经成长为全球最大的社交网络，月活跃用户达到12亿，市值约1200亿美元。</p>
 
-<p>为什么我认为这是一个糟糕的设计呢？因为用户刚刚打开你的App，明显就是想使用你的功能。例如刚刚打开新浪微博，可能就是想看一下最新的消息或回复。刚刚打开网易新闻客户端，可能就是想看看最新的新闻。这个时候，你告诉用户有新版本，是想让用户暂时放弃使用该App吗？我不知道有多少用户会去点“升级”这个按钮，反正我每次看到这个提示都很郁闷，因为我如果点了，我就暂时不能使用该应用了（升级时原版本的App是无法使用的）。所以我在想，这个提示升级的时间能不能做得更友好一些？</p>
+<p>业界内大多讨论的话题都围绕在Facebook收购WhatsApp这件事情上，而作为一个移动开发者，我更加看重Facebook 发布Paper这件事情。因为Paper并不是一个简单的应用，它有着非常优秀的交互效果，并且在产品设计和技术上都使用了许多前沿的技术，那就让我们看看，Paper的开发到底有何不同之处？</p>
 
+<h2>交互设计</h2>
+
+<p>我们首先从产品设计上看Paper的不同之处。Paper虽然只是一个新闻客户端，但从大家对Paper的评价上，我们发现优秀的交互再一次成为大家关注的焦点。回想那些成功的应用，大多都有着令人心动的交互效果，例如：Tweetie的下拉刷新，现在基本上成为iPhone上内容刷新的标准。Path跳出来的红心让人心动，很多朋友甚至会没事点那个红心，欣赏那流畅的按钮散开效果。还有Mailbox，用流畅的手势操作，将邮件管理与任务管理完美结合起来。</p>
+
+<p>国外成功的优秀应用也在影响着国内。交互设计不同于平面设计，不能简单地用Photoshop展现，而交互设计对于移动应用的成功又异常关键，所以需要花费不少时间来设计，因此产品经理很难兼顾地做交互设计。所以，在国内的一线互联网公司里，交互设计师这个职位慢慢成了移动应用的标配。但是在大部分的非一线互联网公司里面，移动开发的设计仍然停留在由产品经理简单潦草的完成阶段。所以，Facebook这次Paper的成功发布，再一次给移动开发的从业者指出了交互设计的重要性。</p>
+
+<p>回顾中国互联网产业的发展我们可以发现，产品经理（Product Manager）这个职位也是最近五、六年才成为互联网公司的标配的，想必在不远的将来，除着交互设计越来越重要，移动交互设计师也会成为每一个互联网公司重要的必备职位。</p>
+
+<p>另一方面，由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集<a href="http://facebook.github.io/origami/">Origami</a>，使得交互设计工作得到更好的辅助。而且在Facebook的带动下，<a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>也出现了。jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。</p>
+
+<p>不过另一方面，该工具仍然需要设计师具备一定的基础编码能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。</p>
+
+<h2>移动开发技术</h2>
+
+<p>随着iOS依赖管理工具Cocoapods和大量第三方开源库成熟起来，业界积累了大量的优秀开源项目。这次Facebook开发Paper使用了<a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">将近100个第三方开源库</a>，极大地减化了自己的应用开发任务。相信随着移动开发的发展，移动开发的生态圈会越来越成熟，基础的开源组件也将将越来越丰富，广大开发者都将从中受益。</p>
+
+<p>另一方面，Facebook的工程师在<a href="http://www.quora.com/What-exactly-did-Jason-Prado-mean-when-he-said-Xcode-cannot-handle-our-scale/answer/Scott-Goodson-1">Quora上反馈</a>说Paper在Xcode下打开需要40多秒钟，编译一次需要30分钟。这反映出大量的开源库的使用也给iOS集成编译环境Xcode提出了新的挑战，相信苹果会花大力气解决Xcode的性能问题。</p>
+
+<h2>总结</h2>
+
+<p>Facebook发布的Paper让我看到了移动开发领域的快速发展，大量新的工具和开源技术给了设计师和程序员机会和挑战，相信在移动互联网快速发展的浪潮中，会涌现出越来越多优秀的移动应用。谁会是未来移动互联网的霸主？让我们拭目以待。</p>
+
+<h2>版权说明</h2>
+
+<p>本文已发表在《程序员》杂志2014年4月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-16/2819341">http://www.csdn.net/article/2014-04-16/2819341</a></p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/11/10/how-to-design-upgrade-notice/">阅读 &rarr;</a>
-    </footer>
   
 
 
@@ -132,7 +152,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/04/12/install-mavericks-note/">Mac重装记录</a></h1>
     
     
       <p class="meta">
@@ -148,7 +168,7 @@
   
 
 
-<time datetime="2012-10-27T20:43:00+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2012</time>
+<time datetime="2014-04-12T17:00:20+08:00" pubdate data-updated="true">Apr 12<span>th</span>, 2014</time>
         
       </p>
     
@@ -157,322 +177,103 @@
 
   <div class="entry-content"><h2>前言</h2>
 
-<p><img src="/images/opencv.png"></p>
+<p>上次将我的<a href="http://blog.devtang.com/blog/2014/01/26/add-ssd-to-old-imac/">iMac硬盘换成SSD</a>后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果：</p>
 
-<p><a href="http://opencv.org/about.html">OpenCV</a> 是一个开源的跨平台计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。</p>
+<ol>
+<li>启动时按住Shift键进入安全模式（没能进入）</li>
+<li>同时按下 Command、Option、P 与 R 键不放（成功执行，但还是无法进入系统）</li>
+<li>按住 Command 键及 S 键，进入单用户模式（成功进入，但是把“/资源库/StartupItems”与“/系统/资源库/StartupItems”都清除，以及清除了<code>com.apple.loginwindow.plist</code> 和<code>com.apple.windowserver.plist</code>后，但还是无法通过正常启动进入系统）</li>
+<li>在单用户模式中修复磁盘，没有发现磁盘问题</li>
+</ol>
 
-<p>最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。有些问题费了我很多时间，在此总结分享给大家，希望后来人少走些弯路。</p>
 
-<p>可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。</p>
+<p>于是我做了一次覆盖安装，之后可以使用了，但昨天电脑又无法进入系统了。于是我打算格盘后做一次完全的重装，在此记录下自己的重装过程。</p>
 
-<p>所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。</p>
+<h2>备份数据</h2>
 
-<p>（2013-6-22）更新: 我在XCode4.6.2 和 OpenCV 2.4.5版本的时候重新进行了一次环境搭建，以下内容做了相应调整，应该也是有效的。</p>
+<p>由于我能够通过启动时按Command 键及 S 键，进入单用户模式，所以我首先把自己未提交的工程代码通过U盘备份出来了，具体步骤如下：</p>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/10/27/use-opencv-in-ios/">阅读 &rarr;</a>
-    </footer>
-  
+<ol>
+<li>按住 Command 键及 S 键不放，以“单一使用者模式”开机。</li>
+<li>加载磁盘：<code>mount -uw /</code></li>
+<li>新建一个U盘的加载目的文件夹： <code>mkdir /usb</code></li>
+<li>插入U盘，然后用如下命令加载U盘 <code>mount_msdos /dev/disk1s1 /usb</code> （如果你的U盘不是msdos格式，可以尝试在输入mount_后，按两次tab查看可用的其它格式）</li>
+<li>备份资料：<code>cp -r  ~/work/iphone /usb</code></li>
+<li>弹出U盘：<code>umount /dev/disk1s1</code></li>
+<li>将U盘资料放到别的电脑上，然后准备用来下一步制作安装盘</li>
+</ol>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">粉笔网的架构和项目管理</a></h1>
-    
-    
-      <p class="meta">
-        
+<h2>制作安装盘</h2>
 
+<p> 苹果的操作系统其实可以直接通过网络恢复，考虑到恢复时间实在太长，所以最好制作成安装盘，这样安装起来非常快。</p>
 
+<ol>
+<li>准备好一个8G以上的空白U盘，准备好另外一台Mac电脑用来制作安装盘。</li>
+<li>新的操作系统<code>Mavericks.app</code>可以在AppStore上直接下载。在另一台电脑上把文件下载好，下载后文件<code>Mavericks.app</code>应该在你的<code>/Applications</code>目录下。</li>
+<li>插入U盘，执行：<code>sudo /Applications/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia --volume /Volumes/Untitled --applicationpath /Applications/Install\ OS\ X\ Mavericks.app --nointeraction</code></li>
+<li>以上命令会将U盘先格式化，然后制作成安装盘，整个过程大概需要40分钟左右。</li>
+</ol>
 
 
+<h2>安装系统</h2>
 
+<ol>
+<li>插入上一步制作好的U盘</li>
+<li>启动时按住 option 键，然后选择通过U盘启动，之后先进入磁盘工具里面把硬盘格式化了（你也可以选择不格式化，这样就是覆盖安装）</li>
+<li>安装系统。整个安装过程大概要30分钟的样子。</li>
+</ol>
 
 
+<h2>安装软件</h2>
 
-  
+<p> 安装好系统后，首先进入AppStore升级系统，把需要的更新补丁都装了。然后通过AppStore的”Purchases”页面，重新安装以前购买过的应用，我主要装的是 qq、evernote、Alfred、MplayerX、Xcode、Dash、Keynote、有道词典。另外通过网页另外下载了QQ的五笔输入法。</p>
 
+<p>接下来的基本上是命令行的安装，Mac下管理命令行工具首先得装homebrew了：</p>
 
-<time datetime="2012-10-15T10:56:00+08:00" pubdate data-updated="true">Oct 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-  <div class="entry-content"><p>10月10日，在 <a href="http://weibo.com/cmdnclub">CMDN炫姐姐</a> 的邀请下，我们粉笔网团队通过CSDN的CMDN Club,对外进行了第一次<a href="http://hui.csdn.net/MeetingInfo.aspx?MID=137">技术分享</a>。分享的内容主要包括2部分:</p>
+<p>安装完之后执行一下<code>brew doctor</code>进行一下自检，看有没有什么异常。没问题就开始安装axel, imagemagick, autojump等命令行工具：</p>
 
-<p>第一部分是关于粉笔网使用Scrum进行快速开发的故事。我们分享了如何在3个多月完成了全平台的开发的经验分享，其中也包括我们对Scrum的具体使用方式和其中遇到的各种问题。CSDN整理出来的报道文章在<a href="http://www.csdn.net/article/2012-10-11/2810658">这里</a>。</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install wget
+</span><span class='line'>brew install axel
+</span><span class='line'>brew install imagemagick
+</span><span class='line'>brew install autojump
+</span></code></pre></td></tr></table></div></figure>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">阅读 &rarr;</a>
-    </footer>
-  
 
+<p></p>
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/09/3rd-libs-used-in-fenbi-app/">粉笔网iPhone端使用的第三方开源库</a></h1>
-    
-    
-      <p class="meta">
-        
+<p>有些程序(例如老版本的ruby需要使用gcc来编译)，通过以下命令安装老版的gcc：</p>
 
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap homebrew/dupes
+</span><span class='line'>brew install apple-gcc42
+</span></code></pre></td></tr></table></div></figure>
 
 
+<h2>使用brew cask来安装应用</h2>
 
+<p>之前专门<a href="http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">写文章介绍</a>过<code>brew cask</code>, 这次打算试试常用软件都用它来装，首先安装brew cask:</p>
 
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap phinze/cask
+</span><span class='line'>brew install brew-cask
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>然后设置alfred，把 <code>/opt/homebrew-cask</code>增加到 alfred 的search目录中，然后就可以用alfred来启动安装后的应用了。</p>
 
-  
-
-
-<time datetime="2012-10-09T15:30:00+08:00" pubdate data-updated="true">Oct 9<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>最近有朋友问我粉笔网iPhone端使用了哪些第三方的开源库。我在这儿整理了一下，分享给大家。</p>
-
-<p><img src="/images/fenbi_libs.png"></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/10/09/3rd-libs-used-in-fenbi-app/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/05/upgrade-your-app-to-support-iphone5/">让你的APP支持iPhone5</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-05T16:18:00+08:00" pubdate data-updated="true">Oct 5<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>国庆节前，为了支持iPhone5的屏幕分辨率(640象素 x 1136象素)，我尝试着升级粉笔网<a href="http://itunes.apple.com/cn/app/fen-bi-wang/id551540593">iPhone客户端</a>。整个过程花了大概一天的时间，我把这个过程总结下来，希望对大家有帮助。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/10/05/upgrade-your-app-to-support-iphone5/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/15/talk-about-my-startup-exp/">谈谈我的创业感受</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-15T13:50:00+08:00" pubdate data-updated="true">Sep 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>5个程序员，3个多月时间，30多万行代码，1000个bug，只为打造卓越产品。</p>
-
-<h2>开发历程</h2>
-
-<p>先简单介绍一下产品。我们的产品叫“<a href="http://fenbi.com">粉笔网</a>”，这是一个新颖的学习社区。我们公司的创始人是前网易高管<a href="http://baike.baidu.com/view/2264197.htm">李勇</a>。我们团队从4月份开始筹备，5月份开始工作，整个开发历经3个多月，其中网站于8月28号顺利上线，<a href="http://itunes.apple.com/cn/app/fen-bi-wang/id551540593">iPhone客户端</a>和<a href="http://cdn.fen.bi/sc/app/fenbi.apk">Android客户端</a>于9月8日顺利通过审核上线。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/09/15/talk-about-my-startup-exp/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-26T20:34:00+08:00" pubdate data-updated="true">Aug 26<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>问题</h2>
-
-<p>我们知道，在iOS开发中，为了使我们的app能够同时支持iPhone的Retina屏幕和普通屏幕，美术同学需要对UI设计稿中的每个元素进行2次切图。苹果要求对图片元素的命名分别为 name.png 和 name@2x.png，带@2x的表示是Retina屏幕的贴图，不带@2x的同名文件为普通屏幕的贴图。</p>
-
-<p>我在开发的时候发现很难要求美术同学按照开发的要求来对图片命名。她们通常对于切图的命名是例如 <em>登录按钮大.png</em> ，<em>登录按钮小.png</em>, <em>登录按钮按下大.png</em> <em>登录按钮按下小.png</em> 这样的形式。于是，对这些文件按照苹果的要求进行重命名就成了我这个码农的一个体力活。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/08/26/use-script-to-power-up-ui-work/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/05/use-modern-objective-c/">Objective-C的新特性</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-05T21:50:00+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>苹果在今年的WWDC2012大会上介绍了大量Objective-C的新特性，能够帮助iOS程序员更加高效地编写代码。在不久前更新的XCode4.4版本中，这些新特性已经可以使用了。让我们看看这些新特性有哪些：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/08/05/use-modern-objective-c/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/06/24/enhance-uiactionsheet/">封装同步的UIActionSheet</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-24T21:51:00+08:00" pubdate data-updated="true">Jun 24<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>问题</h2>
-
-<p>做iOS开发的同学想必都用过UIActionSheet。UIActionSheet可以弹出一个选择列表，让用户选择列表中的某一项操作。使用UIActionSheet非常简单，以下是一个简单的示例代码：</p>
+<p>接下来用brew cask安装：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -484,68 +285,82 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">someButtonClicked</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">UIActionSheet</span> <span class="o">*</span> <span class="n">sheet</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIActionSheet</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="nb">nil</span> <span class="nl">delegate:</span><span class="n">self</span> <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;ddd&quot;</span> <span class="nl">destructiveButtonTitle:</span><span class="s">@&quot;aaa&quot;</span> <span class="nl">otherButtonTitles:</span><span class="s">@&quot;bbb&quot;</span><span class="p">,</span> <span class="s">@&quot;ccc&quot;</span><span class="p">,</span> <span class="s">@&quot;ddd&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">sheet</span><span class="p">.</span><span class="n">destructiveButtonIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">sheet</span> <span class="nl">showInView:</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">actionSheet:</span><span class="p">(</span><span class="n">UIActionSheet</span> <span class="o">*</span><span class="p">)</span><span class="nv">actionSheet</span> <span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">buttonIndex</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;result = %d&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew cask install iterm2
+</span><span class='line'>brew cask install dropbox
+</span><span class='line'>brew cask install google-chrome
+</span><span class='line'>brew cask install sublime-text
+</span><span class='line'>brew cask install mou
+</span><span class='line'>brew cask install xtrafinder
+</span><span class='line'>brew cask install charles
+</span><span class='line'>brew cask install reveal
+</span><span class='line'>brew cask install xscope
+</span><span class='line'>brew cask install sparrow
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>但我个人在使用时，感觉UIActionSheet有以下2个问题：</p>
+<h2>使用zsh</h2>
 
+<p>然后是使用zsh，下载安装ohmyzsh:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -L http://install.ohmyz.sh | sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安装完成之后，<code>vim ~/.zshrc</code> ，除了git插件外，另外增加 osx 和 autojump 插件。然后把以下这行注释启用：<code>export LANG=en_US.UTF-8</code> ，否则命令行中的中文可能会乱码。</p>
+
+<h2>同步数据</h2>
+
+<p>挂上VPN之后，打开chrome，然后同步自己的所有信息，chrome的同步挺赞的，包括书签，插件，浏览历史记录以及保存的密码都同步过来了。</p>
+
+<p>打开evernote和dropbox，同步数据。由于我的个人文档都存在它们里面，所以同步过来还是挺方便的。</p>
+
+<p>打开QQ，将漫游的聊天记录同步过来。打开dash，恢复购买，然后把snippet从dropbox同步过来。</p>
+
+<p>将自己的ssh key从原来的机器上复制过来。</p>
+
+<h2>设置Ruby</h2>
+
+<p>由于我的博客使用Octopress搭建，所以需要安装Ruby：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew update
+</span><span class='line'>brew install rbenv
+</span><span class='line'>brew install ruby-build
+</span><span class='line'>
+</span><span class='line'>rbenv install 1.9.3-p0
+</span><span class='line'>rbenv <span class="nb">local </span>1.9.3-p0
+</span><span class='line'>rbenv rehash
+</span><span class='line'>
+</span><span class='line'>gem install bundler
+</span><span class='line'>rbenv rehash
+</span><span class='line'>bundle install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>结束语</h2>
+
+<p>一切完成之后，我写下了本文，希望能帮助大家快速地重装系统。简单来说：</p>
+
+<ol>
+<li>通过evernote、dropbox和chrome将个人数据保存在云端后，重装后能快速恢复环境。</li>
+<li>通过homebrew和基于homebrew的brew cask，可以方便地帮助你快速安装不在AppStore上销售的软件。</li>
+</ol>
+
+
+<p>其实正常情况下，Mac使用迁移助理或Time Machine恢复非常方便，如果不是万不得已，大家也不用像我这样重装系统。</p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/06/24/enhance-uiactionsheet/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/05/do-not-use-sbjson/">不要使用SBJSON(json-framework)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-05T09:35:00+08:00" pubdate data-updated="true">May 5<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>不知道为什么，在iOS开发中，有很多人使用 <a href="https://github.com/stig/json-framework">SBJSON</a> （又被称作json-framework)来做JSON解析库。我想这是因为SBJSON是最早在iOS上出现的JSON解析库。但是随着iOS开发的流行，越来越多优秀的JSON解析库也涌现出来, SBJSON和它们相比，性能上有很大的差距。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/05/05/do-not-use-sbjson/">阅读 &rarr;</a>
-    </footer>
   
 
 
@@ -564,6 +379,12 @@
 <aside class="sidebar">
   
     <section>
+  <h1>赞助商</h1>
+  <p>
+     <img width="260px" src="/images/ad_sale.png" />
+  </p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="你注意到了吗？在Xcode中，当你点击查看调用栈的时候，调用栈的每个方法前面都有一个Icon，而且还有好几种不同的样子，如下图所示，你知道它们代表什么意思吗？ ">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,9 +23,8 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <!-- googleapis is fucked by gfw ...
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  -->
+  <!-- googleapis is fucked by gfw -->
+  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -83,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/">XCode Debugger中的Icon符号的意义</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a></h1>
     
     
       <p class="meta">
@@ -99,155 +98,62 @@
   
 
 
-<time datetime="2013-12-22T19:23:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time>
+<time datetime="2014-05-16T21:36:16+08:00" pubdate data-updated="true">May 16<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>你注意到了吗？在Xcode中，当你点击查看调用栈的时候，调用栈的每个方法前面都有一个Icon，而且还有好几种不同的样子，如下图所示，你知道它们代表什么意思吗？</p>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<p><img src="/images/debugger-icon.png"></p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/ios-app-security-development">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/">阅读 &rarr;</a>
-    </footer>
-  
+<h3>前言</h3>
 
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/12/11/network-tool-charles-intr/">iOS开发工具-网络封包分析工具Charles</a></h1>
-    
-    
-      <p class="meta">
-        
+<p>【摘要】：本期iOS移动开发周报带来如下内容：iOS应用安全开发概述，Collection View 动画，可变参数列表的实现原理，XcodeBoost插件等。</p>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-11T14:03:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/charles-logo.png"></p>
-
-<h2>简介</h2>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/network-packet-analysis-tool-charles">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<p><a href="http://www.charlesproxy.com/">Charles</a>是在Mac下常用的截取网络封包的工具，在做iOS开发时，我们为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析。Charles通过将自己设置成系统的网络访问代理服务器，使得所有的网络访问请求都通过它来完成，从而实现了网络封包的截取和分析。</p>
-
-<p>Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时。</p>
-
-<p>因此，该付费方案对广大用户还是相当友好的，即使你长期不付费，也能使用完整的软件功能。只是当你需要长时间进行封包调试时，会因为Charles强制关闭而遇到影响。</p>
-
-<p>Charles主要的功能包括：</p>
+<h2>教程</h2>
 
 <ol>
-<li>支持SSL代理。可以截取分析<a href="http://zh.wikipedia.org/wiki/%E5%AE%89%E5%85%A8%E5%A5%97%E6%8E%A5%E5%B1%82">SSL</a>的请求。</li>
-<li>支持流量控制。可以模拟慢速网络以及等待时间（latency）较长的请求。</li>
-<li>支持AJAX调试。可以自动将json或xml数据格式化，方便查看。</li>
-<li>支持AMF调试。可以将Flash Remoting 或 Flex Remoting信息格式化，方便查看。</li>
-<li>支持重发网络请求，方便后端调试。</li>
-<li>支持修改网络请求参数。</li>
-<li>支持网络请求的截获并动态修改。</li>
-<li>检查HTML，CSS和RSS内容是否符合<a href="http://validator.w3.org/">W3C标准</a>。</li>
+<li><p><a href="http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security">《iOS应用安全开发，你不知道的那些事》</a>：iOS应用由于其直接运行在手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文从网络安全、本地文件和数据安全、源代码安全三个方面，阐述iOS应用在安全性上遇到的挑战。</p></li>
+<li><p><a href="http://objccn.io/issue-12-5/">《Collection View 动画》</a>：<code>UICollectionView</code> 和相关类的设置非常灵活和强大。但是灵活性一旦增强，某种程度上也增加了其复杂性： <code>UICollectionView</code> 比老式的 <code>UITableView</code> 更有深度，适用性也更强。本文的第一部分将集中讨论并举例说明如何用不同的类和方法来共同帮助实现一些常见的 <code>UICollectionView</code> 动画。在第二部分，我们将看一下带有 collection views 的 view controller 转场动画以及在 <code>useLayoutToLayoutNavigationTransitions</code> 可用时使用其进行转场，如果不可用时，我们会实现一个自定义转场动画。</p></li>
+<li><p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">《Variable Argument Lists》</a>：可变参数函数（Variadic Function），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的。本文讨论了其具体的实现内部原理。最后作者<a href="http://weibo.com/lancy1014">晨钰Lancy</a>介绍了其开源的一个能够接收block作为回调的自定义的<a href="https://github.com/lancy/cyalertview">AlertView组件</a>。</p></li>
+<li><p><a href="http://imoldman.github.io/blog/2014/04/30/why-assert-enabled-under-release-in-xcode/">《assert出问题了》</a>：作者分享了在Xcode中使用Assert时需要注意的问题。</p></li>
+<li><p><a href="http://stackoverflow.com/questions/7385439/exception-thrown-in-nsorderedset-generated-accessors">《CoreData的坑》</a>：<a href="http://weibo.com/pinxue">pinxue</a>分享了一个持续3年都没有修复的CoreData的Bug。</p></li>
+<li><p><a href="http://www.taofengping.com/2014/05/07/multi-similar-application/#.U3N25q2SyrJ">《使用cocoapods创建多个类似工程的尝试》</a>：因为业务的需要，作者做了一批类似无聊图的App，应用本身没有复杂的逻辑，所有类“无聊图”的应用都针对特定的用户群，设计了不同界面风格的，比如适合宅男的女神应用，适合吃货的美食应用等等诸如此类，大概一共七八个。作者介绍了其使用cocoapods创建多个类似工程的尝试。</p></li>
+<li><p><a href="http://miao.hu/2012/02/26/osx-exp-share/">《Mac 软件和学习经验分享》</a>：作者介绍了一些优秀的 Mac 软件和学习Mac的经验。</p></li>
+<li><p><a href="http://subjc.com/">subjc.com</a>：subjc.com是一个介绍iOS界面编程技巧的网站。网站中有动画实例分析以及实现的代码。</p></li>
 </ol>
 
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/12/11/network-tool-charles-intr/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/14/use-flurry-to-analyse-data/">使用Flurry来统计和分析用户行为</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-14T13:51:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>简介</h2>
-
-<p><img src="/images/flurry-logo.png"></p>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/use-flurry-to-statistics-and-analysis-user-behavior">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<p><a href="http://www.flurry.com/">Flurry</a>是一家专门为移动应用提供数据统计和分析的公司。他们的数据统计分析SDK支持的平台包括iPhone, iPad, Android, Windows Phone, Java ME和BlackBerry。使用Flurry服务的公司包括eBay、Yahoo、Hulu和Skype等超过11万家公司，涉及的应用超过36万个。</p>
-
-<p>利用Flurry提供的分析平台，我们可以很容易地自动统计出应用的使用情况，例如：</p>
+<h2>工具</h2>
 
 <ol>
-<li>每天（每周或每月）登录用户数，应用使用次数</li>
-<li>每天（每周或每月）新用户数，活跃用户数</li>
-<li>用户的所在地、年龄、性别的分布情况</li>
+<li><p><a href="https://github.com/fortinmike/XcodeBoost">XcodeBoost</a>：XcodeBoost包含多个辅助修改代码的小功能，比如：</p>
+
+<ol>
+<li>可以在.m文件中复制方法实现，然后将该方法的定义粘贴到对应的.h文件中</li>
+<li>可以在某一个源文件中直接输入正则表达式查找</li>
+<li>可以复制粘贴代码时不启用Xcode的自动缩进功能（Xcode的自动缩进经常出问题，造成已经调整好的代码缩进，因为粘贴时被Xcode调整坏了）</li>
+</ol>
+</li>
 </ol>
 
 
-<p>Flurry也可以自动统计出移动设备的分类情况，例如：</p>
+<h2>开源项目</h2>
 
 <ol>
-<li>使用3G，Wifi的会话比例</li>
-<li>使用iOS系统各版本(例如iOS6.0, iOS7.0等)的比例</li>
-<li>使用iOS各种设备（例如iPhone4, iPhone5等)的比例</li>
+<li><p><a href="https://github.com/monoclesociety/eggscellent">Eggscellent开源</a>：Eggscellent是Mac上的开源的番茄钟应用。</p></li>
+<li><p><a href="https://github.com/viewfinderco/viewfinder">Viewfinder</a>：移动支付公司 Square 将去年收购的照片应用 Viewfinder 开源了，包含服务端、iOS 和 Android 应用代码。<a href="http://corner.squareup.com/2014/05/open-sourcing-viewfinder.html">这里</a>有该项目的介绍。</p></li>
+<li><p><a href="https://github.com/kevinzhow/PNChart">PNChart</a>：作者<a href="http://weibo.com/kevinzhow">周楷雯Kevin</a>发布了PNChart 0.5版本，提供了一个更漂亮的Pie Chart界面。</p></li>
+<li><p><a href="https://atom.io/">文本编辑器Atom开源</a>：GitHub将其开发的文本编辑器Atom开源。</p></li>
 </ol>
 
-
-<p>除了上面介绍的自动统计项目，Flurry SDK也提供了统计用的相关API，便于我们针对自己产品的特点，做针对性的统计。例如统计应用中某个按钮的按下次数，或者网络请求的平均响应时间等。</p>
-
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/11/14/use-flurry-to-analyse-data/">阅读 &rarr;</a>
-    </footer>
   
 
 
@@ -258,7 +164,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/10/21/the-tech-detail-of-ape-client-3/">猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/08/ios-security-dev-overview/">iOS应用安全开发概述</a></h1>
     
     
       <p class="meta">
@@ -274,330 +180,229 @@
   
 
 
-<time datetime="2013-10-21T16:15:00+08:00" pubdate data-updated="true">Oct 21<span>st</span>, 2013</time>
+<time datetime="2014-05-08T21:27:23+08:00" pubdate data-updated="true">May 8<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>前言</h2>
+  <div class="entry-content"><p><img src="/images/security.jpeg"></p>
 
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
+<p>【摘要】：iOS应用由于其直接运行在手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文将从网络安全、本地文件和数据安全、源代码安全三个方面，阐述iOS应用在安全性上遇到的挑战。</p>
 
-<p>这是本技术分享系列文章的第三篇。本文涉及的技术细节是：基于CoreText的排版引擎。</p>
+<h1>前言</h1>
 
+<p>在传统互联网领域，安全已经是一个老生常谈的话题。在许多大公司里面，都设置有专门的安全部门，用于检测自己产品的安全性。但即便是这样，业界仍然时常暴出许多安全问题的新闻。就在不久前，乌云<a href="http://gd.people.com.cn/n/2014/0325/c123932-20854292.html">曝光了</a>携程网在支付过程中，为了调试方便，记录了用户的信用卡卡号和CVV码等信息，而调试接口可以被外网访问，这样造成黑客可能通过调试接口读取用户的信用卡信息。虽然最终没有造成实际上的用户损失，但是此次事件再一次给互联网公司敲响了安全的警钟。</p>
+
+<p>除了国内，国外的互联网安全问题同样让人担忧。去年由于曝出<a href="http://tech.163.com/13/0722/09/94CKLASU000947EG.html">Apache Struts2的漏洞</a>，苹果公司多次重置开发者的密码，并且最终为了用户数据的安全，将整个开发者后台全部停止服务，花了2周多时间将后台有潜在问题的功能重写后，才重新开放服务。而4月份刚刚曝光的<a href="http://tech.ifeng.com/internet/detail_2014_04/09/35603734_0.shtml">OpenSSL的heart bleeding漏洞</a>，则让全球的三分之二的网站受到影响。</p>
+
+<p>在移动互联网快速发展的今天，iOS应用由于直接运行在用户的手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文接下来将从三个方面概述iOS移动应用在安全方面所面临的挑战以及应对措施。</p>
+
+<h1>一、网络安全</h1>
+
+<h2>安全地传输用户密码</h2>
+
+<p>大部分的iOS应用都需要联网，通过和服务器端进行通讯，获得最新的信息并且将内容展现给用户。由于网络传输过程中有可能经过不安全的中间节点，所以我们应该对敏感数据加密，用于保证用户信息的安全。黑客可以在受害者的手机上设置网络通讯的代理服务器，从而截获所有的网络请求。即使是Https的加密通讯，黑客也可以通过<a href="http://zh.wikipedia.org/zh-cn/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a>（Man-in-the-middle attack，一种是指攻击者与通讯的两端分别创建独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制）来截取通讯内容。</p>
+
+<p>黑客可以在Mac下使用<a href="http://www.charlesproxy.com/">Charles</a>软件（如果在Windows下，可以使用<a href="http://www.telerik.com/fiddler">fiddler</a>软件）来将自己的电脑设置成代理服务器，从而截取应用的网络请求，分析目标应用在通讯协议上是否有安全问题。为了测试，我选取了在国内最大的两家租车公司（<a href="www.zuche.com/">神州租车</a>和<a href="www.1hai.cn">一嗨租车</a>）的iOS应用。</p>
+
+<p>从下图可以看到，神州租车和一嗨租车在用户登录时，均采用明文的方式，将密码直接发送给服务器。其中一嗨租车不但采用明文方式发送密码，而且在发送时使用了Http Get的方式，而GET的URL数据一般都会保存在服务器的access log中，所以黑客一旦攻破服务器，只需要扫描acesss log，则可以轻易获得所有用户的明文密码。(注：在本文发表前，一嗨租车已经修改了登录协议，采用了POST的方式来登录，但仍然传递的是明文密码)</p>
+
+<p>神州租车登录协议:</p>
+
+<p><img src="/images/zuche-protocol.png"></p>
+
+<p>一嗨租车登录协议:</p>
+
+<p><img src="/images/1hai-protocol.png"></p>
+
+<p>如果每一个移动移动都像以上两种应用那样，明文传输用户密码，那么我们可以想象这样一个场景，黑客在咖啡馆或机场等一些公共场所，将自己的电脑设置成该场所一样名字的免费Wifi，那么受害者只要不小心使用了该Wifi，则可能泄漏自己的明文密码。对于大多数普通人，都会使用一样的密码登录他的所有的帐号，这就意味着他的其他帐号：例如淘宝或网上银行帐号也有被盗的风险。</p>
+
+<p>正确的做法应该是这样：事先生成一对用于加密的公私钥，客户端在登录时，使用公钥将用户的密码加密后，将密文传输到服务器。服务器使用私钥将密码解密，然后加盐(Salt：在密码学中，是指通过在密码任意固定位置插入特定的字符串，让散列后的结果和使用原始密码的散列结果不相符)之后再多次求MD5，之后再和服务器原来存储的用同样方法处理过的密码匹配，如果一致，则登录成功。这样的做法，保证黑客即使截获了加密后的密文，由于没有私钥，也无法还原出原始的密码。而服务器即使被黑客攻陷，黑客除了暴力尝试，也无法从加盐和多次MD5后的密码中还原出原始的密码。这样就保证了用户密码的安全。</p>
+
+<h2>防止通讯协议被轻易破解</h2>
+
+<p>除了上面提到的明文传输密码的问题外，移动端应用还要面对黑客对于通讯协议的破解的威胁。在成功破解了通讯协议后，黑客可以模拟客户端登录，进而伪造一些用户行为，可能对用户数据造成危害。例如腾讯出品的消除游戏“天天爱消除”，在淘宝上就有很多售价仅为1元的代练服务，如果真正是人工代练，是不可能卖这么便宜的，只有可能是该游戏的通讯协议被破解，黑客制作出了代练的机器人程序。</p>
+
+<p>通讯协议被破解除了对于移动端游戏有严重危害外，对于应用也有很大的危害。例如针对微信，黑客可以制作一些僵尸帐号，通过向微信公共帐号后台发送垃圾广告，达到赢利目的。而iPhone设备上的iMessage通讯协议据也被破解了，所以很多iPhone用户会收到来自iMessage的垃圾广告。</p>
+
+<p>对于以上提到的问题，开发者可以选择类似 <a href="https://code.google.com/p/protobuf/protobuf">protobuf</a> (google提供的一个开源数据交换格式，其最大的特点是基于二进制，因此比传统的JSON格式要短小得多)之类的二进制通讯协议或者自己实现通讯协议，对于传输的内容进行一定程度的加密，以增加黑客破解协议的难度。下图是我截取的淘宝客户端的通讯数据，可以看到其中的值都不能直观地猜出内容，所以这对于通讯协议是有一定的保护作用。</p>
+
+<p><img src="/images/taobao-protocol.png"></p>
+
+<h2>验证应用内支付的凭证</h2>
+
+<p>iOS应用内支付(IAP)是众多应用赢利的方式，通过先让用户免费试用或试完，然后提供应用内支付来为愿意付费的用户提供更强大的功能，这种模式特别适合不习惯一开始就掏钱的中国用户。但是，由于国内越狱用户的比例比较大，所以我们也需要注意应用内支付环节中的安全问题。</p>
+
+<p>简单来说，越狱后的手机由于没有沙盒作为保护，黑客可以对系统进行任意地修改，所以在支付过程中，苹果返回的已付款成功的凭证可能是伪造的。客户端拿到付款凭证之后，还需要将凭证上传到自己的服务器上，进行二次验证，以保证凭证的真实性。</p>
+
+<p>另外，我们发现越狱用户的手机上，很可能被黑客用中间人攻击技术来劫持支付凭证。这对于黑客有什么好处呢？因为苹果为了保护用户的隐私，支付凭证中并不包含任何用户的帐号信息，所以我们的应用和服务器无法知道这个凭证是谁买的，而只能知道这个凭证是真的还是假的。所以在验证凭证时，哪个帐号发起了验证请求，我们就默认这个凭证是该帐号拥有的。如果黑客将凭证截获，就可以伪装成真实用户来验证凭证或者转手出售获利。</p>
+
+<p>打个比方，这就类似于很多商场的购物卡一样，由于是不记名的，黑客如果将你买的购物卡偷窃然后去刷卡购物，商场是无法简单地区分出来的。</p>
+
+<p>所以，对于应用内支付，开发者除了需要仔细地验证购买凭证外，也需要告知用户在越狱手机上进行支付的风险。</p>
+
+<h1>二、本地文件和数据安全</h1>
+
+<h2>程序文件的安全</h2>
+
+<p>iOS应用大部分的逻辑都是在编译后的二进制文件中，但是由于今年来混合式（Hybrid）编程方式的兴起，很多应用的部分功能也采用内嵌Web浏览器的方式来实现。例如腾讯QQ iOS客户端的内部，就有部分逻辑是用Web方式实现的。由于iOS安装文件其实就是一个zip包，所以我们可以通过解压，看到包内的内容。以下是我解开腾讯QQ客户端，看到的其qqapi.js文件的内容:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">iOSQQApi</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'>    <span class="nx">app</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="cm">/**</span>
+</span><span class='line'><span class="cm">         查询单个应用是否已安装</span>
+</span><span class='line'><span class="cm">         @param {String} scheme 比如&#39;mqq&#39;</span>
+</span><span class='line'><span class="cm">         @return {Boolean}</span>
+</span><span class='line'><span class="cm">         */</span>
+</span><span class='line'>        <span class="nx">isAppInstalled</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">scheme</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">iOSQQApi</span><span class="p">.</span><span class="nx">_invokeClientMethod</span><span class="p">(</span>
+</span><span class='line'>                <span class="s1">&#39;app&#39;</span><span class="p">,</span> <span class="s1">&#39;isInstalled&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="p">{</span><span class="s1">&#39;scheme&#39;</span><span class="o">:</span><span class="nx">scheme</span><span class="p">});</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="cm">/**</span>
+</span><span class='line'><span class="cm">         批量查询指定应用是否已安装</span>
+</span><span class='line'><span class="cm">         @param {Array&lt;String&gt;} schemes </span>
+</span><span class='line'><span class="cm">                比如[&#39;mqq&#39;, &#39;mqqapi&#39;]</span>
+</span><span class='line'><span class="cm">         @return {Array&lt;Boolean&gt;}</span>
+</span><span class='line'><span class="cm">         */</span>
+</span><span class='line'>        <span class="nx">isAppInstalledBatch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">schemes</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">iOSQQApi</span><span class="p">.</span><span class="nx">_invokeClientMethod</span><span class="p">(</span>
+</span><span class='line'>                <span class="s1">&#39;app&#39;</span><span class="p">,</span><span class="s1">&#39;batchIsInstalled&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="p">{</span><span class="s1">&#39;schemes&#39;</span><span class="o">:</span><span class="nx">schemes</span><span class="p">});</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到，这些文件都有着完整清晰的注释。通过分析这些javascript文件，黑客可以比较轻松地知道其调用逻辑。在越狱手机上，还可以修改这些javascript代码，达到攻击的目的。</p>
+
+<p>笔者也曾经尝试查看支付宝客户端中的彩票功能，通过分析，也可以找到其完整的、带着清晰注释的javascript代码。如下图所示：（注：支付宝现在已经对相应代码进行了加密）</p>
+
+<p><img src="/images/alipay-source.png"></p>
+
+<p>通过将javascript源码进行混淆和加密，可以防止黑客轻易地阅读和篡改相关的逻辑，也可以防止自己的Web端与Native端的通讯协议泄漏。</p>
+
+<h2>本地数据安全</h2>
+
+<p>iOS应用的数据在本地通常保存在本地文件或本地数据库中。如果对本地的数据不进行加密处理，很可能被黑客篡改。以下是一个名为 LepsWorld3 的游戏，打开它的本地文件，可以很容易地找到，它使用了一个名为 ItempLifes的变量保存生命数。如下图所示：</p>
+
+<p><img src="/images/game-data.png"></p>
+
+<p>于是我们就可以简单修改该值，达到修改游戏参数的目的。而在淘宝上，也可以找到许多以此挣钱的商家，如下图所示：</p>
+
+<p><img src="/images/game-data-sell.png"></p>
+
+<p>对于本地的重要数据，我们应该加密存储或者将其保存到 keychain 中，以保证其不被篡改。</p>
+
+<h1>三、源代码安全</h1>
+
+<p>通过file, class-dump, theos, otool等工具，黑客可以分析已经编译之后的二进制程序文件，不过相对于这些工具来说，IDA的威胁最大。</p>
+
+<p><a href="https://www.hex-rays.com/products/ida/">IDA</a>是一个收费的反汇编工具，对于Objective-C代码，它可以常常可以反汇编到可以方便阅读的程度，这对于程序的安全性，也是一个很大的危害。因为通过阅读源码，黑客可以更加方便地分析出应用的通讯协议和数据加密方式。</p>
+
+<p>下图分别示例了一段代码的原始内容，以及通过IDA反汇编之后的结果。可以看到，IDA几乎还原了原本的逻辑，而且可读性也非常高。</p>
+
+<p>原始代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">if</span> <span class="p">([[</span><span class="n">VersionAgent</span> <span class="n">sharedInstance</span><span class="p">]</span> <span class="n">isUpgraded</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">UpdateMigrationAgent</span> <span class="o">*</span><span class="n">agent</span> <span class="o">=</span>
+</span><span class='line'>            <span class="p">[[</span><span class="n">UpdateMigrationAgent</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">FileUtils</span> <span class="n">clearCacheDirectory</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">VersionAgent</span> <span class="n">sharedInstance</span><span class="p">]</span> <span class="n">saveAppVersion</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>反汇编后：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">v6</span> <span class="o">=</span> <span class="n">_objc_msgSend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OBJC_CLASS___VersionAgent</span><span class="p">,</span>
+</span><span class='line'>                   <span class="s">&quot;sharedInstance&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">v7</span> <span class="o">=</span> <span class="n">objc_retainAutoreleasedReturnValue</span><span class="p">(</span><span class="n">v6</span><span class="p">);</span>
+</span><span class='line'><span class="n">v41</span> <span class="o">=</span> <span class="n">_objc_msgSend</span><span class="p">(</span><span class="n">v7</span><span class="p">,</span> <span class="s">&quot;isUpgraded&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">objc_release</span><span class="p">(</span><span class="n">v7</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="n">v41</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="n">CFSTR</span><span class="p">(</span><span class="s">&quot;app is upgraded&quot;</span><span class="p">),</span> <span class="n">v41</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">_objc_msgSend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OBJC_CLASS___FileUtils</span><span class="p">,</span>
+</span><span class='line'>                  <span class="s">&quot;clearCacheDirectory&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">v8</span> <span class="o">=</span> <span class="n">_objc_msgSend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OBJC_CLASS___VersionAgent</span><span class="p">,</span>
+</span><span class='line'>                       <span class="s">&quot;sharedInstance&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">v9</span> <span class="o">=</span> <span class="n">objc_retainAutoreleasedReturnValue</span><span class="p">(</span><span class="n">v8</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">_objc_msgSend</span><span class="p">(</span><span class="n">v9</span><span class="p">,</span> <span class="s">&quot;saveAppVersion&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">objc_release</span><span class="p">(</span><span class="n">v9</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>反汇编的代码被获得后，由于软件内部逻辑相比汇编代码来说可读性高了很多。黑客可以用来制作软件的注册机，也可以更加方便地破解网络通讯协议，从而制作出机器人（僵尸）帐号。最极端的情况下，黑客可以将反汇编的代码稍加修改，植入木马，然后重新打包发布在一些越狱渠道上，这将对用户产生巨大的危害。</p>
+
+<p>对于IDA这类工具，我们的应对措施就比较少了。除了可以用一些宏来简单混淆类名外，我们也可以将关键的逻辑用纯C实现。例如微信的iOS端的通讯底层，就是用C实现的。这样的方式除了能保证通讯协议安全外，也可以在iOS和Android等多个平台使用同一套底层通讯代码，达到复用的目的。</p>
+
+<h1>总结</h1>
+
+<p>由于移动互联网的快速发展，人们的购物、理财等需求也在移动端出现，这使得移动应用的安全性越来越重要。由于部署在用户终端上，移动应用比服务器应用更容易被攻击，大家也需要在移动应用的网络通讯、本地文件和数据、源代码三方面做好防范，只有这样才能保证应用的安全。</p>
+
+<h1>版权说明</h1>
+
+<p>本文已发表在《程序员》杂志2014年5月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security">http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security</a></p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/10/21/the-tech-detail-of-ape-client-3/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/10/19/the-tech-detail-of-ape-client-2/">猿题库iOS客户端的技术细节（二）：答题卡扫描算法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-19T11:10:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第二篇。本文涉及的技术细节是：答题卡扫描算法。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/10/19/the-tech-detail-of-ape-client-2/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-17T00:43:00+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第一篇。本文涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/10/15/objective-c-object-model/">Objective-C对象模型及应用</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-15T20:31:00+08:00" pubdate data-updated="true">Oct 15<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>原创文章，转载请注明出自<a href="http://blog.devtang.com">唐巧的技术博客</a>。</p>
-
-<p>本文主要介绍Objective-C对象模型的实现细节，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。希望本文能加深你对Objective-C对象的理解。</p>
-
-<h2>ISA指针</h2>
-
-<p>Objective-C是一门面向对象的编程语言。每一个对象都是一个类的实例。在Objective-C语言的内部，每一个对象都有一个名为isa的指针，指向该对象的类。每一个类描述了一系列它的实例的特点，包括成员变量的列表，成员函数的列表等。每一个对象都可以接受消息，而对象能够接收的消息列表是保存在它所对应的类中。</p>
-
-<p>在XCode中按<code>Shift + Command + O</code>, 然后输入NSObject.h和objc.h，可以打开NSObject的定义头文件，通过头文件我们可以看到，NSObject就是一个包含isa指针的结构体，如下图所示：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/10/15/objective-c-object-model/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-11T16:00:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/wawati-sample.jpg"></p>
-
-<h2>引言</h2>
-
-<p>在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于：</p>
-
-<p>1、字体文件通常比较大，10M &ndash; 20M是一个常见的字体库的大小。大部分的非游戏的app体积都集中在10M以内，因为字体文件的加入而造成应用体积翻倍让人感觉有些不值。如果只是很少量的按钮字体需要设置，可以用一些工具把使用到的汉字字体编码从字体库中抽取出来，以节省体积。但如果是一些变化的内容需要自定义的字体，那就只有打包整个字体库了。</p>
-
-<p>2、中文的字体通常都是有版权的。在应用中加入特殊中文字体还需要处理相应的版权问题。对于一些小公司或个人开发者来说，这是一笔不小的开销。</p>
-
-<p>以上两点造成App Store里面使用特殊中文字库的iOS应用较少。现在通常只有阅读类的应用才会使用特殊中文字库。</p>
-
-<p>但其实从iOS6开始，苹果就支持动态下载中文字体到系统中。只是苹果一直没有公开相应的API。最终，相应的API在今年的WWDC大会上公开，接下来就让我们来一起了解这个功能。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/08/11/ios-asian-font-download-introduction/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/28/a-look-inside-blocks/">谈Objective-C Block的实现</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-28T10:42:00+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p><a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">这里</a>有关于block的5道测试题，建议你阅读本文之前先做一下测试。</p>
-
-<p>先介绍一下什么是闭包。在wikipedia上，<a href="http://en.wikipedia.org/wiki/Closure_(computer_science">闭包的定义</a>)是:</p>
-
-<blockquote><p>In programming languages, a closure is a function or reference to a function together with a referencing environment—a table storing a reference to each of the non-local variables (also called free variables or upvalues) of that function.</p></blockquote>
-
-
-<p>翻译过来，闭包是一个函数（或指向函数的指针），再加上该函数执行的外部的上下文变量（有时候也称作自由变量）。</p>
-
-<p>block实际上就是Objective-C语言对于闭包的实现。
-block配合上dispatch_queue，可以方便地实现简单的多线程编程和异步编程，关于这个，我之前写过一篇文章介绍：<a href="http://blog.devtang.com/blog/2012/02/22/use-gcd/">《使用GCD》</a>。</p>
-
-<p>本文主要介绍Objective-C语言的block在编译器中的实现方式。主要包括：</p>
-
-<ol>
-<li>block的内部实现数据结构介绍</li>
-<li>block的三种类型及其相关的内存管理方式</li>
-<li>block如何通过capture变量来达到访问函数外的变量</li>
-</ol>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/07/28/a-look-inside-blocks/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/24/use-crashlytics/">使用Crashlytics来保存应用崩溃信息</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-24T20:56:00+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/crashlytics-logo.jpg"></p>
-
-<p>本文首发于InfoQ，版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">原文链接</a>。</p>
-
-<h2>简介</h2>
-
-<p><a href="http://try.crashlytics.com/">Crashlytic</a> 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, 团购应用GroupOn等移动应用。</p>
-
-<p>2013年1月，Crashlytics<a href="http://www.crashlytics.com/blog/crashlytics-is-joining-forces-with-twitter/">被Twitter收购</a>，成为又一个成功的创业产品。被收购之后，由于没有了创业公司的不稳定因素，我们更有理由使用它来分析应用崩溃信息。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/07/24/use-crashlytics/">阅读 &rarr;</a>
-    </footer>
   
 
 
@@ -616,6 +421,12 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
 <aside class="sidebar">
   
     <section>
+  <h1>赞助商</h1>
+  <p>
+     <img width="260px" src="/images/ad_sale.png" />
+  </p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     

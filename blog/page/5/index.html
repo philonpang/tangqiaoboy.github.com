@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是： 请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码? 我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下， &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,9 +23,8 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <!-- googleapis is fucked by gfw ...
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  -->
+  <!-- googleapis is fucked by gfw -->
+  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -83,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/06/ios-weekly-10/">iOS移动开发周报-第10期</a></h1>
     
     
       <p class="meta">
@@ -99,290 +98,65 @@
   
 
 
-<time datetime="2013-06-23T12:39:00+08:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2013</time>
+<time datetime="2014-05-06T21:48:24+08:00" pubdate data-updated="true">May 6<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/alipay-plugin-1.jpg"></p>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<h2>前言</h2>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/facebook-pop-opensource">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<p>因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是：</p>
+<h3>前言</h3>
 
-<pre><code>请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码?
-</code></pre>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下，将支付宝客户端的插件机制具体实现方式介绍给大家。</p>
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果发布 2014 年第二季度财报，Facebook将神奇动画引擎Pop开源，Objc.io中文翻译站建成，iOS 7.1.1 更新可能造成升级失败等。</p>
 
-<p>先介绍一下该插件机制，如上图所示，支付宝客户端在安装后，对于像“彩票”、“爱心捐赠”这类功能，需要再点击安装一次，然后才可以使用。有些时候该插件功能进行了升级，需要点击升级才可以继续使用。插件的方式有利于软件动态增加新的功能或升级功能，而不用再一次向AppStore提交审核。另外，由于用户不需要的插件可以不用安装，也缩小了应用本身的体积大小，节省了下载流量。</p>
+<h2>新闻</h2>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/06/23/alipay-plugin-mechanism/">阅读 &rarr;</a>
-    </footer>
-  
+<ol>
+<li><p><a href="http://tech2ipo.com/64670">《Facebook 发布应用内深度链接技术：AppLinks》</a>：Facebook 刚刚在 f8 开发者大会上正式发布了 AppLinks 技术。该链接技术允许开发者在任何内容中植入链接，在点击后将用户带到应用内的其他地方，或是另一款应用内、或另一款应用的商城下载页面。<a href="http://vimeo.com/93018959">这里</a>有 AppLinks 技术的介绍视频。</p></li>
+<li><p><a href="http://blog.jetbrains.com/objc/2014/04/appcode-3-0-eap-opens-with-an-integrated-ui-designer-and-improved-project-settings/">《AppCode 3.0的改进》</a>：jetbrains公司在其官方博客上介绍了对于AppCode 3.0的改进，他们在EAP中集成了项目设置和UI编辑。使得AppCode对Xcode的依赖性更小。在此之前，iOS工程中的UI编辑必须在Xcode中进行。</p></li>
+<li><p><a href="http://geek.csdn.net/news/detail/7534">《Facebook将神奇动画引擎Pop开源》</a>：Facebook 2月发布的新闻类应用Paper，因为其灵动的用户界面和交互，成为近来最令人眼前一亮的移动产品之一，而POP是Paper使用到的动效引擎。</p></li>
+<li><p><a href="http://weibo.com/1708947107/B1grIt913?mod=weibotime">iOS 7.1.1 更新，但可能造成升级失败</a>：iOS7.1.1
+进一步改进了 Touch ID 的指纹识别，修复了可能影响键盘响应能力的错误，修复了启用 VoiceOver后使用蓝牙键盘时出现的问题。笔者发现非常多朋友的iPhone通过OTA升级iOS 7.1.1失败了，需要连接itunes恢复。他们的手机均未越狱。当然，也有升级成功的，大家小心，升级前一定先备份好资料。</p></li>
+<li><p><a href="http://tech.sina.com.cn/it/2014-04-24/05149341652.shtml">《苹果发布 2014 年第二季度财报，收入同比增长 5%，净利润同比增7%》</a>：苹果公司发布了2014财年第二财季业绩。报告显示，苹果公司第二财季营收为456.46亿美元，比去年同期的436.03亿美元增长5%；净利润为102.23亿美元，比去年同期的95.47亿美元增长7%。苹果公司第二财季营收和每股收益均超出华尔街分析师预期，推动其盘后股价大幅上涨逾7%。</p></li>
+<li><p><a href="http://money.21cbh.com/2014/4-24/1MMDA2NTVfMTE0NzI1Mg.html">《Facebook第一季度财报：净利润同比增193%》</a>：4月24日Facebook发布了截至3月31日的2014财年第一季度未经审计财报。报告显示，Facebook第一季度营收为25.02亿美元，比去年同期的14.58亿美元增长72%；净利润为6.42亿美元，比去年同期的2.19亿美元增长193%。</p></li>
+</ol>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/17/startup-anniversary-note/">写在创业一周年</a></h1>
-    
-    
-      <p class="meta">
-        
+<h2>教程</h2>
 
+<ol>
+<li><p><a href="http://objccn.io/">Objc.io中文翻译站建成</a>：<a href="http://onevcat.com/">@onevcat</a>和<a href="http://weibo.com/fangyixiong?topnav=1&amp;wvr=5&amp;topsug=1">@方一雄</a>、<a href="http://weibo.com/nixzhu">@nixzhu</a>等几十个译者一起努力，完成了objc.io上的所有文章的翻译，这是一个objc.io的完整、准确、优雅的中文翻译版本，为中国 Objective-C 社区带来最佳实践和先进技术。整个过程花费了一个多月。这是值得每一个iOS开发者学习的资料。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-26-make-swipeable-table-view-cell-actions-without-going-nuts-scroll-views.md">《制作一个可以滑动操作的 Table View Cell》</a>：Apple 通过 iOS 7 的邮件（Mail）应用介绍了一种新的用户界面方案——向左滑动以显示一个有着多个操作的菜单。本教程将会向你展示如何制作一个这样的 Table View Cell，而不用因嵌套的 Scroll View 陷入困境。</p></li>
+<li><p><a href="http://objcio.com/blog/2014/04/25/mastering-the-icloud-document-store/">《精通iCloud文档存储》</a>：即便已经推出了3年，iCloud 文档存储依然是一个充满神秘、误解和抱怨的话题。iCloud 同步经常被批评不可靠且速度慢。虽然在 iCloud 的早期有一些严重的 bug，开发者们还是不得不学习有关文件同步的课程。文件同步事关重大，为应用开发带来了新方向，一个经常被低估的方向，比如进行同步服务相关的合作时，对于处理文件异步更改的需要。
+本文会介绍几个创建支持 iCloud 的应用时可能会遇到的一些绊脚石。</p></li>
+<li><p><a href="http://www.v2ex.com/t/109496">《关于用 OS X 做网站服务器》</a>：V2EX的作者分享了关于用 OS X 做网站服务器的经验。</p></li>
+<li><p><a href="http://ios-blog.co.uk/getting-started/xcode-5-tips-and-tricks/">《Xcode 5 – Tips and tricks》</a>：文章介绍了Xcode 5相关的常用快捷键。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-22-ui-activity-viewcontroller.md">《研究 UIActivityViewController》</a>：UIActivityViewController出现于 iOS 6，在应用里为分享和操作数据提供了一个统一的服务接口。作者详细介绍了UIActivityViewController的使用以及如何创建一个自定义 UIActivity。</p></li>
+<li><p><a href="http://www.36kr.com/p/211441.html">《小细节大作为：提高iOS访问权限通过率有这几个办法》</a>：Brenden Mulligan是群组照片聚合应用Cluster的创始人之一，兼设计师。作为一名产品设计师和企业家，Brenden的作品包括 OneSheet和ArtistData等。在文章中，Brenden讲述了原生应用Cluster是如何提高iOS访问权限通过率的。</p></li>
+</ol>
 
 
+<h2>工具</h2>
 
+<ol>
+<li><a href="https://itunes.apple.com/cn/app/touchcolor/id859727780?mt=8">TouchColor</a>：TouchColor是一个由<a href="http://tw.weibo.com/100mango">@方秋枋</a>开发的优雅简洁，功能完善的取色器。它提供照片取色，照相取色，实时取色三大功能，并且在AppStore上免费提供下载。</li>
+</ol>
 
 
+<h2>开源项目</h2>
 
+<ol>
+<li><p><a href="https://github.com/facebook/pop">POP</a>：POP是Paper使用到的动效引擎。</p></li>
+<li><p><a href="https://github.com/jerols/PopTut">PopTut</a>：一个使用POP做动效的示例工程。除了示例代码外，作者也提供了<a href="https://www.youtube.com/watch?v=ErJ4FnPa_Qk">视频教程</a>。</p></li>
+<li><p><a href="http://wangzz.github.io/blog/2014/04/25/githubyou-xiu-xiang-mu-ios/">《github优秀开源项目大全-iOS》</a>：作者搜集了在github上的一些优秀的开源项目。</p></li>
+</ol>
 
-  
-
-
-<time datetime="2013-06-17T20:56:00+08:00" pubdate data-updated="true">Jun 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/startup-anniversary.jpg"></p>
-
-<h2>前言</h2>
-
-<p>大约在去年这个时候，我离开网易有道，开始了自己的创业不归路。一年过去了，总是在忙碌，在最忙的时候，我连博客都没有时间更新了。但是这一年的经历对我的成长重大，还是挺值得写下来的，在此将我的故事分享给那些一同走在创业路上的朋友。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/06/17/startup-anniversary-note/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/16/ios-dev-tool-app-store-tool/">iOS开发工具篇-AppStore统计工具</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-16T12:26:00+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>本文首发于InfoQ，本文版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/appstore-statistical-tool">原文链接</a>。</p>
-
-<h2>前言</h2>
-
-<p>随着iOS开发的流行，针对iOS开发涉及的方方面面，早有一些公司提供了专门的解决方案或工具。这些解决方案或工具包括：用户行为统计工具（友盟，Flurry，Google Analytics等),  App Store销售分析工具（例如App annie)， App crash收集工具（例如Crashlytics)，App测试发布工具（Test Flight）, App Push服务等。</p>
-
-<p>这些解决方案或工具节省了iOS开发者大量的开发时间，但是由于相关介绍文章的缺乏，许多开发者都在重复着自己一次又一次重新造轮子。所以我希望，将我自己使用和调研的相关的第三方服务使用经验，整理成一系列文章，以便广大开发者能够省去大量的重复性工作。</p>
-
-<p>今天介绍AppStore统计工具：App Annie和苹果的命令行统计工具。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/06/16/ios-dev-tool-app-store-tool/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/goodbye-viewdidunload/">再见，viewDidUnload方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T17:37:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>前言</h3>
-
-<p>我在去年的一篇文章<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">《iOS5中UIViewController的新方法》</a>中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中，viewDidUnload回调方法被Deprecated掉了。查看苹果的文档，可以看到如下的说明。</p>
-
-<p><img src="/images/viewdidunload-1.jpg"></p>
-
-<p>那么，原本在viewDidUnload中的代码应该怎么处理？在iOS6中，又应该怎么处理内存警告？带着这些问题，我查找了一些资料，在此分享给大家。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/05/18/goodbye-viewdidunload/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/08/git-submodule-issues/">Git Submodule的坑</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-08T21:44:00+08:00" pubdate data-updated="true">May 8<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了，赶紧抽空充充电吧。本文并不打算做Git入门级介绍，想学习git的同学，推荐国内作者蒋鑫写的<a href="http://book.douban.com/subject/6526452/">《Git权威指南》</a>。</p>
-
-<p>对于一些比较大的工程，为了便于复用，常常需要抽取子项目。例如我开发的猿题库客户端现在包括3门考试，客户端涉及的公共UI、公共底层逻辑、公共的第三方库、以及公共的答题卡扫描算法就被我分别抽取成了子项目。这些子项目都以git submodule的形式，增加到工程中。</p>
-
-<p>在使用了git submodule一段时间后，我发现了一些submodule的问题，在此分享给大家。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/05/08/git-submodule-issues/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>2008年</h2>
-
-<p>62天售空。介绍了iPhone 3G。</p>
-
-<p><img src="/images/wwdc-2008.jpg" width="500px" /></p>
-
-<h2>2009年</h2>
-
-<p>33天售空。介绍了iPhone 3GS。</p>
-
-<p><img src="/images/wwdc-2009.png" width="500px" /></p>
-
-<h2>2010年</h2>
-
-<p>8天售空。介绍了iPhone 4。</p>
-
-<p><img src="/images/wwdc-2010.png" width="500px" /></p>
-
-<h2>2011年</h2>
-
-<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
-
-<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
-
-<p><img src="/images/wwdc-2011.jpg" width="500px" /></p>
-
-<h2>2012年</h2>
-
-<p>2小时售空。介绍了iOS6。</p>
-
-<p><img src="/images/wwdc-2012.jpg" width="500px" /></p>
-
-<h2>2013年</h2>
-
-<p>2分钟售空。期待。</p>
-
-<p><img src="/images/wwdc-2013.jpg" width="500px" /></p>
 </div>
   
   
@@ -395,7 +169,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/04/25/ios-weekly-9/">iOS移动开发周报-第9期</a></h1>
     
     
       <p class="meta">
@@ -411,182 +185,51 @@
   
 
 
-<time datetime="2013-04-29T20:22:00+08:00" pubdate data-updated="true">Apr 29<span>th</span>, 2013</time>
+<time datetime="2014-04-25T20:44:56+08:00" pubdate data-updated="true">Apr 25<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/forget.jpeg"></p>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<p>今天翻到很久以前自己在网易博客上写的<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201110133108545/">这篇文章</a>，惊奇地发现自己都忘记了里面的一些内容。所以我又重新学习了一下，然后改了改内容，挪到这里。</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/ios-mobile-developmeng-weekly">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<h2>前言</h2>
+<h3>前言</h3>
 
-<p><a href="http://www.amazon.cn/s?ie=UTF8&amp;search-alias=books&amp;field-author=Steffen%20Itterheim">Steffen Itterheim</a>是<a href="http://www.amazon.cn/Learn-Iphone-and-Ipad-Cocos2d-Game-Development-The-Leading-Framework-for-Building-2D-Graphical-and-Interactive-Applications-Itterheim-Steffen/dp/1430233036/ref=sr_1_1?ie=UTF8&amp;qid=1321168092&amp;sr=8-1">《Learn Iphone and Ipad Cocos2d Game Development》</a>作者。cocos2d和cocos2d-x现在已成为著名的游戏开发引擎。在AppStore上有超过100个游戏是基于Cocos2D。</p>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>Steffen Itterheim在<a href="http://www.learn-cocos2d.com/2011/10/complete-list-objectivec-20-compiler-directives">他的博客</a>中总结了 Objective-C 2.0 所有的编译器保留字，并且对这些保留字做了介绍和使用示例。这些保留字如下：</p>
+<p>【摘要】：本期iOS移动开发周报带来如下内容：专门针对越狱iOS设备的盗号木马出现，iOS7下载自定义的字体功能不可用，Toll-Free Bridging等。</p>
 
-<pre>
-@class
-@defs
-@protocol @required @optional @end
-@interface @public @package @protected @private @property @end
-@implementation @synthesize @dynamic @end
-@throw @try @catch @finally
-@synchronized @autoreleasepool
-@selector @encode
-@compatibility_alias
-@”string”
-</pre>
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://blog.devtang.com/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>：国外的iOS开发者 <a href="https://twitter.com/iOn1c">@iOn1c</a> 发现一个来自中国的开发者&#8221;WANG XIN&#8221;签名的iOS平台的木马插件，该插件是一个名为Unflod.dylib动态链接库，可以将越狱机器上的AppleID用户名和密码盗取，并且发送到指定服务器上。<a href="http://pastebin.com/raw.php?i=QxVRd2ha">这里</a>有该恶意插件的反汇编代码。笔者作为一个资深iOS开发者，建议一般普通用户，如果是为了用盗版软件就别越狱了，各种国内的越狱渠道都非常不安全的。如果是开发者们为了研究安全而越狱的，最好也只是在专门研究用的iTouch上使用，以避免可能的安全风险。</p></li>
+<li><p><a href="http://weibo.com/1676354212/AFt7N5pl8">iOS7下载自定义的字体功能不可用</a>：墨客的作者<a href="http://weibo.com/1676354212/AFt7N5pl8">@an00na</a>发现iOS提供的下载自定义的字体功能有bug，完全不能使用。相关的Bug说明在<a href="http://openradar.appspot.com/radar?id=5881896777023488">这里</a>。</p></li>
+</ol>
 
 
-<p>我把这些保留字过了一遍，发现很少用到的有 @dynamic @defs @encode @compatibility_alis，所以就给大家介绍一下这几个关键字吧。</p>
+<h2>教程</h2>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/04/29/the-missing-objc-keywords/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/07/tricks-in-iap/">iOS应用内支付(IAP)的那些坑</a></h1>
-    
-    
-      <p class="meta">
-        
+<ol>
+<li><p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/">《Toll-Free Bridging》</a>：作者<a href="http://weibo.com/lancy1014/">@晨钰Lancy</a>在文章中介绍Toll-Free Bridging的实现原理，以及在ARC下Toll-Free Bridging的使用场景和注意事项。</p></li>
+<li><p><a href="https://app.yinxiang.com/shard/s16/sh/15d40ea3-7273-4701-a816-dea7edfb2140/b41319e65ca4d91d2553f2bab25b8959">《iOS7.0到iOS7.1 UI修复》</a>：作者<a href="http://weibo.com/2271223902/B0960vL7J?ref=atme">@白仔_wyk</a>介绍了iOS7.0下原本正常的界面在iOS7.1显示错误的问题，并且介绍了修复方法。</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=OiY1cheLpmI">《Full Length Event &ndash; Building Paper》</a>：Facebook官方分享了介绍Paper的技术细节的视频（视频来自YouTube，需要翻墙才能观看）。视频中介绍Facebook自已实现的动画框架POP，以及如何做设计，测试，代码审核等各方面的信息。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-21-write-a-simple-nodejs-mongodb-web-service-for-an-ios-app.md">《为一个 iOS 应用编写一个简单的 Node.js/MongoDB Web 服务》</a>：作者<a href="http://weibo.com/nixzhu">@nixzhu</a>翻译了一个来自<a href="http://www.raywenderlich.com/61078/write-simple-node-jsmongodb-web-service-ios-app">RW</a>的教程，介绍了如何为一个 iOS 应用编写一个简单的 Node.js/MongoDB Web 服务。在本教程中，你将学会如何搭建了一个 Node.js 环境，驱动 Express；在此平台之上，你将构建一个通过 REST API 来提供一个 MongoDB 数据库的服务器。对于iOS端，你将构建一个很酷的叫做“有趣的地方”的应用，标记有趣的位置，让其它用户能够找出他们附近有趣的地方。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/zi-ti-jia-zai-san-chong-fang-shi">《字体加载三种方式》</a>：作者介绍了三种加载字体的方式：静态加载、动态加载、动态下载苹果提供的多种字体。</p></li>
+</ol>
 
 
+<h2>开源项目</h2>
 
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-07T20:14:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/iap-icon.jpg"></p>
-
-<h2>前言</h2>
-
-<p><a href="https://www.udacity.com/">udacity</a>中的在线课程<a href="https://www.udacity.com/course/ep245">《How to build a startup》</a>中提到，所谓创业，就是尝试寻找新的赢利模式。正因为这是一种尝试，所以不可避免地需要调整产品方向，寻找市场中还未被发现的用户需求，给用户创造价值，进而获得收入。最近很火的<a href="http://book.douban.com/subject/10945606/">精益创业</a>的观点，则是强调将这种尝试成本降到最小，使得自己可以根据市场反馈迅速调整产品。</p>
-
-<p>我们在今年春节后上线了新的在线智能题库：<a href="http://yuantiku.com/">猿题库</a>。这应该是我们在互联网教育这个创业领域尝试的第二个方向。</p>
-
-<p>猿题库现在推出了公务员考试行测和申论2个产品，均包括web, iOS和Android三个平台。这次我们尝试做一个收费的产品，所以在iOS端集成了应用内支付（IAP）功能。在开发过程中和上线后，我们遇到了IAP中的一些坑，在此分享给各位。</p>
+<ol>
+<li><p><a href="https://github.com/mxcl/PromiseKit">PromiseKit</a>：异步模式在iOS编程中非常常见。针对异步编程，业界提出了Promise的抽象（又称作Deferred模式）。通过这些一些库，开发人员能够在实际编程中使用Promise模式，每个Promise都拥有一个叫做then的唯一接口，当Promise失败或成功时，它就会进行回调。它代表了一种可能会长时间运行而且不一定必须完成的操作结果。这种模式不会阻塞和等待长时间的操作完成，而是返回一个代表了承诺的（promised）结果的对象。PromiseKit是Promise模式的iOS实现。</p></li>
+<li><p><a href="https://github.com/intentkit/IntentKit">IntentKit</a>：IntentKit是一个方便你处理第三方的URL Scheme的工具。</p></li>
+</ol>
 
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/04/07/tricks-in-iap/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/27/should-we-use-arc/">是否应该使用ARC?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-27T21:23:00+08:00" pubdate data-updated="true">Mar 27<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/arc-logo.jpg"></p>
-
-<p>我和身边做iOS开发的同事组建了一个QQ群，每隔一段时间，大家就会讨论是否应该使用ARC。所以我觉得有必要将这些讨论分享出来，让大家消除对于ARC的疑虑。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/03/27/should-we-use-arc/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/21/introduction-of-weixin-public-account/">分享iOS开发技巧的微信公共账号</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-21T20:02:00+08:00" pubdate data-updated="true">Feb 21<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/weixin-why.jpg" width="300px" /></p>
-
-<p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
-
-<p>后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。现在群里面加入了包括网易，腾讯，百度，新浪，搜狐，美团，豆瓣等公司的iOS程序员以及一些自由职业者。因为大家都是比较有经验的开发者，所以每天大家的讨论不太多，但是都很有价值。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/02/21/introduction-of-weixin-public-account/">阅读 &rarr;</a>
-    </footer>
   
 
 
@@ -605,6 +248,12 @@
 <aside class="sidebar">
   
     <section>
+  <h1>赞助商</h1>
+  <p>
+     <img width="260px" src="/images/ad_sale.png" />
+  </p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     

@@ -9,7 +9,9 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。 后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。 &hellip;">
+  <meta name="description" content="在iOS应用中，有时候会需要调用系统的一些UI控件，例如： 在UIWebView中长按会弹出系统的上下文菜单
+在UIImagePickerController中会使用系统的照相机界面
+在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。 以上这些UI控件中， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,7 +25,9 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
+  <!-- googleapis is fucked by gfw ...
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  -->
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -75,51 +79,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/21/introduction-of-weixin-public-account/">分享iOS开发技巧的微信公共账号</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-21T20:02:00+08:00" pubdate data-updated="true">Feb 21<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/weixin-why.jpg" width="300px" /></p>
-
-<p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
-
-<p>后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。现在群里面加入了包括网易，腾讯，百度，新浪，搜狐，美团，豆瓣等公司的iOS程序员以及一些自由职业者。因为大家都是比较有经验的开发者，所以每天大家的讨论不太多，但是都很有价值。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/02/21/introduction-of-weixin-public-account/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
   
   
     <article>
@@ -535,6 +494,66 @@
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/14/make-stack-trace-more-readable/">让XCode的 Stack Trace信息可读</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T20:19:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天在写iOS代码的时候，调试的时候模拟器崩溃了。异常停在了如下整个main函数的入口处：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// 异常停在了下面这行，毫无提示作用</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">UIApplicationMain</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="nb">nil</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">MyClass</span> <span class="n">class</span><span class="p">]));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/11/14/make-stack-trace-more-readable/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -550,10 +569,6 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
@@ -597,6 +612,10 @@
     
       <li class="post">
         <a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a>
       </li>
     
   </ul>

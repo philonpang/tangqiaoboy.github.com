@@ -4,7 +4,7 @@
   <title><![CDATA[Category: summary | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/summary/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-06-02T17:46:01+08:00</updated>
+  <updated>2014-06-05T18:40:03+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,100 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[将博客从GitHub迁移到GitCafe]]></title>
-    <link href="http://blog.devtang.com/blog/2014/06/02/use-gitcafe-to-host-blog/"/>
-    <updated>2014-06-02T17:22:02+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/06/02/use-gitcafe-to-host-blog</id>
-    <content type="html"><![CDATA[<p>我之前一直使用<a href="https://pages.github.com/">Github Pages功能</a>以及<a href="http://octopress.org/">Octopress</a>来搭建个人博客，我也写了一篇文章<a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">《象写程序一样写博客：搭建基于github的博客》</a>来分享博客搭建的技术细节。</p>
-
-<p>但是自从我的博客每天访问量超过2000次以后，我就发现博客的访问速度还是一个不可忽视的问题。通过<a href="http://www.jiankongbao.com/">监控宝</a>和<a href="http://www.google.com/analytics/">Google Analytics</a>，我发现有些博客文章的平均打开时间长达4秒钟。于是我开始考虑将博客搭建在更快的服务器上面。</p>
-
-<p>我的首先考虑是购买独立的VPS，<a href="https://www.linode.com/pricing">Linode</a>每月30$的价格还是略贵，于是我买的是 <a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>，<a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>算下来每月只需要5$。于是在一个周末，我花时间购买了DigitalOcean家的VPS，安装了Nginx，然后在上面运行了一个脚本，定时将我github博客的内容自动更新过来（其实就是定期<code>git pull</code>一下我博客的repo）。</p>
-
-<p>就这样运行了一个月，我发现虽然<a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>服务器的ping值相比github要快一些。但是从监控数据上看，整体的网页访问速度并没有什么提高。就在我在微博上抱怨的时候，一个朋友推荐我试试<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>。于是我就尝试了一下，结果你猜怎么着？我被吓坏了。</p>
-
-<p>ping值直接从200ms左右减少到3ms左右，如下图所示：</p>
-
-<p><img src="/images/gitcafe-ping.jpg"></p>
-
-<p>监控宝的统计显示，首页平均打开时间从原来的1800ms减少到350ms左右，快了5倍，如下图所示：</p>
-
-<p><img src="/images/gitcafe-jiankong.jpg"></p>
-
-<p>所以我强烈建议各位基于Github Pages功能来搭建个人博客的朋友，将博客内容镜像到<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>上。如果你有个人的独立域名，那么镜像之后就可以随时将博客地址在Github和Gitcafe之间切换了。对于各位博主来说，这样做没有任何风险，因为你可以随时再切换回去。当然，免费用了人家的服务，如果你能像我这样，在网站的底部附上感谢内容，那是再好不过的了。</p>
-
-<p>以下为大家介绍详细的迁移过程。</p>
-
-<h2>迁移教程</h2>
-
-<h3>注册</h3>
-
-<p>如果你还没有注册过<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>，首先需要<a href="https://gitcafe.com/signup">点这里</a>注册一下。</p>
-
-<p>注册完成之后，去<a href="https://gitcafe.com/account/public_keys">公钥管理</a>那儿添加一下你的ssh公钥，这样以后提交代码会方便很多。当然你也可以不设置这一步，每次提交通过密码来验证。</p>
-
-<h3>在GitCafe上新建一个博客项目</h3>
-
-<p>然后我们需要先在GitCafe上新建一个博客项目。GitCafe的博客搭建官方教程藏得比较深，所以我第一次还没有找到，教程地址在<a href="https://gitcafe.com/GitCafe/Help/wiki/Pages-%E7%9B%B8%E5%85%B3%E5%B8%AE%E5%8A%A9#wiki">这里</a>。具体来说，就是创建一个与用户名(如果是组织，就是组织名)相同名称的项目。如果你创建的项目名与用户名相同，GitCafe会自动识别成这是一个Page项目，如下所示：</p>
-
-<p><img src="/images/gitcafe-create-page.jpg"></p>
-
-<h3>设置多个Git Remote源</h3>
-
-<p>接下来我们需要将原本提交到Github上的博客内容同步提交到GitCafe。因为我的博客是基于<a href="http://octopress.org/">Octopress</a>的，我介绍一下Octopress的做法，其它博客引擎的做法类似。</p>
-
-<p>对于Octopress，我们只需要每次提交网站内容时，执行完 <code>rake deploy</code>之后，再执行以下脚本即可（你可以将该脚本中的代码仓库地址换成你的，然后将其保存成一个脚 本文件，需要时执行一下即可）：</p>
-
-<p>``` bash</p>
-
-<p>cd _deploy</p>
-
-<h1>添加 gitcafe 源</h1>
-
-<p>git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git >> /dev/null 2>&amp;1</p>
-
-<h1>提交博客内容</h1>
-
-<p>echo &ldquo;### Pushing to GitCafe&hellip;&rdquo;
-git push -u gitcafe master:gitcafe-pages
-echo &ldquo;### Done&rdquo;%</p>
-
-<p>```</p>
-
-<p>大概解释一下以上内容，Octopress在发布时会将自己的 <code>_delpoy</code>目录切换到master分支，然后将生成的博客内容放到<code>_delpoy</code>目录中，然后执行<code>git push</code>操作。正常情况下，默认内容是push到github上的。我们执行的以上脚本，就是为该项目增加了一个名为<code>gitcafe</code>的远程仓库，然后将master分支push到<code>gitcafe</code>的<code>gitcafe-pages</code>分支。</p>
-
-<h3>修改Rakefile (可选)</h3>
-
-<p>除了以上方法外，你也可以直接修改<code>Rakefile</code>。在其第269行后增加如下代码，也可以达到同样的目的，这样你每次就仍然只需要执行<code>rake deploy</code>即可同时将博客同步到github和gitcafe：</p>
-
-<p><code>ruby
-system "git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git &gt;&gt; /dev/null 2&gt;&amp;1"
-system "git push -u gitcafe master:gitcafe-pages"
-</code></p>
-
-<p>插入代码的示例位置如下：</p>
-
-<p><img src="/images/gitcafe-edit-rakefile.jpg"></p>
-
-<h3>设置域名</h3>
-
-<p>GitCafe的自定义域名设置比github要友好得多，它不但提供了图形界面设置，并且支持同时设置多个域名。在<code>项目管理</code>&ndash;><code>域名管理</code>中，我们可以找到相应的设置项，如下所示：</p>
-
-<p><img src="/images/gitcafe-set-domain.jpg"></p>
-
-<p>在设置完之后，我们需要去域名解析的服务商那儿，将对应的域名用<code>A记录</code>类型，解析到<code>117.79.146.98</code>即可。</p>
-
-<h3>添加对GitCafe的感谢(可选)</h3>
-
-<p>如果你也想像我一样，想在博客底部添加对GitCafe的感谢，可以参考<a href="https://github.com/tangqiaoboy/tangqiaoboy.github.com/commit/a8ff6914d6fca786baf5702de3da01d408bd7b43">这个提交</a>。它通过修改Octopress的<code>source/_includes/custom/footer.html</code>模版文件完成。</p>
-
-<h2>感谢</h2>
-
-<p>最后再次感谢GitCafe，上个月在QCon大会上了解到他们的发展思路和Github很不一样。虽然它还是一家创业公司，但是我期待看到它最终能够推动国内开源和技术社区的发展。</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[技术人员如何坚持写作]]></title>
@@ -437,6 +343,131 @@ system "git push -u gitcafe master:gitcafe-pages"
 <li>开始写iOS开发的书</li>
 <li>创业得到了<a href="http://tech.sina.com.cn/i/2013-09-10/09528724637.shtml">B轮融资</a></li>
 </ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[如何写面向互联网公司的求职简历]]></title>
+    <link href="http://blog.devtang.com/blog/2013/12/22/how-to-write-resume-for-it-company/"/>
+    <updated>2013-12-22T20:04:00+08:00</updated>
+    <id>http://blog.devtang.com/blog/2013/12/22/how-to-write-resume-for-it-company</id>
+    <content type="html"><![CDATA[<p><img src="/images/resume-title.jpg"></p>
+
+<h2>前言</h2>
+
+<p>我在IT公司工作了六年，有着三年面试官的经历。在面试中，我发现很多人都不能写好一份求职简历，所以今天不谈iOS开发，谈谈如何写一份针对互联网公司的求职简历。</p>
+
+<p>我主要想分享的内容包括：</p>
+
+<ul>
+<li>简历的页数不要超过两页（最好一页）
+
+<ul>
+<li>删掉不必要的信息</li>
+<li>如果你实在太牛逼，最多写2页</li>
+</ul>
+</li>
+<li>重要的信息写在最前面
+
+<ul>
+<li>你的联系方式</li>
+<li>你最重要的工作经历</li>
+</ul>
+</li>
+<li>不要简单罗列工作经历
+
+<ul>
+<li>列出你的工作中有价值的细节（有哪些技术上的困难等）</li>
+</ul>
+</li>
+<li>不要写任何虚假或夸大的信息
+
+<ul>
+<li>类似精通java，精通C/C++等</li>
+</ul>
+</li>
+<li>不要附加任何可能带来负面印象的信息
+
+<ul>
+<li>不要加照片</li>
+<li>不要写政治面貌</li>
+<li>不要写奇怪的爱好（打游戏，喝酒，抽烟）</li>
+<li>不要写参加过某某培训公司的iOS培训</li>
+<li>尽量用专业邮箱</li>
+<li>用PDF格式</li>
+</ul>
+</li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2>简历不要超过两页（最好一页）</h2>
+
+<p>互联网公司和传统企业有着很大的区别，通常情况下，创新和效率是互联网公司比较追求的公司文化，所以体现在简历上，就是超过一页的简历通常会被认为不够专业。</p>
+
+<p>更麻烦的是，多数这种简历很可能在HR手中就被过滤掉了，因为HR每天会收到大量的简历，一般情况下每份简历在手中的停留时间也就10秒钟左右。而超过一页的简历会需要更多的时间去寻找简历中的有价值部分，对于HR来说，她更倾向于认为这种人通常是不靠谱的，因为写个简历都不懂行规，为什么还要给他面试机会呢?</p>
+
+<p>那么我们应该如何精简简历呢? 简单说来就是一个字：删！</p>
+
+<p>删掉不必要的自我介绍信息，很多求职者会将自己在学校所学的课程罗列上去，例如：C语言，数据结构，数学分析。。。好家伙，一写就是几十门，还放在简历的最上面，就怕面试官看不见。对于这类信息，一个字：删！面试官不Care你上了哪些课程，而且在全中国，大家上的课程也都大同小异，所以没必要写出来。</p>
+
+<p>删除不必要的工作或实习、实践经历。如果你找一份程序员的工作，那么你参加了奥运会的志愿者活动，并且拿到了奖励或者你参加学校的辩论队，获得了最佳辩手这些经历通常是不相关的。诸如此类的还有你帮导师代课，讲了和工作不相关的某某专业课，或者你在学生会工作等等。删除不相关的工作、实习或实践内容可以保证你的简历干净。当然，如果你实在没得可写，比如你是应届生，一点实习经历都没有，那可以适当写一两条，保证你能写够一页的简历，但是那两条也要注意是强调你的团队合作能力或者执行力之类的技能，因为这些才是面试官感兴趣的。</p>
+
+<p>删除不必要的证书：最多写个4、6级的证书，什么教师资格证，中高级程序员证，还有国内的各种什么认证，都是没有人Care的。</p>
+
+<p>删除不必要的细节，作为iOS开发的面试官，很多求职者在介绍自己的iOS项目经历的时候，介绍了这个工程用的工作环境是Mac OS，使用的机器是Mac Mini，编译器是XCode4.x，能够运行在iOS4.3以上环境，还有一些人，把这个项目用到的开源库都写上啦，什么ASI, AFNetworking, Cocoapods啥的。这些其实都不是重点，请删掉。后面我会讲，你应该如何介绍你的iOS项目经历。</p>
+
+<p>自我评价，这个部分是应届生最喜欢写的，各种有没有的优点都写上，例如：</p>
+
+<p><blockquote><p></p></p><p><p> 性格开朗、稳重、有活力，待人热情、真诚；工作认真负责，积极主动，能吃苦耐劳，用于承受压力，勇于创新；有很强的组织能力和团队协作精神，具有较强的适应能力；纪律性强，工作积极配合；意志坚强，具有较强的无私奉献精神。对待工作认真负责，善于沟通、协调有较强的组织能力与团队精神；活泼开朗、乐观上进、有爱心并善于施教并行；上进心强、勤于学习能不断提高自身的能力与综合素质。</p></p><p><p></p></blockquote></p>
+
+<p>这些内容在面试的时候不太好考查，都可以删掉。通常如果有HR面的话，HR自然会考查一些你的沟通，抗压，性格等软实力。</p>
+
+<p>我相信，不管你是刚毕业的学生，还是工作十年的老手，你都可以把你的简历精简到一页A4纸上。</p>
+
+<h2>重要的信息写在最前面</h2>
+
+<p>将你觉得最吸引人的地方写在最前面。如果你有牛逼公司的实习，那就把实习经历写在最前面，如果你在一个牛逼的实验室里面做科研，就把研究成果和论文写出来，如果你有获得过比较牛逼的比赛名次（例如google code, ACM比赛之类），写上绝对吸引眼球。</p>
+
+<p>所以，每个人的简历的介绍顺序应该都是不一样的，不要在网上下载一个模板，然后就一项一项地填：教育经历，实习经历，得奖经历，个人爱好，这样的简历毫无吸引力，也无法突出你的特点。</p>
+
+<p>除了你的个人特点是重要信息外，你的手机号，邮箱，毕业院校，专业以及毕业时间这些也都是非常重要的，一定要写在简历最上面。</p>
+
+<h2>不要简单地罗列工作经历</h2>
+
+<p>不要简单地说你开发了某某iOS客户端。这样简单的罗列你的作品集并不能让面试官很好地了解你的能力，当然，真正在面试时面试官可能会仔细询问，但是一份好的简历，应该省去一些面试官额外询问你的工作细节的时间。</p>
+
+<p>具体的做法是：详细的描述你对于某某iOS客户端的贡献。主要包括：你参与了多少比例功能的开发? 你解决了哪些开发中的有挑战的问题? 你是不是技术负责人?</p>
+
+<p>而且，通过你反思这些贡献，你也可以达到自我审视，如果你发现这个项目你根本什么有价值的贡献都没做，就打了打酱油，那你最好不要写在简历上，否则当面试官在面试时问起时，你会很难回答，最终让他发现你的这个项目经历根本一文不值时，肯定会给一个负面的印象。</p>
+
+<h2>不要写任何虚假或夸大的信息</h2>
+
+<p>刚刚毕业的学生都喜欢写精通Java，精通C/C++，其实代码可能写了不到1万行，我觉得你要精通某个语言，至少得写50万行这个语言的代码才行，而且要对语言的各种内部机制和原理有了解。那些宣称精通Java的同学，连Java如何做内存回收，如何做范型支持，如何做自动boxing和unboxing的都不知道，真不知道为什么要写精通2字。</p>
+
+<p>任何夸大或虚假的信息，在面试时被发现，会造成极差的面试印象，所以你如果对某个知识一知半解，要么就写“使用过”某某，要么就干脆不写。如果你简历实在太单薄，没办法写上了一些自己打酱油的项目，被问起来怎么办? 请看看下面的故事：</p>
+
+<p>我面试过一个同学，他的面试时非常诚实，问他一些简历上的东西，他如果不会，就会老实说，这个我只是使用了一下，确实不清楚细节。对于一些没有技术含量的项目，他也会老实说，这个项目他做的工作比较少，主要是别人在做。最后他还会补充说，“我自认为自己数据结构和算法还不错，要不你问我这方面的知识吧。”</p>
+
+<p>这倒是一个不错的办法，对于一个没有项目经验，但是聪明并且数据结构和算法基础知识扎实的应届生，其实我们是非常愿意培养的。很多人以为公司面试是看经验，希望招进来就能干活，其实不是的，至少我们现在以及我以前在网易招人，面试的是对方的潜力，没有项目经验根本关系不大。</p>
+
+<p>总之，不要写任何虚假或夸大的信息，即使你最终骗得过面试官，进了某公司，如果能力不够，在最初的试用期内，也很可能因为能力不足而被开掉。</p>
+
+<h2>不要附加任何可能带来负面印象的信息</h2>
+
+<p>任何与招聘工作无关的东西，尽量不要提。有些信息提了可能有加分，也可能有减分，取决于具体的面试官。而有些信息大部分情况下都是减分的，我罗列一下我认为是减分的信息。</p>
+
+<ol>
+<li><p>不要在简历中附加个人照片。个人长相属于与工作能力不相关的信息，也许你觉得你长得很帅，那你怎么知道你的样子不和面试官的情敌长得一样? 也许你长得很漂亮，那么你怎么知道HR是否被你长得一样的小三把男朋友抢了? 我说得有点极端，那人们对于长相的评价标准确实千差万别，萝卜青菜各有所爱，加上可能有一些潜在的极端情况，所以没必要附加这部分信息。这属于加了可能有加分，也可能有减分的情况。</p></li>
+<li><p>不要写你的政治面貌。你以为现在互联网公司还看重你是否是D员吗? 就算看重，你怎么知道他们认为这是加分还是减分? 我知道有一家公司，只要是D员的都直接拒掉。所以，除非你是面试的国企，在互联网公司，这一条最好不要写，写了有可能是平分，也有可能是减分，加分的可能性极小。</p></li>
+<li><p>不要写各种奇怪的爱好。喜欢打Dota，喝酒，这类可能带来负面印象的爱好最好不要写。的确有些公司会有这种一起联机玩游戏或者喝酒的文化，不过除非你明确清楚对于目标公司，写上会是加分项，否则还是不写为妙。（顺便说一句，据我了解，阿里的朋友特别喜欢喝酒，面试阿里写上这个可能是加分的，但如果你要是遇到阿里里面正好不喝酒的Team或面试官，不要怪我。）</p></li>
+<li><p>不要使用word格式的简历，使用PDF的格式。我在招iOS程序员时，好多人的简历都是Word格式的，mac下的office那么难用，公司好多人机器上都没有mac office。我真怀疑这些人真是的想投简历么? PDF格式的简历通常能展现出简历的专业性。</p></li>
+<li><p>不要使用QQ号开头的QQ邮箱，例如 12345@qq.com ，邮箱的事情我之前简单说过，有些人很在乎这个，有些人觉得无所谓，我个人对用数字开头的QQ邮箱的求职者不会有加分，但是对使用gmail邮箱的求职者有加分。因为这涉及到个人的工作效率，使用gmail的人通常会使用邮件组，过滤器，IMAP协议，标签，这些都有助于提高工作效率。如果你非要使用QQ邮箱，也应该申请一个有意义的邮箱名，例如 <a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#116;&#97;&#110;&#x67;&#x71;&#x69;&#97;&#111;&#64;&#x71;&#x71;&#46;&#99;&#111;&#x6d;">&#x74;&#x61;&#x6e;&#103;&#x71;&#x69;&#97;&#111;&#x40;&#113;&#113;&#46;&#99;&#x6f;&#109;</a> 。相关的讨论可以参见知乎上的讨论：<a href="http://www.zhihu.com/question/21649995/answer/18879801">《用人单位拒绝聘用使用 QQ 邮箱发应聘邮件的求职者，这一行为是否合理？》</a></p></li>
+<li><p>不要写参加过某某培训公司的iOS培训，特别是那种一、两个月的速成培训。这对于我和身边很多面试官来说，绝对是负分。面试当中，经验是一个考查点，但是学习能力比经验重要多了，如果你是参加培训学习的iOS开发，很可能说明你没有自学能力。这一点似乎很多人都没有搞清楚，大家可以看看 <a href="http://weibo.com/jeffz">@老赵</a> 在他的个人博客上发表的 <a href="http://blog.zhaojie.me/2010/04/why-i-say-no-to-aptech.html">《为什么我要反对北大青鸟》</a>。 我在2年前也写过一篇博客<a href="http://blog.devtang.com/blog/2012/01/20/we-must-self-learning/">《我们必须自学》</a>，详细解释了我的看法。</p></li>
+</ol>
 
 ]]></content>
   </entry>

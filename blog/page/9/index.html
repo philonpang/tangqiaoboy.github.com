@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本期移动开发周报带来如下内容 &hellip;">
+  <meta name="description" content="github真是无所不能。其Pages功能支持上传html，并且在页面中显示。于是有好事者做了一个基于github的博客管理工具：octopress，基本原理是用git来管理你的文章，然后最终发布到github上成为一个独立博客站点。由于github支持CNAME域名指向，所以如果有独立域名的话， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,8 +23,7 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <!-- googleapis is fucked by gfw -->
-  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -82,7 +81,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/02/10/setup-blog-based-on-github/">象写程序一样写博客：搭建基于github的博客</a></h1>
     
     
       <p class="meta">
@@ -98,61 +97,23 @@
   
 
 
-<time datetime="2014-03-28T23:52:29+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2014</time>
+<time datetime="2012-02-10T19:55:00+08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h3>版权说明</h3>
+  <div class="entry-content"><p>github真是无所不能。其<a href="http://pages.github.com/">Pages功能</a>支持上传html，并且在页面中显示。于是有好事者做了一个基于github的博客管理工具：<a href="http://octopress.org/">octopress</a>，基本原理是用git来管理你的文章，然后最终发布到github上成为一个独立博客站点。由于github支持CNAME域名指向，所以如果有独立域名的话，可以基于这些做出一个专业的博客站点出来。</p>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/reduce-ios-size">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期移动开发周报带来如下内容：减小iOS应用程序的大小，Quartz Composer的增强工具Origami的教程以及jQC工具等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="https://deals.iphoneincanada.ca/sales/the-mac-freebie-bundle-3-0">《The Mac Freebie Bundle 3.0》</a>：该网站提供了7个原本收费的Mac App的免费购买。笔者试用了一下其中的X-Mirage，它可以把iPhone投到Mac上，并提供录象功能，适合将演示导出成视频。另外那个页面有Bug，在购买时信用卡信息不用填写，留空就可以直接购买成功。</p></li>
-<li><p><a href="http://www.macstories.net/news/apple-testing-related-search-suggestions-on-the-app-store/">《App Store 将增加匹配相关搜索关键字的新功能》</a>：新增加的功能有助于提高相关关键词的点击量。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://nonomori.farbox.com/post/injection-plugin-for-xcode">《injection plugin for xcode》</a>：Injection Plugin For Xcode 是 Xcode 上的一个插件。利用它可以修改应用代码，实时在模拟器或实机上看到效果而不需要重启应用。作者介绍了该插件的详细使用方式。</p></li>
-<li><p><a href="http://www.pasanpremaratne.com/2014/03/15/UI-Prototyping-with-Quartz-Composer-and-Origami/">《UI Prototyping with Quartz Composer and Origami》</a>：由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集Origami，使得交互设计工作得到更好的辅助。不过另一方面，该工具仍然需要设计师具备一定的逻辑思维能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。本教程介绍了如何使用Quartz Composer 和 Origami来做交互设计。</p></li>
-<li><p>写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：
-<a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">Android篇</a>，<a href="http://t.cn/8sbXyOH">C++ 篇1</a>和<a href="http://t.cn/8sbXLyg">C++ 篇2</a>，<a href="http://t.cn/8FpEP4x">Go 篇</a>。</p></li>
-<li><p><a href="http://beyondvincent.com/blog/2014/03/26/cookbook-moving-table-view-cells-with-a-long-press-gesture/">《利用长按手势移动 Table View Cells》</a>：本教程中介绍了如何通过长按手势来移动 table view中的cell，这种操作方式就像苹果自家的天气 App 一样。</p></li>
-<li><p><a href="http://beyondvincent.com/blog/2014/03/24/reducing-the-size-of-my-app/">《减小iOS应用程序的大小》</a>：本文收集了一些减小程序安装包大小的相关技巧(当第一次下载和安装程序时)。如果是针对升级程序的话，可以看这篇文章: <a href="https://developer.apple.com/library/ios/qa/qa1779/">《减小iOS应用程序升级时所需下载的大小》</a>，这与第一次安装使用的工作原理有所不同。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">《NSNumber对象缓存以及Tagged Pointer》</a>：本文讨论了<code>NSNumber</code>对象的缓存以及苹果在64位系统引入的<code>Tagged Pointer</code>对象。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>：jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。Quartz Composer是苹果提供的一个交互设计工具。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/gbammc/WechatPayDemo">WechatPayDemo</a>: WechatPayDemo是一个非官方的微信支付Demo，基于微信SDK1.4.1构建。由于微信官方并没有提供支付功能的iOS Demo，加上官方的文档错误，使得本文作者花了较大精力调试。他希望开源这个工程来帮助其他iOS开发者少有一些弯路。</p></li>
-<li><p><a href="http://trawor.farbox.com/post/vz">微转iOS客户端和服务端</a>：微转是一个基于微博的数码设备平台，客户端和后台全部基于AVOSCloud服务实现。作者将其iOS客户端和服务端代码全部开源。</p></li>
-<li><p><a href="https://github.com/facebook/Tweaks">Tweaks</a>：Tweaks让开发者可以方便地对特定事物进行标记——比如动画效果的时间，或者是按钮的颜色，或者是图片的透明度——并在使用设备实际运行应用时让开发者方便地进行实时调整。</p></li>
-</ol>
+<p>本博客就是完全基于此搭建起来的，在使用了2个月之后，我将原系统根据中国人的需求做了一些配置，去掉了GFW会挡住的google font api，以及替换掉了速度超慢的国外的评论系统，也加上了分享到国内的微博的功能。现在把这些都总结出来，希望大家都可以方便地搭建基于github的博客来。</p>
 
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/10/setup-blog-based-on-github/">阅读 &rarr;</a>
+    </footer>
   
 
 
@@ -163,7 +124,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a></h1>
     
     
       <p class="meta">
@@ -179,82 +140,18 @@
   
 
 
-<time datetime="2014-03-21T21:09:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
+<time datetime="2012-02-06T21:19:00+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>这是一次和 <a href="http://onevcat.com/">@onevcat</a> 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括：</p>
+  <div class="entry-content"><h3>前言</h3>
 
-<ol>
-<li>系统对象的缓存</li>
-<li><code>Tagged Pointer</code>对象</li>
-</ol>
-
-
-<h2>autorelase对象</h2>
-
-<p>按照苹果的编程约定，由非<code>alloc</code>,<code>copy</code>返回的对象都是<code>autorelease</code>的，所以对于以下代码，虽然变量<code>number</code>是<code>__weak</code>的，但是由于<code>[NSNumber numberWithInt:100]</code>返回的对象是<code>autorelase</code>的，所以仍然能通过NSLog打印出来。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>从汇编代码中看，以上代码在创建<code>number</code>变量时，是通过<code>objc_loadWeak</code>方法进行的。而根据 <a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#arc-runtime-objc-loadweak">Clang的官方文档</a>，<code>objc_loadWeak</code>方法会<code>retain</code>并<code>autorelease</code>这个对象。所以给一个weak对象赋值，它并不会马上释放，而是会放到<code>autorelease pool</code>中，与<code>autorelease pool</code>一起释放。</p>
-
-<p>如下是<code>objc_loadWeak</code>的代码示例：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">id</span> <span class="nf">objc_loadWeak</span><span class="p">(</span><span class="kt">id</span> <span class="o">*</span><span class="n">object</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">objc_autorelease</span><span class="p">(</span><span class="n">objc_loadWeakRetained</span><span class="p">(</span><span class="n">object</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>为了验证这个回答，我们又做了一个有趣的例子来验证，如下所示：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
-</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在上面这个例子中，果然如我们所料，<code>number</code>在通过NSLog查看值时，变成了nil。</p>
-
-<h3>讨论二：关于NSNumber对象的缓存</h3>
-
-<p>我们在做以上实验时，发现一个有趣的现象，如果你把100变成了10，则<code>number</code>变成在NSLog时，就能够输出值来，不再是nil了。如下是测试代码：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
-</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>经过 onevcat 的实验，从-1 ～ 12都是可以输出的，而其它值却会变成nil。于是我们猜测是系统对这些常见值的对象做了缓存，于是我们写了如下代码来验证。</p>
-
-<p>结果果然是这样，多次创建值为10的<code>NSNumber</code>对象，其地址都是<font color=red>一样的</font>。而多次创建值为100的<code>NSNumber</code>对象，每次创建获得的对象地址都是<font color=red>不一样的</font>。</p>
+<p>在苹果的WWDC2011大会视频的
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=101">《Session 101 &ndash; What&rsquo;s New in Cocoa》</a> 和
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=102">《Session 102 &ndash; Implementing UIViewController Containment》</a> 中介绍了苹果在iOS5中给UIViewController新增加的5方法以及一个属性:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -263,54 +160,379 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
-</span><span class='line'><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 方法</span>
+</span><span class='line'><span class="nl">addChildViewController:</span>
+</span><span class='line'><span class="nl">removeFromParentViewController:</span>
+</span><span class='line'><span class="nl">transitionFromViewController:toViewController:duration:options:animations:completion:</span>
+</span><span class='line'><span class="nl">willMoveToParentViewController:</span>
+</span><span class='line'><span class="nl">didMoveToParentViewController:</span>
+</span><span class='line'><span class="c1">// 属性</span>
+</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">childViewControllers</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>讨论三：64位系统与Tagged Pointer对象</h3>
-
-<p>讨论本来已经结束了，结果我在写这篇博客的时候，手贱又测试了一下，发现在64位的模拟器下，无论创建多少次，也无论int的值是多少，所有相同int值的<code>NSNumber</code>对象地址都是一样的！</p>
-
-<p>疑惑了几分钟，我突然想起WWDC中介绍的64位系统引放的<code>Tagged Pointer</code>，恍然大悟。</p>
-
-<p>在WWDC2013的《Session 404 Advanced in Objective-C》视频中，苹果介绍了<code>Tagged Pointer</code>。<code>Tagged Pointer</code>的存在主要是为了节省内存。我们知道，对象的指针大小一般是与机器字长有关，在32位系统中，一个指针的大小是32位（4字节），而在64位系统中，一个指针的大小将是64位（8字节）。</p>
-
-<p>在64位系统中，如果我们真正使用一个指针来存储<code>NSNumber</code>实例，那么我们首先需要一个8字节的指针，另外需要一块内存存储<code>NSNumber</code>实例，这通常又是8字节。这样的内存开销是比较大的。苹果对于<code>NSNumber</code>和<code>NSDate</code>对象，改成了用<code>Tagged Pointer</code>来存储，简单来说，<code>Tagged Pointer</code>是一个假的指针，它的值不再是另一个地址，而就是对应变量的值。</p>
-
-<p><code>Tagged Pointer</code>主要有以下3个特点：</p>
-
-<ol>
-<li><code>Tagged Pointer</code>专门用来存储小的对象，例如<code>NSNumber</code>和<code>NSDate</code></li>
-<li><code>Tagged Pointer</code>指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已！所以，它的内存并不存储在堆中，也不需要malloc和free。</li>
-<li>在内存读取上有着3倍的效率（以前是寻址->发消息->获取值，现在直接获取值），创建时比以前快106倍。</li>
-</ol>
 
 
-<p> 相关英文文档截图如下：</p>
-
-<p> <img src="/images/tagged_pointer_1.jpg"></p>
-
-<p>但<code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 <code>isa</code> 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。</p>
-
-<p>因为不是真正的对象，所以如果你直接访问<code>Tagged Pointer</code>的<code>isa</code>成员的话，在编译时将会有如下警告：</p>
-
-<p> <img src="/images/tagged_pointer_2.jpg"></p>
-
-<p>对于上面的写法，应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>，如下图所示：</p>
-
-<p> <img src="/images/tagged_pointer_3.jpg"></p>
-
-<p>至此，所有疑问都已经解决，开心～</p>
-
-<p>另外这儿有一篇介绍<code>Tagged Pointer</code>的文章：<a href="http://blog.xcodev.com/archives/tagged-pointer-and-64-bit/">《64位与Tagged Pointer》</a>，一并推荐给大家。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/05/mvc-in-ios-develop/">斯坦福大学iOS开发公开课总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-05T12:58:00+08:00" pubdate data-updated="true">Feb 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>iphone开发相关的教程中最有名的，当数斯坦福大学发布的&#8221;iphone开发公开课&#8221;了。此公开课在以前叫做《iphone开发教程》，今年由于平板电脑的流行，所以也加入了ipad开发相关的课程。在<a href="http://v.163.com/special/opencourse/iphonekaifa.html">网易公开课</a>上，有<a href="http://v.163.com/special/opencourse/iphonekaifa.html">该教程</a>的2010年录象，并且前面15集带中文字幕文件，非常适合初学者学习。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/05/mvc-in-ios-develop/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-04T14:32:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>代码片段介绍</h3>
+
+<p>xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code snippet中，使用的时候，只需要键入快捷键，就可以把模版的内容填到代码中。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/04/use-git-to-manage-code-snippets/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/03/talk-about-svn-and-git/">Git的使用感受</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-03T21:08:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>从开始工作到现在，在公司里面一直用svn来做版本管理。大约半年前听说了Git，因为Git的光辉相当耀眼，作者是Linus Torvalds，被大量的开源软件采用，如jQuery, Perl, Qt, ROR, YUI, GNOME等，所以决定学一学。
+比较庆幸的是，国内有一本较好的介绍Git的书：<a href="http://www.amazon.cn/Git%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97-%E8%92%8B%E9%91%AB/dp/B0058FLC40/ref=sr_1_1?ie=UTF8&amp;qid=1328277616&amp;sr=8-1">《Git权威指南》</a>。
+我大概花了一个月的周末时间来学习它。在这里总结一下使用Git的感受，主要是和SVN来做一些比较，以便突出Git的特点。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/03/talk-about-svn-and-git/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">使用Objective-C的文档生成工具:appledoc</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-01T20:37:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>做项目的人多了，就需要文档了。今天开始尝试写一些项目文档。但是就源代码来说，文档最好和源码在一起，这样更新起来更加方便和顺手。象Java语言本身就自带javadoc命令，可以从源码中抽取文档。今天抽空调研了一下objective-c语言的类似工具。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/23/use-javascript-to-import-pictures/">用javascript协助导入图片</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-23T23:10:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>需求</h2>
+
+<p>先说说需求。春节回家见爸妈，老爸迷上了摄影。他把平时的照片都上传到了<a href="http://photo.chengdu.cn/">成都图片网</a>,这个成都图片网专门有一个“快拍成都”的版块，用于大家将随手拍的生活中的图片分享上去。每天编辑还会选出一张最有特色的图片，刊登到《成都商报》上。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/23/use-javascript-to-import-pictures/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/20/we-must-self-learning/">我们必须自学</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-20T23:53:00+08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前两天看到一个文章，题名为<a href="http://www.aqee.net/all-programmers-are-self-taught/">《所有的程序员都是自学成才》</a>。当时没有什么特别的想法，只是觉得自己也确实是基本上靠自学来掌握新的知识的。但是今天在公车上没事好好想了一想，想明白了，原来对于程序员来说，只能自学才能成才。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/20/we-must-self-learning/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/01/2011-summary/">2011年个人总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-01T18:47:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2011年的过去了，总结一下今年的成长和收获。</p>
+
+<h3>流水账</h3>
+
+<p>2011年是我完整工作的一年。不过这一年的工作也变动频繁。</p>
+
+<p>首先是从1月份专门搞uvs，把uvs升级成ouvs。升级后增加了对于时间段搜索的支持。另一方面，周末在家做的topcoder component终于拿到了一次第一。这是一个做IBM Symphony插件的项目，因为之前在IBM实习一直做相关的东西，所以能够很快的做出来，那个东西tricky的东西很多，所以基本上没有人做。不过除我之外还有一个会做的，竞争就只是我和他之间了，不过最终我比他得分稍高一点，拿到了800$的第一名奖金，另外digital run的排名还多拿了100多$。一月份的时候把这个钱通过wireless
+transfer转到了我的工商银行账号，然后马上换成了人民币。第一次尝到拿美元，还是很开心的。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/01/2011-summary/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/27/mac-top/">Mac下的top命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-27T13:30:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>以前只是在linux机器上使用top命令。常用的快键键是:</p>
+
+<ul>
+<li>p键 &ndash; 按cpu使用率排序</li>
+<li>m键 &ndash; 按内存使用量排序</li>
+</ul>
+
+
+<p>这2个快捷键在mac上都不一样。对应的是，先输入o，然后输入cpu则按cpu使用量排序，输入rsize则按内存使用量排序。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/12/27/mac-top/">阅读 &rarr;</a>
+    </footer>
   
 
 
@@ -329,14 +551,12 @@
 <aside class="sidebar">
   
     <section>
-  <h1>赞助商</h1>
-  <p>
-     <img width="260px" src="/images/ad_sale.png" />
-  </p>
-</section>
-<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
@@ -380,10 +600,6 @@
     
       <li class="post">
         <a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a>
       </li>
     
   </ul>

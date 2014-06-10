@@ -23,8 +23,7 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <!-- googleapis is fucked by gfw -->
-  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -193,22 +192,22 @@
 </span><span class='line'>
 </span><span class='line'><span class="k">@end</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">@implementation</span> <span class="nc">Father</span>
+</span><span class='line'><span class="err">@</span><span class="n">implementation</span> <span class="n">Father</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">@end</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">@interface</span> <span class="nc">Child</span> : <span class="nc">Father</span> <span class="p">{</span>
+</span><span class='line'><span class="err">@</span><span class="n">interface</span> <span class="n">Child</span> <span class="o">:</span> <span class="n">Father</span> <span class="p">{</span>
 </span><span class='line'>    <span class="kt">int</span> <span class="n">_child</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">@end</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">@implementation</span> <span class="nc">Child</span>
+</span><span class='line'><span class="err">@</span><span class="n">implementation</span> <span class="n">Child</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">@end</span>
 </span><span class='line'>
 </span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
 </span><span class='line'><span class="p">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">Child</span> <span class="o">*</span> <span class="n">child</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Child</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
@@ -550,14 +549,12 @@ var jiathis_config={
 <aside class="sidebar">
   
     <section>
-  <h1>赞助商</h1>
-  <p>
-     <img width="260px" src="/images/ad_sale.png" />
-  </p>
-</section>
-<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
@@ -601,10 +598,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a>
       </li>
     
   </ul>

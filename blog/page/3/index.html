@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="我和朋友的故事 这个月我给InfoQ网站、《程序员》的投稿所获的稿费，加上去人人网分享技术所得到的礼物，一共有将近3000块。看到这个数字之后我自己都吓了一跳，不知不觉中，写作和分享竟然给自己带来了这么大的直观收入。 但是相比那些非金钱上的收获，这些直接收入又显得微不足道。我在《作为码农， &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本周移动开发周报带来如下内容 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,8 +23,7 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <!-- googleapis is fucked by gfw -->
-  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -82,7 +81,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/03/14/ios-weekly-3/">iOS移动开发周报-第3期</a></h1>
     
     
       <p class="meta">
@@ -98,81 +97,66 @@
   
 
 
-<time datetime="2014-05-24T14:00:12+08:00" pubdate data-updated="true">May 24<span>th</span>, 2014</time>
+<time datetime="2014-03-14T15:10:00+08:00" pubdate data-updated="true">Mar 14<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/writing.jpg"></p>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<h2>我和朋友的故事</h2>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/apple-ios71-xcode51">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<p>这个月我给<a href="http://www.infoq.com/cn">InfoQ网站</a>、<a href="http://programmer.csdn.net/">《程序员》</a>的投稿所获的稿费，加上去人人网分享技术所得到的礼物，一共有将近3000块。看到这个数字之后我自己都吓了一跳，不知不觉中，写作和分享竟然给自己带来了这么大的直观收入。</p>
+<h3>前言</h3>
 
-<p>但是相比那些非金钱上的收获，这些直接收入又显得微不足道。我在<a href="http://blog.devtang.com/blog/2014/01/08/why-we-need-write/">《作为码农，我们为什么要写作》</a>一文中，总结了写作给自己带来的非金钱上的收获，包括：<code>提高自己对知识的掌握层次</code>、<code>提高表达和沟通的能力</code>、<code>错误内容反馈</code>、<code>认识朋友</code>、<code>了解更多相关信息</code>、<code>提高影响力</code>和<code>获得传递知识的乐趣</code>。</p>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>由于我自己从写作中获得了巨大的好处，所以我尝试向身边的朋友推荐这个自我提高的方式，但是非常令人惊讶的是，即使知道这里面会有巨大的好处，我身边的很多朋友仍然不能坚持写作。我从他们中收集到的负面反馈包括：</p>
+<p>【摘要】：本周移动开发周报带来如下内容：苹果发布iOS7.1相关内容，ReactiveCocoa和Origami相关的教程，一些来自于Facebook的开源项目。</p>
+
+<h2>新闻</h2>
 
 <ol>
-<li><p>写作太花时间。我的朋友A发现，完成一篇给InfoQ的投稿需要花费他周末2天的时间（包括查找资料和写作，和InfoQ编辑的沟通，多次改稿等）。而从稿费得到的直接收入，远远不能弥补他所花费的时间。通常人们都喜欢将自己的月工资除以22，然后算出来每天自己的时间成本。当发现自己的写作直接收入远远不能匹配工作的收入时，很多人都会选择放弃。</p></li>
-<li><p>自己不擅长写作。我的朋友B对于Origami非常精通，我本来打算向他约一篇深入介绍Origami的稿件，但是当然得知稿件的稿费只有千字150元时，他就放弃了。拿他的话来说，写文章憋出几个字可比写代码费劲多了，为了这篇文章，他可能得花费数周才能完成，最终的稿费收入可能只有几百块。</p></li>
-<li><p>写作对自己收获不大。我的朋友C是一个技术牛人，但是他习惯通过记笔记的方式来整理知识，对于一些知识点，因为是消化过的，所以他就只需要在笔记中将关键的内容记录下来，就可以方便地在后期进行知识的回顾。而如果他要写文章的话，因为文章是面向其他读者，他就需要非常仔细地介绍知识的前因后果，做各种铺垫，还需要做到有条理，表达清晰。这些如果要做好，配图、举例子、提供参考资料等工作是免不了的，所以让我的朋友C觉得实在太花时间了，性价比太低。</p></li>
-<li><p>自己不能坚持。我的朋友D完全同意我的观点，认为写作能够带来的巨大好处，但是他就是坚持不下来。这就像有些人不能坚持锻炼身体，有些人不能坚持早睡早起，有些人不能坚持控制饮食一样，对于一些有好处但是需要和自己的潜意识做斗争的事情，很容易被自己打败。</p></li>
+<li><p><a href="http://tech.sina.com.cn/it/apple/2014-03-11/01399228853.shtml">《苹果发布iOS 7.1更新》</a>：苹果在3月11日正式发布了iOS 7.1更新，支持连接车载系统CarPlay。iOS 7.1 对用户界面进一步做了改进，同时改进了Touch ID指纹识别的能力，并针对iPhone 4做了优化。也此同时，苹果也同步放出了支持iOS 7.1的集成编译环境Xcode 5.1正式版，开发者可以从<a href="http://developer.apple.com/">苹果开发者中心</a>下载新版本的Xcode。</p></li>
+<li><p><a href="http://www.polarb.com/publishers/results/poll_sets/2042">《iOS 7.1 vs iOS 7》</a>：文章对比了iOS 7.1相对于iOS 7所做的细节上的调整，这些调整结果也支持用户打分。从打分结果上看，大部分的调整得到了用户的肯定。</p></li>
+<li><p><a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">《3月的TIOBE编程语言排行榜》</a>：三月的TIOBE编程语言排行榜，Objective-C和C++继续拉开差距，稳坐第三的位置。而在半年前，二者还是几乎一样的Rating值，可见移动开发在继续升温。</p></li>
+<li><p>升级到Xcode 5.1和iOS 7遇到的各种开发问题及解决办法汇总：</p>
+
+<ul>
+<li><a href="http://weibo.com/2157980617/AAwK4kpE8?mod=weibotime">《iOS 企业证书部署无效的问题》</a></li>
+<li><a href="http://weibo.com/1658814735/AAvyB25js">《clipsToBounds 属性默认值变了》</a></li>
+<li><a href="http://weibo.com/2157980617/AAv3IwVrH?mod=weibotime">《第三方库不支持64位造成编译错误》</a></li>
+</ul>
+</li>
 </ol>
 
 
-<h2>坚持写作的关键</h2>
-
-<p>他们说得有道理吗？我认为非常有道理。而且我认为，我的ABCD四个朋友，都会在各自领域成为大牛，因为他们都热爱编程，喜欢专研，并且有着认真做事情的态度。所以反过来，我认为坚持写作并不是一个人通往成功的必经之路，但是写作是帮助你成功的一个重要的加分项。</p>
-
-<p>那我们为什么坚持写作？我只想到一个理由：爱好。</p>
-
-<p>但是我不同意爱好就等同于擅长的事情。通常情况下某一个人因为在天赋上擅长做某件事情，然后就会在这件事情上持续收获满足感，进而在该件事情上比别人投入更多时间。但是也有那种反过来的，因为爱好一件事情，从而不断地坚持做那件事情，最终因为投入巨大的时间而成功。</p>
-
-<p>我个人坚持写作就属于后者。高中时，我的语文成绩一直在应试教育的阴影之下，由于并不擅长记忆，我的语文成绩一直非常差，高考时语文差一点不及格，满分150的考卷最终只有92分。但是我内心深处还是喜欢表达的，所以最终工作后还是坚持将自己的学习收获写成文章表达出来，慢慢写多了就有一些感觉了，最终能够熟练地进行技术写作。</p>
-
-<p>我个人对于编程也是这样，由于初高中时对于编程的痴迷，得以花费大量的课余时间学习编程。其实我还是比较笨的，例如高中时为了看懂一个非递归的枚举代码就花了近一个月。那个时候还坚持买《程序员》杂志，虽然大部分看不懂=。= ，下图是今年春节回家在家里看到一本11年前买的《程序杂》杂志。</p>
-
-<p><img src="/images/programmer-2003.jpg"></p>
-
-<p>所以，你不需要一定擅长写作，只需要有一个喜欢表达和分享的心就可以。</p>
-
-<p>对于爱好，李笑来的<a href="http://book.douban.com/subject/3609132/">《把时间当作朋友》</a>一书中的观点更加极端。他在书的第一章“心智的力量”中认为：只要人足够强大，能够控制自己的心智，那么就可以无视兴趣的力量，坚持做对自己有收获的事情，然后反而过由于长久坚持而收获成功，得到最终的满足感，最后通过满足感反过来得到兴趣。他的原话是：</p>
-
-<blockquote><p>只要一件事儿你能做好，并且做到比谁都好，或者至少比大多数人好，你没办法对那件事情没兴趣。</p><p>往往并不是有兴趣才能做好，而是做好了才有兴趣。</p></blockquote>
-
-
-<p>但是我终究认为人不是机器，我个人更喜欢随性一些，如果做A和B两件事情都能带来成功，我更倾向于用我个人的兴趣或直觉来选择，而不是“控制心智”，完全理智地看A和B哪个收益更大。</p>
-
-<p>本文接下来的部分是写给那些内心爱好写作与分享的朋友，以及那些能够“控制心智”的朋友。我们将讨论如何坚持写作。</p>
-
-<h2>如何坚持写作</h2>
-
-<p>在有了兴趣之后，我们来解决上面ABCD四个朋友提出的各种问题，看如何能坚持写作。对于ABCD提出的各种问题，我们可以尝试以下这些解决办法：</p>
+<h2>教程</h2>
 
 <ol>
-<li><p>对于不擅长写作的朋友，可以尝试刚开始不要写那么深入的文章，也不要太追求完美而忽略效率。写作能力的提高本来就循序渐进的，刚开始写简单一些，总归比不写要好得多。我刚开始的写作内容，就是尝试把苹果WWDC视频中的内容看懂后，用自己的话再讲一遍。慢慢的，就可以写一些原创的深入文章了。</p></li>
-<li><p>对于觉得写作太花时间的朋友，可以尝试把写作内容变短。例如每天用200-500个字总结一些今天在技术上的收获。慢慢坚持，就可以提高自己的表达能力。我个人就喜欢用微博或微信公共帐号来发表简短的原创内容，虽然很多时候就是介绍一个架构或新闻，但是思考怎么用简短的几个字表达清楚，并且能吸引读者转发或阅读，也是能有不少小的提高的。</p></li>
-<li><p>对于觉得写作收获不大的朋友，如果你把写作当爱好，就不应该计较收获了。另外，我认为写作的收获在早期可能不明显，但是当你的写作积累了一定量的时候，收获就会被成倍地放大，就像我现在这样。我从写作上获得的收入是巨大的。</p></li>
-<li><p>对于不能坚持的朋友，也可以尝试上面说的方法2，即每天写少量的内容，这样时间开销会比较少。</p></li>
+<li><p><a href="http://www.raywenderlich.com/62699/reactivecocoa-tutorial-pt1">《ReactiveCocoa Tutorial – The Definitive Introduction》</a>: RayWenderlich网站放出了从零开始学ReactiveCocoa系列教程第一课。讲得很基本很实用，适合想学ReactiveCocoa的同学作为入门教材。</p></li>
+<li><p><a href="http://imkevin.me/post/78301132929/nginx-spdy-ios">《让 Nginx SPDY 和 iOS 交朋友》</a>：<a href="http://zh.wikipedia.org/wiki/SPDY">SPDY</a>是Google开发的基于传输控制协议（TCP）的应用层协议，目前已经被用于Google Chrome浏览器中来访问Google的SSL加密服务。SPDY协议类似于HTTP，但旨在缩短网页的加载时间和提高安全性。SPDY协议通过压缩、多路复用和优先级来缩短加载时间。作者在文章中分享了如何在iOS应用中使用SPDY协议的经验。</p></li>
+<li><p><a href="http://blog.xcodev.com/archives/access-iphone-simcard-contacts-via-baseband/">《利用iPhone基带读写SIM卡联系人》</a> 和 <a href="http://blog.xcodev.com/archives/send-sms-via-iphone-baseband/">《利用iPhone基带发送短信息》</a>：文章简要介绍了一下SIM卡的一些常识，AT指令中中文字符的相关处理，以及如何读写SIM卡中的联系人数据，最终实现了利用iPhone基带发送短信息的功能。不过由于苹果沙盒(sandbox)的限制，该相关知识只能在越狱手机上应用。</p></li>
+<li><p><a href="http://vimeo.com/88468610">《The 4 Minute Guide to Quartz Composer
+》</a>和<a href="http://vimeo.com/85578380">《Prototyping with Facebook Origami》</a>：两篇介绍Facebook免费提供的基于Quartz Composer的交互设计工具Origami的视频教程（需要翻墙）。</p></li>
 </ol>
 
 
-<p>最后，学习和模仿别人的写法也是一个不错的提高方式，像 <a href="http://onevcat.com/">onevcat</a> 和 <a href="http://macshuo.com/">池建强</a> 的文章就比我写得风趣得多，我也在尝试多一些有趣的表达方式。</p>
+<h2>工具</h2>
 
-<h2>推荐</h2>
+<ol>
+<li>手工写<code>.gitignore</code>文件常常费时费力还容易出错，<a href="http://www.gitignore.io/">http://www.gitignore.io/</a> 是一个<code>.gitignore</code>的生成网站，iOS工程的<code>.gitignore</code>生成地址是这个： <a href="http://www.gitignore.io/api/xcode,objective-c">http://www.gitignore.io/api/xcode,objective-c</a></li>
+</ol>
 
-<p>最后推荐大家在有一定写作能力后，尝试给 <a href="http://www.infoq.com/cn">InfoQ网站</a> 或<a href="http://programmer.csdn.net/">《程序员》</a>杂志投稿，通常他们对于稿件会有更加严格的审核，所以即使稿件被拒，也能让自己找到未来提高的地方。</p>
 
-<p>当你给InfoQ的原创文章投稿超过3篇被发表后，就可以申请成为兼职编辑，InfoQ编辑每月有一次集体的“我是吃货”聚会，各种海吃海喝之后，还可以和InfoQ CEO Kevin, 男神池建强，张龙老师，交际花显峰等其他编辑当面交流技术，实在是一次难得的机会。</p>
+<h2>开源项目</h2>
 
-<p>每年InfoQ兼职编辑还可以用3篇原创稿件换取5800元的QCon门票，并可以采访QCon上来自全国各地的技术高手。比如今年的<a href="http://www.qconbeijing.com/">QCon会</a>上，我就<a href="http://www.infoq.com/cn/news/2014/04/interview-ios-test-guide-author">采访</a>了<a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/product-description/B00JPVNFKM">《iOS测试指南》</a>的作者羋峮。虽然大家看到了最终的<a href="http://www.infoq.com/cn/news/2014/04/interview-ios-test-guide-author">采访稿件</a>，但是亲自面对面交流的收获很难完全体现在稿件中的，比如有一条羋峮对于测试的看法：“只测试需要测试的逻辑”这一条，虽然只是采访之后随口所说，但对我的影响还是非常大的，但我很难将其思想体现在稿件中。</p>
+<ol>
+<li><p><a href="https://github.com/facebook/Shimmer">Shimmer</a>: Facebook 开源了他旗下应用 Paper 的加载效果，它使用了WWDC 2009中介绍的<code>-[CALayer mask]</code>的技术方案。</p></li>
+<li><p><a href="https://github.com/facebook/chisel">chisel</a>：Facebook开源了LLDB的增强工具chisel，其中的许多命令对于调试界面非常有帮助。</p></li>
+<li><p><a href="https://github.com/facebook/KVOController">KVOController</a>: Facebook开源了Key-Value Observing工具KVOController。KVO是一个在iOS应用程序开发中，用于模块间通讯的技术技术，常常用于保证界面对于模型数据变化的实时响应。</p></li>
+</ol>
 
-<p>喜欢本文能让那些喜欢写作和分享的人，都能坚持自己的这个爱好，最终从中得到巨大的回报！</p>
-
-<p>愿大家玩得开心～</p>
 </div>
   
   
@@ -185,7 +169,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/03/07/ios-weekly-2/">iOS移动开发周报-第2期</a></h1>
     
     
       <p class="meta">
@@ -201,7 +185,7 @@
   
 
 
-<time datetime="2014-05-24T10:04:19+08:00" pubdate data-updated="true">May 24<span>th</span>, 2014</time>
+<time datetime="2014-03-07T21:44:00+08:00" pubdate data-updated="true">Mar 7<span>th</span>, 2014</time>
         
       </p>
     
@@ -210,51 +194,506 @@
 
   <div class="entry-content"><h3>版权说明</h3>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/apple-renew-wwdc2014-application">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/apple-store-gray-chain">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
 <h3>前言</h3>
 
 <p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果更新WWDC 2014应用、GCD 深入理解、objc.io第12期翻译等。</p>
-
 <h2>新闻</h2>
 
 <ol>
-<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-05-22/08099393630.shtml">《苹果更新WWDC 2014应用 公布主题演讲时间》</a>：2014年苹果公司全球开发者大会(WWDC)将于6月2日举行。5月21日，他们更新了iOS版WWDC官方应用，并将公布主题演讲时间。</p></li>
-<li><p><a href="https://github.com/orta/wwdc_parties_2014">《各种WWDC2014现场聚会》</a>：该项目列出了各种第三方公司或组织打算在WWDC时候进行的线下聚会。</p></li>
-<li><p><a href="http://weicdsq.lofter.com/post/20a5c5_13cc45e">《关于发现的一个流氓黑客恶意盗号插件的源头追踪》</a>：威锋技术组分享了追踪一个恶意盗号插件源头的过程。从中我们可以看到越狱手机市场有多么混乱和危险。笔者认为，如果不是研究安全为目的，就不要越狱，特别是不要为了装盗版而越狱。</p></li>
+<li><p><a href="http://daily.zhihu.com/story/3350426">《利用苹果商店规则漏洞的灰色地下产业链》</a>：作者在文章中介绍了一些投机分子，利用苹果商店在汇率上的漏洞，借助汇率和实际汇率的差价来倒卖商品。据文中介绍，一款不错的手游产品，每月的账面销售额为700万元，但可能真正到账的只有550万元，其余的150万元中约有50万元的黑卡耗损，而剩余的100万则被这些汇率倒卖者攫取。</p></li>
+<li><p><a href="http://www.guomii.com/posts/37790">《Apple即将推出CarPlay功能》</a>：Apple宣布几大顶级汽车制造商即将推出CarPlay。据苹果介绍，CarPlay是一种更智能、更安全且更有意思的在车中使用iPhone的方式。</p></li>
+<li><p><a href="http://djt.qq.com/mobile/article/1073">《2013移动行业分析》</a> 腾讯移动分析发布了2013年移动行业数据分析报告，报告介绍了iOS的用户比例和版本分布。根据文中的统计，国内移动终端iOS市场份额为24.7%。另外不同于国外的情况是，国内iOS5的用户比例仍然高达12%。</p></li>
+<li><p><a href="http://images.apple.com/iphone/business/docs/iOS_Security_Feb14.pdf">《iOS Security》</a>：苹果发布官方的安全方面的文档，介绍了iOS系统从硬件，文件系统到网络等各方面的安全细节。</p></li>
+<li><p><a href="http://highscalability.com/blog/2014/2/26/the-whatsapp-architecture-facebook-bought-for-19-billion.html">《WhatsApp 架构设计》</a>: 作者在文章中分享了最近被Facebook收购的WhatsApp的架构，包括它使用到的前后端技术框架以及硬件，文章中也分享了一些提高服务器并发连接数和可扩展性的经验。</p></li>
 </ol>
 
 
 <h2>教程</h2>
 
 <ol>
-<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-05-14-grand-central-dispatch-in-depth-part-2.md">《GCD 深入理解：第二部分》</a>：本文是由<a href="http://weibo.com/riven0951">Riven</a>和<a href="https://twitter.com/nixzhu">@nixzhu</a>共同翻译的GCD 深入理解的第二部分。文章更加深入地介绍了 GCD 的高级用法，包括 Dispatch Group 、并发的危害、正确的阻塞方式、信号量以及 Dispatch Source 等。</p></li>
-<li><p><a href="http://objccn.io/issue-12/">《objc.io第12期翻译：动画》</a>：本期翻译涵盖了iOS动画的方方面面——从 UIView 动画，Core Animation，一直到从零打造一个你自己定义的动画。文章还讨论了 View Controller 和 Collection View 有关的动画，以及如何让动画变得可以交互。</p></li>
-<li><p><a href="http://bomberstudios.com/post/54587126654/using-sketch-mirror-liveview-silkscreen-skala">《Using Sketch Mirror, LiveView, SilkScreen, Skala Preview, AirServer &amp; others via USB》</a>：文章介绍了用 USB 热点共享提高演示时 iPhone 画面帧数的技巧，该技巧可用于在使用AirServer或Sketch mirror等应用时，在wifi糟糕的环境下解决数据传输太慢的问题。</p></li>
-<li><p><a href="http://highperformancecoredata.com/">《High Performance Core Data》</a>：文章列出了讲Core Data 性能方面的各种资源，包括博客、Podcast以及开源代码。</p></li>
-<li><p> <a href="http://nsscreencast.com/">NSScreenCast</a>：NSScreenCast是一个风格有趣的iOS教程网站。</p></li>
+<li><p><a href="http://blog.csdn.net/wzzvictory/article/details/20067595">《CocoaPods详解之&mdash;&mdash;制作篇》</a>：作者详细介绍了CocoaPods依赖库的创建过程，这对于开源项目作者来说很有帮助。</p></li>
+<li><p><a href="http://blog.jobbole.com/61101/">《通过实现一个TableView来理解iOS UI编程》</a>：作者通过实现一遍TableView来理解UIKit的一些技术细节，包括几何布局框架、UI的层次架构、子类化UIScrollView、Cell的重用、响应和处理事件和可扩展性等技术细节。</p></li>
+<li><p><a href="http://www.yidianzixun.com/article/news_eaf23f7ff41d4862ecbf0d10441cf5f5?s=1">《iOS 开发者应该知道的 ARM 结构》</a>：到目前为止，所有的 iOS 设备都使用 ARM 结构处理器。作者在文章中介绍了ARM处理器的各种特点，包括条件执行、Thumb 指令集、内存对齐和除法等技术细节。</p></li>
+<li><p><a href="http://segmentfault.com/a/1190000000390012">《iOS 开发：绘制像素到屏幕》</a>：像素是如何绘制到屏幕上面的？把数据输出到屏幕的方法有很多，通过调用很多不同的framework和不同的函数。作者在文章中介绍了这个过程背后的东西，这能够帮助大家在遇到性能问题时调试解决问题。</p></li>
+<li><p><a href="http://iosinit.com/?p=854">《玩转字符串》</a> 和 <a href="http://iosinit.com/?p=880">《字符串渲染》</a>: 作者翻译了objc.io第九期关于字符串的系列文章。《玩转字符串》中介绍了字符串的比较、搜索、排序以及格式化等功能。《字符串渲染》中介绍了字符串在UILabel、UITextField以及Core Text中的渲染细节。</p></li>
+<li><p><a href="http://iosdevelopertips.com/general/object-encoding-and-decoding-with-nssecurecoding.html">《Object Encoding and Decoding with NSSecureCoding Protocol》</a>：作者在文章中介绍了如何使用NSSecureCoding来序列化和反序列化对象。文章最后，作者提供了一个名为<a href="https://github.com/nicklockwood/AutoCoding">AutoCoding</a>的开源项目来帮助大家实现相关的功能。</p></li>
+<li><p><a href="https://developer.apple.com/design/">《苹果最新的设计指南》</a>: 苹果发布了其最新的设计指南，试图帮助开发者更好地学习iOS7风格的应用和游戏设计。新版指南提供了大量的视频和文档，内容涵盖应用和游戏开发的各个方面。</p></li>
 </ol>
 
 
 <h2>工具</h2>
 
 <ol>
-<li><p><a href="https://github.com/ideo/avocado/">avocado</a>：avocado是一个基于Facebook Origami的交互设计工具集。其由<a href="http://www.ideo.com/">IDEO</a>开源，可用于做交互原型设计。</p></li>
-<li><p><a href="http://resolution.im/">resolution.im</a>：resolution.im是一个提问各种iOS设备尺寸信息以及设计模版的网站。</p></li>
+<li><p><a href="http://koofrank.com/blog/2014/02/28/my-first-article/">《四个iOS开发的小工具》</a>：作者在文章中介绍了4个有助于iOS开发的小工具。不过笔者并不同意文章后半部分的关于Blocks内联的内容。</p></li>
+<li><p>著名的Xcode插件：<a href="https://github.com/supermarin/Alcatraz">Alcatraz</a> 完成了对Xcode 5的适配，大家可以用它方便地管理XCode的相关第三方插件。</p></li>
 </ol>
 
 
 <h2>开源项目</h2>
 
 <ol>
-<li><p><a href="https://github.com/Ciechan/BCMeshTransformView">BCMeshTransformView</a>：BCMeshTransformView是一个用于实现Mesh变换效果的开源库，关于Mesh变换，可以查阅<a href="http://ciechanowski.me/blog/2014/05/14/mesh-transforms/">这篇博文</a>。</p></li>
-<li><p><a href="https://github.com/hfossli/AGGeometryKit-POP">AGGeometryKit-POP</a>：AGGeometryKit-POP是一个基于facebook POP的动效框架，这里有一个它能提供的动效<a href="http://vimeo.com/95383807">演示视频</a>。</p></li>
+<li><p>QFish分享了一个小项目：<a href="https://github.com/qfish/xproj">xproj</a>，可以帮iOS开发者批量地为工程文件添加编译参数 <code>-fno-objc-arc</code> 或 <code>-fobjc-arc</code>。</p></li>
+<li><p><a href="https://github.com/GeekZooStudio/ECMobile_iOS">ECMobile 3.0.0</a>发布，完全基于 BeeFramework 0.5.0 开发，它可以作为使用BeeFramework的参考项目。</p></li>
+<li><p><a href="http://weibo.com/ranwj">移动开发小冉</a>写了一个类似虾米音乐的iOS App首页左右滑动效果的示例程序，代码质量很高，项目地址在<a href="https://github.com/nonstriater/NTSlidingViewController">这里</a>。</p></li>
+<li><p><a href="https://github.com/5sw/SWParallaxScrollView">SWParallaxScrollView</a>：SWParallaxScrollView是一个具有多个层次的可滑动视图，可以实现不同层之间不同的滑动速度。该技术常常用来做应用初次启动时的介绍。</p></li>
 </ol>
 
 </div>
   
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/05/use-alcatraz-to-manage-xcode-plugins/">使用Alcatraz来管理Xcode插件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-05T22:36:00+08:00" pubdate data-updated="true">Mar 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/Alcatraz-logo.jpg"></p>
+
+<h2>简介</h2>
+
+<p>Alcatraz是一个帮你管理Xcode插件、模版以及颜色配置的工具。它可以直接集成到Xcode的图形界面中，让你感觉就像在使用Xcode自带的功能一样。</p>
+
+<h2>安装和删除</h2>
+
+<p>使用如下的命令行来安装Alcatraz：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir -p ~/Library/Application<span class="se">\ </span>Support/Developer/Shared/Xcode/Plug-ins;
+</span><span class='line'>curl -L http://git.io/lOQWeA | tar xvz -C ~/Library/Application<span class="se">\ </span>Support/Developer/Shared/Xcode/Plug-ins
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果你不想使用Alcatraz了，可以使用如下命令来删除：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rm -rf ~/Library/Application<span class="se">\ </span>Support/Developer/Shared/Xcode/Plug-ins/Alcatraz.xcplugin
+</span><span class='line'>rm -rf ~/Library/Application<span class="se">\ </span>Support/Alcatraz
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/03/05/use-alcatraz-to-manage-xcode-plugins/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/27/ios-weekly-1/">iOS移动开发周报-第1期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-27T17:23:00+08:00" pubdate data-updated="true">Feb 27<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/02/apple-ssl-bug">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-02-22/08379183001.shtml">《苹果收购iOS测试平台TestFlight的开发商》</a>，苹果公司确认收购知名iOS测试平台TestFlight的开发商Burstly。与此同时，TestFlight表示将停止提供Android平台产品，不再面向新用户销售Android版测试软件开发包(SDK)，而当前用户仍可以继续使用。</p></li>
+<li><p><a href="http://coolshell.cn/articles/11112.html">《由苹果的低级Bug想到的》</a>: 2月22日苹果修复了SSL连接验证的一个bug，该bug会引起中间人攻击。文章作者详细分析了Bug产生的潜在原因和一些思考，包括代码风格、测试、以及goto语句的使用。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/02/11/baidu-interview/">《百度面试》</a>：作者在文章中分享了百度移动云可穿戴部门iOS开发职位的面试经历，其中多个技术问题值得大家深入学习。</p></li>
+<li><p><a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">《Facebook Paper使用的第三方库》</a>：作者在文章中分享了facebook paper使用的第三方库。该列表中的第三方库对广大iOS开发者来说，具有很好的参考意义。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://blog.xcodev.com/archives/iphone-baseband-intro/">《初识iPhone基带通讯》</a>：基带（Baseband）是手机的通讯模块，它负责移动网络的调制与解调工作，它与手机核心通讯功能息息相关。作者在文章中介绍了，如何在越狱的iPhone中，用基带进行通讯。</p></li>
+<li><p><a href="http://sjpsega.com/blog/2014/02/11/yi--ios-7-best-practices-part-1/">《[译]iOS7最佳实践：一个天气App案例(一)》</a>和<a href="http://sjpsega.com/blog/2014/02/15/yi--ios-7-best-practices-part-2/">《[译]iOS7最佳实践：一个天气App案例(二)》</a>：在这篇来自raywenderlich的教程中，作者详细介绍了如何使用依赖管理工具Cocoapods、纯代码布局、响应式编程框架ReactiveCocoa以及OpenWeatherMap完成一个天气应用，具有很高的学习价值。</p></li>
+<li><p><a href="http://blog.csdn.net/yiyaaixuexi/article/details/19642621">《基于脚本实现动态库注入》</a>：作者分享了她在越狱手机上，基于脚本向某个应用动态注入动态库的想法和实践。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/02/21/xcode-plugin-fun/">《Xcode5 Plugins 开发简介》</a>：作者在文章中介绍了如何给Xcode5开发插件。最后作为示例，开发了一个简单的插件，记录Xcode开发中Building的时间。</p></li>
+<li><p><a href="http://onevcat.com/2014/02/ios-test-with-kiwi/">《TDD的iOS开发初步以及Kiwi使用入门》</a>：测试驱动开发(Test Driven Development，简称为TDD)是保证代码质量的一种程序开发方法。作者介绍了在iOS开发中使用TDD及Kiwi的方法。</p></li>
+<li><p><a href="http://iosinit.com/?p=787">《objc.io系列文章中文翻译汇总》</a>：objc.io是国外的一个iOS教程网站，它每一期的教程会有一个主题，在这个主题下会有6篇左右的文章（有时由浅入深，有时侧重点不同），实属iOS学习中的精品资源。因此，每一期objc.io文章出来的时候，都会有一些热心的读者将文章翻译成中文。作者将网上的翻译汇总在文章中，方便大家阅读。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://itunes.apple.com/cn/app/crash-manager/id806327079?mt=8">Crash Manager</a>：Crash Manager是Crashlytics的非官方iPhone客户端，而且在AppStore上免费。InfoQ也曾撰文介绍过Crashlytics的使用：<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">《统计Crash的工具Crashlytics》</a>。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/DyCI/dyci-main">DyCI</a> ：DyCI是一个动态注入工具，用于向iOS应用中注入代码而不用重新启动应用。</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">使用brew cask来安装Mac应用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-26T21:38:00+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>简介</h2>
+
+<p><a href="https://github.com/phinze/homebrew-cask"><code>brew cask</code></a>是一个用命令行管理Mac下应用的工具，它是基于<a href="http://brew.sh/"><code>homebrew</code></a>的一个增强工具。</p>
+
+<p><code>homebrew</code>可以管理Mac下的命令行工具，例如<code>imagemagick</code>, <code>nodejs</code>，如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install imagemagick
+</span><span class='line'>brew install node
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而使用上<code>brew cask</code>之后，你还可以用它来管理Mac下的Gui程序，例如<code>qq</code>, <code>chrome</code>, <code>evernote</code>等，如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew cask install qq
+</span><span class='line'>brew cask install google-chrome
+</span><span class='line'>brew cask install evernote
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/11/reactivecocoa-introduction/">ReactiveCocoa - iOS开发的新框架</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-11T18:47:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/reactivecocoa-ios-new-develop-framework">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h2>什么是ReactiveCocoa</h2>
+
+<p><a href="https://github.com/ReactiveCocoa/ReactiveCocoa">ReactiveCocoa</a>（其简称为RAC）是由<a href="https://github.com/blog/1107-reactivecocoa-for-a-better-world">Github</a> 开源的一个应用于iOS和OS X开发的新框架。RAC具有函数式编程和响应式编程的特性。它主要吸取了.Net的 <a href="http://msdn.microsoft.com/en-us/data/gg577609">Reactive Extensions</a>的设计和实现。</p>
+
+<h2>ReactiveCocoa试图解决什么问题</h2>
+
+<p>经过一段时间的研究，我认为ReactiveCocoa试图解决以下3个问题：</p>
+
+<ol>
+<li>传统iOS开发过程中，状态以及状态之间依赖过多的问题</li>
+<li>传统MVC架构的问题：Controller比较复杂，可测试性差</li>
+<li>提供统一的消息传递机制</li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/02/11/reactivecocoa-introduction/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/26/add-ssd-to-old-imac/">自己动手给iMac换SSD</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-26T22:06:00+08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>公司的iMac是2011年款的，经过2年的使用，现在已经变得比较慢了，用<code>htop</code>看了一下，其实cpu占用率一直不高，主要是磁盘IO比较慢，所以考虑自己动手给iMac换一个SSD。在此将整个过程分享给大家。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/26/add-ssd-to-old-imac/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-23T17:36:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>分享一个在使用Core Text时遇到的问题。</p>
+
+<h2>问题描述</h2>
+
+<p>我们的猿题库界面因为有图片、公式需要混排，所以用的是Core Text实现的排版。</p>
+
+<p>在使用中，发现一些英文题目的换行方式不对，
+我们设置的是按单词换行，但是总是有些题目的换行并不是按单词的，造成显示上比较错乱，如下图所示。图中unchangeable, study, falls 三个单词都被生生截断了，造成阅读上的不适。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-08T21:51:00+08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。</p>
+
+<p>不得不承认，这的确是一个事实，通常情况下，把一个知识讲清楚比理解它更难。那我们为什么要花时间写作呢？我想写作至少有以下好处。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/08/why-we-need-write/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/01/2013-summary/">2013年个人总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-01T19:04:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2013这一年值得总结的有两方面的事情：一是技术分享和收获，二是创业感悟。</p>
+
+<h2>技术分享</h2>
+
+<p>我这一年在技术分享上投入了更多的时间，也得到了非常大的收获。</p>
+
+<p>我主要的技术分享渠道包括：</p>
+
+<ol>
+<li><p>个人博客。今年一共完成了24篇原创博客。相比于去年的36篇，少了很多。主要是因为很多精力分散到微信公共帐号上去了。不过今年文章的质量相比去年更高了，写了包括<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>和<a href="http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/">《谈Objective-C Block的实现》</a>这类比较深入的文章。</p></li>
+<li><p><a href="http://www.infoq.com/cn/">InfoQ网站</a> 。今年一共完成了7篇发表在<a href="http://www.infoq.com/cn/">InfoQ</a> 上的<a href="http://www.infoq.com/cn/author/%E5%94%90%E5%B7%A7">稿件</a> , 其中原创技术文章4篇，翻译技术新闻1篇，采访稿2篇。</p></li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/01/2013-summary/">阅读 &rarr;</a>
+    </footer>
   
 
 
@@ -273,14 +712,12 @@
 <aside class="sidebar">
   
     <section>
-  <h1>赞助商</h1>
-  <p>
-     <img width="260px" src="/images/ad_sale.png" />
-  </p>
-</section>
-<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
@@ -324,10 +761,6 @@
     
       <li class="post">
         <a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a>
       </li>
     
   </ul>

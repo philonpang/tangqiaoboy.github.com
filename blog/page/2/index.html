@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 【摘要】：为了节省内存和提高执行效率，苹果提出了Tagged Pointer的概念。对于64位程序，引入Tagged Pointer后，相关逻辑能减少一半的内存占用，以及3倍的访问速度提升， &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,8 +23,7 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <!-- googleapis is fucked by gfw -->
-  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -82,7 +81,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/04/25/ios-weekly-9/">iOS移动开发周报-第9期</a></h1>
     
     
       <p class="meta">
@@ -98,7 +97,7 @@
   
 
 
-<time datetime="2014-05-30T22:15:29+08:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
+<time datetime="2014-04-25T20:44:56+08:00" pubdate data-updated="true">Apr 25<span>th</span>, 2014</time>
         
       </p>
     
@@ -107,127 +106,40 @@
 
   <div class="entry-content"><h3>版权说明</h3>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/deep-understanding-of-tagged-pointer">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/ios-mobile-developmeng-weekly">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<p>【摘要】：为了节省内存和提高执行效率，苹果提出了<code>Tagged Pointer</code>的概念。对于64位程序，引入Tagged Pointer后，相关逻辑能减少一半的内存占用，以及3倍的访问速度提升，100倍的创建、销毁速度提升。本文从<code>Tagged Pointer</code>试图解决的问题入手，带领读者理解<code>Tagged Pointer</code>的实现细节和优势，最后指出了使用时的注意事项。</p>
+<h3>前言</h3>
 
-<h2>前言</h2>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>在2013年9月，苹果推出了<a href="http://en.wikipedia.org/wiki/IPhone_5S">iPhone5s</a>，与此同时，iPhone5s配备了首个采用64位架构的<a href="http://en.wikipedia.org/wiki/Apple_A7">A7双核处理器</a>，为了节省内存和提高执行效率，苹果提出了<code>Tagged Pointer</code>的概念。对于64位程序，引入Tagged Pointer后，相关逻辑能减少一半的内存占用，以及3倍的访问速度提升，100倍的创建、销毁速度提升。本文从<code>Tagged Pointer</code>试图解决的问题入手，带领读者理解<code>Tagged Pointer</code>的实现细节和优势，最后指出了使用时的注意事项。</p>
+<p>【摘要】：本期iOS移动开发周报带来如下内容：专门针对越狱iOS设备的盗号木马出现，iOS7下载自定义的字体功能不可用，Toll-Free Bridging等。</p>
 
-<h2>问题</h2>
-
-<p>我们先看看原有的对象为什么会浪费内存。假设我们要存储一个NSNumber对象，其值是一个整数。正常情况下，如果这个整数只是一个NSInteger的普通变量，那么它所占用的内存是与CPU的位数有关，在32位CPU下占4个字节，在64位CPU下是占8个字节的。而指针类型的大小通常也是与CPU位数相关，一个指针所占用的内存在32位CPU下为4个字节，在64位CPU下也是8个字节。</p>
-
-<p>所以一个普通的iOS程序，如果没有<code>Tagged Pointer</code>对象，从32位机器迁移到64位机器中后，虽然逻辑没有任何变化，但这种NSNumber、NSDate一类的对象所占用的内存会翻倍。如下图所示：</p>
-
-<p><img src="/images/tagged_pointer_before.jpg"></p>
-
-<p>我们再来看看效率上的问题，为了存储和访问一个NSNumber对象，我们需要在堆上为其分配内存，另外还要维护它的引用计数，管理它的生命期。这些都给程序增加了额外的逻辑，造成运行效率上的损失。</p>
-
-<h2>Tagged Pointer</h2>
-
-<p>为了改进上面提到的内存占用和效率问题，苹果提出了<code>Tagged Pointer</code>对象。由于NSNumber、NSDate一类的变量本身的值需要占用的内存大小常常不需要8个字节，拿整数来说，4个字节所能表示的有符号整数就可以达到20多亿（注：2<sup>31</sup>=2147483648，另外1位作为符号位)，对于绝大多数情况都是可以处理的。</p>
-
-<p>所以我们可以将一个对象的指针拆成两部分，一部分直接保存数据，另一部分作为特殊标记，表示这是一个特别的指针，不指向任何一个地址。所以，引入了<code>Tagged Pointer</code>对象之后，64位CPU下NSNumber的内存图变成了以下这样：</p>
-
-<p><img src="/images/tagged_pointer_after.jpg"></p>
-
-<p>对此，我们也可以用 Xcode做实验来验证。我们的实验代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number1</span> <span class="o">=</span> <span class="err">@</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number2</span> <span class="o">=</span> <span class="err">@</span><span class="mi">2</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number3</span> <span class="o">=</span> <span class="err">@</span><span class="mi">3</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">NSNumber</span> <span class="o">*</span><span class="n">numberFFFF</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="mh">0xFFFF</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number1 pointer is %p&quot;</span><span class="p">,</span> <span class="n">number1</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number2 pointer is %p&quot;</span><span class="p">,</span> <span class="n">number2</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number3 pointer is %p&quot;</span><span class="p">,</span> <span class="n">number3</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;numberffff pointer is %p&quot;</span><span class="p">,</span> <span class="n">numberFFFF</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">UIApplicationMain</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="nb">nil</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">AppDelegate</span> <span class="n">class</span><span class="p">]));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在该代码中，我们将几个Number类型的指针的值直接输出。需要注意的是，我们需要将模拟器切换成 64位的CPU来测试，如下图所示：</p>
-
-<p><img src="https://dl.dropboxusercontent.com/u/23544450/tagged_pointer_switch_64bit_simulator.jpg" alt="" /></p>
-
-<p>运行之后，我们得到的结果如下，可以看到，除去最后的数字最末尾的2以及最开头的0xb，其它数字刚好表示了相应NSNumber的值。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">number1</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0xb000000000000012</span>
-</span><span class='line'><span class="n">number2</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0xb000000000000022</span>
-</span><span class='line'><span class="n">number3</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0xb000000000000032</span>
-</span><span class='line'><span class="n">numberFFFF</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0xb0000000000ffff2</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可见，苹果确实是将值直接存储到了指针本身里面。我们还可以猜测，数字最末尾的2以及最开头的0xb是否就是苹果对于<code>Tagged Pointer</code>的特殊标记呢？我们尝试放一个8字节的长的整数到<code>NSNumber</code>实例中，对于这样的实例，由于<code>Tagged Pointer</code>无法将其按上面的压缩方式来保存，那么应该就会以普通对象的方式来保存，我们的实验代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">bigNumber</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="mh">0xEFFFFFFFFFFFFFFF</span><span class="p">);</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;bigNumber pointer is %p&quot;</span><span class="p">,</span> <span class="n">bigNumber</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>运行之后，结果如下，验证了我们的猜测，<code>bigNumber</code>的地址更像是一个普通的指针地址，和它本身的值看不出任何关系：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">bigNumber</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0x10921ecc0</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可见，当8字节可以承载用于表示的数值时，系统就会以<code>Tagged Pointer</code>的方式生成指针，如果8字节承载不了时，则又用以前的方式来生成普通的指针。关于以上关于<code>Tag Pointer</code>的存储细节，我们也可以在<a href="https://www.mikeash.com/pyblog/friday-qa-2012-07-27-lets-build-tagged-pointers.html">这里</a>找到相应的讨论，但是其中关于<code>Tagged Pointer</code>的实现细节与我们的实验并不相符，笔者认为可能是苹果更改了具体的实现细节，并且这并不影响<code>Tagged Pointer</code>我们讨论<code>Tagged Pointer</code>本身的优点。</p>
-
-<h2>特点</h2>
-
-<p>我们也可以在WWDC2013的《Session 404 Advanced in Objective-C》视频中，看到苹果对于<code>Tagged Pointer</code>特点的介绍：</p>
+<h2>新闻</h2>
 
 <ol>
-<li><code>Tagged Pointer</code>专门用来存储小的对象，例如<code>NSNumber</code>和<code>NSDate</code></li>
-<li><code>Tagged Pointer</code>指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已。所以，它的内存并不存储在堆中，也不需要malloc和free。</li>
-<li>在内存读取上有着3倍的效率，创建时比以前快106倍。</li>
+<li><p><a href="http://blog.devtang.com/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>：国外的iOS开发者 <a href="https://twitter.com/iOn1c">@iOn1c</a> 发现一个来自中国的开发者&#8221;WANG XIN&#8221;签名的iOS平台的木马插件，该插件是一个名为Unflod.dylib动态链接库，可以将越狱机器上的AppleID用户名和密码盗取，并且发送到指定服务器上。<a href="http://pastebin.com/raw.php?i=QxVRd2ha">这里</a>有该恶意插件的反汇编代码。笔者作为一个资深iOS开发者，建议一般普通用户，如果是为了用盗版软件就别越狱了，各种国内的越狱渠道都非常不安全的。如果是开发者们为了研究安全而越狱的，最好也只是在专门研究用的iTouch上使用，以避免可能的安全风险。</p></li>
+<li><p><a href="http://weibo.com/1676354212/AFt7N5pl8">iOS7下载自定义的字体功能不可用</a>：墨客的作者<a href="http://weibo.com/1676354212/AFt7N5pl8">@an00na</a>发现iOS提供的下载自定义的字体功能有bug，完全不能使用。相关的Bug说明在<a href="http://openradar.appspot.com/radar?id=5881896777023488">这里</a>。</p></li>
 </ol>
 
 
-<p>由此可见，苹果引入<code>Tagged Pointer</code>，不但减少了64位机器下程序的内存占用，还提高了运行效率。完美地解决了小内存对象在存储和访问效率上的问题。</p>
+<h2>教程</h2>
 
-<h2>isa指针</h2>
+<ol>
+<li><p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/">《Toll-Free Bridging》</a>：作者<a href="http://weibo.com/lancy1014/">@晨钰Lancy</a>在文章中介绍Toll-Free Bridging的实现原理，以及在ARC下Toll-Free Bridging的使用场景和注意事项。</p></li>
+<li><p><a href="https://app.yinxiang.com/shard/s16/sh/15d40ea3-7273-4701-a816-dea7edfb2140/b41319e65ca4d91d2553f2bab25b8959">《iOS7.0到iOS7.1 UI修复》</a>：作者<a href="http://weibo.com/2271223902/B0960vL7J?ref=atme">@白仔_wyk</a>介绍了iOS7.0下原本正常的界面在iOS7.1显示错误的问题，并且介绍了修复方法。</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=OiY1cheLpmI">《Full Length Event &ndash; Building Paper》</a>：Facebook官方分享了介绍Paper的技术细节的视频（视频来自YouTube，需要翻墙才能观看）。视频中介绍Facebook自已实现的动画框架POP，以及如何做设计，测试，代码审核等各方面的信息。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-21-write-a-simple-nodejs-mongodb-web-service-for-an-ios-app.md">《为一个 iOS 应用编写一个简单的 Node.js/MongoDB Web 服务》</a>：作者<a href="http://weibo.com/nixzhu">@nixzhu</a>翻译了一个来自<a href="http://www.raywenderlich.com/61078/write-simple-node-jsmongodb-web-service-ios-app">RW</a>的教程，介绍了如何为一个 iOS 应用编写一个简单的 Node.js/MongoDB Web 服务。在本教程中，你将学会如何搭建了一个 Node.js 环境，驱动 Express；在此平台之上，你将构建一个通过 REST API 来提供一个 MongoDB 数据库的服务器。对于iOS端，你将构建一个很酷的叫做“有趣的地方”的应用，标记有趣的位置，让其它用户能够找出他们附近有趣的地方。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/zi-ti-jia-zai-san-chong-fang-shi">《字体加载三种方式》</a>：作者介绍了三种加载字体的方式：静态加载、动态加载、动态下载苹果提供的多种字体。</p></li>
+</ol>
 
-<p><code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 <code>isa</code> 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。
-因为不是真正的对象，所以如果你直接访问<code>Tagged Pointer</code>的<code>isa</code>成员的话，在编译时将会有如下警告：</p>
 
-<p><img src="https://dl.dropboxusercontent.com/u/23544450/tagged_pointer_isa_forbidden.jpg" alt="" /></p>
+<h2>开源项目</h2>
 
-<p>对于上面的写法，应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>。只要避免在代码中直接访问对象的isa变量，即可避免这个问题。</p>
+<ol>
+<li><p><a href="https://github.com/mxcl/PromiseKit">PromiseKit</a>：异步模式在iOS编程中非常常见。针对异步编程，业界提出了Promise的抽象（又称作Deferred模式）。通过这些一些库，开发人员能够在实际编程中使用Promise模式，每个Promise都拥有一个叫做then的唯一接口，当Promise失败或成功时，它就会进行回调。它代表了一种可能会长时间运行而且不一定必须完成的操作结果。这种模式不会阻塞和等待长时间的操作完成，而是返回一个代表了承诺的（promised）结果的对象。PromiseKit是Promise模式的iOS实现。</p></li>
+<li><p><a href="https://github.com/intentkit/IntentKit">IntentKit</a>：IntentKit是一个方便你处理第三方的URL Scheme的工具。</p></li>
+</ol>
 
-<h2>总结</h2>
-
-<p>苹果将<code>Tagged Pointer</code>引入，给64位系统带来了内存的节省和运行效率的提高。<code>Tagged Pointer</code>通过在其最后一个bit位设置一个特殊标记，用于将数据直接保存在指针本身中。因为<code>Tagged Pointer</code>并不是真正的对象，我们在使用时需要注意不要直接访问其isa变量。</p>
 </div>
   
   
@@ -240,7 +152,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a></h1>
     
     
       <p class="meta">
@@ -256,129 +168,370 @@
   
 
 
-<time datetime="2014-05-25T14:09:00+08:00" pubdate data-updated="true">May 25<span>th</span>, 2014</time>
+<time datetime="2014-04-19T00:27:38+08:00" pubdate data-updated="true">Apr 19<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/cocoapods-logo.png"></p>
+  <div class="entry-content"><p><img src="/images/jailbreak-warning.jpg"></p>
 
-<h2>文档更新说明</h2>
+<h3>关于木马</h3>
 
-<ul>
-<li>2012-12-02 v1.0 初稿</li>
-<li>2014-01-08 v1.1 增加设置ruby淘宝源相关内容</li>
-<li>2014-05-25 v2.0 增加国内spec镜像、使用私有pod、podfile.lock、创建spec文件等内容</li>
-</ul>
+<p>今天，国外的iOS开发者 <a href="https://twitter.com/iOn1c">@iOn1c</a> 发现一个来自中国的开发者&#8221;WANG XIN&#8221;签名的iOS平台的木马插件，该插件是一个名为<code>Unflod.dylib</code>动态链接库，可以将越狱机器上的Apple ID用户名和密码盗取，并且发送到指定服务器上。<a href="http://pastebin.com/raw.php?i=QxVRd2ha">这里</a>有该恶意插件的反汇编代码。<a href="https://www.sektioneins.de/en/blog/14-04-18-iOS-malware-campaign-unflod-baby-panda.html">这里</a>有关于该木马插件的详细分析。</p>
+
+<h3>检测与原理</h3>
+
+<p>检查你的设备是否有该木马的方法：用<code>iFile</code>查看<code>/Library/MobileSubstrate/DynamicLibraries/Unflod.dylib</code> 文件是否存在，如果存在，请立即删除并且重新启动设备。</p>
+
+<p>国外的越狱开发者也分析了一下该插件的工作原理，它通过监听所有的SSL协议，来截取用户的帐号和密码。所以理论上，该技术方案其实不光可以监听Apple ID帐号，还可以用来监听支付宝、微信等应用的帐号和密码。</p>
+
+<h3>感想</h3>
+
+<p>自从2010年7月26日，美国版权局修改《千禧年数字版权法》中的豁免条款，认可了iOS越狱的合法性以后，国外越狱社区就一直在为了自由地使用iPhone设备努力。国外的Cydia商店不但提供了大量优秀的免费软件，也提供了付费的越狱软件的下载。越狱在国外，是与盗版严格划清界限的，大多数的越狱开发者，也都是为了更好的使用iPhone而开发相关软件。</p>
+
+<p>但是在国内，大部分的越狱用户的目的还是停留在使用盗版软件上，这也反映出国人的版权意识薄弱以及法律对于知识产权保护的不力。相关的盗版软件渠道，不但能够堂堂正正的宣传<a href="http://weibo.com/2786069543/yxpdRrpGB?mod=weibotime">“海量正版软件游戏，全部免费安装”</a>，而且有些公司还能被大公司以<a href="http://tech.sina.com.cn/i/baidubuy91/">上亿美金收购</a>。只能说国内的环境实在是太奇葩。</p>
+
+<p>以下是某助手的广告截图，你相信全部苹果游戏应用，本身就是免费的么？</p>
+
+<p><img src="/images/kuaiyong.jpg"></p>
+
+<p>这次由中国开发者&#8221;WANG XIN&#8221;签名的这个木马插件，实在是让中国人自“太极”事件之后再次蒙羞。简单来说，就是坏了规矩。以后来自中国越狱开发者开发的正常越狱软件，将会受到更多潜在的“歧视”和“关照”。而国外的开发者看中国市场，会更加坚定地认为这是一个盗版横行的市场，从而想办法特别“关照”中国用户或者直接像很多国外的游戏厂商那样，直接忽视中国市场。</p>
+
+<h3>建议</h3>
+
+<p>最后回说安全这件事，笔者作为一个资深iOS开发者，建议一般普通用户，如果是为了用盗版软件就别越狱了，各种国内的越狱渠道都非常不安全的。</p>
+
+<p>如果是开发者们为了研究安全而越狱的，最好也只是在专门研究用的iTouch上使用，以避免可能的安全风险。</p>
+
+<p>虽然感觉那一天还比较遥远，但真心希望有一天，国内对于版权的保护能够开展起来，这对于整个中国互联网产业的发展，将会是一个极大的促进。</p>
+</div>
+  
+  
 
 
-<h2>CocoaPods简介</h2>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<p>每种语言发展到一个阶段，就会出现相应的依赖管理工具，例如Java语言的Maven，nodejs的npm。随着iOS开发者的增多，业界也出现了为iOS程序提供依赖管理的工具，它的名字叫做：<a href="http://cocoapods.org/">CocoaPods</a>。</p>
 
-<p>CocoaPods<a href="https://github.com/CocoaPods/CocoaPods">项目的源码</a>在Github上管理。该项目开始于2011年8月12日，经过多年发展，现在已经成为iOS开发事实上的依赖管理标准工具。开发iOS项目不可避免地要使用第三方开源库，CocoaPods的出现使得我们可以节省设置和更新第三方开源库的时间。</p>
 
-<p>在我开发猿题库客户端时，其使用了24个第三方开源库。在没有使用CocoaPods以前，我需要:</p>
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-18T21:58:29+08:00" pubdate data-updated="true">Apr 18<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/etag-improve-ios-url-function">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：SDWebImage缓存图片的机制、使用Etag增强iOS的URL缓存功能、从Facebook看移动开发的发展、FuzzyAutocomplete插件等。</p>
+
+<h2>教程</h2>
 
 <ol>
-<li>把这些第三方开源库的源代码文件复制到项目中，或者设置成git的submodule。</li>
-<li>对于这些开源库通常需要依赖系统的一些framework，我需要手工地将这些framework一一增加到项目依赖中，比如通常情况下，一个网络库就需要增加以下framework: CFNetwork, SystemConfiguration, MobileCoreServices, CoreGraphics, zlib。</li>
-<li>对于某些开源库，我还需要设置<code>-licucore</code>或者 <code>-fno-objc-arc</code>等编译参数</li>
-<li>管理这些依赖包的更新。</li>
+<li><p><a href="http://www.overcode.hk/?p=449">《SDWebImage缓存图片的机制》</a>：文章详细介绍了SDWebImage对于图片的缓存逻辑的实现细节。</p></li>
+<li><p><a href="http://shiningio.com/2014/04/12/ios-url-cache-with-etags/">《使用Etag增强iOS的URL缓存功能》</a>：iOS下对于缓存的支持有很多，比如Core Data，它可以很方便的建模和操作本地SQLite数据库， NSUserDefaults则可以用来缓存一些用户配置等等。本篇主要谈谈使用Etag标签来解决iOS下的URL缓存问题。服务端使用的是Tornado，原生支持Etag，而且默认处于开启状态，因此在应用层面基本不需要额外的代码处理。客户端使用NSURLCache配合AFNetworking进行网络请求。</p></li>
+<li><p><a href="http://www.cnblogs.com/biosli/p/NSObject_inherit.html">《初始化阶段 —— load 和 initialize》</a>：文章介绍了load函数和initialize函数各自的加载顺序。最后文章总结出：将针对于类修改放在intialize中，将针对Category的修改放在load中。假如是修改系统的类，一般会通过添加Category来添加功能，如果修改initialize会导致原生的intialize不会执行，所以放在load中会比较妥当。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/04/13/objc_dig_interface/">《ObjC @interface的设计哲学与设计技巧》</a>：学习Objective-C语言时，尤其是先学过其他编程语言再来看Objective-C时，总会对Objective-C的类声明的关键字interface感到有点奇怪，在其它面向对象的语言中通常由class关键字来表示，而interface在Java中表示的却大约相当于Objective-C的protocol，这个关键字的区别究竟代表了Objective-C语言的设计者怎样的思想呢，在Objective-C类设计中需要注意哪些问题呢？作者在文章中对这个问题进行一些思考和探究。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook/">《从Facebook看移动开发的发展》</a>：作者从Facebook的故事切入，分享了未来移动开发快速发展中，给设计师和程序员带来的挑战。</p></li>
+<li><p><a href="http://imtx.me/archives/1888.html">《CoreData Object 变成 Fault 的另一种方式》</a>：CoreData是一个架构庞大、学习曲线比较陡峭的 iOS 组件，每次遇到问题都会对其有新的认识。文章分享了关于错误认知 Object（NSManagedObject）与 Context（NSManagedContext）的引用关系而导致的 Fault 问题。</p></li>
+<li><p><a href="http://maoa.cn/?post=414">《关于 Mac 右键菜单》</a>：Mac OS X Lion 的 Launch Service 用于关联应用程序和文件并维护最近打开的项目列表。在文件关联和右键菜单方面，每当系统安装一个新的应用程序，都会调用 Launch Service 的 API 注册关联的文件类型。文章详细介绍了这其中的过程。</p></li>
 </ol>
 
 
-<p>这些体力活虽然简单，但毫无技术含量并且浪费时间。在使用CocoaPods之后，我只需要将用到的第三方开源库放到一个名为Podfile的文件中，然后执行<code>pod install</code>。CocoaPods就会自动将这些第三方开源库的源码下载下来，并且为我的工程设置好相应的系统依赖和编译参数。</p>
+<h2>工具</h2>
 
-<h2>CocoaPods的安装和使用介绍</h2>
+<ol>
+<li><p><a href="https://fnd.io">fnd.io</a>: fnd.io 是一个App Store的网页版，搜索速度非常快，可以用来代替itunes进行应用的检索。</p></li>
+<li><p><a href="https://www.shortcutfoo.com/">Shortcut Foo</a>：Shortcut Foo是一个训练你记忆快捷键的网站，除了包括iOS的第三方IDE AppCode的内容外，还包括vim，emacs, git等内容。</p></li>
+<li><p><a href="https://github.com/FuzzyAutocomplete/FuzzyAutocompletePlugin">FuzzyAutocomplete</a>：FuzzyAutocomplete是一个Xcode自动补全插件，刚刚更新到了2.0版本。它可以让你不需要再遵循从头匹配的原则来补全代码，而是随便输入你记得的关键字来进行匹配，整个插件的响应速度也非常快。</p></li>
+</ol>
 
-<h3>安装</h3>
 
-<p>安装方式异常简单, Mac下都自带ruby，使用ruby的gem命令即可下载安装：</p>
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/granoff/Lockbox">Lockbox</a>: Lockbox是一个帮助你方便地将数据保存到keychain中的开源工具类。</p></li>
+<li><p><a href="https://github.com/nolimits4web/framework7/">Framework7</a>： Framework7 是一个功能齐全的 HTML 框架，用来构建 iOS7 应用程序。Framework7 允许你使用Javascript代码来实现应用的列表，侧边栏，弹出框等控件。</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/16/mobile-development-view-from-facebook/">从Facebook看移动开发的发展</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-16T20:37:59+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/facebook-logo.jpg"></p>
+
+<h2>从Facebook谈起</h2>
+
+<p>Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式<a href="http://tech.ifeng.com/internet/special/fb-whatsapp/content-1/detail_2014_02/21/34032969_0.shtml">收购移动 IM 应用 WhatsApp</a>，总收购成本 190 亿美元。然后是继续发布了新产品：2014年2月，Facebook发布了一个新的移动端新闻阅读应用<a href="https://www.facebook.com/paper">Paper</a>。最后，Facebook最近还将自己使用的大量工具开源，包括开源了Paper的加载效果<a href="https://github.com/facebook/Shimmer">Shimmer</a>，LLDB的增强工具<a href="https://github.com/facebook/chisel">chisel</a>，以及Key-Value Observing工具<a href="https://github.com/facebook/KVOController">KVOController</a>，如果说这些开源工具让程序员如获至宝的话，那么Facebook将Paper的交互设计工具<a href="http://facebook.github.io/origami/">Origami</a>免费开放，则是对广大设计师的福音，极大地方便了移动交互设计工作的开展。</p>
+
+<p>2014年对于Facebook来说也是一个值得纪念的日子。因为从2004年2月4日Facebook产品上线到现在，Facebook刚刚走过10个年头。10年前，Facebook的创始人扎克伯格才19岁，是哈佛大学的一名学生。转眼间10年后，Facebook已经成长为全球最大的社交网络，月活跃用户达到12亿，市值约1200亿美元。</p>
+
+<p>业界内大多讨论的话题都围绕在Facebook收购WhatsApp这件事情上，而作为一个移动开发者，我更加看重Facebook 发布Paper这件事情。因为Paper并不是一个简单的应用，它有着非常优秀的交互效果，并且在产品设计和技术上都使用了许多前沿的技术，那就让我们看看，Paper的开发到底有何不同之处？</p>
+
+<h2>交互设计</h2>
+
+<p>我们首先从产品设计上看Paper的不同之处。Paper虽然只是一个新闻客户端，但从大家对Paper的评价上，我们发现优秀的交互再一次成为大家关注的焦点。回想那些成功的应用，大多都有着令人心动的交互效果，例如：Tweetie的下拉刷新，现在基本上成为iPhone上内容刷新的标准。Path跳出来的红心让人心动，很多朋友甚至会没事点那个红心，欣赏那流畅的按钮散开效果。还有Mailbox，用流畅的手势操作，将邮件管理与任务管理完美结合起来。</p>
+
+<p>国外成功的优秀应用也在影响着国内。交互设计不同于平面设计，不能简单地用Photoshop展现，而交互设计对于移动应用的成功又异常关键，所以需要花费不少时间来设计，因此产品经理很难兼顾地做交互设计。所以，在国内的一线互联网公司里，交互设计师这个职位慢慢成了移动应用的标配。但是在大部分的非一线互联网公司里面，移动开发的设计仍然停留在由产品经理简单潦草的完成阶段。所以，Facebook这次Paper的成功发布，再一次给移动开发的从业者指出了交互设计的重要性。</p>
+
+<p>回顾中国互联网产业的发展我们可以发现，产品经理（Product Manager）这个职位也是最近五、六年才成为互联网公司的标配的，想必在不远的将来，除着交互设计越来越重要，移动交互设计师也会成为每一个互联网公司重要的必备职位。</p>
+
+<p>另一方面，由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集<a href="http://facebook.github.io/origami/">Origami</a>，使得交互设计工作得到更好的辅助。而且在Facebook的带动下，<a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>也出现了。jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。</p>
+
+<p>不过另一方面，该工具仍然需要设计师具备一定的基础编码能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。</p>
+
+<h2>移动开发技术</h2>
+
+<p>随着iOS依赖管理工具Cocoapods和大量第三方开源库成熟起来，业界积累了大量的优秀开源项目。这次Facebook开发Paper使用了<a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">将近100个第三方开源库</a>，极大地减化了自己的应用开发任务。相信随着移动开发的发展，移动开发的生态圈会越来越成熟，基础的开源组件也将将越来越丰富，广大开发者都将从中受益。</p>
+
+<p>另一方面，Facebook的工程师在<a href="http://www.quora.com/What-exactly-did-Jason-Prado-mean-when-he-said-Xcode-cannot-handle-our-scale/answer/Scott-Goodson-1">Quora上反馈</a>说Paper在Xcode下打开需要40多秒钟，编译一次需要30分钟。这反映出大量的开源库的使用也给iOS集成编译环境Xcode提出了新的挑战，相信苹果会花大力气解决Xcode的性能问题。</p>
+
+<h2>总结</h2>
+
+<p>Facebook发布的Paper让我看到了移动开发领域的快速发展，大量新的工具和开源技术给了设计师和程序员机会和挑战，相信在移动互联网快速发展的浪潮中，会涌现出越来越多优秀的移动应用。谁会是未来移动互联网的霸主？让我们拭目以待。</p>
+
+<h2>版权说明</h2>
+
+<p>本文已发表在《程序员》杂志2014年4月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-16/2819341">http://www.csdn.net/article/2014-04-16/2819341</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/12/install-mavericks-note/">Mac重装记录</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-12T17:00:20+08:00" pubdate data-updated="true">Apr 12<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>上次将我的<a href="http://blog.devtang.com/blog/2014/01/26/add-ssd-to-old-imac/">iMac硬盘换成SSD</a>后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果：</p>
+
+<ol>
+<li>启动时按住Shift键进入安全模式（没能进入）</li>
+<li>同时按下 Command、Option、P 与 R 键不放（成功执行，但还是无法进入系统）</li>
+<li>按住 Command 键及 S 键，进入单用户模式（成功进入，但是把“/资源库/StartupItems”与“/系统/资源库/StartupItems”都清除，以及清除了<code>com.apple.loginwindow.plist</code> 和<code>com.apple.windowserver.plist</code>后，但还是无法通过正常启动进入系统）</li>
+<li>在单用户模式中修复磁盘，没有发现磁盘问题</li>
+</ol>
+
+
+<p>于是我做了一次覆盖安装，之后可以使用了，但昨天电脑又无法进入系统了。于是我打算格盘后做一次完全的重装，在此记录下自己的重装过程。</p>
+
+<h2>备份数据</h2>
+
+<p>由于我能够通过启动时按Command 键及 S 键，进入单用户模式，所以我首先把自己未提交的工程代码通过U盘备份出来了，具体步骤如下：</p>
+
+<ol>
+<li>按住 Command 键及 S 键不放，以“单一使用者模式”开机。</li>
+<li>加载磁盘：<code>mount -uw /</code></li>
+<li>新建一个U盘的加载目的文件夹： <code>mkdir /usb</code></li>
+<li>插入U盘，然后用如下命令加载U盘 <code>mount_msdos /dev/disk1s1 /usb</code> （如果你的U盘不是msdos格式，可以尝试在输入mount_后，按两次tab查看可用的其它格式）</li>
+<li>备份资料：<code>cp -r  ~/work/iphone /usb</code></li>
+<li>弹出U盘：<code>umount /dev/disk1s1</code></li>
+<li>将U盘资料放到别的电脑上，然后准备用来下一步制作安装盘</li>
+</ol>
+
+
+<h2>制作安装盘</h2>
+
+<p> 苹果的操作系统其实可以直接通过网络恢复，考虑到恢复时间实在太长，所以最好制作成安装盘，这样安装起来非常快。</p>
+
+<ol>
+<li>准备好一个8G以上的空白U盘，准备好另外一台Mac电脑用来制作安装盘。</li>
+<li>新的操作系统<code>Mavericks.app</code>可以在AppStore上直接下载。在另一台电脑上把文件下载好，下载后文件<code>Mavericks.app</code>应该在你的<code>/Applications</code>目录下。</li>
+<li>插入U盘，执行：<code>sudo /Applications/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia --volume /Volumes/Untitled --applicationpath /Applications/Install\ OS\ X\ Mavericks.app --nointeraction</code></li>
+<li>以上命令会将U盘先格式化，然后制作成安装盘，整个过程大概需要40分钟左右。</li>
+</ol>
+
+
+<h2>安装系统</h2>
+
+<ol>
+<li>插入上一步制作好的U盘</li>
+<li>启动时按住 option 键，然后选择通过U盘启动，之后先进入磁盘工具里面把硬盘格式化了（你也可以选择不格式化，这样就是覆盖安装）</li>
+<li>安装系统。整个安装过程大概要30分钟的样子。</li>
+</ol>
+
+
+<h2>安装软件</h2>
+
+<p> 安装好系统后，首先进入AppStore升级系统，把需要的更新补丁都装了。然后通过AppStore的”Purchases”页面，重新安装以前购买过的应用，我主要装的是 qq、evernote、Alfred、MplayerX、Xcode、Dash、Keynote、有道词典。另外通过网页另外下载了QQ的五笔输入法。</p>
+
+<p>接下来的基本上是命令行的安装，Mac下管理命令行工具首先得装homebrew了：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo gem install cocoapods
-</span><span class='line'><span class="nv">$ </span>pod setup
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>如果你的gem太老，可能也会有问题，可以尝试用如下命令升级gem:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo gem update --system
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>另外，ruby的软件源rubygems.org因为使用的亚马逊的云服务，所以被墙了，需要更新一下ruby的源，如下代码将官方的ruby源替换成国内淘宝的源：</p>
+<p>安装完之后执行一下<code>brew doctor</code>进行一下自检，看有没有什么异常。没问题就开始安装axel, imagemagick, autojump等命令行工具：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem sources --remove https://rubygems.org/
-</span><span class='line'>gem sources -a http://ruby.taobao.org/
-</span><span class='line'>gem sources -l
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install wget
+</span><span class='line'>brew install axel
+</span><span class='line'>brew install imagemagick
+</span><span class='line'>brew install autojump
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>还有一点需要注意，<code>pod setup</code>在执行时，会输出<code>Setting up CocoaPods master repo</code>，但是会等待比较久的时间。这步其实是Cocoapods在将它的信息下载到 <code>~/.cocoapods</code>目录下，如果你等太久，可以试着cd到那个目录，用<code>du -sh *</code>来查看下载进度。你也可以参考本文接下来的<code>使用cocoapods的镜像索引</code>一节的内容来提高下载速度。</p>
+<p></p>
 
-<h3>使用CocoaPods的镜像索引</h3>
-
-<p>所有的项目的Podspec文件都托管在<code>https://github.com/CocoaPods/Specs</code>。第一次执行<code>pod setup</code>时，CocoaPods会将这些<code>podspec</code>索引文件更新到本地的 <code>~/.cocoapods/</code>目录下，这个索引文件比较大，有80M左右。所以第一次更新时非常慢，笔者就更新了将近1个小时才完成。</p>
-
-<p>一个叫<a href="http://akinliu.github.io/2014/05/03/cocoapods-specs-/">akinliu</a>的朋友在<a href="http://gitcafe.com/">gitcafe</a>和<a href="http://www.oschina.net/">occhina</a>上建立了CocoaPods索引库的镜像，因为gitcafe和occhina都是国内的服务器，所以在执行索引更新操作时，会快很多。如下操作可以将CocoaPods设置成使用gitcafe镜像：</p>
+<p>有些程序(例如老版本的ruby需要使用gcc来编译)，通过以下命令安装老版的gcc：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod repo remove master
-</span><span class='line'>pod repo add master https://gitcafe.com/akuandev/Specs.git
-</span><span class='line'>pod repo update
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap homebrew/dupes
+</span><span class='line'>brew install apple-gcc42
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>将以上代码中的 <code>https://gitcafe.com/akuandev/Specs.git</code> 替换成 <code>http://git.oschina.net/akuandev/Specs.git</code> 即可使用occhina上的镜像。</p>
+<h2>使用brew cask来安装应用</h2>
 
-<h3>使用CocoaPods</h3>
+<p>之前专门<a href="http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">写文章介绍</a>过<code>brew cask</code>, 这次打算试试常用软件都用它来装，首先安装brew cask:</p>
 
-<p>使用时需要新建一个名为Podfile的文件，以如下格式，将依赖的库名字依次列在文件中即可</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap phinze/cask
+</span><span class='line'>brew install brew-cask
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后设置alfred，把 <code>/opt/homebrew-cask</code>增加到 alfred 的search目录中，然后就可以用alfred来启动安装后的应用了。</p>
+
+<p>接下来用brew cask安装：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>platform :ios
-</span><span class='line'>pod <span class="s1">&#39;JSONKit&#39;</span>,       <span class="s1">&#39;~&gt; 1.4&#39;</span>
-</span><span class='line'>pod <span class="s1">&#39;Reachability&#39;</span>,  <span class="s1">&#39;~&gt; 3.0.0&#39;</span>
-</span><span class='line'>pod <span class="s1">&#39;ASIHTTPRequest&#39;</span>
-</span><span class='line'>pod <span class="s1">&#39;RegexKitLite&#39;</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew cask install iterm2
+</span><span class='line'>brew cask install dropbox
+</span><span class='line'>brew cask install google-chrome
+</span><span class='line'>brew cask install sublime-text
+</span><span class='line'>brew cask install mou
+</span><span class='line'>brew cask install xtrafinder
+</span><span class='line'>brew cask install charles
+</span><span class='line'>brew cask install reveal
+</span><span class='line'>brew cask install xscope
+</span><span class='line'>brew cask install sparrow
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>然后你将编辑好的Podfile文件放到你的项目根目录中，执行如下命令即可：</p>
+<h2>使用zsh</h2>
+
+<p>然后是使用zsh，下载安装ohmyzsh:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="s2">&quot;your project home&quot;</span>
-</span><span class='line'>pod install
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -L http://install.ohmyz.sh | sh
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>现在，你的所有第三方库都已经下载完成并且设置好了编译参数和依赖，你只需要记住如下2点即可：</p>
+<p>安装完成之后，<code>vim ~/.zshrc</code> ，除了git插件外，另外增加 osx 和 autojump 插件。然后把以下这行注释启用：<code>export LANG=en_US.UTF-8</code> ，否则命令行中的中文可能会乱码。</p>
 
-<ol>
-<li>使用CocoaPods生成的 <em>.xcworkspace 文件来打开工程，而不是以前的 </em>.xcodeproj 文件。</li>
-<li>每次更改了Podfile文件，你需要重新执行一次<code>pod update</code>命令。</li>
-</ol>
+<h2>同步数据</h2>
 
+<p>挂上VPN之后，打开chrome，然后同步自己的所有信息，chrome的同步挺赞的，包括书签，插件，浏览历史记录以及保存的密码都同步过来了。</p>
 
-<h3>查找第三方库</h3>
+<p>打开evernote和dropbox，同步数据。由于我的个人文档都存在它们里面，所以同步过来还是挺方便的。</p>
 
-<p>你如果不知道cocoaPods管理的库中，是否有你想要的库，那么你可以通过pod search命令进行查找，以下是我用pod search json查找到的所有可用的库：</p>
+<p>打开QQ，将漫游的聊天记录同步过来。打开dash，恢复购买，然后把snippet从dropbox同步过来。</p>
+
+<p>将自己的ssh key从原来的机器上复制过来。</p>
+
+<h2>设置Ruby</h2>
+
+<p>由于我的博客使用Octopress搭建，所以需要安装Ruby：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -391,95 +544,495 @@
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>pod search json
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew update
+</span><span class='line'>brew install rbenv
+</span><span class='line'>brew install ruby-build
 </span><span class='line'>
-</span><span class='line'>-&gt; AnyJSON <span class="o">(</span>0.0.1<span class="o">)</span>
-</span><span class='line'>   Encode / Decode JSON by any means possible.
-</span><span class='line'>   - Homepage: https://github.com/mattt/AnyJSON
-</span><span class='line'>   - Source:   https://github.com/mattt/AnyJSON.git
-</span><span class='line'>   - Versions: 0.0.1 <span class="o">[</span>master repo<span class="o">]</span>
+</span><span class='line'>rbenv install 1.9.3-p0
+</span><span class='line'>rbenv <span class="nb">local </span>1.9.3-p0
+</span><span class='line'>rbenv rehash
 </span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>-&gt; JSONKit <span class="o">(</span>1.5pre<span class="o">)</span>
-</span><span class='line'>   A Very High Performance Objective-C JSON Library.
-</span><span class='line'>   - Homepage: https://github.com/johnezang/JSONKit
-</span><span class='line'>   - Source:   git://github.com/johnezang/JSONKit.git
-</span><span class='line'>   - Versions: 1.5pre, 1.4 <span class="o">[</span>master repo<span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'>// ...以下省略若干行
+</span><span class='line'>gem install bundler
+</span><span class='line'>rbenv rehash
+</span><span class='line'>bundle install
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>关于.gitignore</h3>
+<h2>结束语</h2>
 
-<p>当你执行<code>pod install</code>之后，除了Podfile外，CocoaPods还会生成一个名为<code>Podfile.lock</code>的文件，你不应该把这个文件加入到<code>.gitignore</code>中。因为<code>Podfile.lock</code>会锁定当前各依赖库的版本，之后如果多次执行<code>pod install</code> 不会更改版本，要<code>pod update</code>才会改<code>Podfile.lock</code>了。这样多人协作的时候，可以防止第三方库升级时造成大家各自的第三方库版本不一致。</p>
-
-<p>CocoaPods的这篇<a href="http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control">官方文档</a>也在<code>What is a Podfile.lock</code>一节中介绍了<code>Podfile.lock</code>的作用，并且指出：</p>
-
-<blockquote><p>This file should always be kept under version control.</p></blockquote>
-
-
-<h2>为自己的项目创建podspec文件</h2>
-
-<p>我们可以为自己的开源项目创建<code>podspec</code>文件，首先通过如下命令初始化一个<code>podspec</code>文件：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod spec create your_pod_spec_name
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>该命令执行之后，CocoaPods会生成一个名为<code>your_pod_spec_name.podspec</code>的文件，然后我们修改其中的相关内容即可。</p>
-
-<p>具体步骤可以参考这两篇博文中的相关内容：<a href="http://ishalou.com/blog/2012/10/16/how-to-create-a-cocoapods-spec-file/">《如何编写一个CocoaPods的spec文件》</a> 和<a href="http://studentdeng.github.io/blog/2013/09/13/cocoapods-tutorial/">《Cocoapods 入门》</a>。</p>
-
-<h2>使用私有的pods</h2>
-
-<p>我们可以直接指定某一个依赖的<code>podspec</code>，这样就可以使用公司内部的私有库。该方案有利于使企业内部的公共项目支持CocoaPods。如下是一个示例：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod <span class="s1">&#39;MyCommon&#39;</span>, :podspec <span class="o">=</span>&gt; <span class="s1">&#39;https://yuantiku.com/common/myCommon.podspec&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>不更新podspec</h2>
-
-<p>CocoaPods在执行<code>pod install</code>和<code>pod update</code>时，会默认先更新一次<code>podspec</code>索引。使用<code>--no-repo-update</code>参数可以禁止其做索引更新操作。如下所示：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod install --no-repo-update
-</span><span class='line'>pod update --no-repo-update
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>生成第三方库的帮助文档</h3>
-
-<p>如果你想让CococaPods帮你生成第三方库的帮助文档，并集成到Xcode中，那么用brew安装appledoc即可：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install appledoc
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>关于appledoc，我在另一篇博客<a href="http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">《使用Objective-C的文档生成工具:appledoc》</a>中有专门介绍。它最大的优点是可以将帮助文档集成到Xcode中，这样你在敲代码的时候，按住opt键单击类名或方法名，就可以显示出相应的帮助文档。</p>
-
-<h2>原理</h2>
-
-<p>大概研究了一下CocoaPods的原理，它是将所有的依赖库都放到另一个名为Pods项目中，然后让主项目依赖Pods项目，这样，源码管理工作都从主项目移到了Pods项目中。发现的一些技术细节有：</p>
+<p>一切完成之后，我写下了本文，希望能帮助大家快速地重装系统。简单来说：</p>
 
 <ol>
-<li>Pods项目最终会编译成一个名为libPods.a的文件，主项目只需要依赖这个.a文件即可。</li>
-<li>对于资源文件，CocoaPods提供了一个名为Pods-resources.sh的bash脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。</li>
-<li>CocoaPods通过一个名为Pods.xcconfig的文件来在编译时设置所有的依赖和参数。</li>
+<li>通过evernote、dropbox和chrome将个人数据保存在云端后，重装后能快速恢复环境。</li>
+<li>通过homebrew和基于homebrew的brew cask，可以方便地帮助你快速安装不在AppStore上销售的软件。</li>
 </ol>
 
 
-<p>愿大家玩得开心～</p>
+<p>其实正常情况下，Mac使用迁移助理或Time Machine恢复非常方便，如果不是万不得已，大家也不用像我这样重装系统。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/10/ios-weekly-7/">iOS移动开发周报-第7期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-10T23:34:02+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-wwdc2014-ticket">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果WWDC2014门票开卖，
+ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://nb.zol.com.cn/445/4451916.html">苹果WWDC2014门票开卖，开发者需通过抽签的方式申请购买</a>：2014年苹果开发者大会（WWDC）将于6月2日至6日在旧金山Moscone West中心举行。而本次WWDC大会的门票将于旧金山当地时间4月7日上午十点开始发售，开发者需通过抽签的方式申请购买，下午五点到八点公布获得门票的名单。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://realmacsoftware.com/blog/dynamic-linking">《Dynamic Linking》</a>：文章详细解释了动态链接库在iOS程序中的加载过程，作者在也尝试自己实现了一个动态链接库并且在iOS程序中成功加载，不过文章最后指出，在AppStore上架的的应用，如果要加载动态链接库，该链接库需要得到苹果的签名才能加载成功，虽然这在技术上是可行的，但苹果现阶段的审核要求是不接受这种应用的。作者也将相关代码开源在 <a href="https://github.com/ddeville/Dynamic-iOS">Dynamic-iOS</a> 项目中。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/ios-7-jiao-hu-shi-guo-du">《iOS 7 交互式过渡》</a>：iOS 7 新加入了自定义 View Controller 之间的过渡效果的方法。本文介绍了如何利用相关的API实现自定义的过滤效果。文章的内容主要包括：实现自定义过渡、使用自定义过渡、让过渡变得可以交互。文中例子的工程文件也已上传至<a href="https://github.com/PeteC/InteractiveViewControllerTransitions">GitHub</a>。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/">《ARC下dealloc过程及.cxx_destruct的探究》</a>：在MRC时代，我们经常在<code>dealloc</code>方法将内部其他对象释放掉，申请的非Objc对象的内存当然也需要一并处理掉，最后调用super，继续将父类对象做析构。而在ARC时代，大部分的代码都不再需要了。这些相应的代码是如何由编译器完成的？带着这样的疑问，作者研究了LLVM的具体实现细节。</p></li>
+<li><p><a href="https://github.com/jspahrsummers/enemy-of-the-state/blob/master/Enemy%20of%20the%20State.pdf">《Enemy of the State》</a>：作者分享了程序架构中存在状态的坏处以及避免状态的一些方法：优先使用不可变对象、使用ReactiveCocoa框架、使用Model-View-ViewModel框架。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="http://chen.do/blog/2013/09/30/selectively-ignoring-objective-c-exceptions-in-xcode/">在Xcode调试时忽略部分异常</a>：作者提供了一些llvm增强脚本，用于方便地在调试时忽略掉部分异常。增强脚本的代码也开源在<a href="https://gist.github.com/chendo/6759305/raw/ignore_specified_objc_exceptions.py">这里</a>。</p></li>
+<li><p><a href="https://github.com/naotaka/ClipMenu">ClipMenu</a>：开源的Mac OS剪贴板管理工具。</p></li>
+<li><p><a href="https://github.com/kolinkrewinkel/Polychromatic">Polychromatic</a>：一个只高亮属性和变量的Xcode插件。</p></li>
+<li><p><a href="https://github.com/shjborage/Reveal-Plugin-for-XCode">Reveal-Plugin-for-XCode</a>：作者写了一个Reveal插件，可以使工程不作任何修改的情况下使用Reveal，该插件已在Alcatraz上架。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/03/ios-weekly-6/">iOS移动开发周报-第6期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-03T21:37:15+08:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-change-account-price">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果修改了中国区开发者帐号的付费价格、苹果调整了5个地区的AppStore应用价格以避免利用汇率的套利、iPhone版Office应用免费等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p>苹果在最近修改了中国区的开发者帐号（Developer Program）的付费方式，开始支持人民币支付并取消了美元支付。不过相对于以前99$每年的注册费用，现在需要使用688人民币。按现在的市场价汇率计算，相比以前，开发者需要多支付将近70元费用。</p></li>
+<li><p><a href="http://iosdevelopertips.com/app-store/microsoft-office-mobile-iphone-now-free.html">iPhone版Office免费</a>：微软将自己旗下的iPhone版Office的价格修改为免费，下载地址是<a href="https://itunes.apple.com/cn/app/microsoft-office-mobile/id541164041?mt=8">这里</a>。</p></li>
+<li><p>苹果于4月1日给开发者发邮件称：将会调整包括南非在内的5个地区的AppStore应用价格。在这之前，由于南非的货币持续贬值，一些投机分子，利用苹果商店在汇率上的漏洞，借助苹果商店汇率和实际汇率的差价来倒卖商品。<a href="http://daily.zhihu.com/story/3350426">《利用苹果商店规则漏洞的灰色地下产业链》</a>揭露了该行为。</p></li>
+<li><p><a href="https://github.com/showcases/projects-that-power-github-for-mac">《Projects that power GitHub for Mac》</a>：GitHub在其官方网站上分享了在开发Mac版GitHub客户端时使用的第三方库，共30个。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.objc.io/issue-11/">《面向iOS开发者的Android教程》</a>：著名的iOS原创教程网站objc.io最近推出了一期介绍Android的教程。由于作者都是具有iOS开发经验的，所以教程内容特别适合于已经有iOS开发经验的读者。文章许多知识的讲解也会拿iOS开发中已有的概念来做对比，加深读者理解。</p></li>
+<li><p><a href="http://billwang1990.github.io/blog/2014/03/26/nsassert-vc-nscassert/">《小心NSAssert》</a>：作者分享了在block中使用<code>NSAssert</code>时需要小心循环引用的问题。</p></li>
+<li><p><a href="http://blog.xcodev.com/archives/issus-2014-4-2/">《最近开发中遇到的问题汇总》</a>：文章依次介绍了最近开发中遇到的问题，包括：《UIButton在Disabled状态下标题混乱的问题》、《含软连字符的字符串计算显示长度的问题》和《UINavigationBar左右两边按钮可同时点击的问题》。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/03/22/corebluetooth/">《Core Bluetooth Concept》</a>：作者介绍了在iOS设备中使用<code>CoreBluetooth</code>API来实现基于蓝牙4.0通讯相关的基础知识和示例工程。</p></li>
+<li><p><a href="http://billwang1990.github.io/blog/2014/03/31/nshashtable-and-nsmaptable/">《NSHashTable &amp; NSMapTable》</a>：作者简单介绍了一下iOS开发中相对于<code>NSDictionary</code>和<code>NSSet</code>来说，不常被人使用的<code>NSHashTable</code>和<code>NSMapTable</code>的相关知识。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://github.com/Galeas/CocoaPodUI">CocoaPodUI</a>：<code>CocoaPodUI</code>是一个Xcode中的GUI插件，为iOS工程第三方依赖管理工具<code>CocoaPods</code>提供UI管理界面。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://gist.github.com/raven/8553761">Breakpoints_v2.xcbkptlist</a>：作者介绍了如何不修改工程设置和源码，将reveal集成到调试环境中的办法。<a href="http://revealapp.com/">reveal</a>是一个动态调试和修改界面的工具。</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-28T23:52:29+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/reduce-ios-size">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期移动开发周报带来如下内容：减小iOS应用程序的大小，Quartz Composer的增强工具Origami的教程以及jQC工具等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="https://deals.iphoneincanada.ca/sales/the-mac-freebie-bundle-3-0">《The Mac Freebie Bundle 3.0》</a>：该网站提供了7个原本收费的Mac App的免费购买。笔者试用了一下其中的X-Mirage，它可以把iPhone投到Mac上，并提供录象功能，适合将演示导出成视频。另外那个页面有Bug，在购买时信用卡信息不用填写，留空就可以直接购买成功。</p></li>
+<li><p><a href="http://www.macstories.net/news/apple-testing-related-search-suggestions-on-the-app-store/">《App Store 将增加匹配相关搜索关键字的新功能》</a>：新增加的功能有助于提高相关关键词的点击量。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://nonomori.farbox.com/post/injection-plugin-for-xcode">《injection plugin for xcode》</a>：Injection Plugin For Xcode 是 Xcode 上的一个插件。利用它可以修改应用代码，实时在模拟器或实机上看到效果而不需要重启应用。作者介绍了该插件的详细使用方式。</p></li>
+<li><p><a href="http://www.pasanpremaratne.com/2014/03/15/UI-Prototyping-with-Quartz-Composer-and-Origami/">《UI Prototyping with Quartz Composer and Origami》</a>：由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集Origami，使得交互设计工作得到更好的辅助。不过另一方面，该工具仍然需要设计师具备一定的逻辑思维能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。本教程介绍了如何使用Quartz Composer 和 Origami来做交互设计。</p></li>
+<li><p>写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：
+<a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">Android篇</a>，<a href="http://t.cn/8sbXyOH">C++ 篇1</a>和<a href="http://t.cn/8sbXLyg">C++ 篇2</a>，<a href="http://t.cn/8FpEP4x">Go 篇</a>。</p></li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/26/cookbook-moving-table-view-cells-with-a-long-press-gesture/">《利用长按手势移动 Table View Cells》</a>：本教程中介绍了如何通过长按手势来移动 table view中的cell，这种操作方式就像苹果自家的天气 App 一样。</p></li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/24/reducing-the-size-of-my-app/">《减小iOS应用程序的大小》</a>：本文收集了一些减小程序安装包大小的相关技巧(当第一次下载和安装程序时)。如果是针对升级程序的话，可以看这篇文章: <a href="https://developer.apple.com/library/ios/qa/qa1779/">《减小iOS应用程序升级时所需下载的大小》</a>，这与第一次安装使用的工作原理有所不同。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">《NSNumber对象缓存以及Tagged Pointer》</a>：本文讨论了<code>NSNumber</code>对象的缓存以及苹果在64位系统引入的<code>Tagged Pointer</code>对象。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>：jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。Quartz Composer是苹果提供的一个交互设计工具。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/gbammc/WechatPayDemo">WechatPayDemo</a>: WechatPayDemo是一个非官方的微信支付Demo，基于微信SDK1.4.1构建。由于微信官方并没有提供支付功能的iOS Demo，加上官方的文档错误，使得本文作者花了较大精力调试。他希望开源这个工程来帮助其他iOS开发者少有一些弯路。</p></li>
+<li><p><a href="http://trawor.farbox.com/post/vz">微转iOS客户端和服务端</a>：微转是一个基于微博的数码设备平台，客户端和后台全部基于AVOSCloud服务实现。作者将其iOS客户端和服务端代码全部开源。</p></li>
+<li><p><a href="https://github.com/facebook/Tweaks">Tweaks</a>：Tweaks让开发者可以方便地对特定事物进行标记——比如动画效果的时间，或者是按钮的颜色，或者是图片的透明度——并在使用设备实际运行应用时让开发者方便地进行实时调整。</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T21:09:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是一次和 <a href="http://onevcat.com/">@onevcat</a> 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括：</p>
+
+<ol>
+<li>系统对象的缓存</li>
+<li><code>Tagged Pointer</code>对象</li>
+</ol>
+
+
+<h2>autorelase对象</h2>
+
+<p>按照苹果的编程约定，由非<code>alloc</code>,<code>copy</code>返回的对象都是<code>autorelease</code>的，所以对于以下代码，虽然变量<code>number</code>是<code>__weak</code>的，但是由于<code>[NSNumber numberWithInt:100]</code>返回的对象是<code>autorelase</code>的，所以仍然能通过NSLog打印出来。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>从汇编代码中看，以上代码在创建<code>number</code>变量时，是通过<code>objc_loadWeak</code>方法进行的。而根据 <a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#arc-runtime-objc-loadweak">Clang的官方文档</a>，<code>objc_loadWeak</code>方法会<code>retain</code>并<code>autorelease</code>这个对象。所以给一个weak对象赋值，它并不会马上释放，而是会放到<code>autorelease pool</code>中，与<code>autorelease pool</code>一起释放。</p>
+
+<p>如下是<code>objc_loadWeak</code>的代码示例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">id</span> <span class="nf">objc_loadWeak</span><span class="p">(</span><span class="kt">id</span> <span class="o">*</span><span class="n">object</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">objc_autorelease</span><span class="p">(</span><span class="n">objc_loadWeakRetained</span><span class="p">(</span><span class="n">object</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>为了验证这个回答，我们又做了一个有趣的例子来验证，如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
+</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在上面这个例子中，果然如我们所料，<code>number</code>在通过NSLog查看值时，变成了nil。</p>
+
+<h3>讨论二：关于NSNumber对象的缓存</h3>
+
+<p>我们在做以上实验时，发现一个有趣的现象，如果你把100变成了10，则<code>number</code>变成在NSLog时，就能够输出值来，不再是nil了。如下是测试代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
+</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>经过 onevcat 的实验，从-1 ～ 12都是可以输出的，而其它值却会变成nil。于是我们猜测是系统对这些常见值的对象做了缓存，于是我们写了如下代码来验证。</p>
+
+<p>结果果然是这样，多次创建值为10的<code>NSNumber</code>对象，其地址都是<font color=red>一样的</font>。而多次创建值为100的<code>NSNumber</code>对象，每次创建获得的对象地址都是<font color=red>不一样的</font>。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>讨论三：64位系统与Tagged Pointer对象</h3>
+
+<p>讨论本来已经结束了，结果我在写这篇博客的时候，手贱又测试了一下，发现在64位的模拟器下，无论创建多少次，也无论int的值是多少，所有相同int值的<code>NSNumber</code>对象地址都是一样的！</p>
+
+<p>疑惑了几分钟，我突然想起WWDC中介绍的64位系统引放的<code>Tagged Pointer</code>，恍然大悟。</p>
+
+<p>在WWDC2013的《Session 404 Advanced in Objective-C》视频中，苹果介绍了<code>Tagged Pointer</code>。<code>Tagged Pointer</code>的存在主要是为了节省内存。我们知道，对象的指针大小一般是与机器字长有关，在32位系统中，一个指针的大小是32位（4字节），而在64位系统中，一个指针的大小将是64位（8字节）。</p>
+
+<p>在64位系统中，如果我们真正使用一个指针来存储<code>NSNumber</code>实例，那么我们首先需要一个8字节的指针，另外需要一块内存存储<code>NSNumber</code>实例，这通常又是8字节。这样的内存开销是比较大的。苹果对于<code>NSNumber</code>和<code>NSDate</code>对象，改成了用<code>Tagged Pointer</code>来存储，简单来说，<code>Tagged Pointer</code>是一个假的指针，它的值不再是另一个地址，而就是对应变量的值。</p>
+
+<p><code>Tagged Pointer</code>主要有以下3个特点：</p>
+
+<ol>
+<li><code>Tagged Pointer</code>专门用来存储小的对象，例如<code>NSNumber</code>和<code>NSDate</code></li>
+<li><code>Tagged Pointer</code>指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已！所以，它的内存并不存储在堆中，也不需要malloc和free。</li>
+<li>在内存读取上有着3倍的效率（以前是寻址->发消息->获取值，现在直接获取值），创建时比以前快106倍。</li>
+</ol>
+
+
+<p> 相关英文文档截图如下：</p>
+
+<p> <img src="/images/tagged_pointer_1.jpg"></p>
+
+<p>但<code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 <code>isa</code> 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。</p>
+
+<p>因为不是真正的对象，所以如果你直接访问<code>Tagged Pointer</code>的<code>isa</code>成员的话，在编译时将会有如下警告：</p>
+
+<p> <img src="/images/tagged_pointer_2.jpg"></p>
+
+<p>对于上面的写法，应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>，如下图所示：</p>
+
+<p> <img src="/images/tagged_pointer_3.jpg"></p>
+
+<p>至此，所有疑问都已经解决，开心～</p>
+
+<p>另外这儿有一篇介绍<code>Tagged Pointer</code>的文章：<a href="http://blog.xcodev.com/archives/tagged-pointer-and-64-bit/">《64位与Tagged Pointer》</a>，一并推荐给大家。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/21/ios-weekly-4/">iOS移动开发周报-第4期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T20:23:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/lldb-debug-command">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>本周iOS移动开发周报，带来一系列iOS开发教程以及2个开源项目。这期中的2个开源项目都比较值得关注，一个是VVebo写的GIF解决方案，另一个是用OC实现的QQ自动回复机器人。后者的作者是图书<a href="http://item.jd.com/11389860.html">《iOS应用逆向工程》</a>的作者，这本书也是一本不错的安全方面的入门图书，一并推荐给大家。</p>
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://wufawei.com/2014/03/symbolicating-ios-crash-logs/">《分析iOS Crash文件：符号化iOS Crash文件的3种方法》</a>：文章介绍了拿到用户的<code>.crash</code>文件之后，如何符合化（Symbolicating）crash文件的3种方法。它们分别是：使用Xcode、使用命令行工具symbolicatecrash，以及使用命令行工具atos。这些方法可以帮助开发者尽快找到应用crash的原因。</p></li>
+<li><p><a href="http://objcio.com/blog/2014/03/10/custom-controls/">《自定义控件》</a>：本文翻译自objc.io的《Custom Controls》，讨论了一些自定义视图和控件的诀窍和技巧。文章先对UIKit已经提供的控件做了一个概览，介绍一些渲染技巧，随后深入到视图和它们的所有者之间的通信策略，并简略探讨了辅助功能、本地化和测试。</p></li>
+<li><p><a href="http://nshipster.cn/dictionary-services/">《关于字典的介绍》</a>：文章介绍了OS X和iOS里面系统提供的字典服务以及调用方法。其中OS X中介绍的是使用私有API的方法，而iOS中介绍的是使用公开的<code>UIReferenceLibraryViewController</code>的方法。</p></li>
+<li><p><a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">《Android Development Tips For iOS Devs》</a>：写给iOS开发者看的Android开发技巧，适合有iOS开发背景的朋友学习Android开发。</p></li>
+<li><p><a href="http://iosinit.com/?p=1022">《iOS 7之UICollectionView与UIKit Dynamics》</a>：<code>UIKit Dynamics</code> 是 iOS 7 中基于物理动画引擎的一个新功能–它被特别设计使其能很好地与 <code>CollectionView</code> 配合工作。本文介绍了如何将这两个特性结合在一起。文章翻译自objc.io第5期。</p></li>
+<li><p><a href="http://www.starfelix.com/blog/2014/03/17/lldbdiao-shi-ming-ling-chu-tan/">《LLDB调试命令初探》</a>：LLDB是LLVM下的调试器，Xcode从4.0开始编译器开始改用LLVM，相应的调试器也从gdb改为LLDB。而从 Xcode5.0开始所有工程也被自动设置为使用LLDB。本文从初学者的角度讲解了在日常的开发中如何使用LLDB以及LLDB常用的命令。</p></li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/19/18-tips-for-working-effectively-with-interface-builder/">《提高Interface Builder高效工作的8个技巧》</a>：文章介绍了Xcode的界面编辑器Interface Builder的8个使用技巧，可以提高工作效率。</p></li>
+<li><p><a href="http://imtx.me/archives/1885.html">《自由地控制 Xcode Open Quickly 打开方式》</a>：文章介绍了Xcode Open Quickly使用的一则技巧，可以方便地控制打开方式。</p></li>
+<li><p><a href="http://blog.csdn.net/yiyaaixuexi/article/details/21469769">《static和被裁的符号表》</a>：作者念茜这次从安全防御角度出发，讲解利用static关键字裁掉函数符号，以便不让攻击者理清自己程序的敏感业务逻辑，提高应用的逆向门槛。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p>微博客户端 <a href="http://weibo.com/appsupport">VVebo</a> 的作者开源了他自己为VVebo写的GIF解决方案 <a href="https://github.com/johnil/VVeboImageView">VVeboImageView</a>， 占用内存很小。</p></li>
+<li><p><a href="https://github.com/iosre/Skua">《iOS客户端自动回复机器人源码》</a>：作者实现了一个QQ的自动回复机器人。</p></li>
+</ol>
+
 </div>
   
   
@@ -500,14 +1053,12 @@
 <aside class="sidebar">
   
     <section>
-  <h1>赞助商</h1>
-  <p>
-     <img width="260px" src="/images/ad_sale.png" />
-  </p>
-</section>
-<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
@@ -551,10 +1102,6 @@
     
       <li class="post">
         <a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a>
       </li>
     
   </ul>

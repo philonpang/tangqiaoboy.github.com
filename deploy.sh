@@ -1,5 +1,6 @@
 #! /bin/bash
 
+rake generate
 rake deploy
 cd _deploy
 

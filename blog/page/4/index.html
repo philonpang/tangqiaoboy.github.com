@@ -9,8 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 我在IT公司工作了六年，有着三年面试官的经历。在面试中，我发现很多人都不能写好一份求职简历，所以今天不谈iOS开发，谈谈如何写一份针对互联网公司的求职简历。 我主要想分享的内容包括： 简历的页数不要超过两页（最好一页） 删掉不必要的信息
-如果你实在太牛逼，最多写2页 重要的信息写在最前面 &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +23,8 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <!-- googleapis is fucked by gfw -->
+  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/12/22/how-to-write-resume-for-it-company/">如何写面向互联网公司的求职简历</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a></h1>
     
     
       <p class="meta">
@@ -98,544 +98,142 @@
   
 
 
-<time datetime="2013-12-22T20:04:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time>
+<time datetime="2014-05-24T10:04:19+08:00" pubdate data-updated="true">May 24<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/resume-title.jpg"></p>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<h2>前言</h2>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/apple-renew-wwdc2014-application">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<p>我在IT公司工作了六年，有着三年面试官的经历。在面试中，我发现很多人都不能写好一份求职简历，所以今天不谈iOS开发，谈谈如何写一份针对互联网公司的求职简历。</p>
+<h3>前言</h3>
 
-<p>我主要想分享的内容包括：</p>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<ul>
-<li>简历的页数不要超过两页（最好一页）
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果更新WWDC 2014应用、GCD 深入理解、objc.io第12期翻译等。</p>
 
-<ul>
-<li>删掉不必要的信息</li>
-<li>如果你实在太牛逼，最多写2页</li>
-</ul>
-</li>
-<li>重要的信息写在最前面
-
-<ul>
-<li>你的联系方式</li>
-<li>你最重要的工作经历</li>
-</ul>
-</li>
-<li>不要简单罗列工作经历
-
-<ul>
-<li>列出你的工作中有价值的细节（有哪些技术上的困难等）</li>
-</ul>
-</li>
-<li>不要写任何虚假或夸大的信息
-
-<ul>
-<li>类似精通java，精通C/C++等</li>
-</ul>
-</li>
-<li>不要附加任何可能带来负面印象的信息
-
-<ul>
-<li>不要加照片</li>
-<li>不要写政治面貌</li>
-<li>不要写奇怪的爱好（打游戏，喝酒，抽烟）</li>
-<li>不要写参加过某某培训公司的iOS培训</li>
-<li>尽量用专业邮箱</li>
-<li>用PDF格式</li>
-</ul>
-</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/12/22/how-to-write-resume-for-it-company/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/">XCode Debugger中的Icon符号的意义</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-22T19:23:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>你注意到了吗？在Xcode中，当你点击查看调用栈的时候，调用栈的每个方法前面都有一个Icon，而且还有好几种不同的样子，如下图所示，你知道它们代表什么意思吗？</p>
-
-<p><img src="/images/debugger-icon.png"></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/12/11/network-tool-charles-intr/">iOS开发工具-网络封包分析工具Charles</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-11T14:03:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/charles-logo.png"></p>
-
-<h2>简介</h2>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/network-packet-analysis-tool-charles">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<p><a href="http://www.charlesproxy.com/">Charles</a>是在Mac下常用的截取网络封包的工具，在做iOS开发时，我们为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析。Charles通过将自己设置成系统的网络访问代理服务器，使得所有的网络访问请求都通过它来完成，从而实现了网络封包的截取和分析。</p>
-
-<p>Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时。</p>
-
-<p>因此，该付费方案对广大用户还是相当友好的，即使你长期不付费，也能使用完整的软件功能。只是当你需要长时间进行封包调试时，会因为Charles强制关闭而遇到影响。</p>
-
-<p>Charles主要的功能包括：</p>
+<h2>新闻</h2>
 
 <ol>
-<li>支持SSL代理。可以截取分析<a href="http://zh.wikipedia.org/wiki/%E5%AE%89%E5%85%A8%E5%A5%97%E6%8E%A5%E5%B1%82">SSL</a>的请求。</li>
-<li>支持流量控制。可以模拟慢速网络以及等待时间（latency）较长的请求。</li>
-<li>支持AJAX调试。可以自动将json或xml数据格式化，方便查看。</li>
-<li>支持AMF调试。可以将Flash Remoting 或 Flex Remoting信息格式化，方便查看。</li>
-<li>支持重发网络请求，方便后端调试。</li>
-<li>支持修改网络请求参数。</li>
-<li>支持网络请求的截获并动态修改。</li>
-<li>检查HTML，CSS和RSS内容是否符合<a href="http://validator.w3.org/">W3C标准</a>。</li>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-05-22/08099393630.shtml">《苹果更新WWDC 2014应用 公布主题演讲时间》</a>：2014年苹果公司全球开发者大会(WWDC)将于6月2日举行。5月21日，他们更新了iOS版WWDC官方应用，并将公布主题演讲时间。</p></li>
+<li><p><a href="https://github.com/orta/wwdc_parties_2014">《各种WWDC2014现场聚会》</a>：该项目列出了各种第三方公司或组织打算在WWDC时候进行的线下聚会。</p></li>
+<li><p><a href="http://weicdsq.lofter.com/post/20a5c5_13cc45e">《关于发现的一个流氓黑客恶意盗号插件的源头追踪》</a>：威锋技术组分享了追踪一个恶意盗号插件源头的过程。从中我们可以看到越狱手机市场有多么混乱和危险。笔者认为，如果不是研究安全为目的，就不要越狱，特别是不要为了装盗版而越狱。</p></li>
 </ol>
 
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/12/11/network-tool-charles-intr/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/14/use-flurry-to-analyse-data/">使用Flurry来统计和分析用户行为</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-14T13:51:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>简介</h2>
-
-<p><img src="/images/flurry-logo.png"></p>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/use-flurry-to-statistics-and-analysis-user-behavior">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<p><a href="http://www.flurry.com/">Flurry</a>是一家专门为移动应用提供数据统计和分析的公司。他们的数据统计分析SDK支持的平台包括iPhone, iPad, Android, Windows Phone, Java ME和BlackBerry。使用Flurry服务的公司包括eBay、Yahoo、Hulu和Skype等超过11万家公司，涉及的应用超过36万个。</p>
-
-<p>利用Flurry提供的分析平台，我们可以很容易地自动统计出应用的使用情况，例如：</p>
+<h2>教程</h2>
 
 <ol>
-<li>每天（每周或每月）登录用户数，应用使用次数</li>
-<li>每天（每周或每月）新用户数，活跃用户数</li>
-<li>用户的所在地、年龄、性别的分布情况</li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-05-14-grand-central-dispatch-in-depth-part-2.md">《GCD 深入理解：第二部分》</a>：本文是由<a href="http://weibo.com/riven0951">Riven</a>和<a href="https://twitter.com/nixzhu">@nixzhu</a>共同翻译的GCD 深入理解的第二部分。文章更加深入地介绍了 GCD 的高级用法，包括 Dispatch Group 、并发的危害、正确的阻塞方式、信号量以及 Dispatch Source 等。</p></li>
+<li><p><a href="http://objccn.io/issue-12/">《objc.io第12期翻译：动画》</a>：本期翻译涵盖了iOS动画的方方面面——从 UIView 动画，Core Animation，一直到从零打造一个你自己定义的动画。文章还讨论了 View Controller 和 Collection View 有关的动画，以及如何让动画变得可以交互。</p></li>
+<li><p><a href="http://bomberstudios.com/post/54587126654/using-sketch-mirror-liveview-silkscreen-skala">《Using Sketch Mirror, LiveView, SilkScreen, Skala Preview, AirServer &amp; others via USB》</a>：文章介绍了用 USB 热点共享提高演示时 iPhone 画面帧数的技巧，该技巧可用于在使用AirServer或Sketch mirror等应用时，在wifi糟糕的环境下解决数据传输太慢的问题。</p></li>
+<li><p><a href="http://highperformancecoredata.com/">《High Performance Core Data》</a>：文章列出了讲Core Data 性能方面的各种资源，包括博客、Podcast以及开源代码。</p></li>
+<li><p> <a href="http://nsscreencast.com/">NSScreenCast</a>：NSScreenCast是一个风格有趣的iOS教程网站。</p></li>
 </ol>
 
 
-<p>Flurry也可以自动统计出移动设备的分类情况，例如：</p>
+<h2>工具</h2>
 
 <ol>
-<li>使用3G，Wifi的会话比例</li>
-<li>使用iOS系统各版本(例如iOS6.0, iOS7.0等)的比例</li>
-<li>使用iOS各种设备（例如iPhone4, iPhone5等)的比例</li>
+<li><p><a href="https://github.com/ideo/avocado/">avocado</a>：avocado是一个基于Facebook Origami的交互设计工具集。其由<a href="http://www.ideo.com/">IDEO</a>开源，可用于做交互原型设计。</p></li>
+<li><p><a href="http://resolution.im/">resolution.im</a>：resolution.im是一个提问各种iOS设备尺寸信息以及设计模版的网站。</p></li>
 </ol>
 
 
-<p>除了上面介绍的自动统计项目，Flurry SDK也提供了统计用的相关API，便于我们针对自己产品的特点，做针对性的统计。例如统计应用中某个按钮的按下次数，或者网络请求的平均响应时间等。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/11/14/use-flurry-to-analyse-data/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/10/21/the-tech-detail-of-ape-client-3/">猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-21T16:15:00+08:00" pubdate data-updated="true">Oct 21<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第三篇。本文涉及的技术细节是：基于CoreText的排版引擎。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/10/21/the-tech-detail-of-ape-client-3/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/10/19/the-tech-detail-of-ape-client-2/">猿题库iOS客户端的技术细节（二）：答题卡扫描算法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-19T11:10:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第二篇。本文涉及的技术细节是：答题卡扫描算法。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/10/19/the-tech-detail-of-ape-client-2/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-17T00:43:00+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第一篇。本文涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/10/15/objective-c-object-model/">Objective-C对象模型及应用</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-15T20:31:00+08:00" pubdate data-updated="true">Oct 15<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>原创文章，转载请注明出自<a href="http://blog.devtang.com">唐巧的技术博客</a>。</p>
-
-<p>本文主要介绍Objective-C对象模型的实现细节，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。希望本文能加深你对Objective-C对象的理解。</p>
-
-<h2>ISA指针</h2>
-
-<p>Objective-C是一门面向对象的编程语言。每一个对象都是一个类的实例。在Objective-C语言的内部，每一个对象都有一个名为isa的指针，指向该对象的类。每一个类描述了一系列它的实例的特点，包括成员变量的列表，成员函数的列表等。每一个对象都可以接受消息，而对象能够接收的消息列表是保存在它所对应的类中。</p>
-
-<p>在XCode中按<code>Shift + Command + O</code>, 然后输入NSObject.h和objc.h，可以打开NSObject的定义头文件，通过头文件我们可以看到，NSObject就是一个包含isa指针的结构体，如下图所示：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/10/15/objective-c-object-model/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-11T16:00:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/wawati-sample.jpg"></p>
-
-<h2>引言</h2>
-
-<p>在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于：</p>
-
-<p>1、字体文件通常比较大，10M &ndash; 20M是一个常见的字体库的大小。大部分的非游戏的app体积都集中在10M以内，因为字体文件的加入而造成应用体积翻倍让人感觉有些不值。如果只是很少量的按钮字体需要设置，可以用一些工具把使用到的汉字字体编码从字体库中抽取出来，以节省体积。但如果是一些变化的内容需要自定义的字体，那就只有打包整个字体库了。</p>
-
-<p>2、中文的字体通常都是有版权的。在应用中加入特殊中文字体还需要处理相应的版权问题。对于一些小公司或个人开发者来说，这是一笔不小的开销。</p>
-
-<p>以上两点造成App Store里面使用特殊中文字库的iOS应用较少。现在通常只有阅读类的应用才会使用特殊中文字库。</p>
-
-<p>但其实从iOS6开始，苹果就支持动态下载中文字体到系统中。只是苹果一直没有公开相应的API。最终，相应的API在今年的WWDC大会上公开，接下来就让我们来一起了解这个功能。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/08/11/ios-asian-font-download-introduction/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/28/a-look-inside-blocks/">谈Objective-C Block的实现</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-28T10:42:00+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p><a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">这里</a>有关于block的5道测试题，建议你阅读本文之前先做一下测试。</p>
-
-<p>先介绍一下什么是闭包。在wikipedia上，<a href="http://en.wikipedia.org/wiki/Closure_(computer_science">闭包的定义</a>)是:</p>
-
-<blockquote><p>In programming languages, a closure is a function or reference to a function together with a referencing environment—a table storing a reference to each of the non-local variables (also called free variables or upvalues) of that function.</p></blockquote>
-
-
-<p>翻译过来，闭包是一个函数（或指向函数的指针），再加上该函数执行的外部的上下文变量（有时候也称作自由变量）。</p>
-
-<p>block实际上就是Objective-C语言对于闭包的实现。
-block配合上dispatch_queue，可以方便地实现简单的多线程编程和异步编程，关于这个，我之前写过一篇文章介绍：<a href="http://blog.devtang.com/blog/2012/02/22/use-gcd/">《使用GCD》</a>。</p>
-
-<p>本文主要介绍Objective-C语言的block在编译器中的实现方式。主要包括：</p>
+<h2>开源项目</h2>
 
 <ol>
-<li>block的内部实现数据结构介绍</li>
-<li>block的三种类型及其相关的内存管理方式</li>
-<li>block如何通过capture变量来达到访问函数外的变量</li>
+<li><p><a href="https://github.com/Ciechan/BCMeshTransformView">BCMeshTransformView</a>：BCMeshTransformView是一个用于实现Mesh变换效果的开源库，关于Mesh变换，可以查阅<a href="http://ciechanowski.me/blog/2014/05/14/mesh-transforms/">这篇博文</a>。</p></li>
+<li><p><a href="https://github.com/hfossli/AGGeometryKit-POP">AGGeometryKit-POP</a>：AGGeometryKit-POP是一个基于facebook POP的动效框架，这里有一个它能提供的动效<a href="http://vimeo.com/95383807">演示视频</a>。</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-16T21:36:16+08:00" pubdate data-updated="true">May 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/ios-app-security-development">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：iOS应用安全开发概述，Collection View 动画，可变参数列表的实现原理，XcodeBoost插件等。</p>
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security">《iOS应用安全开发，你不知道的那些事》</a>：iOS应用由于其直接运行在手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文从网络安全、本地文件和数据安全、源代码安全三个方面，阐述iOS应用在安全性上遇到的挑战。</p></li>
+<li><p><a href="http://objccn.io/issue-12-5/">《Collection View 动画》</a>：<code>UICollectionView</code> 和相关类的设置非常灵活和强大。但是灵活性一旦增强，某种程度上也增加了其复杂性： <code>UICollectionView</code> 比老式的 <code>UITableView</code> 更有深度，适用性也更强。本文的第一部分将集中讨论并举例说明如何用不同的类和方法来共同帮助实现一些常见的 <code>UICollectionView</code> 动画。在第二部分，我们将看一下带有 collection views 的 view controller 转场动画以及在 <code>useLayoutToLayoutNavigationTransitions</code> 可用时使用其进行转场，如果不可用时，我们会实现一个自定义转场动画。</p></li>
+<li><p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">《Variable Argument Lists》</a>：可变参数函数（Variadic Function），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的。本文讨论了其具体的实现内部原理。最后作者<a href="http://weibo.com/lancy1014">晨钰Lancy</a>介绍了其开源的一个能够接收block作为回调的自定义的<a href="https://github.com/lancy/cyalertview">AlertView组件</a>。</p></li>
+<li><p><a href="http://imoldman.github.io/blog/2014/04/30/why-assert-enabled-under-release-in-xcode/">《assert出问题了》</a>：作者分享了在Xcode中使用Assert时需要注意的问题。</p></li>
+<li><p><a href="http://stackoverflow.com/questions/7385439/exception-thrown-in-nsorderedset-generated-accessors">《CoreData的坑》</a>：<a href="http://weibo.com/pinxue">pinxue</a>分享了一个持续3年都没有修复的CoreData的Bug。</p></li>
+<li><p><a href="http://www.taofengping.com/2014/05/07/multi-similar-application/#.U3N25q2SyrJ">《使用cocoapods创建多个类似工程的尝试》</a>：因为业务的需要，作者做了一批类似无聊图的App，应用本身没有复杂的逻辑，所有类“无聊图”的应用都针对特定的用户群，设计了不同界面风格的，比如适合宅男的女神应用，适合吃货的美食应用等等诸如此类，大概一共七八个。作者介绍了其使用cocoapods创建多个类似工程的尝试。</p></li>
+<li><p><a href="http://miao.hu/2012/02/26/osx-exp-share/">《Mac 软件和学习经验分享》</a>：作者介绍了一些优秀的 Mac 软件和学习Mac的经验。</p></li>
+<li><p><a href="http://subjc.com/">subjc.com</a>：subjc.com是一个介绍iOS界面编程技巧的网站。网站中有动画实例分析以及实现的代码。</p></li>
 </ol>
 
 
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="https://github.com/fortinmike/XcodeBoost">XcodeBoost</a>：XcodeBoost包含多个辅助修改代码的小功能，比如：</p>
+
+<ol>
+<li>可以在.m文件中复制方法实现，然后将该方法的定义粘贴到对应的.h文件中</li>
+<li>可以在某一个源文件中直接输入正则表达式查找</li>
+<li>可以复制粘贴代码时不启用Xcode的自动缩进功能（Xcode的自动缩进经常出问题，造成已经调整好的代码缩进，因为粘贴时被Xcode调整坏了）</li>
+</ol>
+</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/monoclesociety/eggscellent">Eggscellent开源</a>：Eggscellent是Mac上的开源的番茄钟应用。</p></li>
+<li><p><a href="https://github.com/viewfinderco/viewfinder">Viewfinder</a>：移动支付公司 Square 将去年收购的照片应用 Viewfinder 开源了，包含服务端、iOS 和 Android 应用代码。<a href="http://corner.squareup.com/2014/05/open-sourcing-viewfinder.html">这里</a>有该项目的介绍。</p></li>
+<li><p><a href="https://github.com/kevinzhow/PNChart">PNChart</a>：作者<a href="http://weibo.com/kevinzhow">周楷雯Kevin</a>发布了PNChart 0.5版本，提供了一个更漂亮的Pie Chart界面。</p></li>
+<li><p><a href="https://atom.io/">文本编辑器Atom开源</a>：GitHub将其开发的文本编辑器Atom开源。</p></li>
+</ol>
+
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/07/28/a-look-inside-blocks/">阅读 &rarr;</a>
-    </footer>
   
 
 
@@ -654,6 +252,12 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
 <aside class="sidebar">
   
     <section>
+  <h1>赞助商</h1>
+  <p>
+     <img width="260px" src="/images/ad_sale.png" />
+  </p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     

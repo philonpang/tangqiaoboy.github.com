@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="简介 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 Charles是在Mac下常用的截取网络封包的工具，在做iOS开发时，我们为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析。Charles通过将自己设置成系统的网络访问代理服务器， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/page/17">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <!-- googleapis is fucked by gfw -->
+  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">所有文章</a></li>
+  <li><a href="/blog/categories/ios/">iOS开发专题</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/11/network-tool-charles-intr/">iOS开发工具-网络封包分析工具Charles</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-11T14:03:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/charles-logo.png"></p>
+
+<h2>简介</h2>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/network-packet-analysis-tool-charles">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<p><a href="http://www.charlesproxy.com/">Charles</a>是在Mac下常用的截取网络封包的工具，在做iOS开发时，我们为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析。Charles通过将自己设置成系统的网络访问代理服务器，使得所有的网络访问请求都通过它来完成，从而实现了网络封包的截取和分析。</p>
+
+<p>Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时。</p>
+
+<p>因此，该付费方案对广大用户还是相当友好的，即使你长期不付费，也能使用完整的软件功能。只是当你需要长时间进行封包调试时，会因为Charles强制关闭而遇到影响。</p>
+
+<p>Charles主要的功能包括：</p>
+
+<ol>
+<li>支持SSL代理。可以截取分析<a href="http://zh.wikipedia.org/wiki/%E5%AE%89%E5%85%A8%E5%A5%97%E6%8E%A5%E5%B1%82">SSL</a>的请求。</li>
+<li>支持流量控制。可以模拟慢速网络以及等待时间（latency）较长的请求。</li>
+<li>支持AJAX调试。可以自动将json或xml数据格式化，方便查看。</li>
+<li>支持AMF调试。可以将Flash Remoting 或 Flex Remoting信息格式化，方便查看。</li>
+<li>支持重发网络请求，方便后端调试。</li>
+<li>支持修改网络请求参数。</li>
+<li>支持网络请求的截获并动态修改。</li>
+<li>检查HTML，CSS和RSS内容是否符合<a href="http://validator.w3.org/">W3C标准</a>。</li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/12/11/network-tool-charles-intr/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/14/use-flurry-to-analyse-data/">使用Flurry来统计和分析用户行为</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-14T13:51:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>简介</h2>
+
+<p><img src="/images/flurry-logo.png"></p>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/use-flurry-to-statistics-and-analysis-user-behavior">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<p><a href="http://www.flurry.com/">Flurry</a>是一家专门为移动应用提供数据统计和分析的公司。他们的数据统计分析SDK支持的平台包括iPhone, iPad, Android, Windows Phone, Java ME和BlackBerry。使用Flurry服务的公司包括eBay、Yahoo、Hulu和Skype等超过11万家公司，涉及的应用超过36万个。</p>
+
+<p>利用Flurry提供的分析平台，我们可以很容易地自动统计出应用的使用情况，例如：</p>
+
+<ol>
+<li>每天（每周或每月）登录用户数，应用使用次数</li>
+<li>每天（每周或每月）新用户数，活跃用户数</li>
+<li>用户的所在地、年龄、性别的分布情况</li>
+</ol>
+
+
+<p>Flurry也可以自动统计出移动设备的分类情况，例如：</p>
+
+<ol>
+<li>使用3G，Wifi的会话比例</li>
+<li>使用iOS系统各版本(例如iOS6.0, iOS7.0等)的比例</li>
+<li>使用iOS各种设备（例如iPhone4, iPhone5等)的比例</li>
+</ol>
+
+
+<p>除了上面介绍的自动统计项目，Flurry SDK也提供了统计用的相关API，便于我们针对自己产品的特点，做针对性的统计。例如统计应用中某个按钮的按下次数，或者网络请求的平均响应时间等。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/11/14/use-flurry-to-analyse-data/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/18/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/16/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>赞助商</h1>
+  <p>
+     <img width="260px" src="/images/ad_sale.png" />
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/08/ios-security-dev-overview/">iOS应用安全开发概述</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/06/ios-weekly-10/">iOS移动开发周报-第10期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/25/ios-weekly-9/">iOS移动开发周报-第9期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p> Blogger, InfoQ编辑, iOS开发, 创业者。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记、粉笔网、猿题库。
+      <br/>
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+      <br />我的<strong>&#8220;iOSDevTips&#8221;</strong>微信公众账号:
+      <br/><img width="220px" src="/images/weixin-qr.jpg" />
+  </p>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  &copy; 2014 - 唐巧 -
+  <span class="credit">基于 <a href="http://octopress.org" target="_blank">Octopress</a></span>
+  <span class="credit">, 感谢 <a href="http://gitcafe.com/signup?invited_by=tangqiaoboy" target="_blank">GitCafe</a> 为本站提供存储空间</span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

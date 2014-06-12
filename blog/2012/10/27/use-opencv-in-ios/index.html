@@ -223,11 +223,11 @@
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  NSImage+OpenCV.h</span>
-</span><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  Created by TangQiao on 12-10-26.</span>
-</span><span class='line'><span class="cp">//</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  NSImage+OpenCV.h</span>
+</span><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  Created by TangQiao on 12-10-26.</span>
+</span><span class='line'><span class="c1">//</span>
 </span><span class='line'>
 </span><span class='line'><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 </span><span class='line'><span class="cp">#import &quot;opencv2/opencv.hpp&quot;</span>
@@ -377,11 +377,11 @@
 <span class='line-number'>129</span>
 <span class='line-number'>130</span>
 <span class='line-number'>131</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  NSImage+OpenCV.mm</span>
-</span><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  Created by TangQiao on 12-10-26.</span>
-</span><span class='line'><span class="cp">//</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  NSImage+OpenCV.mm</span>
+</span><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  Created by TangQiao on 12-10-26.</span>
+</span><span class='line'><span class="c1">//</span>
 </span><span class='line'>
 </span><span class='line'><span class="cp">#import &quot;NSImage+OpenCV.h&quot;</span>
 </span><span class='line'>
@@ -540,12 +540,12 @@
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;Availability.h&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="cp">#ifdef __cplusplus</span>
-</span><span class='line'><span class="cp">    #import &lt;opencv2/opencv.hpp&gt;</span>
+</span><span class='line'>    <span class="err">#</span><span class="n">import</span> <span class="o">&lt;</span><span class="n">opencv2</span><span class="o">/</span><span class="n">opencv</span><span class="p">.</span><span class="n">hpp</span><span class="o">&gt;</span>
 </span><span class='line'><span class="cp">#endif</span>
 </span><span class='line'>
 </span><span class='line'><span class="cp">#ifdef __OBJC__</span>
-</span><span class='line'><span class="cp">    #import &lt;UIKit/UIKit.h&gt;</span>
-</span><span class='line'><span class="cp">    #import &lt;Foundation/Foundation.h&gt;</span>
+</span><span class='line'>    <span class="err">#</span><span class="n">import</span> <span class="o">&lt;</span><span class="n">UIKit</span><span class="o">/</span><span class="n">UIKit</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="err">#</span><span class="n">import</span> <span class="o">&lt;</span><span class="n">Foundation</span><span class="o">/</span><span class="n">Foundation</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
 </span><span class='line'><span class="cp">#endif</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -588,19 +588,19 @@
 <span class='line-number'>23</span>
 <span class='line-number'>24</span>
 <span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  UIImage+OpenCV.h</span>
-</span><span class='line'><span class="cp">//  OpenCVClient</span>
-</span><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  Created by Robin Summerhill on 02/09/2011.</span>
-</span><span class='line'><span class="cp">//  Copyright 2011 Aptogo Limited. All rights reserved.</span>
-</span><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  Permission is given to use this source code file without charge in any</span>
-</span><span class='line'><span class="cp">//  project, commercial or otherwise, entirely at your risk, with the condition</span>
-</span><span class='line'><span class="cp">//  that any redistribution (in part or whole) of source code must retain</span>
-</span><span class='line'><span class="cp">//  this copyright and permission notice. Attribution in compiled projects is</span>
-</span><span class='line'><span class="cp">//  appreciated but not required.</span>
-</span><span class='line'><span class="cp">//</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  UIImage+OpenCV.h</span>
+</span><span class='line'><span class="c1">//  OpenCVClient</span>
+</span><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  Created by Robin Summerhill on 02/09/2011.</span>
+</span><span class='line'><span class="c1">//  Copyright 2011 Aptogo Limited. All rights reserved.</span>
+</span><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  Permission is given to use this source code file without charge in any</span>
+</span><span class='line'><span class="c1">//  project, commercial or otherwise, entirely at your risk, with the condition</span>
+</span><span class='line'><span class="c1">//  that any redistribution (in part or whole) of source code must retain</span>
+</span><span class='line'><span class="c1">//  this copyright and permission notice. Attribution in compiled projects is</span>
+</span><span class='line'><span class="c1">//  appreciated but not required.</span>
+</span><span class='line'><span class="c1">//</span>
 </span><span class='line'>
 </span><span class='line'><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
 </span><span class='line'>
@@ -735,19 +735,19 @@
 <span class='line-number'>115</span>
 <span class='line-number'>116</span>
 <span class='line-number'>117</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  UIImage+OpenCV.mm</span>
-</span><span class='line'><span class="cp">//  OpenCVClient</span>
-</span><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  Created by Robin Summerhill on 02/09/2011.</span>
-</span><span class='line'><span class="cp">//  Copyright 2011 Aptogo Limited. All rights reserved.</span>
-</span><span class='line'><span class="cp">//</span>
-</span><span class='line'><span class="cp">//  Permission is given to use this source code file without charge in any</span>
-</span><span class='line'><span class="cp">//  project, commercial or otherwise, entirely at your risk, with the condition</span>
-</span><span class='line'><span class="cp">//  that any redistribution (in part or whole) of source code must retain</span>
-</span><span class='line'><span class="cp">//  this copyright and permission notice. Attribution in compiled projects is</span>
-</span><span class='line'><span class="cp">//  appreciated but not required.</span>
-</span><span class='line'><span class="cp">//</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  UIImage+OpenCV.mm</span>
+</span><span class='line'><span class="c1">//  OpenCVClient</span>
+</span><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  Created by Robin Summerhill on 02/09/2011.</span>
+</span><span class='line'><span class="c1">//  Copyright 2011 Aptogo Limited. All rights reserved.</span>
+</span><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  Permission is given to use this source code file without charge in any</span>
+</span><span class='line'><span class="c1">//  project, commercial or otherwise, entirely at your risk, with the condition</span>
+</span><span class='line'><span class="c1">//  that any redistribution (in part or whole) of source code must retain</span>
+</span><span class='line'><span class="c1">//  this copyright and permission notice. Attribution in compiled projects is</span>
+</span><span class='line'><span class="c1">//  appreciated but not required.</span>
+</span><span class='line'><span class="c1">//</span>
 </span><span class='line'>
 </span><span class='line'><span class="cp">#import &quot;UIImage+OpenCV.h&quot;</span>
 </span><span class='line'>
@@ -967,6 +967,10 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/10/ios-weekly-14/">Ios Weekly 14</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
       </li>
     
@@ -1008,10 +1012,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/04/25/ios-weekly-9/">iOS移动开发周报-第9期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>
       </li>
     
   </ul>

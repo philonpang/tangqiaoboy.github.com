@@ -113,7 +113,7 @@
 
 <h2>解决方案</h2>
 
-<p>有什么方法能减少开发和美术的体力活呢？想到因为 <a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#110;&#x61;&#x6d;&#101;&#64;&#50;&#x78;&#x2e;&#x70;&#x6e;&#x67;">&#x6e;&#97;&#x6d;&#101;&#x40;&#x32;&#120;&#x2e;&#112;&#x6e;&#x67;</a> 的图片是 name.png 图片的2整倍，所以，我们完全可以让美术只切@2x的大图，而我们使用脚本来生成小图。于是我写了下面这样的一个脚本，我只需要将所有的大图按照类似 <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x6e;&#97;&#109;&#101;&#x2d;&#49;&#64;&#x32;&#x78;&#x2e;&#112;&#x6e;&#x67;">&#110;&#x61;&#109;&#101;&#45;&#x31;&#64;&#x32;&#x78;&#x2e;&#x70;&#110;&#103;</a> , <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x6e;&#x61;&#109;&#101;&#x2d;&#x32;&#x40;&#x32;&#120;&#46;&#112;&#110;&#103;">&#110;&#97;&#109;&#x65;&#45;&#50;&#64;&#x32;&#x78;&#46;&#x70;&#x6e;&#103;</a> 方式命名，然后脚本就会自动帮我生成对应的名为 name-1.png 和 name-2.png的小图。</p>
+<p>有什么方法能减少开发和美术的体力活呢？想到因为 <a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#58;&#110;&#97;&#109;&#101;&#x40;&#50;&#x78;&#x2e;&#112;&#x6e;&#103;">&#x6e;&#97;&#x6d;&#101;&#x40;&#50;&#120;&#46;&#112;&#110;&#x67;</a> 的图片是 name.png 图片的2整倍，所以，我们完全可以让美术只切@2x的大图，而我们使用脚本来生成小图。于是我写了下面这样的一个脚本，我只需要将所有的大图按照类似 <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#110;&#97;&#109;&#x65;&#45;&#49;&#64;&#50;&#x78;&#x2e;&#112;&#x6e;&#x67;">&#x6e;&#x61;&#x6d;&#101;&#45;&#x31;&#64;&#x32;&#x78;&#x2e;&#112;&#x6e;&#103;</a> , <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#110;&#x61;&#109;&#x65;&#x2d;&#x32;&#64;&#x32;&#x78;&#x2e;&#112;&#x6e;&#103;">&#x6e;&#x61;&#x6d;&#101;&#x2d;&#50;&#x40;&#50;&#120;&#46;&#112;&#x6e;&#x67;</a> 方式命名，然后脚本就会自动帮我生成对应的名为 name-1.png 和 name-2.png的小图。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -197,15 +197,15 @@
 </span><span class='line'>
 </span><span class='line'><span class="k">for</span> <span class="n">src_file</span> <span class="k">in</span> <span class="n">$SRC_DIR</span><span class="o">/*</span><span class="p">.</span><span class="o">*</span> <span class="p">;</span> <span class="k">do</span>
 </span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;process file name: $src_file&quot;</span>
-</span><span class='line'><span class="cp">    # 获得去掉文件名的纯路径</span>
+</span><span class='line'>    <span class="err">#</span> <span class="err">获得去掉文件名的纯路径</span>
 </span><span class='line'>    <span class="n">src_path</span><span class="o">=</span><span class="err">`</span><span class="n">dirname</span> <span class="n">$src_file</span><span class="err">`</span>
-</span><span class='line'><span class="cp">    # 获得去掉路径的纯文件名</span>
+</span><span class='line'>    <span class="err">#</span> <span class="err">获得去掉路径的纯文件名</span>
 </span><span class='line'>    <span class="n">filename</span><span class="o">=</span><span class="err">`</span><span class="n">basename</span> <span class="n">$src_file</span><span class="err">`</span>
-</span><span class='line'><span class="cp">    # 获得文件名字(不包括扩展名)</span>
+</span><span class='line'>    <span class="err">#</span> <span class="err">获得文件名字</span><span class="p">(</span><span class="err">不包括扩展名</span><span class="p">)</span>
 </span><span class='line'>    <span class="n">name</span><span class="o">=</span><span class="err">`</span><span class="n">echo</span> <span class="s">&quot;$filename&quot;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="sc">&#39;.&#39;</span> <span class="o">-</span><span class="n">f1</span><span class="err">`</span>
-</span><span class='line'><span class="cp">    # remove @2x in filename if there is</span>
+</span><span class='line'>    <span class="err">#</span> <span class="n">remove</span> <span class="err">@</span><span class="mi">2</span><span class="n">x</span> <span class="k">in</span> <span class="n">filename</span> <span class="k">if</span> <span class="n">there</span> <span class="n">is</span>
 </span><span class='line'>    <span class="n">name</span><span class="o">=</span><span class="err">`</span><span class="n">echo</span> <span class="s">&quot;$name&quot;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="s">&quot;@&quot;</span> <span class="o">-</span><span class="n">f1</span><span class="err">`</span>
-</span><span class='line'><span class="cp">    # 获得文件扩展名</span>
+</span><span class='line'>    <span class="err">#</span> <span class="err">获得文件扩展名</span>
 </span><span class='line'>    <span class="n">extension</span><span class="o">=</span><span class="err">`</span><span class="n">echo</span> <span class="s">&quot;$filename&quot;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="sc">&#39;.&#39;</span> <span class="o">-</span><span class="n">f2</span><span class="err">`</span>
 </span><span class='line'>    <span class="n">dest_file</span><span class="o">=</span><span class="s">&quot;$DEST_DIR/${name}.${extension}&quot;</span>
 </span><span class='line'>
@@ -445,6 +445,10 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/10/ios-weekly-14/">Ios Weekly 14</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
       </li>
     
@@ -486,10 +490,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/04/25/ios-weekly-9/">iOS移动开发周报-第9期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>
       </li>
     
   </ul>

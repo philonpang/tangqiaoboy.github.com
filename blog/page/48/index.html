@@ -9,7 +9,8 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 今天参加了Adobe和CSDN组织的一个关于PhoneGap的开发讲座 ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。 正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容， &hellip;">
+  <meta name="description" content="Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/page/38">
+  <link rel="canonical" href="http://blog.devtang.com/blog/page/48">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
@@ -82,7 +83,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">关于UIWebView和PhoneGap的总结</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a></h1>
     
     
       <p class="meta">
@@ -98,67 +99,32 @@
   
 
 
-<time datetime="2012-03-24T20:19:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2012</time>
+<time datetime="2011-08-10T17:32:00+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>前言</h2>
+  <div class="entry-content"><p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
 
-<p>今天参加了Adobe和CSDN组织的一个关于<a href="http://hui.csdn.net/MeetingInfo.aspx?mid=99">PhoneGap的开发讲座</a> ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容，所以也需要做js与native代码相互调用的事情。所以在这儿顺便总结一下UIWebView在使用上的细节，以及谈谈我对PhoneGap的看法。</p>
+
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/15/10-most-common-questions-on-stackoverflow-201203/">iPhone开发常问的十个问题(2012年3月版)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-15T22:04:00+08:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>今天去stackoverflow.com上看了一下iPhone标签下排名最高的10个问题，将它们整理出来，希望这些常见问题能帮到一些iPhone开发的初学者。本来想把答案也翻译过来的，后来发现答案资料通常都比较复杂，翻译起来太麻烦。所以大家还是看英文的答案吧，我只顺带用中文总结一下答案。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/15/10-most-common-questions-on-stackoverflow-201203/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">阅读 &rarr;</a>
     </footer>
   
 
@@ -167,11 +133,9 @@
   
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/39/">&larr; Older</a>
-    
     <a href="/blog/archives">Blog Archives</a>
     
-    <a class="next" href="/blog/page/37/">Newer &rarr;</a>
+    <a class="next" href="/blog/page/47/">Newer &rarr;</a>
     
   </div>
 </div>

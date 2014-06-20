@@ -93,7 +93,7 @@ function loadURL(url) {
 
 而stringByEvaluatingJavaScriptFromString方法本身会直接返回一个NSString类型的执行结果，所以这显然是一个同步调用。
 
-所以js call native是异步，native call js是异步。在处理一些逻辑的时候，不可避免需要考虑这个特点。
+所以js call native是异步，native call js是同步。在处理一些逻辑的时候，不可避免需要考虑这个特点。
 
 这里顺便说一个android，其实在android开发中，js调native是同步的，但是PhoneGap为了将自己做成一个跨平台的框架，所以在android的js call native的native端，用 new Thread新建了一个执行线程，这样把android的js call native也变成了异步调用。
 
@@ -148,7 +148,7 @@ AMD规范需要用目录层级当作包层次，这一点就象java一样。之�
 
 所以PhoneGap不是万能的，但也不是没有用，它有它擅长的领域，一切都看你是否合理地使用它。
 
-最后，推荐[PhoneGap中国网站](http://www.phonegap.cn/) ，在这里，你可以找到为数不多的中文资料。也推荐本次PhoneGap的演讲者[董龙飞的微博](http://weibo.com/donglongfei)， 它是Adobe中国平台技术经理，应该能为你解答不少关于PhoneGap的问题。
+最后，推荐[PhoneGap中国网站](http://www.phonegap.cn/) ，在这里，你可以找到为数不多的中文资料。
 
 ## 对js的感想
 现在前端工程师相当牛逼啊。前端工程师不但可以写前端网页，还可以用Flex写桌面端程序，可以用nodejs写server端程序，可以用PhoneGap写移动端程序，这一切，都是基于javascript语言的，还有最新出的windows 8，原生支持用js来写Metro程序，世界已经无法阻止前端工程师了。

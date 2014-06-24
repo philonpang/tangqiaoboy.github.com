@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-06-12T11:49:35+08:00</updated>
+  <updated>2014-06-24T17:16:45+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第15期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/06/24/ios-weekly-15/"/>
+    <updated>2014-06-24T12:58:31+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/06/24/ios-weekly-15</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/06/ios8-osx10.10-extension">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：Swift 和 C# 的语法比较，一个CoreText排版性能问题，谈谈 iOS 8 和 OS X 10.10 的 Extension等。</p>
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://swift.sh/topic/125/swift-c/">《Swift 和 C# 的语法比较》</a>：适合有C#开发经验的朋友快速了解Swift语言。</p></li>
+<li><p><a href="https://leverich.github.io/swiftislikescala/">《Swift 和 Scala 的语法比较》</a>：适合有 Scala 开发经验的朋友快速了解Swift语言。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/06/13/auto-layout/">《AutoLayout 相关概念介绍和动画demo》</a>：文章从传统布局的问题入手，介绍了AutoLayout 相关概念，最后提供了一个示例的Demo程序。</p></li>
+<li><p><a href="http://blog.cnbang.net/tech/2268/">《一个CoreText排版性能问题》</a>：伊书的阅读器是用CoreText排版的，在中文字体的选择上，自带的字体中只有黑体，后来发现日文字体Hiragino也是可以用于中文，而且显示效果比黑体好很多，于是选用了这个字体。但在CoreText排版中遇到个问题，用Hiragino字体排版速度非常慢，几乎是默认黑体的100倍。作者分享了整个问题查找和最后解决的过程。</p></li>
+<li><p><a href="http://imtx.me/archives/1898.html">《谈谈 iOS 8 和 OS X 10.10 的 Extension》</a>：作者介绍了 WWDC 14 的视频之《Creating Extensions for iOS and OS X》中介绍的Extensions技术，解释了为何 Extensions 这么重要。</p></li>
+<li><p><a href="http://objccn.io/issue-13/">《objc第13期：架构》</a>：本期objc.io的中文翻译带来了5篇高质量的关于iOS程序架构方面的文章，分别是：<a href="http://objccn.io/issue-13-1/">《MVVM 介绍》</a>、<a href="http://objccn.io/issue-13-2/">《避免滥用单例》</a>、 <a href="http://objccn.io/issue-13-3/">《iOS 中的行为》</a>、<a href="http://objccn.io/issue-13-4/">《子类》</a>、 <a href="http://objccn.io/issue-13-5/">《使用 VIPER 构建 iOS 应用》</a>。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-06-22-quartz-composer-and-origami-tutorial-button-animation.md">《用 Quartz Composer 和 Origami 制作一个简单的按钮动画》</a>: 文章由 <a href="http://weibo.com/nixzhu">@nixzhu</a> 翻译。阅读本文，然后照着做一遍。只需20分钟，你就能了解 QC 和 Origami 是什么，能做什么，以及怎么做。</p></li>
+<li><p><a href="http://www.cocoachina.com/applenews/devnews/2014/0621/8905.html">《Reactive Cocoa详解》</a>：Reactive Cocoa是一个函数响应式编程思想在Objective-C语言下的实现。本文将从几个方面详细介绍Reactive Cocoa。</p></li>
+<li><p><a href="http://nshipster.cn/cocoapods/">《Cocoa​Pods》</a>：在Objective-C的情况下，CocoaPods提供了一个绝佳的整合合作开发的工具，并且在快速发展的开发社区中起到了一个集结点的作用。在本文中，我们将通过讨论CocoaPods的过去，现在以及将来，一起庆祝0.33版本（具有里程碑意义）的发布。</p></li>
+<li><p><a href="http://geeklu.com/2014/05/facebook-pop-usage/">《Facebook Pop 使用指南》</a>：Facebook Pop其实是基于CADisplayLink(Mac平台上使用的CVDisplayLink)实现的独立于Core Animation之外的动画方案。作者在文章中主要介绍了Facebook Pop的使用。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="https://github.com/iosxtools/WWDC2014">WWDC2014字幕下载工具</a>：一个 OSX App，方便下载WWDC2014的视频。</p></li>
+<li><p><a href="http://octavianlogigan.com/1360/how-to-export-notes-from-ibooks/">《如何导出iBooks中的笔记》</a>：文章介绍了从iBook导出笔记的技巧。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第14期]]></title>
@@ -317,195 +358,6 @@ bigNumber pointer is 0x10921ecc0
 <h2>总结</h2>
 
 <p>苹果将<code>Tagged Pointer</code>引入，给64位系统带来了内存的节省和运行效率的提高。<code>Tagged Pointer</code>通过在其最后一个bit位设置一个特殊标记，用于将数据直接保存在指针本身中。因为<code>Tagged Pointer</code>并不是真正的对象，我们在使用时需要注意不要直接访问其isa变量。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[用CocoaPods做iOS程序的依赖管理]]></title>
-    <link href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/"/>
-    <updated>2014-05-25T14:09:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency</id>
-    <content type="html"><![CDATA[<p><img src="/images/cocoapods-logo.png"></p>
-
-<h2>文档更新说明</h2>
-
-<ul>
-<li>2012-12-02 v1.0 初稿</li>
-<li>2014-01-08 v1.1 增加设置ruby淘宝源相关内容</li>
-<li>2014-05-25 v2.0 增加国内spec镜像、使用私有pod、podfile.lock、创建spec文件等内容</li>
-</ul>
-
-
-<h2>CocoaPods简介</h2>
-
-<p>每种语言发展到一个阶段，就会出现相应的依赖管理工具，例如Java语言的Maven，nodejs的npm。随着iOS开发者的增多，业界也出现了为iOS程序提供依赖管理的工具，它的名字叫做：<a href="http://cocoapods.org/">CocoaPods</a>。</p>
-
-<p>CocoaPods<a href="https://github.com/CocoaPods/CocoaPods">项目的源码</a>在Github上管理。该项目开始于2011年8月12日，经过多年发展，现在已经成为iOS开发事实上的依赖管理标准工具。开发iOS项目不可避免地要使用第三方开源库，CocoaPods的出现使得我们可以节省设置和更新第三方开源库的时间。</p>
-
-<p>在我开发猿题库客户端时，其使用了24个第三方开源库。在没有使用CocoaPods以前，我需要:</p>
-
-<ol>
-<li>把这些第三方开源库的源代码文件复制到项目中，或者设置成git的submodule。</li>
-<li>对于这些开源库通常需要依赖系统的一些framework，我需要手工地将这些framework一一增加到项目依赖中，比如通常情况下，一个网络库就需要增加以下framework: CFNetwork, SystemConfiguration, MobileCoreServices, CoreGraphics, zlib。</li>
-<li>对于某些开源库，我还需要设置<code>-licucore</code>或者 <code>-fno-objc-arc</code>等编译参数</li>
-<li>管理这些依赖包的更新。</li>
-</ol>
-
-
-<p>这些体力活虽然简单，但毫无技术含量并且浪费时间。在使用CocoaPods之后，我只需要将用到的第三方开源库放到一个名为Podfile的文件中，然后执行<code>pod install</code>。CocoaPods就会自动将这些第三方开源库的源码下载下来，并且为我的工程设置好相应的系统依赖和编译参数。</p>
-
-<h2>CocoaPods的安装和使用介绍</h2>
-
-<h3>安装</h3>
-
-<p>安装方式异常简单, Mac下都自带ruby，使用ruby的gem命令即可下载安装：</p>
-
-<p><code>bash
-$ sudo gem install cocoapods
-$ pod setup
-</code></p>
-
-<p>如果你的gem太老，可能也会有问题，可以尝试用如下命令升级gem:</p>
-
-<p><code>bash
-sudo gem update --system
-</code></p>
-
-<p>另外，ruby的软件源rubygems.org因为使用的亚马逊的云服务，所以被墙了，需要更新一下ruby的源，如下代码将官方的ruby源替换成国内淘宝的源：</p>
-
-<p><code>
-gem sources --remove https://rubygems.org/
-gem sources -a http://ruby.taobao.org/
-gem sources -l
-</code></p>
-
-<p>还有一点需要注意，<code>pod setup</code>在执行时，会输出<code>Setting up CocoaPods master repo</code>，但是会等待比较久的时间。这步其实是Cocoapods在将它的信息下载到 <code>~/.cocoapods</code>目录下，如果你等太久，可以试着cd到那个目录，用<code>du -sh *</code>来查看下载进度。你也可以参考本文接下来的<code>使用cocoapods的镜像索引</code>一节的内容来提高下载速度。</p>
-
-<h3>使用CocoaPods的镜像索引</h3>
-
-<p>所有的项目的Podspec文件都托管在<code>https://github.com/CocoaPods/Specs</code>。第一次执行<code>pod setup</code>时，CocoaPods会将这些<code>podspec</code>索引文件更新到本地的 <code>~/.cocoapods/</code>目录下，这个索引文件比较大，有80M左右。所以第一次更新时非常慢，笔者就更新了将近1个小时才完成。</p>
-
-<p>一个叫<a href="http://akinliu.github.io/2014/05/03/cocoapods-specs-/">akinliu</a>的朋友在<a href="http://gitcafe.com/">gitcafe</a>和<a href="http://www.oschina.net/">occhina</a>上建立了CocoaPods索引库的镜像，因为gitcafe和occhina都是国内的服务器，所以在执行索引更新操作时，会快很多。如下操作可以将CocoaPods设置成使用gitcafe镜像：</p>
-
-<p>``` bash</p>
-
-<p>pod repo remove master
-pod repo add master <a href="https://gitcafe.com/akuandev/Specs.git">https://gitcafe.com/akuandev/Specs.git</a>
-pod repo update</p>
-
-<p>```</p>
-
-<p>将以上代码中的 <code>https://gitcafe.com/akuandev/Specs.git</code> 替换成 <code>http://git.oschina.net/akuandev/Specs.git</code> 即可使用occhina上的镜像。</p>
-
-<h3>使用CocoaPods</h3>
-
-<p>使用时需要新建一个名为Podfile的文件，以如下格式，将依赖的库名字依次列在文件中即可</p>
-
-<p><code>
-platform :ios
-pod 'JSONKit',       '~&gt; 1.4'
-pod 'Reachability',  '~&gt; 3.0.0'
-pod 'ASIHTTPRequest'
-pod 'RegexKitLite'
-</code></p>
-
-<p>然后你将编辑好的Podfile文件放到你的项目根目录中，执行如下命令即可：</p>
-
-<p><code>bash
-cd "your project home"
-pod install
-</code></p>
-
-<p>现在，你的所有第三方库都已经下载完成并且设置好了编译参数和依赖，你只需要记住如下2点即可：</p>
-
-<ol>
-<li>使用CocoaPods生成的 <em>.xcworkspace 文件来打开工程，而不是以前的 </em>.xcodeproj 文件。</li>
-<li>每次更改了Podfile文件，你需要重新执行一次<code>pod update</code>命令。</li>
-</ol>
-
-
-<h3>查找第三方库</h3>
-
-<p>你如果不知道cocoaPods管理的库中，是否有你想要的库，那么你可以通过pod search命令进行查找，以下是我用pod search json查找到的所有可用的库：</p>
-
-<p>``` bash
-$ pod search json</p>
-
-<p>&ndash;> AnyJSON (0.0.1)
-   Encode / Decode JSON by any means possible.
-   &ndash; Homepage: <a href="https://github.com/mattt/AnyJSON">https://github.com/mattt/AnyJSON</a>
-   &ndash; Source:   <a href="https://github.com/mattt/AnyJSON.git">https://github.com/mattt/AnyJSON.git</a>
-   &ndash; Versions: 0.0.1 [master repo]</p>
-
-<p>&ndash;> JSONKit (1.5pre)
-   A Very High Performance Objective-C JSON Library.
-   &ndash; Homepage: <a href="https://github.com/johnezang/JSONKit">https://github.com/johnezang/JSONKit</a>
-   &ndash; Source:   git://github.com/johnezang/JSONKit.git
-   &ndash; Versions: 1.5pre, 1.4 [master repo]</p>
-
-<p>// &hellip;以下省略若干行</p>
-
-<p>```</p>
-
-<h3>关于.gitignore</h3>
-
-<p>当你执行<code>pod install</code>之后，除了Podfile外，CocoaPods还会生成一个名为<code>Podfile.lock</code>的文件，你不应该把这个文件加入到<code>.gitignore</code>中。因为<code>Podfile.lock</code>会锁定当前各依赖库的版本，之后如果多次执行<code>pod install</code> 不会更改版本，要<code>pod update</code>才会改<code>Podfile.lock</code>了。这样多人协作的时候，可以防止第三方库升级时造成大家各自的第三方库版本不一致。</p>
-
-<p>CocoaPods的这篇<a href="http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control">官方文档</a>也在<code>What is a Podfile.lock</code>一节中介绍了<code>Podfile.lock</code>的作用，并且指出：</p>
-
-<p><blockquote><p></p></p><p><p>This file should always be kept under version control.</p></p><p><p></p></blockquote></p>
-
-<h2>为自己的项目创建podspec文件</h2>
-
-<p>我们可以为自己的开源项目创建<code>podspec</code>文件，首先通过如下命令初始化一个<code>podspec</code>文件：</p>
-
-<p><code>
-pod spec create your_pod_spec_name
-</code></p>
-
-<p>该命令执行之后，CocoaPods会生成一个名为<code>your_pod_spec_name.podspec</code>的文件，然后我们修改其中的相关内容即可。</p>
-
-<p>具体步骤可以参考这两篇博文中的相关内容：<a href="http://ishalou.com/blog/2012/10/16/how-to-create-a-cocoapods-spec-file/">《如何编写一个CocoaPods的spec文件》</a> 和<a href="http://studentdeng.github.io/blog/2013/09/13/cocoapods-tutorial/">《Cocoapods 入门》</a>。</p>
-
-<h2>使用私有的pods</h2>
-
-<p>我们可以直接指定某一个依赖的<code>podspec</code>，这样就可以使用公司内部的私有库。该方案有利于使企业内部的公共项目支持CocoaPods。如下是一个示例：</p>
-
-<p><code>bash
-pod 'MyCommon', :podspec =&gt; 'https://yuantiku.com/common/myCommon.podspec'
-</code></p>
-
-<h2>不更新podspec</h2>
-
-<p>CocoaPods在执行<code>pod install</code>和<code>pod update</code>时，会默认先更新一次<code>podspec</code>索引。使用<code>--no-repo-update</code>参数可以禁止其做索引更新操作。如下所示：</p>
-
-<p><code>
-pod install --no-repo-update
-pod update --no-repo-update
-</code></p>
-
-<h3>生成第三方库的帮助文档</h3>
-
-<p>如果你想让CococaPods帮你生成第三方库的帮助文档，并集成到Xcode中，那么用brew安装appledoc即可：</p>
-
-<p><code>bash
-brew install appledoc
-</code></p>
-
-<p>关于appledoc，我在另一篇博客<a href="http://blog.devtang.com/blog/2012/02/01/use-appledoc-to-generate-xcode-doc/">《使用Objective-C的文档生成工具:appledoc》</a>中有专门介绍。它最大的优点是可以将帮助文档集成到Xcode中，这样你在敲代码的时候，按住opt键单击类名或方法名，就可以显示出相应的帮助文档。</p>
-
-<h2>原理</h2>
-
-<p>大概研究了一下CocoaPods的原理，它是将所有的依赖库都放到另一个名为Pods项目中，然后让主项目依赖Pods项目，这样，源码管理工作都从主项目移到了Pods项目中。发现的一些技术细节有：</p>
-
-<ol>
-<li>Pods项目最终会编译成一个名为libPods.a的文件，主项目只需要依赖这个.a文件即可。</li>
-<li>对于资源文件，CocoaPods提供了一个名为Pods-resources.sh的bash脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。</li>
-<li>CocoaPods通过一个名为Pods.xcconfig的文件来在编译时设置所有的依赖和参数。</li>
-</ol>
-
-
-<p>愿大家玩得开心～</p>
 ]]></content>
   </entry>
   

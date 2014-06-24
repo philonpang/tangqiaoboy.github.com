@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-06-12T11:49:35+08:00</updated>
+  <updated>2014-06-24T17:16:45+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第15期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/06/24/ios-weekly-15/"/>
+    <updated>2014-06-24T12:58:31+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/06/24/ios-weekly-15</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/06/ios8-osx10.10-extension">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：Swift 和 C# 的语法比较，一个CoreText排版性能问题，谈谈 iOS 8 和 OS X 10.10 的 Extension等。</p>
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://swift.sh/topic/125/swift-c/">《Swift 和 C# 的语法比较》</a>：适合有C#开发经验的朋友快速了解Swift语言。</p></li>
+<li><p><a href="https://leverich.github.io/swiftislikescala/">《Swift 和 Scala 的语法比较》</a>：适合有 Scala 开发经验的朋友快速了解Swift语言。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/06/13/auto-layout/">《AutoLayout 相关概念介绍和动画demo》</a>：文章从传统布局的问题入手，介绍了AutoLayout 相关概念，最后提供了一个示例的Demo程序。</p></li>
+<li><p><a href="http://blog.cnbang.net/tech/2268/">《一个CoreText排版性能问题》</a>：伊书的阅读器是用CoreText排版的，在中文字体的选择上，自带的字体中只有黑体，后来发现日文字体Hiragino也是可以用于中文，而且显示效果比黑体好很多，于是选用了这个字体。但在CoreText排版中遇到个问题，用Hiragino字体排版速度非常慢，几乎是默认黑体的100倍。作者分享了整个问题查找和最后解决的过程。</p></li>
+<li><p><a href="http://imtx.me/archives/1898.html">《谈谈 iOS 8 和 OS X 10.10 的 Extension》</a>：作者介绍了 WWDC 14 的视频之《Creating Extensions for iOS and OS X》中介绍的Extensions技术，解释了为何 Extensions 这么重要。</p></li>
+<li><p><a href="http://objccn.io/issue-13/">《objc第13期：架构》</a>：本期objc.io的中文翻译带来了5篇高质量的关于iOS程序架构方面的文章，分别是：<a href="http://objccn.io/issue-13-1/">《MVVM 介绍》</a>、<a href="http://objccn.io/issue-13-2/">《避免滥用单例》</a>、 <a href="http://objccn.io/issue-13-3/">《iOS 中的行为》</a>、<a href="http://objccn.io/issue-13-4/">《子类》</a>、 <a href="http://objccn.io/issue-13-5/">《使用 VIPER 构建 iOS 应用》</a>。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-06-22-quartz-composer-and-origami-tutorial-button-animation.md">《用 Quartz Composer 和 Origami 制作一个简单的按钮动画》</a>: 文章由 <a href="http://weibo.com/nixzhu">@nixzhu</a> 翻译。阅读本文，然后照着做一遍。只需20分钟，你就能了解 QC 和 Origami 是什么，能做什么，以及怎么做。</p></li>
+<li><p><a href="http://www.cocoachina.com/applenews/devnews/2014/0621/8905.html">《Reactive Cocoa详解》</a>：Reactive Cocoa是一个函数响应式编程思想在Objective-C语言下的实现。本文将从几个方面详细介绍Reactive Cocoa。</p></li>
+<li><p><a href="http://nshipster.cn/cocoapods/">《Cocoa​Pods》</a>：在Objective-C的情况下，CocoaPods提供了一个绝佳的整合合作开发的工具，并且在快速发展的开发社区中起到了一个集结点的作用。在本文中，我们将通过讨论CocoaPods的过去，现在以及将来，一起庆祝0.33版本（具有里程碑意义）的发布。</p></li>
+<li><p><a href="http://geeklu.com/2014/05/facebook-pop-usage/">《Facebook Pop 使用指南》</a>：Facebook Pop其实是基于CADisplayLink(Mac平台上使用的CVDisplayLink)实现的独立于Core Animation之外的动画方案。作者在文章中主要介绍了Facebook Pop的使用。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="https://github.com/iosxtools/WWDC2014">WWDC2014字幕下载工具</a>：一个 OSX App，方便下载WWDC2014的视频。</p></li>
+<li><p><a href="http://octavianlogigan.com/1360/how-to-export-notes-from-ibooks/">《如何导出iBooks中的笔记》</a>：文章介绍了从iBook导出笔记的技巧。</p></li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-24T12:58:31+08:00" pubdate data-updated="true">Jun 24<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第14期]]></title>
@@ -2116,162 +2182,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 <span class="categories">
   
     <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[NSNumber对象缓存以及Tagged Pointer]]></title>
-    <link href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/"/>
-    <updated>2014-03-21T21:09:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer</id>
-    <content type="html"><![CDATA[<p>这是一次和 <a href="http://onevcat.com/">@onevcat</a> 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括：</p>
-
-<ol>
-<li>系统对象的缓存</li>
-<li><code>Tagged Pointer</code>对象</li>
-</ol>
-
-
-<h2>autorelase对象</h2>
-
-<p>按照苹果的编程约定，由非<code>alloc</code>,<code>copy</code>返回的对象都是<code>autorelease</code>的，所以对于以下代码，虽然变量<code>number</code>是<code>__weak</code>的，但是由于<code>[NSNumber numberWithInt:100]</code>返回的对象是<code>autorelase</code>的，所以仍然能通过NSLog打印出来。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>从汇编代码中看，以上代码在创建<code>number</code>变量时，是通过<code>objc_loadWeak</code>方法进行的。而根据 <a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#arc-runtime-objc-loadweak">Clang的官方文档</a>，<code>objc_loadWeak</code>方法会<code>retain</code>并<code>autorelease</code>这个对象。所以给一个weak对象赋值，它并不会马上释放，而是会放到<code>autorelease pool</code>中，与<code>autorelease pool</code>一起释放。</p>
-
-<p>如下是<code>objc_loadWeak</code>的代码示例：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">id</span> <span class="nf">objc_loadWeak</span><span class="p">(</span><span class="kt">id</span> <span class="o">*</span><span class="n">object</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">objc_autorelease</span><span class="p">(</span><span class="n">objc_loadWeakRetained</span><span class="p">(</span><span class="n">object</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>为了验证这个回答，我们又做了一个有趣的例子来验证，如下所示：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
-</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在上面这个例子中，果然如我们所料，<code>number</code>在通过NSLog查看值时，变成了nil。</p>
-
-<h3>讨论二：关于NSNumber对象的缓存</h3>
-
-<p>我们在做以上实验时，发现一个有趣的现象，如果你把100变成了10，则<code>number</code>变成在NSLog时，就能够输出值来，不再是nil了。如下是测试代码：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
-</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>经过 onevcat 的实验，从-1 ～ 12都是可以输出的，而其它值却会变成nil。于是我们猜测是系统对这些常见值的对象做了缓存，于是我们写了如下代码来验证。</p>
-
-<p>结果果然是这样，多次创建值为10的<code>NSNumber</code>对象，其地址都是<font color=red>一样的</font>。而多次创建值为100的<code>NSNumber</code>对象，每次创建获得的对象地址都是<font color=red>不一样的</font>。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
-</span><span class='line'><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>讨论三：64位系统与Tagged Pointer对象</h3>
-
-<p>讨论本来已经结束了，结果我在写这篇博客的时候，手贱又测试了一下，发现在64位的模拟器下，无论创建多少次，也无论int的值是多少，所有相同int值的<code>NSNumber</code>对象地址都是一样的！</p>
-
-<p>疑惑了几分钟，我突然想起WWDC中介绍的64位系统引放的<code>Tagged Pointer</code>，恍然大悟。</p>
-
-<p>在WWDC2013的《Session 404 Advanced in Objective-C》视频中，苹果介绍了<code>Tagged Pointer</code>。<code>Tagged Pointer</code>的存在主要是为了节省内存。我们知道，对象的指针大小一般是与机器字长有关，在32位系统中，一个指针的大小是32位（4字节），而在64位系统中，一个指针的大小将是64位（8字节）。</p>
-
-<p>在64位系统中，如果我们真正使用一个指针来存储<code>NSNumber</code>实例，那么我们首先需要一个8字节的指针，另外需要一块内存存储<code>NSNumber</code>实例，这通常又是8字节。这样的内存开销是比较大的。苹果对于<code>NSNumber</code>和<code>NSDate</code>对象，改成了用<code>Tagged Pointer</code>来存储，简单来说，<code>Tagged Pointer</code>是一个假的指针，它的值不再是另一个地址，而就是对应变量的值。</p>
-
-<p><code>Tagged Pointer</code>主要有以下3个特点：</p>
-
-<ol>
-<li><code>Tagged Pointer</code>专门用来存储小的对象，例如<code>NSNumber</code>和<code>NSDate</code></li>
-<li><code>Tagged Pointer</code>指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已！所以，它的内存并不存储在堆中，也不需要malloc和free。</li>
-<li>在内存读取上有着3倍的效率（以前是寻址->发消息->获取值，现在直接获取值），创建时比以前快106倍。</li>
-</ol>
-
-
-<p> 相关英文文档截图如下：</p>
-
-<p> <img src="http://blog.devtang.com/images/tagged_pointer_1.jpg"></p>
-
-<p>但<code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 <code>isa</code> 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。</p>
-
-<p>因为不是真正的对象，所以如果你直接访问<code>Tagged Pointer</code>的<code>isa</code>成员的话，在编译时将会有如下警告：</p>
-
-<p> <img src="http://blog.devtang.com/images/tagged_pointer_2.jpg"></p>
-
-<p>对于上面的写法，应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>，如下图所示：</p>
-
-<p> <img src="http://blog.devtang.com/images/tagged_pointer_3.jpg"></p>
-
-<p>至此，所有疑问都已经解决，开心～</p>
-
-<p>另外这儿有一篇介绍<code>Tagged Pointer</code>的文章：<a href="http://blog.xcodev.com/archives/tagged-pointer-and-64-bit/">《64位与Tagged Pointer》</a>，一并推荐给大家。</p>
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-21T21:09:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
   
 </span>
 

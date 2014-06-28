@@ -193,22 +193,22 @@
 </span><span class='line'>
 </span><span class='line'><span class="k">@end</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">@implementation</span> <span class="nc">Father</span>
+</span><span class='line'><span class="err">@</span><span class="n">implementation</span> <span class="n">Father</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">@end</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">@interface</span> <span class="nc">Child</span> : <span class="nc">Father</span> <span class="p">{</span>
+</span><span class='line'><span class="err">@</span><span class="n">interface</span> <span class="n">Child</span> <span class="o">:</span> <span class="n">Father</span> <span class="p">{</span>
 </span><span class='line'>    <span class="kt">int</span> <span class="n">_child</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">@end</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">@implementation</span> <span class="nc">Child</span>
+</span><span class='line'><span class="err">@</span><span class="n">implementation</span> <span class="n">Child</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">@end</span>
 </span><span class='line'>
 </span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
 </span><span class='line'><span class="p">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">Child</span> <span class="o">*</span> <span class="n">child</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Child</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>

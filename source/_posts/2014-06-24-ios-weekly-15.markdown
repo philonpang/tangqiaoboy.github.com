@@ -32,7 +32,7 @@ categories: iOS weekly
 
  1. [《用 Quartz Composer 和 Origami 制作一个简单的按钮动画》](https://github.com/nixzhu/dev-blog/blob/master/2014-06-22-quartz-composer-and-origami-tutorial-button-animation.md): 文章由 [@nixzhu](http://weibo.com/nixzhu) 翻译。阅读本文，然后照着做一遍。只需20分钟，你就能了解 QC 和 Origami 是什么，能做什么，以及怎么做。
 
- 1. [《Reactive Cocoa详解》](http://www.cocoachina.com/applenews/devnews/2014/0621/8905.html)：Reactive Cocoa是一个函数响应式编程思想在Objective-C语言下的实现。本文将从几个方面详细介绍Reactive Cocoa。
+ 1. [《Reactive Cocoa详解》](http://blog.sunnyxx.com/2014/03/06/rac_1_macros/)：Reactive Cocoa是一个函数响应式编程思想在Objective-C语言下的实现。本文将从几个方面详细介绍Reactive Cocoa。
 
  1. [《Cocoa​Pods》](http://nshipster.cn/cocoapods/)：在Objective-C的情况下，CocoaPods提供了一个绝佳的整合合作开发的工具，并且在快速发展的开发社区中起到了一个集结点的作用。在本文中，我们将通过讨论CocoaPods的过去，现在以及将来，一起庆祝0.33版本（具有里程碑意义）的发布。
   

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 苹果的官网文档。 ">
+  <meta name="description" content="前言 SQLite (http://www.sqlite.org/docs.html) 是一个轻量级的关系数据库。iOS SDK很早就支持了SQLite，在使用时，只需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。但是，原生的SQLite &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,49 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/04/22/use-fmdb/">在iOS开发中使用FMDB</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-22T14:11:00+08:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>SQLite (<a href="http://www.sqlite.org/docs.html">http://www.sqlite.org/docs.html</a>) 是一个轻量级的关系数据库。iOS SDK很早就支持了SQLite，在使用时，只需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。但是，原生的SQLite API在使用上相当不友好，在使用时，非常不便。于是，开源社区中就出现了一系列将SQLite API进行封装的库，而FMDB (<a href="https://github.com/ccgus/fmdb">https://github.com/ccgus/fmdb</a>) 则是开源社区中的优秀者。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/04/22/use-fmdb/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/04/06/about-100-devices-limit/">关于iOS测试机个数上限的详细规则</a></h1>
     
     
@@ -120,51 +163,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">关于UIWebView和PhoneGap的总结</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-24T20:19:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>今天参加了Adobe和CSDN组织的一个关于<a href="http://hui.csdn.net/MeetingInfo.aspx?mid=99">PhoneGap的开发讲座</a> ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。</p>
-
-<p>正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容，所以也需要做js与native代码相互调用的事情。所以在这儿顺便总结一下UIWebView在使用上的细节，以及谈谈我对PhoneGap的看法。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/39/">&larr; Older</a>
@@ -186,6 +184,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/29/ios-dev-tools/">那些好用的iOS开发工具</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
@@ -229,10 +231,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/08/ios-security-dev-overview/">iOS应用安全开发概述</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/06/ios-weekly-10/">iOS移动开发周报-第10期</a>
       </li>
     
   </ul>

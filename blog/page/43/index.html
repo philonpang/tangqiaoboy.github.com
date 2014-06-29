@@ -9,7 +9,9 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 iphone开发相关的教程中最有名的，当数斯坦福大学发布的&#8221;iphone开发公开课&#8221;了。此公开课在以前叫做《iphone开发教程》，今年由于平板电脑的流行，所以也加入了ipad开发相关的课程。在网易公开课上，有该教程的2010年录象，并且前面15集带中文字幕文件， &hellip;">
+  <meta name="description" content="前言 在苹果的WWDC2011大会视频的
+《Session 101 &ndash; What&rsquo;s New in Cocoa》 和
+《Session 102 &ndash; Implementing UIViewController Containment》 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +84,72 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-06T21:19:00+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>在苹果的WWDC2011大会视频的
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=101">《Session 101 &ndash; What&rsquo;s New in Cocoa》</a> 和
+<a href="https://developer.apple.com/videos/wwdc/2011/?id=102">《Session 102 &ndash; Implementing UIViewController Containment》</a> 中介绍了苹果在iOS5中给UIViewController新增加的5方法以及一个属性:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 方法</span>
+</span><span class='line'><span class="nl">addChildViewController:</span>
+</span><span class='line'><span class="nl">removeFromParentViewController:</span>
+</span><span class='line'><span class="nl">transitionFromViewController:toViewController:duration:options:animations:completion:</span>
+</span><span class='line'><span class="nl">willMoveToParentViewController:</span>
+</span><span class='line'><span class="nl">didMoveToParentViewController:</span>
+</span><span class='line'><span class="c1">// 属性</span>
+</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">childViewControllers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/02/05/mvc-in-ios-develop/">斯坦福大学iOS开发公开课总结</a></h1>
     
     
@@ -120,49 +188,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/04/use-git-to-manage-code-snippets/">使用Github来管理xcode4中的代码片段</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-04T14:32:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>代码片段介绍</h3>
-
-<p>xcode4引入了一个新feature: code snippets，在整个界面的右下角，可以通过快捷键：cmd + ctrl + opt + 2 调出来。code snippets是一些代码的模版，对于一些常见的编程模式，xcode都将这些代码抽象成模版放到code snippet中，使用的时候，只需要键入快捷键，就可以把模版的内容填到代码中。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/04/use-git-to-manage-code-snippets/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/44/">&larr; Older</a>
@@ -184,6 +209,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/29/ios-dev-tools/">那些好用的iOS开发工具</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
@@ -227,10 +256,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/08/ios-security-dev-overview/">iOS应用安全开发概述</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/06/ios-weekly-10/">iOS移动开发周报-第10期</a>
       </li>
     
   </ul>

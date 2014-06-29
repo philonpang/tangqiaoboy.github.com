@@ -74,10 +74,10 @@ categories:  summary
 
 最后推荐大家在有一定写作能力后，尝试给 [InfoQ网站](http://www.infoq.com/cn) 或[《程序员》](http://programmer.csdn.net/)杂志投稿，通常他们对于稿件会有更加严格的审核，所以即使稿件被拒，也能让自己找到未来提高的地方。
 
-当你给InfoQ的原创文章投稿超过3篇被发表后，就可以申请成为兼职编辑，InfoQ编辑每月有一次集体的“我是吃货”聚会，各种海吃海喝之后，还可以和InfoQ CEO Kevin, 男神池建强，张龙老师，交际花显峰等其他编辑当面交流技术，实在是一次难得的机会。
+当你给InfoQ的原创文章投稿超过3篇被发表后，就可以申请成为兼职编辑，InfoQ编辑每月有一次集体的“我是吃货”聚会，各种海吃海喝之后，还可以和InfoQ CEO Kevin、男神池建强、张龙老师、交际花显峰等其他编辑当面交流技术，实在是一次难得的机会。
 
 每年InfoQ兼职编辑还可以用3篇原创稿件换取5800元的QCon门票，并可以采访QCon上来自全国各地的技术高手。比如今年的[QCon会](http://www.qconbeijing.com/)上，我就[采访](http://www.infoq.com/cn/news/2014/04/interview-ios-test-guide-author)了[《iOS测试指南》](http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/product-description/B00JPVNFKM)的作者羋峮。虽然大家看到了最终的[采访稿件](http://www.infoq.com/cn/news/2014/04/interview-ios-test-guide-author)，但是亲自面对面交流的收获很难完全体现在稿件中的，比如有一条羋峮对于测试的看法：“只测试需要测试的逻辑”这一条，虽然只是采访之后随口所说，但对我的影响还是非常大的，但我很难将其思想体现在稿件中。
 
-喜欢本文能让那些喜欢写作和分享的人，都能坚持自己的这个爱好，最终从中得到巨大的回报！
+希望本文能让那些喜欢写作和分享的人，都能坚持自己的这个爱好，最终从中得到巨大的回报！
 
 愿大家玩得开心～

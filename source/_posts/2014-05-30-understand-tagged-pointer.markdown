@@ -59,7 +59,7 @@ int main(int argc, char * argv[])
 
 在该代码中，我们将几个Number类型的指针的值直接输出。需要注意的是，我们需要将模拟器切换成 64位的CPU来测试，如下图所示：
 
-![](https://dl.dropboxusercontent.com/u/23544450/tagged_pointer_switch_64bit_simulator.jpg)
+{% img /images/tagged_pointer_switch_64bit_simulator.jpg %}
 
 
 运行之后，我们得到的结果如下，可以看到，除去最后的数字最末尾的2以及最开头的0xb，其它数字刚好表示了相应NSNumber的值。
@@ -101,7 +101,7 @@ bigNumber pointer is 0x10921ecc0
 `Tagged Pointer`的引入也带来了问题，即`Tagged Pointer`因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在[《Objective-C对象模型及应用》](http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/)一文中就写道，所有对象都有 `isa` 指针，而`Tagged Pointer`其实是没有的，因为它不是真正的对象。
 因为不是真正的对象，所以如果你直接访问`Tagged Pointer`的`isa`成员的话，在编译时将会有如下警告：
 
-![](https://dl.dropboxusercontent.com/u/23544450/tagged_pointer_isa_forbidden.jpg)
+{% img /images/tagged_pointer_isa_forbidden.jpg %}
 
 对于上面的写法，应该换成相应的方法调用，如 `isKindOfClass` 和 `object_getClass`。只要避免在代码中直接访问对象的isa变量，即可避免这个问题。
 

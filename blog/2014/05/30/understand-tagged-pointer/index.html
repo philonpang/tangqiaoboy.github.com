@@ -167,7 +167,7 @@
 
 <p>在该代码中，我们将几个Number类型的指针的值直接输出。需要注意的是，我们需要将模拟器切换成 64位的CPU来测试，如下图所示：</p>
 
-<p><img src="https://dl.dropboxusercontent.com/u/23544450/tagged_pointer_switch_64bit_simulator.jpg" alt="" /></p>
+<p><img src="/images/tagged_pointer_switch_64bit_simulator.jpg"></p>
 
 <p>运行之后，我们得到的结果如下，可以看到，除去最后的数字最末尾的2以及最开头的0xb，其它数字刚好表示了相应NSNumber的值。</p>
 
@@ -218,7 +218,7 @@
 <p><code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 <code>isa</code> 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。
 因为不是真正的对象，所以如果你直接访问<code>Tagged Pointer</code>的<code>isa</code>成员的话，在编译时将会有如下警告：</p>
 
-<p><img src="https://dl.dropboxusercontent.com/u/23544450/tagged_pointer_isa_forbidden.jpg" alt="" /></p>
+<p><img src="/images/tagged_pointer_isa_forbidden.jpg"></p>
 
 <p>对于上面的写法，应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>。只要避免在代码中直接访问对象的isa变量，即可避免这个问题。</p>
 

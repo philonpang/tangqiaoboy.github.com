@@ -278,7 +278,7 @@ g. AddressBookUI
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@protocol</span> <span class="nc">DecoderDelegate</span><span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-</span><span class='line'><span class="k">@optional</span>
+</span><span class='line'><span class="err">@</span><span class="n">optional</span>
 </span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="n">decoder</span> <span class="nl">willDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">image</span> <span class="nl">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">subset</span><span class="p">;</span>
 </span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">decoder:</span><span class="p">(</span><span class="n">Decoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">decoder</span> <span class="nf">didDecodeImage:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">image</span> <span class="nf">usingSubset:</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">subset</span> <span class="nf">withResult:</span><span class="p">(</span><span class="n">TwoDDecoderResult</span> <span class="o">*</span><span class="p">)</span><span class="nv">result</span> <span class="p">{</span>
 </span><span class='line'>  <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;result = %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">result</span> <span class="n">text</span><span class="p">]);</span>
@@ -412,6 +412,10 @@ var jiathis_config={
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/29/ios-dev-tools/">那些好用的iOS开发工具</a>
       </li>
     
@@ -453,10 +457,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/08/ios-security-dev-overview/">iOS应用安全开发概述</a>
       </li>
     
   </ul>

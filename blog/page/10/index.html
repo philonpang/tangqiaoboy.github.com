@@ -9,8 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 上次将我的iMac硬盘换成SSD后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果： 启动时按住Shift键进入安全模式（没能进入）
-同时按下 Command、Option、P &hellip;">
+  <meta name="description" content="从Facebook谈起 Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式收购移动 IM 应用 WhatsApp，总收购成本 190 亿美元。然后是继续发布了新产品： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/16/mobile-development-view-from-facebook/">从Facebook看移动开发的发展</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-16T20:37:59+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/facebook-logo.jpg"></p>
+
+<h2>从Facebook谈起</h2>
+
+<p>Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式<a href="http://tech.ifeng.com/internet/special/fb-whatsapp/content-1/detail_2014_02/21/34032969_0.shtml">收购移动 IM 应用 WhatsApp</a>，总收购成本 190 亿美元。然后是继续发布了新产品：2014年2月，Facebook发布了一个新的移动端新闻阅读应用<a href="https://www.facebook.com/paper">Paper</a>。最后，Facebook最近还将自己使用的大量工具开源，包括开源了Paper的加载效果<a href="https://github.com/facebook/Shimmer">Shimmer</a>，LLDB的增强工具<a href="https://github.com/facebook/chisel">chisel</a>，以及Key-Value Observing工具<a href="https://github.com/facebook/KVOController">KVOController</a>，如果说这些开源工具让程序员如获至宝的话，那么Facebook将Paper的交互设计工具<a href="http://facebook.github.io/origami/">Origami</a>免费开放，则是对广大设计师的福音，极大地方便了移动交互设计工作的开展。</p>
+
+<p>2014年对于Facebook来说也是一个值得纪念的日子。因为从2004年2月4日Facebook产品上线到现在，Facebook刚刚走过10个年头。10年前，Facebook的创始人扎克伯格才19岁，是哈佛大学的一名学生。转眼间10年后，Facebook已经成长为全球最大的社交网络，月活跃用户达到12亿，市值约1200亿美元。</p>
+
+<p>业界内大多讨论的话题都围绕在Facebook收购WhatsApp这件事情上，而作为一个移动开发者，我更加看重Facebook 发布Paper这件事情。因为Paper并不是一个简单的应用，它有着非常优秀的交互效果，并且在产品设计和技术上都使用了许多前沿的技术，那就让我们看看，Paper的开发到底有何不同之处？</p>
+
+<h2>交互设计</h2>
+
+<p>我们首先从产品设计上看Paper的不同之处。Paper虽然只是一个新闻客户端，但从大家对Paper的评价上，我们发现优秀的交互再一次成为大家关注的焦点。回想那些成功的应用，大多都有着令人心动的交互效果，例如：Tweetie的下拉刷新，现在基本上成为iPhone上内容刷新的标准。Path跳出来的红心让人心动，很多朋友甚至会没事点那个红心，欣赏那流畅的按钮散开效果。还有Mailbox，用流畅的手势操作，将邮件管理与任务管理完美结合起来。</p>
+
+<p>国外成功的优秀应用也在影响着国内。交互设计不同于平面设计，不能简单地用Photoshop展现，而交互设计对于移动应用的成功又异常关键，所以需要花费不少时间来设计，因此产品经理很难兼顾地做交互设计。所以，在国内的一线互联网公司里，交互设计师这个职位慢慢成了移动应用的标配。但是在大部分的非一线互联网公司里面，移动开发的设计仍然停留在由产品经理简单潦草的完成阶段。所以，Facebook这次Paper的成功发布，再一次给移动开发的从业者指出了交互设计的重要性。</p>
+
+<p>回顾中国互联网产业的发展我们可以发现，产品经理（Product Manager）这个职位也是最近五、六年才成为互联网公司的标配的，想必在不远的将来，除着交互设计越来越重要，移动交互设计师也会成为每一个互联网公司重要的必备职位。</p>
+
+<p>另一方面，由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集<a href="http://facebook.github.io/origami/">Origami</a>，使得交互设计工作得到更好的辅助。而且在Facebook的带动下，<a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>也出现了。jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。</p>
+
+<p>不过另一方面，该工具仍然需要设计师具备一定的基础编码能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。</p>
+
+<h2>移动开发技术</h2>
+
+<p>随着iOS依赖管理工具Cocoapods和大量第三方开源库成熟起来，业界积累了大量的优秀开源项目。这次Facebook开发Paper使用了<a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">将近100个第三方开源库</a>，极大地减化了自己的应用开发任务。相信随着移动开发的发展，移动开发的生态圈会越来越成熟，基础的开源组件也将将越来越丰富，广大开发者都将从中受益。</p>
+
+<p>另一方面，Facebook的工程师在<a href="http://www.quora.com/What-exactly-did-Jason-Prado-mean-when-he-said-Xcode-cannot-handle-our-scale/answer/Scott-Goodson-1">Quora上反馈</a>说Paper在Xcode下打开需要40多秒钟，编译一次需要30分钟。这反映出大量的开源库的使用也给iOS集成编译环境Xcode提出了新的挑战，相信苹果会花大力气解决Xcode的性能问题。</p>
+
+<h2>总结</h2>
+
+<p>Facebook发布的Paper让我看到了移动开发领域的快速发展，大量新的工具和开源技术给了设计师和程序员机会和挑战，相信在移动互联网快速发展的浪潮中，会涌现出越来越多优秀的移动应用。谁会是未来移动互联网的霸主？让我们拭目以待。</p>
+
+<h2>版权说明</h2>
+
+<p>本文已发表在《程序员》杂志2014年4月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-16/2819341">http://www.csdn.net/article/2014-04-16/2819341</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -297,85 +366,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/10/ios-weekly-7/">iOS移动开发周报-第7期</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-10T23:34:02+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-wwdc2014-ticket">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果WWDC2014门票开卖，
-ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><a href="http://nb.zol.com.cn/445/4451916.html">苹果WWDC2014门票开卖，开发者需通过抽签的方式申请购买</a>：2014年苹果开发者大会（WWDC）将于6月2日至6日在旧金山Moscone West中心举行。而本次WWDC大会的门票将于旧金山当地时间4月7日上午十点开始发售，开发者需通过抽签的方式申请购买，下午五点到八点公布获得门票的名单。</li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://realmacsoftware.com/blog/dynamic-linking">《Dynamic Linking》</a>：文章详细解释了动态链接库在iOS程序中的加载过程，作者在也尝试自己实现了一个动态链接库并且在iOS程序中成功加载，不过文章最后指出，在AppStore上架的的应用，如果要加载动态链接库，该链接库需要得到苹果的签名才能加载成功，虽然这在技术上是可行的，但苹果现阶段的审核要求是不接受这种应用的。作者也将相关代码开源在 <a href="https://github.com/ddeville/Dynamic-iOS">Dynamic-iOS</a> 项目中。</p></li>
-<li><p><a href="http://nonomori.farbox.com/post/ios-7-jiao-hu-shi-guo-du">《iOS 7 交互式过渡》</a>：iOS 7 新加入了自定义 View Controller 之间的过渡效果的方法。本文介绍了如何利用相关的API实现自定义的过滤效果。文章的内容主要包括：实现自定义过渡、使用自定义过渡、让过渡变得可以交互。文中例子的工程文件也已上传至<a href="https://github.com/PeteC/InteractiveViewControllerTransitions">GitHub</a>。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/">《ARC下dealloc过程及.cxx_destruct的探究》</a>：在MRC时代，我们经常在<code>dealloc</code>方法将内部其他对象释放掉，申请的非Objc对象的内存当然也需要一并处理掉，最后调用super，继续将父类对象做析构。而在ARC时代，大部分的代码都不再需要了。这些相应的代码是如何由编译器完成的？带着这样的疑问，作者研究了LLVM的具体实现细节。</p></li>
-<li><p><a href="https://github.com/jspahrsummers/enemy-of-the-state/blob/master/Enemy%20of%20the%20State.pdf">《Enemy of the State》</a>：作者分享了程序架构中存在状态的坏处以及避免状态的一些方法：优先使用不可变对象、使用ReactiveCocoa框架、使用Model-View-ViewModel框架。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="http://chen.do/blog/2013/09/30/selectively-ignoring-objective-c-exceptions-in-xcode/">在Xcode调试时忽略部分异常</a>：作者提供了一些llvm增强脚本，用于方便地在调试时忽略掉部分异常。增强脚本的代码也开源在<a href="https://gist.github.com/chendo/6759305/raw/ignore_specified_objc_exceptions.py">这里</a>。</p></li>
-<li><p><a href="https://github.com/naotaka/ClipMenu">ClipMenu</a>：开源的Mac OS剪贴板管理工具。</p></li>
-<li><p><a href="https://github.com/kolinkrewinkel/Polychromatic">Polychromatic</a>：一个只高亮属性和变量的Xcode插件。</p></li>
-<li><p><a href="https://github.com/shjborage/Reveal-Plugin-for-XCode">Reveal-Plugin-for-XCode</a>：作者写了一个Reveal插件，可以使工程不作任何修改的情况下使用Reveal，该插件已在Alcatraz上架。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/11/">&larr; Older</a>
@@ -397,6 +387,10 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -440,10 +434,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
     
       <li class="post">
         <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

@@ -9,7 +9,8 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="和去年一样，记录一下今年的成长和收获。 ">
+  <meta name="description" content="Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/page/30">
+  <link rel="canonical" href="http://blog.devtang.com/blog/page/50">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
@@ -82,7 +83,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/01/01/2012-summary/">2012年个人总结</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a></h1>
     
     
       <p class="meta">
@@ -98,67 +99,32 @@
   
 
 
-<time datetime="2013-01-01T14:31:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time>
+<time datetime="2011-08-10T17:32:00+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>和<a href="http://blog.devtang.com/blog/2012/01/01/2011-summary/">去年</a>一样，记录一下今年的成长和收获。</p>
+  <div class="entry-content"><p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2013/01/01/2012-summary/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/23/use-zxing-library/">在iOS中使用ZXing库</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-23T17:03:00+08:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/zxing-icon.png"></p>
-
-<h2>前言</h2>
-
-<p><a href="https://code.google.com/p/zxing/">ZXing</a>(<a href="https://github.com/zxing/zxing">Github镜像地址</a>)是一个开源的条码生成和扫描库（开源协议为<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache2.0</a>)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。</p>
-
-<p>我上周在iOS项目开发中使用了ZXing的扫描二维码功能。在此总结一下如何将ZXing集成到已有的iOS工程中，分享给大家。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/12/23/use-zxing-library/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">阅读 &rarr;</a>
     </footer>
   
 
@@ -167,11 +133,9 @@
   
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/31/">&larr; Older</a>
-    
     <a href="/blog/archives">Blog Archives</a>
     
-    <a class="next" href="/blog/page/29/">Newer &rarr;</a>
+    <a class="next" href="/blog/page/49/">Newer &rarr;</a>
     
   </div>
 </div>

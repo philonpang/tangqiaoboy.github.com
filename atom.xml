@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-07-02T22:26:00+08:00</updated>
+  <updated>2014-07-03T20:59:46+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,80 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第16期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/07/03/ios-weekly-16/"/>
+    <updated>2014-07-03T20:41:49+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/07/03/ios-weekly-16</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/ios8-new-features">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：i​OS 8的新特性，敏感逻辑的保护方案，iOS绘图教程，WKWebView的使用等。</p>
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://nshipster.cn/ios8/">《i​OS 8》</a>：Mattt Thompson在文章中介绍了iOS8的各种新特性。</p></li>
+<li><p><a href="http://blog.csdn.net/yiyaaixuexi/article/details/29210413">《iOS安全攻防：敏感逻辑的保护方案》</a>：文章介绍了一种低学习成本的，简易的Objective-C逻辑代码重写为C代码的办法。</p></li>
+<li><p><a href="http://imtx.me/archives/1899.html">《谈谈 iOS 8 拍照和摄影功能的增强》</a>：iPhone 的照相功能有着敏捷的反应速度和不错的成像素质，使得 iPhone 成为最佳的随手拍手机。这次 WWDC 14 上尽管没有任何新硬件的更新，但是 iOS 8 在照相功能上的增强再次让我这样的随手拍狂人激动不已。文章主要介绍了iOS 8 带来的倒计时拍摄和延时摄影功能。</p></li>
+<li><p><a href="http://blog.rpplusplus.me/blog/2014/06/26/wwdc14-session-401/">《WWDC14 Session 401 學習筆記》</a>：文章总结了WWDC14 Session 401介绍的PlayGround、Interface Builder和Debug相关功能的改进。</p></li>
+<li><p><a href="http://www.cnblogs.com/xdream86/archive/2012/12/12/2814552.html">《iOS绘图教程》</a>：本文是《Programming iOS5》中Drawing一章的翻译，考虑到主题完整性，翻译版本中加入了一些书中未涉及到的内容。该文章中比较完整地介绍了iOS的整个绘图原理及相关的API。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/06/24/core-animation/">《Core Animation基本概念和Additive Animation》</a>：文章介绍一些Core Animation基本概念，最后提到一些iOS8的动画改动。</p></li>
+<li><p><a href="https://mikeash.com/pyblog/friday-qa-2014-06-20-interesting-swift-features.html">《Interesting Swift Features》</a>：文章介绍了Swift相对于Objective-C增加的一些有趣的特性，并且讨论了其带来的好处。</p></li>
+<li><p><a href="http://www.raywenderlich.com/76260/video-tutorial-introduction-swift-part-6-functions">《Introduction to Swift Part 6: Functions》</a>：Ray Wenderlich上的关于Swift函数的视频教程。</p></li>
+<li><p><a href="http://www.raywenderlich.com/76248/facebook-pop-tech-talk-video">《Facebook Pop Tech Talk Video》</a>：Ray Wenderlich上的关于Facebook Pop的视频教程。</p></li>
+<li><p><a href="http://www.kinderas.com/technology/2014/6/7/getting-started-with-wkwebview-using-swift-in-ios-8">《Getting started with WKWebView using Swift in iOS 8》</a>：文章介绍了iOS8中新加的WKWebView的使用。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://github.com/uranusjr/macdown">macdown</a>：macdown是一个开源的Mac下的markdown编辑器。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/lexrus/LTMorphingLabel">LTMorphingLabel</a>：用swift写的文字飘入飘出的效果。</p></li>
+<li><p><a href="https://github.com/hewigovens/Crashlytics-FPCustomHandler">Crashlytics-FPCustomHandler</a>：这是一个为 Crashlytics 写的 category, 可以方便添加自己的崩溃处理函数。</p></li>
+<li><p><a href="https://github.com/relatedcode/ParseChat">ParseChat</a>：ParseChat是基于Parse实现的一个实时的聊天室开源应用。</p></li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-03T20:41:49+08:00" pubdate data-updated="true">Jul 3<span>rd</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[WWDC2014，苹果的“软件”发布会]]></title>
@@ -2346,83 +2420,6 @@
 <span class="categories">
   
     <a class='category' href='/blog/categories/mac/'>mac</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第7期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/04/10/ios-weekly-7/"/>
-    <updated>2014-04-10T23:34:02+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/04/10/ios-weekly-7</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-wwdc2014-ticket">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果WWDC2014门票开卖，
-ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><a href="http://nb.zol.com.cn/445/4451916.html">苹果WWDC2014门票开卖，开发者需通过抽签的方式申请购买</a>：2014年苹果开发者大会（WWDC）将于6月2日至6日在旧金山Moscone West中心举行。而本次WWDC大会的门票将于旧金山当地时间4月7日上午十点开始发售，开发者需通过抽签的方式申请购买，下午五点到八点公布获得门票的名单。</li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://realmacsoftware.com/blog/dynamic-linking">《Dynamic Linking》</a>：文章详细解释了动态链接库在iOS程序中的加载过程，作者在也尝试自己实现了一个动态链接库并且在iOS程序中成功加载，不过文章最后指出，在AppStore上架的的应用，如果要加载动态链接库，该链接库需要得到苹果的签名才能加载成功，虽然这在技术上是可行的，但苹果现阶段的审核要求是不接受这种应用的。作者也将相关代码开源在 <a href="https://github.com/ddeville/Dynamic-iOS">Dynamic-iOS</a> 项目中。</p></li>
-<li><p><a href="http://nonomori.farbox.com/post/ios-7-jiao-hu-shi-guo-du">《iOS 7 交互式过渡》</a>：iOS 7 新加入了自定义 View Controller 之间的过渡效果的方法。本文介绍了如何利用相关的API实现自定义的过滤效果。文章的内容主要包括：实现自定义过渡、使用自定义过渡、让过渡变得可以交互。文中例子的工程文件也已上传至<a href="https://github.com/PeteC/InteractiveViewControllerTransitions">GitHub</a>。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/">《ARC下dealloc过程及.cxx_destruct的探究》</a>：在MRC时代，我们经常在<code>dealloc</code>方法将内部其他对象释放掉，申请的非Objc对象的内存当然也需要一并处理掉，最后调用super，继续将父类对象做析构。而在ARC时代，大部分的代码都不再需要了。这些相应的代码是如何由编译器完成的？带着这样的疑问，作者研究了LLVM的具体实现细节。</p></li>
-<li><p><a href="https://github.com/jspahrsummers/enemy-of-the-state/blob/master/Enemy%20of%20the%20State.pdf">《Enemy of the State》</a>：作者分享了程序架构中存在状态的坏处以及避免状态的一些方法：优先使用不可变对象、使用ReactiveCocoa框架、使用Model-View-ViewModel框架。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="http://chen.do/blog/2013/09/30/selectively-ignoring-objective-c-exceptions-in-xcode/">在Xcode调试时忽略部分异常</a>：作者提供了一些llvm增强脚本，用于方便地在调试时忽略掉部分异常。增强脚本的代码也开源在<a href="https://gist.github.com/chendo/6759305/raw/ignore_specified_objc_exceptions.py">这里</a>。</p></li>
-<li><p><a href="https://github.com/naotaka/ClipMenu">ClipMenu</a>：开源的Mac OS剪贴板管理工具。</p></li>
-<li><p><a href="https://github.com/kolinkrewinkel/Polychromatic">Polychromatic</a>：一个只高亮属性和变量的Xcode插件。</p></li>
-<li><p><a href="https://github.com/shjborage/Reveal-Plugin-for-XCode">Reveal-Plugin-for-XCode</a>：作者写了一个Reveal插件，可以使工程不作任何修改的情况下使用Reveal，该插件已在Alcatraz上架。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-10T23:34:02+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
   
 </span>
 

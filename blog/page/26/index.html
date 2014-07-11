@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="2008年 62天售空。介绍了iPhone 3G。 2009年 33天售空。介绍了iPhone 3GS。 2010年 8天售空。介绍了iPhone 4。 2011年 12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。 从这一年开始， &hellip;">
+  <meta name="description" content="前言 我在去年的一篇文章《iOS5中UIViewController的新方法》中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/05/18/goodbye-viewdidunload/">再见，viewDidUnload方法</a></h1>
     
     
       <p class="meta">
@@ -98,52 +98,27 @@
   
 
 
-<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
+<time datetime="2013-05-18T17:37:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>2008年</h2>
+  <div class="entry-content"><h3>前言</h3>
 
-<p>62天售空。介绍了iPhone 3G。</p>
+<p>我在去年的一篇文章<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">《iOS5中UIViewController的新方法》</a>中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中，viewDidUnload回调方法被Deprecated掉了。查看苹果的文档，可以看到如下的说明。</p>
 
-<p><img src="/images/wwdc-2008.jpg" width="500px" /></p>
+<p><img src="/images/viewdidunload-1.jpg"></p>
 
-<h2>2009年</h2>
+<p>那么，原本在viewDidUnload中的代码应该怎么处理？在iOS6中，又应该怎么处理内存警告？带着这些问题，我查找了一些资料，在此分享给大家。</p>
 
-<p>33天售空。介绍了iPhone 3GS。</p>
-
-<p><img src="/images/wwdc-2009.png" width="500px" /></p>
-
-<h2>2010年</h2>
-
-<p>8天售空。介绍了iPhone 4。</p>
-
-<p><img src="/images/wwdc-2010.png" width="500px" /></p>
-
-<h2>2011年</h2>
-
-<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
-
-<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
-
-<p><img src="/images/wwdc-2011.jpg" width="500px" /></p>
-
-<h2>2012年</h2>
-
-<p>2小时售空。介绍了iOS6。</p>
-
-<p><img src="/images/wwdc-2012.jpg" width="500px" /></p>
-
-<h2>2013年</h2>
-
-<p>2分钟售空。期待。</p>
-
-<p><img src="/images/wwdc-2013.jpg" width="500px" /></p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/05/18/goodbye-viewdidunload/">阅读 &rarr;</a>
+    </footer>
   
 
 
@@ -154,7 +129,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/05/08/git-submodule-issues/">Git Submodule的坑</a></h1>
     
     
       <p class="meta">
@@ -170,44 +145,26 @@
   
 
 
-<time datetime="2013-04-29T20:22:00+08:00" pubdate data-updated="true">Apr 29<span>th</span>, 2013</time>
+<time datetime="2013-05-08T21:44:00+08:00" pubdate data-updated="true">May 8<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/forget.jpeg"></p>
+  <div class="entry-content"><h2>前言</h2>
 
-<p>今天翻到很久以前自己在网易博客上写的<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201110133108545/">这篇文章</a>，惊奇地发现自己都忘记了里面的一些内容。所以我又重新学习了一下，然后改了改内容，挪到这里。</p>
+<p>随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了，赶紧抽空充充电吧。本文并不打算做Git入门级介绍，想学习git的同学，推荐国内作者蒋鑫写的<a href="http://book.douban.com/subject/6526452/">《Git权威指南》</a>。</p>
 
-<h2>前言</h2>
+<p>对于一些比较大的工程，为了便于复用，常常需要抽取子项目。例如我开发的猿题库客户端现在包括3门考试，客户端涉及的公共UI、公共底层逻辑、公共的第三方库、以及公共的答题卡扫描算法就被我分别抽取成了子项目。这些子项目都以git submodule的形式，增加到工程中。</p>
 
-<p><a href="http://www.amazon.cn/s?ie=UTF8&amp;search-alias=books&amp;field-author=Steffen%20Itterheim">Steffen Itterheim</a>是<a href="http://www.amazon.cn/Learn-Iphone-and-Ipad-Cocos2d-Game-Development-The-Leading-Framework-for-Building-2D-Graphical-and-Interactive-Applications-Itterheim-Steffen/dp/1430233036/ref=sr_1_1?ie=UTF8&amp;qid=1321168092&amp;sr=8-1">《Learn Iphone and Ipad Cocos2d Game Development》</a>作者。cocos2d和cocos2d-x现在已成为著名的游戏开发引擎。在AppStore上有超过100个游戏是基于Cocos2D。</p>
-
-<p>Steffen Itterheim在<a href="http://www.learn-cocos2d.com/2011/10/complete-list-objectivec-20-compiler-directives">他的博客</a>中总结了 Objective-C 2.0 所有的编译器保留字，并且对这些保留字做了介绍和使用示例。这些保留字如下：</p>
-
-<pre>
-@class
-@defs
-@protocol @required @optional @end
-@interface @public @package @protected @private @property @end
-@implementation @synthesize @dynamic @end
-@throw @try @catch @finally
-@synchronized @autoreleasepool
-@selector @encode
-@compatibility_alias
-@”string”
-</pre>
-
-
-<p>我把这些保留字过了一遍，发现很少用到的有 @dynamic @defs @encode @compatibility_alis，所以就给大家介绍一下这几个关键字吧。</p>
+<p>在使用了git submodule一段时间后，我发现了一些submodule的问题，在此分享给大家。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2013/04/29/the-missing-objc-keywords/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/05/08/git-submodule-issues/">阅读 &rarr;</a>
     </footer>
   
 
@@ -227,14 +184,22 @@
 <aside class="sidebar">
   
     <section>
-  <h1>友情链接</h1>
+  <h1>赞助商</h1>
   <p>
-     <a href="http://fir.im" target="_blank"><img width="260px" src="/images/fir.png" /></a>
+     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -274,14 +239,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

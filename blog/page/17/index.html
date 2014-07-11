@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。 不得不承认，这的确是一个事实， &hellip;">
+  <meta name="description" content="公司的iMac是2011年款的，经过2年的使用，现在已经变得比较慢了，用htop看了一下，其实cpu占用率一直不高，主要是磁盘IO比较慢，所以考虑自己动手给iMac换一个SSD。在此将整个过程分享给大家。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/01/26/add-ssd-to-old-imac/">自己动手给iMac换SSD</a></h1>
     
     
       <p class="meta">
@@ -98,22 +98,20 @@
   
 
 
-<time datetime="2014-01-08T21:51:00+08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time>
+<time datetime="2014-01-26T22:06:00+08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。</p>
-
-<p>不得不承认，这的确是一个事实，通常情况下，把一个知识讲清楚比理解它更难。那我们为什么要花时间写作呢？我想写作至少有以下好处。</p>
+  <div class="entry-content"><p>公司的iMac是2011年款的，经过2年的使用，现在已经变得比较慢了，用<code>htop</code>看了一下，其实cpu占用率一直不高，主要是磁盘IO比较慢，所以考虑自己动手给iMac换一个SSD。在此将整个过程分享给大家。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2014/01/08/why-we-need-write/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2014/01/26/add-ssd-to-old-imac/">阅读 &rarr;</a>
     </footer>
   
 
@@ -125,7 +123,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/01/01/2013-summary/">2013年个人总结</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a></h1>
     
     
       <p class="meta">
@@ -141,32 +139,27 @@
   
 
 
-<time datetime="2014-01-01T19:04:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
+<time datetime="2014-01-23T17:36:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>2013这一年值得总结的有两方面的事情：一是技术分享和收获，二是创业感悟。</p>
+  <div class="entry-content"><p>分享一个在使用Core Text时遇到的问题。</p>
 
-<h2>技术分享</h2>
+<h2>问题描述</h2>
 
-<p>我这一年在技术分享上投入了更多的时间，也得到了非常大的收获。</p>
+<p>我们的猿题库界面因为有图片、公式需要混排，所以用的是Core Text实现的排版。</p>
 
-<p>我主要的技术分享渠道包括：</p>
-
-<ol>
-<li><p>个人博客。今年一共完成了24篇原创博客。相比于去年的36篇，少了很多。主要是因为很多精力分散到微信公共帐号上去了。不过今年文章的质量相比去年更高了，写了包括<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>和<a href="http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/">《谈Objective-C Block的实现》</a>这类比较深入的文章。</p></li>
-<li><p><a href="http://www.infoq.com/cn/">InfoQ网站</a> 。今年一共完成了7篇发表在<a href="http://www.infoq.com/cn/">InfoQ</a> 上的<a href="http://www.infoq.com/cn/author/%E5%94%90%E5%B7%A7">稿件</a> , 其中原创技术文章4篇，翻译技术新闻1篇，采访稿2篇。</p></li>
-</ol>
-
+<p>在使用中，发现一些英文题目的换行方式不对，
+我们设置的是按单词换行，但是总是有些题目的换行并不是按单词的，造成显示上比较错乱，如下图所示。图中unchangeable, study, falls 三个单词都被生生截断了，造成阅读上的不适。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2014/01/01/2013-summary/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">阅读 &rarr;</a>
     </footer>
   
 
@@ -186,14 +179,22 @@
 <aside class="sidebar">
   
     <section>
-  <h1>友情链接</h1>
+  <h1>赞助商</h1>
   <p>
-     <a href="http://fir.im" target="_blank"><img width="260px" src="/images/fir.png" /></a>
+     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -233,14 +234,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 最近有朋友问我粉笔网iPhone端使用了哪些第三方的开源库。我在这儿整理了一下，分享给大家。 ">
+  <meta name="description" content="前言 OpenCV 是一个开源的跨平台计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。 最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/10/09/3rd-libs-used-in-fenbi-app/">粉笔网iPhone端使用的第三方开源库</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a></h1>
     
     
       <p class="meta">
@@ -98,7 +98,7 @@
   
 
 
-<time datetime="2012-10-09T15:30:00+08:00" pubdate data-updated="true">Oct 9<span>th</span>, 2012</time>
+<time datetime="2012-10-27T20:43:00+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2012</time>
         
       </p>
     
@@ -107,15 +107,23 @@
 
   <div class="entry-content"><h2>前言</h2>
 
-<p>最近有朋友问我粉笔网iPhone端使用了哪些第三方的开源库。我在这儿整理了一下，分享给大家。</p>
+<p><img src="/images/opencv.png"></p>
 
-<p><img src="/images/fenbi_libs.png"></p>
+<p><a href="http://opencv.org/about.html">OpenCV</a> 是一个开源的跨平台计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。</p>
+
+<p>最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。有些问题费了我很多时间，在此总结分享给大家，希望后来人少走些弯路。</p>
+
+<p>可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。</p>
+
+<p>所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。</p>
+
+<p>（2013-6-22）更新: 我在XCode4.6.2 和 OpenCV 2.4.5版本的时候重新进行了一次环境搭建，以下内容做了相应调整，应该也是有效的。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/10/09/3rd-libs-used-in-fenbi-app/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2012/10/27/use-opencv-in-ios/">阅读 &rarr;</a>
     </footer>
   
 
@@ -127,7 +135,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/10/05/upgrade-your-app-to-support-iphone5/">让你的APP支持iPhone5</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">粉笔网的架构和项目管理</a></h1>
     
     
       <p class="meta">
@@ -143,22 +151,22 @@
   
 
 
-<time datetime="2012-10-05T16:18:00+08:00" pubdate data-updated="true">Oct 5<span>th</span>, 2012</time>
+<time datetime="2012-10-15T10:56:00+08:00" pubdate data-updated="true">Oct 15<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>前言</h2>
+  <div class="entry-content"><p>10月10日，在 <a href="http://weibo.com/cmdnclub">CMDN炫姐姐</a> 的邀请下，我们粉笔网团队通过CSDN的CMDN Club,对外进行了第一次<a href="http://hui.csdn.net/MeetingInfo.aspx?MID=137">技术分享</a>。分享的内容主要包括2部分:</p>
 
-<p>国庆节前，为了支持iPhone5的屏幕分辨率(640象素 x 1136象素)，我尝试着升级粉笔网<a href="http://itunes.apple.com/cn/app/fen-bi-wang/id551540593">iPhone客户端</a>。整个过程花了大概一天的时间，我把这个过程总结下来，希望对大家有帮助。</p>
+<p>第一部分是关于粉笔网使用Scrum进行快速开发的故事。我们分享了如何在3个多月完成了全平台的开发的经验分享，其中也包括我们对Scrum的具体使用方式和其中遇到的各种问题。CSDN整理出来的报道文章在<a href="http://www.csdn.net/article/2012-10-11/2810658">这里</a>。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/10/05/upgrade-your-app-to-support-iphone5/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">阅读 &rarr;</a>
     </footer>
   
 
@@ -178,14 +186,22 @@
 <aside class="sidebar">
   
     <section>
-  <h1>友情链接</h1>
+  <h1>赞助商</h1>
   <p>
-     <a href="http://fir.im" target="_blank"><img width="260px" src="/images/fir.png" /></a>
+     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -225,14 +241,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

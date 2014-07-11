@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="本文首发于InfoQ，版权归InfoQ所有，转载请保留原文链接。 简介 Crashlytic 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, &hellip;">
+  <meta name="description" content="引言 在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于： 1、字体文件通常比较大，10M &ndash; 20M是一个常见的字体库的大小。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/07/24/use-crashlytics/">使用Crashlytics来保存应用崩溃信息</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a></h1>
     
     
       <p class="meta">
@@ -98,28 +98,32 @@
   
 
 
-<time datetime="2013-07-24T20:56:00+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
+<time datetime="2013-08-11T16:00:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/crashlytics-logo.jpg"></p>
+  <div class="entry-content"><p><img src="/images/wawati-sample.jpg"></p>
 
-<p>本文首发于InfoQ，版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">原文链接</a>。</p>
+<h2>引言</h2>
 
-<h2>简介</h2>
+<p>在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于：</p>
 
-<p><a href="http://try.crashlytics.com/">Crashlytic</a> 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, 团购应用GroupOn等移动应用。</p>
+<p>1、字体文件通常比较大，10M &ndash; 20M是一个常见的字体库的大小。大部分的非游戏的app体积都集中在10M以内，因为字体文件的加入而造成应用体积翻倍让人感觉有些不值。如果只是很少量的按钮字体需要设置，可以用一些工具把使用到的汉字字体编码从字体库中抽取出来，以节省体积。但如果是一些变化的内容需要自定义的字体，那就只有打包整个字体库了。</p>
 
-<p>2013年1月，Crashlytics<a href="http://www.crashlytics.com/blog/crashlytics-is-joining-forces-with-twitter/">被Twitter收购</a>，成为又一个成功的创业产品。被收购之后，由于没有了创业公司的不稳定因素，我们更有理由使用它来分析应用崩溃信息。</p>
+<p>2、中文的字体通常都是有版权的。在应用中加入特殊中文字体还需要处理相应的版权问题。对于一些小公司或个人开发者来说，这是一笔不小的开销。</p>
+
+<p>以上两点造成App Store里面使用特殊中文字库的iOS应用较少。现在通常只有阅读类的应用才会使用特殊中文字库。</p>
+
+<p>但其实从iOS6开始，苹果就支持动态下载中文字体到系统中。只是苹果一直没有公开相应的API。最终，相应的API在今年的WWDC大会上公开，接下来就让我们来一起了解这个功能。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2013/07/24/use-crashlytics/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/08/11/ios-asian-font-download-introduction/">阅读 &rarr;</a>
     </footer>
   
 
@@ -131,7 +135,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/07/28/a-look-inside-blocks/">谈Objective-C Block的实现</a></h1>
     
     
       <p class="meta">
@@ -147,31 +151,41 @@
   
 
 
-<time datetime="2013-06-23T12:39:00+08:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2013</time>
+<time datetime="2013-07-28T10:42:00+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/alipay-plugin-1.jpg"></p>
+  <div class="entry-content"><h2>前言</h2>
 
-<h2>前言</h2>
+<p><a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">这里</a>有关于block的5道测试题，建议你阅读本文之前先做一下测试。</p>
 
-<p>因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是：</p>
+<p>先介绍一下什么是闭包。在wikipedia上，<a href="http://en.wikipedia.org/wiki/Closure_(computer_science">闭包的定义</a>)是:</p>
 
-<pre><code>请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码?
-</code></pre>
+<blockquote><p>In programming languages, a closure is a function or reference to a function together with a referencing environment—a table storing a reference to each of the non-local variables (also called free variables or upvalues) of that function.</p></blockquote>
 
-<p>我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下，将支付宝客户端的插件机制具体实现方式介绍给大家。</p>
 
-<p>先介绍一下该插件机制，如上图所示，支付宝客户端在安装后，对于像“彩票”、“爱心捐赠”这类功能，需要再点击安装一次，然后才可以使用。有些时候该插件功能进行了升级，需要点击升级才可以继续使用。插件的方式有利于软件动态增加新的功能或升级功能，而不用再一次向AppStore提交审核。另外，由于用户不需要的插件可以不用安装，也缩小了应用本身的体积大小，节省了下载流量。</p>
+<p>翻译过来，闭包是一个函数（或指向函数的指针），再加上该函数执行的外部的上下文变量（有时候也称作自由变量）。</p>
+
+<p>block实际上就是Objective-C语言对于闭包的实现。
+block配合上dispatch_queue，可以方便地实现简单的多线程编程和异步编程，关于这个，我之前写过一篇文章介绍：<a href="http://blog.devtang.com/blog/2012/02/22/use-gcd/">《使用GCD》</a>。</p>
+
+<p>本文主要介绍Objective-C语言的block在编译器中的实现方式。主要包括：</p>
+
+<ol>
+<li>block的内部实现数据结构介绍</li>
+<li>block的三种类型及其相关的内存管理方式</li>
+<li>block如何通过capture变量来达到访问函数外的变量</li>
+</ol>
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2013/06/23/alipay-plugin-mechanism/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/07/28/a-look-inside-blocks/">阅读 &rarr;</a>
     </footer>
   
 
@@ -191,14 +205,22 @@
 <aside class="sidebar">
   
     <section>
-  <h1>友情链接</h1>
+  <h1>赞助商</h1>
   <p>
-     <a href="http://fir.im" target="_blank"><img width="260px" src="/images/fir.png" /></a>
+     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -238,14 +260,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

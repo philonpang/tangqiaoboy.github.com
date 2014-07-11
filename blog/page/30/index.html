@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 ZXing(Github镜像地址)是一个开源的条码生成和扫描库（开源协议为Apache2.0)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。 &hellip;">
+  <meta name="description" content="前言 Objective-c语言在申请对象的时，需要使用两段构造(Two Stage Creation)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/12/23/use-zxing-library/">在iOS中使用ZXing库</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/01/13/two-stage-creation-on-cocoa/">谈ObjC对象的两段构造模式</a></h1>
     
     
       <p class="meta">
@@ -98,26 +98,31 @@
   
 
 
-<time datetime="2012-12-23T17:03:00+08:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2012</time>
+<time datetime="2013-01-13T10:15:00+08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/zxing-icon.png"></p>
+  <div class="entry-content"><h2>前言</h2>
 
-<h2>前言</h2>
+<p>Objective-c语言在申请对象的时，需要使用两段构造(<a href="http://volonbolon.net/post/634999801/two-stage-creation-in-cocoa">Two Stage Creation</a>)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例：</p>
 
-<p><a href="https://code.google.com/p/zxing/">ZXing</a>(<a href="https://github.com/zxing/zxing">Github镜像地址</a>)是一个开源的条码生成和扫描库（开源协议为<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache2.0</a>)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithString:</span><span class="s">@&quot;http://blog.devtang.com&quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>我上周在iOS项目开发中使用了ZXing的扫描二维码功能。在此总结一下如何将ZXing集成到已有的iOS工程中，分享给大家。</p>
+
+<p>由于该语言的对象创建方法和大多数其它语言（如C、C++、Java、JavaScript）都不一样，所以引起了我的好奇。是什么原因促使Objective-C做了这种设计，而又是什么原因促使大多数其它语言都采用&#8221;new&#8221;方法来一次性创建对象呢？</p>
+
+<p>在看了<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书（顺便吐槽一下该书中文版翻译质量不高，建议看英文版），并且做了一些调研之后，我将总结分享给大家，欢迎大家讨论。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/12/23/use-zxing-library/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/01/13/two-stage-creation-on-cocoa/">阅读 &rarr;</a>
     </footer>
   
 
@@ -129,7 +134,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/12/15/do-not-use-storyboard/">StoryBoard&#8211;看上去很美</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/01/01/2012-summary/">2012年个人总结</a></h1>
     
     
       <p class="meta">
@@ -145,24 +150,20 @@
   
 
 
-<time datetime="2012-12-15T10:21:00+08:00" pubdate data-updated="true">Dec 15<span>th</span>, 2012</time>
+<time datetime="2013-01-01T14:31:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>介绍</h2>
-
-<p>StoryBoard是苹果在2011年的WWDC Session 309《Introducing Interface Builder Storyboarding》中介绍的Interface Builder的新功能。其基本想法是将原本的xib进行升级，引入一个容器用于管理多个xib文件，并且这个容器可以通过拖拽设置xib之间的界面跳转。而这个容器就是被苹果称做的StoryBoard。下图是一个Storyboard的截图。</p>
-
-<p><img src="/images/enbrace-ios5-1.png"></p>
+  <div class="entry-content"><p>和<a href="http://blog.devtang.com/blog/2012/01/01/2011-summary/">去年</a>一样，记录一下今年的成长和收获。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/12/15/do-not-use-storyboard/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/01/01/2012-summary/">阅读 &rarr;</a>
     </footer>
   
 
@@ -182,14 +183,22 @@
 <aside class="sidebar">
   
     <section>
-  <h1>友情链接</h1>
+  <h1>赞助商</h1>
   <p>
-     <a href="http://fir.im" target="_blank"><img width="260px" src="/images/fir.png" /></a>
+     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -229,14 +238,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

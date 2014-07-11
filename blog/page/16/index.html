@@ -9,7 +9,10 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="公司的iMac是2011年款的，经过2年的使用，现在已经变得比较慢了，用htop看了一下，其实cpu占用率一直不高，主要是磁盘IO比较慢，所以考虑自己动手给iMac换一个SSD。在此将整个过程分享给大家。 ">
+  <meta name="description" content="简介 brew cask是一个用命令行管理Mac下应用的工具，它是基于homebrew的一个增强工具。 homebrew可以管理Mac下的命令行工具，例如imagemagick, nodejs，如下所示： 1
+2
+brew install imagemagick
+brew install node &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/01/26/add-ssd-to-old-imac/">自己动手给iMac换SSD</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">使用brew cask来安装Mac应用</a></h1>
     
     
       <p class="meta">
@@ -98,20 +101,44 @@
   
 
 
-<time datetime="2014-01-26T22:06:00+08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
+<time datetime="2014-02-26T21:38:00+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>公司的iMac是2011年款的，经过2年的使用，现在已经变得比较慢了，用<code>htop</code>看了一下，其实cpu占用率一直不高，主要是磁盘IO比较慢，所以考虑自己动手给iMac换一个SSD。在此将整个过程分享给大家。</p>
+  <div class="entry-content"><h2>简介</h2>
+
+<p><a href="https://github.com/phinze/homebrew-cask"><code>brew cask</code></a>是一个用命令行管理Mac下应用的工具，它是基于<a href="http://brew.sh/"><code>homebrew</code></a>的一个增强工具。</p>
+
+<p><code>homebrew</code>可以管理Mac下的命令行工具，例如<code>imagemagick</code>, <code>nodejs</code>，如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install imagemagick
+</span><span class='line'>brew install node
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而使用上<code>brew cask</code>之后，你还可以用它来管理Mac下的Gui程序，例如<code>qq</code>, <code>chrome</code>, <code>evernote</code>等，如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew cask install qq
+</span><span class='line'>brew cask install google-chrome
+</span><span class='line'>brew cask install evernote
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2014/01/26/add-ssd-to-old-imac/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">阅读 &rarr;</a>
     </footer>
   
 
@@ -123,7 +150,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">非换行空格在CoreText排版上的问题</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/02/11/reactivecocoa-introduction/">ReactiveCocoa - iOS开发的新框架</a></h1>
     
     
       <p class="meta">
@@ -139,27 +166,35 @@
   
 
 
-<time datetime="2014-01-23T17:36:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2014</time>
+<time datetime="2014-02-11T18:47:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>分享一个在使用Core Text时遇到的问题。</p>
+  <div class="entry-content"><p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/reactivecocoa-ios-new-develop-framework">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<h2>问题描述</h2>
+<h2>什么是ReactiveCocoa</h2>
 
-<p>我们的猿题库界面因为有图片、公式需要混排，所以用的是Core Text实现的排版。</p>
+<p><a href="https://github.com/ReactiveCocoa/ReactiveCocoa">ReactiveCocoa</a>（其简称为RAC）是由<a href="https://github.com/blog/1107-reactivecocoa-for-a-better-world">Github</a> 开源的一个应用于iOS和OS X开发的新框架。RAC具有函数式编程和响应式编程的特性。它主要吸取了.Net的 <a href="http://msdn.microsoft.com/en-us/data/gg577609">Reactive Extensions</a>的设计和实现。</p>
 
-<p>在使用中，发现一些英文题目的换行方式不对，
-我们设置的是按单词换行，但是总是有些题目的换行并不是按单词的，造成显示上比较错乱，如下图所示。图中unchangeable, study, falls 三个单词都被生生截断了，造成阅读上的不适。</p>
+<h2>ReactiveCocoa试图解决什么问题</h2>
+
+<p>经过一段时间的研究，我认为ReactiveCocoa试图解决以下3个问题：</p>
+
+<ol>
+<li>传统iOS开发过程中，状态以及状态之间依赖过多的问题</li>
+<li>传统MVC架构的问题：Controller比较复杂，可测试性差</li>
+<li>提供统一的消息传递机制</li>
+</ol>
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2014/01/23/the-issue-of-non-breaking-space-in-coretext/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2014/02/11/reactivecocoa-introduction/">阅读 &rarr;</a>
     </footer>
   
 
@@ -179,14 +214,22 @@
 <aside class="sidebar">
   
     <section>
-  <h1>友情链接</h1>
+  <h1>赞助商</h1>
   <p>
-     <a href="http://fir.im" target="_blank"><img width="260px" src="/images/fir.png" /></a>
+     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -226,14 +269,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

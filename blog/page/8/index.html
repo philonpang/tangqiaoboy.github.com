@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
+  <meta name="description" content="【摘要】：iOS应用由于其直接运行在手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文将从网络安全、本地文件和数据安全、源代码安全三个方面，阐述iOS应用在安全性上遇到的挑战。 前言 在传统互联网领域，安全已经是一个老生常谈的话题。在许多大公司里面，都设置有专门的安全部门， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/04/25/ios-weekly-9/">iOS移动开发周报-第9期</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/08/ios-security-dev-overview/">iOS应用安全开发概述</a></h1>
     
     
       <p class="meta">
@@ -98,49 +98,227 @@
   
 
 
-<time datetime="2014-04-25T20:44:56+08:00" pubdate data-updated="true">Apr 25<span>th</span>, 2014</time>
+<time datetime="2014-05-08T21:27:23+08:00" pubdate data-updated="true">May 8<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h3>版权说明</h3>
+  <div class="entry-content"><p><img src="/images/security.jpeg"></p>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/ios-mobile-developmeng-weekly">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+<p>【摘要】：iOS应用由于其直接运行在手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文将从网络安全、本地文件和数据安全、源代码安全三个方面，阐述iOS应用在安全性上遇到的挑战。</p>
 
-<h3>前言</h3>
+<h1>前言</h1>
 
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+<p>在传统互联网领域，安全已经是一个老生常谈的话题。在许多大公司里面，都设置有专门的安全部门，用于检测自己产品的安全性。但即便是这样，业界仍然时常暴出许多安全问题的新闻。就在不久前，乌云<a href="http://gd.people.com.cn/n/2014/0325/c123932-20854292.html">曝光了</a>携程网在支付过程中，为了调试方便，记录了用户的信用卡卡号和CVV码等信息，而调试接口可以被外网访问，这样造成黑客可能通过调试接口读取用户的信用卡信息。虽然最终没有造成实际上的用户损失，但是此次事件再一次给互联网公司敲响了安全的警钟。</p>
 
-<p>【摘要】：本期iOS移动开发周报带来如下内容：专门针对越狱iOS设备的盗号木马出现，iOS7下载自定义的字体功能不可用，Toll-Free Bridging等。</p>
+<p>除了国内，国外的互联网安全问题同样让人担忧。去年由于曝出<a href="http://tech.163.com/13/0722/09/94CKLASU000947EG.html">Apache Struts2的漏洞</a>，苹果公司多次重置开发者的密码，并且最终为了用户数据的安全，将整个开发者后台全部停止服务，花了2周多时间将后台有潜在问题的功能重写后，才重新开放服务。而4月份刚刚曝光的<a href="http://tech.ifeng.com/internet/detail_2014_04/09/35603734_0.shtml">OpenSSL的heart bleeding漏洞</a>，则让全球的三分之二的网站受到影响。</p>
 
-<h2>新闻</h2>
+<p>在移动互联网快速发展的今天，iOS应用由于直接运行在用户的手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文接下来将从三个方面概述iOS移动应用在安全方面所面临的挑战以及应对措施。</p>
 
-<ol>
-<li><p><a href="http://blog.devtang.com/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a>：国外的iOS开发者 <a href="https://twitter.com/iOn1c">@iOn1c</a> 发现一个来自中国的开发者&#8221;WANG XIN&#8221;签名的iOS平台的木马插件，该插件是一个名为Unflod.dylib动态链接库，可以将越狱机器上的AppleID用户名和密码盗取，并且发送到指定服务器上。<a href="http://pastebin.com/raw.php?i=QxVRd2ha">这里</a>有该恶意插件的反汇编代码。笔者作为一个资深iOS开发者，建议一般普通用户，如果是为了用盗版软件就别越狱了，各种国内的越狱渠道都非常不安全的。如果是开发者们为了研究安全而越狱的，最好也只是在专门研究用的iTouch上使用，以避免可能的安全风险。</p></li>
-<li><p><a href="http://weibo.com/1676354212/AFt7N5pl8">iOS7下载自定义的字体功能不可用</a>：墨客的作者<a href="http://weibo.com/1676354212/AFt7N5pl8">@an00na</a>发现iOS提供的下载自定义的字体功能有bug，完全不能使用。相关的Bug说明在<a href="http://openradar.appspot.com/radar?id=5881896777023488">这里</a>。</p></li>
-</ol>
+<h1>一、网络安全</h1>
+
+<h2>安全地传输用户密码</h2>
+
+<p>大部分的iOS应用都需要联网，通过和服务器端进行通讯，获得最新的信息并且将内容展现给用户。由于网络传输过程中有可能经过不安全的中间节点，所以我们应该对敏感数据加密，用于保证用户信息的安全。黑客可以在受害者的手机上设置网络通讯的代理服务器，从而截获所有的网络请求。即使是Https的加密通讯，黑客也可以通过<a href="http://zh.wikipedia.org/zh-cn/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a>（Man-in-the-middle attack，一种是指攻击者与通讯的两端分别创建独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制）来截取通讯内容。</p>
+
+<p>黑客可以在Mac下使用<a href="http://www.charlesproxy.com/">Charles</a>软件（如果在Windows下，可以使用<a href="http://www.telerik.com/fiddler">fiddler</a>软件）来将自己的电脑设置成代理服务器，从而截取应用的网络请求，分析目标应用在通讯协议上是否有安全问题。为了测试，我选取了在国内最大的两家租车公司（<a href="www.zuche.com/">神州租车</a>和<a href="www.1hai.cn">一嗨租车</a>）的iOS应用。</p>
+
+<p>从下图可以看到，神州租车和一嗨租车在用户登录时，均采用明文的方式，将密码直接发送给服务器。其中一嗨租车不但采用明文方式发送密码，而且在发送时使用了Http Get的方式，而GET的URL数据一般都会保存在服务器的access log中，所以黑客一旦攻破服务器，只需要扫描acesss log，则可以轻易获得所有用户的明文密码。(注：在本文发表前，一嗨租车已经修改了登录协议，采用了POST的方式来登录，但仍然传递的是明文密码)</p>
+
+<p>神州租车登录协议:</p>
+
+<p><img src="/images/zuche-protocol.png"></p>
+
+<p>一嗨租车登录协议:</p>
+
+<p><img src="/images/1hai-protocol.png"></p>
+
+<p>如果每一个移动移动都像以上两种应用那样，明文传输用户密码，那么我们可以想象这样一个场景，黑客在咖啡馆或机场等一些公共场所，将自己的电脑设置成该场所一样名字的免费Wifi，那么受害者只要不小心使用了该Wifi，则可能泄漏自己的明文密码。对于大多数普通人，都会使用一样的密码登录他的所有的帐号，这就意味着他的其他帐号：例如淘宝或网上银行帐号也有被盗的风险。</p>
+
+<p>正确的做法应该是这样：事先生成一对用于加密的公私钥，客户端在登录时，使用公钥将用户的密码加密后，将密文传输到服务器。服务器使用私钥将密码解密，然后加盐(Salt：在密码学中，是指通过在密码任意固定位置插入特定的字符串，让散列后的结果和使用原始密码的散列结果不相符)之后再多次求MD5，之后再和服务器原来存储的用同样方法处理过的密码匹配，如果一致，则登录成功。这样的做法，保证黑客即使截获了加密后的密文，由于没有私钥，也无法还原出原始的密码。而服务器即使被黑客攻陷，黑客除了暴力尝试，也无法从加盐和多次MD5后的密码中还原出原始的密码。这样就保证了用户密码的安全。</p>
+
+<h2>防止通讯协议被轻易破解</h2>
+
+<p>除了上面提到的明文传输密码的问题外，移动端应用还要面对黑客对于通讯协议的破解的威胁。在成功破解了通讯协议后，黑客可以模拟客户端登录，进而伪造一些用户行为，可能对用户数据造成危害。例如腾讯出品的消除游戏“天天爱消除”，在淘宝上就有很多售价仅为1元的代练服务，如果真正是人工代练，是不可能卖这么便宜的，只有可能是该游戏的通讯协议被破解，黑客制作出了代练的机器人程序。</p>
+
+<p>通讯协议被破解除了对于移动端游戏有严重危害外，对于应用也有很大的危害。例如针对微信，黑客可以制作一些僵尸帐号，通过向微信公共帐号后台发送垃圾广告，达到赢利目的。而iPhone设备上的iMessage通讯协议据也被破解了，所以很多iPhone用户会收到来自iMessage的垃圾广告。</p>
+
+<p>对于以上提到的问题，开发者可以选择类似 <a href="https://code.google.com/p/protobuf/protobuf">protobuf</a> (google提供的一个开源数据交换格式，其最大的特点是基于二进制，因此比传统的JSON格式要短小得多)之类的二进制通讯协议或者自己实现通讯协议，对于传输的内容进行一定程度的加密，以增加黑客破解协议的难度。下图是我截取的淘宝客户端的通讯数据，可以看到其中的值都不能直观地猜出内容，所以这对于通讯协议是有一定的保护作用。</p>
+
+<p><img src="/images/taobao-protocol.png"></p>
+
+<h2>验证应用内支付的凭证</h2>
+
+<p>iOS应用内支付(IAP)是众多应用赢利的方式，通过先让用户免费试用或试完，然后提供应用内支付来为愿意付费的用户提供更强大的功能，这种模式特别适合不习惯一开始就掏钱的中国用户。但是，由于国内越狱用户的比例比较大，所以我们也需要注意应用内支付环节中的安全问题。</p>
+
+<p>简单来说，越狱后的手机由于没有沙盒作为保护，黑客可以对系统进行任意地修改，所以在支付过程中，苹果返回的已付款成功的凭证可能是伪造的。客户端拿到付款凭证之后，还需要将凭证上传到自己的服务器上，进行二次验证，以保证凭证的真实性。</p>
+
+<p>另外，我们发现越狱用户的手机上，很可能被黑客用中间人攻击技术来劫持支付凭证。这对于黑客有什么好处呢？因为苹果为了保护用户的隐私，支付凭证中并不包含任何用户的帐号信息，所以我们的应用和服务器无法知道这个凭证是谁买的，而只能知道这个凭证是真的还是假的。所以在验证凭证时，哪个帐号发起了验证请求，我们就默认这个凭证是该帐号拥有的。如果黑客将凭证截获，就可以伪装成真实用户来验证凭证或者转手出售获利。</p>
+
+<p>打个比方，这就类似于很多商场的购物卡一样，由于是不记名的，黑客如果将你买的购物卡偷窃然后去刷卡购物，商场是无法简单地区分出来的。</p>
+
+<p>所以，对于应用内支付，开发者除了需要仔细地验证购买凭证外，也需要告知用户在越狱手机上进行支付的风险。</p>
+
+<h1>二、本地文件和数据安全</h1>
+
+<h2>程序文件的安全</h2>
+
+<p>iOS应用大部分的逻辑都是在编译后的二进制文件中，但是由于今年来混合式（Hybrid）编程方式的兴起，很多应用的部分功能也采用内嵌Web浏览器的方式来实现。例如腾讯QQ iOS客户端的内部，就有部分逻辑是用Web方式实现的。由于iOS安装文件其实就是一个zip包，所以我们可以通过解压，看到包内的内容。以下是我解开腾讯QQ客户端，看到的其qqapi.js文件的内容:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">iOSQQApi</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'>    <span class="nx">app</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="cm">/**</span>
+</span><span class='line'><span class="cm">         查询单个应用是否已安装</span>
+</span><span class='line'><span class="cm">         @param {String} scheme 比如&#39;mqq&#39;</span>
+</span><span class='line'><span class="cm">         @return {Boolean}</span>
+</span><span class='line'><span class="cm">         */</span>
+</span><span class='line'>        <span class="nx">isAppInstalled</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">scheme</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">iOSQQApi</span><span class="p">.</span><span class="nx">_invokeClientMethod</span><span class="p">(</span>
+</span><span class='line'>                <span class="s1">&#39;app&#39;</span><span class="p">,</span> <span class="s1">&#39;isInstalled&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="p">{</span><span class="s1">&#39;scheme&#39;</span><span class="o">:</span><span class="nx">scheme</span><span class="p">});</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="cm">/**</span>
+</span><span class='line'><span class="cm">         批量查询指定应用是否已安装</span>
+</span><span class='line'><span class="cm">         @param {Array&lt;String&gt;} schemes </span>
+</span><span class='line'><span class="cm">                比如[&#39;mqq&#39;, &#39;mqqapi&#39;]</span>
+</span><span class='line'><span class="cm">         @return {Array&lt;Boolean&gt;}</span>
+</span><span class='line'><span class="cm">         */</span>
+</span><span class='line'>        <span class="nx">isAppInstalledBatch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">schemes</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">iOSQQApi</span><span class="p">.</span><span class="nx">_invokeClientMethod</span><span class="p">(</span>
+</span><span class='line'>                <span class="s1">&#39;app&#39;</span><span class="p">,</span><span class="s1">&#39;batchIsInstalled&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="p">{</span><span class="s1">&#39;schemes&#39;</span><span class="o">:</span><span class="nx">schemes</span><span class="p">});</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>教程</h2>
+<p>可以看到，这些文件都有着完整清晰的注释。通过分析这些javascript文件，黑客可以比较轻松地知道其调用逻辑。在越狱手机上，还可以修改这些javascript代码，达到攻击的目的。</p>
 
-<ol>
-<li><p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/">《Toll-Free Bridging》</a>：作者<a href="http://weibo.com/lancy1014/">@晨钰Lancy</a>在文章中介绍Toll-Free Bridging的实现原理，以及在ARC下Toll-Free Bridging的使用场景和注意事项。</p></li>
-<li><p><a href="https://app.yinxiang.com/shard/s16/sh/15d40ea3-7273-4701-a816-dea7edfb2140/b41319e65ca4d91d2553f2bab25b8959">《iOS7.0到iOS7.1 UI修复》</a>：作者<a href="http://weibo.com/2271223902/B0960vL7J?ref=atme">@白仔_wyk</a>介绍了iOS7.0下原本正常的界面在iOS7.1显示错误的问题，并且介绍了修复方法。</p></li>
-<li><p><a href="https://www.youtube.com/watch?v=OiY1cheLpmI">《Full Length Event &ndash; Building Paper》</a>：Facebook官方分享了介绍Paper的技术细节的视频（视频来自YouTube，需要翻墙才能观看）。视频中介绍Facebook自已实现的动画框架POP，以及如何做设计，测试，代码审核等各方面的信息。</p></li>
-<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-21-write-a-simple-nodejs-mongodb-web-service-for-an-ios-app.md">《为一个 iOS 应用编写一个简单的 Node.js/MongoDB Web 服务》</a>：作者<a href="http://weibo.com/nixzhu">@nixzhu</a>翻译了一个来自<a href="http://www.raywenderlich.com/61078/write-simple-node-jsmongodb-web-service-ios-app">RW</a>的教程，介绍了如何为一个 iOS 应用编写一个简单的 Node.js/MongoDB Web 服务。在本教程中，你将学会如何搭建了一个 Node.js 环境，驱动 Express；在此平台之上，你将构建一个通过 REST API 来提供一个 MongoDB 数据库的服务器。对于iOS端，你将构建一个很酷的叫做“有趣的地方”的应用，标记有趣的位置，让其它用户能够找出他们附近有趣的地方。</p></li>
-<li><p><a href="http://nonomori.farbox.com/post/zi-ti-jia-zai-san-chong-fang-shi">《字体加载三种方式》</a>：作者介绍了三种加载字体的方式：静态加载、动态加载、动态下载苹果提供的多种字体。</p></li>
-</ol>
+<p>笔者也曾经尝试查看支付宝客户端中的彩票功能，通过分析，也可以找到其完整的、带着清晰注释的javascript代码。如下图所示：（注：支付宝现在已经对相应代码进行了加密）</p>
+
+<p><img src="/images/alipay-source.png"></p>
+
+<p>通过将javascript源码进行混淆和加密，可以防止黑客轻易地阅读和篡改相关的逻辑，也可以防止自己的Web端与Native端的通讯协议泄漏。</p>
+
+<h2>本地数据安全</h2>
+
+<p>iOS应用的数据在本地通常保存在本地文件或本地数据库中。如果对本地的数据不进行加密处理，很可能被黑客篡改。以下是一个名为 LepsWorld3 的游戏，打开它的本地文件，可以很容易地找到，它使用了一个名为 ItempLifes的变量保存生命数。如下图所示：</p>
+
+<p><img src="/images/game-data.png"></p>
+
+<p>于是我们就可以简单修改该值，达到修改游戏参数的目的。而在淘宝上，也可以找到许多以此挣钱的商家，如下图所示：</p>
+
+<p><img src="/images/game-data-sell.png"></p>
+
+<p>对于本地的重要数据，我们应该加密存储或者将其保存到 keychain 中，以保证其不被篡改。</p>
+
+<h1>三、源代码安全</h1>
+
+<p>通过file, class-dump, theos, otool等工具，黑客可以分析已经编译之后的二进制程序文件，不过相对于这些工具来说，IDA的威胁最大。</p>
+
+<p><a href="https://www.hex-rays.com/products/ida/">IDA</a>是一个收费的反汇编工具，对于Objective-C代码，它可以常常可以反汇编到可以方便阅读的程度，这对于程序的安全性，也是一个很大的危害。因为通过阅读源码，黑客可以更加方便地分析出应用的通讯协议和数据加密方式。</p>
+
+<p>下图分别示例了一段代码的原始内容，以及通过IDA反汇编之后的结果。可以看到，IDA几乎还原了原本的逻辑，而且可读性也非常高。</p>
+
+<p>原始代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">if</span> <span class="p">([[</span><span class="n">VersionAgent</span> <span class="n">sharedInstance</span><span class="p">]</span> <span class="n">isUpgraded</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">UpdateMigrationAgent</span> <span class="o">*</span><span class="n">agent</span> <span class="o">=</span>
+</span><span class='line'>            <span class="p">[[</span><span class="n">UpdateMigrationAgent</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">FileUtils</span> <span class="n">clearCacheDirectory</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">VersionAgent</span> <span class="n">sharedInstance</span><span class="p">]</span> <span class="n">saveAppVersion</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>开源项目</h2>
+<p>反汇编后：</p>
 
-<ol>
-<li><p><a href="https://github.com/mxcl/PromiseKit">PromiseKit</a>：异步模式在iOS编程中非常常见。针对异步编程，业界提出了Promise的抽象（又称作Deferred模式）。通过这些一些库，开发人员能够在实际编程中使用Promise模式，每个Promise都拥有一个叫做then的唯一接口，当Promise失败或成功时，它就会进行回调。它代表了一种可能会长时间运行而且不一定必须完成的操作结果。这种模式不会阻塞和等待长时间的操作完成，而是返回一个代表了承诺的（promised）结果的对象。PromiseKit是Promise模式的iOS实现。</p></li>
-<li><p><a href="https://github.com/intentkit/IntentKit">IntentKit</a>：IntentKit是一个方便你处理第三方的URL Scheme的工具。</p></li>
-</ol>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">v6</span> <span class="o">=</span> <span class="n">_objc_msgSend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OBJC_CLASS___VersionAgent</span><span class="p">,</span>
+</span><span class='line'>                   <span class="s">&quot;sharedInstance&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">v7</span> <span class="o">=</span> <span class="n">objc_retainAutoreleasedReturnValue</span><span class="p">(</span><span class="n">v6</span><span class="p">);</span>
+</span><span class='line'><span class="n">v41</span> <span class="o">=</span> <span class="n">_objc_msgSend</span><span class="p">(</span><span class="n">v7</span><span class="p">,</span> <span class="s">&quot;isUpgraded&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">objc_release</span><span class="p">(</span><span class="n">v7</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="n">v41</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="n">CFSTR</span><span class="p">(</span><span class="s">&quot;app is upgraded&quot;</span><span class="p">),</span> <span class="n">v41</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">_objc_msgSend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OBJC_CLASS___FileUtils</span><span class="p">,</span>
+</span><span class='line'>                  <span class="s">&quot;clearCacheDirectory&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">v8</span> <span class="o">=</span> <span class="n">_objc_msgSend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OBJC_CLASS___VersionAgent</span><span class="p">,</span>
+</span><span class='line'>                       <span class="s">&quot;sharedInstance&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">v9</span> <span class="o">=</span> <span class="n">objc_retainAutoreleasedReturnValue</span><span class="p">(</span><span class="n">v8</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">_objc_msgSend</span><span class="p">(</span><span class="n">v9</span><span class="p">,</span> <span class="s">&quot;saveAppVersion&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">objc_release</span><span class="p">(</span><span class="n">v9</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
+
+<p>反汇编的代码被获得后，由于软件内部逻辑相比汇编代码来说可读性高了很多。黑客可以用来制作软件的注册机，也可以更加方便地破解网络通讯协议，从而制作出机器人（僵尸）帐号。最极端的情况下，黑客可以将反汇编的代码稍加修改，植入木马，然后重新打包发布在一些越狱渠道上，这将对用户产生巨大的危害。</p>
+
+<p>对于IDA这类工具，我们的应对措施就比较少了。除了可以用一些宏来简单混淆类名外，我们也可以将关键的逻辑用纯C实现。例如微信的iOS端的通讯底层，就是用C实现的。这样的方式除了能保证通讯协议安全外，也可以在iOS和Android等多个平台使用同一套底层通讯代码，达到复用的目的。</p>
+
+<h1>总结</h1>
+
+<p>由于移动互联网的快速发展，人们的购物、理财等需求也在移动端出现，这使得移动应用的安全性越来越重要。由于部署在用户终端上，移动应用比服务器应用更容易被攻击，大家也需要在移动应用的网络通讯、本地文件和数据、源代码三方面做好防范，只有这样才能保证应用的安全。</p>
+
+<h1>版权说明</h1>
+
+<p>本文已发表在《程序员》杂志2014年5月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security">http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security</a></p>
 </div>
   
   
@@ -153,7 +331,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/06/ios-weekly-10/">iOS移动开发周报-第10期</a></h1>
     
     
       <p class="meta">
@@ -169,44 +347,65 @@
   
 
 
-<time datetime="2014-04-19T00:27:38+08:00" pubdate data-updated="true">Apr 19<span>th</span>, 2014</time>
+<time datetime="2014-05-06T21:48:24+08:00" pubdate data-updated="true">May 6<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/jailbreak-warning.jpg"></p>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<h3>关于木马</h3>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/facebook-pop-opensource">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<p>今天，国外的iOS开发者 <a href="https://twitter.com/iOn1c">@iOn1c</a> 发现一个来自中国的开发者&#8221;WANG XIN&#8221;签名的iOS平台的木马插件，该插件是一个名为<code>Unflod.dylib</code>动态链接库，可以将越狱机器上的Apple ID用户名和密码盗取，并且发送到指定服务器上。<a href="http://pastebin.com/raw.php?i=QxVRd2ha">这里</a>有该恶意插件的反汇编代码。<a href="https://www.sektioneins.de/en/blog/14-04-18-iOS-malware-campaign-unflod-baby-panda.html">这里</a>有关于该木马插件的详细分析。</p>
+<h3>前言</h3>
 
-<h3>检测与原理</h3>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>检查你的设备是否有该木马的方法：用<code>iFile</code>查看<code>/Library/MobileSubstrate/DynamicLibraries/Unflod.dylib</code> 文件是否存在，如果存在，请立即删除并且重新启动设备。</p>
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果发布 2014 年第二季度财报，Facebook将神奇动画引擎Pop开源，Objc.io中文翻译站建成，iOS 7.1.1 更新可能造成升级失败等。</p>
 
-<p>国外的越狱开发者也分析了一下该插件的工作原理，它通过监听所有的SSL协议，来截取用户的帐号和密码。所以理论上，该技术方案其实不光可以监听Apple ID帐号，还可以用来监听支付宝、微信等应用的帐号和密码。</p>
+<h2>新闻</h2>
 
-<h3>感想</h3>
+<ol>
+<li><p><a href="http://tech2ipo.com/64670">《Facebook 发布应用内深度链接技术：AppLinks》</a>：Facebook 刚刚在 f8 开发者大会上正式发布了 AppLinks 技术。该链接技术允许开发者在任何内容中植入链接，在点击后将用户带到应用内的其他地方，或是另一款应用内、或另一款应用的商城下载页面。<a href="http://vimeo.com/93018959">这里</a>有 AppLinks 技术的介绍视频。</p></li>
+<li><p><a href="http://blog.jetbrains.com/objc/2014/04/appcode-3-0-eap-opens-with-an-integrated-ui-designer-and-improved-project-settings/">《AppCode 3.0的改进》</a>：jetbrains公司在其官方博客上介绍了对于AppCode 3.0的改进，他们在EAP中集成了项目设置和UI编辑。使得AppCode对Xcode的依赖性更小。在此之前，iOS工程中的UI编辑必须在Xcode中进行。</p></li>
+<li><p><a href="http://geek.csdn.net/news/detail/7534">《Facebook将神奇动画引擎Pop开源》</a>：Facebook 2月发布的新闻类应用Paper，因为其灵动的用户界面和交互，成为近来最令人眼前一亮的移动产品之一，而POP是Paper使用到的动效引擎。</p></li>
+<li><p><a href="http://weibo.com/1708947107/B1grIt913?mod=weibotime">iOS 7.1.1 更新，但可能造成升级失败</a>：iOS7.1.1
+进一步改进了 Touch ID 的指纹识别，修复了可能影响键盘响应能力的错误，修复了启用 VoiceOver后使用蓝牙键盘时出现的问题。笔者发现非常多朋友的iPhone通过OTA升级iOS 7.1.1失败了，需要连接itunes恢复。他们的手机均未越狱。当然，也有升级成功的，大家小心，升级前一定先备份好资料。</p></li>
+<li><p><a href="http://tech.sina.com.cn/it/2014-04-24/05149341652.shtml">《苹果发布 2014 年第二季度财报，收入同比增长 5%，净利润同比增7%》</a>：苹果公司发布了2014财年第二财季业绩。报告显示，苹果公司第二财季营收为456.46亿美元，比去年同期的436.03亿美元增长5%；净利润为102.23亿美元，比去年同期的95.47亿美元增长7%。苹果公司第二财季营收和每股收益均超出华尔街分析师预期，推动其盘后股价大幅上涨逾7%。</p></li>
+<li><p><a href="http://money.21cbh.com/2014/4-24/1MMDA2NTVfMTE0NzI1Mg.html">《Facebook第一季度财报：净利润同比增193%》</a>：4月24日Facebook发布了截至3月31日的2014财年第一季度未经审计财报。报告显示，Facebook第一季度营收为25.02亿美元，比去年同期的14.58亿美元增长72%；净利润为6.42亿美元，比去年同期的2.19亿美元增长193%。</p></li>
+</ol>
 
-<p>自从2010年7月26日，美国版权局修改《千禧年数字版权法》中的豁免条款，认可了iOS越狱的合法性以后，国外越狱社区就一直在为了自由地使用iPhone设备努力。国外的Cydia商店不但提供了大量优秀的免费软件，也提供了付费的越狱软件的下载。越狱在国外，是与盗版严格划清界限的，大多数的越狱开发者，也都是为了更好的使用iPhone而开发相关软件。</p>
 
-<p>但是在国内，大部分的越狱用户的目的还是停留在使用盗版软件上，这也反映出国人的版权意识薄弱以及法律对于知识产权保护的不力。相关的盗版软件渠道，不但能够堂堂正正的宣传<a href="http://weibo.com/2786069543/yxpdRrpGB?mod=weibotime">“海量正版软件游戏，全部免费安装”</a>，而且有些公司还能被大公司以<a href="http://tech.sina.com.cn/i/baidubuy91/">上亿美金收购</a>。只能说国内的环境实在是太奇葩。</p>
+<h2>教程</h2>
 
-<p>以下是某助手的广告截图，你相信全部苹果游戏应用，本身就是免费的么？</p>
+<ol>
+<li><p><a href="http://objccn.io/">Objc.io中文翻译站建成</a>：<a href="http://onevcat.com/">@onevcat</a>和<a href="http://weibo.com/fangyixiong?topnav=1&amp;wvr=5&amp;topsug=1">@方一雄</a>、<a href="http://weibo.com/nixzhu">@nixzhu</a>等几十个译者一起努力，完成了objc.io上的所有文章的翻译，这是一个objc.io的完整、准确、优雅的中文翻译版本，为中国 Objective-C 社区带来最佳实践和先进技术。整个过程花费了一个多月。这是值得每一个iOS开发者学习的资料。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-26-make-swipeable-table-view-cell-actions-without-going-nuts-scroll-views.md">《制作一个可以滑动操作的 Table View Cell》</a>：Apple 通过 iOS 7 的邮件（Mail）应用介绍了一种新的用户界面方案——向左滑动以显示一个有着多个操作的菜单。本教程将会向你展示如何制作一个这样的 Table View Cell，而不用因嵌套的 Scroll View 陷入困境。</p></li>
+<li><p><a href="http://objcio.com/blog/2014/04/25/mastering-the-icloud-document-store/">《精通iCloud文档存储》</a>：即便已经推出了3年，iCloud 文档存储依然是一个充满神秘、误解和抱怨的话题。iCloud 同步经常被批评不可靠且速度慢。虽然在 iCloud 的早期有一些严重的 bug，开发者们还是不得不学习有关文件同步的课程。文件同步事关重大，为应用开发带来了新方向，一个经常被低估的方向，比如进行同步服务相关的合作时，对于处理文件异步更改的需要。
+本文会介绍几个创建支持 iCloud 的应用时可能会遇到的一些绊脚石。</p></li>
+<li><p><a href="http://www.v2ex.com/t/109496">《关于用 OS X 做网站服务器》</a>：V2EX的作者分享了关于用 OS X 做网站服务器的经验。</p></li>
+<li><p><a href="http://ios-blog.co.uk/getting-started/xcode-5-tips-and-tricks/">《Xcode 5 – Tips and tricks》</a>：文章介绍了Xcode 5相关的常用快捷键。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-22-ui-activity-viewcontroller.md">《研究 UIActivityViewController》</a>：UIActivityViewController出现于 iOS 6，在应用里为分享和操作数据提供了一个统一的服务接口。作者详细介绍了UIActivityViewController的使用以及如何创建一个自定义 UIActivity。</p></li>
+<li><p><a href="http://www.36kr.com/p/211441.html">《小细节大作为：提高iOS访问权限通过率有这几个办法》</a>：Brenden Mulligan是群组照片聚合应用Cluster的创始人之一，兼设计师。作为一名产品设计师和企业家，Brenden的作品包括 OneSheet和ArtistData等。在文章中，Brenden讲述了原生应用Cluster是如何提高iOS访问权限通过率的。</p></li>
+</ol>
 
-<p><img src="/images/kuaiyong.jpg"></p>
 
-<p>这次由中国开发者&#8221;WANG XIN&#8221;签名的这个木马插件，实在是让中国人自“太极”事件之后再次蒙羞。简单来说，就是坏了规矩。以后来自中国越狱开发者开发的正常越狱软件，将会受到更多潜在的“歧视”和“关照”。而国外的开发者看中国市场，会更加坚定地认为这是一个盗版横行的市场，从而想办法特别“关照”中国用户或者直接像很多国外的游戏厂商那样，直接忽视中国市场。</p>
+<h2>工具</h2>
 
-<h3>建议</h3>
+<ol>
+<li><a href="https://itunes.apple.com/cn/app/touchcolor/id859727780?mt=8">TouchColor</a>：TouchColor是一个由<a href="http://tw.weibo.com/100mango">@方秋枋</a>开发的优雅简洁，功能完善的取色器。它提供照片取色，照相取色，实时取色三大功能，并且在AppStore上免费提供下载。</li>
+</ol>
 
-<p>最后回说安全这件事，笔者作为一个资深iOS开发者，建议一般普通用户，如果是为了用盗版软件就别越狱了，各种国内的越狱渠道都非常不安全的。</p>
 
-<p>如果是开发者们为了研究安全而越狱的，最好也只是在专门研究用的iTouch上使用，以避免可能的安全风险。</p>
+<h2>开源项目</h2>
 
-<p>虽然感觉那一天还比较遥远，但真心希望有一天，国内对于版权的保护能够开展起来，这对于整个中国互联网产业的发展，将会是一个极大的促进。</p>
+<ol>
+<li><p><a href="https://github.com/facebook/pop">POP</a>：POP是Paper使用到的动效引擎。</p></li>
+<li><p><a href="https://github.com/jerols/PopTut">PopTut</a>：一个使用POP做动效的示例工程。除了示例代码外，作者也提供了<a href="https://www.youtube.com/watch?v=ErJ4FnPa_Qk">视频教程</a>。</p></li>
+<li><p><a href="http://wangzz.github.io/blog/2014/04/25/githubyou-xiu-xiang-mu-ios/">《github优秀开源项目大全-iOS》</a>：作者搜集了在github上的一些优秀的开源项目。</p></li>
+</ol>
+
 </div>
   
   
@@ -227,14 +426,22 @@
 <aside class="sidebar">
   
     <section>
-  <h1>友情链接</h1>
+  <h1>赞助商</h1>
   <p>
-     <a href="http://fir.im" target="_blank"><img width="260px" src="/images/fir.png" /></a>
+     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -274,14 +481,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

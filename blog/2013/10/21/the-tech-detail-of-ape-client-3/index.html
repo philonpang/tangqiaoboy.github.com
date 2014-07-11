@@ -206,23 +206,23 @@
 <span class='line-number'>39</span>
 <span class='line-number'>40</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cm">/* Callbacks */</span>
-</span><span class='line'><span class="k">static</span> <span class="kt">void</span> <span class="n">deallocCallback</span><span class="p">(</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ref</span> <span class="p">){</span>
+</span><span class='line'><span class="k">static</span> <span class="kt">void</span> <span class="nf">deallocCallback</span><span class="p">(</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ref</span> <span class="p">){</span>
 </span><span class='line'>    <span class="p">[(</span><span class="kt">id</span><span class="p">)</span><span class="n">ref</span> <span class="n">release</span><span class="p">];</span>
 </span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">static</span> <span class="n">CGFloat</span> <span class="n">ascentCallback</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ref</span> <span class="p">){</span>
+</span><span class='line'><span class="k">static</span> <span class="n">CGFloat</span> <span class="nf">ascentCallback</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ref</span> <span class="p">){</span>
 </span><span class='line'>    <span class="n">CGFloat</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)[(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="p">)</span><span class="n">ref</span> <span class="nl">objectForKey:</span><span class="s">@&quot;height&quot;</span><span class="p">]</span> <span class="n">floatValue</span><span class="p">];</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="p">[</span><span class="n">FrameParserConfig</span> <span class="n">sharedInstance</span><span class="p">].</span><span class="n">baselineFromMid</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">static</span> <span class="n">CGFloat</span> <span class="n">descentCallback</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ref</span> <span class="p">){</span>
+</span><span class='line'><span class="k">static</span> <span class="n">CGFloat</span> <span class="nf">descentCallback</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ref</span> <span class="p">){</span>
 </span><span class='line'>    <span class="n">CGFloat</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)[(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="p">)</span><span class="n">ref</span> <span class="nl">objectForKey:</span><span class="s">@&quot;height&quot;</span><span class="p">]</span> <span class="n">floatValue</span><span class="p">];</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="p">[</span><span class="n">FrameParserConfig</span> <span class="n">sharedInstance</span><span class="p">].</span><span class="n">baselineFromMid</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">static</span> <span class="n">CGFloat</span> <span class="n">widthCallback</span><span class="p">(</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ref</span> <span class="p">){</span>
+</span><span class='line'><span class="k">static</span> <span class="n">CGFloat</span> <span class="nf">widthCallback</span><span class="p">(</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ref</span> <span class="p">){</span>
 </span><span class='line'>    <span class="k">return</span> <span class="p">[(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)[(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="p">)</span><span class="n">ref</span> <span class="nl">objectForKey:</span><span class="s">@&quot;width&quot;</span><span class="p">]</span> <span class="n">floatValue</span><span class="p">];</span>
 </span><span class='line'>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">appendDelegateData:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">delegateData</span> <span class="nl">ToString:</span><span class="p">(</span><span class="n">NSMutableAttributedString</span><span class="o">*</span><span class="p">)</span><span class="n">contentString</span> <span class="p">{</span>
+</span><span class='line'><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">appendDelegateData:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">delegateData</span> <span class="nf">ToString:</span><span class="p">(</span><span class="n">NSMutableAttributedString</span><span class="o">*</span><span class="p">)</span><span class="nv">contentString</span> <span class="p">{</span>
 </span><span class='line'>    <span class="c1">//render empty space for drawing the image in the text //1</span>
 </span><span class='line'>    <span class="n">CTRunDelegateCallbacks</span> <span class="n">callbacks</span><span class="p">;</span>
 </span><span class='line'>    <span class="n">callbacks</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">kCTRunDelegateCurrentVersion</span><span class="p">;</span>
@@ -557,14 +557,22 @@ var jiathis_config={
 <aside class="sidebar">
   
     <section>
-  <h1>友情链接</h1>
+  <h1>赞助商</h1>
   <p>
-     <a href="http://fir.im" target="_blank"><img width="260px" src="/images/fir.png" /></a>
+     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -604,14 +612,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

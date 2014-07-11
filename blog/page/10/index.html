@@ -9,8 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 上次将我的iMac硬盘换成SSD后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果： 启动时按住Shift键进入安全模式（没能进入）
-同时按下 Command、Option、P &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/04/12/install-mavericks-note/">Mac重装记录</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a></h1>
     
     
       <p class="meta">
@@ -99,197 +98,52 @@
   
 
 
-<time datetime="2014-04-12T17:00:20+08:00" pubdate data-updated="true">Apr 12<span>th</span>, 2014</time>
+<time datetime="2014-04-18T21:58:29+08:00" pubdate data-updated="true">Apr 18<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>前言</h2>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<p>上次将我的<a href="http://blog.devtang.com/blog/2014/01/26/add-ssd-to-old-imac/">iMac硬盘换成SSD</a>后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果：</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/etag-improve-ios-url-function">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：SDWebImage缓存图片的机制、使用Etag增强iOS的URL缓存功能、从Facebook看移动开发的发展、FuzzyAutocomplete插件等。</p>
+
+<h2>教程</h2>
 
 <ol>
-<li>启动时按住Shift键进入安全模式（没能进入）</li>
-<li>同时按下 Command、Option、P 与 R 键不放（成功执行，但还是无法进入系统）</li>
-<li>按住 Command 键及 S 键，进入单用户模式（成功进入，但是把“/资源库/StartupItems”与“/系统/资源库/StartupItems”都清除，以及清除了<code>com.apple.loginwindow.plist</code> 和<code>com.apple.windowserver.plist</code>后，但还是无法通过正常启动进入系统）</li>
-<li>在单用户模式中修复磁盘，没有发现磁盘问题</li>
+<li><p><a href="http://www.overcode.hk/?p=449">《SDWebImage缓存图片的机制》</a>：文章详细介绍了SDWebImage对于图片的缓存逻辑的实现细节。</p></li>
+<li><p><a href="http://shiningio.com/2014/04/12/ios-url-cache-with-etags/">《使用Etag增强iOS的URL缓存功能》</a>：iOS下对于缓存的支持有很多，比如Core Data，它可以很方便的建模和操作本地SQLite数据库， NSUserDefaults则可以用来缓存一些用户配置等等。本篇主要谈谈使用Etag标签来解决iOS下的URL缓存问题。服务端使用的是Tornado，原生支持Etag，而且默认处于开启状态，因此在应用层面基本不需要额外的代码处理。客户端使用NSURLCache配合AFNetworking进行网络请求。</p></li>
+<li><p><a href="http://www.cnblogs.com/biosli/p/NSObject_inherit.html">《初始化阶段 —— load 和 initialize》</a>：文章介绍了load函数和initialize函数各自的加载顺序。最后文章总结出：将针对于类修改放在intialize中，将针对Category的修改放在load中。假如是修改系统的类，一般会通过添加Category来添加功能，如果修改initialize会导致原生的intialize不会执行，所以放在load中会比较妥当。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/04/13/objc_dig_interface/">《ObjC @interface的设计哲学与设计技巧》</a>：学习Objective-C语言时，尤其是先学过其他编程语言再来看Objective-C时，总会对Objective-C的类声明的关键字interface感到有点奇怪，在其它面向对象的语言中通常由class关键字来表示，而interface在Java中表示的却大约相当于Objective-C的protocol，这个关键字的区别究竟代表了Objective-C语言的设计者怎样的思想呢，在Objective-C类设计中需要注意哪些问题呢？作者在文章中对这个问题进行一些思考和探究。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook/">《从Facebook看移动开发的发展》</a>：作者从Facebook的故事切入，分享了未来移动开发快速发展中，给设计师和程序员带来的挑战。</p></li>
+<li><p><a href="http://imtx.me/archives/1888.html">《CoreData Object 变成 Fault 的另一种方式》</a>：CoreData是一个架构庞大、学习曲线比较陡峭的 iOS 组件，每次遇到问题都会对其有新的认识。文章分享了关于错误认知 Object（NSManagedObject）与 Context（NSManagedContext）的引用关系而导致的 Fault 问题。</p></li>
+<li><p><a href="http://maoa.cn/?post=414">《关于 Mac 右键菜单》</a>：Mac OS X Lion 的 Launch Service 用于关联应用程序和文件并维护最近打开的项目列表。在文件关联和右键菜单方面，每当系统安装一个新的应用程序，都会调用 Launch Service 的 API 注册关联的文件类型。文章详细介绍了这其中的过程。</p></li>
 </ol>
 
 
-<p>于是我做了一次覆盖安装，之后可以使用了，但昨天电脑又无法进入系统了。于是我打算格盘后做一次完全的重装，在此记录下自己的重装过程。</p>
-
-<h2>备份数据</h2>
-
-<p>由于我能够通过启动时按Command 键及 S 键，进入单用户模式，所以我首先把自己未提交的工程代码通过U盘备份出来了，具体步骤如下：</p>
+<h2>工具</h2>
 
 <ol>
-<li>按住 Command 键及 S 键不放，以“单一使用者模式”开机。</li>
-<li>加载磁盘：<code>mount -uw /</code></li>
-<li>新建一个U盘的加载目的文件夹： <code>mkdir /usb</code></li>
-<li>插入U盘，然后用如下命令加载U盘 <code>mount_msdos /dev/disk1s1 /usb</code> （如果你的U盘不是msdos格式，可以尝试在输入mount_后，按两次tab查看可用的其它格式）</li>
-<li>备份资料：<code>cp -r  ~/work/iphone /usb</code></li>
-<li>弹出U盘：<code>umount /dev/disk1s1</code></li>
-<li>将U盘资料放到别的电脑上，然后准备用来下一步制作安装盘</li>
+<li><p><a href="https://fnd.io">fnd.io</a>: fnd.io 是一个App Store的网页版，搜索速度非常快，可以用来代替itunes进行应用的检索。</p></li>
+<li><p><a href="https://www.shortcutfoo.com/">Shortcut Foo</a>：Shortcut Foo是一个训练你记忆快捷键的网站，除了包括iOS的第三方IDE AppCode的内容外，还包括vim，emacs, git等内容。</p></li>
+<li><p><a href="https://github.com/FuzzyAutocomplete/FuzzyAutocompletePlugin">FuzzyAutocomplete</a>：FuzzyAutocomplete是一个Xcode自动补全插件，刚刚更新到了2.0版本。它可以让你不需要再遵循从头匹配的原则来补全代码，而是随便输入你记得的关键字来进行匹配，整个插件的响应速度也非常快。</p></li>
 </ol>
 
 
-<h2>制作安装盘</h2>
-
-<p> 苹果的操作系统其实可以直接通过网络恢复，考虑到恢复时间实在太长，所以最好制作成安装盘，这样安装起来非常快。</p>
+<h2>开源项目</h2>
 
 <ol>
-<li>准备好一个8G以上的空白U盘，准备好另外一台Mac电脑用来制作安装盘。</li>
-<li>新的操作系统<code>Mavericks.app</code>可以在AppStore上直接下载。在另一台电脑上把文件下载好，下载后文件<code>Mavericks.app</code>应该在你的<code>/Applications</code>目录下。</li>
-<li>插入U盘，执行：<code>sudo /Applications/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia --volume /Volumes/Untitled --applicationpath /Applications/Install\ OS\ X\ Mavericks.app --nointeraction</code></li>
-<li>以上命令会将U盘先格式化，然后制作成安装盘，整个过程大概需要40分钟左右。</li>
+<li><p><a href="https://github.com/granoff/Lockbox">Lockbox</a>: Lockbox是一个帮助你方便地将数据保存到keychain中的开源工具类。</p></li>
+<li><p><a href="https://github.com/nolimits4web/framework7/">Framework7</a>： Framework7 是一个功能齐全的 HTML 框架，用来构建 iOS7 应用程序。Framework7 允许你使用Javascript代码来实现应用的列表，侧边栏，弹出框等控件。</p></li>
 </ol>
 
-
-<h2>安装系统</h2>
-
-<ol>
-<li>插入上一步制作好的U盘</li>
-<li>启动时按住 option 键，然后选择通过U盘启动，之后先进入磁盘工具里面把硬盘格式化了（你也可以选择不格式化，这样就是覆盖安装）</li>
-<li>安装系统。整个安装过程大概要30分钟的样子。</li>
-</ol>
-
-
-<h2>安装软件</h2>
-
-<p> 安装好系统后，首先进入AppStore升级系统，把需要的更新补丁都装了。然后通过AppStore的”Purchases”页面，重新安装以前购买过的应用，我主要装的是 qq、evernote、Alfred、MplayerX、Xcode、Dash、Keynote、有道词典。另外通过网页另外下载了QQ的五笔输入法。</p>
-
-<p>接下来的基本上是命令行的安装，Mac下管理命令行工具首先得装homebrew了：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>安装完之后执行一下<code>brew doctor</code>进行一下自检，看有没有什么异常。没问题就开始安装axel, imagemagick, autojump等命令行工具：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install wget
-</span><span class='line'>brew install axel
-</span><span class='line'>brew install imagemagick
-</span><span class='line'>brew install autojump
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>有些程序(例如老版本的ruby需要使用gcc来编译)，通过以下命令安装老版的gcc：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap homebrew/dupes
-</span><span class='line'>brew install apple-gcc42
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>使用brew cask来安装应用</h2>
-
-<p>之前专门<a href="http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">写文章介绍</a>过<code>brew cask</code>, 这次打算试试常用软件都用它来装，首先安装brew cask:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap phinze/cask
-</span><span class='line'>brew install brew-cask
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后设置alfred，把 <code>/opt/homebrew-cask</code>增加到 alfred 的search目录中，然后就可以用alfred来启动安装后的应用了。</p>
-
-<p>接下来用brew cask安装：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew cask install iterm2
-</span><span class='line'>brew cask install dropbox
-</span><span class='line'>brew cask install google-chrome
-</span><span class='line'>brew cask install sublime-text
-</span><span class='line'>brew cask install mou
-</span><span class='line'>brew cask install xtrafinder
-</span><span class='line'>brew cask install charles
-</span><span class='line'>brew cask install reveal
-</span><span class='line'>brew cask install xscope
-</span><span class='line'>brew cask install sparrow
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>使用zsh</h2>
-
-<p>然后是使用zsh，下载安装ohmyzsh:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -L http://install.ohmyz.sh | sh
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>安装完成之后，<code>vim ~/.zshrc</code> ，除了git插件外，另外增加 osx 和 autojump 插件。然后把以下这行注释启用：<code>export LANG=en_US.UTF-8</code> ，否则命令行中的中文可能会乱码。</p>
-
-<h2>同步数据</h2>
-
-<p>挂上VPN之后，打开chrome，然后同步自己的所有信息，chrome的同步挺赞的，包括书签，插件，浏览历史记录以及保存的密码都同步过来了。</p>
-
-<p>打开evernote和dropbox，同步数据。由于我的个人文档都存在它们里面，所以同步过来还是挺方便的。</p>
-
-<p>打开QQ，将漫游的聊天记录同步过来。打开dash，恢复购买，然后把snippet从dropbox同步过来。</p>
-
-<p>将自己的ssh key从原来的机器上复制过来。</p>
-
-<h2>设置Ruby</h2>
-
-<p>由于我的博客使用Octopress搭建，所以需要安装Ruby：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew update
-</span><span class='line'>brew install rbenv
-</span><span class='line'>brew install ruby-build
-</span><span class='line'>
-</span><span class='line'>rbenv install 1.9.3-p0
-</span><span class='line'>rbenv <span class="nb">local </span>1.9.3-p0
-</span><span class='line'>rbenv rehash
-</span><span class='line'>
-</span><span class='line'>gem install bundler
-</span><span class='line'>rbenv rehash
-</span><span class='line'>bundle install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>结束语</h2>
-
-<p>一切完成之后，我写下了本文，希望能帮助大家快速地重装系统。简单来说：</p>
-
-<ol>
-<li>通过evernote、dropbox和chrome将个人数据保存在云端后，重装后能快速恢复环境。</li>
-<li>通过homebrew和基于homebrew的brew cask，可以方便地帮助你快速安装不在AppStore上销售的软件。</li>
-</ol>
-
-
-<p>其实正常情况下，Mac使用迁移助理或Time Machine恢复非常方便，如果不是万不得已，大家也不用像我这样重装系统。</p>
 </div>
   
   
@@ -302,7 +156,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/04/10/ios-weekly-7/">iOS移动开发周报-第7期</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/04/16/mobile-development-view-from-facebook/">从Facebook看移动开发的发展</a></h1>
     
     
       <p class="meta">
@@ -318,57 +172,48 @@
   
 
 
-<time datetime="2014-04-10T23:34:02+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time>
+<time datetime="2014-04-16T20:37:59+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h3>版权说明</h3>
+  <div class="entry-content"><p><img src="/images/facebook-logo.jpg"></p>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-wwdc2014-ticket">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+<h2>从Facebook谈起</h2>
 
-<h3>前言</h3>
+<p>Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式<a href="http://tech.ifeng.com/internet/special/fb-whatsapp/content-1/detail_2014_02/21/34032969_0.shtml">收购移动 IM 应用 WhatsApp</a>，总收购成本 190 亿美元。然后是继续发布了新产品：2014年2月，Facebook发布了一个新的移动端新闻阅读应用<a href="https://www.facebook.com/paper">Paper</a>。最后，Facebook最近还将自己使用的大量工具开源，包括开源了Paper的加载效果<a href="https://github.com/facebook/Shimmer">Shimmer</a>，LLDB的增强工具<a href="https://github.com/facebook/chisel">chisel</a>，以及Key-Value Observing工具<a href="https://github.com/facebook/KVOController">KVOController</a>，如果说这些开源工具让程序员如获至宝的话，那么Facebook将Paper的交互设计工具<a href="http://facebook.github.io/origami/">Origami</a>免费开放，则是对广大设计师的福音，极大地方便了移动交互设计工作的开展。</p>
 
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+<p>2014年对于Facebook来说也是一个值得纪念的日子。因为从2004年2月4日Facebook产品上线到现在，Facebook刚刚走过10个年头。10年前，Facebook的创始人扎克伯格才19岁，是哈佛大学的一名学生。转眼间10年后，Facebook已经成长为全球最大的社交网络，月活跃用户达到12亿，市值约1200亿美元。</p>
 
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果WWDC2014门票开卖，
-ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
+<p>业界内大多讨论的话题都围绕在Facebook收购WhatsApp这件事情上，而作为一个移动开发者，我更加看重Facebook 发布Paper这件事情。因为Paper并不是一个简单的应用，它有着非常优秀的交互效果，并且在产品设计和技术上都使用了许多前沿的技术，那就让我们看看，Paper的开发到底有何不同之处？</p>
 
-<h2>新闻</h2>
+<h2>交互设计</h2>
 
-<ol>
-<li><a href="http://nb.zol.com.cn/445/4451916.html">苹果WWDC2014门票开卖，开发者需通过抽签的方式申请购买</a>：2014年苹果开发者大会（WWDC）将于6月2日至6日在旧金山Moscone West中心举行。而本次WWDC大会的门票将于旧金山当地时间4月7日上午十点开始发售，开发者需通过抽签的方式申请购买，下午五点到八点公布获得门票的名单。</li>
-</ol>
+<p>我们首先从产品设计上看Paper的不同之处。Paper虽然只是一个新闻客户端，但从大家对Paper的评价上，我们发现优秀的交互再一次成为大家关注的焦点。回想那些成功的应用，大多都有着令人心动的交互效果，例如：Tweetie的下拉刷新，现在基本上成为iPhone上内容刷新的标准。Path跳出来的红心让人心动，很多朋友甚至会没事点那个红心，欣赏那流畅的按钮散开效果。还有Mailbox，用流畅的手势操作，将邮件管理与任务管理完美结合起来。</p>
 
+<p>国外成功的优秀应用也在影响着国内。交互设计不同于平面设计，不能简单地用Photoshop展现，而交互设计对于移动应用的成功又异常关键，所以需要花费不少时间来设计，因此产品经理很难兼顾地做交互设计。所以，在国内的一线互联网公司里，交互设计师这个职位慢慢成了移动应用的标配。但是在大部分的非一线互联网公司里面，移动开发的设计仍然停留在由产品经理简单潦草的完成阶段。所以，Facebook这次Paper的成功发布，再一次给移动开发的从业者指出了交互设计的重要性。</p>
 
-<h2>教程</h2>
+<p>回顾中国互联网产业的发展我们可以发现，产品经理（Product Manager）这个职位也是最近五、六年才成为互联网公司的标配的，想必在不远的将来，除着交互设计越来越重要，移动交互设计师也会成为每一个互联网公司重要的必备职位。</p>
 
-<ol>
-<li><p><a href="http://realmacsoftware.com/blog/dynamic-linking">《Dynamic Linking》</a>：文章详细解释了动态链接库在iOS程序中的加载过程，作者在也尝试自己实现了一个动态链接库并且在iOS程序中成功加载，不过文章最后指出，在AppStore上架的的应用，如果要加载动态链接库，该链接库需要得到苹果的签名才能加载成功，虽然这在技术上是可行的，但苹果现阶段的审核要求是不接受这种应用的。作者也将相关代码开源在 <a href="https://github.com/ddeville/Dynamic-iOS">Dynamic-iOS</a> 项目中。</p></li>
-<li><p><a href="http://nonomori.farbox.com/post/ios-7-jiao-hu-shi-guo-du">《iOS 7 交互式过渡》</a>：iOS 7 新加入了自定义 View Controller 之间的过渡效果的方法。本文介绍了如何利用相关的API实现自定义的过滤效果。文章的内容主要包括：实现自定义过渡、使用自定义过渡、让过渡变得可以交互。文中例子的工程文件也已上传至<a href="https://github.com/PeteC/InteractiveViewControllerTransitions">GitHub</a>。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/">《ARC下dealloc过程及.cxx_destruct的探究》</a>：在MRC时代，我们经常在<code>dealloc</code>方法将内部其他对象释放掉，申请的非Objc对象的内存当然也需要一并处理掉，最后调用super，继续将父类对象做析构。而在ARC时代，大部分的代码都不再需要了。这些相应的代码是如何由编译器完成的？带着这样的疑问，作者研究了LLVM的具体实现细节。</p></li>
-<li><p><a href="https://github.com/jspahrsummers/enemy-of-the-state/blob/master/Enemy%20of%20the%20State.pdf">《Enemy of the State》</a>：作者分享了程序架构中存在状态的坏处以及避免状态的一些方法：优先使用不可变对象、使用ReactiveCocoa框架、使用Model-View-ViewModel框架。</p></li>
-</ol>
+<p>另一方面，由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集<a href="http://facebook.github.io/origami/">Origami</a>，使得交互设计工作得到更好的辅助。而且在Facebook的带动下，<a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>也出现了。jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。</p>
 
+<p>不过另一方面，该工具仍然需要设计师具备一定的基础编码能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。</p>
 
-<h2>工具</h2>
+<h2>移动开发技术</h2>
 
-<ol>
-<li><p><a href="http://chen.do/blog/2013/09/30/selectively-ignoring-objective-c-exceptions-in-xcode/">在Xcode调试时忽略部分异常</a>：作者提供了一些llvm增强脚本，用于方便地在调试时忽略掉部分异常。增强脚本的代码也开源在<a href="https://gist.github.com/chendo/6759305/raw/ignore_specified_objc_exceptions.py">这里</a>。</p></li>
-<li><p><a href="https://github.com/naotaka/ClipMenu">ClipMenu</a>：开源的Mac OS剪贴板管理工具。</p></li>
-<li><p><a href="https://github.com/kolinkrewinkel/Polychromatic">Polychromatic</a>：一个只高亮属性和变量的Xcode插件。</p></li>
-<li><p><a href="https://github.com/shjborage/Reveal-Plugin-for-XCode">Reveal-Plugin-for-XCode</a>：作者写了一个Reveal插件，可以使工程不作任何修改的情况下使用Reveal，该插件已在Alcatraz上架。</p></li>
-</ol>
+<p>随着iOS依赖管理工具Cocoapods和大量第三方开源库成熟起来，业界积累了大量的优秀开源项目。这次Facebook开发Paper使用了<a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">将近100个第三方开源库</a>，极大地减化了自己的应用开发任务。相信随着移动开发的发展，移动开发的生态圈会越来越成熟，基础的开源组件也将将越来越丰富，广大开发者都将从中受益。</p>
 
+<p>另一方面，Facebook的工程师在<a href="http://www.quora.com/What-exactly-did-Jason-Prado-mean-when-he-said-Xcode-cannot-handle-our-scale/answer/Scott-Goodson-1">Quora上反馈</a>说Paper在Xcode下打开需要40多秒钟，编译一次需要30分钟。这反映出大量的开源库的使用也给iOS集成编译环境Xcode提出了新的挑战，相信苹果会花大力气解决Xcode的性能问题。</p>
 
-<h2>开源项目</h2>
+<h2>总结</h2>
 
-<ol>
-<li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
-</ol>
+<p>Facebook发布的Paper让我看到了移动开发领域的快速发展，大量新的工具和开源技术给了设计师和程序员机会和挑战，相信在移动互联网快速发展的浪潮中，会涌现出越来越多优秀的移动应用。谁会是未来移动互联网的霸主？让我们拭目以待。</p>
 
+<h2>版权说明</h2>
+
+<p>本文已发表在《程序员》杂志2014年4月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-16/2819341">http://www.csdn.net/article/2014-04-16/2819341</a></p>
 </div>
   
   
@@ -389,14 +234,22 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
 <aside class="sidebar">
   
     <section>
-  <h1>友情链接</h1>
+  <h1>赞助商</h1>
   <p>
-     <a href="http://fir.im" target="_blank"><img width="260px" src="/images/fir.png" /></a>
+     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/02/talk-about-wwdc2014/">WWDC2014，苹果的“软件”发布会</a>
@@ -436,14 +289,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
     
       <li class="post">
         <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a>
       </li>
     
   </ul>

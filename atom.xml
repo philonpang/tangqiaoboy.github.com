@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-07-04T20:40:51+08:00</updated>
+  <updated>2014-07-22T21:22:14+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,171 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第18期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/07/22/ios-weekly-18/"/>
+    <updated>2014-07-22T21:19:39+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/07/22/ios-weekly-18</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/apple-ibm-cooperation">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果与 IBM 展开长期深度合作，Swift官方博客，Swift开发的视频教程等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.36kr.com/p/213771.html">《苹果与 IBM 展开长期深度合作，双方优势互补，专注企业级移动市场》</a>：苹果与 IBM 达成排他性合作协议，联合各自领先市场的优势，共同打造一样新品类商业应用，建立全新的企业级移动体验——IBM 享誉已久的大数据及分析能力将注入苹果的 iPhone 与 iPad——结合后者擅长的用户体验，共同改善企业及员工使用 iOS 设备工作的流程。</p></li>
+<li><p><a href="http://www.cocoachina.com/applenews/apple/2014/0715/9148.html">《苹果官方数据显示iOS 7渗透率已达90%》</a>：苹果最新数据显示，7月7日到13日之间，在访问App Store的设备中，90%的设备运行了iOS 7系统，而距离iOS 7正式发布仅仅为10个月的时间。不过国内iOS 7系统的比例还远远未达到80%。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="https://developer.apple.com/swift/blog/">《Swift官方博客》</a>：苹果在开发者中心建立了Swift官方博客，用于帮助开发者获得Swift的相关知识和资源。</p></li>
+<li><p><a href="http://wonderffee.github.io/blog/2014/07/19/quincykit-and-kscrash/">《利用QuincyKit + KSCrash构建自己的Crash Log收集与管理系统 》</a>：iOS bug定位是极看重crash log的，目前网上Crash Log收集与管理服务较有名的有Crashlytics, Flurry, 友盟等。本文介绍了QuincyKit + KSCrash构建自己的Crash Log收集与管理系统的适用场景和特点。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/07/17/ios_0code_vc/">《0 代码 ViewController》</a>：作者尝试利用Interface Builder的Object控件实现了一个0行代码的View Controller，在减小Controller体积小，提供了一些新颖的思路。不过需要注意，其文章示例代码中的ViewModel持久了View对象，其实不是指的（MVVM）中ViewModel，更像是一个Controller的代理。</p></li>
+<li><p><a href="http://www.thinkandbuild.it/from-objective-c-to-swift/">《From Objective-C to Swift: thoughts and hints》</a>：文章详细比较了Objective-C与Swift在编程中的细节差异。</p></li>
+</ol>
+
+
+<h2>视频</h2>
+
+<ol>
+<li><a href="http://www.imooc.com/learn/149">《Swift开发的视频》</a>：jakelin做了一个Swift开发的视频，视频从头到尾的讲述了如何开发一个Swift Weather app，同时也讲述了CococaPods，Core Location和AFNetworking的使用，源码地址在 <a href="https://github.com/JakeLin/SwiftWeather">这里</a> 。</li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="http://pgyer.com/">蒲公英</a>：蒲公英是专为iOS开发者提供的免费应用众测平台，旨在解决开发者将应用分发给内测用户及众测时的繁杂、低效的问题。使用蒲公英，开发者可将应用一键上传至蒲公英网站实现托管，托管后的应用拥单独的下载页面。开发者只需将下载页面地址（或二维码）发给内测用户，测试用户即可用手机直接安装，避免了之前测试用户需要将手机用数据线连接到电脑，才能安装测试应用的痛苦过程。它的特点是可以帮你用企业证书签名，同时设置密码，帮助大家分发测试版本。</p></li>
+<li><p><a href="https://github.com/realm/jazzy">jazzy</a>：jazzy是一个为Objective-C和Swift语言生成帮助文档的开源工具。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/realm/realm-cocoa">Realm</a>：Realm是一个真正为移动设备打造的数据库，同时支持Objective-C和Swfit。Realm宣称其相比Sqlite，在移动设备上有着更好的性能表现。</li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-22T21:19:39+08:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第17期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/07/11/ios-weekly-17/"/>
+    <updated>2014-07-11T19:36:11+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/07/11/ios-weekly-17</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/swift-beta3-change">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：Swift 进入TIOBE 指数排名16，Swift 在 Beta3 中的变化，WebKit in iOS 8等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">《Swift 进入TIOBE 指数排名16》</a>：在TIOBE的 2014年7月编程语言排行榜上，苹果公司新的编程语言Swift发布一个月内就进入TIOBE指数，名列位置16，前三名则没有变化，依旧是C、Java、Objective-C。</p></li>
+<li><p><a href="http://www.guomii.com/posts/38291">《韩国当局下令 Apple 改变 App Store 退款政策》</a>：近日韩国当局已经下令 Apple 修改其公司的 App Store 退款政策，理由是现有政策违反了公平贸易的相关规定。众所周知，目前 App Store 的退款政策是用户先提交请求，然后由 Apple 员工审核要不要进行退款。也就是说，最终是否能够退款存在着员工一定的主观因素，因此被韩国公平贸易委员会认为这是不公平的。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://andelf.github.io/blog/2014/07/08/swift-beta3-changes/">《Swift 在 Beta3 中的变化》</a>：刚刚更新的Xcode 6 Beta3中，Swift编译器又进行了较大的更改，本文章详细介绍了改动细节。</p></li>
+<li><p><a href="http://www.taofengping.com/2014/07/04/pinterest-transition-swift/">《用Swift实现Pinterest中的转场效果》</a>：在StackOverFlow上有人问Pinterest中转场的效果是如何实现的，在<a href="http://engineering.pinterest.com/post/67769846580/behind-the-pins-building-pinterest-3-0-for-ios">Pinterest的Blog</a>上工程师大致对Pinterest的结构作了大致的介绍，但是没有涉及到具体动画部分的实现。所以作者抽空用Swift重新实现了一遍这个转场的效果。</p></li>
+<li><p><a href="http://www.hotobear.com/?p=741">《WebKit in iOS 8》</a>：苹果在WWDC上公布了iOS的新框架WebKit.framework，其包含了新的网页浏览控件WKWebView。本文介绍了其相对于UIWebView所做的改进。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/ios-8-presentation-controller">《iOS 8 presentation controller》</a>：iOS 8 新加入一个类：UIPresentationController，它与 iOS 7 新添加的类与协议一道，帮助我们方便快捷地实现View Controller 的自定义过渡效果。作者完成了一个使用相关API的演示程序。</p></li>
+<li><p><a href="http://www.raywenderlich.com/74106/mvvm-tutorial-with-reactivecocoa-part-1">《MVVM Tutorial with ReactiveCocoa》</a>：RW新的ReactiveCocoa教材出炉了。不同于上次SimpleWeather的面面俱到，这次主讲MVVM设计模式和数据绑定。</p></li>
+<li><p><a href="http://oleb.net/blog/2014/07/swift-strings/">《Strings in Swift》</a>：文章介绍了Swift中字符串的各种细节上的使用注意事项。</p></li>
+</ol>
+
+
+<h2>视频</h2>
+
+<ol>
+<li><a href="http://www.infoq.com/cn/presentations/security-issues-behind-mobile-app">《移动APP背后的安全问题》</a>：现在已进入移动互联网时代，吃喝玩乐、办公支付等等各种应用都在抢占移动APP市场，由于安全无处不在的本质，在多年前就已经有少数人在研究移动APP的中木马、钓鱼等等，但很少有人想到移动APP安全跟WEB安全的关系。安全宝安全团队Leader尹毅在视频中分享了： 1、移动APP市场安全现状 2、安卓APP的反编译及漏洞挖掘 3、利用移动APP渗透的各种“猥琐”思路 4、自动化移动APP安全漏洞挖掘的程序实现。</li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="http://answerhuang.duapp.com/index.php/2014/07/06/dsym_tool/">《dSYM 文件分析工具》</a>：Xcode编译项目后，我们会看到一个同名的 dSYM 文件，dSYM 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件。作者分享了一个工具，能够根据dSYM文件方便从Crash信息中分析出有可能错误的地方。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/kylef/QueryKit">QueryKit</a>：QueryKit是一个用Swift实现的、方便对CoreData数据进行查询的工具库。</li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-11T19:36:11+08:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第16期]]></title>
@@ -2135,291 +2300,6 @@
 <span class="categories">
   
     <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[从Facebook看移动开发的发展]]></title>
-    <link href="http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook/"/>
-    <updated>2014-04-16T20:37:59+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook</id>
-    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/facebook-logo.jpg"></p>
-
-<h2>从Facebook谈起</h2>
-
-<p>Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式<a href="http://tech.ifeng.com/internet/special/fb-whatsapp/content-1/detail_2014_02/21/34032969_0.shtml">收购移动 IM 应用 WhatsApp</a>，总收购成本 190 亿美元。然后是继续发布了新产品：2014年2月，Facebook发布了一个新的移动端新闻阅读应用<a href="https://www.facebook.com/paper">Paper</a>。最后，Facebook最近还将自己使用的大量工具开源，包括开源了Paper的加载效果<a href="https://github.com/facebook/Shimmer">Shimmer</a>，LLDB的增强工具<a href="https://github.com/facebook/chisel">chisel</a>，以及Key-Value Observing工具<a href="https://github.com/facebook/KVOController">KVOController</a>，如果说这些开源工具让程序员如获至宝的话，那么Facebook将Paper的交互设计工具<a href="http://facebook.github.io/origami/">Origami</a>免费开放，则是对广大设计师的福音，极大地方便了移动交互设计工作的开展。</p>
-
-<p>2014年对于Facebook来说也是一个值得纪念的日子。因为从2004年2月4日Facebook产品上线到现在，Facebook刚刚走过10个年头。10年前，Facebook的创始人扎克伯格才19岁，是哈佛大学的一名学生。转眼间10年后，Facebook已经成长为全球最大的社交网络，月活跃用户达到12亿，市值约1200亿美元。</p>
-
-<p>业界内大多讨论的话题都围绕在Facebook收购WhatsApp这件事情上，而作为一个移动开发者，我更加看重Facebook 发布Paper这件事情。因为Paper并不是一个简单的应用，它有着非常优秀的交互效果，并且在产品设计和技术上都使用了许多前沿的技术，那就让我们看看，Paper的开发到底有何不同之处？</p>
-
-<h2>交互设计</h2>
-
-<p>我们首先从产品设计上看Paper的不同之处。Paper虽然只是一个新闻客户端，但从大家对Paper的评价上，我们发现优秀的交互再一次成为大家关注的焦点。回想那些成功的应用，大多都有着令人心动的交互效果，例如：Tweetie的下拉刷新，现在基本上成为iPhone上内容刷新的标准。Path跳出来的红心让人心动，很多朋友甚至会没事点那个红心，欣赏那流畅的按钮散开效果。还有Mailbox，用流畅的手势操作，将邮件管理与任务管理完美结合起来。</p>
-
-<p>国外成功的优秀应用也在影响着国内。交互设计不同于平面设计，不能简单地用Photoshop展现，而交互设计对于移动应用的成功又异常关键，所以需要花费不少时间来设计，因此产品经理很难兼顾地做交互设计。所以，在国内的一线互联网公司里，交互设计师这个职位慢慢成了移动应用的标配。但是在大部分的非一线互联网公司里面，移动开发的设计仍然停留在由产品经理简单潦草的完成阶段。所以，Facebook这次Paper的成功发布，再一次给移动开发的从业者指出了交互设计的重要性。</p>
-
-<p>回顾中国互联网产业的发展我们可以发现，产品经理（Product Manager）这个职位也是最近五、六年才成为互联网公司的标配的，想必在不远的将来，除着交互设计越来越重要，移动交互设计师也会成为每一个互联网公司重要的必备职位。</p>
-
-<p>另一方面，由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集<a href="http://facebook.github.io/origami/">Origami</a>，使得交互设计工作得到更好的辅助。而且在Facebook的带动下，<a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>也出现了。jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。</p>
-
-<p>不过另一方面，该工具仍然需要设计师具备一定的基础编码能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。</p>
-
-<h2>移动开发技术</h2>
-
-<p>随着iOS依赖管理工具Cocoapods和大量第三方开源库成熟起来，业界积累了大量的优秀开源项目。这次Facebook开发Paper使用了<a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">将近100个第三方开源库</a>，极大地减化了自己的应用开发任务。相信随着移动开发的发展，移动开发的生态圈会越来越成熟，基础的开源组件也将将越来越丰富，广大开发者都将从中受益。</p>
-
-<p>另一方面，Facebook的工程师在<a href="http://www.quora.com/What-exactly-did-Jason-Prado-mean-when-he-said-Xcode-cannot-handle-our-scale/answer/Scott-Goodson-1">Quora上反馈</a>说Paper在Xcode下打开需要40多秒钟，编译一次需要30分钟。这反映出大量的开源库的使用也给iOS集成编译环境Xcode提出了新的挑战，相信苹果会花大力气解决Xcode的性能问题。</p>
-
-<h2>总结</h2>
-
-<p>Facebook发布的Paper让我看到了移动开发领域的快速发展，大量新的工具和开源技术给了设计师和程序员机会和挑战，相信在移动互联网快速发展的浪潮中，会涌现出越来越多优秀的移动应用。谁会是未来移动互联网的霸主？让我们拭目以待。</p>
-
-<h2>版权说明</h2>
-
-<p>本文已发表在《程序员》杂志2014年4月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-16/2819341">http://www.csdn.net/article/2014-04-16/2819341</a></p>
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-16T20:37:59+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/summary/'>summary</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mac重装记录]]></title>
-    <link href="http://blog.devtang.com/blog/2014/04/12/install-mavericks-note/"/>
-    <updated>2014-04-12T17:00:20+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/04/12/install-mavericks-note</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
-
-<p>上次将我的<a href="http://blog.devtang.com/blog/2014/01/26/add-ssd-to-old-imac/">iMac硬盘换成SSD</a>后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果：</p>
-
-<ol>
-<li>启动时按住Shift键进入安全模式（没能进入）</li>
-<li>同时按下 Command、Option、P 与 R 键不放（成功执行，但还是无法进入系统）</li>
-<li>按住 Command 键及 S 键，进入单用户模式（成功进入，但是把“/资源库/StartupItems”与“/系统/资源库/StartupItems”都清除，以及清除了<code>com.apple.loginwindow.plist</code> 和<code>com.apple.windowserver.plist</code>后，但还是无法通过正常启动进入系统）</li>
-<li>在单用户模式中修复磁盘，没有发现磁盘问题</li>
-</ol>
-
-
-<p>于是我做了一次覆盖安装，之后可以使用了，但昨天电脑又无法进入系统了。于是我打算格盘后做一次完全的重装，在此记录下自己的重装过程。</p>
-
-<h2>备份数据</h2>
-
-<p>由于我能够通过启动时按Command 键及 S 键，进入单用户模式，所以我首先把自己未提交的工程代码通过U盘备份出来了，具体步骤如下：</p>
-
-<ol>
-<li>按住 Command 键及 S 键不放，以“单一使用者模式”开机。</li>
-<li>加载磁盘：<code>mount -uw /</code></li>
-<li>新建一个U盘的加载目的文件夹： <code>mkdir /usb</code></li>
-<li>插入U盘，然后用如下命令加载U盘 <code>mount_msdos /dev/disk1s1 /usb</code> （如果你的U盘不是msdos格式，可以尝试在输入mount_后，按两次tab查看可用的其它格式）</li>
-<li>备份资料：<code>cp -r  ~/work/iphone /usb</code></li>
-<li>弹出U盘：<code>umount /dev/disk1s1</code></li>
-<li>将U盘资料放到别的电脑上，然后准备用来下一步制作安装盘</li>
-</ol>
-
-
-<h2>制作安装盘</h2>
-
-<p> 苹果的操作系统其实可以直接通过网络恢复，考虑到恢复时间实在太长，所以最好制作成安装盘，这样安装起来非常快。</p>
-
-<ol>
-<li>准备好一个8G以上的空白U盘，准备好另外一台Mac电脑用来制作安装盘。</li>
-<li>新的操作系统<code>Mavericks.app</code>可以在AppStore上直接下载。在另一台电脑上把文件下载好，下载后文件<code>Mavericks.app</code>应该在你的<code>/Applications</code>目录下。</li>
-<li>插入U盘，执行：<code>sudo /Applications/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia --volume /Volumes/Untitled --applicationpath /Applications/Install\ OS\ X\ Mavericks.app --nointeraction</code></li>
-<li>以上命令会将U盘先格式化，然后制作成安装盘，整个过程大概需要40分钟左右。</li>
-</ol>
-
-
-<h2>安装系统</h2>
-
-<ol>
-<li>插入上一步制作好的U盘</li>
-<li>启动时按住 option 键，然后选择通过U盘启动，之后先进入磁盘工具里面把硬盘格式化了（你也可以选择不格式化，这样就是覆盖安装）</li>
-<li>安装系统。整个安装过程大概要30分钟的样子。</li>
-</ol>
-
-
-<h2>安装软件</h2>
-
-<p> 安装好系统后，首先进入AppStore升级系统，把需要的更新补丁都装了。然后通过AppStore的”Purchases”页面，重新安装以前购买过的应用，我主要装的是 qq、evernote、Alfred、MplayerX、Xcode、Dash、Keynote、有道词典。另外通过网页另外下载了QQ的五笔输入法。</p>
-
-<p>接下来的基本上是命令行的安装，Mac下管理命令行工具首先得装homebrew了：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>安装完之后执行一下<code>brew doctor</code>进行一下自检，看有没有什么异常。没问题就开始安装axel, imagemagick, autojump等命令行工具：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install wget
-</span><span class='line'>brew install axel
-</span><span class='line'>brew install imagemagick
-</span><span class='line'>brew install autojump
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>有些程序(例如老版本的ruby需要使用gcc来编译)，通过以下命令安装老版的gcc：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap homebrew/dupes
-</span><span class='line'>brew install apple-gcc42
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>使用brew cask来安装应用</h2>
-
-<p>之前专门<a href="http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">写文章介绍</a>过<code>brew cask</code>, 这次打算试试常用软件都用它来装，首先安装brew cask:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap phinze/cask
-</span><span class='line'>brew install brew-cask
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后设置alfred，把 <code>/opt/homebrew-cask</code>增加到 alfred 的search目录中，然后就可以用alfred来启动安装后的应用了。</p>
-
-<p>接下来用brew cask安装：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew cask install iterm2
-</span><span class='line'>brew cask install dropbox
-</span><span class='line'>brew cask install google-chrome
-</span><span class='line'>brew cask install sublime-text
-</span><span class='line'>brew cask install mou
-</span><span class='line'>brew cask install xtrafinder
-</span><span class='line'>brew cask install charles
-</span><span class='line'>brew cask install reveal
-</span><span class='line'>brew cask install xscope
-</span><span class='line'>brew cask install sparrow
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>使用zsh</h2>
-
-<p>然后是使用zsh，下载安装ohmyzsh:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -L http://install.ohmyz.sh | sh
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>安装完成之后，<code>vim ~/.zshrc</code> ，除了git插件外，另外增加 osx 和 autojump 插件。然后把以下这行注释启用：<code>export LANG=en_US.UTF-8</code> ，否则命令行中的中文可能会乱码。</p>
-
-<h2>同步数据</h2>
-
-<p>挂上VPN之后，打开chrome，然后同步自己的所有信息，chrome的同步挺赞的，包括书签，插件，浏览历史记录以及保存的密码都同步过来了。</p>
-
-<p>打开evernote和dropbox，同步数据。由于我的个人文档都存在它们里面，所以同步过来还是挺方便的。</p>
-
-<p>打开QQ，将漫游的聊天记录同步过来。打开dash，恢复购买，然后把snippet从dropbox同步过来。</p>
-
-<p>将自己的ssh key从原来的机器上复制过来。</p>
-
-<h2>设置Ruby</h2>
-
-<p>由于我的博客使用Octopress搭建，所以需要安装Ruby：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew update
-</span><span class='line'>brew install rbenv
-</span><span class='line'>brew install ruby-build
-</span><span class='line'>
-</span><span class='line'>rbenv install 1.9.3-p0
-</span><span class='line'>rbenv <span class="nb">local </span>1.9.3-p0
-</span><span class='line'>rbenv rehash
-</span><span class='line'>
-</span><span class='line'>gem install bundler
-</span><span class='line'>rbenv rehash
-</span><span class='line'>bundle install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>结束语</h2>
-
-<p>一切完成之后，我写下了本文，希望能帮助大家快速地重装系统。简单来说：</p>
-
-<ol>
-<li>通过evernote、dropbox和chrome将个人数据保存在云端后，重装后能快速恢复环境。</li>
-<li>通过homebrew和基于homebrew的brew cask，可以方便地帮助你快速安装不在AppStore上销售的软件。</li>
-</ol>
-
-
-<p>其实正常情况下，Mac使用迁移助理或Time Machine恢复非常方便，如果不是万不得已，大家也不用像我这样重装系统。</p>
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-12T17:00:20+08:00" pubdate data-updated="true">Apr 12<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/mac/'>mac</a>
   
 </span>
 

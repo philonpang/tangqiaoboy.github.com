@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="使用xcode4也有一段时间了，今天整理了一下xcode4的一些使用技巧，在这里分享给大家。 ">
+  <meta name="description" content="前言 今天参加了Adobe和CSDN组织的一个关于PhoneGap的开发讲座 ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。 正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/03/10/xcode4-tips/">Xcode4使用技巧</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">关于UIWebView和PhoneGap的总结</a></h1>
     
     
       <p class="meta">
@@ -98,20 +98,24 @@
   
 
 
-<time datetime="2012-03-10T20:42:00+08:00" pubdate data-updated="true">Mar 10<span>th</span>, 2012</time>
+<time datetime="2012-03-24T20:19:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>使用xcode4也有一段时间了，今天整理了一下xcode4的一些使用技巧，在这里分享给大家。</p>
+  <div class="entry-content"><h2>前言</h2>
+
+<p>今天参加了Adobe和CSDN组织的一个关于<a href="http://hui.csdn.net/MeetingInfo.aspx?mid=99">PhoneGap的开发讲座</a> ，而PhoneGap在iOS设备上的实现就是通过UIWebView控件来展示html内容，并且与native代码进行交互的。</p>
+
+<p>正好我们在做有道云笔记的iPad版，因为我们也是使用UIWebView来展示笔记内容，所以也需要做js与native代码相互调用的事情。所以在这儿顺便总结一下UIWebView在使用上的细节，以及谈谈我对PhoneGap的看法。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/03/10/xcode4-tips/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/">阅读 &rarr;</a>
     </footer>
   
 
@@ -123,7 +127,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/02/29/collaboration-with-git/">用Git进行协同开发</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/03/15/10-most-common-questions-on-stackoverflow-201203/">iPhone开发常问的十个问题(2012年3月版)</a></h1>
     
     
       <p class="meta">
@@ -139,28 +143,22 @@
   
 
 
-<time datetime="2012-02-29T19:08:00+08:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+<time datetime="2012-03-15T22:04:00+08:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>问题场景描述</h2>
+  <div class="entry-content"><h2>前言</h2>
 
-<p>常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。</p>
-
-<p>对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。</p>
-
-<p>在这种方式下，大家各自写自己的代码，提交到svn上，然后用svn up获得对方的代码。在调试问题的时候，大家可能不停地更新代码，然后让对方用svn up来更新。最终，虽然开发能够顺利进行，但是svn上会积累大量调试中的代码历史。所以，这样把svn当作代码中转站是一个很山寨的行为。</p>
-
-<p>在开发<a href="http://note.youdao.com">有道云笔记</a>新的<a href="http://itunes.apple.com/cn/app/id483995181">iPad版</a>时，我和前端同事zyc尝试用git进行了协同开发。在这里把具体方案分享给大家，欢迎大家讨论。</p>
+<p>今天去stackoverflow.com上看了一下iPhone标签下排名最高的10个问题，将它们整理出来，希望这些常见问题能帮到一些iPhone开发的初学者。本来想把答案也翻译过来的，后来发现答案资料通常都比较复杂，翻译起来太麻烦。所以大家还是看英文的答案吧，我只顺带用中文总结一下答案。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/02/29/collaboration-with-git/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2012/03/15/10-most-common-questions-on-stackoverflow-201203/">阅读 &rarr;</a>
     </footer>
   
 
@@ -188,6 +186,14 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
@@ -227,14 +233,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
       </li>
     
   </ul>

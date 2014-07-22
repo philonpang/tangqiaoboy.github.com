@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 什么是ReactiveCocoa ReactiveCocoa（其简称为RAC）是由Github 开源的一个应用于iOS和OS X开发的新框架。RAC具有函数式编程和响应式编程的特性。它主要吸取了.Net的 &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 新闻 《 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/02/11/reactivecocoa-introduction/">ReactiveCocoa - iOS开发的新框架</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/02/27/ios-weekly-1/">iOS移动开发周报-第1期</a></h1>
     
     
       <p class="meta">
@@ -98,36 +98,58 @@
   
 
 
-<time datetime="2014-02-11T18:47:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+<time datetime="2014-02-27T17:23:00+08:00" pubdate data-updated="true">Feb 27<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/reactivecocoa-ios-new-develop-framework">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<h2>什么是ReactiveCocoa</h2>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/02/apple-ssl-bug">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<p><a href="https://github.com/ReactiveCocoa/ReactiveCocoa">ReactiveCocoa</a>（其简称为RAC）是由<a href="https://github.com/blog/1107-reactivecocoa-for-a-better-world">Github</a> 开源的一个应用于iOS和OS X开发的新框架。RAC具有函数式编程和响应式编程的特性。它主要吸取了.Net的 <a href="http://msdn.microsoft.com/en-us/data/gg577609">Reactive Extensions</a>的设计和实现。</p>
+<h3>前言</h3>
 
-<h2>ReactiveCocoa试图解决什么问题</h2>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>经过一段时间的研究，我认为ReactiveCocoa试图解决以下3个问题：</p>
+<h2>新闻</h2>
 
 <ol>
-<li>传统iOS开发过程中，状态以及状态之间依赖过多的问题</li>
-<li>传统MVC架构的问题：Controller比较复杂，可测试性差</li>
-<li>提供统一的消息传递机制</li>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-02-22/08379183001.shtml">《苹果收购iOS测试平台TestFlight的开发商》</a>，苹果公司确认收购知名iOS测试平台TestFlight的开发商Burstly。与此同时，TestFlight表示将停止提供Android平台产品，不再面向新用户销售Android版测试软件开发包(SDK)，而当前用户仍可以继续使用。</p></li>
+<li><p><a href="http://coolshell.cn/articles/11112.html">《由苹果的低级Bug想到的》</a>: 2月22日苹果修复了SSL连接验证的一个bug，该bug会引起中间人攻击。文章作者详细分析了Bug产生的潜在原因和一些思考，包括代码风格、测试、以及goto语句的使用。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/02/11/baidu-interview/">《百度面试》</a>：作者在文章中分享了百度移动云可穿戴部门iOS开发职位的面试经历，其中多个技术问题值得大家深入学习。</p></li>
+<li><p><a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">《Facebook Paper使用的第三方库》</a>：作者在文章中分享了facebook paper使用的第三方库。该列表中的第三方库对广大iOS开发者来说，具有很好的参考意义。</p></li>
 </ol>
 
 
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://blog.xcodev.com/archives/iphone-baseband-intro/">《初识iPhone基带通讯》</a>：基带（Baseband）是手机的通讯模块，它负责移动网络的调制与解调工作，它与手机核心通讯功能息息相关。作者在文章中介绍了，如何在越狱的iPhone中，用基带进行通讯。</p></li>
+<li><p><a href="http://sjpsega.com/blog/2014/02/11/yi--ios-7-best-practices-part-1/">《[译]iOS7最佳实践：一个天气App案例(一)》</a>和<a href="http://sjpsega.com/blog/2014/02/15/yi--ios-7-best-practices-part-2/">《[译]iOS7最佳实践：一个天气App案例(二)》</a>：在这篇来自raywenderlich的教程中，作者详细介绍了如何使用依赖管理工具Cocoapods、纯代码布局、响应式编程框架ReactiveCocoa以及OpenWeatherMap完成一个天气应用，具有很高的学习价值。</p></li>
+<li><p><a href="http://blog.csdn.net/yiyaaixuexi/article/details/19642621">《基于脚本实现动态库注入》</a>：作者分享了她在越狱手机上，基于脚本向某个应用动态注入动态库的想法和实践。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/02/21/xcode-plugin-fun/">《Xcode5 Plugins 开发简介》</a>：作者在文章中介绍了如何给Xcode5开发插件。最后作为示例，开发了一个简单的插件，记录Xcode开发中Building的时间。</p></li>
+<li><p><a href="http://onevcat.com/2014/02/ios-test-with-kiwi/">《TDD的iOS开发初步以及Kiwi使用入门》</a>：测试驱动开发(Test Driven Development，简称为TDD)是保证代码质量的一种程序开发方法。作者介绍了在iOS开发中使用TDD及Kiwi的方法。</p></li>
+<li><p><a href="http://iosinit.com/?p=787">《objc.io系列文章中文翻译汇总》</a>：objc.io是国外的一个iOS教程网站，它每一期的教程会有一个主题，在这个主题下会有6篇左右的文章（有时由浅入深，有时侧重点不同），实属iOS学习中的精品资源。因此，每一期objc.io文章出来的时候，都会有一些热心的读者将文章翻译成中文。作者将网上的翻译汇总在文章中，方便大家阅读。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://itunes.apple.com/cn/app/crash-manager/id806327079?mt=8">Crash Manager</a>：Crash Manager是Crashlytics的非官方iPhone客户端，而且在AppStore上免费。InfoQ也曾撰文介绍过Crashlytics的使用：<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">《统计Crash的工具Crashlytics》</a>。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/DyCI/dyci-main">DyCI</a> ：DyCI是一个动态注入工具，用于向iOS应用中注入代码而不用重新启动应用。</li>
+</ol>
+
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/02/11/reactivecocoa-introduction/">阅读 &rarr;</a>
-    </footer>
   
 
 
@@ -138,7 +160,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/01/26/add-ssd-to-old-imac/">自己动手给iMac换SSD</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">使用brew cask来安装Mac应用</a></h1>
     
     
       <p class="meta">
@@ -154,20 +176,44 @@
   
 
 
-<time datetime="2014-01-26T22:06:00+08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
+<time datetime="2014-02-26T21:38:00+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>公司的iMac是2011年款的，经过2年的使用，现在已经变得比较慢了，用<code>htop</code>看了一下，其实cpu占用率一直不高，主要是磁盘IO比较慢，所以考虑自己动手给iMac换一个SSD。在此将整个过程分享给大家。</p>
+  <div class="entry-content"><h2>简介</h2>
+
+<p><a href="https://github.com/phinze/homebrew-cask"><code>brew cask</code></a>是一个用命令行管理Mac下应用的工具，它是基于<a href="http://brew.sh/"><code>homebrew</code></a>的一个增强工具。</p>
+
+<p><code>homebrew</code>可以管理Mac下的命令行工具，例如<code>imagemagick</code>, <code>nodejs</code>，如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install imagemagick
+</span><span class='line'>brew install node
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而使用上<code>brew cask</code>之后，你还可以用它来管理Mac下的Gui程序，例如<code>qq</code>, <code>chrome</code>, <code>evernote</code>等，如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew cask install qq
+</span><span class='line'>brew cask install google-chrome
+</span><span class='line'>brew cask install evernote
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2014/01/26/add-ssd-to-old-imac/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">阅读 &rarr;</a>
     </footer>
   
 
@@ -195,6 +241,14 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
@@ -234,14 +288,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a>
       </li>
     
   </ul>

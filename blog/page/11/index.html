@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
+  <meta name="description" content="关于木马 今天，国外的iOS开发者 @iOn1c 发现一个来自中国的开发者&#8221;WANG XIN&#8221;签名的iOS平台的木马插件，该插件是一个名为Unflod.dylib动态链接库，可以将越狱机器上的Apple ID用户名和密码盗取，并且发送到指定服务器上。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,72 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/19/ios-jailbreak-trojan/">专门针对越狱iOS设备的盗号木马出现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-19T00:27:38+08:00" pubdate data-updated="true">Apr 19<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/jailbreak-warning.jpg"></p>
+
+<h3>关于木马</h3>
+
+<p>今天，国外的iOS开发者 <a href="https://twitter.com/iOn1c">@iOn1c</a> 发现一个来自中国的开发者&#8221;WANG XIN&#8221;签名的iOS平台的木马插件，该插件是一个名为<code>Unflod.dylib</code>动态链接库，可以将越狱机器上的Apple ID用户名和密码盗取，并且发送到指定服务器上。<a href="http://pastebin.com/raw.php?i=QxVRd2ha">这里</a>有该恶意插件的反汇编代码。<a href="https://www.sektioneins.de/en/blog/14-04-18-iOS-malware-campaign-unflod-baby-panda.html">这里</a>有关于该木马插件的详细分析。</p>
+
+<h3>检测与原理</h3>
+
+<p>检查你的设备是否有该木马的方法：用<code>iFile</code>查看<code>/Library/MobileSubstrate/DynamicLibraries/Unflod.dylib</code> 文件是否存在，如果存在，请立即删除并且重新启动设备。</p>
+
+<p>国外的越狱开发者也分析了一下该插件的工作原理，它通过监听所有的SSL协议，来截取用户的帐号和密码。所以理论上，该技术方案其实不光可以监听Apple ID帐号，还可以用来监听支付宝、微信等应用的帐号和密码。</p>
+
+<h3>感想</h3>
+
+<p>自从2010年7月26日，美国版权局修改《千禧年数字版权法》中的豁免条款，认可了iOS越狱的合法性以后，国外越狱社区就一直在为了自由地使用iPhone设备努力。国外的Cydia商店不但提供了大量优秀的免费软件，也提供了付费的越狱软件的下载。越狱在国外，是与盗版严格划清界限的，大多数的越狱开发者，也都是为了更好的使用iPhone而开发相关软件。</p>
+
+<p>但是在国内，大部分的越狱用户的目的还是停留在使用盗版软件上，这也反映出国人的版权意识薄弱以及法律对于知识产权保护的不力。相关的盗版软件渠道，不但能够堂堂正正的宣传<a href="http://weibo.com/2786069543/yxpdRrpGB?mod=weibotime">“海量正版软件游戏，全部免费安装”</a>，而且有些公司还能被大公司以<a href="http://tech.sina.com.cn/i/baidubuy91/">上亿美金收购</a>。只能说国内的环境实在是太奇葩。</p>
+
+<p>以下是某助手的广告截图，你相信全部苹果游戏应用，本身就是免费的么？</p>
+
+<p><img src="/images/kuaiyong.jpg"></p>
+
+<p>这次由中国开发者&#8221;WANG XIN&#8221;签名的这个木马插件，实在是让中国人自“太极”事件之后再次蒙羞。简单来说，就是坏了规矩。以后来自中国越狱开发者开发的正常越狱软件，将会受到更多潜在的“歧视”和“关照”。而国外的开发者看中国市场，会更加坚定地认为这是一个盗版横行的市场，从而想办法特别“关照”中国用户或者直接像很多国外的游戏厂商那样，直接忽视中国市场。</p>
+
+<h3>建议</h3>
+
+<p>最后回说安全这件事，笔者作为一个资深iOS开发者，建议一般普通用户，如果是为了用盗版软件就别越狱了，各种国内的越狱渠道都非常不安全的。</p>
+
+<p>如果是开发者们为了研究安全而越狱的，最好也只是在专门研究用的iTouch上使用，以避免可能的安全风险。</p>
+
+<p>虽然感觉那一天还比较遥远，但真心希望有一天，国内对于版权的保护能够开展起来，这对于整个中国互联网产业的发展，将会是一个极大的促进。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -151,76 +217,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/16/mobile-development-view-from-facebook/">从Facebook看移动开发的发展</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-16T20:37:59+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/facebook-logo.jpg"></p>
-
-<h2>从Facebook谈起</h2>
-
-<p>Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式<a href="http://tech.ifeng.com/internet/special/fb-whatsapp/content-1/detail_2014_02/21/34032969_0.shtml">收购移动 IM 应用 WhatsApp</a>，总收购成本 190 亿美元。然后是继续发布了新产品：2014年2月，Facebook发布了一个新的移动端新闻阅读应用<a href="https://www.facebook.com/paper">Paper</a>。最后，Facebook最近还将自己使用的大量工具开源，包括开源了Paper的加载效果<a href="https://github.com/facebook/Shimmer">Shimmer</a>，LLDB的增强工具<a href="https://github.com/facebook/chisel">chisel</a>，以及Key-Value Observing工具<a href="https://github.com/facebook/KVOController">KVOController</a>，如果说这些开源工具让程序员如获至宝的话，那么Facebook将Paper的交互设计工具<a href="http://facebook.github.io/origami/">Origami</a>免费开放，则是对广大设计师的福音，极大地方便了移动交互设计工作的开展。</p>
-
-<p>2014年对于Facebook来说也是一个值得纪念的日子。因为从2004年2月4日Facebook产品上线到现在，Facebook刚刚走过10个年头。10年前，Facebook的创始人扎克伯格才19岁，是哈佛大学的一名学生。转眼间10年后，Facebook已经成长为全球最大的社交网络，月活跃用户达到12亿，市值约1200亿美元。</p>
-
-<p>业界内大多讨论的话题都围绕在Facebook收购WhatsApp这件事情上，而作为一个移动开发者，我更加看重Facebook 发布Paper这件事情。因为Paper并不是一个简单的应用，它有着非常优秀的交互效果，并且在产品设计和技术上都使用了许多前沿的技术，那就让我们看看，Paper的开发到底有何不同之处？</p>
-
-<h2>交互设计</h2>
-
-<p>我们首先从产品设计上看Paper的不同之处。Paper虽然只是一个新闻客户端，但从大家对Paper的评价上，我们发现优秀的交互再一次成为大家关注的焦点。回想那些成功的应用，大多都有着令人心动的交互效果，例如：Tweetie的下拉刷新，现在基本上成为iPhone上内容刷新的标准。Path跳出来的红心让人心动，很多朋友甚至会没事点那个红心，欣赏那流畅的按钮散开效果。还有Mailbox，用流畅的手势操作，将邮件管理与任务管理完美结合起来。</p>
-
-<p>国外成功的优秀应用也在影响着国内。交互设计不同于平面设计，不能简单地用Photoshop展现，而交互设计对于移动应用的成功又异常关键，所以需要花费不少时间来设计，因此产品经理很难兼顾地做交互设计。所以，在国内的一线互联网公司里，交互设计师这个职位慢慢成了移动应用的标配。但是在大部分的非一线互联网公司里面，移动开发的设计仍然停留在由产品经理简单潦草的完成阶段。所以，Facebook这次Paper的成功发布，再一次给移动开发的从业者指出了交互设计的重要性。</p>
-
-<p>回顾中国互联网产业的发展我们可以发现，产品经理（Product Manager）这个职位也是最近五、六年才成为互联网公司的标配的，想必在不远的将来，除着交互设计越来越重要，移动交互设计师也会成为每一个互联网公司重要的必备职位。</p>
-
-<p>另一方面，由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集<a href="http://facebook.github.io/origami/">Origami</a>，使得交互设计工作得到更好的辅助。而且在Facebook的带动下，<a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>也出现了。jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。</p>
-
-<p>不过另一方面，该工具仍然需要设计师具备一定的基础编码能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。</p>
-
-<h2>移动开发技术</h2>
-
-<p>随着iOS依赖管理工具Cocoapods和大量第三方开源库成熟起来，业界积累了大量的优秀开源项目。这次Facebook开发Paper使用了<a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">将近100个第三方开源库</a>，极大地减化了自己的应用开发任务。相信随着移动开发的发展，移动开发的生态圈会越来越成熟，基础的开源组件也将将越来越丰富，广大开发者都将从中受益。</p>
-
-<p>另一方面，Facebook的工程师在<a href="http://www.quora.com/What-exactly-did-Jason-Prado-mean-when-he-said-Xcode-cannot-handle-our-scale/answer/Scott-Goodson-1">Quora上反馈</a>说Paper在Xcode下打开需要40多秒钟，编译一次需要30分钟。这反映出大量的开源库的使用也给iOS集成编译环境Xcode提出了新的挑战，相信苹果会花大力气解决Xcode的性能问题。</p>
-
-<h2>总结</h2>
-
-<p>Facebook发布的Paper让我看到了移动开发领域的快速发展，大量新的工具和开源技术给了设计师和程序员机会和挑战，相信在移动互联网快速发展的浪潮中，会涌现出越来越多优秀的移动应用。谁会是未来移动互联网的霸主？让我们拭目以待。</p>
-
-<h2>版权说明</h2>
-
-<p>本文已发表在《程序员》杂志2014年4月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-16/2819341">http://www.csdn.net/article/2014-04-16/2819341</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/12/">&larr; Older</a>
@@ -242,6 +238,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
@@ -285,10 +285,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
       </li>
     
   </ul>

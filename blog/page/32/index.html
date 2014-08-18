@@ -9,7 +9,9 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 Objective-c语言在申请对象的时，需要使用两段构造(Two Stage Creation)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例： 1 &hellip;">
+  <meta name="description" content="在iOS应用中，有时候会需要调用系统的一些UI控件，例如： 在UIWebView中长按会弹出系统的上下文菜单
+在UIImagePickerController中会使用系统的照相机界面
+在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。 以上这些UI控件中， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +84,58 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/01/23/set-ios-system-ui-language/">设置应用内的系统控件语言</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-23T21:05:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/bdj-rank.jpg"></p>
+
+<p>在iOS应用中，有时候会需要调用系统的一些UI控件，例如：</p>
+
+<ol>
+<li>在UIWebView中长按会弹出系统的上下文菜单</li>
+<li>在UIImagePickerController中会使用系统的照相机界面</li>
+<li>在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。</li>
+</ol>
+
+
+<p>以上这些UI控件中，其显示的语言并不是和你当前手机的系统语言一致的。而是根据你的App内部的语言设置来显示。结果就是，如果你没有设置恰当的话，你的中文App可能会出现一些英文的控件文字。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/23/set-ios-system-ui-language/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/01/13/two-stage-creation-on-cocoa/">谈ObjC对象的两段构造模式</a></h1>
     
     
@@ -129,47 +183,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/01/2012-summary/">2012年个人总结</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-01T14:31:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>和<a href="http://blog.devtang.com/blog/2012/01/01/2011-summary/">去年</a>一样，记录一下今年的成长和收获。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/01/2012-summary/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/33/">&larr; Older</a>
@@ -191,6 +204,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/08/12/ios-weekly-20/">iOS移动开发周报-第20期</a>
@@ -234,10 +251,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
       </li>
     
   </ul>

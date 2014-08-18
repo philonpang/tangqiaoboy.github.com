@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>关于iOS测试机个数上限的详细规则 - 唐巧的技术博客</title>
+  <title>iOS移动开发周报-第21期 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 苹果的官网文档。 规则 我总结出来的规则如下（附上原文以便对应）： &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2012/04/06/about-100-devices-limit">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2014/08/18/ios-weekly-21">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
@@ -79,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">关于iOS测试机个数上限的详细规则</h1>
+      <h1 class="entry-title">iOS移动开发周报-第21期</h1>
     
     
       <p class="meta">
@@ -95,64 +95,60 @@
   
 
 
-<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+<time datetime="2014-08-18T21:53:55+08:00" pubdate data-updated="true">Aug 18<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>前言</h2>
+<div class="entry-content"><h3>版权说明</h3>
 
-<p>公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/apple-icloud">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<!-- more -->
+<h3>前言</h3>
 
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<h2>规则</h2>
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果iCloud中国数据转存中国电信，Swift Operators，100 个 Swift 必备 tips，FLEXLoader等。</p>
 
-<p>我总结出来的规则如下（附上原文以便对应）：</p>
+<h2>新闻</h2>
 
-<ul>
-<li>每一个开发者membership year,只能有100次增加设备的名额。如果你增加一个设备,之后又将该设备删除,并不会将用掉的名额恢复.</li>
-</ul>
-
-
-<p>You can register up to 100 devices per year for development purposes. Any devices added, then later removed, still count towards your maximum number of registered devices per year.</p>
-
-<ul>
-<li>在每一个开发者membership year开始的时候,Team Agent和Admin角色可以选择删掉一些设备来恢复资格, 也可以清空所有设备来恢复到最多100次设备的名额。这个操作在Team Agent和Admin在一次新的membership year开始后即可使用，在使用时，需要注意，先将需要删除的设备删掉，然后才能添加需要新增的设备。一旦开始增加新设备，删除设备以恢复名额的功能将不再可用。</li>
-</ul>
+<ol>
+<li><a href="http://www.36kr.com/p/214546">《苹果iCloud中国数据转存中国电信》</a>：出自抚州市崇仁县电信分公司的新闻显示：中国电信正式为苹果 iCloud 中国用户提供云存储服务，成为苹果公司在中国大陆地区唯一的云存储服务提供商。</li>
+</ol>
 
 
-<p>At the start of a new membership year, Team Agents and Admins can remove devices and restore the available device count for their development team to 100 devices.</p>
+<h2>教程</h2>
 
-<p>When Team Agents or Admins first sign in to the iOS Provisioning Portal at the start of a new membership year, they will be presented with the option to remove devices and restore the device count for those removed devices.</p>
+<ol>
+<li><p><a href="http://nshipster.com/swift-operators/">《Swift Operators》</a>：AFNetworking的作者<a href="http://mattt.me/">Mattt Thompson</a>在本文中详细介绍了swift的操作符，包括基本操作符，操作符重载以及一些使用原则。</p></li>
+<li><p><a href="http://s2dongman.com/?p=658">《为移动而设计，第3章：视觉设计》</a>：理解规则，打破规则，为移动而设计需要我们不断思考，持续发现新的、优美的、易用的解决方案。本文讨论了在视觉设计上如何创造优美、移动应用的解决方案，以及相关的最佳实践。</p></li>
+<li><p><a href="http://www.raywenderlich.com/76285/beginning-core-image-swift">《Beginning Core Image in Swift》</a>：文章介绍了在Swift中使用Core Image，包括使用基础滤镜、从相册加载图片、保存图片到相册等。</p></li>
+<li><p><a href="http://www.raywenderlich.com/79863/video-tutorial-introduction-unity-part-1-introduction">《Introduction to Unity Part 1: Introduction》</a>：本视频对Unity进行了入门性的介绍。</p></li>
+</ol>
 
-<p>Important Note: At the start of your membership year, make sure to remove all devices you no longer use for development prior to adding any new devices.</p>
 
-<ul>
-<li>在以后整个membership year中，删除设备不会增加新的名额。</li>
-</ul>
+<h2>图书</h2>
+
+<ol>
+<li><a href="https://leanpub.com/swifter">《Swifter &ndash; 100 个 Swift 必备 tips》</a>：著名iOS博客作者onevcat总结和分享了 Swift 中 100 条十分实用的小技巧和需要特别注意的地方，希望能让大家更好更快地掌握 Swift。本书提供了5章的试读，最低售价3.99$。</li>
+</ol>
 
 
-<p>Removing devices during your membership year will not open these slots to add new devices.</p>
+<h2>工具</h2>
 
-<h2>举例</h2>
+<ol>
+<li><a href="http://joeyio.com/2014/08/12/tweak-flexloader/">FLEXLoader</a>：FLEXLoader是<a href="http://weibo.com/2js3">@拓词Joey</a>写的一个可以动态加载FLEX的开源越狱插件，它以加载动态库的方式注入到系统App和用户的App中。FLEX全称是”Flipboard Explorer”，是Flipboard团队开发一组调试和探测App的开源工具，功能非常强大，比如查看和修改View的层级结构，查看和修改堆内存中的对象信息等等，更多FLEX介绍和使用信息参考<a href="https://github.com/Flipboard/FLEX">这里</a>。</li>
+</ol>
 
-<p>直接看规则比较晦涩，举个例子：</p>
 
-<p>假如第一年，你增加了70个设备，同时删除了10个设备，这个时候，虽然你的设备数是60，但是可用的增加测试机的名额却只有30个了。</p>
+<h2>开源项目</h2>
 
-<p>到了第二年，你续费了开发者身份，在你第一次登陆进去后，你可以看到你的可用设备恢复成 100 &ndash; 60 = 40个了。这个时候，你可以选择删除一些设备，例如你又删除了20个设备，这样你的名额数变成60个。之后你增加了一个设备，因为你选择了增加新设备，苹果认为你已经放弃删除设备以恢复设备数的机会，这样，你的名额就固定成59个。以后删除设备都不会增加新名额了，直到你的下一个membership year开始时才又会有这样的机会来删除设备释放名额。</p>
+<ol>
+<li><a href="https://github.com/ochococo/Design-Patterns-In-Swift">Design-Patterns-In-Swift</a>：该项目用Swift实现了多种设计模式，读者可以当作代码示例参考。</li>
+</ol>
 
-<h2>总结</h2>
-
-<p>所以说，不管怎么样，你的账号下的可用测试设备始终不会超过100个。不会象有些人想的那样，每过一年名额就直接变成100了。另外，每年删除设备以恢复名额的机会只有开始的时候，以后删除设备也不会恢复名额。</p>
-
-<p>那如果万一我的设备数达到上限，我又急需要增加新设备怎么办呢？我们不久前就遇到了这种情况。我们的解决办法是给苹果的技术客服发邮件要求他们帮助我们删除所有设备并且恢复到增加100个测试设备的名额。最终在过了2天后，苹果答应并帮助我们解决了问题。</p>
-
-<p>具体做法是访问：<a href="https://developer.apple.com/contact/">https://developer.apple.com/contact/</a>，点击 Program Benefits， 然后在新出来的提交界面中将需求填上。之后苹果会发邮件过来告诉你处理结果，可能需要打电话过去和他们沟通一些细节。在沟通完成后，苹果就可以立即帮助你状态修改到“可删除设备来增加测试设备名额”。这样，你就可以选择性的删除一些不需要的设备来释放一些名额了。</p>
 </div>
 
 
@@ -175,12 +171,12 @@
   
 
 
-<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+<time datetime="2014-08-18T21:53:55+08:00" pubdate data-updated="true">Aug 18<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
   
 </span>
 
@@ -234,10 +230,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/03/24/talk-about-uiwebview-and-phonegap/" title="Previous Post: 关于UIWebView和PhoneGap的总结">&laquo; 关于UIWebView和PhoneGap的总结</a>
+        <a class="basic-alignment left" href="/blog/2014/08/12/ios-weekly-20/" title="Previous Post: iOS移动开发周报-第20期">&laquo; iOS移动开发周报-第20期</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/04/22/use-fmdb/" title="Next Post: 在iOS开发中使用FMDB">在iOS开发中使用FMDB &raquo;</a>
       
     </p>
   </footer>

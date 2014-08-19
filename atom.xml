@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-08-18T21:57:09+08:00</updated>
+  <updated>2014-08-19T10:19:22+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -48,7 +48,7 @@
 <h2>图书</h2>
 
 <ol>
-<li><a href="https://leanpub.com/swifter">《Swifter &ndash; 100 个 Swift 必备 tips》</a>：著名iOS博客作者onevcat总结和分享了 Swift 中 100 条十分实用的小技巧和需要特别注意的地方，希望能让大家更好更快地掌握 Swift。本书提供了5章的试读，最低售价3.99$。</li>
+<li><a href="http://swifter.tips">《Swifter &ndash; 100 个 Swift 必备 tips》</a>：著名iOS博客作者onevcat总结和分享了 Swift 中 100 条十分实用的小技巧和需要特别注意的地方，希望能让大家更好更快地掌握 Swift。本书提供了5章的试读，最低售价3.99$。</li>
 </ol>
 
 

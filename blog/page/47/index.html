@@ -9,7 +9,8 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="github真是无所不能。其Pages功能支持上传html，并且在页面中显示。于是有好事者做了一个基于github的博客管理工具：octopress，基本原理是用git来管理你的文章，然后最终发布到github上成为一个独立博客站点。由于github支持CNAME域名指向，所以如果有独立域名的话， &hellip;">
+  <meta name="description" content="我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段： 1
+[self &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +83,52 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/02/14/nsstring-java-like-wrapper/">给NSString增加Java风格的方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-14T17:17:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">self</span> <span class="nl">stringByTrimmingCharactersInSet:</span><span class="p">[</span><span class="n">NSCharacterSet</span> <span class="n">whitespaceAndNewlineCharacterSet</span><span class="p">]];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/14/nsstring-java-like-wrapper/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/02/10/setup-blog-based-on-github/">象写程序一样写博客：搭建基于github的博客</a></h1>
     
     
@@ -120,72 +167,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">iOS5中UIViewController的新方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-06T21:19:00+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>前言</h3>
-
-<p>在苹果的WWDC2011大会视频的
-<a href="https://developer.apple.com/videos/wwdc/2011/?id=101">《Session 101 &ndash; What&rsquo;s New in Cocoa》</a> 和
-<a href="https://developer.apple.com/videos/wwdc/2011/?id=102">《Session 102 &ndash; Implementing UIViewController Containment》</a> 中介绍了苹果在iOS5中给UIViewController新增加的5方法以及一个属性:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 方法</span>
-</span><span class='line'><span class="nl">addChildViewController:</span>
-</span><span class='line'><span class="nl">removeFromParentViewController:</span>
-</span><span class='line'><span class="nl">transitionFromViewController:toViewController:duration:options:animations:completion:</span>
-</span><span class='line'><span class="nl">willMoveToParentViewController:</span>
-</span><span class='line'><span class="nl">didMoveToParentViewController:</span>
-</span><span class='line'><span class="c1">// 属性</span>
-</span><span class='line'><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">childViewControllers</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/48/">&larr; Older</a>
@@ -207,6 +188,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
@@ -250,10 +235,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/ios-weekly-14/">iOS移动开发周报-第14期</a>
       </li>
     
   </ul>

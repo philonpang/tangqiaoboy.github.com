@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-08-24T19:16:20+08:00</updated>
+  <updated>2014-09-01T21:27:01+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,77 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第23期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/09/01/ios-weekly-23/"/>
+    <updated>2014-09-01T20:22:54+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/09/01/ios-weekly-23</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/afnetworking2.0">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果发出9月9日发布会邀请函，AFNetworking2.0源码解析，objc与鸭子对象，Protecting iOS Applications等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://tech.sina.com.cn/mobile/n/apple/2014-08-29/01339582927.shtml">《苹果发出9月9日发布会邀请函》</a>：苹果公司刚刚向外界发出邀请函，太平洋时间9月9日上午10点（北京时间9月10日凌晨1点），将在美国库伯提诺市弗林特剧院举行发布会。本次发布会的主角极有可能是iPhone 6及iWatch智能手表。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://blog.cnbang.net/tech/2320/">《AFNetworking2.0源码解析》</a>：AFNetworking是著名的iOS网络库，文章作者分享了其阅读AFNetworking2.0源码的收获。</p></li>
+<li><p><a href="http://www.raywenderlich.com/76433/how-to-make-a-custom-control-swift">《Creating a Custom Control in Swift》</a>：文章介绍了如何使用Swift自定义一个进度条控件。</p></li>
+<li><p><a href="http://baoz.me/452378">《iOS干货精选》</a>：本文是《码农周刊》中的精品文章的集合，包括iOS和Android部分。</p></li>
+<li><p><a href="http://www.topcoder.com/blog/kicking-off-our-500k-learn-swift-series/">《Kicking Off our $500K Learn Swift Series》</a>：TopCoder推出学习Swift系列比赛，拿出多达50万美元奖励学习成绩突出者。</p></li>
+<li><p><a href="https://developer.apple.com/swift/blog/?id=12">《Optionals Case Study: valuesForKeys》</a>：来自苹果官方博客的教程，通过学习Dictionary的valuesForKeys方法，来了解Optional类型。</p></li>
+<li><p><a href="http://blog.csdn.net/u011247468/article/details/16332071">《Xcode5 Asset Catalog 使用备忘》</a>：Asset Catalog是Xcode5引入的一个新的图片管理方式，文章介绍了使用Asset Catalog创建可拉伸图片的方法。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/08/24/objc-duck/">《objc与鸭子对象（上）》</a>、<a href="http://blog.sunnyxx.com/2014/08/26/objc-duck-advanced/">《objc与鸭子对象（下）》</a>：文章上半部分介绍了鸭子类型和它在ObjC中的实践，以及一个使用NSProxy实现JSON Entity的鸭子类。下半部分介绍了鸭子对象的进阶用法，并简单介绍由鸭子对象思想衍生出的依赖注入。</p></li>
+<li><p><a href="http://www.polidea.com/#!heartbeat/blog/Protecting_iOS_Applications">《Protecting iOS Applications》</a>：文章系统地介绍了如何保护iOS程序的代码安全，防止反汇编分析。</p></li>
+<li><p><a href="http://iosdevelopertips.com/xcode/swift-replacement-pragma.html">《Swift’s Answer to #pragma mark, FIXME and TODO》</a>：文章介绍了在ObjC中支持的#pragma mark, FIXME 和 TODO，在Swift语言中是如何使用的。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/Polidea/ios-class-guard">ios-class-guard</a>：一个用于保护iOS源码不被反汇编的开源库。</li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-01T20:22:54+08:00" pubdate data-updated="true">Sep 1<span>st</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第22期]]></title>
@@ -2132,86 +2203,6 @@
 
 
 <time datetime="2014-05-24T10:04:19+08:00" pubdate data-updated="true">May 24<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第11期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/05/16/ios-weekly-11/"/>
-    <updated>2014-05-16T21:36:16+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/05/16/ios-weekly-11</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/ios-app-security-development">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：iOS应用安全开发概述，Collection View 动画，可变参数列表的实现原理，XcodeBoost插件等。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security">《iOS应用安全开发，你不知道的那些事》</a>：iOS应用由于其直接运行在手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文从网络安全、本地文件和数据安全、源代码安全三个方面，阐述iOS应用在安全性上遇到的挑战。</p></li>
-<li><p><a href="http://objccn.io/issue-12-5/">《Collection View 动画》</a>：<code>UICollectionView</code> 和相关类的设置非常灵活和强大。但是灵活性一旦增强，某种程度上也增加了其复杂性： <code>UICollectionView</code> 比老式的 <code>UITableView</code> 更有深度，适用性也更强。本文的第一部分将集中讨论并举例说明如何用不同的类和方法来共同帮助实现一些常见的 <code>UICollectionView</code> 动画。在第二部分，我们将看一下带有 collection views 的 view controller 转场动画以及在 <code>useLayoutToLayoutNavigationTransitions</code> 可用时使用其进行转场，如果不可用时，我们会实现一个自定义转场动画。</p></li>
-<li><p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">《Variable Argument Lists》</a>：可变参数函数（Variadic Function），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的。本文讨论了其具体的实现内部原理。最后作者<a href="http://weibo.com/lancy1014">晨钰Lancy</a>介绍了其开源的一个能够接收block作为回调的自定义的<a href="https://github.com/lancy/cyalertview">AlertView组件</a>。</p></li>
-<li><p><a href="http://imoldman.github.io/blog/2014/04/30/why-assert-enabled-under-release-in-xcode/">《assert出问题了》</a>：作者分享了在Xcode中使用Assert时需要注意的问题。</p></li>
-<li><p><a href="http://stackoverflow.com/questions/7385439/exception-thrown-in-nsorderedset-generated-accessors">《CoreData的坑》</a>：<a href="http://weibo.com/pinxue">pinxue</a>分享了一个持续3年都没有修复的CoreData的Bug。</p></li>
-<li><p><a href="http://www.taofengping.com/2014/05/07/multi-similar-application/#.U3N25q2SyrJ">《使用cocoapods创建多个类似工程的尝试》</a>：因为业务的需要，作者做了一批类似无聊图的App，应用本身没有复杂的逻辑，所有类“无聊图”的应用都针对特定的用户群，设计了不同界面风格的，比如适合宅男的女神应用，适合吃货的美食应用等等诸如此类，大概一共七八个。作者介绍了其使用cocoapods创建多个类似工程的尝试。</p></li>
-<li><p><a href="http://miao.hu/2012/02/26/osx-exp-share/">《Mac 软件和学习经验分享》</a>：作者介绍了一些优秀的 Mac 软件和学习Mac的经验。</p></li>
-<li><p><a href="http://subjc.com/">subjc.com</a>：subjc.com是一个介绍iOS界面编程技巧的网站。网站中有动画实例分析以及实现的代码。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="https://github.com/fortinmike/XcodeBoost">XcodeBoost</a>：XcodeBoost包含多个辅助修改代码的小功能，比如：</p>
-
-<ol>
-<li>可以在.m文件中复制方法实现，然后将该方法的定义粘贴到对应的.h文件中</li>
-<li>可以在某一个源文件中直接输入正则表达式查找</li>
-<li>可以复制粘贴代码时不启用Xcode的自动缩进功能（Xcode的自动缩进经常出问题，造成已经调整好的代码缩进，因为粘贴时被Xcode调整坏了）</li>
-</ol>
-</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/monoclesociety/eggscellent">Eggscellent开源</a>：Eggscellent是Mac上的开源的番茄钟应用。</p></li>
-<li><p><a href="https://github.com/viewfinderco/viewfinder">Viewfinder</a>：移动支付公司 Square 将去年收购的照片应用 Viewfinder 开源了，包含服务端、iOS 和 Android 应用代码。<a href="http://corner.squareup.com/2014/05/open-sourcing-viewfinder.html">这里</a>有该项目的介绍。</p></li>
-<li><p><a href="https://github.com/kevinzhow/PNChart">PNChart</a>：作者<a href="http://weibo.com/kevinzhow">周楷雯Kevin</a>发布了PNChart 0.5版本，提供了一个更漂亮的Pie Chart界面。</p></li>
-<li><p><a href="https://atom.io/">文本编辑器Atom开源</a>：GitHub将其开发的文本编辑器Atom开源。</p></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-16T21:36:16+08:00" pubdate data-updated="true">May 16<span>th</span>, 2014</time> 
 
 <span class="categories">
   

@@ -42,4 +42,4 @@ categories: iOS weekly
 
 ##开源项目
 
- 1. [ios-class-guard](https://github.com/Polidea/ios-class-guard)：一个用于保护iOS源码不被反汇编的开源库。
+ 1. [ios-class-guard](https://github.com/Polidea/ios-class-guard)：一个用于混淆iOS的类名、方法名以及变量名的开源库。

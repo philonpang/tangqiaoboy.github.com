@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-09-03T21:40:18+08:00</updated>
+  <updated>2014-09-03T21:51:20+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -53,7 +53,7 @@
 <h2>开源项目</h2>
 
 <ol>
-<li><a href="https://github.com/Polidea/ios-class-guard">ios-class-guard</a>：一个用于保护iOS源码不被反汇编的开源库。</li>
+<li><a href="https://github.com/Polidea/ios-class-guard">ios-class-guard</a>：一个用于混淆iOS的类名、方法名以及变量名的开源库。</li>
 </ol>
 
  <p class="meta"> 

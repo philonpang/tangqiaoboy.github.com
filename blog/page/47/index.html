@@ -9,7 +9,8 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="需求 先说说需求。春节回家见爸妈，老爸迷上了摄影。他把平时的照片都上传到了成都图片网,这个成都图片网专门有一个“快拍成都”的版块，用于大家将随手拍的生活中的图片分享上去。每天编辑还会选出一张最有特色的图片，刊登到《成都商报》上。 ">
+  <meta name="description" content="我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段： 1
+[self &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +83,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/01/23/use-javascript-to-import-pictures/">用javascript协助导入图片</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/02/14/nsstring-java-like-wrapper/">给NSString增加Java风格的方法</a></h1>
     
     
       <p class="meta">
@@ -98,22 +99,25 @@
   
 
 
-<time datetime="2012-01-23T23:10:00+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2012</time>
+<time datetime="2012-02-14T17:17:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>需求</h2>
+  <div class="entry-content"><p>我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段：</p>
 
-<p>先说说需求。春节回家见爸妈，老爸迷上了摄影。他把平时的照片都上传到了<a href="http://photo.chengdu.cn/">成都图片网</a>,这个成都图片网专门有一个“快拍成都”的版块，用于大家将随手拍的生活中的图片分享上去。每天编辑还会选出一张最有特色的图片，刊登到《成都商报》上。</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">self</span> <span class="nl">stringByTrimmingCharactersInSet:</span><span class="p">[</span><span class="n">NSCharacterSet</span> <span class="n">whitespaceAndNewlineCharacterSet</span><span class="p">]];</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/01/23/use-javascript-to-import-pictures/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2012/02/14/nsstring-java-like-wrapper/">阅读 &rarr;</a>
     </footer>
   
 
@@ -125,7 +129,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/01/20/we-must-self-learning/">我们必须自学</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/02/10/setup-blog-based-on-github/">象写程序一样写博客：搭建基于github的博客</a></h1>
     
     
       <p class="meta">
@@ -141,20 +145,22 @@
   
 
 
-<time datetime="2012-01-20T23:53:00+08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
+<time datetime="2012-02-10T19:55:00+08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>前两天看到一个文章，题名为<a href="http://www.aqee.net/all-programmers-are-self-taught/">《所有的程序员都是自学成才》</a>。当时没有什么特别的想法，只是觉得自己也确实是基本上靠自学来掌握新的知识的。但是今天在公车上没事好好想了一想，想明白了，原来对于程序员来说，只能自学才能成才。</p>
+  <div class="entry-content"><p>github真是无所不能。其<a href="http://pages.github.com/">Pages功能</a>支持上传html，并且在页面中显示。于是有好事者做了一个基于github的博客管理工具：<a href="http://octopress.org/">octopress</a>，基本原理是用git来管理你的文章，然后最终发布到github上成为一个独立博客站点。由于github支持CNAME域名指向，所以如果有独立域名的话，可以基于这些做出一个专业的博客站点出来。</p>
+
+<p>本博客就是完全基于此搭建起来的，在使用了2个月之后，我将原系统根据中国人的需求做了一些配置，去掉了GFW会挡住的google font api，以及替换掉了速度超慢的国外的评论系统，也加上了分享到国内的微博的功能。现在把这些都总结出来，希望大家都可以方便地搭建基于github的博客来。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/01/20/we-must-self-learning/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2012/02/10/setup-blog-based-on-github/">阅读 &rarr;</a>
     </footer>
   
 
@@ -176,12 +182,40 @@
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/ios-weekly-20/">iOS移动开发周报-第20期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
@@ -201,34 +235,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/ios-weekly-14/">iOS移动开发周报-第14期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
       </li>
     
   </ul>

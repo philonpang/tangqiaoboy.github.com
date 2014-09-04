@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 ZXing(Github镜像地址)是一个开源的条码生成和扫描库（开源协议为Apache2.0)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。 &hellip;">
+  <meta name="description" content="今天翻到很久以前自己在网易博客上写的这篇文章，惊奇地发现自己都忘记了里面的一些内容。所以我又重新学习了一下，然后改了改内容，挪到这里。 前言 Steffen Itterheim是《Learn Iphone and Ipad Cocos2d Game Development》作者。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/12/23/use-zxing-library/">在iOS中使用ZXing库</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a></h1>
     
     
       <p class="meta">
@@ -98,26 +98,44 @@
   
 
 
-<time datetime="2012-12-23T17:03:00+08:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2012</time>
+<time datetime="2013-04-29T20:22:00+08:00" pubdate data-updated="true">Apr 29<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/zxing-icon.png"></p>
+  <div class="entry-content"><p><img src="/images/forget.jpeg"></p>
+
+<p>今天翻到很久以前自己在网易博客上写的<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201110133108545/">这篇文章</a>，惊奇地发现自己都忘记了里面的一些内容。所以我又重新学习了一下，然后改了改内容，挪到这里。</p>
 
 <h2>前言</h2>
 
-<p><a href="https://code.google.com/p/zxing/">ZXing</a>(<a href="https://github.com/zxing/zxing">Github镜像地址</a>)是一个开源的条码生成和扫描库（开源协议为<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache2.0</a>)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。</p>
+<p><a href="http://www.amazon.cn/s?ie=UTF8&amp;search-alias=books&amp;field-author=Steffen%20Itterheim">Steffen Itterheim</a>是<a href="http://www.amazon.cn/Learn-Iphone-and-Ipad-Cocos2d-Game-Development-The-Leading-Framework-for-Building-2D-Graphical-and-Interactive-Applications-Itterheim-Steffen/dp/1430233036/ref=sr_1_1?ie=UTF8&amp;qid=1321168092&amp;sr=8-1">《Learn Iphone and Ipad Cocos2d Game Development》</a>作者。cocos2d和cocos2d-x现在已成为著名的游戏开发引擎。在AppStore上有超过100个游戏是基于Cocos2D。</p>
 
-<p>我上周在iOS项目开发中使用了ZXing的扫描二维码功能。在此总结一下如何将ZXing集成到已有的iOS工程中，分享给大家。</p>
+<p>Steffen Itterheim在<a href="http://www.learn-cocos2d.com/2011/10/complete-list-objectivec-20-compiler-directives">他的博客</a>中总结了 Objective-C 2.0 所有的编译器保留字，并且对这些保留字做了介绍和使用示例。这些保留字如下：</p>
+
+<pre>
+@class
+@defs
+@protocol @required @optional @end
+@interface @public @package @protected @private @property @end
+@implementation @synthesize @dynamic @end
+@throw @try @catch @finally
+@synchronized @autoreleasepool
+@selector @encode
+@compatibility_alias
+@”string”
+</pre>
+
+
+<p>我把这些保留字过了一遍，发现很少用到的有 @dynamic @defs @encode @compatibility_alis，所以就给大家介绍一下这几个关键字吧。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/12/23/use-zxing-library/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/04/29/the-missing-objc-keywords/">阅读 &rarr;</a>
     </footer>
   
 
@@ -129,7 +147,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/12/15/do-not-use-storyboard/">StoryBoard&#8211;看上去很美</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/04/07/tricks-in-iap/">iOS应用内支付(IAP)的那些坑</a></h1>
     
     
       <p class="meta">
@@ -145,24 +163,28 @@
   
 
 
-<time datetime="2012-12-15T10:21:00+08:00" pubdate data-updated="true">Dec 15<span>th</span>, 2012</time>
+<time datetime="2013-04-07T20:14:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>介绍</h2>
+  <div class="entry-content"><p><img src="/images/iap-icon.jpg"></p>
 
-<p>StoryBoard是苹果在2011年的WWDC Session 309《Introducing Interface Builder Storyboarding》中介绍的Interface Builder的新功能。其基本想法是将原本的xib进行升级，引入一个容器用于管理多个xib文件，并且这个容器可以通过拖拽设置xib之间的界面跳转。而这个容器就是被苹果称做的StoryBoard。下图是一个Storyboard的截图。</p>
+<h2>前言</h2>
 
-<p><img src="/images/enbrace-ios5-1.png"></p>
+<p><a href="https://www.udacity.com/">udacity</a>中的在线课程<a href="https://www.udacity.com/course/ep245">《How to build a startup》</a>中提到，所谓创业，就是尝试寻找新的赢利模式。正因为这是一种尝试，所以不可避免地需要调整产品方向，寻找市场中还未被发现的用户需求，给用户创造价值，进而获得收入。最近很火的<a href="http://book.douban.com/subject/10945606/">精益创业</a>的观点，则是强调将这种尝试成本降到最小，使得自己可以根据市场反馈迅速调整产品。</p>
+
+<p>我们在今年春节后上线了新的在线智能题库：<a href="http://yuantiku.com/">猿题库</a>。这应该是我们在互联网教育这个创业领域尝试的第二个方向。</p>
+
+<p>猿题库现在推出了公务员考试行测和申论2个产品，均包括web, iOS和Android三个平台。这次我们尝试做一个收费的产品，所以在iOS端集成了应用内支付（IAP）功能。在开发过程中和上线后，我们遇到了IAP中的一些坑，在此分享给各位。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/12/15/do-not-use-storyboard/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/04/07/tricks-in-iap/">阅读 &rarr;</a>
     </footer>
   
 
@@ -184,12 +206,40 @@
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/ios-weekly-20/">iOS移动开发周报-第20期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
@@ -209,34 +259,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/ios-weekly-14/">iOS移动开发周报-第14期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。 这是本技术分享系列文章的第一篇。本文涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。 ">
+  <meta name="description" content="2013这一年值得总结的有两方面的事情：一是技术分享和收获，二是创业感悟。 技术分享 我这一年在技术分享上投入了更多的时间，也得到了非常大的收获。 我主要的技术分享渠道包括： 个人博客。今年一共完成了24篇原创博客。相比于去年的36篇，少了很多。主要是因为很多精力分散到微信公共帐号上去了。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">猿题库iOS客户端的技术细节（一）：使用多target来构建大量相似App</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/01/01/2013-summary/">2013年个人总结</a></h1>
     
     
       <p class="meta">
@@ -98,24 +98,32 @@
   
 
 
-<time datetime="2013-10-17T00:43:00+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2013</time>
+<time datetime="2014-01-01T19:04:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>前言</h2>
+  <div class="entry-content"><p>2013这一年值得总结的有两方面的事情：一是技术分享和收获，二是创业感悟。</p>
 
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
+<h2>技术分享</h2>
 
-<p>这是本技术分享系列文章的第一篇。本文涉及的技术细节是：采用多Target编译方案来实现多个相似App的开发，以保证我们能够快速地推出多个相似课程的客户端。</p>
+<p>我这一年在技术分享上投入了更多的时间，也得到了非常大的收获。</p>
+
+<p>我主要的技术分享渠道包括：</p>
+
+<ol>
+<li><p>个人博客。今年一共完成了24篇原创博客。相比于去年的36篇，少了很多。主要是因为很多精力分散到微信公共帐号上去了。不过今年文章的质量相比去年更高了，写了包括<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>和<a href="http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/">《谈Objective-C Block的实现》</a>这类比较深入的文章。</p></li>
+<li><p><a href="http://www.infoq.com/cn/">InfoQ网站</a> 。今年一共完成了7篇发表在<a href="http://www.infoq.com/cn/">InfoQ</a> 上的<a href="http://www.infoq.com/cn/author/%E5%94%90%E5%B7%A7">稿件</a> , 其中原创技术文章4篇，翻译技术新闻1篇，采访稿2篇。</p></li>
+</ol>
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2013/10/17/the-tech-detail-of-ape-client-1/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2014/01/01/2013-summary/">阅读 &rarr;</a>
     </footer>
   
 
@@ -127,7 +135,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/10/15/objective-c-object-model/">Objective-C对象模型及应用</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/12/22/how-to-write-resume-for-it-company/">如何写面向互联网公司的求职简历</a></h1>
     
     
       <p class="meta">
@@ -143,30 +151,67 @@
   
 
 
-<time datetime="2013-10-15T20:31:00+08:00" pubdate data-updated="true">Oct 15<span>th</span>, 2013</time>
+<time datetime="2013-12-22T20:04:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>前言</h2>
+  <div class="entry-content"><p><img src="/images/resume-title.jpg"></p>
 
-<p>原创文章，转载请注明出自<a href="http://blog.devtang.com">唐巧的技术博客</a>。</p>
+<h2>前言</h2>
 
-<p>本文主要介绍Objective-C对象模型的实现细节，以及Objective-C语言对象模型中对<code>isa swizzling</code>和<code>method swizzling</code>的支持。希望本文能加深你对Objective-C对象的理解。</p>
+<p>我在IT公司工作了六年，有着三年面试官的经历。在面试中，我发现很多人都不能写好一份求职简历，所以今天不谈iOS开发，谈谈如何写一份针对互联网公司的求职简历。</p>
 
-<h2>ISA指针</h2>
+<p>我主要想分享的内容包括：</p>
 
-<p>Objective-C是一门面向对象的编程语言。每一个对象都是一个类的实例。在Objective-C语言的内部，每一个对象都有一个名为isa的指针，指向该对象的类。每一个类描述了一系列它的实例的特点，包括成员变量的列表，成员函数的列表等。每一个对象都可以接受消息，而对象能够接收的消息列表是保存在它所对应的类中。</p>
+<ul>
+<li>简历的页数不要超过两页（最好一页）
 
-<p>在XCode中按<code>Shift + Command + O</code>, 然后输入NSObject.h和objc.h，可以打开NSObject的定义头文件，通过头文件我们可以看到，NSObject就是一个包含isa指针的结构体，如下图所示：</p>
+<ul>
+<li>删掉不必要的信息</li>
+<li>如果你实在太牛逼，最多写2页</li>
+</ul>
+</li>
+<li>重要的信息写在最前面
+
+<ul>
+<li>你的联系方式</li>
+<li>你最重要的工作经历</li>
+</ul>
+</li>
+<li>不要简单罗列工作经历
+
+<ul>
+<li>列出你的工作中有价值的细节（有哪些技术上的困难等）</li>
+</ul>
+</li>
+<li>不要写任何虚假或夸大的信息
+
+<ul>
+<li>类似精通java，精通C/C++等</li>
+</ul>
+</li>
+<li>不要附加任何可能带来负面印象的信息
+
+<ul>
+<li>不要加照片</li>
+<li>不要写政治面貌</li>
+<li>不要写奇怪的爱好（打游戏，喝酒，抽烟）</li>
+<li>不要写参加过某某培训公司的iOS培训</li>
+<li>尽量用专业邮箱</li>
+<li>用PDF格式</li>
+</ul>
+</li>
+</ul>
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2013/10/15/objective-c-object-model/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/12/22/how-to-write-resume-for-it-company/">阅读 &rarr;</a>
     </footer>
   
 
@@ -188,12 +233,40 @@
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/ios-weekly-20/">iOS移动开发周报-第20期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
@@ -213,34 +286,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/ios-weekly-14/">iOS移动开发周报-第14期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
       </li>
     
   </ul>

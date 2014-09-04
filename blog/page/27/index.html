@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="2008年 62天售空。介绍了iPhone 3G。 2009年 33天售空。介绍了iPhone 3GS。 2010年 8天售空。介绍了iPhone 4。 2011年 12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。 从这一年开始， &hellip;">
+  <meta name="description" content="前言 这里有关于block的5道测试题，建议你阅读本文之前先做一下测试。 先介绍一下什么是闭包。在wikipedia上，闭包的定义)是: In programming languages, a closure is a function or reference to a function &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/07/28/a-look-inside-blocks/">谈Objective-C Block的实现</a></h1>
     
     
       <p class="meta">
@@ -98,52 +98,42 @@
   
 
 
-<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
+<time datetime="2013-07-28T10:42:00+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>2008年</h2>
+  <div class="entry-content"><h2>前言</h2>
 
-<p>62天售空。介绍了iPhone 3G。</p>
+<p><a href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/">这里</a>有关于block的5道测试题，建议你阅读本文之前先做一下测试。</p>
 
-<p><img src="/images/wwdc-2008.jpg" width="500px" /></p>
+<p>先介绍一下什么是闭包。在wikipedia上，<a href="http://en.wikipedia.org/wiki/Closure_(computer_science">闭包的定义</a>)是:</p>
 
-<h2>2009年</h2>
+<blockquote><p>In programming languages, a closure is a function or reference to a function together with a referencing environment—a table storing a reference to each of the non-local variables (also called free variables or upvalues) of that function.</p></blockquote>
 
-<p>33天售空。介绍了iPhone 3GS。</p>
 
-<p><img src="/images/wwdc-2009.png" width="500px" /></p>
+<p>翻译过来，闭包是一个函数（或指向函数的指针），再加上该函数执行的外部的上下文变量（有时候也称作自由变量）。</p>
 
-<h2>2010年</h2>
+<p>block实际上就是Objective-C语言对于闭包的实现。
+block配合上dispatch_queue，可以方便地实现简单的多线程编程和异步编程，关于这个，我之前写过一篇文章介绍：<a href="http://blog.devtang.com/blog/2012/02/22/use-gcd/">《使用GCD》</a>。</p>
 
-<p>8天售空。介绍了iPhone 4。</p>
+<p>本文主要介绍Objective-C语言的block在编译器中的实现方式。主要包括：</p>
 
-<p><img src="/images/wwdc-2010.png" width="500px" /></p>
+<ol>
+<li>block的内部实现数据结构介绍</li>
+<li>block的三种类型及其相关的内存管理方式</li>
+<li>block如何通过capture变量来达到访问函数外的变量</li>
+</ol>
 
-<h2>2011年</h2>
 
-<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
-
-<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
-
-<p><img src="/images/wwdc-2011.jpg" width="500px" /></p>
-
-<h2>2012年</h2>
-
-<p>2小时售空。介绍了iOS6。</p>
-
-<p><img src="/images/wwdc-2012.jpg" width="500px" /></p>
-
-<h2>2013年</h2>
-
-<p>2分钟售空。期待。</p>
-
-<p><img src="/images/wwdc-2013.jpg" width="500px" /></p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/07/28/a-look-inside-blocks/">阅读 &rarr;</a>
+    </footer>
   
 
 
@@ -154,7 +144,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/29/the-missing-objc-keywords/">那些被遗漏的Objective-C保留字</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/07/24/use-crashlytics/">使用Crashlytics来保存应用崩溃信息</a></h1>
     
     
       <p class="meta">
@@ -170,44 +160,28 @@
   
 
 
-<time datetime="2013-04-29T20:22:00+08:00" pubdate data-updated="true">Apr 29<span>th</span>, 2013</time>
+<time datetime="2013-07-24T20:56:00+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/forget.jpeg"></p>
+  <div class="entry-content"><p><img src="/images/crashlytics-logo.jpg"></p>
 
-<p>今天翻到很久以前自己在网易博客上写的<a href="http://tangqiaoboy.blog.163.com/blog/static/116114258201110133108545/">这篇文章</a>，惊奇地发现自己都忘记了里面的一些内容。所以我又重新学习了一下，然后改了改内容，挪到这里。</p>
+<p>本文首发于InfoQ，版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">原文链接</a>。</p>
 
-<h2>前言</h2>
+<h2>简介</h2>
 
-<p><a href="http://www.amazon.cn/s?ie=UTF8&amp;search-alias=books&amp;field-author=Steffen%20Itterheim">Steffen Itterheim</a>是<a href="http://www.amazon.cn/Learn-Iphone-and-Ipad-Cocos2d-Game-Development-The-Leading-Framework-for-Building-2D-Graphical-and-Interactive-Applications-Itterheim-Steffen/dp/1430233036/ref=sr_1_1?ie=UTF8&amp;qid=1321168092&amp;sr=8-1">《Learn Iphone and Ipad Cocos2d Game Development》</a>作者。cocos2d和cocos2d-x现在已成为著名的游戏开发引擎。在AppStore上有超过100个游戏是基于Cocos2D。</p>
+<p><a href="http://try.crashlytics.com/">Crashlytic</a> 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, 团购应用GroupOn等移动应用。</p>
 
-<p>Steffen Itterheim在<a href="http://www.learn-cocos2d.com/2011/10/complete-list-objectivec-20-compiler-directives">他的博客</a>中总结了 Objective-C 2.0 所有的编译器保留字，并且对这些保留字做了介绍和使用示例。这些保留字如下：</p>
-
-<pre>
-@class
-@defs
-@protocol @required @optional @end
-@interface @public @package @protected @private @property @end
-@implementation @synthesize @dynamic @end
-@throw @try @catch @finally
-@synchronized @autoreleasepool
-@selector @encode
-@compatibility_alias
-@”string”
-</pre>
-
-
-<p>我把这些保留字过了一遍，发现很少用到的有 @dynamic @defs @encode @compatibility_alis，所以就给大家介绍一下这几个关键字吧。</p>
+<p>2013年1月，Crashlytics<a href="http://www.crashlytics.com/blog/crashlytics-is-joining-forces-with-twitter/">被Twitter收购</a>，成为又一个成功的创业产品。被收购之后，由于没有了创业公司的不稳定因素，我们更有理由使用它来分析应用崩溃信息。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2013/04/29/the-missing-objc-keywords/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/07/24/use-crashlytics/">阅读 &rarr;</a>
     </footer>
   
 
@@ -229,12 +203,40 @@
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/ios-weekly-20/">iOS移动开发周报-第20期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
@@ -254,34 +256,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/ios-weekly-14/">iOS移动开发周报-第14期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
       </li>
     
   </ul>

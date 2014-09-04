@@ -4,7 +4,7 @@
   <title><![CDATA[Category: weekly | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/weekly/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-07-11T19:37:50+08:00</updated>
+  <updated>2014-09-04T09:46:49+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -14,241 +14,261 @@
 
   
   <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第17期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/07/11/ios-weekly-17/"/>
-    <updated>2014-07-11T19:36:11+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/07/11/ios-weekly-17</id>
+    <title type="html"><![CDATA[iOS移动开发周报-第23期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/09/01/ios-weekly-23/"/>
+    <updated>2014-09-01T20:22:54+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/09/01/ios-weekly-23</id>
     <content type="html"><![CDATA[<h3>版权说明</h3>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/swift-beta3-change">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/afnetworking2.0">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
 <h3>前言</h3>
 
 <p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>【摘要】：本期iOS移动开发周报带来如下内容：Swift 进入TIOBE 指数排名16，Swift 在 Beta3 中的变化，WebKit in iOS 8等。</p>
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果发出9月9日发布会邀请函，AFNetworking2.0源码解析，objc与鸭子对象，Protecting iOS Applications等。</p>
 
 <h2>新闻</h2>
 
 <ol>
-<li><p><a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">《Swift 进入TIOBE 指数排名16》</a>：在TIOBE的 2014年7月编程语言排行榜上，苹果公司新的编程语言Swift发布一个月内就进入TIOBE指数，名列位置16，前三名则没有变化，依旧是C、Java、Objective-C。</p></li>
-<li><p><a href="http://www.guomii.com/posts/38291">《韩国当局下令 Apple 改变 App Store 退款政策》</a>：近日韩国当局已经下令 Apple 修改其公司的 App Store 退款政策，理由是现有政策违反了公平贸易的相关规定。众所周知，目前 App Store 的退款政策是用户先提交请求，然后由 Apple 员工审核要不要进行退款。也就是说，最终是否能够退款存在着员工一定的主观因素，因此被韩国公平贸易委员会认为这是不公平的。</p></li>
+<li><a href="http://tech.sina.com.cn/mobile/n/apple/2014-08-29/01339582927.shtml">《苹果发出9月9日发布会邀请函》</a>：苹果公司刚刚向外界发出邀请函，太平洋时间9月9日上午10点（北京时间9月10日凌晨1点），将在美国库伯提诺市弗林特剧院举行发布会。本次发布会的主角极有可能是iPhone 6及iWatch智能手表。</li>
 </ol>
 
 
 <h2>教程</h2>
 
 <ol>
-<li><p><a href="http://andelf.github.io/blog/2014/07/08/swift-beta3-changes/">《Swift 在 Beta3 中的变化》</a>：刚刚更新的Xcode 6 Beta3中，Swift编译器又进行了较大的更改，本文章详细介绍了改动细节。</p></li>
-<li><p><a href="http://www.taofengping.com/2014/07/04/pinterest-transition-swift/">《用Swift实现Pinterest中的转场效果》</a>：在StackOverFlow上有人问Pinterest中转场的效果是如何实现的，在<a href="http://engineering.pinterest.com/post/67769846580/behind-the-pins-building-pinterest-3-0-for-ios">Pinterest的Blog</a>上工程师大致对Pinterest的结构作了大致的介绍，但是没有涉及到具体动画部分的实现。所以作者抽空用Swift重新实现了一遍这个转场的效果。</p></li>
-<li><p><a href="http://www.hotobear.com/?p=741">《WebKit in iOS 8》</a>：苹果在WWDC上公布了iOS的新框架WebKit.framework，其包含了新的网页浏览控件WKWebView。本文介绍了其相对于UIWebView所做的改进。</p></li>
-<li><p><a href="http://nonomori.farbox.com/post/ios-8-presentation-controller">《iOS 8 presentation controller》</a>：iOS 8 新加入一个类：UIPresentationController，它与 iOS 7 新添加的类与协议一道，帮助我们方便快捷地实现View Controller 的自定义过渡效果。作者完成了一个使用相关API的演示程序。</p></li>
-<li><p><a href="http://www.raywenderlich.com/74106/mvvm-tutorial-with-reactivecocoa-part-1">《MVVM Tutorial with ReactiveCocoa》</a>：RW新的ReactiveCocoa教材出炉了。不同于上次SimpleWeather的面面俱到，这次主讲MVVM设计模式和数据绑定。</p></li>
-<li><p><a href="http://oleb.net/blog/2014/07/swift-strings/">《Strings in Swift》</a>：文章介绍了Swift中字符串的各种细节上的使用注意事项。</p></li>
+<li><p><a href="http://blog.cnbang.net/tech/2320/">《AFNetworking2.0源码解析》</a>：AFNetworking是著名的iOS网络库，文章作者分享了其阅读AFNetworking2.0源码的收获。</p></li>
+<li><p><a href="http://www.raywenderlich.com/76433/how-to-make-a-custom-control-swift">《Creating a Custom Control in Swift》</a>：文章介绍了如何使用Swift自定义一个进度条控件。</p></li>
+<li><p><a href="http://baoz.me/452378">《iOS干货精选》</a>：本文是《码农周刊》中的精品文章的集合，包括iOS和Android部分。</p></li>
+<li><p><a href="http://www.topcoder.com/blog/kicking-off-our-500k-learn-swift-series/">《Kicking Off our $500K Learn Swift Series》</a>：TopCoder推出学习Swift系列比赛，拿出多达50万美元奖励学习成绩突出者。</p></li>
+<li><p><a href="https://developer.apple.com/swift/blog/?id=12">《Optionals Case Study: valuesForKeys》</a>：来自苹果官方博客的教程，通过学习Dictionary的valuesForKeys方法，来了解Optional类型。</p></li>
+<li><p><a href="http://blog.csdn.net/u011247468/article/details/16332071">《Xcode5 Asset Catalog 使用备忘》</a>：Asset Catalog是Xcode5引入的一个新的图片管理方式，文章介绍了使用Asset Catalog创建可拉伸图片的方法。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/08/24/objc-duck/">《objc与鸭子对象（上）》</a>、<a href="http://blog.sunnyxx.com/2014/08/26/objc-duck-advanced/">《objc与鸭子对象（下）》</a>：文章上半部分介绍了鸭子类型和它在ObjC中的实践，以及一个使用NSProxy实现JSON Entity的鸭子类。下半部分介绍了鸭子对象的进阶用法，并简单介绍由鸭子对象思想衍生出的依赖注入。</p></li>
+<li><p><a href="http://www.polidea.com/#!heartbeat/blog/Protecting_iOS_Applications">《Protecting iOS Applications》</a>：文章系统地介绍了如何保护iOS程序的代码安全，防止反汇编分析。</p></li>
+<li><p><a href="http://iosdevelopertips.com/xcode/swift-replacement-pragma.html">《Swift’s Answer to #pragma mark, FIXME and TODO》</a>：文章介绍了在ObjC中支持的#pragma mark, FIXME 和 TODO，在Swift语言中是如何使用的。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/Polidea/ios-class-guard">ios-class-guard</a>：一个用于混淆iOS的类名、方法名以及变量名的开源库。</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第22期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/08/24/ios-weekly-22/"/>
+    <updated>2014-08-24T19:14:22+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/08/24/ios-weekly-22</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/shares-of-apple">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果股价创新高，iOS8自动调整UITableView布局，Swift学习心得等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://tech.qq.com/a/20140820/007526.htm">《苹果股价创新高 市值全球第一超第二名30%》</a>： 8月20日，苹果公司周二收盘股价创下历史新高水平，超过了2012年保持的最高记录。苹果作为全球市值最高的公司，比全球市值第二大的埃克森美孚公司高出了30%。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://zonble.net/archives/2014_08/1616.php">《Swift学习心得》</a>：作者分享了学习Swift语言的心得，包括苹果为什么要设计Swift语言以及Swift语言的各种特性。</p></li>
+<li><p><a href="http://yulingtianxia.com/blog/2014/08/17/New-in-Table-and-Collection-Views/">《iOS8自动调整UITableView和UICollectionView布局》</a>：本文讲述了UITableView、UICollectionView实现self-sizing cell布局的知识，以及如何用InvalidationContext优化UICollectionView布局的更新。作者微博：<a href="http://weibo.com/yulingtianxia">@杨萧玉HIT</a>。</p></li>
+<li><p><a href="http://yulingtianxia.com/blog/2014/08/19/best-practices-for-building-spritekit-games/">《创建SpriteKit游戏的最佳范例》</a>：本文从拓展性、游戏构造和性能三个方面分别讲述建立SpriteKit游戏时的一些实践经验和范例。作者微博：<a href="http://weibo.com/yulingtianxia">@杨萧玉HIT</a>。</p></li>
+<li><p><a href="http://beyondvincent.com/blog/2014/07/30/provision-ios-ipa-app-for-in-house-enterprise-distribution/">《在企业内部分发 iOS 应用程序》</a>：在企业内部分发 iOS 应用程序非常复杂，作者详细介绍了实现的过程。</p></li>
+<li><p><a href="https://developer.apple.com/swift/blog/?id=10">《Value and Reference Types》</a>：苹果的这篇官方微博介绍了Swift的值类型和引用类型的差别。</p></li>
+<li><p><a href="http://www.raywenderlich.com/76519/add-table-view-search-swift">《How to Add Table View Search in Swift》</a>：来自raywenderlich的教程，用Swift实现为TableView增加搜索功能。</p></li>
+<li><p><a href="https://www.mikeash.com/pyblog/friday-qa-2014-08-15-swift-name-mangling.html">《Swift Name Mangling》</a>：文章分析了Swift编译器对于函数名的处理方式。</p></li>
+<li><p><a href="http://nshipster.com/swift-literal-convertible/">《Swift Literal Convertibles》</a>：文章介绍了Swift中的字面量（Literal）的类型转换规则。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/facebook/fishhook">fishhook</a>：fishhook是Facebook开源的一个可以hook系统方法的工具。</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第21期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/08/18/ios-weekly-21/"/>
+    <updated>2014-08-18T21:53:55+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/08/18/ios-weekly-21</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/apple-icloud">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果iCloud中国数据转存中国电信，Swift Operators，100 个 Swift 必备 tips，FLEXLoader等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://www.36kr.com/p/214546">《苹果iCloud中国数据转存中国电信》</a>：出自抚州市崇仁县电信分公司的新闻显示：中国电信正式为苹果 iCloud 中国用户提供云存储服务，成为苹果公司在中国大陆地区唯一的云存储服务提供商。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://nshipster.com/swift-operators/">《Swift Operators》</a>：AFNetworking的作者<a href="http://mattt.me/">Mattt Thompson</a>在本文中详细介绍了swift的操作符，包括基本操作符，操作符重载以及一些使用原则。</p></li>
+<li><p><a href="http://s2dongman.com/?p=658">《为移动而设计，第3章：视觉设计》</a>：理解规则，打破规则，为移动而设计需要我们不断思考，持续发现新的、优美的、易用的解决方案。本文讨论了在视觉设计上如何创造优美、移动应用的解决方案，以及相关的最佳实践。</p></li>
+<li><p><a href="http://www.raywenderlich.com/76285/beginning-core-image-swift">《Beginning Core Image in Swift》</a>：文章介绍了在Swift中使用Core Image，包括使用基础滤镜、从相册加载图片、保存图片到相册等。</p></li>
+<li><p><a href="http://www.raywenderlich.com/79863/video-tutorial-introduction-unity-part-1-introduction">《Introduction to Unity Part 1: Introduction》</a>：本视频对Unity进行了入门性的介绍。</p></li>
+</ol>
+
+
+<h2>图书</h2>
+
+<ol>
+<li><a href="http://swifter.tips">《Swifter &ndash; 100 个 Swift 必备 tips》</a>：著名iOS博客作者onevcat总结和分享了 Swift 中 100 条十分实用的小技巧和需要特别注意的地方，希望能让大家更好更快地掌握 Swift。本书提供了5章的试读，最低售价3.99$。</li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="http://joeyio.com/2014/08/12/tweak-flexloader/">FLEXLoader</a>：FLEXLoader是<a href="http://weibo.com/2js3">@拓词Joey</a>写的一个可以动态加载FLEX的开源越狱插件，它以加载动态库的方式注入到系统App和用户的App中。FLEX全称是”Flipboard Explorer”，是Flipboard团队开发一组调试和探测App的开源工具，功能非常强大，比如查看和修改View的层级结构，查看和修改堆内存中的对象信息等等，更多FLEX介绍和使用信息参考<a href="https://github.com/Flipboard/FLEX">这里</a>。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/ochococo/Design-Patterns-In-Swift">Design-Patterns-In-Swift</a>：该项目用Swift实现了多种设计模式，读者可以当作代码示例参考。</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第20期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/08/12/ios-weekly-20/"/>
+    <updated>2014-08-12T20:08:34+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/08/12/ios-weekly-20</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/ios-notification-center">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：iOS 通知中心扩展制作入门，iOS APP可执行文件的组成，objc非主流代码技巧等。</p>
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://onevcat.com/2014/08/notification-today-widget/">《iOS 通知中心扩展制作入门》</a>：本文通过一个简单的实用 demo 介绍了一下 iOS 8 中扩展开发的一些共通方法和一个通知中心扩展的实际制作。</p></li>
+<li><p><a href="http://blog.cnbang.net/tech/2296/">《iOS APP可执行文件的组成》</a>：iOS APP编译后，除了一些资源文件，剩下的就是一个可执行文件，本文分析了该可执行文件的组成。该文章的作者是 <a href="http://weibo.com/bang">@bang</a>。</p></li>
+<li><p><a href="http://yulingtianxia.com/blog/2014/08/08/spritekitzai-ios8he-osx10-dot-10zhong-de-xin-te-xing/#jtss-tsina">《SpriteKit在iOS8和OSX10.10中的新特性》</a>：在iOS8和OSX10.10中SpriteKit迎来了重大升级。在物理表现方面增加了着色器，光照和阴影；在物理模拟方面增加了像素物理体、力场和宇宙动力学和约束等；在Xcode中集成了场景编辑器，你不需要写代码就能完成一些复杂的工作；此外它还集成了SceneKit以及其他的改进。本文对这些新特性做了详细介绍。</p></li>
+<li><p><a href="http://billwang1990.github.io/blog/2014/08/07/remote-use-lldb/">《使用LLDB远程调试APP》</a>：文章作者因为最近要开始学习一些iOS逆向的一些东西，调试别人的app自然是必不可少的工作。试验后发现用GDB调试并不好用，而且苹果推的也是LLDB，所以需要使用LLDB来进行调试工作。使用LLDB就不像使用GDB进行调试那么方便，使用GDB的话直接在Cydia里面安装好GDB之后，ssh到你的设备就可以开始工作了，使用LLDB远程调试你越狱设备上的APP稍微麻烦一点。作者详细介绍了使用细节。</p></li>
+<li><p><a href="http://blog.xcodev.com/archives/objective-c-naming/">《Objective-C之优雅的命名》</a>：计算机语言是人和计算机之间通讯的媒介。好的代码应该是就像人对计算机说话那样，自然而优雅。命名看上去是一件很简单的事，而往往越是简单的事越难做好，否则大师们也不会把命名看成是计算机界的难题了。如何把Objective-C这门计算机语言以优雅的方式“说”出，还是比较考验工程师对它的理解深度的。在苹果的SDK中有大量的API，我们可以从这些API中体会到一些命名的艺术。</p></li>
+<li><p><a href="http://www.jessesquires.com/apples-to-apples-part-two/">《Apples to apples, Part II》</a>：本文是JSQMessagesViewController 的作者 Jesse Squires 博客上写的一篇 Objective-C 与 Swift 性能对比分析文章。从中可以了解到在开启完优化之后，Swift在性能上的表现是非常不错的。本文来自 <a href="http://weibo.com/u/2034474825">@isaced</a>的推荐。</p></li>
+<li><p><a href="https://github.com/ShinobiControls/iOS8-day-by-day">《iOS8-day-by-day》</a>：这是一个学习iOS8的系列文章合集，一共有16篇文章。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/08/02/objc-weird-code/">《objc非主流代码技巧》</a>：看开源代码时，总会看到一些大神级别的代码，给人眼前一亮的感觉，多数都是被淡忘的C语言语法，作者在文章中总结了objc写码中遇到的各类非主流代码技巧和一些妙用。</p></li>
+<li><p><a href="http://msching.github.io/blog/2014/08/02/audio-in-ios-5/">《iOS音频播放 (五)：AudioQueue》</a>：本文讲解了如何使用AudioQueue播放音频数据。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="http://fauxpasapp.com/">Faux Pas for Xcode</a>：Faux Pas for Xcode是一个项目检查工具。使用它相当于给自己的项目请了一个专业的 Reviewer，它会指出项目级别上不规范不合理的地方，并且有相关内容的链接可以学习。</p></li>
+<li><p><a href="http://ios.b2mp.cn/tools">App Icons Create Tool</a>：这是  <a href="http://weibo.com/helou?from=usercardnew">@往何处寻</a> 做的一键创建iOS APP应用图标的在线工具，可以帮助你生成各种尺寸的应用图标。</p></li>
+<li><p><a href="https://github.com/lexrus/ios-dev-playbook">ios-dev-playbook</a>: ios-dev-playbook是一个快速配置 iOS 开发需要的服务器工具。目前只支持 Debian Wheezy服务器，可以安装 GitLab、Countly、Jenkins 等。该项目作者是<a href="https://twitter.com/lexrus">@lexrus</a>。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/Alamofire/Alamofire">Alamofire</a>：Alamofire是AFNetworking的作者mattt新写的网络请求的swift库。</p></li>
+<li><p><a href="http://www.oschina.net/p/easyios">EasyIOS</a>: EasyIOS是基于MVVM 的iOS开发框架。它封装了Scene、SceneModel、Model、Action四种模型来对IOS进行开发，4种模型的定义解决了IOS开发中ViewController承担了过多角色而造成的代码质量低下，使得结构思路更加清晰。</p></li>
+<li><p><a href="https://github.com/AgileBits/onepassword-app-extension">1Password Extension for iOS Apps</a>：1Password的扩展SDK，可以方便地集成到iOS应用中。</p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第19期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/07/30/ios-weekly-19/"/>
+    <updated>2014-07-30T22:10:03+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/07/30/ios-weekly-19</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/apple-earnings-announcement">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果第三季度财报公布，iOS界面开发的大一统，Flipboard开源的FLEX工具等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://pad.pconline.com.cn/514/5144196.html">《净利润达77亿美元!苹果第三季度财报公布》</a>：苹果发布了截至6月28日的2014财年第三季度财报。从财报中我们可以看到，苹果在第三财季营收374亿美元，同比增长6%；净利润为77亿美元，同比增长12%。</p></li>
+<li><p><a href="http://tech.qq.com/a/20140721/005712.htm">《苹果iOS在日本占据了超过50%的市场》</a>：苹果iOS在日本占据了超过50%的市场，在中国的份额为14.7%。</p></li>
+<li><p><a href="http://www.huxiu.com/article/38395/1.html">《苹果财报解读》</a>：中国地区 iPhone 销量上升 48%，iPhone 6 备受瞩目。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://onevcat.com/2014/07/ios-ui-unique/">《WWDC 2014 Session笔记 &ndash; iOS界面开发的大一统》</a>：iOS 8 和 OS X 10.10 中一个被强调了多次的主题就是大一统，Apple 希望通过 Hand-off 和各种体验的无缝切换和集成将用户黏在由 Apple 设备构成的生态圈中。对于广大 iOS 开发者赖以生存的 UIKit 来说，这次最大的变化就是 Size Classes 的引入和新的 Presentation 系统了，本文对Size Classes及其相关知识进行了详细的介绍。</p></li>
+<li><p><a href="http://airspeedvelocity.net/">《Airspeed Velocity》</a>：一个专门介绍Swift语言的博客。</p></li>
+<li><p><a href="http://nomothetis.svbtle.com/">《ALEXANDROS SALAZAR》</a>：一个专门介绍Swift语言的博客。</p></li>
+<li><p><a href="http://www.raywenderlich.com/72021/supercharging-xcode-efficiency">《Supercharging Your Xcode Efficiency》</a>：文章介绍了各种提高开发效率的Xcode使用技巧。</p></li>
+<li><p><a href="http://objccn.io/issue-14-3/">《插件》</a>：插件是给你已经发布的 App 增加功能的一个好办法，Mac 上的 App 支持插件已经有很长的历史了。在 NSBundle 的帮助下，插件开发变得很简单，本文介绍了在Mac上进行插件开发的方法。</p></li>
+<li><p><a href="https://github.com/vsouza/awesome-ios">《Awesome iOS》</a>：一个iOS的各类优秀的开源项目集合。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2014/07/27/ios-evelup-tips/">《iOS开发如何提高》</a>：本文分享了iOS开发提高的各种方法。</p></li>
+<li><p><a href="http://weibo.com/2584320772/BfHoM6MM4">《如何编写 iOS 8 Widget》</a>：作者简单介绍了 iOS 8 Widget的编写方法。</p></li>
 </ol>
 
 
 <h2>视频</h2>
 
 <ol>
-<li><a href="http://www.infoq.com/cn/presentations/security-issues-behind-mobile-app">《移动APP背后的安全问题》</a>：现在已进入移动互联网时代，吃喝玩乐、办公支付等等各种应用都在抢占移动APP市场，由于安全无处不在的本质，在多年前就已经有少数人在研究移动APP的中木马、钓鱼等等，但很少有人想到移动APP安全跟WEB安全的关系。安全宝安全团队Leader尹毅在视频中分享了： 1、移动APP市场安全现状 2、安卓APP的反编译及漏洞挖掘 3、利用移动APP渗透的各种“猥琐”思路 4、自动化移动APP安全漏洞挖掘的程序实现。</li>
+<li><a href="https://www.youtube.com/user/UIKonf/feed">《UIKonf 2014》</a>：国外的iOS开发技术会议UIKonf视频。</li>
 </ol>
 
 
 <h2>工具</h2>
 
 <ol>
-<li><a href="http://answerhuang.duapp.com/index.php/2014/07/06/dsym_tool/">《dSYM 文件分析工具》</a>：Xcode编译项目后，我们会看到一个同名的 dSYM 文件，dSYM 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件。作者分享了一个工具，能够根据dSYM文件方便从Crash信息中分析出有可能错误的地方。</li>
+<li><p><a href="https://github.com/markohlebar/Peckham">Peckham</a>：你是否遇到这样的场景?在源码中用到一个类，写完发现因为没有import它的头文件，所以编译不通过。正常情况下，你需要跳转到源代码头部加入该头文件，然后再继续跳回上次编辑位置继续写代码。这样的跳转很不方便，而且让你的逻辑被打断。<a href="https://github.com/markohlebar/Peckham">Peckham</a>是一个帮助你填写#import头文件的Xcode插件，使用它可以方便在源代码的任意位置插入所需要的头文件。</p></li>
+<li><p><a href="http://www.robovm.com/">RoboVM</a>：用Java来写原生的iOS程序。</p></li>
+<li><p><a href="https://github.com/Flipboard/FLEX">FLEX</a>：FLEX是Flipboard开源的一系列在应用中调试的工具集。该工具集提供了查看和修改相关view的属性功能。</p></li>
+<li><p><a href="https://appbot.co/">AppBot</a>: AppBot是可以订阅App Store用户的评价和评分，不局限于自己的产品，其他App也可以订阅然后会邮件发送给你，随时了解用户的评价，改善产品。本条来自 <a href="http://weibo.com/phpmaple">@KooFrank</a>的推荐。</p></li>
 </ol>
 
 
 <h2>开源项目</h2>
 
 <ol>
-<li><a href="https://github.com/kylef/QueryKit">QueryKit</a>：QueryKit是一个用Swift实现的、方便对CoreData数据进行查询的工具库。</li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第16期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/07/03/ios-weekly-16/"/>
-    <updated>2014-07-03T20:41:49+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/07/03/ios-weekly-16</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/ios8-new-features">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：i​OS 8的新特性，敏感逻辑的保护方案，iOS绘图教程，WKWebView的使用等。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://nshipster.cn/ios8/">《i​OS 8》</a>：Mattt Thompson在文章中介绍了iOS8的各种新特性。</p></li>
-<li><p><a href="http://blog.csdn.net/yiyaaixuexi/article/details/29210413">《iOS安全攻防：敏感逻辑的保护方案》</a>：文章介绍了一种低学习成本的，简易的Objective-C逻辑代码重写为C代码的办法。</p></li>
-<li><p><a href="http://imtx.me/archives/1899.html">《谈谈 iOS 8 拍照和摄影功能的增强》</a>：iPhone 的照相功能有着敏捷的反应速度和不错的成像素质，使得 iPhone 成为最佳的随手拍手机。这次 WWDC 14 上尽管没有任何新硬件的更新，但是 iOS 8 在照相功能上的增强再次让我这样的随手拍狂人激动不已。文章主要介绍了iOS 8 带来的倒计时拍摄和延时摄影功能。</p></li>
-<li><p><a href="http://blog.rpplusplus.me/blog/2014/06/26/wwdc14-session-401/">《WWDC14 Session 401 學習筆記》</a>：文章总结了WWDC14 Session 401介绍的PlayGround、Interface Builder和Debug相关功能的改进。</p></li>
-<li><p><a href="http://www.cnblogs.com/xdream86/archive/2012/12/12/2814552.html">《iOS绘图教程》</a>：本文是《Programming iOS5》中Drawing一章的翻译，考虑到主题完整性，翻译版本中加入了一些书中未涉及到的内容。该文章中比较完整地介绍了iOS的整个绘图原理及相关的API。</p></li>
-<li><p><a href="http://studentdeng.github.io/blog/2014/06/24/core-animation/">《Core Animation基本概念和Additive Animation》</a>：文章介绍一些Core Animation基本概念，最后提到一些iOS8的动画改动。</p></li>
-<li><p><a href="https://mikeash.com/pyblog/friday-qa-2014-06-20-interesting-swift-features.html">《Interesting Swift Features》</a>：文章介绍了Swift相对于Objective-C增加的一些有趣的特性，并且讨论了其带来的好处。</p></li>
-<li><p><a href="http://www.raywenderlich.com/76260/video-tutorial-introduction-swift-part-6-functions">《Introduction to Swift Part 6: Functions》</a>：Ray Wenderlich上的关于Swift函数的视频教程。</p></li>
-<li><p><a href="http://www.raywenderlich.com/76248/facebook-pop-tech-talk-video">《Facebook Pop Tech Talk Video》</a>：Ray Wenderlich上的关于Facebook Pop的视频教程。</p></li>
-<li><p><a href="http://www.kinderas.com/technology/2014/6/7/getting-started-with-wkwebview-using-swift-in-ios-8">《Getting started with WKWebView using Swift in iOS 8》</a>：文章介绍了iOS8中新加的WKWebView的使用。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="https://github.com/uranusjr/macdown">macdown</a>：macdown是一个开源的Mac下的markdown编辑器。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/lexrus/LTMorphingLabel">LTMorphingLabel</a>：用swift写的文字飘入飘出的效果。</p></li>
-<li><p><a href="https://github.com/hewigovens/Crashlytics-FPCustomHandler">Crashlytics-FPCustomHandler</a>：这是一个为 Crashlytics 写的 category, 可以方便添加自己的崩溃处理函数。</p></li>
-<li><p><a href="https://github.com/relatedcode/ParseChat">ParseChat</a>：ParseChat是基于Parse实现的一个实时的聊天室开源应用。</p></li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第15期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/06/24/ios-weekly-15/"/>
-    <updated>2014-06-24T12:58:31+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/06/24/ios-weekly-15</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/06/ios8-osx10.10-extension">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：Swift 和 C# 的语法比较，一个CoreText排版性能问题，谈谈 iOS 8 和 OS X 10.10 的 Extension等。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://swift.sh/topic/125/swift-c/">《Swift 和 C# 的语法比较》</a>：适合有C#开发经验的朋友快速了解Swift语言。</p></li>
-<li><p><a href="https://leverich.github.io/swiftislikescala/">《Swift 和 Scala 的语法比较》</a>：适合有 Scala 开发经验的朋友快速了解Swift语言。</p></li>
-<li><p><a href="http://studentdeng.github.io/blog/2014/06/13/auto-layout/">《AutoLayout 相关概念介绍和动画demo》</a>：文章从传统布局的问题入手，介绍了AutoLayout 相关概念，最后提供了一个示例的Demo程序。</p></li>
-<li><p><a href="http://blog.cnbang.net/tech/2268/">《一个CoreText排版性能问题》</a>：伊书的阅读器是用CoreText排版的，在中文字体的选择上，自带的字体中只有黑体，后来发现日文字体Hiragino也是可以用于中文，而且显示效果比黑体好很多，于是选用了这个字体。但在CoreText排版中遇到个问题，用Hiragino字体排版速度非常慢，几乎是默认黑体的100倍。作者分享了整个问题查找和最后解决的过程。</p></li>
-<li><p><a href="http://imtx.me/archives/1898.html">《谈谈 iOS 8 和 OS X 10.10 的 Extension》</a>：作者介绍了 WWDC 14 的视频之《Creating Extensions for iOS and OS X》中介绍的Extensions技术，解释了为何 Extensions 这么重要。</p></li>
-<li><p><a href="http://objccn.io/issue-13/">《objc第13期：架构》</a>：本期objc.io的中文翻译带来了5篇高质量的关于iOS程序架构方面的文章，分别是：<a href="http://objccn.io/issue-13-1/">《MVVM 介绍》</a>、<a href="http://objccn.io/issue-13-2/">《避免滥用单例》</a>、 <a href="http://objccn.io/issue-13-3/">《iOS 中的行为》</a>、<a href="http://objccn.io/issue-13-4/">《子类》</a>、 <a href="http://objccn.io/issue-13-5/">《使用 VIPER 构建 iOS 应用》</a>。</p></li>
-<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-06-22-quartz-composer-and-origami-tutorial-button-animation.md">《用 Quartz Composer 和 Origami 制作一个简单的按钮动画》</a>: 文章由 <a href="http://weibo.com/nixzhu">@nixzhu</a> 翻译。阅读本文，然后照着做一遍。只需20分钟，你就能了解 QC 和 Origami 是什么，能做什么，以及怎么做。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/03/06/rac_1_macros/">《Reactive Cocoa详解》</a>：Reactive Cocoa是一个函数响应式编程思想在Objective-C语言下的实现。本文将从几个方面详细介绍Reactive Cocoa。</p></li>
-<li><p><a href="http://nshipster.cn/cocoapods/">《Cocoa​Pods》</a>：在Objective-C的情况下，CocoaPods提供了一个绝佳的整合合作开发的工具，并且在快速发展的开发社区中起到了一个集结点的作用。在本文中，我们将通过讨论CocoaPods的过去，现在以及将来，一起庆祝0.33版本（具有里程碑意义）的发布。</p></li>
-<li><p><a href="http://geeklu.com/2014/05/facebook-pop-usage/">《Facebook Pop 使用指南》</a>：Facebook Pop其实是基于CADisplayLink(Mac平台上使用的CVDisplayLink)实现的独立于Core Animation之外的动画方案。作者在文章中主要介绍了Facebook Pop的使用。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="https://github.com/iosxtools/WWDC2014">WWDC2014字幕下载工具</a>：一个 OSX App，方便下载WWDC2014的视频。</p></li>
-<li><p><a href="http://octavianlogigan.com/1360/how-to-export-notes-from-ibooks/">《如何导出iBooks中的笔记》</a>：文章介绍了从iBook导出笔记的技巧。</p></li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第14期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/06/10/ios-weekly-14/"/>
-    <updated>2014-06-10T20:36:23+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/06/10/ios-weekly-14</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/06/ios-mobile-weekly">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果发布Swift编程语言以及Swift编程语言相关学习资料。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="https://itunes.apple.com/gb/book/swift-programming-language/id881256329?mt=11">《The Swift Programming Language》</a>：这是苹果官方出版的Swift学习教材，可以免费下载到iBooks中阅读。其中文版翻译项目也在 Github 上火热进行中，地址在<a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese">这里</a>。</p></li>
-<li><p><a href="http://www.raywenderlich.com/73967/swift-cheat-sheet-and-quick-reference">《Swift Cheat Sheet and Quick Reference》</a>：出自raywenderlich的一份Swift快速参考手册，现在还比较简单，但它正快速更新中。</p></li>
-<li><p><a href="http://www.raywenderlich.com/73997/swift-language-highlights">《Swift Language Highlights: An Objective-C Developer’s Perspective》</a>：文章比较了Swift和Objective-C语言的差异性。</p></li>
-<li><p><a href="http://blog.txx.im/blog/2014/06/07/wwdc14-session-402/">《WWDC14 Session 402 》学习笔记</a>：<a href="http://weibo.com/rpplusplus">@糖炒小虾_txx</a>完成了三篇关于Swift的学习笔记，主要内容均来自WWDC14 Session 402的视频。</p></li>
-<li><p><a href="http://www.splasmata.com/?p=2798">《Swift 和Objective-C性能测试》</a>：苹果在WWDC视频中只是简单提到Swift在排序和加密算法上比Objective-C快。本文对两者的性能进行了更复杂的测试，文章中做的测试结果如下：循环100万次，Objective-C比Swift快 29倍；变量增加1， Objective-C比Swift快 46倍。还有一些其它比较，大家可以自己看原文，所以真相是：Swift其实不一定比OC快。</p></li>
-<li><p><a href="http://onevcat.com/2014/06/walk-in-swift/">《行走于 Swift 的世界中》</a>：笔者和周围朋友讨论swift的技术细节，大家都觉得swift比想像中要复杂，onevcat的本文讲述了不少swift的细节。从中你会看到，swift真的不简单。</p></li>
-<li><p><a href="http://code.csdn.net/news/2820075">《Swift编程语言资料大合集》</a>：来自CSDN整理的Swift学习合集资料。</p></li>
-<li><p><a href="http://weekly.manong.io/issues/33?ref=swift">《Swift 特刊》</a>：来自码农周刊的Swift学习合集资料。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<p><a href="http://www.iwangke.me/2014/06/07/wwdc-2014-download-script/">下载脚本</a>：该脚本是WWDC 2014 PDF 及session 视频下载脚本。</p>
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://developer.apple.com/wwdc/resources/sample-code/">WWDC的示例代码</a>：比起GitHub上的开源项目，官方的代码更有参考价值。比如Session 406的代码Lister就用一个Swift实现的包含OSX和iOS的Productivity App，还演示了各种Cocoa新功能。</p></li>
-<li><p><a href="https://github.com/fullstackio/FlappySwift">FlappySwift</a>：FlappySwift用swift重写的一个开源Flappy Bird游戏。</p></li>
-<li><p><a href="https://github.com/YANGReal/JokeClient-Swift">JokeClient-Swift</a>：JokeClient-Swift是<a href="http://weibo.com/208083608">@YANGReal</a>用swift写了一个开源的糗事百科的客户端，主要涉及网络请求，图片加载、缓存、自定义UITableViewCell、delegate以及closure，内容接口基于糗事百科API。</p></li>
-<li><p><a href="https://github.com/austinzheng/swift-2048">swift-2048</a>：一个用Swift实现的2048游戏。</p></li>
-<li><p><a href="https://github.com/croath/UIImageView-BetterFace-Swift">UIImageView-BetterFace-Swift</a>：UIImageView-BetterFace-Swift是一个根据目标图象中头像的位置进行智能图片裁剪的开源库，该地址是其更新的Swift版本。</p></li>
-<li><p><a href="https://github.com/onevcat/Easy-Cal-Swift">Easy-Cal-Swift</a>：swift是类型安全（type safe) 的语言。但是，由于它有类型推断（type inference）能力，所以当能推断出类型时，你不必非要写对应的类型。对于 字面量（literal value），整数会被推断成Int，浮点数会被推断成Double类型。但是，它并没有定义整数和浮点之间的加法，本项目实现了一个常用的运算符重载，这样就可以支持整数和浮点数做加法了。</p></li>
-<li><p><a href="https://github.com/amitburst/HackerNews">HackerNews</a>：用Swift实现的HackerNews客户端。</p></li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第13期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/06/01/ios-weekly-13/"/>
-    <updated>2014-06-01T17:27:22+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/06/01/ios-weekly-13</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/facebook-pop">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：Facebook Pop 使用指南，用CocoaPods做iOS程序的依赖管理，在 iOS 上捕捉签名，加密你的SQLite等。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p> <a href="http://geeklu.com/2014/05/facebook-pop-usage/">《Facebook Pop 使用指南》</a>：Facebook Pop其实是基于CADisplayLink(Mac平台上使用的CVDisplayLink)实现的独立于Core Animation之外的动画方案。文章主要介绍了Facebook Pop如何使用。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">《用CocoaPods做iOS程序的依赖管理》</a>：文章除了介绍了CocoaPods的基本功能外，还增加了如何设置国内spec镜像、使用私有pod、podfile.lock、如何创建spec文件等内容。</p></li>
-<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-05-27-capture-a-signature-on-ios.md">《在 iOS 上捕捉签名》</a>：文章介绍了如何绘制像 Paper 应用那样的真正平滑的曲线，包括如何使用二次贝塞尔曲线使签名平滑，以及基于触摸速度，使签名宽度可变，从而创建出更加自然的笔画。</p></li>
-<li><p><a href="http://blog.t-xx.me/blog/2014/05/28/hack-weibo-sdk/">《解決WeiboSDK Bundleid 綁定問題》</a>：@糖炒小虾_txx 利用IDA分析和 method_swizzling 破解了微博SDK的bundle d綁定，这样就可以绕开weibo sdk 的sso 和bundle id綁定的要求，这算是Objective-C黑魔法的一次有效实践。</p></li>
-<li><p> <a href="http://wangzz.github.io/blog/2014/05/19/jia-mi-ni-de-sqlite/">《加密你的SQLite》</a>：SQLite是一个轻量的、跨平台的、开源的数据库引擎，它的在读写效率、消耗总量、延迟时间和整体简单性上具有的优越性，使其成为移动平台数据库的最佳解决方案。然而免费版的SQLite有一个致命缺点：不支持加密。这就导致存储在SQLite中的数据可以被任何人用任何文本编辑器查看到。本文讨论了各种对SQLite的加密方法。</p></li>
-<li><p> <a href="http://security.ios-wiki.com/issue-3-4/">《Reveal：分析iOS UI的利器》</a>：Reveal能够在运行时调试和修改iOS应用程序。它能连接到应用程序，并允许开发者编辑各种用户界面参数，这反过来会立即反应在程序的UI上。就像用chrome调试HTML页面一样，在不需要重写代码、重新构建和重新部署应用程序的情况下就能够调试和修改iOS用户界面。文章简要介绍了Reveal的功能和几种加载方法。</p></li>
-<li><p> <a href="http://blog.codingcoder.com/ios-games-by-tutorials-chapter8%EF%BC%8Dpart1/">《Sprite Kit 物理引擎初体验 Part 1》</a>：Sprite Kit 内建了一个强大的并且非常容易使用的物理引擎，你可以很容易的使用这个内置的物理引擎来模拟真实世界中的移动。文章介绍了Sprite Kit的基本使用。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="https://itunes.apple.com/cn/app/podlife/id725023109?l=en&amp;mt=8">Podlife</a>：Podlife是一个免费的iOS应用，可以在手机上搜寻各种 CocoaPods，并得到更新提醒。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/schneiderandre/popping">popping</a>：popping是一个POP 使用实例工程。</p></li>
-<li><p><a href="https://github.com/venmo/synx">synx</a>：synx可以自动帮你整理项目里的文件，按 group 重新放置。</p></li>
+<li><p><a href="https://github.com/ftao/vpn-deploy-playbook">vpn-deploy-playbook</a>：一个自动部署各种翻墙服务的工具，包括IPSec，L2TP，PPTP，Cisco AnyConnect，SigmaVPN，APN，shadowsocks，OpenVPN，DNS，SPDY，用户管理等功能。</p></li>
+<li><p><a href="https://github.com/maciekish/iReSign">iReSign</a>：一个可以把ipa用企业证书重新签名的开源项目。</p></li>
 </ol>
 
 ]]></content>

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 Objective-c语言在申请对象的时，需要使用两段构造(Two Stage Creation)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例： 1 &hellip;">
+  <meta name="description" content="前言 随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/01/13/two-stage-creation-on-cocoa/">谈ObjC对象的两段构造模式</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/05/08/git-submodule-issues/">Git Submodule的坑</a></h1>
     
     
       <p class="meta">
@@ -98,7 +98,7 @@
   
 
 
-<time datetime="2013-01-13T10:15:00+08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2013</time>
+<time datetime="2013-05-08T21:44:00+08:00" pubdate data-updated="true">May 8<span>th</span>, 2013</time>
         
       </p>
     
@@ -107,22 +107,17 @@
 
   <div class="entry-content"><h2>前言</h2>
 
-<p>Objective-c语言在申请对象的时，需要使用两段构造(<a href="http://volonbolon.net/post/634999801/two-stage-creation-in-cocoa">Two Stage Creation</a>)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例：</p>
+<p>随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了，赶紧抽空充充电吧。本文并不打算做Git入门级介绍，想学习git的同学，推荐国内作者蒋鑫写的<a href="http://book.douban.com/subject/6526452/">《Git权威指南》</a>。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithString:</span><span class="s">@&quot;http://blog.devtang.com&quot;</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>对于一些比较大的工程，为了便于复用，常常需要抽取子项目。例如我开发的猿题库客户端现在包括3门考试，客户端涉及的公共UI、公共底层逻辑、公共的第三方库、以及公共的答题卡扫描算法就被我分别抽取成了子项目。这些子项目都以git submodule的形式，增加到工程中。</p>
 
-
-<p>由于该语言的对象创建方法和大多数其它语言（如C、C++、Java、JavaScript）都不一样，所以引起了我的好奇。是什么原因促使Objective-C做了这种设计，而又是什么原因促使大多数其它语言都采用&#8221;new&#8221;方法来一次性创建对象呢？</p>
-
-<p>在看了<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书（顺便吐槽一下该书中文版翻译质量不高，建议看英文版），并且做了一些调研之后，我将总结分享给大家，欢迎大家讨论。</p>
+<p>在使用了git submodule一段时间后，我发现了一些submodule的问题，在此分享给大家。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2013/01/13/two-stage-creation-on-cocoa/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2013/05/08/git-submodule-issues/">阅读 &rarr;</a>
     </footer>
   
 
@@ -134,7 +129,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/01/01/2012-summary/">2012年个人总结</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a></h1>
     
     
       <p class="meta">
@@ -150,21 +145,52 @@
   
 
 
-<time datetime="2013-01-01T14:31:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time>
+<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>和<a href="http://blog.devtang.com/blog/2012/01/01/2011-summary/">去年</a>一样，记录一下今年的成长和收获。</p>
+  <div class="entry-content"><h2>2008年</h2>
 
+<p>62天售空。介绍了iPhone 3G。</p>
+
+<p><img src="/images/wwdc-2008.jpg" width="500px" /></p>
+
+<h2>2009年</h2>
+
+<p>33天售空。介绍了iPhone 3GS。</p>
+
+<p><img src="/images/wwdc-2009.png" width="500px" /></p>
+
+<h2>2010年</h2>
+
+<p>8天售空。介绍了iPhone 4。</p>
+
+<p><img src="/images/wwdc-2010.png" width="500px" /></p>
+
+<h2>2011年</h2>
+
+<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
+
+<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
+
+<p><img src="/images/wwdc-2011.jpg" width="500px" /></p>
+
+<h2>2012年</h2>
+
+<p>2小时售空。介绍了iOS6。</p>
+
+<p><img src="/images/wwdc-2012.jpg" width="500px" /></p>
+
+<h2>2013年</h2>
+
+<p>2分钟售空。期待。</p>
+
+<p><img src="/images/wwdc-2013.jpg" width="500px" /></p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/01/2012-summary/">阅读 &rarr;</a>
-    </footer>
   
 
 
@@ -185,12 +211,40 @@
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/ios-weekly-20/">iOS移动开发周报-第20期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
@@ -210,34 +264,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/ios-weekly-14/">iOS移动开发周报-第14期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
       </li>
     
   </ul>

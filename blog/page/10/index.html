@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
+  <meta name="description" content="我和朋友的故事 这个月我给InfoQ网站、《程序员》的投稿所获的稿费，加上去人人网分享技术所得到的礼物，一共有将近3000块。看到这个数字之后我自己都吓了一跳，不知不觉中，写作和分享竟然给自己带来了这么大的直观收入。 但是相比那些非金钱上的收获，这些直接收入又显得微不足道。我在《作为码农， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/04/18/ios-weekly-8/">iOS移动开发周报-第8期</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a></h1>
     
     
       <p class="meta">
@@ -98,52 +98,81 @@
   
 
 
-<time datetime="2014-04-18T21:58:29+08:00" pubdate data-updated="true">Apr 18<span>th</span>, 2014</time>
+<time datetime="2014-05-24T14:00:12+08:00" pubdate data-updated="true">May 24<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h3>版权说明</h3>
+  <div class="entry-content"><p><img src="/images/writing.jpg"></p>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/etag-improve-ios-url-function">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+<h2>我和朋友的故事</h2>
 
-<h3>前言</h3>
+<p>这个月我给<a href="http://www.infoq.com/cn">InfoQ网站</a>、<a href="http://programmer.csdn.net/">《程序员》</a>的投稿所获的稿费，加上去人人网分享技术所得到的礼物，一共有将近3000块。看到这个数字之后我自己都吓了一跳，不知不觉中，写作和分享竟然给自己带来了这么大的直观收入。</p>
 
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+<p>但是相比那些非金钱上的收获，这些直接收入又显得微不足道。我在<a href="http://blog.devtang.com/blog/2014/01/08/why-we-need-write/">《作为码农，我们为什么要写作》</a>一文中，总结了写作给自己带来的非金钱上的收获，包括：<code>提高自己对知识的掌握层次</code>、<code>提高表达和沟通的能力</code>、<code>错误内容反馈</code>、<code>认识朋友</code>、<code>了解更多相关信息</code>、<code>提高影响力</code>和<code>获得传递知识的乐趣</code>。</p>
 
-<p>【摘要】：本期iOS移动开发周报带来如下内容：SDWebImage缓存图片的机制、使用Etag增强iOS的URL缓存功能、从Facebook看移动开发的发展、FuzzyAutocomplete插件等。</p>
-
-<h2>教程</h2>
+<p>由于我自己从写作中获得了巨大的好处，所以我尝试向身边的朋友推荐这个自我提高的方式，但是非常令人惊讶的是，即使知道这里面会有巨大的好处，我身边的很多朋友仍然不能坚持写作。我从他们中收集到的负面反馈包括：</p>
 
 <ol>
-<li><p><a href="http://www.overcode.hk/?p=449">《SDWebImage缓存图片的机制》</a>：文章详细介绍了SDWebImage对于图片的缓存逻辑的实现细节。</p></li>
-<li><p><a href="http://shiningio.com/2014/04/12/ios-url-cache-with-etags/">《使用Etag增强iOS的URL缓存功能》</a>：iOS下对于缓存的支持有很多，比如Core Data，它可以很方便的建模和操作本地SQLite数据库， NSUserDefaults则可以用来缓存一些用户配置等等。本篇主要谈谈使用Etag标签来解决iOS下的URL缓存问题。服务端使用的是Tornado，原生支持Etag，而且默认处于开启状态，因此在应用层面基本不需要额外的代码处理。客户端使用NSURLCache配合AFNetworking进行网络请求。</p></li>
-<li><p><a href="http://www.cnblogs.com/biosli/p/NSObject_inherit.html">《初始化阶段 —— load 和 initialize》</a>：文章介绍了load函数和initialize函数各自的加载顺序。最后文章总结出：将针对于类修改放在intialize中，将针对Category的修改放在load中。假如是修改系统的类，一般会通过添加Category来添加功能，如果修改initialize会导致原生的intialize不会执行，所以放在load中会比较妥当。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/04/13/objc_dig_interface/">《ObjC @interface的设计哲学与设计技巧》</a>：学习Objective-C语言时，尤其是先学过其他编程语言再来看Objective-C时，总会对Objective-C的类声明的关键字interface感到有点奇怪，在其它面向对象的语言中通常由class关键字来表示，而interface在Java中表示的却大约相当于Objective-C的protocol，这个关键字的区别究竟代表了Objective-C语言的设计者怎样的思想呢，在Objective-C类设计中需要注意哪些问题呢？作者在文章中对这个问题进行一些思考和探究。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook/">《从Facebook看移动开发的发展》</a>：作者从Facebook的故事切入，分享了未来移动开发快速发展中，给设计师和程序员带来的挑战。</p></li>
-<li><p><a href="http://imtx.me/archives/1888.html">《CoreData Object 变成 Fault 的另一种方式》</a>：CoreData是一个架构庞大、学习曲线比较陡峭的 iOS 组件，每次遇到问题都会对其有新的认识。文章分享了关于错误认知 Object（NSManagedObject）与 Context（NSManagedContext）的引用关系而导致的 Fault 问题。</p></li>
-<li><p><a href="http://maoa.cn/?post=414">《关于 Mac 右键菜单》</a>：Mac OS X Lion 的 Launch Service 用于关联应用程序和文件并维护最近打开的项目列表。在文件关联和右键菜单方面，每当系统安装一个新的应用程序，都会调用 Launch Service 的 API 注册关联的文件类型。文章详细介绍了这其中的过程。</p></li>
+<li><p>写作太花时间。我的朋友A发现，完成一篇给InfoQ的投稿需要花费他周末2天的时间（包括查找资料和写作，和InfoQ编辑的沟通，多次改稿等）。而从稿费得到的直接收入，远远不能弥补他所花费的时间。通常人们都喜欢将自己的月工资除以22，然后算出来每天自己的时间成本。当发现自己的写作直接收入远远不能匹配工作的收入时，很多人都会选择放弃。</p></li>
+<li><p>自己不擅长写作。我的朋友B对于Origami非常精通，我本来打算向他约一篇深入介绍Origami的稿件，但是当然得知稿件的稿费只有千字150元时，他就放弃了。拿他的话来说，写文章憋出几个字可比写代码费劲多了，为了这篇文章，他可能得花费数周才能完成，最终的稿费收入可能只有几百块。</p></li>
+<li><p>写作对自己收获不大。我的朋友C是一个技术牛人，但是他习惯通过记笔记的方式来整理知识，对于一些知识点，因为是消化过的，所以他就只需要在笔记中将关键的内容记录下来，就可以方便地在后期进行知识的回顾。而如果他要写文章的话，因为文章是面向其他读者，他就需要非常仔细地介绍知识的前因后果，做各种铺垫，还需要做到有条理，表达清晰。这些如果要做好，配图、举例子、提供参考资料等工作是免不了的，所以让我的朋友C觉得实在太花时间了，性价比太低。</p></li>
+<li><p>自己不能坚持。我的朋友D完全同意我的观点，认为写作能够带来的巨大好处，但是他就是坚持不下来。这就像有些人不能坚持锻炼身体，有些人不能坚持早睡早起，有些人不能坚持控制饮食一样，对于一些有好处但是需要和自己的潜意识做斗争的事情，很容易被自己打败。</p></li>
 </ol>
 
 
-<h2>工具</h2>
+<h2>坚持写作的关键</h2>
+
+<p>他们说得有道理吗？我认为非常有道理。而且我认为，我的ABCD四个朋友，都会在各自领域成为大牛，因为他们都热爱编程，喜欢专研，并且有着认真做事情的态度。所以反过来，我认为坚持写作并不是一个人通往成功的必经之路，但是写作是帮助你成功的一个重要的加分项。</p>
+
+<p>那我们为什么坚持写作？我只想到一个理由：爱好。</p>
+
+<p>但是我不同意爱好就等同于擅长的事情。通常情况下某一个人因为在天赋上擅长做某件事情，然后就会在这件事情上持续收获满足感，进而在该件事情上比别人投入更多时间。但是也有那种反过来的，因为爱好一件事情，从而不断地坚持做那件事情，最终因为投入巨大的时间而成功。</p>
+
+<p>我个人坚持写作就属于后者。高中时，我的语文成绩一直在应试教育的阴影之下，由于并不擅长记忆，我的语文成绩一直非常差，高考时语文差一点不及格，满分150的考卷最终只有92分。但是我内心深处还是喜欢表达的，所以最终工作后还是坚持将自己的学习收获写成文章表达出来，慢慢写多了就有一些感觉了，最终能够熟练地进行技术写作。</p>
+
+<p>我个人对于编程也是这样，由于初高中时对于编程的痴迷，得以花费大量的课余时间学习编程。其实我还是比较笨的，例如高中时为了看懂一个非递归的枚举代码就花了近一个月。那个时候还坚持买《程序员》杂志，虽然大部分看不懂=。= ，下图是今年春节回家在家里看到一本11年前买的《程序杂》杂志。</p>
+
+<p><img src="/images/programmer-2003.jpg"></p>
+
+<p>所以，你不需要一定擅长写作，只需要有一个喜欢表达和分享的心就可以。</p>
+
+<p>对于爱好，李笑来的<a href="http://book.douban.com/subject/3609132/">《把时间当作朋友》</a>一书中的观点更加极端。他在书的第一章“心智的力量”中认为：只要人足够强大，能够控制自己的心智，那么就可以无视兴趣的力量，坚持做对自己有收获的事情，然后反而过由于长久坚持而收获成功，得到最终的满足感，最后通过满足感反过来得到兴趣。他的原话是：</p>
+
+<blockquote><p>只要一件事儿你能做好，并且做到比谁都好，或者至少比大多数人好，你没办法对那件事情没兴趣。</p><p>往往并不是有兴趣才能做好，而是做好了才有兴趣。</p></blockquote>
+
+
+<p>但是我终究认为人不是机器，我个人更喜欢随性一些，如果做A和B两件事情都能带来成功，我更倾向于用我个人的兴趣或直觉来选择，而不是“控制心智”，完全理智地看A和B哪个收益更大。</p>
+
+<p>本文接下来的部分是写给那些内心爱好写作与分享的朋友，以及那些能够“控制心智”的朋友。我们将讨论如何坚持写作。</p>
+
+<h2>如何坚持写作</h2>
+
+<p>在有了兴趣之后，我们来解决上面ABCD四个朋友提出的各种问题，看如何能坚持写作。对于ABCD提出的各种问题，我们可以尝试以下这些解决办法：</p>
 
 <ol>
-<li><p><a href="https://fnd.io">fnd.io</a>: fnd.io 是一个App Store的网页版，搜索速度非常快，可以用来代替itunes进行应用的检索。</p></li>
-<li><p><a href="https://www.shortcutfoo.com/">Shortcut Foo</a>：Shortcut Foo是一个训练你记忆快捷键的网站，除了包括iOS的第三方IDE AppCode的内容外，还包括vim，emacs, git等内容。</p></li>
-<li><p><a href="https://github.com/FuzzyAutocomplete/FuzzyAutocompletePlugin">FuzzyAutocomplete</a>：FuzzyAutocomplete是一个Xcode自动补全插件，刚刚更新到了2.0版本。它可以让你不需要再遵循从头匹配的原则来补全代码，而是随便输入你记得的关键字来进行匹配，整个插件的响应速度也非常快。</p></li>
+<li><p>对于不擅长写作的朋友，可以尝试刚开始不要写那么深入的文章，也不要太追求完美而忽略效率。写作能力的提高本来就循序渐进的，刚开始写简单一些，总归比不写要好得多。我刚开始的写作内容，就是尝试把苹果WWDC视频中的内容看懂后，用自己的话再讲一遍。慢慢的，就可以写一些原创的深入文章了。</p></li>
+<li><p>对于觉得写作太花时间的朋友，可以尝试把写作内容变短。例如每天用200-500个字总结一些今天在技术上的收获。慢慢坚持，就可以提高自己的表达能力。我个人就喜欢用微博或微信公共帐号来发表简短的原创内容，虽然很多时候就是介绍一个架构或新闻，但是思考怎么用简短的几个字表达清楚，并且能吸引读者转发或阅读，也是能有不少小的提高的。</p></li>
+<li><p>对于觉得写作收获不大的朋友，如果你把写作当爱好，就不应该计较收获了。另外，我认为写作的收获在早期可能不明显，但是当你的写作积累了一定量的时候，收获就会被成倍地放大，就像我现在这样。我从写作上获得的收入是巨大的。</p></li>
+<li><p>对于不能坚持的朋友，也可以尝试上面说的方法2，即每天写少量的内容，这样时间开销会比较少。</p></li>
 </ol>
 
 
-<h2>开源项目</h2>
+<p>最后，学习和模仿别人的写法也是一个不错的提高方式，像 <a href="http://onevcat.com/">onevcat</a> 和 <a href="http://macshuo.com/">池建强</a> 的文章就比我写得风趣得多，我也在尝试多一些有趣的表达方式。</p>
 
-<ol>
-<li><p><a href="https://github.com/granoff/Lockbox">Lockbox</a>: Lockbox是一个帮助你方便地将数据保存到keychain中的开源工具类。</p></li>
-<li><p><a href="https://github.com/nolimits4web/framework7/">Framework7</a>： Framework7 是一个功能齐全的 HTML 框架，用来构建 iOS7 应用程序。Framework7 允许你使用Javascript代码来实现应用的列表，侧边栏，弹出框等控件。</p></li>
-</ol>
+<h2>推荐</h2>
 
+<p>最后推荐大家在有一定写作能力后，尝试给 <a href="http://www.infoq.com/cn">InfoQ网站</a> 或<a href="http://programmer.csdn.net/">《程序员》</a>杂志投稿，通常他们对于稿件会有更加严格的审核，所以即使稿件被拒，也能让自己找到未来提高的地方。</p>
+
+<p>当你给InfoQ的原创文章投稿超过3篇被发表后，就可以申请成为兼职编辑，InfoQ编辑每月有一次集体的“我是吃货”聚会，各种海吃海喝之后，还可以和InfoQ CEO Kevin、男神池建强、张龙老师、交际花显峰等其他编辑当面交流技术，实在是一次难得的机会。</p>
+
+<p>每年InfoQ兼职编辑还可以用3篇原创稿件换取5800元的QCon门票，并可以采访QCon上来自全国各地的技术高手。比如今年的<a href="http://www.qconbeijing.com/">QCon会</a>上，我就<a href="http://www.infoq.com/cn/news/2014/04/interview-ios-test-guide-author">采访</a>了<a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/product-description/B00JPVNFKM">《iOS测试指南》</a>的作者羋峮。虽然大家看到了最终的<a href="http://www.infoq.com/cn/news/2014/04/interview-ios-test-guide-author">采访稿件</a>，但是亲自面对面交流的收获很难完全体现在稿件中的，比如有一条羋峮对于测试的看法：“只测试需要测试的逻辑”这一条，虽然只是采访之后随口所说，但对我的影响还是非常大的，但我很难将其思想体现在稿件中。</p>
+
+<p>希望本文能让那些喜欢写作和分享的人，都能坚持自己的这个爱好，最终从中得到巨大的回报！</p>
+
+<p>愿大家玩得开心～</p>
 </div>
   
   
@@ -156,7 +185,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/04/16/mobile-development-view-from-facebook/">从Facebook看移动开发的发展</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/24/ios-weekly-12/">iOS移动开发周报-第12期</a></h1>
     
     
       <p class="meta">
@@ -172,48 +201,58 @@
   
 
 
-<time datetime="2014-04-16T20:37:59+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time>
+<time datetime="2014-05-24T10:04:19+08:00" pubdate data-updated="true">May 24<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/facebook-logo.jpg"></p>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<h2>从Facebook谈起</h2>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/apple-renew-wwdc2014-application">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<p>Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式<a href="http://tech.ifeng.com/internet/special/fb-whatsapp/content-1/detail_2014_02/21/34032969_0.shtml">收购移动 IM 应用 WhatsApp</a>，总收购成本 190 亿美元。然后是继续发布了新产品：2014年2月，Facebook发布了一个新的移动端新闻阅读应用<a href="https://www.facebook.com/paper">Paper</a>。最后，Facebook最近还将自己使用的大量工具开源，包括开源了Paper的加载效果<a href="https://github.com/facebook/Shimmer">Shimmer</a>，LLDB的增强工具<a href="https://github.com/facebook/chisel">chisel</a>，以及Key-Value Observing工具<a href="https://github.com/facebook/KVOController">KVOController</a>，如果说这些开源工具让程序员如获至宝的话，那么Facebook将Paper的交互设计工具<a href="http://facebook.github.io/origami/">Origami</a>免费开放，则是对广大设计师的福音，极大地方便了移动交互设计工作的开展。</p>
+<h3>前言</h3>
 
-<p>2014年对于Facebook来说也是一个值得纪念的日子。因为从2004年2月4日Facebook产品上线到现在，Facebook刚刚走过10个年头。10年前，Facebook的创始人扎克伯格才19岁，是哈佛大学的一名学生。转眼间10年后，Facebook已经成长为全球最大的社交网络，月活跃用户达到12亿，市值约1200亿美元。</p>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>业界内大多讨论的话题都围绕在Facebook收购WhatsApp这件事情上，而作为一个移动开发者，我更加看重Facebook 发布Paper这件事情。因为Paper并不是一个简单的应用，它有着非常优秀的交互效果，并且在产品设计和技术上都使用了许多前沿的技术，那就让我们看看，Paper的开发到底有何不同之处？</p>
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果更新WWDC 2014应用、GCD 深入理解、objc.io第12期翻译等。</p>
 
-<h2>交互设计</h2>
+<h2>新闻</h2>
 
-<p>我们首先从产品设计上看Paper的不同之处。Paper虽然只是一个新闻客户端，但从大家对Paper的评价上，我们发现优秀的交互再一次成为大家关注的焦点。回想那些成功的应用，大多都有着令人心动的交互效果，例如：Tweetie的下拉刷新，现在基本上成为iPhone上内容刷新的标准。Path跳出来的红心让人心动，很多朋友甚至会没事点那个红心，欣赏那流畅的按钮散开效果。还有Mailbox，用流畅的手势操作，将邮件管理与任务管理完美结合起来。</p>
+<ol>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-05-22/08099393630.shtml">《苹果更新WWDC 2014应用 公布主题演讲时间》</a>：2014年苹果公司全球开发者大会(WWDC)将于6月2日举行。5月21日，他们更新了iOS版WWDC官方应用，并将公布主题演讲时间。</p></li>
+<li><p><a href="https://github.com/orta/wwdc_parties_2014">《各种WWDC2014现场聚会》</a>：该项目列出了各种第三方公司或组织打算在WWDC时候进行的线下聚会。</p></li>
+<li><p><a href="http://weicdsq.lofter.com/post/20a5c5_13cc45e">《关于发现的一个流氓黑客恶意盗号插件的源头追踪》</a>：威锋技术组分享了追踪一个恶意盗号插件源头的过程。从中我们可以看到越狱手机市场有多么混乱和危险。笔者认为，如果不是研究安全为目的，就不要越狱，特别是不要为了装盗版而越狱。</p></li>
+</ol>
 
-<p>国外成功的优秀应用也在影响着国内。交互设计不同于平面设计，不能简单地用Photoshop展现，而交互设计对于移动应用的成功又异常关键，所以需要花费不少时间来设计，因此产品经理很难兼顾地做交互设计。所以，在国内的一线互联网公司里，交互设计师这个职位慢慢成了移动应用的标配。但是在大部分的非一线互联网公司里面，移动开发的设计仍然停留在由产品经理简单潦草的完成阶段。所以，Facebook这次Paper的成功发布，再一次给移动开发的从业者指出了交互设计的重要性。</p>
 
-<p>回顾中国互联网产业的发展我们可以发现，产品经理（Product Manager）这个职位也是最近五、六年才成为互联网公司的标配的，想必在不远的将来，除着交互设计越来越重要，移动交互设计师也会成为每一个互联网公司重要的必备职位。</p>
+<h2>教程</h2>
 
-<p>另一方面，由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集<a href="http://facebook.github.io/origami/">Origami</a>，使得交互设计工作得到更好的辅助。而且在Facebook的带动下，<a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>也出现了。jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。</p>
+<ol>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-05-14-grand-central-dispatch-in-depth-part-2.md">《GCD 深入理解：第二部分》</a>：本文是由<a href="http://weibo.com/riven0951">Riven</a>和<a href="https://twitter.com/nixzhu">@nixzhu</a>共同翻译的GCD 深入理解的第二部分。文章更加深入地介绍了 GCD 的高级用法，包括 Dispatch Group 、并发的危害、正确的阻塞方式、信号量以及 Dispatch Source 等。</p></li>
+<li><p><a href="http://objccn.io/issue-12/">《objc.io第12期翻译：动画》</a>：本期翻译涵盖了iOS动画的方方面面——从 UIView 动画，Core Animation，一直到从零打造一个你自己定义的动画。文章还讨论了 View Controller 和 Collection View 有关的动画，以及如何让动画变得可以交互。</p></li>
+<li><p><a href="http://bomberstudios.com/post/54587126654/using-sketch-mirror-liveview-silkscreen-skala">《Using Sketch Mirror, LiveView, SilkScreen, Skala Preview, AirServer &amp; others via USB》</a>：文章介绍了用 USB 热点共享提高演示时 iPhone 画面帧数的技巧，该技巧可用于在使用AirServer或Sketch mirror等应用时，在wifi糟糕的环境下解决数据传输太慢的问题。</p></li>
+<li><p><a href="http://highperformancecoredata.com/">《High Performance Core Data》</a>：文章列出了讲Core Data 性能方面的各种资源，包括博客、Podcast以及开源代码。</p></li>
+<li><p> <a href="http://nsscreencast.com/">NSScreenCast</a>：NSScreenCast是一个风格有趣的iOS教程网站。</p></li>
+</ol>
 
-<p>不过另一方面，该工具仍然需要设计师具备一定的基础编码能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。</p>
 
-<h2>移动开发技术</h2>
+<h2>工具</h2>
 
-<p>随着iOS依赖管理工具Cocoapods和大量第三方开源库成熟起来，业界积累了大量的优秀开源项目。这次Facebook开发Paper使用了<a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">将近100个第三方开源库</a>，极大地减化了自己的应用开发任务。相信随着移动开发的发展，移动开发的生态圈会越来越成熟，基础的开源组件也将将越来越丰富，广大开发者都将从中受益。</p>
+<ol>
+<li><p><a href="https://github.com/ideo/avocado/">avocado</a>：avocado是一个基于Facebook Origami的交互设计工具集。其由<a href="http://www.ideo.com/">IDEO</a>开源，可用于做交互原型设计。</p></li>
+<li><p><a href="http://resolution.im/">resolution.im</a>：resolution.im是一个提问各种iOS设备尺寸信息以及设计模版的网站。</p></li>
+</ol>
 
-<p>另一方面，Facebook的工程师在<a href="http://www.quora.com/What-exactly-did-Jason-Prado-mean-when-he-said-Xcode-cannot-handle-our-scale/answer/Scott-Goodson-1">Quora上反馈</a>说Paper在Xcode下打开需要40多秒钟，编译一次需要30分钟。这反映出大量的开源库的使用也给iOS集成编译环境Xcode提出了新的挑战，相信苹果会花大力气解决Xcode的性能问题。</p>
 
-<h2>总结</h2>
+<h2>开源项目</h2>
 
-<p>Facebook发布的Paper让我看到了移动开发领域的快速发展，大量新的工具和开源技术给了设计师和程序员机会和挑战，相信在移动互联网快速发展的浪潮中，会涌现出越来越多优秀的移动应用。谁会是未来移动互联网的霸主？让我们拭目以待。</p>
+<ol>
+<li><p><a href="https://github.com/Ciechan/BCMeshTransformView">BCMeshTransformView</a>：BCMeshTransformView是一个用于实现Mesh变换效果的开源库，关于Mesh变换，可以查阅<a href="http://ciechanowski.me/blog/2014/05/14/mesh-transforms/">这篇博文</a>。</p></li>
+<li><p><a href="https://github.com/hfossli/AGGeometryKit-POP">AGGeometryKit-POP</a>：AGGeometryKit-POP是一个基于facebook POP的动效框架，这里有一个它能提供的动效<a href="http://vimeo.com/95383807">演示视频</a>。</p></li>
+</ol>
 
-<h2>版权说明</h2>
-
-<p>本文已发表在《程序员》杂志2014年4月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-16/2819341">http://www.csdn.net/article/2014-04-16/2819341</a></p>
 </div>
   
   
@@ -236,12 +275,40 @@
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/ios-weekly-20/">iOS移动开发周报-第20期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
@@ -261,34 +328,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/ios-weekly-14/">iOS移动开发周报-第14期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
       </li>
     
   </ul>

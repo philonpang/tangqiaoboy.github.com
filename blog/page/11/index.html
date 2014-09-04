@@ -9,8 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 上次将我的iMac硬盘换成SSD后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果： 启动时按住Shift键进入安全模式（没能进入）
-同时按下 Command、Option、P &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/04/12/install-mavericks-note/">Mac重装记录</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/16/ios-weekly-11/">iOS移动开发周报-第11期</a></h1>
     
     
       <p class="meta">
@@ -99,197 +98,60 @@
   
 
 
-<time datetime="2014-04-12T17:00:20+08:00" pubdate data-updated="true">Apr 12<span>th</span>, 2014</time>
+<time datetime="2014-05-16T21:36:16+08:00" pubdate data-updated="true">May 16<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>前言</h2>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<p>上次将我的<a href="http://blog.devtang.com/blog/2014/01/26/add-ssd-to-old-imac/">iMac硬盘换成SSD</a>后，我是通过迁移助理将我的Mac Book Air的环境同步过去的，不知道为什么，半个月前出现了重启后电脑一直处于加转中的状态。尝试过了网上提供的以下方法都没有效果：</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/ios-app-security-development">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：iOS应用安全开发概述，Collection View 动画，可变参数列表的实现原理，XcodeBoost插件等。</p>
+
+<h2>教程</h2>
 
 <ol>
-<li>启动时按住Shift键进入安全模式（没能进入）</li>
-<li>同时按下 Command、Option、P 与 R 键不放（成功执行，但还是无法进入系统）</li>
-<li>按住 Command 键及 S 键，进入单用户模式（成功进入，但是把“/资源库/StartupItems”与“/系统/资源库/StartupItems”都清除，以及清除了<code>com.apple.loginwindow.plist</code> 和<code>com.apple.windowserver.plist</code>后，但还是无法通过正常启动进入系统）</li>
-<li>在单用户模式中修复磁盘，没有发现磁盘问题</li>
+<li><p><a href="http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security">《iOS应用安全开发，你不知道的那些事》</a>：iOS应用由于其直接运行在手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文从网络安全、本地文件和数据安全、源代码安全三个方面，阐述iOS应用在安全性上遇到的挑战。</p></li>
+<li><p><a href="http://objccn.io/issue-12-5/">《Collection View 动画》</a>：<code>UICollectionView</code> 和相关类的设置非常灵活和强大。但是灵活性一旦增强，某种程度上也增加了其复杂性： <code>UICollectionView</code> 比老式的 <code>UITableView</code> 更有深度，适用性也更强。本文的第一部分将集中讨论并举例说明如何用不同的类和方法来共同帮助实现一些常见的 <code>UICollectionView</code> 动画。在第二部分，我们将看一下带有 collection views 的 view controller 转场动画以及在 <code>useLayoutToLayoutNavigationTransitions</code> 可用时使用其进行转场，如果不可用时，我们会实现一个自定义转场动画。</p></li>
+<li><p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">《Variable Argument Lists》</a>：可变参数函数（Variadic Function），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的。本文讨论了其具体的实现内部原理。最后作者<a href="http://weibo.com/lancy1014">晨钰Lancy</a>介绍了其开源的一个能够接收block作为回调的自定义的<a href="https://github.com/lancy/cyalertview">AlertView组件</a>。</p></li>
+<li><p><a href="http://imoldman.github.io/blog/2014/04/30/why-assert-enabled-under-release-in-xcode/">《assert出问题了》</a>：作者分享了在Xcode中使用Assert时需要注意的问题。</p></li>
+<li><p><a href="http://stackoverflow.com/questions/7385439/exception-thrown-in-nsorderedset-generated-accessors">《CoreData的坑》</a>：<a href="http://weibo.com/pinxue">pinxue</a>分享了一个持续3年都没有修复的CoreData的Bug。</p></li>
+<li><p><a href="http://www.taofengping.com/2014/05/07/multi-similar-application/#.U3N25q2SyrJ">《使用cocoapods创建多个类似工程的尝试》</a>：因为业务的需要，作者做了一批类似无聊图的App，应用本身没有复杂的逻辑，所有类“无聊图”的应用都针对特定的用户群，设计了不同界面风格的，比如适合宅男的女神应用，适合吃货的美食应用等等诸如此类，大概一共七八个。作者介绍了其使用cocoapods创建多个类似工程的尝试。</p></li>
+<li><p><a href="http://miao.hu/2012/02/26/osx-exp-share/">《Mac 软件和学习经验分享》</a>：作者介绍了一些优秀的 Mac 软件和学习Mac的经验。</p></li>
+<li><p><a href="http://subjc.com/">subjc.com</a>：subjc.com是一个介绍iOS界面编程技巧的网站。网站中有动画实例分析以及实现的代码。</p></li>
 </ol>
 
 
-<p>于是我做了一次覆盖安装，之后可以使用了，但昨天电脑又无法进入系统了。于是我打算格盘后做一次完全的重装，在此记录下自己的重装过程。</p>
-
-<h2>备份数据</h2>
-
-<p>由于我能够通过启动时按Command 键及 S 键，进入单用户模式，所以我首先把自己未提交的工程代码通过U盘备份出来了，具体步骤如下：</p>
+<h2>工具</h2>
 
 <ol>
-<li>按住 Command 键及 S 键不放，以“单一使用者模式”开机。</li>
-<li>加载磁盘：<code>mount -uw /</code></li>
-<li>新建一个U盘的加载目的文件夹： <code>mkdir /usb</code></li>
-<li>插入U盘，然后用如下命令加载U盘 <code>mount_msdos /dev/disk1s1 /usb</code> （如果你的U盘不是msdos格式，可以尝试在输入mount_后，按两次tab查看可用的其它格式）</li>
-<li>备份资料：<code>cp -r  ~/work/iphone /usb</code></li>
-<li>弹出U盘：<code>umount /dev/disk1s1</code></li>
-<li>将U盘资料放到别的电脑上，然后准备用来下一步制作安装盘</li>
+<li><p><a href="https://github.com/fortinmike/XcodeBoost">XcodeBoost</a>：XcodeBoost包含多个辅助修改代码的小功能，比如：</p>
+
+<ol>
+<li>可以在.m文件中复制方法实现，然后将该方法的定义粘贴到对应的.h文件中</li>
+<li>可以在某一个源文件中直接输入正则表达式查找</li>
+<li>可以复制粘贴代码时不启用Xcode的自动缩进功能（Xcode的自动缩进经常出问题，造成已经调整好的代码缩进，因为粘贴时被Xcode调整坏了）</li>
+</ol>
+</li>
 </ol>
 
 
-<h2>制作安装盘</h2>
-
-<p> 苹果的操作系统其实可以直接通过网络恢复，考虑到恢复时间实在太长，所以最好制作成安装盘，这样安装起来非常快。</p>
+<h2>开源项目</h2>
 
 <ol>
-<li>准备好一个8G以上的空白U盘，准备好另外一台Mac电脑用来制作安装盘。</li>
-<li>新的操作系统<code>Mavericks.app</code>可以在AppStore上直接下载。在另一台电脑上把文件下载好，下载后文件<code>Mavericks.app</code>应该在你的<code>/Applications</code>目录下。</li>
-<li>插入U盘，执行：<code>sudo /Applications/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia --volume /Volumes/Untitled --applicationpath /Applications/Install\ OS\ X\ Mavericks.app --nointeraction</code></li>
-<li>以上命令会将U盘先格式化，然后制作成安装盘，整个过程大概需要40分钟左右。</li>
+<li><p><a href="https://github.com/monoclesociety/eggscellent">Eggscellent开源</a>：Eggscellent是Mac上的开源的番茄钟应用。</p></li>
+<li><p><a href="https://github.com/viewfinderco/viewfinder">Viewfinder</a>：移动支付公司 Square 将去年收购的照片应用 Viewfinder 开源了，包含服务端、iOS 和 Android 应用代码。<a href="http://corner.squareup.com/2014/05/open-sourcing-viewfinder.html">这里</a>有该项目的介绍。</p></li>
+<li><p><a href="https://github.com/kevinzhow/PNChart">PNChart</a>：作者<a href="http://weibo.com/kevinzhow">周楷雯Kevin</a>发布了PNChart 0.5版本，提供了一个更漂亮的Pie Chart界面。</p></li>
+<li><p><a href="https://atom.io/">文本编辑器Atom开源</a>：GitHub将其开发的文本编辑器Atom开源。</p></li>
 </ol>
 
-
-<h2>安装系统</h2>
-
-<ol>
-<li>插入上一步制作好的U盘</li>
-<li>启动时按住 option 键，然后选择通过U盘启动，之后先进入磁盘工具里面把硬盘格式化了（你也可以选择不格式化，这样就是覆盖安装）</li>
-<li>安装系统。整个安装过程大概要30分钟的样子。</li>
-</ol>
-
-
-<h2>安装软件</h2>
-
-<p> 安装好系统后，首先进入AppStore升级系统，把需要的更新补丁都装了。然后通过AppStore的”Purchases”页面，重新安装以前购买过的应用，我主要装的是 qq、evernote、Alfred、MplayerX、Xcode、Dash、Keynote、有道词典。另外通过网页另外下载了QQ的五笔输入法。</p>
-
-<p>接下来的基本上是命令行的安装，Mac下管理命令行工具首先得装homebrew了：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>安装完之后执行一下<code>brew doctor</code>进行一下自检，看有没有什么异常。没问题就开始安装axel, imagemagick, autojump等命令行工具：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install wget
-</span><span class='line'>brew install axel
-</span><span class='line'>brew install imagemagick
-</span><span class='line'>brew install autojump
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>有些程序(例如老版本的ruby需要使用gcc来编译)，通过以下命令安装老版的gcc：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap homebrew/dupes
-</span><span class='line'>brew install apple-gcc42
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>使用brew cask来安装应用</h2>
-
-<p>之前专门<a href="http://blog.devtang.com/blog/2014/02/26/the-introduction-of-homebrew-and-brewcask/">写文章介绍</a>过<code>brew cask</code>, 这次打算试试常用软件都用它来装，首先安装brew cask:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap phinze/cask
-</span><span class='line'>brew install brew-cask
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后设置alfred，把 <code>/opt/homebrew-cask</code>增加到 alfred 的search目录中，然后就可以用alfred来启动安装后的应用了。</p>
-
-<p>接下来用brew cask安装：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew cask install iterm2
-</span><span class='line'>brew cask install dropbox
-</span><span class='line'>brew cask install google-chrome
-</span><span class='line'>brew cask install sublime-text
-</span><span class='line'>brew cask install mou
-</span><span class='line'>brew cask install xtrafinder
-</span><span class='line'>brew cask install charles
-</span><span class='line'>brew cask install reveal
-</span><span class='line'>brew cask install xscope
-</span><span class='line'>brew cask install sparrow
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>使用zsh</h2>
-
-<p>然后是使用zsh，下载安装ohmyzsh:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -L http://install.ohmyz.sh | sh
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>安装完成之后，<code>vim ~/.zshrc</code> ，除了git插件外，另外增加 osx 和 autojump 插件。然后把以下这行注释启用：<code>export LANG=en_US.UTF-8</code> ，否则命令行中的中文可能会乱码。</p>
-
-<h2>同步数据</h2>
-
-<p>挂上VPN之后，打开chrome，然后同步自己的所有信息，chrome的同步挺赞的，包括书签，插件，浏览历史记录以及保存的密码都同步过来了。</p>
-
-<p>打开evernote和dropbox，同步数据。由于我的个人文档都存在它们里面，所以同步过来还是挺方便的。</p>
-
-<p>打开QQ，将漫游的聊天记录同步过来。打开dash，恢复购买，然后把snippet从dropbox同步过来。</p>
-
-<p>将自己的ssh key从原来的机器上复制过来。</p>
-
-<h2>设置Ruby</h2>
-
-<p>由于我的博客使用Octopress搭建，所以需要安装Ruby：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew update
-</span><span class='line'>brew install rbenv
-</span><span class='line'>brew install ruby-build
-</span><span class='line'>
-</span><span class='line'>rbenv install 1.9.3-p0
-</span><span class='line'>rbenv <span class="nb">local </span>1.9.3-p0
-</span><span class='line'>rbenv rehash
-</span><span class='line'>
-</span><span class='line'>gem install bundler
-</span><span class='line'>rbenv rehash
-</span><span class='line'>bundle install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>结束语</h2>
-
-<p>一切完成之后，我写下了本文，希望能帮助大家快速地重装系统。简单来说：</p>
-
-<ol>
-<li>通过evernote、dropbox和chrome将个人数据保存在云端后，重装后能快速恢复环境。</li>
-<li>通过homebrew和基于homebrew的brew cask，可以方便地帮助你快速安装不在AppStore上销售的软件。</li>
-</ol>
-
-
-<p>其实正常情况下，Mac使用迁移助理或Time Machine恢复非常方便，如果不是万不得已，大家也不用像我这样重装系统。</p>
 </div>
   
   
@@ -302,7 +164,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/04/10/ios-weekly-7/">iOS移动开发周报-第7期</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/08/ios-security-dev-overview/">iOS应用安全开发概述</a></h1>
     
     
       <p class="meta">
@@ -318,57 +180,227 @@
   
 
 
-<time datetime="2014-04-10T23:34:02+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time>
+<time datetime="2014-05-08T21:27:23+08:00" pubdate data-updated="true">May 8<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h3>版权说明</h3>
+  <div class="entry-content"><p><img src="/images/security.jpeg"></p>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-wwdc2014-ticket">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+<p>【摘要】：iOS应用由于其直接运行在手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文将从网络安全、本地文件和数据安全、源代码安全三个方面，阐述iOS应用在安全性上遇到的挑战。</p>
 
-<h3>前言</h3>
+<h1>前言</h1>
 
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+<p>在传统互联网领域，安全已经是一个老生常谈的话题。在许多大公司里面，都设置有专门的安全部门，用于检测自己产品的安全性。但即便是这样，业界仍然时常暴出许多安全问题的新闻。就在不久前，乌云<a href="http://gd.people.com.cn/n/2014/0325/c123932-20854292.html">曝光了</a>携程网在支付过程中，为了调试方便，记录了用户的信用卡卡号和CVV码等信息，而调试接口可以被外网访问，这样造成黑客可能通过调试接口读取用户的信用卡信息。虽然最终没有造成实际上的用户损失，但是此次事件再一次给互联网公司敲响了安全的警钟。</p>
 
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果WWDC2014门票开卖，
-ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
+<p>除了国内，国外的互联网安全问题同样让人担忧。去年由于曝出<a href="http://tech.163.com/13/0722/09/94CKLASU000947EG.html">Apache Struts2的漏洞</a>，苹果公司多次重置开发者的密码，并且最终为了用户数据的安全，将整个开发者后台全部停止服务，花了2周多时间将后台有潜在问题的功能重写后，才重新开放服务。而4月份刚刚曝光的<a href="http://tech.ifeng.com/internet/detail_2014_04/09/35603734_0.shtml">OpenSSL的heart bleeding漏洞</a>，则让全球的三分之二的网站受到影响。</p>
 
-<h2>新闻</h2>
+<p>在移动互联网快速发展的今天，iOS应用由于直接运行在用户的手机上，相比运行在服务器的后台服务，更有可能被黑客攻击。本文接下来将从三个方面概述iOS移动应用在安全方面所面临的挑战以及应对措施。</p>
 
-<ol>
-<li><a href="http://nb.zol.com.cn/445/4451916.html">苹果WWDC2014门票开卖，开发者需通过抽签的方式申请购买</a>：2014年苹果开发者大会（WWDC）将于6月2日至6日在旧金山Moscone West中心举行。而本次WWDC大会的门票将于旧金山当地时间4月7日上午十点开始发售，开发者需通过抽签的方式申请购买，下午五点到八点公布获得门票的名单。</li>
-</ol>
+<h1>一、网络安全</h1>
+
+<h2>安全地传输用户密码</h2>
+
+<p>大部分的iOS应用都需要联网，通过和服务器端进行通讯，获得最新的信息并且将内容展现给用户。由于网络传输过程中有可能经过不安全的中间节点，所以我们应该对敏感数据加密，用于保证用户信息的安全。黑客可以在受害者的手机上设置网络通讯的代理服务器，从而截获所有的网络请求。即使是Https的加密通讯，黑客也可以通过<a href="http://zh.wikipedia.org/zh-cn/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a>（Man-in-the-middle attack，一种是指攻击者与通讯的两端分别创建独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制）来截取通讯内容。</p>
+
+<p>黑客可以在Mac下使用<a href="http://www.charlesproxy.com/">Charles</a>软件（如果在Windows下，可以使用<a href="http://www.telerik.com/fiddler">fiddler</a>软件）来将自己的电脑设置成代理服务器，从而截取应用的网络请求，分析目标应用在通讯协议上是否有安全问题。为了测试，我选取了在国内最大的两家租车公司（<a href="www.zuche.com/">神州租车</a>和<a href="www.1hai.cn">一嗨租车</a>）的iOS应用。</p>
+
+<p>从下图可以看到，神州租车和一嗨租车在用户登录时，均采用明文的方式，将密码直接发送给服务器。其中一嗨租车不但采用明文方式发送密码，而且在发送时使用了Http Get的方式，而GET的URL数据一般都会保存在服务器的access log中，所以黑客一旦攻破服务器，只需要扫描acesss log，则可以轻易获得所有用户的明文密码。(注：在本文发表前，一嗨租车已经修改了登录协议，采用了POST的方式来登录，但仍然传递的是明文密码)</p>
+
+<p>神州租车登录协议:</p>
+
+<p><img src="/images/zuche-protocol.png"></p>
+
+<p>一嗨租车登录协议:</p>
+
+<p><img src="/images/1hai-protocol.png"></p>
+
+<p>如果每一个移动移动都像以上两种应用那样，明文传输用户密码，那么我们可以想象这样一个场景，黑客在咖啡馆或机场等一些公共场所，将自己的电脑设置成该场所一样名字的免费Wifi，那么受害者只要不小心使用了该Wifi，则可能泄漏自己的明文密码。对于大多数普通人，都会使用一样的密码登录他的所有的帐号，这就意味着他的其他帐号：例如淘宝或网上银行帐号也有被盗的风险。</p>
+
+<p>正确的做法应该是这样：事先生成一对用于加密的公私钥，客户端在登录时，使用公钥将用户的密码加密后，将密文传输到服务器。服务器使用私钥将密码解密，然后加盐(Salt：在密码学中，是指通过在密码任意固定位置插入特定的字符串，让散列后的结果和使用原始密码的散列结果不相符)之后再多次求MD5，之后再和服务器原来存储的用同样方法处理过的密码匹配，如果一致，则登录成功。这样的做法，保证黑客即使截获了加密后的密文，由于没有私钥，也无法还原出原始的密码。而服务器即使被黑客攻陷，黑客除了暴力尝试，也无法从加盐和多次MD5后的密码中还原出原始的密码。这样就保证了用户密码的安全。</p>
+
+<h2>防止通讯协议被轻易破解</h2>
+
+<p>除了上面提到的明文传输密码的问题外，移动端应用还要面对黑客对于通讯协议的破解的威胁。在成功破解了通讯协议后，黑客可以模拟客户端登录，进而伪造一些用户行为，可能对用户数据造成危害。例如腾讯出品的消除游戏“天天爱消除”，在淘宝上就有很多售价仅为1元的代练服务，如果真正是人工代练，是不可能卖这么便宜的，只有可能是该游戏的通讯协议被破解，黑客制作出了代练的机器人程序。</p>
+
+<p>通讯协议被破解除了对于移动端游戏有严重危害外，对于应用也有很大的危害。例如针对微信，黑客可以制作一些僵尸帐号，通过向微信公共帐号后台发送垃圾广告，达到赢利目的。而iPhone设备上的iMessage通讯协议据也被破解了，所以很多iPhone用户会收到来自iMessage的垃圾广告。</p>
+
+<p>对于以上提到的问题，开发者可以选择类似 <a href="https://code.google.com/p/protobuf/protobuf">protobuf</a> (google提供的一个开源数据交换格式，其最大的特点是基于二进制，因此比传统的JSON格式要短小得多)之类的二进制通讯协议或者自己实现通讯协议，对于传输的内容进行一定程度的加密，以增加黑客破解协议的难度。下图是我截取的淘宝客户端的通讯数据，可以看到其中的值都不能直观地猜出内容，所以这对于通讯协议是有一定的保护作用。</p>
+
+<p><img src="/images/taobao-protocol.png"></p>
+
+<h2>验证应用内支付的凭证</h2>
+
+<p>iOS应用内支付(IAP)是众多应用赢利的方式，通过先让用户免费试用或试完，然后提供应用内支付来为愿意付费的用户提供更强大的功能，这种模式特别适合不习惯一开始就掏钱的中国用户。但是，由于国内越狱用户的比例比较大，所以我们也需要注意应用内支付环节中的安全问题。</p>
+
+<p>简单来说，越狱后的手机由于没有沙盒作为保护，黑客可以对系统进行任意地修改，所以在支付过程中，苹果返回的已付款成功的凭证可能是伪造的。客户端拿到付款凭证之后，还需要将凭证上传到自己的服务器上，进行二次验证，以保证凭证的真实性。</p>
+
+<p>另外，我们发现越狱用户的手机上，很可能被黑客用中间人攻击技术来劫持支付凭证。这对于黑客有什么好处呢？因为苹果为了保护用户的隐私，支付凭证中并不包含任何用户的帐号信息，所以我们的应用和服务器无法知道这个凭证是谁买的，而只能知道这个凭证是真的还是假的。所以在验证凭证时，哪个帐号发起了验证请求，我们就默认这个凭证是该帐号拥有的。如果黑客将凭证截获，就可以伪装成真实用户来验证凭证或者转手出售获利。</p>
+
+<p>打个比方，这就类似于很多商场的购物卡一样，由于是不记名的，黑客如果将你买的购物卡偷窃然后去刷卡购物，商场是无法简单地区分出来的。</p>
+
+<p>所以，对于应用内支付，开发者除了需要仔细地验证购买凭证外，也需要告知用户在越狱手机上进行支付的风险。</p>
+
+<h1>二、本地文件和数据安全</h1>
+
+<h2>程序文件的安全</h2>
+
+<p>iOS应用大部分的逻辑都是在编译后的二进制文件中，但是由于今年来混合式（Hybrid）编程方式的兴起，很多应用的部分功能也采用内嵌Web浏览器的方式来实现。例如腾讯QQ iOS客户端的内部，就有部分逻辑是用Web方式实现的。由于iOS安装文件其实就是一个zip包，所以我们可以通过解压，看到包内的内容。以下是我解开腾讯QQ客户端，看到的其qqapi.js文件的内容:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">iOSQQApi</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'>    <span class="nx">app</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="cm">/**</span>
+</span><span class='line'><span class="cm">         查询单个应用是否已安装</span>
+</span><span class='line'><span class="cm">         @param {String} scheme 比如&#39;mqq&#39;</span>
+</span><span class='line'><span class="cm">         @return {Boolean}</span>
+</span><span class='line'><span class="cm">         */</span>
+</span><span class='line'>        <span class="nx">isAppInstalled</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">scheme</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">iOSQQApi</span><span class="p">.</span><span class="nx">_invokeClientMethod</span><span class="p">(</span>
+</span><span class='line'>                <span class="s1">&#39;app&#39;</span><span class="p">,</span> <span class="s1">&#39;isInstalled&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="p">{</span><span class="s1">&#39;scheme&#39;</span><span class="o">:</span><span class="nx">scheme</span><span class="p">});</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="cm">/**</span>
+</span><span class='line'><span class="cm">         批量查询指定应用是否已安装</span>
+</span><span class='line'><span class="cm">         @param {Array&lt;String&gt;} schemes </span>
+</span><span class='line'><span class="cm">                比如[&#39;mqq&#39;, &#39;mqqapi&#39;]</span>
+</span><span class='line'><span class="cm">         @return {Array&lt;Boolean&gt;}</span>
+</span><span class='line'><span class="cm">         */</span>
+</span><span class='line'>        <span class="nx">isAppInstalledBatch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">schemes</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">iOSQQApi</span><span class="p">.</span><span class="nx">_invokeClientMethod</span><span class="p">(</span>
+</span><span class='line'>                <span class="s1">&#39;app&#39;</span><span class="p">,</span><span class="s1">&#39;batchIsInstalled&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="p">{</span><span class="s1">&#39;schemes&#39;</span><span class="o">:</span><span class="nx">schemes</span><span class="p">});</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>教程</h2>
+<p>可以看到，这些文件都有着完整清晰的注释。通过分析这些javascript文件，黑客可以比较轻松地知道其调用逻辑。在越狱手机上，还可以修改这些javascript代码，达到攻击的目的。</p>
 
-<ol>
-<li><p><a href="http://realmacsoftware.com/blog/dynamic-linking">《Dynamic Linking》</a>：文章详细解释了动态链接库在iOS程序中的加载过程，作者在也尝试自己实现了一个动态链接库并且在iOS程序中成功加载，不过文章最后指出，在AppStore上架的的应用，如果要加载动态链接库，该链接库需要得到苹果的签名才能加载成功，虽然这在技术上是可行的，但苹果现阶段的审核要求是不接受这种应用的。作者也将相关代码开源在 <a href="https://github.com/ddeville/Dynamic-iOS">Dynamic-iOS</a> 项目中。</p></li>
-<li><p><a href="http://nonomori.farbox.com/post/ios-7-jiao-hu-shi-guo-du">《iOS 7 交互式过渡》</a>：iOS 7 新加入了自定义 View Controller 之间的过渡效果的方法。本文介绍了如何利用相关的API实现自定义的过滤效果。文章的内容主要包括：实现自定义过渡、使用自定义过渡、让过渡变得可以交互。文中例子的工程文件也已上传至<a href="https://github.com/PeteC/InteractiveViewControllerTransitions">GitHub</a>。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/">《ARC下dealloc过程及.cxx_destruct的探究》</a>：在MRC时代，我们经常在<code>dealloc</code>方法将内部其他对象释放掉，申请的非Objc对象的内存当然也需要一并处理掉，最后调用super，继续将父类对象做析构。而在ARC时代，大部分的代码都不再需要了。这些相应的代码是如何由编译器完成的？带着这样的疑问，作者研究了LLVM的具体实现细节。</p></li>
-<li><p><a href="https://github.com/jspahrsummers/enemy-of-the-state/blob/master/Enemy%20of%20the%20State.pdf">《Enemy of the State》</a>：作者分享了程序架构中存在状态的坏处以及避免状态的一些方法：优先使用不可变对象、使用ReactiveCocoa框架、使用Model-View-ViewModel框架。</p></li>
-</ol>
+<p>笔者也曾经尝试查看支付宝客户端中的彩票功能，通过分析，也可以找到其完整的、带着清晰注释的javascript代码。如下图所示：（注：支付宝现在已经对相应代码进行了加密）</p>
+
+<p><img src="/images/alipay-source.png"></p>
+
+<p>通过将javascript源码进行混淆和加密，可以防止黑客轻易地阅读和篡改相关的逻辑，也可以防止自己的Web端与Native端的通讯协议泄漏。</p>
+
+<h2>本地数据安全</h2>
+
+<p>iOS应用的数据在本地通常保存在本地文件或本地数据库中。如果对本地的数据不进行加密处理，很可能被黑客篡改。以下是一个名为 LepsWorld3 的游戏，打开它的本地文件，可以很容易地找到，它使用了一个名为 ItempLifes的变量保存生命数。如下图所示：</p>
+
+<p><img src="/images/game-data.png"></p>
+
+<p>于是我们就可以简单修改该值，达到修改游戏参数的目的。而在淘宝上，也可以找到许多以此挣钱的商家，如下图所示：</p>
+
+<p><img src="/images/game-data-sell.png"></p>
+
+<p>对于本地的重要数据，我们应该加密存储或者将其保存到 keychain 中，以保证其不被篡改。</p>
+
+<h1>三、源代码安全</h1>
+
+<p>通过file, class-dump, theos, otool等工具，黑客可以分析已经编译之后的二进制程序文件，不过相对于这些工具来说，IDA的威胁最大。</p>
+
+<p><a href="https://www.hex-rays.com/products/ida/">IDA</a>是一个收费的反汇编工具，对于Objective-C代码，它可以常常可以反汇编到可以方便阅读的程度，这对于程序的安全性，也是一个很大的危害。因为通过阅读源码，黑客可以更加方便地分析出应用的通讯协议和数据加密方式。</p>
+
+<p>下图分别示例了一段代码的原始内容，以及通过IDA反汇编之后的结果。可以看到，IDA几乎还原了原本的逻辑，而且可读性也非常高。</p>
+
+<p>原始代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">if</span> <span class="p">([[</span><span class="n">VersionAgent</span> <span class="n">sharedInstance</span><span class="p">]</span> <span class="n">isUpgraded</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">UpdateMigrationAgent</span> <span class="o">*</span><span class="n">agent</span> <span class="o">=</span>
+</span><span class='line'>            <span class="p">[[</span><span class="n">UpdateMigrationAgent</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">FileUtils</span> <span class="n">clearCacheDirectory</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">VersionAgent</span> <span class="n">sharedInstance</span><span class="p">]</span> <span class="n">saveAppVersion</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>工具</h2>
+<p>反汇编后：</p>
 
-<ol>
-<li><p><a href="http://chen.do/blog/2013/09/30/selectively-ignoring-objective-c-exceptions-in-xcode/">在Xcode调试时忽略部分异常</a>：作者提供了一些llvm增强脚本，用于方便地在调试时忽略掉部分异常。增强脚本的代码也开源在<a href="https://gist.github.com/chendo/6759305/raw/ignore_specified_objc_exceptions.py">这里</a>。</p></li>
-<li><p><a href="https://github.com/naotaka/ClipMenu">ClipMenu</a>：开源的Mac OS剪贴板管理工具。</p></li>
-<li><p><a href="https://github.com/kolinkrewinkel/Polychromatic">Polychromatic</a>：一个只高亮属性和变量的Xcode插件。</p></li>
-<li><p><a href="https://github.com/shjborage/Reveal-Plugin-for-XCode">Reveal-Plugin-for-XCode</a>：作者写了一个Reveal插件，可以使工程不作任何修改的情况下使用Reveal，该插件已在Alcatraz上架。</p></li>
-</ol>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">v6</span> <span class="o">=</span> <span class="n">_objc_msgSend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OBJC_CLASS___VersionAgent</span><span class="p">,</span>
+</span><span class='line'>                   <span class="s">&quot;sharedInstance&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">v7</span> <span class="o">=</span> <span class="n">objc_retainAutoreleasedReturnValue</span><span class="p">(</span><span class="n">v6</span><span class="p">);</span>
+</span><span class='line'><span class="n">v41</span> <span class="o">=</span> <span class="n">_objc_msgSend</span><span class="p">(</span><span class="n">v7</span><span class="p">,</span> <span class="s">&quot;isUpgraded&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">objc_release</span><span class="p">(</span><span class="n">v7</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="n">v41</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="n">CFSTR</span><span class="p">(</span><span class="s">&quot;app is upgraded&quot;</span><span class="p">),</span> <span class="n">v41</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">_objc_msgSend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OBJC_CLASS___FileUtils</span><span class="p">,</span>
+</span><span class='line'>                  <span class="s">&quot;clearCacheDirectory&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">v8</span> <span class="o">=</span> <span class="n">_objc_msgSend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OBJC_CLASS___VersionAgent</span><span class="p">,</span>
+</span><span class='line'>                       <span class="s">&quot;sharedInstance&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">v9</span> <span class="o">=</span> <span class="n">objc_retainAutoreleasedReturnValue</span><span class="p">(</span><span class="n">v8</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">_objc_msgSend</span><span class="p">(</span><span class="n">v9</span><span class="p">,</span> <span class="s">&quot;saveAppVersion&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">objc_release</span><span class="p">(</span><span class="n">v9</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>开源项目</h2>
+<p>反汇编的代码被获得后，由于软件内部逻辑相比汇编代码来说可读性高了很多。黑客可以用来制作软件的注册机，也可以更加方便地破解网络通讯协议，从而制作出机器人（僵尸）帐号。最极端的情况下，黑客可以将反汇编的代码稍加修改，植入木马，然后重新打包发布在一些越狱渠道上，这将对用户产生巨大的危害。</p>
 
-<ol>
-<li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
-</ol>
+<p>对于IDA这类工具，我们的应对措施就比较少了。除了可以用一些宏来简单混淆类名外，我们也可以将关键的逻辑用纯C实现。例如微信的iOS端的通讯底层，就是用C实现的。这样的方式除了能保证通讯协议安全外，也可以在iOS和Android等多个平台使用同一套底层通讯代码，达到复用的目的。</p>
 
+<h1>总结</h1>
+
+<p>由于移动互联网的快速发展，人们的购物、理财等需求也在移动端出现，这使得移动应用的安全性越来越重要。由于部署在用户终端上，移动应用比服务器应用更容易被攻击，大家也需要在移动应用的网络通讯、本地文件和数据、源代码三方面做好防范，只有这样才能保证应用的安全。</p>
+
+<h1>版权说明</h1>
+
+<p>本文已发表在《程序员》杂志2014年5月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security">http://www.csdn.net/article/2014-04-30/2819573-The-Secret-Of-App-Dev-Security</a></p>
 </div>
   
   
@@ -391,12 +423,40 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/ios-weekly-20/">iOS移动开发周报-第20期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
@@ -416,34 +476,6 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/ios-weekly-14/">iOS移动开发周报-第14期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
       </li>
     
   </ul>

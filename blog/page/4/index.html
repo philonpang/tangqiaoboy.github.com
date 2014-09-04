@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="我之前一直使用Github Pages功能以及Octopress来搭建个人博客，我也写了一篇文章《象写程序一样写博客：搭建基于github的博客》来分享博客搭建的技术细节。 但是自从我的博客每天访问量超过2000次以后，我就发现博客的访问速度还是一个不可忽视的问题。通过监控宝和Google &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a></h1>
     
     
       <p class="meta">
@@ -98,102 +98,62 @@
   
 
 
-<time datetime="2014-06-02T17:22:02+08:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2014</time>
+<time datetime="2014-07-22T21:19:39+08:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我之前一直使用<a href="https://pages.github.com/">Github Pages功能</a>以及<a href="http://octopress.org/">Octopress</a>来搭建个人博客，我也写了一篇文章<a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">《象写程序一样写博客：搭建基于github的博客》</a>来分享博客搭建的技术细节。</p>
+  <div class="entry-content"><h3>版权说明</h3>
 
-<p>但是自从我的博客每天访问量超过2000次以后，我就发现博客的访问速度还是一个不可忽视的问题。通过<a href="http://www.jiankongbao.com/">监控宝</a>和<a href="http://www.google.com/analytics/">Google Analytics</a>，我发现有些博客文章的平均打开时间长达4秒钟。于是我开始考虑将博客搭建在更快的服务器上面。</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/apple-ibm-cooperation">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
-<p>我的首先考虑是购买独立的VPS，<a href="https://www.linode.com/pricing">Linode</a>每月30$的价格还是略贵，于是我买的是 <a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>，<a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>算下来每月只需要5$。于是在一个周末，我花时间购买了DigitalOcean家的VPS，安装了Nginx，然后在上面运行了一个脚本，定时将我github博客的内容自动更新过来（其实就是定期<code>git pull</code>一下我博客的repo）。</p>
+<h3>前言</h3>
 
-<p>就这样运行了一个月，我发现虽然<a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>服务器的ping值相比github要快一些。但是从监控数据上看，整体的网页访问速度并没有什么提高。就在我在微博上抱怨的时候，一个朋友推荐我试试<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>。于是我就尝试了一下，结果你猜怎么着？我被吓坏了。</p>
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>ping值直接从200ms左右减少到3ms左右，如下图所示：</p>
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果与 IBM 展开长期深度合作，Swift官方博客，Swift开发的视频教程等。</p>
 
-<p><img src="/images/gitcafe-ping.jpg"></p>
+<h2>新闻</h2>
 
-<p>监控宝的统计显示，首页平均打开时间从原来的1800ms减少到350ms左右，快了5倍，如下图所示：</p>
-
-<p><img src="/images/gitcafe-jiankong.jpg"></p>
-
-<p>所以我强烈建议各位基于Github Pages功能来搭建个人博客的朋友，将博客内容镜像到<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>上。如果你有个人的独立域名，那么镜像之后就可以随时将博客地址在Github和Gitcafe之间切换了。对于各位博主来说，这样做没有任何风险，因为你可以随时再切换回去。当然，免费用了人家的服务，如果你能像我这样，在网站的底部附上感谢内容，那是再好不过的了。</p>
-
-<p>以下为大家介绍详细的迁移过程。</p>
-
-<h2>迁移教程</h2>
-
-<h3>注册</h3>
-
-<p>如果你还没有注册过<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>，首先需要<a href="https://gitcafe.com/signup">点这里</a>注册一下。</p>
-
-<p>注册完成之后，去<a href="https://gitcafe.com/account/public_keys">公钥管理</a>那儿添加一下你的ssh公钥，这样以后提交代码会方便很多。当然你也可以不设置这一步，每次提交通过密码来验证。</p>
-
-<h3>在GitCafe上新建一个博客项目</h3>
-
-<p>然后我们需要先在GitCafe上新建一个博客项目。GitCafe的博客搭建官方教程藏得比较深，所以我第一次还没有找到，教程地址在<a href="https://gitcafe.com/GitCafe/Help/wiki/Pages-%E7%9B%B8%E5%85%B3%E5%B8%AE%E5%8A%A9#wiki">这里</a>。具体来说，就是创建一个与用户名(如果是组织，就是组织名)相同名称的项目。如果你创建的项目名与用户名相同，GitCafe会自动识别成这是一个Page项目，如下所示：</p>
-
-<p><img src="/images/gitcafe-create-page.jpg"></p>
-
-<h3>设置多个Git Remote源</h3>
-
-<p>接下来我们需要将原本提交到Github上的博客内容同步提交到GitCafe。因为我的博客是基于<a href="http://octopress.org/">Octopress</a>的，我介绍一下Octopress的做法，其它博客引擎的做法类似。</p>
-
-<p>对于Octopress，我们只需要每次提交网站内容时，执行完 <code>rake deploy</code>之后，再执行以下脚本即可（你可以将该脚本中的代码仓库地址换成你的，然后将其保存成一个脚 本文件，需要时执行一下即可）：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>_deploy
-</span><span class='line'><span class="c"># 添加 gitcafe 源</span>
-</span><span class='line'>git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git &gt;&gt; /dev/null 2&gt;&amp;1
-</span><span class='line'><span class="c"># 提交博客内容</span>
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;### Pushing to GitCafe...&quot;</span>
-</span><span class='line'>git push -u gitcafe master:gitcafe-pages
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;### Done&quot;</span>%
-</span></code></pre></td></tr></table></div></figure>
+<ol>
+<li><p><a href="http://www.36kr.com/p/213771.html">《苹果与 IBM 展开长期深度合作，双方优势互补，专注企业级移动市场》</a>：苹果与 IBM 达成排他性合作协议，联合各自领先市场的优势，共同打造一样新品类商业应用，建立全新的企业级移动体验——IBM 享誉已久的大数据及分析能力将注入苹果的 iPhone 与 iPad——结合后者擅长的用户体验，共同改善企业及员工使用 iOS 设备工作的流程。</p></li>
+<li><p><a href="http://www.cocoachina.com/applenews/apple/2014/0715/9148.html">《苹果官方数据显示iOS 7渗透率已达90%》</a>：苹果最新数据显示，7月7日到13日之间，在访问App Store的设备中，90%的设备运行了iOS 7系统，而距离iOS 7正式发布仅仅为10个月的时间。不过国内iOS 7系统的比例还远远未达到80%。</p></li>
+</ol>
 
 
-<p>大概解释一下以上内容，Octopress在发布时会将自己的 <code>_delpoy</code>目录切换到master分支，然后将生成的博客内容放到<code>_delpoy</code>目录中，然后执行<code>git push</code>操作。正常情况下，默认内容是push到github上的。我们执行的以上脚本，就是为该项目增加了一个名为<code>gitcafe</code>的远程仓库，然后将master分支push到<code>gitcafe</code>的<code>gitcafe-pages</code>分支。</p>
+<h2>教程</h2>
 
-<h3>修改Rakefile (可选)</h3>
-
-<p>除了以上方法外，你也可以直接修改<code>Rakefile</code>。在其第269行后增加如下代码，也可以达到同样的目的，这样你每次就仍然只需要执行<code>rake deploy</code>即可同时将博客同步到github和gitcafe：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">system</span> <span class="s2">&quot;git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git &gt;&gt; /dev/null 2&gt;&amp;1&quot;</span>
-</span><span class='line'><span class="nb">system</span> <span class="s2">&quot;git push -u gitcafe master:gitcafe-pages&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
+<ol>
+<li><p><a href="https://developer.apple.com/swift/blog/">《Swift官方博客》</a>：苹果在开发者中心建立了Swift官方博客，用于帮助开发者获得Swift的相关知识和资源。</p></li>
+<li><p><a href="http://wonderffee.github.io/blog/2014/07/19/quincykit-and-kscrash/">《利用QuincyKit + KSCrash构建自己的Crash Log收集与管理系统 》</a>：iOS bug定位是极看重crash log的，目前网上Crash Log收集与管理服务较有名的有Crashlytics, Flurry, 友盟等。本文介绍了QuincyKit + KSCrash构建自己的Crash Log收集与管理系统的适用场景和特点。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/07/17/ios_0code_vc/">《0 代码 ViewController》</a>：作者尝试利用Interface Builder的Object控件实现了一个0行代码的View Controller，在减小Controller体积小，提供了一些新颖的思路。不过需要注意，其文章示例代码中的ViewModel持久了View对象，其实不是指的（MVVM）中ViewModel，更像是一个Controller的代理。</p></li>
+<li><p><a href="http://www.thinkandbuild.it/from-objective-c-to-swift/">《From Objective-C to Swift: thoughts and hints》</a>：文章详细比较了Objective-C与Swift在编程中的细节差异。</p></li>
+</ol>
 
 
-<p>插入代码的示例位置如下：</p>
+<h2>视频</h2>
 
-<p><img src="/images/gitcafe-edit-rakefile.jpg"></p>
+<ol>
+<li><a href="http://www.imooc.com/learn/149">《Swift开发的视频》</a>：jakelin做了一个Swift开发的视频，视频从头到尾的讲述了如何开发一个Swift Weather app，同时也讲述了CococaPods，Core Location和AFNetworking的使用，源码地址在 <a href="https://github.com/JakeLin/SwiftWeather">这里</a> 。</li>
+</ol>
 
-<h3>设置域名</h3>
 
-<p>GitCafe的自定义域名设置比github要友好得多，它不但提供了图形界面设置，并且支持同时设置多个域名。在<code>项目管理</code>&ndash;><code>域名管理</code>中，我们可以找到相应的设置项，如下所示：</p>
+<h2>工具</h2>
 
-<p><img src="/images/gitcafe-set-domain.jpg"></p>
+<ol>
+<li><p><a href="http://pgyer.com/">蒲公英</a>：蒲公英是专为iOS开发者提供的免费应用众测平台，旨在解决开发者将应用分发给内测用户及众测时的繁杂、低效的问题。使用蒲公英，开发者可将应用一键上传至蒲公英网站实现托管，托管后的应用拥单独的下载页面。开发者只需将下载页面地址（或二维码）发给内测用户，测试用户即可用手机直接安装，避免了之前测试用户需要将手机用数据线连接到电脑，才能安装测试应用的痛苦过程。它的特点是可以帮你用企业证书签名，同时设置密码，帮助大家分发测试版本。</p></li>
+<li><p><a href="https://github.com/realm/jazzy">jazzy</a>：jazzy是一个为Objective-C和Swift语言生成帮助文档的开源工具。</p></li>
+</ol>
 
-<p>在设置完之后，我们需要去域名解析的服务商那儿，将对应的域名用<code>A记录</code>类型，解析到<code>117.79.146.98</code>即可。</p>
 
-<h3>添加对GitCafe的感谢(可选)</h3>
+<h2>开源项目</h2>
 
-<p>如果你也想像我一样，想在博客底部添加对GitCafe的感谢，可以参考<a href="https://github.com/tangqiaoboy/tangqiaoboy.github.com/commit/a8ff6914d6fca786baf5702de3da01d408bd7b43">这个提交</a>。它通过修改Octopress的<code>source/_includes/custom/footer.html</code>模版文件完成。</p>
+<ol>
+<li><a href="https://github.com/realm/realm-cocoa">Realm</a>：Realm是一个真正为移动设备打造的数据库，同时支持Objective-C和Swfit。Realm宣称其相比Sqlite，在移动设备上有着更好的性能表现。</li>
+</ol>
 
-<h2>感谢</h2>
-
-<p>最后再次感谢GitCafe，上个月在QCon大会上了解到他们的发展思路和Github很不一样。虽然它还是一家创业公司，但是我期待看到它最终能够推动国内开源和技术社区的发展。</p>
 </div>
   
   
@@ -206,7 +166,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a></h1>
     
     
       <p class="meta">
@@ -222,7 +182,7 @@
   
 
 
-<time datetime="2014-06-01T17:27:22+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2014</time>
+<time datetime="2014-07-11T19:36:11+08:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time>
         
       </p>
     
@@ -231,39 +191,52 @@
 
   <div class="entry-content"><h3>版权说明</h3>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/facebook-pop">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/swift-beta3-change">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
 
 <h3>前言</h3>
 
 <p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>【摘要】：本期iOS移动开发周报带来如下内容：Facebook Pop 使用指南，用CocoaPods做iOS程序的依赖管理，在 iOS 上捕捉签名，加密你的SQLite等。</p>
+<p>【摘要】：本期iOS移动开发周报带来如下内容：Swift 进入TIOBE 指数排名16，Swift 在 Beta3 中的变化，WebKit in iOS 8等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">《Swift 进入TIOBE 指数排名16》</a>：在TIOBE的 2014年7月编程语言排行榜上，苹果公司新的编程语言Swift发布一个月内就进入TIOBE指数，名列位置16，前三名则没有变化，依旧是C、Java、Objective-C。</p></li>
+<li><p><a href="http://www.guomii.com/posts/38291">《韩国当局下令 Apple 改变 App Store 退款政策》</a>：近日韩国当局已经下令 Apple 修改其公司的 App Store 退款政策，理由是现有政策违反了公平贸易的相关规定。众所周知，目前 App Store 的退款政策是用户先提交请求，然后由 Apple 员工审核要不要进行退款。也就是说，最终是否能够退款存在着员工一定的主观因素，因此被韩国公平贸易委员会认为这是不公平的。</p></li>
+</ol>
+
 
 <h2>教程</h2>
 
 <ol>
-<li><p> <a href="http://geeklu.com/2014/05/facebook-pop-usage/">《Facebook Pop 使用指南》</a>：Facebook Pop其实是基于CADisplayLink(Mac平台上使用的CVDisplayLink)实现的独立于Core Animation之外的动画方案。文章主要介绍了Facebook Pop如何使用。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">《用CocoaPods做iOS程序的依赖管理》</a>：文章除了介绍了CocoaPods的基本功能外，还增加了如何设置国内spec镜像、使用私有pod、podfile.lock、如何创建spec文件等内容。</p></li>
-<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-05-27-capture-a-signature-on-ios.md">《在 iOS 上捕捉签名》</a>：文章介绍了如何绘制像 Paper 应用那样的真正平滑的曲线，包括如何使用二次贝塞尔曲线使签名平滑，以及基于触摸速度，使签名宽度可变，从而创建出更加自然的笔画。</p></li>
-<li><p><a href="http://blog.t-xx.me/blog/2014/05/28/hack-weibo-sdk/">《解決WeiboSDK Bundleid 綁定問題》</a>：@糖炒小虾_txx 利用IDA分析和 method_swizzling 破解了微博SDK的bundle d綁定，这样就可以绕开weibo sdk 的sso 和bundle id綁定的要求，这算是Objective-C黑魔法的一次有效实践。</p></li>
-<li><p> <a href="http://wangzz.github.io/blog/2014/05/19/jia-mi-ni-de-sqlite/">《加密你的SQLite》</a>：SQLite是一个轻量的、跨平台的、开源的数据库引擎，它的在读写效率、消耗总量、延迟时间和整体简单性上具有的优越性，使其成为移动平台数据库的最佳解决方案。然而免费版的SQLite有一个致命缺点：不支持加密。这就导致存储在SQLite中的数据可以被任何人用任何文本编辑器查看到。本文讨论了各种对SQLite的加密方法。</p></li>
-<li><p> <a href="http://security.ios-wiki.com/issue-3-4/">《Reveal：分析iOS UI的利器》</a>：Reveal能够在运行时调试和修改iOS应用程序。它能连接到应用程序，并允许开发者编辑各种用户界面参数，这反过来会立即反应在程序的UI上。就像用chrome调试HTML页面一样，在不需要重写代码、重新构建和重新部署应用程序的情况下就能够调试和修改iOS用户界面。文章简要介绍了Reveal的功能和几种加载方法。</p></li>
-<li><p> <a href="http://blog.codingcoder.com/ios-games-by-tutorials-chapter8%EF%BC%8Dpart1/">《Sprite Kit 物理引擎初体验 Part 1》</a>：Sprite Kit 内建了一个强大的并且非常容易使用的物理引擎，你可以很容易的使用这个内置的物理引擎来模拟真实世界中的移动。文章介绍了Sprite Kit的基本使用。</p></li>
+<li><p><a href="http://andelf.github.io/blog/2014/07/08/swift-beta3-changes/">《Swift 在 Beta3 中的变化》</a>：刚刚更新的Xcode 6 Beta3中，Swift编译器又进行了较大的更改，本文章详细介绍了改动细节。</p></li>
+<li><p><a href="http://www.taofengping.com/2014/07/04/pinterest-transition-swift/">《用Swift实现Pinterest中的转场效果》</a>：在StackOverFlow上有人问Pinterest中转场的效果是如何实现的，在<a href="http://engineering.pinterest.com/post/67769846580/behind-the-pins-building-pinterest-3-0-for-ios">Pinterest的Blog</a>上工程师大致对Pinterest的结构作了大致的介绍，但是没有涉及到具体动画部分的实现。所以作者抽空用Swift重新实现了一遍这个转场的效果。</p></li>
+<li><p><a href="http://www.hotobear.com/?p=741">《WebKit in iOS 8》</a>：苹果在WWDC上公布了iOS的新框架WebKit.framework，其包含了新的网页浏览控件WKWebView。本文介绍了其相对于UIWebView所做的改进。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/ios-8-presentation-controller">《iOS 8 presentation controller》</a>：iOS 8 新加入一个类：UIPresentationController，它与 iOS 7 新添加的类与协议一道，帮助我们方便快捷地实现View Controller 的自定义过渡效果。作者完成了一个使用相关API的演示程序。</p></li>
+<li><p><a href="http://www.raywenderlich.com/74106/mvvm-tutorial-with-reactivecocoa-part-1">《MVVM Tutorial with ReactiveCocoa》</a>：RW新的ReactiveCocoa教材出炉了。不同于上次SimpleWeather的面面俱到，这次主讲MVVM设计模式和数据绑定。</p></li>
+<li><p><a href="http://oleb.net/blog/2014/07/swift-strings/">《Strings in Swift》</a>：文章介绍了Swift中字符串的各种细节上的使用注意事项。</p></li>
+</ol>
+
+
+<h2>视频</h2>
+
+<ol>
+<li><a href="http://www.infoq.com/cn/presentations/security-issues-behind-mobile-app">《移动APP背后的安全问题》</a>：现在已进入移动互联网时代，吃喝玩乐、办公支付等等各种应用都在抢占移动APP市场，由于安全无处不在的本质，在多年前就已经有少数人在研究移动APP的中木马、钓鱼等等，但很少有人想到移动APP安全跟WEB安全的关系。安全宝安全团队Leader尹毅在视频中分享了： 1、移动APP市场安全现状 2、安卓APP的反编译及漏洞挖掘 3、利用移动APP渗透的各种“猥琐”思路 4、自动化移动APP安全漏洞挖掘的程序实现。</li>
 </ol>
 
 
 <h2>工具</h2>
 
 <ol>
-<li><a href="https://itunes.apple.com/cn/app/podlife/id725023109?l=en&amp;mt=8">Podlife</a>：Podlife是一个免费的iOS应用，可以在手机上搜寻各种 CocoaPods，并得到更新提醒。</li>
+<li><a href="http://answerhuang.duapp.com/index.php/2014/07/06/dsym_tool/">《dSYM 文件分析工具》</a>：Xcode编译项目后，我们会看到一个同名的 dSYM 文件，dSYM 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件。作者分享了一个工具，能够根据dSYM文件方便从Crash信息中分析出有可能错误的地方。</li>
 </ol>
 
 
 <h2>开源项目</h2>
 
 <ol>
-<li><p><a href="https://github.com/schneiderandre/popping">popping</a>：popping是一个POP 使用实例工程。</p></li>
-<li><p><a href="https://github.com/venmo/synx">synx</a>：synx可以自动帮你整理项目里的文件，按 group 重新放置。</p></li>
+<li><a href="https://github.com/kylef/QueryKit">QueryKit</a>：QueryKit是一个用Swift实现的、方便对CoreData数据进行查询的工具库。</li>
 </ol>
 
 </div>
@@ -288,12 +261,40 @@
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://co.youdao.com/?keyfrom=tangqiao" target="_blank"><img width="260px" src="/images/youdao_co.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/ios-weekly-20/">iOS移动开发周报-第20期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
@@ -313,34 +314,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/ios-weekly-14/">iOS移动开发周报-第14期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/ios-weekly-13/">iOS移动开发周报-第13期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/understand-tagged-pointer/">深入理解Tagged Pointer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/24/how-to-persist-writing/">技术人员如何坚持写作</a>
       </li>
     
   </ul>

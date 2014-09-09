@@ -9,7 +9,8 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="你注意到了吗？在Xcode中，当你点击查看调用栈的时候，调用栈的每个方法前面都有一个Icon，而且还有好几种不同的样子，如下图所示，你知道它们代表什么意思吗？ ">
+  <meta name="description" content="前言 我在IT公司工作了六年，有着三年面试官的经历。在面试中，我发现很多人都不能写好一份求职简历，所以今天不谈iOS开发，谈谈如何写一份针对互联网公司的求职简历。 我主要想分享的内容包括： 简历的页数不要超过两页（最好一页） 删掉不必要的信息
+如果你实在太牛逼，最多写2页 重要的信息写在最前面 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +83,94 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/12/22/how-to-write-resume-for-it-company/">如何写面向互联网公司的求职简历</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-22T20:04:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/resume-title.jpg"></p>
+
+<h2>前言</h2>
+
+<p>我在IT公司工作了六年，有着三年面试官的经历。在面试中，我发现很多人都不能写好一份求职简历，所以今天不谈iOS开发，谈谈如何写一份针对互联网公司的求职简历。</p>
+
+<p>我主要想分享的内容包括：</p>
+
+<ul>
+<li>简历的页数不要超过两页（最好一页）
+
+<ul>
+<li>删掉不必要的信息</li>
+<li>如果你实在太牛逼，最多写2页</li>
+</ul>
+</li>
+<li>重要的信息写在最前面
+
+<ul>
+<li>你的联系方式</li>
+<li>你最重要的工作经历</li>
+</ul>
+</li>
+<li>不要简单罗列工作经历
+
+<ul>
+<li>列出你的工作中有价值的细节（有哪些技术上的困难等）</li>
+</ul>
+</li>
+<li>不要写任何虚假或夸大的信息
+
+<ul>
+<li>类似精通java，精通C/C++等</li>
+</ul>
+</li>
+<li>不要附加任何可能带来负面印象的信息
+
+<ul>
+<li>不要加照片</li>
+<li>不要写政治面貌</li>
+<li>不要写奇怪的爱好（打游戏，喝酒，抽烟）</li>
+<li>不要写参加过某某培训公司的iOS培训</li>
+<li>尽量用专业邮箱</li>
+<li>用PDF格式</li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/12/22/how-to-write-resume-for-it-company/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/12/22/the-secret-of-xcode-debugger-icon/">XCode Debugger中的Icon符号的意义</a></h1>
     
     
@@ -120,71 +209,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/12/11/network-tool-charles-intr/">iOS开发工具-网络封包分析工具Charles</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-11T14:03:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/charles-logo.png"></p>
-
-<h2>简介</h2>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/network-packet-analysis-tool-charles">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<p><a href="http://www.charlesproxy.com/">Charles</a>是在Mac下常用的截取网络封包的工具，在做iOS开发时，我们为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析。Charles通过将自己设置成系统的网络访问代理服务器，使得所有的网络访问请求都通过它来完成，从而实现了网络封包的截取和分析。</p>
-
-<p>Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时。</p>
-
-<p>因此，该付费方案对广大用户还是相当友好的，即使你长期不付费，也能使用完整的软件功能。只是当你需要长时间进行封包调试时，会因为Charles强制关闭而遇到影响。</p>
-
-<p>Charles主要的功能包括：</p>
-
-<ol>
-<li>支持SSL代理。可以截取分析<a href="http://zh.wikipedia.org/wiki/%E5%AE%89%E5%85%A8%E5%A5%97%E6%8E%A5%E5%B1%82">SSL</a>的请求。</li>
-<li>支持流量控制。可以模拟慢速网络以及等待时间（latency）较长的请求。</li>
-<li>支持AJAX调试。可以自动将json或xml数据格式化，方便查看。</li>
-<li>支持AMF调试。可以将Flash Remoting 或 Flex Remoting信息格式化，方便查看。</li>
-<li>支持重发网络请求，方便后端调试。</li>
-<li>支持修改网络请求参数。</li>
-<li>支持网络请求的截获并动态修改。</li>
-<li>检查HTML，CSS和RSS内容是否符合<a href="http://validator.w3.org/">W3C标准</a>。</li>
-</ol>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/12/11/network-tool-charles-intr/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/24/">&larr; Older</a>
@@ -200,12 +224,16 @@
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://click.bmob.cn/?sid=f92455fa76a5829eb031" target="_blank"><img width="260px" src="/images/ad_bmob.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/ios-weekly-24/">iOS移动开发周报-第24期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
@@ -249,10 +277,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/29/ios-dev-tools/">那些好用的iOS开发工具</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
       </li>
     
   </ul>

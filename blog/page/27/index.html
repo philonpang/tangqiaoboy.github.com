@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 这里有关于block的5道测试题，建议你阅读本文之前先做一下测试。 先介绍一下什么是闭包。在wikipedia上，闭包的定义)是: In programming languages, a closure is a function or reference to a function &hellip;">
+  <meta name="description" content="引言 在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于： 1、字体文件通常比较大，10M &ndash; 20M是一个常见的字体库的大小。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,59 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/08/11/ios-asian-font-download-introduction/">动态下载苹果提供的多种中文字体</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-11T16:00:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/wawati-sample.jpg"></p>
+
+<h2>引言</h2>
+
+<p>在今年WWDC的内容公开之前，大家都以为iOS系统里面只有一种中文字体。为了达到更好的字体效果，有些应用在自己的应用资源包中加入了字体文件。但自己打包字体文件比较麻烦，原因在于：</p>
+
+<p>1、字体文件通常比较大，10M &ndash; 20M是一个常见的字体库的大小。大部分的非游戏的app体积都集中在10M以内，因为字体文件的加入而造成应用体积翻倍让人感觉有些不值。如果只是很少量的按钮字体需要设置，可以用一些工具把使用到的汉字字体编码从字体库中抽取出来，以节省体积。但如果是一些变化的内容需要自定义的字体，那就只有打包整个字体库了。</p>
+
+<p>2、中文的字体通常都是有版权的。在应用中加入特殊中文字体还需要处理相应的版权问题。对于一些小公司或个人开发者来说，这是一笔不小的开销。</p>
+
+<p>以上两点造成App Store里面使用特殊中文字库的iOS应用较少。现在通常只有阅读类的应用才会使用特殊中文字库。</p>
+
+<p>但其实从iOS6开始，苹果就支持动态下载中文字体到系统中。只是苹果一直没有公开相应的API。最终，相应的API在今年的WWDC大会上公开，接下来就让我们来一起了解这个功能。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/08/11/ios-asian-font-download-introduction/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/07/28/a-look-inside-blocks/">谈Objective-C Block的实现</a></h1>
     
     
@@ -139,55 +192,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/24/use-crashlytics/">使用Crashlytics来保存应用崩溃信息</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-24T20:56:00+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/crashlytics-logo.jpg"></p>
-
-<p>本文首发于InfoQ，版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/crashlytics-crash-statistics-tools">原文链接</a>。</p>
-
-<h2>简介</h2>
-
-<p><a href="http://try.crashlytics.com/">Crashlytic</a> 成立于2011年，是专门为移动应用开者发提供的保存和分析应用崩溃信息的工具。Crashlytics的使用者包括：支付工具Paypal, 点评应用Yelp, 照片分享应用Path, 团购应用GroupOn等移动应用。</p>
-
-<p>2013年1月，Crashlytics<a href="http://www.crashlytics.com/blog/crashlytics-is-joining-forces-with-twitter/">被Twitter收购</a>，成为又一个成功的创业产品。被收购之后，由于没有了创业公司的不稳定因素，我们更有理由使用它来分析应用崩溃信息。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/07/24/use-crashlytics/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/28/">&larr; Older</a>
@@ -203,12 +207,16 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://click.bmob.cn/?sid=f92455fa76a5829eb031" target="_blank"><img width="260px" src="/images/ad_bmob.gif" /></a>
+     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
   </p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/ios-weekly-24/">iOS移动开发周报-第24期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
@@ -252,10 +260,6 @@ block配合上dispatch_queue，可以方便地实现简单的多线程编程和�
     
       <li class="post">
         <a href="/blog/2014/06/29/ios-dev-tools/">那些好用的iOS开发工具</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/24/ios-weekly-15/">iOS移动开发周报-第15期</a>
       </li>
     
   </ul>

@@ -214,6 +214,6 @@ Scrum不是银弹，它并不能解决所有问题，实际上，很多时候它
 
 本文旨在通过介绍Scrum的核心思想和基本框架，吸引大家了解Scrum。要实践Scrum，还是需要进一步的学习才行。欢迎大家详细阅读[《Scrum指南》](https://www.scrum.org/Portals/0/Documents/Scrum%20Guides/2013/Scrum-Guide-CN.pdf#zoom=100)，然后尝试使用Scrum来让自己每天的工作变得轻松愉快。
 
-PS：我们的公司猿题库创业两年，做在线教育方向，不久前顺利拿到了1500万美元的B轮融资。我们现在很缺人，也欢迎大家加入我们，和我们一起玩Scrum游戏，感兴趣的可以看：[职位介绍](http://www.yuantiku.com/campus/)。
+PS：我们的公司猿题库创业两年，做在线教育方向，不久前顺利拿到了1500万美元的C轮融资。我们现在很缺人，也欢迎大家加入我们，和我们一起玩Scrum游戏，感兴趣的可以看：[职位介绍](http://www.yuantiku.com/campus/)。
 
 愿大家玩得开心～

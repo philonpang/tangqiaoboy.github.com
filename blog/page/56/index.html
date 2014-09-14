@@ -9,7 +9,8 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。 不得不承认，这的确是一个事实， &hellip;">
+  <meta name="description" content="Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/page/23">
+  <link rel="canonical" href="http://blog.devtang.com/blog/page/56">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
@@ -82,7 +83,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/01/08/why-we-need-write/">作为码农，我们为什么要写作</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">不要在init和dealloc函数中使用accessor</a></h1>
     
     
       <p class="meta">
@@ -98,75 +99,32 @@
   
 
 
-<time datetime="2014-01-08T21:51:00+08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time>
+<time datetime="2011-08-10T17:32:00+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。</p>
+  <div class="entry-content"><p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
+因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
 
-<p>不得不承认，这的确是一个事实，通常情况下，把一个知识讲清楚比理解它更难。那我们为什么要花时间写作呢？我想写作至少有以下好处。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/01/08/why-we-need-write/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/01/01/2013-summary/">2013年个人总结</a></h1>
-    
-    
-      <p class="meta">
-        
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-01T19:04:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>2013这一年值得总结的有两方面的事情：一是技术分享和收获，二是创业感悟。</p>
-
-<h2>技术分享</h2>
-
-<p>我这一年在技术分享上投入了更多的时间，也得到了非常大的收获。</p>
-
-<p>我主要的技术分享渠道包括：</p>
-
-<ol>
-<li><p>个人博客。今年一共完成了24篇原创博客。相比于去年的36篇，少了很多。主要是因为很多精力分散到微信公共帐号上去了。不过今年文章的质量相比去年更高了，写了包括<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>和<a href="http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/">《谈Objective-C Block的实现》</a>这类比较深入的文章。</p></li>
-<li><p><a href="http://www.infoq.com/cn/">InfoQ网站</a> 。今年一共完成了7篇发表在<a href="http://www.infoq.com/cn/">InfoQ</a> 上的<a href="http://www.infoq.com/cn/author/%E5%94%90%E5%B7%A7">稿件</a> , 其中原创技术文章4篇，翻译技术新闻1篇，采访稿2篇。</p></li>
-</ol>
 
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2014/01/01/2013-summary/">阅读 &rarr;</a>
+      <a rel="full-article" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">阅读 &rarr;</a>
     </footer>
   
 
@@ -175,11 +133,9 @@
   
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/24/">&larr; Older</a>
-    
     <a href="/blog/archives">Blog Archives</a>
     
-    <a class="next" href="/blog/page/22/">Newer &rarr;</a>
+    <a class="next" href="/blog/page/55/">Newer &rarr;</a>
     
   </div>
 </div>

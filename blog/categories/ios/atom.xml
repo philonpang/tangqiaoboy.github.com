@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-09-13T21:30:13+08:00</updated>
+  <updated>2014-09-14T20:14:03+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第25期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/09/14/ios-weekly-25/"/>
+    <updated>2014-09-14T19:56:42+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/09/14/ios-weekly-25</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/09/iphone-6-release">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果发布 iPhone6 和 Apple Watch、Swift 1.0 GM发布、Xcode 6支持PDF Vector作为图像素材、iPhone6分辨率与适配等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://news.ifeng.com/a/20140910/41926157_0.shtml">《苹果发布 iPhone6 和 Apple Watch》</a>：北京时间9月10日凌晨1点，美国苹果公司在30年前发布Mac电脑的故地，正式发布了全新一代 iPhone 6以及可穿戴设备 Apple Watch。</p></li>
+<li><p><a href="http://www.infoq.com/cn/news/2014/09/swift-10-gm">《Swift 1.0 GM发布》</a>：北京时间9月10日，Swift迎来了第二个里程碑：Swift 1.0 GM发布。GM是Golden Master的缩写，GM版几乎等同于正式版.不过这次苹果还特意在发布新闻中提到GM版并非final版本，未来Swift还将添加其它更高级的新功能、提升性能以及精简语法。</p></li>
+<li><p><a href="http://weibo.com/1846569133/BmD7gEvkZ">《Xcode 6支持PDF Vector作为图像素材》</a>：Xcode 6 的默认 App 模板已经用 PDF Vector 矢量作为图像素材了。所以 iOS 的适配可以说是轻松的，布局用 AutoLayout，图标用矢量，可以无视分辨率的存在。设计师们在用 Sketch 设计时，不要再输出1x、2x、3x 的 PNG 了。</p></li>
+<li><p><a href="http://digi.it.sohu.com/20140912/n404256321.shtml">《苹果隐晦表示Apple Watch续航约为一天》</a>：苹果没有在发布会上提到Apple Watch的续航问题，但在记者问到时，苹果官方的回复是：“我们没有对外公布，但是我们希望用户白天戴表，晚上可以充电。”</p></li>
+<li><p><a href="http://weibo.com/1708947107/BmuUHA9RY?mod=weibotime#_rnd1410529835695">《iTunes Connect Bug导致只接受支持arm64的应用》</a>：苹果9月10日的iTunes Connect更新造成一个Bug，导致审核后台只接受支持arm64的应用上传。由于国内大量的第三方SDK并未更新到支持arm64，所以此Bug导致国内众多应用无法上传。好在问题只持续了一天，但是此事也给那些一直懒于更新第三方SDK的厂商敲响了警钟。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.objc.io/issue-16/">《Swift》</a>：objc.io第16期的专题为Swift，为我们带来了关于Swift的5篇精品文章。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/09/10/iphone6-resolution/">《iPhone6分辨率与适配》</a>：文章介绍了iPhone6的图片适配问题。</p></li>
+<li><p><a href="http://www.taofengping.com/2014/09/09/leak-GPUImage_cocoapods/#.VBL897ySyXw">《你的Pod出现内存泄露了吗》</a>：文章介绍了深度使用Cocoapods时可能遇到的内存泄漏问题。</p></li>
+<li><p><a href="http://kimsungwhee.com/xcode6-%E5%BC%80%E5%90%AF-iphone6-iphone6-plus-%E5%88%86%E8%BE%A8%E7%8E%87/">《xcode6 开启 iPhone6 &amp; iPhone6 plus 分辨率》</a>：文章介绍了在Xcode6 GM下如何开启iPhone6和iPhone6 plus的分辨率。作者微博：<a href="http://weibo.com/u/2289288323">@kimsungwhee</a>。</p></li>
+<li><p><a href="http://www.bignerdranch.com/blog/asynchronous-testing-with-xcode-6/">《Asynchronous Testing With Xcode 6》</a>：在Xcode 6以前，写异步的测试用例比较麻烦。该文章介绍了在Xcode 6下使用<code>XCTestExpectation</code>类，如何更方便地写一些异步的测试用例。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/tonymillion/Reachability">Reachability</a>：苹果提供过一个Reachability类，用于检测网络状态。但是该类由于年代久远，并不支持ARC。该项目旨在提供一个苹果的Reachability类的替代品，支持ARC和block的使用方式。</p></li>
+<li><p><a href="https://github.com/ch3n/ZAlert">ZAlert</a>：ZAlert是一个用Swift实现的，用于显示<code>UIAlertView</code>和<code>UIActionSheet</code>的工具类，支持链式调用，仅支持iOS8。作者微博：<a href="http://weibo.com/fantcbug">@ch3nz</a>。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第24期]]></title>
@@ -215,56 +262,6 @@
 
 <ol>
 <li><a href="https://github.com/ochococo/Design-Patterns-In-Swift">Design-Patterns-In-Swift</a>：该项目用Swift实现了多种设计模式，读者可以当作代码示例参考。</li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第20期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/08/12/ios-weekly-20/"/>
-    <updated>2014-08-12T20:08:34+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/08/12/ios-weekly-20</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/ios-notification-center">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：iOS 通知中心扩展制作入门，iOS APP可执行文件的组成，objc非主流代码技巧等。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://onevcat.com/2014/08/notification-today-widget/">《iOS 通知中心扩展制作入门》</a>：本文通过一个简单的实用 demo 介绍了一下 iOS 8 中扩展开发的一些共通方法和一个通知中心扩展的实际制作。</p></li>
-<li><p><a href="http://blog.cnbang.net/tech/2296/">《iOS APP可执行文件的组成》</a>：iOS APP编译后，除了一些资源文件，剩下的就是一个可执行文件，本文分析了该可执行文件的组成。该文章的作者是 <a href="http://weibo.com/bang">@bang</a>。</p></li>
-<li><p><a href="http://yulingtianxia.com/blog/2014/08/08/spritekitzai-ios8he-osx10-dot-10zhong-de-xin-te-xing/#jtss-tsina">《SpriteKit在iOS8和OSX10.10中的新特性》</a>：在iOS8和OSX10.10中SpriteKit迎来了重大升级。在物理表现方面增加了着色器，光照和阴影；在物理模拟方面增加了像素物理体、力场和宇宙动力学和约束等；在Xcode中集成了场景编辑器，你不需要写代码就能完成一些复杂的工作；此外它还集成了SceneKit以及其他的改进。本文对这些新特性做了详细介绍。</p></li>
-<li><p><a href="http://billwang1990.github.io/blog/2014/08/07/remote-use-lldb/">《使用LLDB远程调试APP》</a>：文章作者因为最近要开始学习一些iOS逆向的一些东西，调试别人的app自然是必不可少的工作。试验后发现用GDB调试并不好用，而且苹果推的也是LLDB，所以需要使用LLDB来进行调试工作。使用LLDB就不像使用GDB进行调试那么方便，使用GDB的话直接在Cydia里面安装好GDB之后，ssh到你的设备就可以开始工作了，使用LLDB远程调试你越狱设备上的APP稍微麻烦一点。作者详细介绍了使用细节。</p></li>
-<li><p><a href="http://blog.xcodev.com/archives/objective-c-naming/">《Objective-C之优雅的命名》</a>：计算机语言是人和计算机之间通讯的媒介。好的代码应该是就像人对计算机说话那样，自然而优雅。命名看上去是一件很简单的事，而往往越是简单的事越难做好，否则大师们也不会把命名看成是计算机界的难题了。如何把Objective-C这门计算机语言以优雅的方式“说”出，还是比较考验工程师对它的理解深度的。在苹果的SDK中有大量的API，我们可以从这些API中体会到一些命名的艺术。</p></li>
-<li><p><a href="http://www.jessesquires.com/apples-to-apples-part-two/">《Apples to apples, Part II》</a>：本文是JSQMessagesViewController 的作者 Jesse Squires 博客上写的一篇 Objective-C 与 Swift 性能对比分析文章。从中可以了解到在开启完优化之后，Swift在性能上的表现是非常不错的。本文来自 <a href="http://weibo.com/u/2034474825">@isaced</a>的推荐。</p></li>
-<li><p><a href="https://github.com/ShinobiControls/iOS8-day-by-day">《iOS8-day-by-day》</a>：这是一个学习iOS8的系列文章合集，一共有16篇文章。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/08/02/objc-weird-code/">《objc非主流代码技巧》</a>：看开源代码时，总会看到一些大神级别的代码，给人眼前一亮的感觉，多数都是被淡忘的C语言语法，作者在文章中总结了objc写码中遇到的各类非主流代码技巧和一些妙用。</p></li>
-<li><p><a href="http://msching.github.io/blog/2014/08/02/audio-in-ios-5/">《iOS音频播放 (五)：AudioQueue》</a>：本文讲解了如何使用AudioQueue播放音频数据。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="http://fauxpasapp.com/">Faux Pas for Xcode</a>：Faux Pas for Xcode是一个项目检查工具。使用它相当于给自己的项目请了一个专业的 Reviewer，它会指出项目级别上不规范不合理的地方，并且有相关内容的链接可以学习。</p></li>
-<li><p><a href="http://ios.b2mp.cn/tools">App Icons Create Tool</a>：这是  <a href="http://weibo.com/helou?from=usercardnew">@往何处寻</a> 做的一键创建iOS APP应用图标的在线工具，可以帮助你生成各种尺寸的应用图标。</p></li>
-<li><p><a href="https://github.com/lexrus/ios-dev-playbook">ios-dev-playbook</a>: ios-dev-playbook是一个快速配置 iOS 开发需要的服务器工具。目前只支持 Debian Wheezy服务器，可以安装 GitLab、Countly、Jenkins 等。该项目作者是<a href="https://twitter.com/lexrus">@lexrus</a>。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/Alamofire/Alamofire">Alamofire</a>：Alamofire是AFNetworking的作者mattt新写的网络请求的swift库。</p></li>
-<li><p><a href="http://www.oschina.net/p/easyios">EasyIOS</a>: EasyIOS是基于MVVM 的iOS开发框架。它封装了Scene、SceneModel、Model、Action四种模型来对IOS进行开发，4种模型的定义解决了IOS开发中ViewController承担了过多角色而造成的代码质量低下，使得结构思路更加清晰。</p></li>
-<li><p><a href="https://github.com/AgileBits/onepassword-app-extension">1Password Extension for iOS Apps</a>：1Password的扩展SDK，可以方便地集成到iOS应用中。</p></li>
 </ol>
 
 ]]></content>

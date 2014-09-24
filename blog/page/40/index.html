@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 OpenCV 是一个开源的跨平台计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。 最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。 &hellip;">
+  <meta name="description" content="功能设计 先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，设计的“升级提示功能”都不太友好。在此分享一下我的想法，欢迎大家讨论。 这些App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,55 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-10T18:42:00+08:00" pubdate data-updated="true">Nov 10<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>功能设计</h2>
+
+<p>先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，设计的“升级提示功能”都不太友好。在此分享一下我的想法，欢迎大家讨论。</p>
+
+<p>这些App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题，一句话描述起来就是：“这些App都会在用户刚刚使用它的时候，提示有新版本，让用户去AppStore上下载最新的版本”。下面是某个应用的升级提示截图：</p>
+
+<p><img src="/images/app-upgrade-1.jpg"></p>
+
+<p>为什么我认为这是一个糟糕的设计呢？因为用户刚刚打开你的App，明显就是想使用你的功能。例如刚刚打开新浪微博，可能就是想看一下最新的消息或回复。刚刚打开网易新闻客户端，可能就是想看看最新的新闻。这个时候，你告诉用户有新版本，是想让用户暂时放弃使用该App吗？我不知道有多少用户会去点“升级”这个按钮，反正我每次看到这个提示都很郁闷，因为我如果点了，我就暂时不能使用该应用了（升级时原版本的App是无法使用的）。所以我在想，这个提示升级的时间能不能做得更友好一些？</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/11/10/how-to-design-upgrade-notice/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a></h1>
     
     
@@ -130,49 +179,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">粉笔网的架构和项目管理</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-15T10:56:00+08:00" pubdate data-updated="true">Oct 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>10月10日，在 <a href="http://weibo.com/cmdnclub">CMDN炫姐姐</a> 的邀请下，我们粉笔网团队通过CSDN的CMDN Club,对外进行了第一次<a href="http://hui.csdn.net/MeetingInfo.aspx?MID=137">技术分享</a>。分享的内容主要包括2部分:</p>
-
-<p>第一部分是关于粉笔网使用Scrum进行快速开发的故事。我们分享了如何在3个多月完成了全平台的开发的经验分享，其中也包括我们对Scrum的具体使用方式和其中遇到的各种问题。CSDN整理出来的报道文章在<a href="http://www.csdn.net/article/2012-10-11/2810658">这里</a>。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/10/15/scrum-and-architecture-in-fenbi/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/41/">&larr; Older</a>
@@ -194,6 +200,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/24/ios-weekly-26/">iOS移动开发周报-第26期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/14/ios-weekly-25/">iOS移动开发周报-第25期</a>
@@ -237,10 +247,6 @@
     
       <li class="post">
         <a href="/blog/2014/07/11/ios-weekly-17/">iOS移动开发周报-第17期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/07/03/ios-weekly-16/">iOS移动开发周报-第16期</a>
       </li>
     
   </ul>

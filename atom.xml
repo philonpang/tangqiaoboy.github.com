@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-09-14T20:24:15+08:00</updated>
+  <updated>2014-09-24T20:51:23+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,92 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第26期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/09/24/ios-weekly-26/"/>
+    <updated>2014-09-24T20:49:02+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/09/24/ios-weekly-26</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/09/swift-strong-point">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：Swift 的强大之处、iOS8开发者专题、在Xcode 6中使用矢量PDF、iOS 8 App Extensions等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://www.guomii.com/posts/38832">《Apple 上线 Android 到 iPhone 数据迁移教程》</a>：为了让更多的 Android 用户加入到 iPhone 阵营，Apple 主动出击，上线了一个<a href="http://support.apple.com/kb/HT6407">专门的页面</a>，帮助 Android 用户购买 iPhone 之后迁移数据。涉及到的内容包括邮件、通讯录、日历、照片、视频、音乐、电子书、PDF、文档、应用等的迁移。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://objccn.io/issue-16-1/">《Swift 的强大之处》</a>：介绍了Swift语言的特性，包括支持函数式编程、类型安全、不可变性等。</p></li>
+<li><p><a href="http://objccn.io/issue-16-4/">《Swift 的函数式 API》</a>：Swift 引入了泛型和函数式编程的思想，极大地扩展了设计的空间。文章借对 Core Image 进行函数式 API 封装为例，展示出应用 Swift 进行函数式编程的能力。</p></li>
+<li><p><a href="http://www.cocoachina.com/special/ios8/">《iOS8开发者专题》</a>：由CocoaChina整理出来的iOS8相关的资料汇总。</p></li>
+<li><p><a href="http://blog.callmewhy.com/2014/09/15/todo-list-in-swift/">《用 Swift 开发一个 TODO 应用》</a>：作者 <a href="http://weibo.com/small1030light">@请叫我汪二</a> 在文章中教你如何完成一个 TODO 的应用，功能包括添加任务和浏览任务。适合有一定 Objective-C 的开发基础但是还没怎么接触 Swift 的 iOS 开发者，希望通过这样一个简单的例子可以和大家一起熟悉一下 Swift。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/09/15/objc-attribute-cleanup/">《黑魔法<strong>attribute</strong>((cleanup))》</a>：编译器属性 <code>__attribute__</code>用于向编译器描述特殊的标识、检查或优化。作者在文章中介绍了其中一个名为<code>cleanup</code>的“黑魔法”属性。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/swiftzhong-lei-de-chu-shi-hua-qi-yu-ji-cheng">《Swift中类的初始化器与继承》</a>：Swift 为类定义了两种初始化器来确保类中所有的储存属性都能得到一个初始化值。这两种初始化器就是「指定初始化器」(Designated Initializer)与「便利初始化器」(Convenience Initializer)，文章对其做了介绍。</p></li>
+<li><p><a href="http://blog.ibireme.com/2014/09/16/adapted_to_iphone6/">《大屏iPhone的适配》</a>：自从苹果出了大屏iPhone后，iOS开发也要做适配了， 这里大概总结下这几天了解到的大屏适配的注意事项。</p></li>
+<li><p><a href="http://martiancraft.com/blog/2014/09/vector-images-xcode6/">《Using Vector Images in Xcode 6》</a>：文章介绍了在Xcode 6中使用矢量PDF图形的具体操作方法。</p></li>
+<li><p><a href="http://radex.io/swift/methods/">《Swifty methods》</a>：文章讨论了Swift的函数命名习惯，并与Objective-C语言做了对比。</p></li>
+<li><p><a href="https://developer.apple.com/apple-pay/Apple-Pay-Human-Interface-Guidelines.pdf">《Apple Pay Human Interface Guidelines》</a>：苹果发布了支付功能Apple Pay的人机交互指南。</p></li>
+</ol>
+
+
+<h2>视频</h2>
+
+<ol>
+<li><a href="http://www.raywenderlich.com/83021/ios-8-app-extensions-tech-talk-video">《iOS 8 App Extensions Tech Talk Video》</a>：该视频介绍了iOS 8引入的App Extensions功能。从用户视角和开发者视角分别对其做了介绍。</li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="http://www.wuwacorp.com/specking/">specKing</a>：specKing 与 <a href="http://www.getmarkman.com/">马克鳗</a> 功能类似，用于全自动标示美术稿。不过 specKing 是以付费的 PS 外挂的形式发布的。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/shu223/iOS8-Sampler">iOS8-Sampler</a>：日本的shuさん制作的 iOS8 参考代码集。由 <a href="http://weibo.com/u/2289288323">@kimsungwhee</a> 推荐。</li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-24T20:49:02+08:00" pubdate data-updated="true">Sep 24<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第25期]]></title>
@@ -2036,162 +2122,6 @@
 <span class="categories">
   
     <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/interview/'>interview</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[深入理解Tagged Pointer]]></title>
-    <link href="http://blog.devtang.com/blog/2014/05/30/understand-tagged-pointer/"/>
-    <updated>2014-05-30T22:15:29+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/05/30/understand-tagged-pointer</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/deep-understanding-of-tagged-pointer">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<p>【摘要】：为了节省内存和提高执行效率，苹果提出了<code>Tagged Pointer</code>的概念。对于64位程序，引入Tagged Pointer后，相关逻辑能减少一半的内存占用，以及3倍的访问速度提升，100倍的创建、销毁速度提升。本文从<code>Tagged Pointer</code>试图解决的问题入手，带领读者理解<code>Tagged Pointer</code>的实现细节和优势，最后指出了使用时的注意事项。</p>
-
-<h2>前言</h2>
-
-<p>在2013年9月，苹果推出了<a href="http://en.wikipedia.org/wiki/IPhone_5S">iPhone5s</a>，与此同时，iPhone5s配备了首个采用64位架构的<a href="http://en.wikipedia.org/wiki/Apple_A7">A7双核处理器</a>，为了节省内存和提高执行效率，苹果提出了<code>Tagged Pointer</code>的概念。对于64位程序，引入Tagged Pointer后，相关逻辑能减少一半的内存占用，以及3倍的访问速度提升，100倍的创建、销毁速度提升。本文从<code>Tagged Pointer</code>试图解决的问题入手，带领读者理解<code>Tagged Pointer</code>的实现细节和优势，最后指出了使用时的注意事项。</p>
-
-<h2>问题</h2>
-
-<p>我们先看看原有的对象为什么会浪费内存。假设我们要存储一个NSNumber对象，其值是一个整数。正常情况下，如果这个整数只是一个NSInteger的普通变量，那么它所占用的内存是与CPU的位数有关，在32位CPU下占4个字节，在64位CPU下是占8个字节的。而指针类型的大小通常也是与CPU位数相关，一个指针所占用的内存在32位CPU下为4个字节，在64位CPU下也是8个字节。</p>
-
-<p>所以一个普通的iOS程序，如果没有<code>Tagged Pointer</code>对象，从32位机器迁移到64位机器中后，虽然逻辑没有任何变化，但这种NSNumber、NSDate一类的对象所占用的内存会翻倍。如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/tagged_pointer_before.jpg"></p>
-
-<p>我们再来看看效率上的问题，为了存储和访问一个NSNumber对象，我们需要在堆上为其分配内存，另外还要维护它的引用计数，管理它的生命期。这些都给程序增加了额外的逻辑，造成运行效率上的损失。</p>
-
-<h2>Tagged Pointer</h2>
-
-<p>为了改进上面提到的内存占用和效率问题，苹果提出了<code>Tagged Pointer</code>对象。由于NSNumber、NSDate一类的变量本身的值需要占用的内存大小常常不需要8个字节，拿整数来说，4个字节所能表示的有符号整数就可以达到20多亿（注：2<sup>31</sup>=2147483648，另外1位作为符号位)，对于绝大多数情况都是可以处理的。</p>
-
-<p>所以我们可以将一个对象的指针拆成两部分，一部分直接保存数据，另一部分作为特殊标记，表示这是一个特别的指针，不指向任何一个地址。所以，引入了<code>Tagged Pointer</code>对象之后，64位CPU下NSNumber的内存图变成了以下这样：</p>
-
-<p><img src="http://blog.devtang.com/images/tagged_pointer_after.jpg"></p>
-
-<p>对此，我们也可以用 Xcode做实验来验证。我们的实验代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number1</span> <span class="o">=</span> <span class="err">@</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number2</span> <span class="o">=</span> <span class="err">@</span><span class="mi">2</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number3</span> <span class="o">=</span> <span class="err">@</span><span class="mi">3</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">NSNumber</span> <span class="o">*</span><span class="n">numberFFFF</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="mh">0xFFFF</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number1 pointer is %p&quot;</span><span class="p">,</span> <span class="n">number1</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number2 pointer is %p&quot;</span><span class="p">,</span> <span class="n">number2</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number3 pointer is %p&quot;</span><span class="p">,</span> <span class="n">number3</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;numberffff pointer is %p&quot;</span><span class="p">,</span> <span class="n">numberFFFF</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">UIApplicationMain</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="nb">nil</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">AppDelegate</span> <span class="n">class</span><span class="p">]));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在该代码中，我们将几个Number类型的指针的值直接输出。需要注意的是，我们需要将模拟器切换成 64位的CPU来测试，如下图所示：</p>
-
-<p><img src="http://blog.devtang.com/images/tagged_pointer_switch_64bit_simulator.jpg"></p>
-
-<p>运行之后，我们得到的结果如下，可以看到，除去最后的数字最末尾的2以及最开头的0xb，其它数字刚好表示了相应NSNumber的值。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">number1</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0xb000000000000012</span>
-</span><span class='line'><span class="n">number2</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0xb000000000000022</span>
-</span><span class='line'><span class="n">number3</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0xb000000000000032</span>
-</span><span class='line'><span class="n">numberFFFF</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0xb0000000000ffff2</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可见，苹果确实是将值直接存储到了指针本身里面。我们还可以猜测，数字最末尾的2以及最开头的0xb是否就是苹果对于<code>Tagged Pointer</code>的特殊标记呢？我们尝试放一个8字节的长的整数到<code>NSNumber</code>实例中，对于这样的实例，由于<code>Tagged Pointer</code>无法将其按上面的压缩方式来保存，那么应该就会以普通对象的方式来保存，我们的实验代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">bigNumber</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="mh">0xEFFFFFFFFFFFFFFF</span><span class="p">);</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;bigNumber pointer is %p&quot;</span><span class="p">,</span> <span class="n">bigNumber</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>运行之后，结果如下，验证了我们的猜测，<code>bigNumber</code>的地址更像是一个普通的指针地址，和它本身的值看不出任何关系：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">bigNumber</span> <span class="n">pointer</span> <span class="n">is</span> <span class="mh">0x10921ecc0</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可见，当8字节可以承载用于表示的数值时，系统就会以<code>Tagged Pointer</code>的方式生成指针，如果8字节承载不了时，则又用以前的方式来生成普通的指针。关于以上关于<code>Tag Pointer</code>的存储细节，我们也可以在<a href="https://www.mikeash.com/pyblog/friday-qa-2012-07-27-lets-build-tagged-pointers.html">这里</a>找到相应的讨论，但是其中关于<code>Tagged Pointer</code>的实现细节与我们的实验并不相符，笔者认为可能是苹果更改了具体的实现细节，并且这并不影响<code>Tagged Pointer</code>我们讨论<code>Tagged Pointer</code>本身的优点。</p>
-
-<h2>特点</h2>
-
-<p>我们也可以在WWDC2013的《Session 404 Advanced in Objective-C》视频中，看到苹果对于<code>Tagged Pointer</code>特点的介绍：</p>
-
-<ol>
-<li><code>Tagged Pointer</code>专门用来存储小的对象，例如<code>NSNumber</code>和<code>NSDate</code></li>
-<li><code>Tagged Pointer</code>指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已。所以，它的内存并不存储在堆中，也不需要malloc和free。</li>
-<li>在内存读取上有着3倍的效率，创建时比以前快106倍。</li>
-</ol>
-
-
-<p>由此可见，苹果引入<code>Tagged Pointer</code>，不但减少了64位机器下程序的内存占用，还提高了运行效率。完美地解决了小内存对象在存储和访问效率上的问题。</p>
-
-<h2>isa指针</h2>
-
-<p><code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 <code>isa</code> 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。
-因为不是真正的对象，所以如果你直接访问<code>Tagged Pointer</code>的<code>isa</code>成员的话，在编译时将会有如下警告：</p>
-
-<p><img src="http://blog.devtang.com/images/tagged_pointer_isa_forbidden.jpg"></p>
-
-<p>对于上面的写法，应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>。只要避免在代码中直接访问对象的isa变量，即可避免这个问题。</p>
-
-<h2>总结</h2>
-
-<p>苹果将<code>Tagged Pointer</code>引入，给64位系统带来了内存的节省和运行效率的提高。<code>Tagged Pointer</code>通过在其最后一个bit位设置一个特殊标记，用于将数据直接保存在指针本身中。因为<code>Tagged Pointer</code>并不是真正的对象，我们在使用时需要注意不要直接访问其isa变量。</p>
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-30T22:15:29+08:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>
   
 </span>
 

@@ -60,7 +60,7 @@ gem sources -l
 
 所有的项目的Podspec文件都托管在`https://github.com/CocoaPods/Specs`。第一次执行`pod setup`时，CocoaPods会将这些`podspec`索引文件更新到本地的 `~/.cocoapods/`目录下，这个索引文件比较大，有80M左右。所以第一次更新时非常慢，笔者就更新了将近1个小时才完成。
 
-一个叫[akinliu](http://akinliu.github.io/2014/05/03/cocoapods-specs-/)的朋友在[gitcafe](http://gitcafe.com/)和[occhina](http://www.oschina.net/)上建立了CocoaPods索引库的镜像，因为gitcafe和occhina都是国内的服务器，所以在执行索引更新操作时，会快很多。如下操作可以将CocoaPods设置成使用gitcafe镜像：
+一个叫[akinliu](http://akinliu.github.io/2014/05/03/cocoapods-specs-/)的朋友在[gitcafe](http://gitcafe.com/)和[oschina](http://www.oschina.net/)上建立了CocoaPods索引库的镜像，因为gitcafe和oschina都是国内的服务器，所以在执行索引更新操作时，会快很多。如下操作可以将CocoaPods设置成使用gitcafe镜像：
 
 ``` bash
 
@@ -70,7 +70,7 @@ pod repo update
 
 ```
 
-将以上代码中的 `https://gitcafe.com/akuandev/Specs.git` 替换成 `http://git.oschina.net/akuandev/Specs.git` 即可使用occhina上的镜像。
+将以上代码中的 `https://gitcafe.com/akuandev/Specs.git` 替换成 `http://git.oschina.net/akuandev/Specs.git` 即可使用oschina上的镜像。
 
 ###使用CocoaPods
 

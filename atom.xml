@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-10-03T20:51:49+08:00</updated>
+  <updated>2014-10-03T22:17:14+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[开源一个Key-Value存储工具类]]></title>
+    <link href="http://blog.devtang.com/blog/2014/10/03/opensouce-a-key-value-storage-tool/"/>
+    <updated>2014-10-03T22:06:18+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/10/03/opensouce-a-key-value-storage-tool</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>还记得大学刚学数据库那会儿，天真地以为世界上所有的存储都需要用数据库来做。后来毕业后，正值NOSQL流行，那时我在网易参与了网易微博的开发，我们当时使用了有道自己做的“BigTable”— OMAP来存储微博数据，那个时候才发现，其实Key-Value这种简单的存储也能搞定微博这类不太简单的存储逻辑。</p>
+
+<p>相比MYSQL，当数据量上千万后，NOSQL的优势体现出来了：对于海量数据，NOSQL在存取速度上没有任何影响，另外，天生的多备份和分布式，也说数据安全和扩容变得异常容易。</p>
+
+<h2>iOS端的尝试</h2>
+
+<p>后来我从后台转做iOS端的开发，我就尝试了在iOS端直接使用Key-Value式的存储。经过在粉笔网、猿题库、小猿搜题三个客户端中的尝试后，我发现Key-Value式的存储不但完全能够满足大多数移动端开发的需求，而且非常适合移动端采用。主要原因是：移动端存储的数据量不会很大：</p>
+
+<ul>
+<li>如果是单机的应用（例如效率工具Clear），用户自己一个人创建的数据最多也就上万条。</li>
+<li>如果是有服务端的应用（例如网易新闻，微博），那移动端通常不会保存全量的数据，每次会从服务器上获取数据，本地只是做一些内容的缓存而已，所以也不会有很大的数据量。</li>
+</ul>
+
+
+<p>如果数据量不大的话，那么在iOS端使用最简单直接的Key-Value存储就能带来开发上的效率优势。它能保证：</p>
+
+<ol>
+<li>Model层的代码编写简单，易于测试。</li>
+<li>由于Value是JSON格式，所以在做Model字段更改时，易于扩展和兼容。</li>
+</ol>
+
+
+<h2>实现方案</h2>
+
+<p>在存储引擎上，2年前我直接选择了Sqlite当做存储引擎，相当于每个数据库表只有Key，Value两个字段。后来，随着LevelDB的流行，业界也有一些应用采用了LevelDB来做iOS端的Key-Value存储引擎，例如开源的<a href="https://github.com/viewfinderco/viewfinder">ViewFinder</a>。</p>
+
+<p>因为LevelDB本身并不是为移动端设计的，我担心它过于占用内存，我自己也没有看到业界有在移动端针对LevelDB做很详细的测试，连LevelDB的iOS端移植都不是官方做的。加上我自己写的基于Sqlite的Key-Value存储用着也没有什么问题，所以我也就一直没有更换成LevelDB。</p>
+
+<h2>开源</h2>
+
+<p>经过两年的使用和测试，我认为它非常好用，而且代码也非常简单，只有不到400行。所以现在开源分享给大家，这个项目叫<code>YTKKeyValueStore</code>，项目在<a href="https://github.com/yuantiku/YTKKeyValueStore">这里</a>。以下是一个简单的使用示例：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"test.db"];
+</span><span class='line'>NSString *tableName = @"user_table";
+</span><span class='line'>[store createTableWithName:tableName];
+</span><span class='line'>// 保存
+</span><span class='line'>NSString *key = @"1";
+</span><span class='line'>NSDictionary *user = @{@"id": @1, @"name": @"tangqiao", @"age": @30};
+</span><span class='line'>[store putObject:user withId:key intoTable:tableName];
+</span><span class='line'>// 查询
+</span><span class='line'>NSDictionary *queryUser = [store getObjectById:key fromTable:tableName];
+</span><span class='line'>NSLog(@"query data result: %@", queryUser);</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>其它</h2>
+
+<p>两年前写过不少测试用例，后来给弄丢了，所以现在开项项目中还没有测试用例。由于时间关系，更详细的使用说明稍后会更新到项目中。</p>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-03T22:06:18+08:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[写在创业两周年]]></title>
@@ -1989,76 +2081,6 @@
 <span class="categories">
   
     <a class='category' href='/blog/categories/summary/'>summary</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第13期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/06/01/ios-weekly-13/"/>
-    <updated>2014-06-01T17:27:22+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/06/01/ios-weekly-13</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/05/facebook-pop">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：Facebook Pop 使用指南，用CocoaPods做iOS程序的依赖管理，在 iOS 上捕捉签名，加密你的SQLite等。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p> <a href="http://geeklu.com/2014/05/facebook-pop-usage/">《Facebook Pop 使用指南》</a>：Facebook Pop其实是基于CADisplayLink(Mac平台上使用的CVDisplayLink)实现的独立于Core Animation之外的动画方案。文章主要介绍了Facebook Pop如何使用。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">《用CocoaPods做iOS程序的依赖管理》</a>：文章除了介绍了CocoaPods的基本功能外，还增加了如何设置国内spec镜像、使用私有pod、podfile.lock、如何创建spec文件等内容。</p></li>
-<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-05-27-capture-a-signature-on-ios.md">《在 iOS 上捕捉签名》</a>：文章介绍了如何绘制像 Paper 应用那样的真正平滑的曲线，包括如何使用二次贝塞尔曲线使签名平滑，以及基于触摸速度，使签名宽度可变，从而创建出更加自然的笔画。</p></li>
-<li><p><a href="http://blog.t-xx.me/blog/2014/05/28/hack-weibo-sdk/">《解決WeiboSDK Bundleid 綁定問題》</a>：@糖炒小虾_txx 利用IDA分析和 method_swizzling 破解了微博SDK的bundle d綁定，这样就可以绕开weibo sdk 的sso 和bundle id綁定的要求，这算是Objective-C黑魔法的一次有效实践。</p></li>
-<li><p> <a href="http://wangzz.github.io/blog/2014/05/19/jia-mi-ni-de-sqlite/">《加密你的SQLite》</a>：SQLite是一个轻量的、跨平台的、开源的数据库引擎，它的在读写效率、消耗总量、延迟时间和整体简单性上具有的优越性，使其成为移动平台数据库的最佳解决方案。然而免费版的SQLite有一个致命缺点：不支持加密。这就导致存储在SQLite中的数据可以被任何人用任何文本编辑器查看到。本文讨论了各种对SQLite的加密方法。</p></li>
-<li><p> <a href="http://security.ios-wiki.com/issue-3-4/">《Reveal：分析iOS UI的利器》</a>：Reveal能够在运行时调试和修改iOS应用程序。它能连接到应用程序，并允许开发者编辑各种用户界面参数，这反过来会立即反应在程序的UI上。就像用chrome调试HTML页面一样，在不需要重写代码、重新构建和重新部署应用程序的情况下就能够调试和修改iOS用户界面。文章简要介绍了Reveal的功能和几种加载方法。</p></li>
-<li><p> <a href="http://blog.codingcoder.com/ios-games-by-tutorials-chapter8%EF%BC%8Dpart1/">《Sprite Kit 物理引擎初体验 Part 1》</a>：Sprite Kit 内建了一个强大的并且非常容易使用的物理引擎，你可以很容易的使用这个内置的物理引擎来模拟真实世界中的移动。文章介绍了Sprite Kit的基本使用。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="https://itunes.apple.com/cn/app/podlife/id725023109?l=en&amp;mt=8">Podlife</a>：Podlife是一个免费的iOS应用，可以在手机上搜寻各种 CocoaPods，并得到更新提醒。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/schneiderandre/popping">popping</a>：popping是一个POP 使用实例工程。</p></li>
-<li><p><a href="https://github.com/venmo/synx">synx</a>：synx可以自动帮你整理项目里的文件，按 group 重新放置。</p></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-01T17:27:22+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
   
 </span>
 

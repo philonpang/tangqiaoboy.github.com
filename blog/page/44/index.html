@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="苹果在今年的WWDC2012大会上介绍了大量Objective-C的新特性，能够帮助iOS程序员更加高效地编写代码。在不久前更新的XCode4.4版本中，这些新特性已经可以使用了。让我们看看这些新特性有哪些： ">
+  <meta name="description" content="问题 我们知道，在iOS开发中，为了使我们的app能够同时支持iPhone的Retina屏幕和普通屏幕，美术同学需要对UI设计稿中的每个元素进行2次切图。苹果要求对图片元素的命名分别为 name.png 和 name@2x.png，带@2x的表示是Retina屏幕的贴图，不带@ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,51 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/08/26/use-script-to-power-up-ui-work/">用脚本来简化iOS美术同学的工作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-26T20:34:00+08:00" pubdate data-updated="true">Aug 26<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>问题</h2>
+
+<p>我们知道，在iOS开发中，为了使我们的app能够同时支持iPhone的Retina屏幕和普通屏幕，美术同学需要对UI设计稿中的每个元素进行2次切图。苹果要求对图片元素的命名分别为 name.png 和 name@2x.png，带@2x的表示是Retina屏幕的贴图，不带@2x的同名文件为普通屏幕的贴图。</p>
+
+<p>我在开发的时候发现很难要求美术同学按照开发的要求来对图片命名。她们通常对于切图的命名是例如 <em>登录按钮大.png</em> ，<em>登录按钮小.png</em>, <em>登录按钮按下大.png</em> <em>登录按钮按下小.png</em> 这样的形式。于是，对这些文件按照苹果的要求进行重命名就成了我这个码农的一个体力活。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/26/use-script-to-power-up-ui-work/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/08/05/use-modern-objective-c/">Objective-C的新特性</a></h1>
     
     
@@ -118,74 +163,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/06/24/enhance-uiactionsheet/">封装同步的UIActionSheet</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-24T21:51:00+08:00" pubdate data-updated="true">Jun 24<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>问题</h2>
-
-<p>做iOS开发的同学想必都用过UIActionSheet。UIActionSheet可以弹出一个选择列表，让用户选择列表中的某一项操作。使用UIActionSheet非常简单，以下是一个简单的示例代码：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">someButtonClicked</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">UIActionSheet</span> <span class="o">*</span> <span class="n">sheet</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIActionSheet</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="nb">nil</span> <span class="nl">delegate:</span><span class="n">self</span> <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;ddd&quot;</span> <span class="nl">destructiveButtonTitle:</span><span class="s">@&quot;aaa&quot;</span> <span class="nl">otherButtonTitles:</span><span class="s">@&quot;bbb&quot;</span><span class="p">,</span> <span class="s">@&quot;ccc&quot;</span><span class="p">,</span> <span class="s">@&quot;ddd&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-</span><span class='line'>    <span class="n">sheet</span><span class="p">.</span><span class="n">destructiveButtonIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">sheet</span> <span class="nl">showInView:</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">actionSheet:</span><span class="p">(</span><span class="n">UIActionSheet</span> <span class="o">*</span><span class="p">)</span><span class="nv">actionSheet</span> <span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">buttonIndex</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;result = %d&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>但我个人在使用时，感觉UIActionSheet有以下2个问题：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/06/24/enhance-uiactionsheet/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/45/">&larr; Older</a>
@@ -207,6 +184,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/03/opensouce-a-key-value-storage-tool/">开源一个Key-Value存储工具类</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/10/01/startup-2nd-year-summary/">写在创业两周年</a>
@@ -250,10 +231,6 @@
     
       <li class="post">
         <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/07/22/ios-weekly-18/">iOS移动开发周报-第18期</a>
       </li>
     
   </ul>

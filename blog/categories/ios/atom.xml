@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-10-03T20:51:49+08:00</updated>
+  <updated>2014-10-03T22:17:14+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,64 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[开源一个Key-Value存储工具类]]></title>
+    <link href="http://blog.devtang.com/blog/2014/10/03/opensouce-a-key-value-storage-tool/"/>
+    <updated>2014-10-03T22:06:18+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/10/03/opensouce-a-key-value-storage-tool</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>还记得大学刚学数据库那会儿，天真地以为世界上所有的存储都需要用数据库来做。后来毕业后，正值NOSQL流行，那时我在网易参与了网易微博的开发，我们当时使用了有道自己做的“BigTable”— OMAP来存储微博数据，那个时候才发现，其实Key-Value这种简单的存储也能搞定微博这类不太简单的存储逻辑。</p>
+
+<p>相比MYSQL，当数据量上千万后，NOSQL的优势体现出来了：对于海量数据，NOSQL在存取速度上没有任何影响，另外，天生的多备份和分布式，也说数据安全和扩容变得异常容易。</p>
+
+<h2>iOS端的尝试</h2>
+
+<p>后来我从后台转做iOS端的开发，我就尝试了在iOS端直接使用Key-Value式的存储。经过在粉笔网、猿题库、小猿搜题三个客户端中的尝试后，我发现Key-Value式的存储不但完全能够满足大多数移动端开发的需求，而且非常适合移动端采用。主要原因是：移动端存储的数据量不会很大：</p>
+
+<ul>
+<li>如果是单机的应用（例如效率工具Clear），用户自己一个人创建的数据最多也就上万条。</li>
+<li>如果是有服务端的应用（例如网易新闻，微博），那移动端通常不会保存全量的数据，每次会从服务器上获取数据，本地只是做一些内容的缓存而已，所以也不会有很大的数据量。</li>
+</ul>
+
+
+<p>如果数据量不大的话，那么在iOS端使用最简单直接的Key-Value存储就能带来开发上的效率优势。它能保证：</p>
+
+<ol>
+<li>Model层的代码编写简单，易于测试。</li>
+<li>由于Value是JSON格式，所以在做Model字段更改时，易于扩展和兼容。</li>
+</ol>
+
+
+<h2>实现方案</h2>
+
+<p>在存储引擎上，2年前我直接选择了Sqlite当做存储引擎，相当于每个数据库表只有Key，Value两个字段。后来，随着LevelDB的流行，业界也有一些应用采用了LevelDB来做iOS端的Key-Value存储引擎，例如开源的<a href="https://github.com/viewfinderco/viewfinder">ViewFinder</a>。</p>
+
+<p>因为LevelDB本身并不是为移动端设计的，我担心它过于占用内存，我自己也没有看到业界有在移动端针对LevelDB做很详细的测试，连LevelDB的iOS端移植都不是官方做的。加上我自己写的基于Sqlite的Key-Value存储用着也没有什么问题，所以我也就一直没有更换成LevelDB。</p>
+
+<h2>开源</h2>
+
+<p>经过两年的使用和测试，我认为它非常好用，而且代码也非常简单，只有不到400行。所以现在开源分享给大家，这个项目叫<code>YTKKeyValueStore</code>，项目在<a href="https://github.com/yuantiku/YTKKeyValueStore">这里</a>。以下是一个简单的使用示例：</p>
+
+<p><code>
+YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"test.db"];
+NSString *tableName = @"user_table";
+[store createTableWithName:tableName];
+// 保存
+NSString *key = @"1";
+NSDictionary *user = @{@"id": @1, @"name": @"tangqiao", @"age": @30};
+[store putObject:user withId:key intoTable:tableName];
+// 查询
+NSDictionary *queryUser = [store getObjectById:key fromTable:tableName];
+NSLog(@"query data result: %@", queryUser);
+</code></p>
+
+<h2>其它</h2>
+
+<p>两年前写过不少测试用例，后来给弄丢了，所以现在开项项目中还没有测试用例。由于时间关系，更详细的使用说明稍后会更新到项目中。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第26期]]></title>
@@ -223,51 +281,6 @@
 
 <ol>
 <li><a href="https://github.com/Polidea/ios-class-guard">ios-class-guard</a>：一个用于混淆iOS的类名、方法名以及变量名的开源库。</li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第22期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/08/24/ios-weekly-22/"/>
-    <updated>2014-08-24T19:14:22+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/08/24/ios-weekly-22</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/shares-of-apple">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果股价创新高，iOS8自动调整UITableView布局，Swift学习心得等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><a href="http://tech.qq.com/a/20140820/007526.htm">《苹果股价创新高 市值全球第一超第二名30%》</a>： 8月20日，苹果公司周二收盘股价创下历史新高水平，超过了2012年保持的最高记录。苹果作为全球市值最高的公司，比全球市值第二大的埃克森美孚公司高出了30%。</li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://zonble.net/archives/2014_08/1616.php">《Swift学习心得》</a>：作者分享了学习Swift语言的心得，包括苹果为什么要设计Swift语言以及Swift语言的各种特性。</p></li>
-<li><p><a href="http://yulingtianxia.com/blog/2014/08/17/New-in-Table-and-Collection-Views/">《iOS8自动调整UITableView和UICollectionView布局》</a>：本文讲述了UITableView、UICollectionView实现self-sizing cell布局的知识，以及如何用InvalidationContext优化UICollectionView布局的更新。作者微博：<a href="http://weibo.com/yulingtianxia">@杨萧玉HIT</a>。</p></li>
-<li><p><a href="http://yulingtianxia.com/blog/2014/08/19/best-practices-for-building-spritekit-games/">《创建SpriteKit游戏的最佳范例》</a>：本文从拓展性、游戏构造和性能三个方面分别讲述建立SpriteKit游戏时的一些实践经验和范例。作者微博：<a href="http://weibo.com/yulingtianxia">@杨萧玉HIT</a>。</p></li>
-<li><p><a href="http://beyondvincent.com/blog/2014/07/30/provision-ios-ipa-app-for-in-house-enterprise-distribution/">《在企业内部分发 iOS 应用程序》</a>：在企业内部分发 iOS 应用程序非常复杂，作者详细介绍了实现的过程。</p></li>
-<li><p><a href="https://developer.apple.com/swift/blog/?id=10">《Value and Reference Types》</a>：苹果的这篇官方微博介绍了Swift的值类型和引用类型的差别。</p></li>
-<li><p><a href="http://www.raywenderlich.com/76519/add-table-view-search-swift">《How to Add Table View Search in Swift》</a>：来自raywenderlich的教程，用Swift实现为TableView增加搜索功能。</p></li>
-<li><p><a href="https://www.mikeash.com/pyblog/friday-qa-2014-08-15-swift-name-mangling.html">《Swift Name Mangling》</a>：文章分析了Swift编译器对于函数名的处理方式。</p></li>
-<li><p><a href="http://nshipster.com/swift-literal-convertible/">《Swift Literal Convertibles》</a>：文章介绍了Swift中的字面量（Literal）的类型转换规则。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><a href="https://github.com/facebook/fishhook">fishhook</a>：fishhook是Facebook开源的一个可以hook系统方法的工具。</li>
 </ol>
 
 ]]></content>

@@ -9,19 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="大家好。这是一篇测试的文章。 一级标题 二级标题 六级标题 斜体
-粗体
-粗斜体 pre引用文字，原文。 列表一： 1111
-22222 111
-222 33333 列表二： 11111
-211222
-33333
-4444 c代码高亮效果： 1
-2
-3
-4
-5
-int main() { char &hellip;">
+  <meta name="description" content="在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,136 +82,6 @@ int main() { char &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/12/25/first_post/">Markdown格式测试</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-25T14:17:00+08:00" pubdate data-updated="true">Dec 25<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>大家好。这是一篇测试的文章。</p>
-
-<h1>一级标题</h1>
-
-<h2>二级标题</h2>
-
-<h6>六级标题</h6>
-
-<p><em>斜体</em>
-<strong>粗体</strong>
-<strong><em>粗斜体</em></strong></p>
-
-<pre><code> pre引用文字，原文。
-</code></pre>
-
-<p>列表一：</p>
-
-<ul>
-<li>1111</li>
-<li>22222
-
-<ol>
-<li>111</li>
-<li>222</li>
-</ol>
-</li>
-<li>33333</li>
-</ul>
-
-
-<p>列表二：</p>
-
-<ol>
-<li>11111</li>
-<li>211222</li>
-<li>33333</li>
-<li>4444</li>
-</ol>
-
-
-<p>c代码高亮效果：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kt">char</span> <span class="o">*</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;hello world&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>objc代码高亮效果：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">a</span> <span class="o">=</span> <span class="s">@&quot;abc&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>objc的高亮效果:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">+</span> <span class="p">(</span><span class="n">ImageCache</span> <span class="o">*</span><span class="p">)</span> <span class="nf">sharedInstance</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">instance</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">@synchronized</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">instance</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">instance</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ImageCache</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">instance</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/12/25/first_post/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/">去掉xcode源码末尾的空格</a></h1>
     
     
@@ -260,6 +118,47 @@ int main() { char &hellip;">
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/20/set-uilabel-text-align-top/">让UILabel的文字顶部对齐</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-20T22:43:00+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>xcode中默认的UILabel是垂直居中对齐的，如果你的UILabel高度有多行，当内容少的时候，会自动垂直居中。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/11/20/set-uilabel-text-align-top/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/56/">&larr; Older</a>
@@ -275,7 +174,7 @@ int main() { char &hellip;">
     <section>
   <h1>赞助商</h1>
   <p>
-     <a href="http://pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.gif" /></a>
+     <a href="http://click.bmob.cn/?sid=f92455fa76a5829eb031" target="_blank"><img width="260px" src="/images/ad_bmob.gif" /></a>
   </p>
 </section>
 <section>

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
+  <meta name="description" content="我之前一直使用Github Pages功能以及Octopress来搭建个人博客，我也写了一篇文章《象写程序一样写博客：搭建基于github的博客》来分享博客搭建的技术细节。 但是自从我的博客每天访问量超过2000次以后，我就发现博客的访问速度还是一个不可忽视的问题。通过监控宝和Google &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,130 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/02/use-gitcafe-to-host-blog/">将博客从GitHub迁移到GitCafe</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-02T17:22:02+08:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我之前一直使用<a href="https://pages.github.com/">Github Pages功能</a>以及<a href="http://octopress.org/">Octopress</a>来搭建个人博客，我也写了一篇文章<a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">《象写程序一样写博客：搭建基于github的博客》</a>来分享博客搭建的技术细节。</p>
+
+<p>但是自从我的博客每天访问量超过2000次以后，我就发现博客的访问速度还是一个不可忽视的问题。通过<a href="http://www.jiankongbao.com/">监控宝</a>和<a href="http://www.google.com/analytics/">Google Analytics</a>，我发现有些博客文章的平均打开时间长达4秒钟。于是我开始考虑将博客搭建在更快的服务器上面。</p>
+
+<p>我的首先考虑是购买独立的VPS，<a href="https://www.linode.com/pricing">Linode</a>每月30$的价格还是略贵，于是我买的是 <a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>，<a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>算下来每月只需要5$。于是在一个周末，我花时间购买了DigitalOcean家的VPS，安装了Nginx，然后在上面运行了一个脚本，定时将我github博客的内容自动更新过来（其实就是定期<code>git pull</code>一下我博客的repo）。</p>
+
+<p>就这样运行了一个月，我发现虽然<a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>服务器的ping值相比github要快一些。但是从监控数据上看，整体的网页访问速度并没有什么提高。就在我在微博上抱怨的时候，一个朋友推荐我试试<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>。于是我就尝试了一下，结果你猜怎么着？我被吓坏了。</p>
+
+<p>ping值直接从200ms左右减少到3ms左右，如下图所示：</p>
+
+<p><img src="/images/gitcafe-ping.jpg"></p>
+
+<p>监控宝的统计显示，首页平均打开时间从原来的1800ms减少到350ms左右，快了5倍，如下图所示：</p>
+
+<p><img src="/images/gitcafe-jiankong.jpg"></p>
+
+<p>所以我强烈建议各位基于Github Pages功能来搭建个人博客的朋友，将博客内容镜像到<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>上。如果你有个人的独立域名，那么镜像之后就可以随时将博客地址在Github和Gitcafe之间切换了。对于各位博主来说，这样做没有任何风险，因为你可以随时再切换回去。当然，免费用了人家的服务，如果你能像我这样，在网站的底部附上感谢内容，那是再好不过的了。</p>
+
+<p>以下为大家介绍详细的迁移过程。</p>
+
+<h2>迁移教程</h2>
+
+<h3>注册</h3>
+
+<p>如果你还没有注册过<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>，首先需要<a href="https://gitcafe.com/signup">点这里</a>注册一下。</p>
+
+<p>注册完成之后，去<a href="https://gitcafe.com/account/public_keys">公钥管理</a>那儿添加一下你的ssh公钥，这样以后提交代码会方便很多。当然你也可以不设置这一步，每次提交通过密码来验证。</p>
+
+<h3>在GitCafe上新建一个博客项目</h3>
+
+<p>然后我们需要先在GitCafe上新建一个博客项目。GitCafe的博客搭建官方教程藏得比较深，所以我第一次还没有找到，教程地址在<a href="https://gitcafe.com/GitCafe/Help/wiki/Pages-%E7%9B%B8%E5%85%B3%E5%B8%AE%E5%8A%A9#wiki">这里</a>。具体来说，就是创建一个与用户名(如果是组织，就是组织名)相同名称的项目。如果你创建的项目名与用户名相同，GitCafe会自动识别成这是一个Page项目，如下所示：</p>
+
+<p><img src="/images/gitcafe-create-page.jpg"></p>
+
+<h3>设置多个Git Remote源</h3>
+
+<p>接下来我们需要将原本提交到Github上的博客内容同步提交到GitCafe。因为我的博客是基于<a href="http://octopress.org/">Octopress</a>的，我介绍一下Octopress的做法，其它博客引擎的做法类似。</p>
+
+<p>对于Octopress，我们只需要每次提交网站内容时，执行完 <code>rake deploy</code>之后，再执行以下脚本即可（你可以将该脚本中的代码仓库地址换成你的，然后将其保存成一个脚 本文件，需要时执行一下即可）：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>_deploy
+</span><span class='line'><span class="c"># 添加 gitcafe 源</span>
+</span><span class='line'>git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git &gt;&gt; /dev/null 2&gt;&amp;1
+</span><span class='line'><span class="c"># 提交博客内容</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;### Pushing to GitCafe...&quot;</span>
+</span><span class='line'>git push -u gitcafe master:gitcafe-pages
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;### Done&quot;</span>%
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大概解释一下以上内容，Octopress在发布时会将自己的 <code>_delpoy</code>目录切换到master分支，然后将生成的博客内容放到<code>_delpoy</code>目录中，然后执行<code>git push</code>操作。正常情况下，默认内容是push到github上的。我们执行的以上脚本，就是为该项目增加了一个名为<code>gitcafe</code>的远程仓库，然后将master分支push到<code>gitcafe</code>的<code>gitcafe-pages</code>分支。</p>
+
+<h3>修改Rakefile (可选)</h3>
+
+<p>除了以上方法外，你也可以直接修改<code>Rakefile</code>。在其第269行后增加如下代码，也可以达到同样的目的，这样你每次就仍然只需要执行<code>rake deploy</code>即可同时将博客同步到github和gitcafe：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">system</span> <span class="s2">&quot;git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git &gt;&gt; /dev/null 2&gt;&amp;1&quot;</span>
+</span><span class='line'><span class="nb">system</span> <span class="s2">&quot;git push -u gitcafe master:gitcafe-pages&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>插入代码的示例位置如下：</p>
+
+<p><img src="/images/gitcafe-edit-rakefile.jpg"></p>
+
+<h3>设置域名</h3>
+
+<p>GitCafe的自定义域名设置比github要友好得多，它不但提供了图形界面设置，并且支持同时设置多个域名。在<code>项目管理</code>&ndash;><code>域名管理</code>中，我们可以找到相应的设置项，如下所示：</p>
+
+<p><img src="/images/gitcafe-set-domain.jpg"></p>
+
+<p>在设置完之后，我们需要去域名解析的服务商那儿，将对应的域名用<code>A记录</code>类型，解析到<code>117.79.146.98</code>即可。</p>
+
+<h3>添加对GitCafe的感谢(可选)</h3>
+
+<p>如果你也想像我一样，想在博客底部添加对GitCafe的感谢，可以参考<a href="https://github.com/tangqiaoboy/tangqiaoboy.github.com/commit/a8ff6914d6fca786baf5702de3da01d408bd7b43">这个提交</a>。它通过修改Octopress的<code>source/_includes/custom/footer.html</code>模版文件完成。</p>
+
+<h2>感谢</h2>
+
+<p>最后再次感谢GitCafe，上个月在QCon大会上了解到他们的发展思路和Github很不一样。虽然它还是一家创业公司，但是我期待看到它最终能够推动国内开源和技术社区的发展。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -149,133 +273,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/01/interview-on-miqun/">专访《iOS测试指南》作者羋峮</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-01T17:07:31+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/interview-ios-test-guide-author">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>在 2014年<a href="http://www.qconbeijing.com/">QCon北京</a>大会上，羋峮进行了他的新书<a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/product-description/B00JPVNFKM">《iOS测试指南》</a>的签售会。在大会中，我代表InfoQ与羋峮进行了一次专访，羋峮分享了他在iOS平台做自动化测试的一些经验。</p>
-
-<p>羋峮有着多年的测试经验，先后在高德、豆瓣以及豌豆夹从事过测试相关的工作。他在豆瓣工作时，实现并且开源了iOS的自动化测试工具<a href="https://github.com/douban/ynm3k">ynm3k</a>，并且刚刚完成了系统介绍iOS自动化测试的新书《iOS测试指南》。</p>
-
-<p>InfoQ：羋峮你好，我想请你先介绍一下你的测试工作经历。</p>
-
-<blockquote><p>羋峮：我是03年毕业的，修了三年地铁以后就转行做软件测试工作了。到现在，做测试有七到八年的时间，我是从豆瓣开始做的移动测试相关的工作，当时移动测试也正好赶上一个起步的阶段，所以还有一点小小的心得。</p></blockquote>
-
-<p>InfoQ：我想问的第一个主题是关于自动化测试和持续集成的方面的问题。就我所了解的情况，现在大部分的互联网公司关于移动端的测试的工具都还处于比较初级的阶段，很多公司也没有真正应用上那个自动化测试。我昨天跟阿里的iOS Leader聊，他们没有用到移动端自动化测试，我之前在网易工作，他们也没有做移动端自动化测试，你觉得是什么原因造成移动端自动化测试还没有流行起来，没有大规模的应用？</p>
-
-<blockquote><p>羋峮：测试的投入产出比，尤其是自动化测试的投入产出比一直都没有一个非常简单有效的说明方法。当投入产出比的说不清楚的时候，可能很多人选择观望。tinyfool在给我写这本书的书序的时候，他也做了一个小调查，基本上就是不测试，或者简单测试的占很大的比重，比较细致的测试非常少。测试做的非常少主要有这么几方面的原因：</p>
-
-<p>1、移动端是一个新生事物，总结出来的方法还没有被普遍的认可。移动端承接了更多UI展现方面的工作，其中有很多的和人交互的东西。不但功能复杂，并且还没有唯一的标准。测试的注意力很容易不分散，并且效果非常的不明显。</p>
-
-<p>2、移动端现在更多的是市场行为，需要有产品的占领地盘。还没有到精雕细琢的时代。所以，测试在这个时候明显不如产品或者设计师有话语权。并且现在需要的是“有”，还没有到“精”的程度。</p>
-
-<p>3、国内测试界相对比较浮躁，更多的不是从技术角度去解决问题。所以导致测试需要关注点过于分散，没有真正的定义好自己的工作职责和范围。什么事情都需要关注，最后就是什么事情都没有关注好。</p>
-
-<p>我比较幸运，当时去了豆瓣。豆瓣当时明确的定义了QA的工作职责——推荐新技术或者开发新工具，让开发工程师更好的测试。并且设计师在测试阶段也会投入很大的精力去review设计稿中各种交互方面的不足。</p></blockquote>
-
-<p>InfoQ：你在豆瓣开始尝试iOS的自动化测试，那我想知道你在这个过程中取得哪些成果？</p>
-
-<blockquote><p>羋峮：刚去豆瓣接手工作的时候自己思维还是有局限性的，只是把自己工作定位在去实现一些基于界面操作的自动化的东西，这个其实现在看来可能它是一个切入点，但是可能并不是一个非常好的切入点，其实还有很多工作要做，由于当时自己思维局限所以就做了。</p>
-
-<p>另外一方面，就是因为只想到这一点，所以就是精力比较集中,更容易出一些成果。2011年年底的时候开始做这些工作，自己先后找了有五款自动化测试工具调研。调研的方法是先写一些demo的东西，然后再看看工具的源代码。搞清楚工作的架构和底层原理。最后发现，当时的工具都有一些这样那样的问题。然后自己就开始幻想写一个适合自己的这个自动化工具。</p>
-
-<p>当iOS5发布以后，苹果的对于UI Automation进行了一个改进，增加了<code>performTaskWithPathArgumentsTimeout</code>接口。通过该接口可以实现UI Automation和外部程序的简单通信。基于这个改进，自己拉了在豆瓣的一个开发的同事，两个人就用一个半月的时间写了一个自动化测试工具。也是因为有了performTaskWithPathArgumentsTimeout接口的发布，所以淘宝也当时利用那个接口写了另外一种实现的iOS的测试工具。</p>
-
-<p>在完成ynm3k的开发以后，使用它为豆瓣FM和豆瓣电影写了一些自动化测试用例。效果还可以。</p></blockquote>
-
-<p>InfoQ：淘宝那个开源了吗？</p>
-
-<blockquote><p>羋峮：淘宝那个开源了，叫 <a href="http://code.taobao.org/p/athrun/src/">athrun</a> ，我那个也开源了叫 <a href="https://github.com/douban/ynm3k">ynm3k</a>，当时是12年7月份，那个ADC的专门都有分享，在网上应该也都有链接 <a href="http://adc.taobao.com/carnival/video/147_0">Athrun instrument driver</a>和<a href="http://adc.taobao.com/carnival/video/148_0">豆瓣iOS自动化测试实践和经验</a> 。</p></blockquote>
-
-<p>InfoQ：当时你们花一个半月开发这个自动化测试工具是用20%的工作时间，还是完全的工作时间来做这个事情？因为我觉得你在开发这段时间内肯定也有普通的正常的测试任务要完成，你们公司是怎么平衡这件事情的？</p>
-
-<blockquote><p>羋峮：我们应该是业余时间完成的这个框架。主要就是晚上，或者是快下班的时候，自己挤出来一些时间做这个事情。</p></blockquote>
-
-<p>InfoQ：跟同事的配合也是在那段时间来进行的？</p>
-
-<blockquote><p>羋峮：当时就是我俩分工相对来说很明确，一方面需要有更好的遍历控件和定位控件的方法，是由我来现实的；另一方面，需要引入一个JavaScript语言的单元测试框架。这部分由我豆瓣的同事<a href="http://weibo.com/p/1005051689931124">@SeanLionheart</a>完成，他在正式发布的时候已经去美国上学。</p>
-
-<p>我们两个之间的配合非常顺畅，因为各自的部分是完全解耦的，互补不影响。在交流的时候，还能相互给出自己的想法和意见。</p></blockquote>
-
-<p>InfoQ：你们做这件事情，豆瓣有从文化上，或者从其他方面对你们这件事情有鼓励或者激励吗？我想知道，是否这个公司的文化对于促进了你们做这件事情？</p>
-
-<blockquote><p>羋峮：这个肯定是促进的。首先这个想法是我在一次周会上提出来的。提出来以后，当时我的Leader 解彦博老师就特别鼓励我们去做这件事情，并且大家都很感兴趣，当时的整个测试团队都给我们提供意见或者交流过想法。</p>
-
-<p>第二，在豆瓣的骨子里，就有很多工程师去愿意去用自己的业余时间去写一些小工具来改进效率，或者是提高效率，或者改进流程，这个在豆瓣都是很流行。自己写的工具，在豆瓣内部得到了广泛的应用，对工程师来说这是很高的荣誉。</p></blockquote>
-
-<p>InfoQ：当你产品在快速迭代的时候，它的整个页面的组织，界面逻辑都会在快速变化，这个时候自动化测试是否是在这种场景下不太适合？自动化测试是怎么解决产品快速迭代的问题呢？</p>
-
-<blockquote><p>羋峮：无法适应变化一直是自动化测试的软肋。首先，有一些变化需要测试做兼容，这个兼容可能需要测试框架本身来支持，也可能需要自动化测试脚本通过一些更加层次化的方法来兼容。举一个例子来说，一个登录按钮，从 NavigationBar上移到了可能在中间页面的一个 LoginButton 上面，所以这种情况下是应该去兼容的，因为它只是位置发生了变化，它大的业务逻辑没有发生变化，这种是需要测试框架去兼容的。如果是更大一点的变化，需要测试脚本一定量的维护。
-其次，测试脚本一定要不断的维护。有很多自动化测试最终失败是因为期间放弃过自动化测试脚本的维护。自动化测试脚本不但需要维护，还需要有很好的代码结构。相关测试脚本的代码结构可以参看一些PageObject的思想，也可以看看cucumber等BDD工具，都会帮助你最小改动的维护自动化测试脚本。
-当然，自动化测试接入工程的时机等因素也很重要。这些都没有固定的模式，需要结合自己团队的特点来开展。自动化测试和持续集成是一对好基友。自动化测试执行和结果展示都需要持续集成的帮助。有了持续集成，自动化测试才会被更多的人认可，可才会有更多的人加入到自动化测试的维护中来。
-最后，可能需要更新一下对自动化测试的认识。自动化测试不会降低成本，自动化测试不会主动发现bug。自动化测试可以更标准更快速的重复回归一些功能测试。所以，对自动化测试有一个更加客观的认识，才会帮助你在具体的工程项目中更好的开展自动化测试实践。</p></blockquote>
-
-<p>InfoQ：刚才你提到你在豆瓣开源的ynm3k这个开源测试工具，然后你同时也提到淘宝也开源的athrun，你有没有比较过你们两者之间工具各自有什么特点？</p>
-
-<blockquote><p>羋峮：首先两款工具都同时用到了一个接口，接口的名字是：performTaskWithPathArgumentsTimeout，这个接口可以去运行一个本地的命令行程序。这个接口提供了UI Automation和命令行工具的一个交互的可能。</p>
-
-<p>我用那个接口用的非常轻量，需要把运行完的测试结果通过那个接口写文件写出来，写成标准的XML以后，通过 Jenkins 或者是 Hudson 这些持续集成的工具，把它展现在持续集成工具的页面里头。</p>
-
-<p>我只是写了文件，淘宝的 athrun 做了一个进程之间的通信，所以他那个工具解决的问题是：用户可以不用JavaScript来写UI Automation的东西。athrun自己定义了通信协议，并且通过performTaskWithPathArgumentsTimeout接口来完成和UI Automation的通信。用户可以使用Java语言来做UI Automation的自动化测试。</p>
-
-<p>同样类似的国外也有，就像eBay的<a href="http://ios-driver.github.io/ios-driver/">ios-driver</a>，还有就是最近特别火的 <a href="http://appium.io/">appium</a>，原理上都是通过那个接口实现了两个进程间的通信来驱动UI Automation来完成自动化测试的。appium在驱动UI Automation的基础上还兼容了WebDriver的Json Wire protocl协议。使用者可以使用Java、Python、Ruby等语言直接调用WebDriver的API来完成iOS的自动化测试。WebDriver对很多Web端的测试工程师来说都很熟悉。由于appium兼容了Json Wire protocl协议，使用者还可以使用Gird来并发的测试。当然，appium也支持Android的一些自动化测试。</p>
-
-<p>在《iOS测试指南》书中，大概也进行了一个分类，ynm3k属于扩展型的，扩展型的工具只是提供了一些JavaScript的开发库，用户只需要import进来，可能就会有更简化的写法和更强大的功能，然后但是对本身的UI Automation的，就基本上没有改变。</p>
-
-<p>但是通过苹果提供<code>performTaskWithPathArgumentsTimeout</code>接口进行进程间通信的这种自动化测试工具，我在书里面把它归类为驱动型的测试工具。使用驱动型的测试工具，用户可以有更多种语言的选择，并且可以拥有动态的调试功能。但是驱动型的测试工具，无法在instruments的图形界面下运行，也就失去了，运行自动化测试的时候同时检查内存泄露，统计网络流量等功能。所以，工具对比下来只有适合不适合的说法，并没有绝对意义上的好与坏。</p></blockquote>
-
-<p>InfoQ：刚才也都是提到你的UI测试的书本，我希望你简单介绍一下这本书适合哪些读者，有没有什么你觉得特别值得推荐的书里面的内容可以分享给大家？</p>
-
-<blockquote><p>羋峮：我书里前两章写的很短，就说了一些基本的概念；第三章说的是单元测试的一些实践，并且完成一个简单的app的单元测试。</p>
-
-<p>第四章就简要的介绍一下Automation的基础知识，很多自动化测试工具都是基于UI Automation来做的。不管是用哪个工具，从底层了解一些UI Automation的API，都是有帮助。</p>
-
-<p>第五章写的是iOS端的Web测试的一个方案，介绍了两种工具，其中也提到了Appium，我也更推荐使用Appium来做自动化测试；然后第六章介绍了持续集成方面的事情，就是三到六章应该都是一个综合解决方案中的各个部分的技能的分散介绍。然后第七章介绍了一下，除了功能测试，手机端还需要去做哪些类型的测试，或者借助工具，我们应该怎么样简单的去确认，或者是去更精确的衡量；第八章是基于第三、四、五、六章然后做了一个最后的一个汇总介绍。因为书写的比较慢，在书稿还没有完全完成的时候，苹果就发布了XCode5和OS X 10.9。在这一次更新以后，苹果本身也提供了一个持续集成的解决方案。在XCode5中还升级了单元测试框架。所以这一系列的变化就有了第九章的内容。</p>
-
-<p>书的内容本身是想给刚入门iOS测试的工程师来看的。最早写书的主要目的也是，为了汇总一些资料。因为相关iOS测试的资料实在是太少并且太分散了。但是当书写完以后，才发现原来用到了3-4种变成语言。所以，现在看来可能还需要读者有一定的编程功底。所以本书的最适合读者是有编码能力或者测试经验的人需要了解移动端测试的这样一个人群。</p></blockquote>
-
-<p>InfoQ：你刚才讲到你的工具是开源的，然后你花了业余时间在这个上面，然后你的这本书是你的一个人通过业余时间写作完成的作品，我就想知道你开源和写作大概花费了你多少的业余时间，业余时间里面你是如何安排这些事情的？</p>
-
-<blockquote><p>羋峮：做开源的时候还好了，只需要挤出来一定的时间把框架搭完了，慢慢的可以用零散的工作去实现个别功能，或者优化个别功能。写书的话，整个过程中，其实还是需要一些大块的时间去投入，因为自己语文水平比较差，有的时候明白一件事，可能还要去想一想怎么能写明白。对于我而言，往往需要大块的时间去写书，需要写一个小时以后感觉才能进入状态，进入状态之后写作效率还算OK。一般一次写作的时间会在4个小时以上。我自己估了一下，如果一页的内容，代码和截图占到一半以上的话那一页的时间，大概是1.5个小时，如果是这一页内容是纯文字的话，那一页的时间大概是两个半小时。所以整个大概写了四百个小时左右。</p></blockquote>
-
-<p>InfoQ：这确实是一个很大的工作量。感谢你为大家带来的开源工具和作品，谢谢你！</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/12/">&larr; Older</a>
@@ -297,6 +294,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/12/ios-weekly-27/">iOS移动开发周报-第27期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/10/03/opensouce-a-key-value-storage-tool/">开源一个Key-Value存储工具类</a>
@@ -340,10 +341,6 @@
     
       <li class="post">
         <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
       </li>
     
   </ul>

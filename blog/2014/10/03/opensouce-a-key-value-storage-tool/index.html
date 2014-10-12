@@ -134,7 +134,9 @@
 
 <h2>开源</h2>
 
-<p>经过两年的使用和测试，我认为它非常好用，而且代码也非常简单，只有不到400行。所以现在开源分享给大家，这个项目叫<code>YTKKeyValueStore</code>，项目在<a href="https://github.com/yuantiku/YTKKeyValueStore">这里</a>。以下是一个简单的使用示例：</p>
+<p>经过两年的使用和测试，我认为它非常好用，而且代码也非常简单，只有不到400行。所以现在开源分享给大家，这个项目叫<a href="https://github.com/yuantiku/YTKKeyValueStore">YTKKeyValueStore</a>，项目代码在<a href="https://github.com/yuantiku/YTKKeyValueStore">这里</a>。</p>
+
+<p>以下是一个简单的使用示例：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -157,6 +159,110 @@
 </span><span class='line'>NSDictionary *queryUser = [store getObjectById:key fromTable:tableName];
 </span><span class='line'>NSLog(@"query data result: %@", queryUser);</span></code></pre></td></tr></table></div></figure>
 
+
+<h2>集成说明</h2>
+
+<p>使用本项目，你需要将开源代码中的<code>YTKKeyValueStore.h</code>和<code>YTKKeyValueStore.m</code>添加到你的工程中，并且在工程设置的<code>Link Binary With Libraries</code>中，增加<code>libsqlite3.dylib</code>，如下图所示：</p>
+
+<p><img src="/images/key-value-store-setup.jpg"></p>
+
+<p>由于时间关系，当前还未提供Cocoapods方式集成。</p>
+
+<h2>使用说明</h2>
+
+<p>所有的接口都封装在<code>YTKKeyValueStore</code>类中。以下是一些常用方法说明。</p>
+
+<h3>打开（或创建）数据库</h3>
+
+<p>通过<code>initDBWithName</code>方法，即可在程序的<code>Document</code>目录打开指定的数据库文件。如果该文件不存在，则会创建一个新的数据库。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// 打开名为test.db的数据库，如果该文件不存在，则创新一个新的。
+</span><span class='line'>YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"test.db"];</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>创建数据库表</h3>
+
+<p>通过<code>createTableWithName</code>方法，我们可以在打开的数据库中创建表，如果表名已经存在，则会忽略该操作。如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"test.db"];
+</span><span class='line'>NSString *tableName = @"user_table";
+</span><span class='line'>// 创建名为user_table的表，如果已存在，则忽略该操作
+</span><span class='line'>[store createTableWithName:tableName];</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>读写数据</h3>
+
+<p><code>YTKKeyValueStore</code>类提供key-value的存储接口，存入的所有数据需要提供key以及其对应的value，读取的时候需要提供key来获得相应的value。</p>
+
+<p><code>YTKKeyValueStore</code>类支持的value类型包括：NSString, NSNumber, NSDictionary和NSArray，为此提供了以下接口：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)putString:(NSString *)string withId:(NSString *)stringId intoTable:(NSString *)tableName;
+</span><span class='line'>- (void)putNumber:(NSNumber *)number withId:(NSString *)numberId intoTable:(NSString *)tableName;
+</span><span class='line'>- (void)putObject:(id)object withId:(NSString *)objectId intoTable:(NSString *)tableName;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与此对应，有以下value为NSString, NSNumber, NSDictionary和NSArray的读取接口：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (NSString *)getStringById:(NSString *)stringId fromTable:(NSString *)tableName;
+</span><span class='line'>- (NSNumber *)getNumberById:(NSString *)numberId fromTable:(NSString *)tableName;
+</span><span class='line'>- (id)getObjectById:(NSString *)objectId fromTable:(NSString *)tableName;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>删除数据接口</h3>
+
+<p><code>YTKKeyValueStore</code>提供了以下接口用于删除数据。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// 清除数据表中所有数据
+</span><span class='line'>- (void)clearTable:(NSString *)tableName;
+</span><span class='line'>
+</span><span class='line'>// 删除指定key的数据
+</span><span class='line'>- (void)deleteObjectById:(NSString *)objectId fromTable:(NSString *)tableName;
+</span><span class='line'>
+</span><span class='line'>// 批量删除一组key数组的数据
+</span><span class='line'>- (void)deleteObjectsByIdArray:(NSArray *)objectIdArray fromTable:(NSString *)tableName;
+</span><span class='line'>
+</span><span class='line'>// 批量删除所有带指定前缀的数据
+</span><span class='line'>- (void)deleteObjectsByIdPrefix:(NSString *)objectIdPrefix fromTable:(NSString *)tableName;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>更多接口</h3>
+
+<p><code>YTKKeyValueStore</code>还提供了以下接口来获取表示内部存储的key-value对象。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// 获得指定key的数据
+</span><span class='line'>- (YTKKeyValueItem *)getYTKKeyValueItemById:(NSString *)objectId fromTable:(NSString *)tableName;
+</span><span class='line'>// 获得所有数据
+</span><span class='line'>- (NSArray *)getAllItemsFromTable:(NSString *)tableName;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>由于<code>YTKKeyValueItem</code>类带有<code>createdTime</code>字段，可以获得该条数据的插入（或更新）时间，以便上层做复杂的处理（例如用来做缓存过期逻辑）。</p>
 
 <h2>其它</h2>
 
@@ -245,6 +351,8 @@ var jiathis_config={
         <a class="basic-alignment left" href="/blog/2014/10/01/startup-2nd-year-summary/" title="Previous Post: 写在创业两周年">&laquo; 写在创业两周年</a>
       
       
+        <a class="basic-alignment right" href="/blog/2014/10/12/ios-weekly-27/" title="Next Post: iOS移动开发周报-第27期">iOS移动开发周报-第27期 &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -262,6 +370,10 @@ var jiathis_config={
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/12/ios-weekly-27/">iOS移动开发周报-第27期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/10/03/opensouce-a-key-value-storage-tool/">开源一个Key-Value存储工具类</a>
@@ -305,10 +417,6 @@ var jiathis_config={
     
       <li class="post">
         <a href="/blog/2014/07/30/ios-weekly-19/">iOS移动开发周报-第19期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/07/27/ios-levelup-tips/">iOS开发如何提高</a>
       </li>
     
   </ul>

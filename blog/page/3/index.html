@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="一年前写了一篇名为《写在创业一周年》的文章，眼看创业已经两年多了，我就寻思着是不是再写一个创业两周年的总结。之所以拖了几个月，一是因为刚刚满两年的时候，我们公司刚刚拿下了1500万美元的C轮融资，但是还没有对外公开，所以不方便写。二是因为最近在忙小猿搜题这个新项目，顾不过来。现在正好国庆了， &hellip;">
+  <meta name="description" content="前言 还记得大学刚学数据库那会儿，天真地以为世界上所有的存储都需要用数据库来做。后来毕业后，正值NOSQL流行，那时我在网易参与了网易微博的开发，我们当时使用了有道自己做的“BigTable”— OMAP来存储微博数据，那个时候才发现，其实Key- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,206 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/10/03/opensouce-a-key-value-storage-tool/">开源一个Key-Value存储工具类</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-03T22:06:18+08:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>还记得大学刚学数据库那会儿，天真地以为世界上所有的存储都需要用数据库来做。后来毕业后，正值NOSQL流行，那时我在网易参与了网易微博的开发，我们当时使用了有道自己做的“BigTable”— OMAP来存储微博数据，那个时候才发现，其实Key-Value这种简单的存储也能搞定微博这类不太简单的存储逻辑。</p>
+
+<p>相比MYSQL，当数据量上千万后，NOSQL的优势体现出来了：对于海量数据，NOSQL在存取速度上没有任何影响，另外，天生的多备份和分布式，也说数据安全和扩容变得异常容易。</p>
+
+<h2>iOS端的尝试</h2>
+
+<p>后来我从后台转做iOS端的开发，我就尝试了在iOS端直接使用Key-Value式的存储。经过在粉笔网、猿题库、小猿搜题三个客户端中的尝试后，我发现Key-Value式的存储不但完全能够满足大多数移动端开发的需求，而且非常适合移动端采用。主要原因是：移动端存储的数据量不会很大：</p>
+
+<ul>
+<li>如果是单机的应用（例如效率工具Clear），用户自己一个人创建的数据最多也就上万条。</li>
+<li>如果是有服务端的应用（例如网易新闻，微博），那移动端通常不会保存全量的数据，每次会从服务器上获取数据，本地只是做一些内容的缓存而已，所以也不会有很大的数据量。</li>
+</ul>
+
+
+<p>如果数据量不大的话，那么在iOS端使用最简单直接的Key-Value存储就能带来开发上的效率优势。它能保证：</p>
+
+<ol>
+<li>Model层的代码编写简单，易于测试。</li>
+<li>由于Value是JSON格式，所以在做Model字段更改时，易于扩展和兼容。</li>
+</ol>
+
+
+<h2>实现方案</h2>
+
+<p>在存储引擎上，2年前我直接选择了Sqlite当做存储引擎，相当于每个数据库表只有Key，Value两个字段。后来，随着LevelDB的流行，业界也有一些应用采用了LevelDB来做iOS端的Key-Value存储引擎，例如开源的<a href="https://github.com/viewfinderco/viewfinder">ViewFinder</a>。</p>
+
+<p>因为LevelDB本身并不是为移动端设计的，我担心它过于占用内存，我自己也没有看到业界有在移动端针对LevelDB做很详细的测试，连LevelDB的iOS端移植都不是官方做的。加上我自己写的基于Sqlite的Key-Value存储用着也没有什么问题，所以我也就一直没有更换成LevelDB。</p>
+
+<h2>开源</h2>
+
+<p>经过两年的使用和测试，我认为它非常好用，而且代码也非常简单，只有不到400行。所以现在开源分享给大家，这个项目叫<a href="https://github.com/yuantiku/YTKKeyValueStore">YTKKeyValueStore</a>，项目代码在<a href="https://github.com/yuantiku/YTKKeyValueStore">这里</a>。</p>
+
+<p>以下是一个简单的使用示例：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"test.db"];
+</span><span class='line'>NSString *tableName = @"user_table";
+</span><span class='line'>[store createTableWithName:tableName];
+</span><span class='line'>// 保存
+</span><span class='line'>NSString *key = @"1";
+</span><span class='line'>NSDictionary *user = @{@"id": @1, @"name": @"tangqiao", @"age": @30};
+</span><span class='line'>[store putObject:user withId:key intoTable:tableName];
+</span><span class='line'>// 查询
+</span><span class='line'>NSDictionary *queryUser = [store getObjectById:key fromTable:tableName];
+</span><span class='line'>NSLog(@"query data result: %@", queryUser);</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>集成说明</h2>
+
+<p>使用本项目，你需要将开源代码中的<code>YTKKeyValueStore.h</code>和<code>YTKKeyValueStore.m</code>添加到你的工程中，并且在工程设置的<code>Link Binary With Libraries</code>中，增加<code>libsqlite3.dylib</code>，如下图所示：</p>
+
+<p><img src="/images/key-value-store-setup.jpg"></p>
+
+<p>由于时间关系，当前还未提供Cocoapods方式集成。</p>
+
+<h2>使用说明</h2>
+
+<p>所有的接口都封装在<code>YTKKeyValueStore</code>类中。以下是一些常用方法说明。</p>
+
+<h3>打开（或创建）数据库</h3>
+
+<p>通过<code>initDBWithName</code>方法，即可在程序的<code>Document</code>目录打开指定的数据库文件。如果该文件不存在，则会创建一个新的数据库。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// 打开名为test.db的数据库，如果该文件不存在，则创新一个新的。
+</span><span class='line'>YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"test.db"];</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>创建数据库表</h3>
+
+<p>通过<code>createTableWithName</code>方法，我们可以在打开的数据库中创建表，如果表名已经存在，则会忽略该操作。如下所示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"test.db"];
+</span><span class='line'>NSString *tableName = @"user_table";
+</span><span class='line'>// 创建名为user_table的表，如果已存在，则忽略该操作
+</span><span class='line'>[store createTableWithName:tableName];</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>读写数据</h3>
+
+<p><code>YTKKeyValueStore</code>类提供key-value的存储接口，存入的所有数据需要提供key以及其对应的value，读取的时候需要提供key来获得相应的value。</p>
+
+<p><code>YTKKeyValueStore</code>类支持的value类型包括：NSString, NSNumber, NSDictionary和NSArray，为此提供了以下接口：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)putString:(NSString *)string withId:(NSString *)stringId intoTable:(NSString *)tableName;
+</span><span class='line'>- (void)putNumber:(NSNumber *)number withId:(NSString *)numberId intoTable:(NSString *)tableName;
+</span><span class='line'>- (void)putObject:(id)object withId:(NSString *)objectId intoTable:(NSString *)tableName;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与此对应，有以下value为NSString, NSNumber, NSDictionary和NSArray的读取接口：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (NSString *)getStringById:(NSString *)stringId fromTable:(NSString *)tableName;
+</span><span class='line'>- (NSNumber *)getNumberById:(NSString *)numberId fromTable:(NSString *)tableName;
+</span><span class='line'>- (id)getObjectById:(NSString *)objectId fromTable:(NSString *)tableName;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>删除数据接口</h3>
+
+<p><code>YTKKeyValueStore</code>提供了以下接口用于删除数据。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// 清除数据表中所有数据
+</span><span class='line'>- (void)clearTable:(NSString *)tableName;
+</span><span class='line'>
+</span><span class='line'>// 删除指定key的数据
+</span><span class='line'>- (void)deleteObjectById:(NSString *)objectId fromTable:(NSString *)tableName;
+</span><span class='line'>
+</span><span class='line'>// 批量删除一组key数组的数据
+</span><span class='line'>- (void)deleteObjectsByIdArray:(NSArray *)objectIdArray fromTable:(NSString *)tableName;
+</span><span class='line'>
+</span><span class='line'>// 批量删除所有带指定前缀的数据
+</span><span class='line'>- (void)deleteObjectsByIdPrefix:(NSString *)objectIdPrefix fromTable:(NSString *)tableName;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>更多接口</h3>
+
+<p><code>YTKKeyValueStore</code>还提供了以下接口来获取表示内部存储的key-value对象。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// 获得指定key的数据
+</span><span class='line'>- (YTKKeyValueItem *)getYTKKeyValueItemById:(NSString *)objectId fromTable:(NSString *)tableName;
+</span><span class='line'>// 获得所有数据
+</span><span class='line'>- (NSArray *)getAllItemsFromTable:(NSString *)tableName;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>由于<code>YTKKeyValueItem</code>类带有<code>createdTime</code>字段，可以获得该条数据的插入（或更新）时间，以便上层做复杂的处理（例如用来做缓存过期逻辑）。</p>
+
+<h2>其它</h2>
+
+<p>两年前写过不少测试用例，后来给弄丢了，所以现在开项项目中还没有测试用例。由于时间关系，更详细的使用说明稍后会更新到项目中。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/10/01/startup-2nd-year-summary/">写在创业两周年</a></h1>
     
     
@@ -141,94 +341,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/24/ios-weekly-26/">iOS移动开发周报-第26期</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-24T20:49:02+08:00" pubdate data-updated="true">Sep 24<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/09/swift-strong-point">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：Swift 的强大之处、iOS8开发者专题、在Xcode 6中使用矢量PDF、iOS 8 App Extensions等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><a href="http://www.guomii.com/posts/38832">《Apple 上线 Android 到 iPhone 数据迁移教程》</a>：为了让更多的 Android 用户加入到 iPhone 阵营，Apple 主动出击，上线了一个<a href="http://support.apple.com/kb/HT6407">专门的页面</a>，帮助 Android 用户购买 iPhone 之后迁移数据。涉及到的内容包括邮件、通讯录、日历、照片、视频、音乐、电子书、PDF、文档、应用等的迁移。</li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://objccn.io/issue-16-1/">《Swift 的强大之处》</a>：介绍了Swift语言的特性，包括支持函数式编程、类型安全、不可变性等。</p></li>
-<li><p><a href="http://objccn.io/issue-16-4/">《Swift 的函数式 API》</a>：Swift 引入了泛型和函数式编程的思想，极大地扩展了设计的空间。文章借对 Core Image 进行函数式 API 封装为例，展示出应用 Swift 进行函数式编程的能力。</p></li>
-<li><p><a href="http://www.cocoachina.com/special/ios8/">《iOS8开发者专题》</a>：由CocoaChina整理出来的iOS8相关的资料汇总。</p></li>
-<li><p><a href="http://blog.callmewhy.com/2014/09/15/todo-list-in-swift/">《用 Swift 开发一个 TODO 应用》</a>：作者 <a href="http://weibo.com/small1030light">@请叫我汪二</a> 在文章中教你如何完成一个 TODO 的应用，功能包括添加任务和浏览任务。适合有一定 Objective-C 的开发基础但是还没怎么接触 Swift 的 iOS 开发者，希望通过这样一个简单的例子可以和大家一起熟悉一下 Swift。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/09/15/objc-attribute-cleanup/">《黑魔法<strong>attribute</strong>((cleanup))》</a>：编译器属性 <code>__attribute__</code>用于向编译器描述特殊的标识、检查或优化。作者在文章中介绍了其中一个名为<code>cleanup</code>的“黑魔法”属性。</p></li>
-<li><p><a href="http://nonomori.farbox.com/post/swiftzhong-lei-de-chu-shi-hua-qi-yu-ji-cheng">《Swift中类的初始化器与继承》</a>：Swift 为类定义了两种初始化器来确保类中所有的储存属性都能得到一个初始化值。这两种初始化器就是「指定初始化器」(Designated Initializer)与「便利初始化器」(Convenience Initializer)，文章对其做了介绍。</p></li>
-<li><p><a href="http://blog.ibireme.com/2014/09/16/adapted_to_iphone6/">《大屏iPhone的适配》</a>：自从苹果出了大屏iPhone后，iOS开发也要做适配了， 这里大概总结下这几天了解到的大屏适配的注意事项。</p></li>
-<li><p><a href="http://martiancraft.com/blog/2014/09/vector-images-xcode6/">《Using Vector Images in Xcode 6》</a>：文章介绍了在Xcode 6中使用矢量PDF图形的具体操作方法。</p></li>
-<li><p><a href="http://radex.io/swift/methods/">《Swifty methods》</a>：文章讨论了Swift的函数命名习惯，并与Objective-C语言做了对比。</p></li>
-<li><p><a href="https://developer.apple.com/apple-pay/Apple-Pay-Human-Interface-Guidelines.pdf">《Apple Pay Human Interface Guidelines》</a>：苹果发布了支付功能Apple Pay的人机交互指南。</p></li>
-</ol>
-
-
-<h2>视频</h2>
-
-<ol>
-<li><a href="http://www.raywenderlich.com/83021/ios-8-app-extensions-tech-talk-video">《iOS 8 App Extensions Tech Talk Video》</a>：该视频介绍了iOS 8引入的App Extensions功能。从用户视角和开发者视角分别对其做了介绍。</li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="http://www.wuwacorp.com/specking/">specKing</a>：specKing 与 <a href="http://www.getmarkman.com/">马克鳗</a> 功能类似，用于全自动标示美术稿。不过 specKing 是以付费的 PS 外挂的形式发布的。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><a href="https://github.com/shu223/iOS8-Sampler">iOS8-Sampler</a>：日本的shuさん制作的 iOS8 参考代码集。由 <a href="http://weibo.com/u/2289288323">@kimsungwhee</a> 推荐。</li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -250,6 +362,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/15/ios-weekly-30/">iOS移动开发周报-第30期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/10/30/ios-weekly-29/">iOS移动开发周报-第29期</a>
@@ -293,10 +409,6 @@
     
       <li class="post">
         <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/18/ios-weekly-21/">iOS移动开发周报-第21期</a>
       </li>
     
   </ul>

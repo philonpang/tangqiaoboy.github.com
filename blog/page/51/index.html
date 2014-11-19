@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="什么是GCD Grand Central Dispatch (GCD)是Apple开发的一个多核编程的解决方法。该方法在Mac OS X 10.6雪豹中首次推出，并随后被引入到了iOS4.0中。GCD是一个替代诸如NSThread, NSOperationQueue, &hellip;">
+  <meta name="description" content="问题场景描述 常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。 对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。 在这种方式下，大家各自写自己的代码， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,55 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/02/29/collaboration-with-git/">用Git进行协同开发</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-29T19:08:00+08:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>问题场景描述</h2>
+
+<p>常常会遇到这样的协同场景：后台的同事和前端的同事需要共同开发一个新功能，而他们的代码相互依赖，所以需要不停地更新各自的代码进行联调。</p>
+
+<p>对于这种场景，最简单的方式就是，这2个同事坐到一起，然后把svn当作一个共享代码的中转站来共享开发中的代码。</p>
+
+<p>在这种方式下，大家各自写自己的代码，提交到svn上，然后用svn up获得对方的代码。在调试问题的时候，大家可能不停地更新代码，然后让对方用svn up来更新。最终，虽然开发能够顺利进行，但是svn上会积累大量调试中的代码历史。所以，这样把svn当作代码中转站是一个很山寨的行为。</p>
+
+<p>在开发<a href="http://note.youdao.com">有道云笔记</a>新的<a href="http://itunes.apple.com/cn/app/id483995181">iPad版</a>时，我和前端同事zyc尝试用git进行了协同开发。在这里把具体方案分享给大家，欢迎大家讨论。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/29/collaboration-with-git/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/02/22/use-gcd/">使用GCD</a></h1>
     
     
@@ -122,57 +171,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/16/apply-daily-build-in-ios-project/">给iOS工程增加Daily Build</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-16T19:27:00+08:00" pubdate data-updated="true">Feb 16<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>Daily Build是一件非常有意义的事情，也是敏捷开发中关于“持续集成”的一个实践。Daily Build对于开发来说有如下好处：</p>
-
-<ul>
-<li>保证了每次check in的代码可用，不会造成整个工程编译失败。</li>
-<li>进度跟进。产品经理可以每天看到最新的开发进度，并且试用产品，调整一些细节。很多时候，一个新功能，你真正用了一下才能有体会好或不好，所以daily build也给产品经理更多时间来调理他的设计。</li>
-<li>需求确认。产品经理可以确认开发的功能细节是他的预期。因为我们的开发比较紧凑，所以都没有传统的需求说明文档，所以daily build也给产品经理用于尽早确认开发的功能细节是他的预期，我就遇到一次产品经理发现开发出的一个功能细节和他的预期不一致，但是因为有daily build，使得我可以尽早做修改，把修改的代价减小了。</li>
-<li>测试跟进。如果功能点是独立的话，测试同事完全可以根据daily build来进行一些早期的测试。越早的Bug反馈可以使得修改bug所需的时间越短。</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/16/apply-daily-build-in-ios-project/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/52/">&larr; Older</a>
@@ -194,6 +192,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/19/ios-weekly-31/">iOS移动开发周报-第31期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/11/15/ios-weekly-30/">iOS移动开发周报-第30期</a>
@@ -237,10 +239,6 @@
     
       <li class="post">
         <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/24/ios-weekly-22/">iOS移动开发周报-第22期</a>
       </li>
     
   </ul>

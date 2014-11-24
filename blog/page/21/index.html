@@ -82,6 +82,85 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/04/10/ios-weekly-7/">iOS移动开发周报-第7期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-10T23:34:02+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-wwdc2014-ticket">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果WWDC2014门票开卖，
+ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://nb.zol.com.cn/445/4451916.html">苹果WWDC2014门票开卖，开发者需通过抽签的方式申请购买</a>：2014年苹果开发者大会（WWDC）将于6月2日至6日在旧金山Moscone West中心举行。而本次WWDC大会的门票将于旧金山当地时间4月7日上午十点开始发售，开发者需通过抽签的方式申请购买，下午五点到八点公布获得门票的名单。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://realmacsoftware.com/blog/dynamic-linking">《Dynamic Linking》</a>：文章详细解释了动态链接库在iOS程序中的加载过程，作者在也尝试自己实现了一个动态链接库并且在iOS程序中成功加载，不过文章最后指出，在AppStore上架的的应用，如果要加载动态链接库，该链接库需要得到苹果的签名才能加载成功，虽然这在技术上是可行的，但苹果现阶段的审核要求是不接受这种应用的。作者也将相关代码开源在 <a href="https://github.com/ddeville/Dynamic-iOS">Dynamic-iOS</a> 项目中。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/ios-7-jiao-hu-shi-guo-du">《iOS 7 交互式过渡》</a>：iOS 7 新加入了自定义 View Controller 之间的过渡效果的方法。本文介绍了如何利用相关的API实现自定义的过滤效果。文章的内容主要包括：实现自定义过渡、使用自定义过渡、让过渡变得可以交互。文中例子的工程文件也已上传至<a href="https://github.com/PeteC/InteractiveViewControllerTransitions">GitHub</a>。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/">《ARC下dealloc过程及.cxx_destruct的探究》</a>：在MRC时代，我们经常在<code>dealloc</code>方法将内部其他对象释放掉，申请的非Objc对象的内存当然也需要一并处理掉，最后调用super，继续将父类对象做析构。而在ARC时代，大部分的代码都不再需要了。这些相应的代码是如何由编译器完成的？带着这样的疑问，作者研究了LLVM的具体实现细节。</p></li>
+<li><p><a href="https://github.com/jspahrsummers/enemy-of-the-state/blob/master/Enemy%20of%20the%20State.pdf">《Enemy of the State》</a>：作者分享了程序架构中存在状态的坏处以及避免状态的一些方法：优先使用不可变对象、使用ReactiveCocoa框架、使用Model-View-ViewModel框架。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="http://chen.do/blog/2013/09/30/selectively-ignoring-objective-c-exceptions-in-xcode/">在Xcode调试时忽略部分异常</a>：作者提供了一些llvm增强脚本，用于方便地在调试时忽略掉部分异常。增强脚本的代码也开源在<a href="https://gist.github.com/chendo/6759305/raw/ignore_specified_objc_exceptions.py">这里</a>。</p></li>
+<li><p><a href="https://github.com/naotaka/ClipMenu">ClipMenu</a>：开源的Mac OS剪贴板管理工具。</p></li>
+<li><p><a href="https://github.com/kolinkrewinkel/Polychromatic">Polychromatic</a>：一个只高亮属性和变量的Xcode插件。</p></li>
+<li><p><a href="https://github.com/shjborage/Reveal-Plugin-for-XCode">Reveal-Plugin-for-XCode</a>：作者写了一个Reveal插件，可以使工程不作任何修改的情况下使用Reveal，该插件已在Alcatraz上架。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/04/03/ios-weekly-6/">iOS移动开发周报-第6期</a></h1>
     
     
@@ -156,87 +235,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-28T23:52:29+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/reduce-ios-size">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期移动开发周报带来如下内容：减小iOS应用程序的大小，Quartz Composer的增强工具Origami的教程以及jQC工具等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="https://deals.iphoneincanada.ca/sales/the-mac-freebie-bundle-3-0">《The Mac Freebie Bundle 3.0》</a>：该网站提供了7个原本收费的Mac App的免费购买。笔者试用了一下其中的X-Mirage，它可以把iPhone投到Mac上，并提供录象功能，适合将演示导出成视频。另外那个页面有Bug，在购买时信用卡信息不用填写，留空就可以直接购买成功。</p></li>
-<li><p><a href="http://www.macstories.net/news/apple-testing-related-search-suggestions-on-the-app-store/">《App Store 将增加匹配相关搜索关键字的新功能》</a>：新增加的功能有助于提高相关关键词的点击量。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://nonomori.farbox.com/post/injection-plugin-for-xcode">《injection plugin for xcode》</a>：Injection Plugin For Xcode 是 Xcode 上的一个插件。利用它可以修改应用代码，实时在模拟器或实机上看到效果而不需要重启应用。作者介绍了该插件的详细使用方式。</p></li>
-<li><p><a href="http://www.pasanpremaratne.com/2014/03/15/UI-Prototyping-with-Quartz-Composer-and-Origami/">《UI Prototyping with Quartz Composer and Origami》</a>：由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集Origami，使得交互设计工作得到更好的辅助。不过另一方面，该工具仍然需要设计师具备一定的逻辑思维能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。本教程介绍了如何使用Quartz Composer 和 Origami来做交互设计。</p></li>
-<li><p>写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：
-<a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">Android篇</a>，<a href="http://t.cn/8sbXyOH">C++ 篇1</a>和<a href="http://t.cn/8sbXLyg">C++ 篇2</a>，<a href="http://t.cn/8FpEP4x">Go 篇</a>。</p></li>
-<li><p><a href="http://beyondvincent.com/blog/2014/03/26/cookbook-moving-table-view-cells-with-a-long-press-gesture/">《利用长按手势移动 Table View Cells》</a>：本教程中介绍了如何通过长按手势来移动 table view中的cell，这种操作方式就像苹果自家的天气 App 一样。</p></li>
-<li><p><a href="http://beyondvincent.com/blog/2014/03/24/reducing-the-size-of-my-app/">《减小iOS应用程序的大小》</a>：本文收集了一些减小程序安装包大小的相关技巧(当第一次下载和安装程序时)。如果是针对升级程序的话，可以看这篇文章: <a href="https://developer.apple.com/library/ios/qa/qa1779/">《减小iOS应用程序升级时所需下载的大小》</a>，这与第一次安装使用的工作原理有所不同。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">《NSNumber对象缓存以及Tagged Pointer》</a>：本文讨论了<code>NSNumber</code>对象的缓存以及苹果在64位系统引入的<code>Tagged Pointer</code>对象。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>：jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。Quartz Composer是苹果提供的一个交互设计工具。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/gbammc/WechatPayDemo">WechatPayDemo</a>: WechatPayDemo是一个非官方的微信支付Demo，基于微信SDK1.4.1构建。由于微信官方并没有提供支付功能的iOS Demo，加上官方的文档错误，使得本文作者花了较大精力调试。他希望开源这个工程来帮助其他iOS开发者少有一些弯路。</p></li>
-<li><p><a href="http://trawor.farbox.com/post/vz">微转iOS客户端和服务端</a>：微转是一个基于微博的数码设备平台，客户端和后台全部基于AVOSCloud服务实现。作者将其iOS客户端和服务端代码全部开源。</p></li>
-<li><p><a href="https://github.com/facebook/Tweaks">Tweaks</a>：Tweaks让开发者可以方便地对特定事物进行标记——比如动画效果的时间，或者是按钮的颜色，或者是图片的透明度——并在使用设备实际运行应用时让开发者方便地进行实时调整。</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/22/">&larr; Older</a>
@@ -258,6 +256,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/24/ios-weekly-32/">iOS移动开发周报-第32期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/11/19/ios-weekly-31/">iOS移动开发周报-第31期</a>
@@ -301,10 +303,6 @@
     
       <li class="post">
         <a href="/blog/2014/09/09/ios-weekly-24/">iOS移动开发周报-第24期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/01/ios-weekly-23/">iOS移动开发周报-第23期</a>
       </li>
     
   </ul>

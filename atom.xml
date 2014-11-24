@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-11-19T22:12:12+08:00</updated>
+  <updated>2014-11-24T21:45:20+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,84 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第32期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/11/24/ios-weekly-32/"/>
+    <updated>2014-11-24T21:42:41+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/11/24/ios-weekly-32</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/11/1yuan-apple-app-store-pricing">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：“1元”正式成苹果中国区应用商店新定价、Apple Watch人机界面指南、Apple WatchKit 初探等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://tech.sina.com.cn/it/apple/2014-11-18/06419801088.shtml">《苹果公司发布iOS 8.1.1升级补丁》</a>：11月18日凌晨消息，苹果公司已对上个月针对iPhone、iPad和iPod Touch发布的iOS 8.1操作系统正式推出了iOS 8.1.1升级补丁。iOS 8.1.1将可改善基于iOS 8系统运行的、使用A5芯片的较老设备的表现，也就是指iPad 2和iPhone 4s。除了发布iOS 8.1.1以外，苹果公司还发布了OS X 10.10.1升级补丁以修复WiFi网络表现及其他问题。</p></li>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-11-21/16439814574.shtml">《“1元”正式成苹果中国区应用商店新定价》</a>：11月19日，苹果中国区App Store应用商店出现1元应用，当时曾有消息称这是短期促销行为，不过目前苹果公司已经正式宣布，人民币1元及3元将是中国区应用商店的新定价，作为一个永久价格选项。</p></li>
+<li><p><a href="https://github.com/CocoaPods/CocoaPods/pull/2835">《CocoaPods将要支持Swift》</a>：从 CocoaPods 的一个pull request中，我们了解到著名的 iOS 依赖管理工具 CocoaPods 将要支持 Swift 语言。</p></li>
+<li><p><a href="http://it.sohu.com/20141121/n406233892.shtml">《AppleWatch需求被低估 苹果股价创历史新高》</a>：11月21日，据外国媒体报道，在经过新一轮的多名华尔街分析师上调公司目标股价之后，再加上摩根士丹利认为一些投资者低估了苹果智能手表Apple Watch的市场需求预期，苹果周四股价呈现出上涨局面。苹果股价在当周曾达到历史新高的117.28美元。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://vdisk.weibo.com/s/yWUvUXSZiJFiv">《Apple Watch人机界面指南（中文版）》</a>：苹果于11月19号放出了Apple Watch的官方设计指南。这是由<a href="http://weibo.com/uiteam?from=feed&amp;loc=nickname">微博无线设计团队</a>翻译的中文版指南。</p></li>
+<li><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-11-20-build-custom-control-in-swift.md">《使用 Swift 构建自定义（且“可设计”的）控件》</a>：大约两年前，我写了一篇关于在 iOS 上构件自定义控件的教程。那篇教程获得了社区的高度赞赏，所以我决定将其用 Swift 更新并加入 Designable/Inspectable 属性以支持直接在 Interface Builder 里调整控件的外观。</p></li>
+<li><p><a href="http://onevcat.com/2014/11/watch-kit/">《Apple WatchKit 初探》</a>： 11月19日，Apple 发布了第一版的 Watch Kit 的 API，对于开发者来说，这款新设备的一些更详细的信息也算是逐渐浮出水面。可以说第一版的 WatchKit 开放的功能总体还是令人满意的。Apple 在承诺逐渐开放的方向上继续前进。本文介绍了Watch app 架构和主要的类等相关知识。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/webkit-zhi-shu-ju-gong-xiang">《WatchKit 之 数据共享》</a>：本文介绍了如何使 Watch App 与 iOS App 之间进行数据共享。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/watchkit-zhi-dao-hang">《WatchKit 之 导航》</a>：在 Watch App 中，当涉及到多个界面跳转时，我们共有两种导航方式可使用：<code>Hierarchical</code> 与 <code>Page-based</code>。本文将对这两种导航方式以及 Modal 展现方式做简单的介绍。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://github.com/lucholaf/Auto-Importer-for-Xcode">Auto-Importer</a>：Auto-Importer是一个自动导入类对应的头文件的Xcode插件。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/Carthage/Carthage">Carthage</a>：Carthage是一个去中心化的依赖管理工具。</p></li>
+<li><p><a href="https://github.com/coteditor/CotEditor">CotEditor</a>：CotEditor是一个OS X下的开源的纯文本编辑器。</p></li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-24T21:42:41+08:00" pubdate data-updated="true">Nov 24<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第31期]]></title>
@@ -1814,80 +1892,6 @@
 
 
 <time datetime="2014-07-11T19:36:11+08:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第16期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/07/03/ios-weekly-16/"/>
-    <updated>2014-07-03T20:41:49+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/07/03/ios-weekly-16</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/ios8-new-features">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：i​OS 8的新特性，敏感逻辑的保护方案，iOS绘图教程，WKWebView的使用等。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://nshipster.cn/ios8/">《i​OS 8》</a>：Mattt Thompson在文章中介绍了iOS8的各种新特性。</p></li>
-<li><p><a href="http://blog.csdn.net/yiyaaixuexi/article/details/29210413">《iOS安全攻防：敏感逻辑的保护方案》</a>：文章介绍了一种低学习成本的，简易的Objective-C逻辑代码重写为C代码的办法。</p></li>
-<li><p><a href="http://imtx.me/archives/1899.html">《谈谈 iOS 8 拍照和摄影功能的增强》</a>：iPhone 的照相功能有着敏捷的反应速度和不错的成像素质，使得 iPhone 成为最佳的随手拍手机。这次 WWDC 14 上尽管没有任何新硬件的更新，但是 iOS 8 在照相功能上的增强再次让我这样的随手拍狂人激动不已。文章主要介绍了iOS 8 带来的倒计时拍摄和延时摄影功能。</p></li>
-<li><p><a href="http://blog.rpplusplus.me/blog/2014/06/26/wwdc14-session-401/">《WWDC14 Session 401 學習筆記》</a>：文章总结了WWDC14 Session 401介绍的PlayGround、Interface Builder和Debug相关功能的改进。</p></li>
-<li><p><a href="http://www.cnblogs.com/xdream86/archive/2012/12/12/2814552.html">《iOS绘图教程》</a>：本文是《Programming iOS5》中Drawing一章的翻译，考虑到主题完整性，翻译版本中加入了一些书中未涉及到的内容。该文章中比较完整地介绍了iOS的整个绘图原理及相关的API。</p></li>
-<li><p><a href="http://studentdeng.github.io/blog/2014/06/24/core-animation/">《Core Animation基本概念和Additive Animation》</a>：文章介绍一些Core Animation基本概念，最后提到一些iOS8的动画改动。</p></li>
-<li><p><a href="https://mikeash.com/pyblog/friday-qa-2014-06-20-interesting-swift-features.html">《Interesting Swift Features》</a>：文章介绍了Swift相对于Objective-C增加的一些有趣的特性，并且讨论了其带来的好处。</p></li>
-<li><p><a href="http://www.raywenderlich.com/76260/video-tutorial-introduction-swift-part-6-functions">《Introduction to Swift Part 6: Functions》</a>：Ray Wenderlich上的关于Swift函数的视频教程。</p></li>
-<li><p><a href="http://www.raywenderlich.com/76248/facebook-pop-tech-talk-video">《Facebook Pop Tech Talk Video》</a>：Ray Wenderlich上的关于Facebook Pop的视频教程。</p></li>
-<li><p><a href="http://www.kinderas.com/technology/2014/6/7/getting-started-with-wkwebview-using-swift-in-ios-8">《Getting started with WKWebView using Swift in iOS 8》</a>：文章介绍了iOS8中新加的WKWebView的使用。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="https://github.com/uranusjr/macdown">macdown</a>：macdown是一个开源的Mac下的markdown编辑器。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/lexrus/LTMorphingLabel">LTMorphingLabel</a>：用swift写的文字飘入飘出的效果。</p></li>
-<li><p><a href="https://github.com/hewigovens/Crashlytics-FPCustomHandler">Crashlytics-FPCustomHandler</a>：这是一个为 Crashlytics 写的 category, 可以方便添加自己的崩溃处理函数。</p></li>
-<li><p><a href="https://github.com/relatedcode/ParseChat">ParseChat</a>：ParseChat是基于Parse实现的一个实时的聊天室开源应用。</p></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-03T20:41:49+08:00" pubdate data-updated="true">Jul 3<span>rd</span>, 2014</time> 
 
 <span class="categories">
   

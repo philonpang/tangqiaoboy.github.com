@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 SQLite (http://www.sqlite.org/docs.html) 是一个轻量级的关系数据库。iOS SDK很早就支持了SQLite，在使用时，只需要加入 libsqlite3.dylib 依赖以及引入 sqlite3.h 头文件即可。但是，原生的SQLite &hellip;">
+  <meta name="description" content="不知道为什么，在iOS开发中，有很多人使用 SBJSON （又被称作json-framework)来做JSON解析库。我想这是因为SBJSON是最早在iOS上出现的JSON解析库。但是随着iOS开发的流行，越来越多优秀的JSON解析库也涌现出来, SBJSON和它们相比，性能上有很大的差距。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,47 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/05/05/do-not-use-sbjson/">不要使用SBJSON(json-framework)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-05T09:35:00+08:00" pubdate data-updated="true">May 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不知道为什么，在iOS开发中，有很多人使用 <a href="https://github.com/stig/json-framework">SBJSON</a> （又被称作json-framework)来做JSON解析库。我想这是因为SBJSON是最早在iOS上出现的JSON解析库。但是随着iOS开发的流行，越来越多优秀的JSON解析库也涌现出来, SBJSON和它们相比，性能上有很大的差距。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/05/do-not-use-sbjson/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/04/22/use-fmdb/">在iOS开发中使用FMDB</a></h1>
     
     
@@ -120,49 +161,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/06/about-100-devices-limit/">关于iOS测试机个数上限的详细规则</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-06T16:50:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>公司的iOS测试机快达到苹果规定的100个上限了，而因为the new iPad新出，我们需要新的quota来测试新iPad，所以就仔细研究了一下苹果关于100个测试设备上限的规则。在这里分享给大家。规则的详细内容主要来自 <a href="https://developer.apple.com/support/ios/program-renewals.html">苹果的官网文档</a>。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/04/06/about-100-devices-limit/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/50/">&larr; Older</a>
@@ -184,6 +182,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/01/ios-weekly-33/">iOS移动开发周报-第33期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/11/24/ios-weekly-32/">iOS移动开发周报-第32期</a>
@@ -227,10 +229,6 @@
     
       <li class="post">
         <a href="/blog/2014/09/13/scrum-introduction/">适合码农工作时玩的游戏：Scrum</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/09/ios-weekly-24/">iOS移动开发周报-第24期</a>
       </li>
     
   </ul>

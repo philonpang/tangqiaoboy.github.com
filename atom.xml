@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-12-01T21:36:39+08:00</updated>
+  <updated>2014-12-07T19:25:10+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,115 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[《iOS开发进阶》即将出版]]></title>
+    <link href="http://blog.devtang.com/blog/2014/12/07/about-ios-pro-book/"/>
+    <updated>2014-12-07T19:05:52+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/12/07/about-ios-pro-book</id>
+    <content type="html"><![CDATA[<p>关注我博客的人也许发现了，除了每周一期的InfoQ约稿的《iOS开发周报》，我已经很久没有写iOS方面的原创文章了。这主要的原因是：我把周末的时间都用来筹划一本iOS方面的书，这本书叫做《iOS开发进阶》。下面我就给大家介绍一下此书。</p>
+
+<p><img src="https://raw.githubusercontent.com/tangqiaoboy/iOS-Pro/master/BookCover.jpg" alt="" /></p>
+
+<h3>我的构思</h3>
+
+<p>还记得几年前，我在学习iOS开发入门时，发现同行间的交流环境也比较差，自己提高的过程很慢。在出版物方面，我也一直苦于没有找到一本iOS开发进阶方面的图书。随着移动互联网的快速发展，移动开发的人才也慢慢增多，现在同行间的交流环境相比以前好了很多。但是在国内，仍然没有一本原创的iOS进阶方面的图书出现。因此，我萌生了写作的想法。</p>
+
+<p>写作最开始首先是构思的过程，我回顾自己维护多年的iOS开发博客，从里面100多篇关于iOS开发的原创文章中，整理出来涉及iOS开发进阶提高的3个主要的方向：工具、实践、理论。</p>
+
+<p>于是，我围绕着上述的三个方向，把以前的文章作为基础，再进一步完善相关内容，让各自零散的知识点能够衔接起来，成为一个完整的体系。整个写作的过程是痛并快乐着的，为了保证知识完整，最终书稿中有超过50%是新增加的内容。</p>
+
+<p>从知识的难度上，工具、实践、理论这三大部分的难度逐步提高，以保证读者能慢慢适应。而三大部分内容其实各自独立，有经验的读者也可以按兴趣点或具体需求，跳跃性地阅读此书。</p>
+
+<h3>定位</h3>
+
+<p>《iOS开发进阶》定位于帮助那些iOS开发刚刚入门的同行快速提高自己的水平，适用于至少有3个月以上iOS开发经验的读者。不适合没有任何iOS开发基础的读者阅读。</p>
+
+<p>对于iOS熟练开发者，此书也能补充其知识点的可能的盲区，使其相关知识体系更为完善。</p>
+
+<h3>内容介绍</h3>
+
+<p>《iOS开发进阶》分工具、实践、理论三大部分：</p>
+
+<ul>
+<li>第一部分介绍iOS开发的常用工具</li>
+<li>第二部分介绍iOS开发中的一些常见的实践经验</li>
+<li>第三部分介绍iOS开发中涉及的原理。</li>
+</ul>
+
+
+<p>如果把成为iOS开发高手比作武林小说中的高手修炼的话，工具、实践和理论的学习就分别对应兵器，招式和内功的修炼。此书希望通过这三方面的综合讲解，以全面提高开发者的技能水平。</p>
+
+<p>好的工具可以使得开发效率成倍的增长。此书第一大部分介绍了iOS开发中的各种工具或服务，通过使用它们，可以极大地方便我们的日常开发和维护，提高开发效率。</p>
+
+<p>一个入门之后的iOS开发者，需要的是更深入的实际开发经验的分享。此书第二部分选择了iOS开发几个常见的实际场景，进一步介绍各种iOS开发进阶的实战技巧。对于一些比较零散的知识技巧，作者也在实战小技巧集锦中进行了介绍。</p>
+
+<p>如果把前两部分比作工具和招式的修炼的话，此书第三部分则是内功的修炼。在第三部分中，此书详细分析了iOS开发涉及的语言对象模型，从而能够帮助读者深入理解语言的各种特性和限制。</p>
+
+<h3>出版时间</h3>
+
+<p>《iOS开发进阶》计划在本月下旬出版，定价65元。但是你也知道，图书一般都是会打折出售的，我估计在京东上应该能够以8折左右的价格购买到它。</p>
+
+<h3>一些评价</h3>
+
+<p>我邀请了一些朋友审阅了《iOS开发进阶》初稿，他们的评价如下：</p>
+
+<h4>OurCoders站长，资深iOS开发者 <a href="http://www.weibo.com/u/1400229064?topnav=1&amp;wvr=6&amp;topsug=1">tinyfool</a>:</h4>
+
+<blockquote><p>2008年苹果发布第一代iOS SDK至今，已经有6个年头，整个移动开发的热潮也5、6年了，虽时有人说热潮将尽，但人才市场里iOS开发者仍旧非常短缺。特别短缺的是专业的优秀的iOS开发者，在各种工具无比先进的年代，一个优秀的开发者比十个一般的开发者都更有价值，也可以获得相应的回报。</p>
+
+<p>我一直在说，每一个已经在行业里面的开发者，不应该满足于自己是一个可以干活的人，而应该有所追求，要变成行业的佼佼者，这不仅是因为我们都想有更高的收入，而且人本身就该有追求，特别是当你处在这个迅速变化，生机勃勃的行业中。</p>
+
+<p>这本书的作者唐巧在我心中，本身就是我们这个行业中，非常优秀的开发者。但是更值得称赞的是，他提供了这么一本书，让我们也有机会变成更专业的，更优秀的开发者，善莫大焉。</p></blockquote>
+
+<h4>objccn.io创始人、《Swifter》作者 王巍(<a href="http://www.weibo.com/u/2210132365?topnav=1&amp;wvr=6&amp;topsug=1">onevcat</a>)：</h4>
+
+<blockquote><p>作为一本面向中高级 iOS 开发者的书籍，《iOS开发进阶》一书汇总了很多进阶级开发时所常用和必备的知识。阅读本书不但能帮你借助各类工具大幅提升开发效率，也能加深对 iOS 及 Objective-C 背后机制的理解。如果你想在 iOS 开发的道路上百尺竿头，更进一步的话，这本凝聚了作者多年开发实战经验的进阶级图书将是你不可错过的伙伴！</p></blockquote>
+
+<h4>微信iOS客户端团队负责人 lylechen</h4>
+
+<blockquote><p>唐巧是国内较早从事iOS开发的资深工程师，并在个人博客、InfoQ、公众号等持续更新技术文章，我们也曾邀请他给微信iOS团队分享相关经验。目前市面上缺乏书籍对Objective-C高级特性、Xcode插件等做全面剖析和整理，《iOS开发进阶》很好地填充了此处的空白，相信对广大iOS开发者会有很好的帮助。</p></blockquote>
+
+<h4>网易新闻客户端技术负责人 王聪(<a href="http://www.weibo.com/u/1640364052?topnav=1&amp;wvr=6&amp;topsug=1">robaggio</a>)</h4>
+
+<blockquote><p>本人有幸曾和作者共事，当时他还负责微博后台研发。4年后唐巧转为iOS开发，并成为国内资深专家，主持研发的App也深受市场好评，作者的工作经历本身就是一次完美的『iOS开发进阶』。如果你刚刚提交了第一款AppStore应用，那本书的第一部分定会让你惊叹原来有这么多高效的工具可以帮你；如果你已有一两年iOS开发经验，那你一定会对本书第二部分的各种实战技巧相见恨晚；本书最后部分的底层原理是你成为资深工程师的必备课程。推荐给所有想『进阶』自己的开发者！</p></blockquote>
+
+<p>另外，<a href="http://book.douban.com/subject/25826578/">《MacTalk人生元编程》</a>的作者<a href="http://www.weibo.com/u/1406320502?topnav=1&amp;wvr=6&amp;topsug=1">池建强</a>为本书写了非常精彩的推荐序，光是序言的标题《人生如长跑，成长如进阶》就让我觉得既富有哲理，“进阶”二字又和书名相呼应。但我决定暂不把序言放到网上，给读者一些神秘感。</p>
+
+<h3>一些感悟</h3>
+
+<p>虽然已经有100多篇原创博文作为基础，但是整个写作过程我丝毫感受不到轻松。一方面是由于创业，自己的时间有限，写作断断续续。另一方面，由于自己在微博和微信上被不少同行关注，我自己也有很大的压力想把这本书写得尽量好一些。</p>
+
+<p>最后我看着书稿，虽然觉得还可以写得更多一些，但是就像创业一样，任何事情都需要有一个阶段性成果。我相信当前的内容是足够“干货”的，我也能保证市面上没有第二本相似内容的图书，所以还是想尽快让读者看到这份作品。</p>
+
+<p>希望本书能帮助大家进阶成为 iOS 大牛！</p>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-07T19:05:52+08:00" pubdate data-updated="true">Dec 7<span>th</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第33期]]></title>
@@ -1811,88 +1920,6 @@
 <span class="categories">
   
     <a class='category' href='/blog/categories/ios/'>iOS</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第18期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/07/22/ios-weekly-18/"/>
-    <updated>2014-07-22T21:19:39+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/07/22/ios-weekly-18</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/apple-ibm-cooperation">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果与 IBM 展开长期深度合作，Swift官方博客，Swift开发的视频教程等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://www.36kr.com/p/213771.html">《苹果与 IBM 展开长期深度合作，双方优势互补，专注企业级移动市场》</a>：苹果与 IBM 达成排他性合作协议，联合各自领先市场的优势，共同打造一样新品类商业应用，建立全新的企业级移动体验——IBM 享誉已久的大数据及分析能力将注入苹果的 iPhone 与 iPad——结合后者擅长的用户体验，共同改善企业及员工使用 iOS 设备工作的流程。</p></li>
-<li><p><a href="http://www.cocoachina.com/applenews/apple/2014/0715/9148.html">《苹果官方数据显示iOS 7渗透率已达90%》</a>：苹果最新数据显示，7月7日到13日之间，在访问App Store的设备中，90%的设备运行了iOS 7系统，而距离iOS 7正式发布仅仅为10个月的时间。不过国内iOS 7系统的比例还远远未达到80%。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="https://developer.apple.com/swift/blog/">《Swift官方博客》</a>：苹果在开发者中心建立了Swift官方博客，用于帮助开发者获得Swift的相关知识和资源。</p></li>
-<li><p><a href="http://wonderffee.github.io/blog/2014/07/19/quincykit-and-kscrash/">《利用QuincyKit + KSCrash构建自己的Crash Log收集与管理系统 》</a>：iOS bug定位是极看重crash log的，目前网上Crash Log收集与管理服务较有名的有Crashlytics, Flurry, 友盟等。本文介绍了QuincyKit + KSCrash构建自己的Crash Log收集与管理系统的适用场景和特点。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/07/17/ios_0code_vc/">《0 代码 ViewController》</a>：作者尝试利用Interface Builder的Object控件实现了一个0行代码的View Controller，在减小Controller体积小，提供了一些新颖的思路。不过需要注意，其文章示例代码中的ViewModel持久了View对象，其实不是指的（MVVM）中ViewModel，更像是一个Controller的代理。</p></li>
-<li><p><a href="http://www.thinkandbuild.it/from-objective-c-to-swift/">《From Objective-C to Swift: thoughts and hints》</a>：文章详细比较了Objective-C与Swift在编程中的细节差异。</p></li>
-</ol>
-
-
-<h2>视频</h2>
-
-<ol>
-<li><a href="http://www.imooc.com/learn/149">《Swift开发的视频》</a>：jakelin做了一个Swift开发的视频，视频从头到尾的讲述了如何开发一个Swift Weather app，同时也讲述了CococaPods，Core Location和AFNetworking的使用，源码地址在 <a href="https://github.com/JakeLin/SwiftWeather">这里</a> 。</li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="http://pgyer.com/">蒲公英</a>：蒲公英是专为iOS开发者提供的免费应用众测平台，旨在解决开发者将应用分发给内测用户及众测时的繁杂、低效的问题。使用蒲公英，开发者可将应用一键上传至蒲公英网站实现托管，托管后的应用拥单独的下载页面。开发者只需将下载页面地址（或二维码）发给内测用户，测试用户即可用手机直接安装，避免了之前测试用户需要将手机用数据线连接到电脑，才能安装测试应用的痛苦过程。它的特点是可以帮你用企业证书签名，同时设置密码，帮助大家分发测试版本。</p></li>
-<li><p><a href="https://github.com/realm/jazzy">jazzy</a>：jazzy是一个为Objective-C和Swift语言生成帮助文档的开源工具。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><a href="https://github.com/realm/realm-cocoa">Realm</a>：Realm是一个真正为移动设备打造的数据库，同时支持Objective-C和Swfit。Realm宣称其相比Sqlite，在移动设备上有着更好的性能表现。</li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-22T21:19:39+08:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
   
 </span>
 

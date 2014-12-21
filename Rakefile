@@ -264,10 +264,10 @@ multitask :push do
     puts "\n## Committing: Site updated at #{Time.now.utc}"
     message = "Site updated at #{Time.now.utc}"
     system "git commit -m \"#{message}\""
-    # cancel pushing to github to saving time
-    # puts "\n## Pushing generated #{deploy_dir} website"
-    # system "git push origin #{deploy_branch}"
-    # puts "\n## Github Pages deploy complete"
+    # comment below to cancel pushing to github for saving time
+    puts "\n## Pushing generated #{deploy_dir} website"
+    system "git push origin #{deploy_branch}"
+    puts "\n## Github Pages deploy complete"
   end
 end
 

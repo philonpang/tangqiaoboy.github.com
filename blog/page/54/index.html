@@ -9,8 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 Daily Build是一件非常有意义的事情，也是敏捷开发中关于“持续集成”的一个实践。Daily Build对于开发来说有如下好处： 保证了每次check in的代码可用，不会造成整个工程编译失败。
-进度跟进。产品经理可以每天看到最新的开发进度，并且试用产品，调整一些细节。很多时候， &hellip;">
+  <meta name="description" content="什么是GCD Grand Central Dispatch (GCD)是Apple开发的一个多核编程的解决方法。该方法在Mac OS X 10.6雪豹中首次推出，并随后被引入到了iOS4.0中。GCD是一个替代诸如NSThread, NSOperationQueue, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +82,51 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/02/22/use-gcd/">使用GCD</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-22T20:44:00+08:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>什么是GCD</h2>
+
+<p>Grand Central Dispatch (GCD)是Apple开发的一个多核编程的解决方法。该方法在Mac OS X 10.6雪豹中首次推出，并随后被引入到了iOS4.0中。GCD是一个替代诸如NSThread, NSOperationQueue, NSInvocationOperation等技术的很高效和强大的技术。</p>
+
+<p>GCD和block的配合使用，可以方便地进行多线程编程。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/22/use-gcd/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/02/16/apply-daily-build-in-ios-project/">给iOS工程增加Daily Build</a></h1>
     
     
@@ -129,52 +173,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/14/nsstring-java-like-wrapper/">给NSString增加Java风格的方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-14T17:17:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我实在受不了NSString冗长的方法调用了，每次写之前都要查文档。特别是那个去掉前后多余的空格的方法，长得离谱。与之对应的别的语言，拿java来说，对应的方法名叫trim。拿python来说，对应的方法名叫strip。但是Objective-C呢？是下面这段：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">self</span> <span class="nl">stringByTrimmingCharactersInSet:</span><span class="p">[</span><span class="n">NSCharacterSet</span> <span class="n">whitespaceAndNewlineCharacterSet</span><span class="p">]];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/14/nsstring-java-like-wrapper/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/55/">&larr; Older</a>
@@ -196,6 +194,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/31/ios-weekly-35/">iOS移动开发周报-第35期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/12/21/ios-weekly-34/">iOS移动开发周报-第34期</a>
@@ -239,10 +241,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/01/startup-2nd-year-summary/">写在创业两周年</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/24/ios-weekly-26/">iOS移动开发周报-第26期</a>
       </li>
     
   </ul>

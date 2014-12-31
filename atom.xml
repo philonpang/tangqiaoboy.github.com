@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-12-21T19:58:32+08:00</updated>
+  <updated>2014-12-31T22:06:23+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,77 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第35期]]></title>
+    <link href="http://blog.devtang.com/blog/2014/12/31/ios-weekly-35/"/>
+    <updated>2014-12-31T22:03:13+08:00</updated>
+    <id>http://blog.devtang.com/blog/2014/12/31/ios-weekly-35</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/12/developer-favorite-swift-skills">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：90后CEO的开源心得、iOS8 企业应用部署Bug、盘点开发者最喜爱的Swift技巧、iOS开发的一些奇巧淫技等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.cocoachina.com/programmer/20141224/10747.html">《90后CEO的开源心得：Github 2500 star是如何炼成的》</a>：如果你是一名 iOS 开发者同时还是 Github 的重度使用者，那么你多半见过这个项目：PNChart，一个提供带动画的图表控件。截止到目前为止，PNChart 在 Github上 的 star 数已经超过2500，是一个备受开发者喜爱的 iOS 第三方开源库。该开源库的作者周楷雯，在本文中分享了如何打造一个成功的iOS开源项目。</p></li>
+<li><p><a href="http://www.36kr.com/p/218161.html">《苹果获反向AirPlay专利，在iPhone上同步播放Apple TV内容》</a>：苹果刚刚获得了美国专利与商标局授予的一项新专利，这项专利可以让内容在便携式设备上同步显示，即可以让 Apple TV 这样位置固定的设备上播放的内容，实时同步到 iPhone、iPad 等 iOS 设备上。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://thierry-xing.iteye.com/blog/2119241">《iOS8 企业应用部署Bug》</a>：使用iOS企业部署（In-House Distribution）方式进行应用升级时，在 iOS8 下无法成功，删除应用再重新安装也不行。如果你也遇到了这个问题，那么可以看看作者是如何解决的。需要说明的是，该Bug在 iOS 8.1.2 更新中得到了修复。</p></li>
+<li><p><a href="http://www.csdn.net/article/2014-12-25/2823312-favorite-swift-tips-and-tricks">《盘点开发者最喜爱的Swift技巧》</a>：Swift 发布才半年左右，却已深得众多开发者的青睐，也有了许多学习资源、项目和开发工具。在本文中，来自objc.io、LinkedIn等各个公司的软件工程师及资深开发者总结了自己在接触 Swift 过程中最喜爱的贴士与技巧。</p></li>
+<li><p><a href="http://www.jianshu.com/p/50b63a221f09">《iOS开发的一些奇巧淫技》</a>：作者分享了一些 iOS 开发中涉及的小技巧。</p></li>
+<li><p><a href="http://blog.nswebfrog.com/2014/12/22/swift-script/#541841-tsina-1-77759-d0fc3b3b40d03e6b36d60be81253e42e">《Swift 脚本编写》</a>：作为苹果新一代的编程语言，Swift 不仅可以用来开发 iOS 应用，还可以用来编写脚本，来完成 OS X 下的一些自动化的工作。终于可以用我们熟悉的语言来写自动化脚本了，想想是不是就觉得心里有点小激动呢^_^。本文从一个Hello World脚本开始，介绍了如何用Swift完成脚本编写工作。</p></li>
+<li><p><a href="http://bbs.iosre.com/forum.php?mod=viewthread&amp;tid=645">《一步一步教你写classdump》</a>：最近刚读完《Mac OS X and iOS Internals》的前几章，也想练练手，写tweak，app也烦了，基于上述原因就试着写了这个demo。虽然这些功能都可以通过 otool 和 classdump 去实现，但也算是对 macho 文件格式的一种学习吧。</p></li>
+<li><p><a href="https://github.com/AttackOnDobby/iOS-Core-Animation-Advanced-Techniques">《iOS-Core-Animation-Advanced-Techniques》</a>：一本不错的翻译图书，介绍了关于Core Animation的各方面的知识。</p></li>
+<li><p><a href="https://github.com/ipader/SwiftGuide">《Swift语言指南》</a>：这份指南汇集了 Swift 语言主流学习资源，并以开发者的视角整理编排。</p></li>
+<li><p><a href="http://imtx.me/archives/1917.html">《Swift 项目使用 CoreData 可能会碰到的 32 位系统问题》</a>：最近在项目中偶然发现了一个问题，那就是 Swift 的 CoreData 在 32 位系统下与 64 位系统下表现不一致的问题。简单的说：如果你的 CoreData 模型有一个声明为 Boolean 的 Attribute，并且在代码中使用 NSNumber 来包装（而不是Bool）的话，很可能会遇到这个问题。作者介绍了该问题的细节和解决办法。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/rsms/peertalk">peertalk</a>：peertalk 是一个支持 iOS 与 Mac 通过 USB 相互通讯的开源库。 Duet Display 基于此实现了将 Mac 界面呈现到 iOS 设备上。</li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-31T22:03:13+08:00" pubdate data-updated="true">Dec 31<span>st</span>, 2014</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第34期]]></title>
@@ -1770,96 +1841,6 @@
 
 
 <time datetime="2014-08-12T20:08:34+08:00" pubdate data-updated="true">Aug 12<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第19期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/07/30/ios-weekly-19/"/>
-    <updated>2014-07-30T22:10:03+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/07/30/ios-weekly-19</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/07/apple-earnings-announcement">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果第三季度财报公布，iOS界面开发的大一统，Flipboard开源的FLEX工具等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://pad.pconline.com.cn/514/5144196.html">《净利润达77亿美元!苹果第三季度财报公布》</a>：苹果发布了截至6月28日的2014财年第三季度财报。从财报中我们可以看到，苹果在第三财季营收374亿美元，同比增长6%；净利润为77亿美元，同比增长12%。</p></li>
-<li><p><a href="http://tech.qq.com/a/20140721/005712.htm">《苹果iOS在日本占据了超过50%的市场》</a>：苹果iOS在日本占据了超过50%的市场，在中国的份额为14.7%。</p></li>
-<li><p><a href="http://www.huxiu.com/article/38395/1.html">《苹果财报解读》</a>：中国地区 iPhone 销量上升 48%，iPhone 6 备受瞩目。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://onevcat.com/2014/07/ios-ui-unique/">《WWDC 2014 Session笔记 &ndash; iOS界面开发的大一统》</a>：iOS 8 和 OS X 10.10 中一个被强调了多次的主题就是大一统，Apple 希望通过 Hand-off 和各种体验的无缝切换和集成将用户黏在由 Apple 设备构成的生态圈中。对于广大 iOS 开发者赖以生存的 UIKit 来说，这次最大的变化就是 Size Classes 的引入和新的 Presentation 系统了，本文对Size Classes及其相关知识进行了详细的介绍。</p></li>
-<li><p><a href="http://airspeedvelocity.net/">《Airspeed Velocity》</a>：一个专门介绍Swift语言的博客。</p></li>
-<li><p><a href="http://nomothetis.svbtle.com/">《ALEXANDROS SALAZAR》</a>：一个专门介绍Swift语言的博客。</p></li>
-<li><p><a href="http://www.raywenderlich.com/72021/supercharging-xcode-efficiency">《Supercharging Your Xcode Efficiency》</a>：文章介绍了各种提高开发效率的Xcode使用技巧。</p></li>
-<li><p><a href="http://objccn.io/issue-14-3/">《插件》</a>：插件是给你已经发布的 App 增加功能的一个好办法，Mac 上的 App 支持插件已经有很长的历史了。在 NSBundle 的帮助下，插件开发变得很简单，本文介绍了在Mac上进行插件开发的方法。</p></li>
-<li><p><a href="https://github.com/vsouza/awesome-ios">《Awesome iOS》</a>：一个iOS的各类优秀的开源项目集合。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2014/07/27/ios-evelup-tips/">《iOS开发如何提高》</a>：本文分享了iOS开发提高的各种方法。</p></li>
-<li><p><a href="http://weibo.com/2584320772/BfHoM6MM4">《如何编写 iOS 8 Widget》</a>：作者简单介绍了 iOS 8 Widget的编写方法。</p></li>
-</ol>
-
-
-<h2>视频</h2>
-
-<ol>
-<li><a href="https://www.youtube.com/user/UIKonf/feed">《UIKonf 2014》</a>：国外的iOS开发技术会议UIKonf视频。</li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="https://github.com/markohlebar/Peckham">Peckham</a>：你是否遇到这样的场景?在源码中用到一个类，写完发现因为没有import它的头文件，所以编译不通过。正常情况下，你需要跳转到源代码头部加入该头文件，然后再继续跳回上次编辑位置继续写代码。这样的跳转很不方便，而且让你的逻辑被打断。<a href="https://github.com/markohlebar/Peckham">Peckham</a>是一个帮助你填写#import头文件的Xcode插件，使用它可以方便在源代码的任意位置插入所需要的头文件。</p></li>
-<li><p><a href="http://www.robovm.com/">RoboVM</a>：用Java来写原生的iOS程序。</p></li>
-<li><p><a href="https://github.com/Flipboard/FLEX">FLEX</a>：FLEX是Flipboard开源的一系列在应用中调试的工具集。该工具集提供了查看和修改相关view的属性功能。</p></li>
-<li><p><a href="https://appbot.co/">AppBot</a>: AppBot是可以订阅App Store用户的评价和评分，不局限于自己的产品，其他App也可以订阅然后会邮件发送给你，随时了解用户的评价，改善产品。本条来自 <a href="http://weibo.com/phpmaple">@KooFrank</a>的推荐。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/ftao/vpn-deploy-playbook">vpn-deploy-playbook</a>：一个自动部署各种翻墙服务的工具，包括IPSec，L2TP，PPTP，Cisco AnyConnect，SigmaVPN，APN，shadowsocks，OpenVPN，DNS，SPDY，用户管理等功能。</p></li>
-<li><p><a href="https://github.com/maciekish/iReSign">iReSign</a>：一个可以把ipa用企业证书重新签名的开源项目。</p></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-30T22:10:03+08:00" pubdate data-updated="true">Jul 30<span>th</span>, 2014</time> 
 
 <span class="categories">
   

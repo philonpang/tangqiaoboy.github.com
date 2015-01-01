@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-12-31T22:06:23+08:00</updated>
+  <updated>2015-01-01T21:23:57+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,97 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2014年个人总结]]></title>
+    <link href="http://blog.devtang.com/blog/2015/01/01/2014-summary/"/>
+    <updated>2015-01-01T21:03:18+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/01/01/2014-summary</id>
+    <content type="html"><![CDATA[<p>2014年对于我来说是重要的一年，因为一方面我刚好年满30岁了，另一方面我的家庭生活和工作都经历了很大的变化。值得总结的包括：</p>
+
+<ol>
+<li>通过分享，进一步提高了自己的技术影响力</li>
+<li>创业进一步取得成绩</li>
+</ol>
+
+
+<h2>技术分享</h2>
+
+<p>2014年，我的技术分享包括：</p>
+
+<ol>
+<li>在自己的博客上发布了58篇技术文章。</li>
+<li>在InfoQ网站发表了35期“iOS开发周报”。</li>
+<li>在《程序员》杂志和CSDN网站上发表文章4篇，分别是《从Facebook看移动开发的发展》、《iOS应用安全开发概述》、《WWDC2014，苹果的“软件”发布会》、《那些好用的iOS开发工具》。</li>
+<li>在InfoQ网站和《架构师》迷你书上发表文章4篇，分别是 《作为码农，我们为什么要写作》、《ReactiveCocoa &ndash; iOS开发的新框架》、《深入理解Tagged Pointer》、《专访《iOS测试指南》作者羋峮》。</li>
+<li>受朋友邀请，在深圳微信、人人网和豆瓣做了三场技术分享，分享的主题都是：《深入Objective-C对象模型》。</li>
+<li>11月2日在CSDN主办的MDCC移动开发者大会上做了一次分享，主题是：“猿题库的流量优化之路”。</li>
+<li>12月20日在InfoQ主办的ArchSummit北京上做了一次分享，主题是：“猿题库客户端的技术细节”。</li>
+<li>完成了图书<a href="https://github.com/tangqiaoboy/iOS-Pro">《iOS开发进阶》</a>的写作，100本签售版很快卖光，不过正式出版得到2015年1月中旬。</li>
+<li>开源了两个猿题库客户端的iOS基础库：<a href="https://github.com/yuantiku/YTKKeyValueStore">YTKKeyValueStore</a> 和 <a href="https://github.com/yuantiku/YTKNetwork">YTKNetwork</a>，分别得到了400多和700多的star。</li>
+<li>微信公共帐号：iOSDevTips 发表了将近100篇推送，得到了10000多的粉丝。我的微博 <a href="http://www.weibo.com/tangqiaoboy">@唐巧_boy</a> 分享了上百条技术内容，得到了13000多的粉丝。</li>
+</ol>
+
+
+<p>年初的时候我还会怀疑自己的影响力，但现在已经习惯了成为iOS界的“大V”了。微博上分享技术类信息转发常常超过50次，也会常常被人@提醒来请教问题。</p>
+
+<p>那我是如何树立起自己的技术影响力的呢？这其实主要是通过写博客的方式。我没有想到，从我2010年底开始学iOS开发，到现在短短4年时间，通过博客我能够获得这么大的影响力。现在我也看到越来越多的人加入到技术分享的行列中，用原创的技术博客给整个社区带来知识的分享，同时收获自己的成长和影响力。</p>
+
+<h2>关于创业</h2>
+
+<p>我们今年顺利拿到了<a href="http://tech.sina.com.cn/i/2014-07-22/11209510273.shtml">C轮1500万美元的融资</a>，估值达到1.25亿美元。我自己的创业感悟就是觉得决策团队非常牛逼，另外大家的执行力都非常强。我今年除了做日常的iOS开发外，还承担了一些别的事情，包括：</p>
+
+<ul>
+<li>指导了一位iOS开发零基础的实习生，现在他能够独立的进行开发，非常高兴看着他取得这么大的进步。</li>
+<li>指导了一位实习生完成了Latex渲染引擎在移动端的移植（但其实主要是他的工作出色），这个工作使得我们的客户端在显示公式上和市面上所有同类应用相比具有决定性优势。</li>
+<li>承担了校园招聘的组织工作，大家都被出面试题搞得焦头烂额的，不过最终我们还是搞定了，也收获了不少很有潜力的应届生。</li>
+<li>开始负责小猿搜题这个项目，开始更多地思考产品方面的东西，更多的沟通工作，也开始为更多事情焦虑。</li>
+</ul>
+
+
+<p>负责小猿搜题项目对我是一个新的挑战，之前我作为一个iOS程序员，基本上都只需要专注于技术层面上的实现。而现在我不但需要参与产品的讨论，也需要做更多的组织沟通工作。我们团队仍然保持着强大的执行力，小猿搜题从7月底立项到9月底上线只经历了短短2个月时间。而我们的评测数据显示，我们在搜索质量上毫不逊于竞争对手。但我们需要改进的事情还有很多，希望小猿搜题的用户量和活跃度能够超过猿题库，成为又一个拥有海量初高中生用户的产品。</p>
+
+<h2>读书</h2>
+
+<p>今年为了更加深入的掌握Swift的函数式编程特性，学习了Scala语言以及coursea上的Funtional Programming相关的课程，不过仍然没有找到感觉。我感觉可能后面多写一些Swift程序才能有深入的理解。</p>
+
+<p>今年也读了不少产品的书，包括《我的互联网方法论》、《思考的技术》、《失控》、《定位》等。</p>
+
+<h2>个人Milestone</h2>
+
+<ul>
+<li>完成 《iOS开发进阶》的写作</li>
+<li>创业完成C轮融资，开始负责小猿搜题项目</li>
+<li>有了宝宝</li>
+</ul>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-01T21:03:18+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2015</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/summary/'>summary</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第35期]]></title>
@@ -1766,81 +1857,6 @@
 
 
 <time datetime="2014-08-18T21:53:55+08:00" pubdate data-updated="true">Aug 18<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第20期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/08/12/ios-weekly-20/"/>
-    <updated>2014-08-12T20:08:34+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/08/12/ios-weekly-20</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/ios-notification-center">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：iOS 通知中心扩展制作入门，iOS APP可执行文件的组成，objc非主流代码技巧等。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://onevcat.com/2014/08/notification-today-widget/">《iOS 通知中心扩展制作入门》</a>：本文通过一个简单的实用 demo 介绍了一下 iOS 8 中扩展开发的一些共通方法和一个通知中心扩展的实际制作。</p></li>
-<li><p><a href="http://blog.cnbang.net/tech/2296/">《iOS APP可执行文件的组成》</a>：iOS APP编译后，除了一些资源文件，剩下的就是一个可执行文件，本文分析了该可执行文件的组成。该文章的作者是 <a href="http://weibo.com/bang">@bang</a>。</p></li>
-<li><p><a href="http://yulingtianxia.com/blog/2014/08/08/spritekitzai-ios8he-osx10-dot-10zhong-de-xin-te-xing/#jtss-tsina">《SpriteKit在iOS8和OSX10.10中的新特性》</a>：在iOS8和OSX10.10中SpriteKit迎来了重大升级。在物理表现方面增加了着色器，光照和阴影；在物理模拟方面增加了像素物理体、力场和宇宙动力学和约束等；在Xcode中集成了场景编辑器，你不需要写代码就能完成一些复杂的工作；此外它还集成了SceneKit以及其他的改进。本文对这些新特性做了详细介绍。</p></li>
-<li><p><a href="http://billwang1990.github.io/blog/2014/08/07/remote-use-lldb/">《使用LLDB远程调试APP》</a>：文章作者因为最近要开始学习一些iOS逆向的一些东西，调试别人的app自然是必不可少的工作。试验后发现用GDB调试并不好用，而且苹果推的也是LLDB，所以需要使用LLDB来进行调试工作。使用LLDB就不像使用GDB进行调试那么方便，使用GDB的话直接在Cydia里面安装好GDB之后，ssh到你的设备就可以开始工作了，使用LLDB远程调试你越狱设备上的APP稍微麻烦一点。作者详细介绍了使用细节。</p></li>
-<li><p><a href="http://blog.xcodev.com/archives/objective-c-naming/">《Objective-C之优雅的命名》</a>：计算机语言是人和计算机之间通讯的媒介。好的代码应该是就像人对计算机说话那样，自然而优雅。命名看上去是一件很简单的事，而往往越是简单的事越难做好，否则大师们也不会把命名看成是计算机界的难题了。如何把Objective-C这门计算机语言以优雅的方式“说”出，还是比较考验工程师对它的理解深度的。在苹果的SDK中有大量的API，我们可以从这些API中体会到一些命名的艺术。</p></li>
-<li><p><a href="http://www.jessesquires.com/apples-to-apples-part-two/">《Apples to apples, Part II》</a>：本文是JSQMessagesViewController 的作者 Jesse Squires 博客上写的一篇 Objective-C 与 Swift 性能对比分析文章。从中可以了解到在开启完优化之后，Swift在性能上的表现是非常不错的。本文来自 <a href="http://weibo.com/u/2034474825">@isaced</a>的推荐。</p></li>
-<li><p><a href="https://github.com/ShinobiControls/iOS8-day-by-day">《iOS8-day-by-day》</a>：这是一个学习iOS8的系列文章合集，一共有16篇文章。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/08/02/objc-weird-code/">《objc非主流代码技巧》</a>：看开源代码时，总会看到一些大神级别的代码，给人眼前一亮的感觉，多数都是被淡忘的C语言语法，作者在文章中总结了objc写码中遇到的各类非主流代码技巧和一些妙用。</p></li>
-<li><p><a href="http://msching.github.io/blog/2014/08/02/audio-in-ios-5/">《iOS音频播放 (五)：AudioQueue》</a>：本文讲解了如何使用AudioQueue播放音频数据。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="http://fauxpasapp.com/">Faux Pas for Xcode</a>：Faux Pas for Xcode是一个项目检查工具。使用它相当于给自己的项目请了一个专业的 Reviewer，它会指出项目级别上不规范不合理的地方，并且有相关内容的链接可以学习。</p></li>
-<li><p><a href="http://ios.b2mp.cn/tools">App Icons Create Tool</a>：这是  <a href="http://weibo.com/helou?from=usercardnew">@往何处寻</a> 做的一键创建iOS APP应用图标的在线工具，可以帮助你生成各种尺寸的应用图标。</p></li>
-<li><p><a href="https://github.com/lexrus/ios-dev-playbook">ios-dev-playbook</a>: ios-dev-playbook是一个快速配置 iOS 开发需要的服务器工具。目前只支持 Debian Wheezy服务器，可以安装 GitLab、Countly、Jenkins 等。该项目作者是<a href="https://twitter.com/lexrus">@lexrus</a>。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/Alamofire/Alamofire">Alamofire</a>：Alamofire是AFNetworking的作者mattt新写的网络请求的swift库。</p></li>
-<li><p><a href="http://www.oschina.net/p/easyios">EasyIOS</a>: EasyIOS是基于MVVM 的iOS开发框架。它封装了Scene、SceneModel、Model、Action四种模型来对IOS进行开发，4种模型的定义解决了IOS开发中ViewController承担了过多角色而造成的代码质量低下，使得结构思路更加清晰。</p></li>
-<li><p><a href="https://github.com/AgileBits/onepassword-app-extension">1Password Extension for iOS Apps</a>：1Password的扩展SDK，可以方便地集成到iOS应用中。</p></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-12T20:08:34+08:00" pubdate data-updated="true">Aug 12<span>th</span>, 2014</time> 
 
 <span class="categories">
   

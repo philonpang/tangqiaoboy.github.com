@@ -4,7 +4,7 @@
   <title><![CDATA[Category: summary | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/summary/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2014-12-31T22:06:23+08:00</updated>
+  <updated>2015-01-01T21:23:57+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2014年个人总结]]></title>
+    <link href="http://blog.devtang.com/blog/2015/01/01/2014-summary/"/>
+    <updated>2015-01-01T21:03:18+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/01/01/2014-summary</id>
+    <content type="html"><![CDATA[<p>2014年对于我来说是重要的一年，因为一方面我刚好年满30岁了，另一方面我的家庭生活和工作都经历了很大的变化。值得总结的包括：</p>
+
+<ol>
+<li>通过分享，进一步提高了自己的技术影响力</li>
+<li>创业进一步取得成绩</li>
+</ol>
+
+
+<h2>技术分享</h2>
+
+<p>2014年，我的技术分享包括：</p>
+
+<ol>
+<li>在自己的博客上发布了58篇技术文章。</li>
+<li>在InfoQ网站发表了35期“iOS开发周报”。</li>
+<li>在《程序员》杂志和CSDN网站上发表文章4篇，分别是《从Facebook看移动开发的发展》、《iOS应用安全开发概述》、《WWDC2014，苹果的“软件”发布会》、《那些好用的iOS开发工具》。</li>
+<li>在InfoQ网站和《架构师》迷你书上发表文章4篇，分别是 《作为码农，我们为什么要写作》、《ReactiveCocoa &ndash; iOS开发的新框架》、《深入理解Tagged Pointer》、《专访《iOS测试指南》作者羋峮》。</li>
+<li>受朋友邀请，在深圳微信、人人网和豆瓣做了三场技术分享，分享的主题都是：《深入Objective-C对象模型》。</li>
+<li>11月2日在CSDN主办的MDCC移动开发者大会上做了一次分享，主题是：“猿题库的流量优化之路”。</li>
+<li>12月20日在InfoQ主办的ArchSummit北京上做了一次分享，主题是：“猿题库客户端的技术细节”。</li>
+<li>完成了图书<a href="https://github.com/tangqiaoboy/iOS-Pro">《iOS开发进阶》</a>的写作，100本签售版很快卖光，不过正式出版得到2015年1月中旬。</li>
+<li>开源了两个猿题库客户端的iOS基础库：<a href="https://github.com/yuantiku/YTKKeyValueStore">YTKKeyValueStore</a> 和 <a href="https://github.com/yuantiku/YTKNetwork">YTKNetwork</a>，分别得到了400多和700多的star。</li>
+<li>微信公共帐号：iOSDevTips 发表了将近100篇推送，得到了10000多的粉丝。我的微博 <a href="http://www.weibo.com/tangqiaoboy">@唐巧_boy</a> 分享了上百条技术内容，得到了13000多的粉丝。</li>
+</ol>
+
+
+<p>年初的时候我还会怀疑自己的影响力，但现在已经习惯了成为iOS界的“大V”了。微博上分享技术类信息转发常常超过50次，也会常常被人@提醒来请教问题。</p>
+
+<p>那我是如何树立起自己的技术影响力的呢？这其实主要是通过写博客的方式。我没有想到，从我2010年底开始学iOS开发，到现在短短4年时间，通过博客我能够获得这么大的影响力。现在我也看到越来越多的人加入到技术分享的行列中，用原创的技术博客给整个社区带来知识的分享，同时收获自己的成长和影响力。</p>
+
+<h2>关于创业</h2>
+
+<p>我们今年顺利拿到了<a href="http://tech.sina.com.cn/i/2014-07-22/11209510273.shtml">C轮1500万美元的融资</a>，估值达到1.25亿美元。我自己的创业感悟就是觉得决策团队非常牛逼，另外大家的执行力都非常强。我今年除了做日常的iOS开发外，还承担了一些别的事情，包括：</p>
+
+<ul>
+<li>指导了一位iOS开发零基础的实习生，现在他能够独立的进行开发，非常高兴看着他取得这么大的进步。</li>
+<li>指导了一位实习生完成了Latex渲染引擎在移动端的移植（但其实主要是他的工作出色），这个工作使得我们的客户端在显示公式上和市面上所有同类应用相比具有决定性优势。</li>
+<li>承担了校园招聘的组织工作，大家都被出面试题搞得焦头烂额的，不过最终我们还是搞定了，也收获了不少很有潜力的应届生。</li>
+<li>开始负责小猿搜题这个项目，开始更多地思考产品方面的东西，更多的沟通工作，也开始为更多事情焦虑。</li>
+</ul>
+
+
+<p>负责小猿搜题项目对我是一个新的挑战，之前我作为一个iOS程序员，基本上都只需要专注于技术层面上的实现。而现在我不但需要参与产品的讨论，也需要做更多的组织沟通工作。我们团队仍然保持着强大的执行力，小猿搜题从7月底立项到9月底上线只经历了短短2个月时间。而我们的评测数据显示，我们在搜索质量上毫不逊于竞争对手。但我们需要改进的事情还有很多，希望小猿搜题的用户量和活跃度能够超过猿题库，成为又一个拥有海量初高中生用户的产品。</p>
+
+<h2>读书</h2>
+
+<p>今年为了更加深入的掌握Swift的函数式编程特性，学习了Scala语言以及coursea上的Funtional Programming相关的课程，不过仍然没有找到感觉。我感觉可能后面多写一些Swift程序才能有深入的理解。</p>
+
+<p>今年也读了不少产品的书，包括《我的互联网方法论》、《思考的技术》、《失控》、《定位》等。</p>
+
+<h2>个人Milestone</h2>
+
+<ul>
+<li>完成 《iOS开发进阶》的写作</li>
+<li>创业完成C轮融资，开始负责小猿搜题项目</li>
+<li>有了宝宝</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[写在创业两周年]]></title>
@@ -447,49 +513,6 @@ system "git push -u gitcafe master:gitcafe-pages"
 <p>希望本文能让那些喜欢写作和分享的人，都能坚持自己的这个爱好，最终从中得到巨大的回报！</p>
 
 <p>愿大家玩得开心～</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[从Facebook看移动开发的发展]]></title>
-    <link href="http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook/"/>
-    <updated>2014-04-16T20:37:59+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/04/16/mobile-development-view-from-facebook</id>
-    <content type="html"><![CDATA[<p><img src="/images/facebook-logo.jpg"></p>
-
-<h2>从Facebook谈起</h2>
-
-<p>Facebook最近绝对是互联网界的新闻明星。它首先是进行了大手笔的收购：2014年2月，Facebook 以 160 亿美元现金加股票，以及30 亿美元受限制股票福利的方式<a href="http://tech.ifeng.com/internet/special/fb-whatsapp/content-1/detail_2014_02/21/34032969_0.shtml">收购移动 IM 应用 WhatsApp</a>，总收购成本 190 亿美元。然后是继续发布了新产品：2014年2月，Facebook发布了一个新的移动端新闻阅读应用<a href="https://www.facebook.com/paper">Paper</a>。最后，Facebook最近还将自己使用的大量工具开源，包括开源了Paper的加载效果<a href="https://github.com/facebook/Shimmer">Shimmer</a>，LLDB的增强工具<a href="https://github.com/facebook/chisel">chisel</a>，以及Key-Value Observing工具<a href="https://github.com/facebook/KVOController">KVOController</a>，如果说这些开源工具让程序员如获至宝的话，那么Facebook将Paper的交互设计工具<a href="http://facebook.github.io/origami/">Origami</a>免费开放，则是对广大设计师的福音，极大地方便了移动交互设计工作的开展。</p>
-
-<p>2014年对于Facebook来说也是一个值得纪念的日子。因为从2004年2月4日Facebook产品上线到现在，Facebook刚刚走过10个年头。10年前，Facebook的创始人扎克伯格才19岁，是哈佛大学的一名学生。转眼间10年后，Facebook已经成长为全球最大的社交网络，月活跃用户达到12亿，市值约1200亿美元。</p>
-
-<p>业界内大多讨论的话题都围绕在Facebook收购WhatsApp这件事情上，而作为一个移动开发者，我更加看重Facebook 发布Paper这件事情。因为Paper并不是一个简单的应用，它有着非常优秀的交互效果，并且在产品设计和技术上都使用了许多前沿的技术，那就让我们看看，Paper的开发到底有何不同之处？</p>
-
-<h2>交互设计</h2>
-
-<p>我们首先从产品设计上看Paper的不同之处。Paper虽然只是一个新闻客户端，但从大家对Paper的评价上，我们发现优秀的交互再一次成为大家关注的焦点。回想那些成功的应用，大多都有着令人心动的交互效果，例如：Tweetie的下拉刷新，现在基本上成为iPhone上内容刷新的标准。Path跳出来的红心让人心动，很多朋友甚至会没事点那个红心，欣赏那流畅的按钮散开效果。还有Mailbox，用流畅的手势操作，将邮件管理与任务管理完美结合起来。</p>
-
-<p>国外成功的优秀应用也在影响着国内。交互设计不同于平面设计，不能简单地用Photoshop展现，而交互设计对于移动应用的成功又异常关键，所以需要花费不少时间来设计，因此产品经理很难兼顾地做交互设计。所以，在国内的一线互联网公司里，交互设计师这个职位慢慢成了移动应用的标配。但是在大部分的非一线互联网公司里面，移动开发的设计仍然停留在由产品经理简单潦草的完成阶段。所以，Facebook这次Paper的成功发布，再一次给移动开发的从业者指出了交互设计的重要性。</p>
-
-<p>回顾中国互联网产业的发展我们可以发现，产品经理（Product Manager）这个职位也是最近五、六年才成为互联网公司的标配的，想必在不远的将来，除着交互设计越来越重要，移动交互设计师也会成为每一个互联网公司重要的必备职位。</p>
-
-<p>另一方面，由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集<a href="http://facebook.github.io/origami/">Origami</a>，使得交互设计工作得到更好的辅助。而且在Facebook的带动下，<a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>也出现了。jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。</p>
-
-<p>不过另一方面，该工具仍然需要设计师具备一定的基础编码能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。</p>
-
-<h2>移动开发技术</h2>
-
-<p>随着iOS依赖管理工具Cocoapods和大量第三方开源库成熟起来，业界积累了大量的优秀开源项目。这次Facebook开发Paper使用了<a href="http://blog.rpplusplus.me/blog/2014/02/11/facebook-paper-used-3rd/">将近100个第三方开源库</a>，极大地减化了自己的应用开发任务。相信随着移动开发的发展，移动开发的生态圈会越来越成熟，基础的开源组件也将将越来越丰富，广大开发者都将从中受益。</p>
-
-<p>另一方面，Facebook的工程师在<a href="http://www.quora.com/What-exactly-did-Jason-Prado-mean-when-he-said-Xcode-cannot-handle-our-scale/answer/Scott-Goodson-1">Quora上反馈</a>说Paper在Xcode下打开需要40多秒钟，编译一次需要30分钟。这反映出大量的开源库的使用也给iOS集成编译环境Xcode提出了新的挑战，相信苹果会花大力气解决Xcode的性能问题。</p>
-
-<h2>总结</h2>
-
-<p>Facebook发布的Paper让我看到了移动开发领域的快速发展，大量新的工具和开源技术给了设计师和程序员机会和挑战，相信在移动互联网快速发展的浪潮中，会涌现出越来越多优秀的移动应用。谁会是未来移动互联网的霸主？让我们拭目以待。</p>
-
-<h2>版权说明</h2>
-
-<p>本文已发表在《程序员》杂志2014年4月刊上，链接为：<a href="http://www.csdn.net/article/2014-04-16/2819341">http://www.csdn.net/article/2014-04-16/2819341</a></p>
 ]]></content>
   </entry>
   

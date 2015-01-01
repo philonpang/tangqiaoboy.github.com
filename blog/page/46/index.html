@@ -9,7 +9,15 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="功能设计 先申明一下，我是码农，不是一个产品经理，但我觉得现有市面上的很多App，设计的“升级提示功能”都不太友好。在此分享一下我的想法，欢迎大家讨论。 这些App包括：新浪微博、网易微博、网易新闻客户端以及大部分带有升级提示功能的App，所以我觉得这个问题还是挺普遍的。对于该问题， &hellip;">
+  <meta name="description" content="昨天在写iOS代码的时候，调试的时候模拟器崩溃了。异常停在了如下整个main函数的入口处： 1
+2
+3
+4
+5
+6
+7
+int main(int argc, char *argv[])
+{ @autoreleasepool { // 异常停在了下面这行，毫无提示作用 return &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +90,66 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/11/14/make-stack-trace-more-readable/">让XCode的 Stack Trace信息可读</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T20:19:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天在写iOS代码的时候，调试的时候模拟器崩溃了。异常停在了如下整个main函数的入口处：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// 异常停在了下面这行，毫无提示作用</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">UIApplicationMain</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="nb">nil</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">MyClass</span> <span class="n">class</span><span class="p">]));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/11/14/make-stack-trace-more-readable/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/11/10/how-to-design-upgrade-notice/">改进iOS客户端的升级提醒功能</a></h1>
     
     
@@ -126,59 +194,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/27/use-opencv-in-ios/">在MacOS和iOS系统中使用OpenCV</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-27T20:43:00+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p><img src="/images/opencv.png"></p>
-
-<p><a href="http://opencv.org/about.html">OpenCV</a> 是一个开源的跨平台计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。</p>
-
-<p>最近试着在MacOS和iOS上使用OpenCV，发现网上关于在MacOS和iOS上搭建OpenCV的资料很少。好不容易搜到些资料，却发现由于OpenCV和XCode的版本更新，变得不再有用了。有些问题费了我很多时间，在此总结分享给大家，希望后来人少走些弯路。</p>
-
-<p>可以预见到，随着XCode和OpenCV的版本更新，本文可能不再有效了。</p>
-
-<p>所以特此注明，文本介绍的搭建方法仅针对于 XCode4.5.1 和 OpenCV 2.4.2版本。</p>
-
-<p>（2013-6-22）更新: 我在XCode4.6.2 和 OpenCV 2.4.5版本的时候重新进行了一次环境搭建，以下内容做了相应调整，应该也是有效的。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/10/27/use-opencv-in-ios/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/47/">&larr; Older</a>
@@ -200,6 +215,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/01/2014-summary/">2014年个人总结</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/12/31/ios-weekly-35/">iOS移动开发周报-第35期</a>
@@ -245,10 +264,6 @@
         <a href="/blog/2014/10/03/opensouce-a-key-value-storage-tool/">开源一个Key-Value存储工具类</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/10/01/startup-2nd-year-summary/">写在创业两周年</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -270,7 +285,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  &copy; 2014 - 唐巧 -
+  &copy; 2015 - 唐巧 -
   <span class="credit">基于 <a href="http://octopress.org" target="_blank">Octopress</a></span>
   <span class="credit">, 感谢 <a href="http://gitcafe.com/signup?invited_by=tangqiaoboy" target="_blank">GitCafe</a> 为本站提供存储空间</span>
 </p>

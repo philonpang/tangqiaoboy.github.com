@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。 这是本技术分享系列文章的第三篇。本文涉及的技术细节是：基于CoreText的排版引擎。 ">
+  <meta name="description" content="简介 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 Flurry是一家专门为移动应用提供数据统计和分析的公司。他们的数据统计分析SDK支持的平台包括iPhone, iPad, Android, Windows Phone, Java &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,73 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/11/14/use-flurry-to-analyse-data/">使用Flurry来统计和分析用户行为</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-14T13:51:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>简介</h2>
+
+<p><img src="/images/flurry-logo.png"></p>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/articles/use-flurry-to-statistics-and-analysis-user-behavior">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<p><a href="http://www.flurry.com/">Flurry</a>是一家专门为移动应用提供数据统计和分析的公司。他们的数据统计分析SDK支持的平台包括iPhone, iPad, Android, Windows Phone, Java ME和BlackBerry。使用Flurry服务的公司包括eBay、Yahoo、Hulu和Skype等超过11万家公司，涉及的应用超过36万个。</p>
+
+<p>利用Flurry提供的分析平台，我们可以很容易地自动统计出应用的使用情况，例如：</p>
+
+<ol>
+<li>每天（每周或每月）登录用户数，应用使用次数</li>
+<li>每天（每周或每月）新用户数，活跃用户数</li>
+<li>用户的所在地、年龄、性别的分布情况</li>
+</ol>
+
+
+<p>Flurry也可以自动统计出移动设备的分类情况，例如：</p>
+
+<ol>
+<li>使用3G，Wifi的会话比例</li>
+<li>使用iOS系统各版本(例如iOS6.0, iOS7.0等)的比例</li>
+<li>使用iOS各种设备（例如iPhone4, iPhone5等)的比例</li>
+</ol>
+
+
+<p>除了上面介绍的自动统计项目，Flurry SDK也提供了统计用的相关API，便于我们针对自己产品的特点，做针对性的统计。例如统计应用中某个按钮的按下次数，或者网络请求的平均响应时间等。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/11/14/use-flurry-to-analyse-data/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/10/21/the-tech-detail-of-ape-client-3/">猿题库iOS客户端的技术细节（三）：基于CoreText的排版引擎</a></h1>
     
     
@@ -122,51 +189,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/10/19/the-tech-detail-of-ape-client-2/">猿题库iOS客户端的技术细节（二）：答题卡扫描算法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-19T11:10:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>本人今年主要在负责猿题库iOS客户端的开发，本文旨在通过分享猿题库iOS客户端开发过程中的技术细节，达到总结和交流的目的。</p>
-
-<p>这是本技术分享系列文章的第二篇。本文涉及的技术细节是：答题卡扫描算法。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/10/19/the-tech-detail-of-ape-client-2/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/34/">&larr; Older</a>
@@ -188,6 +210,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/07/ios-2014-summary/">解读2014之iOS篇：拥抱变化</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/01/01/2014-summary/">2014年个人总结</a>
@@ -231,10 +257,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/12/ios-weekly-27/">iOS移动开发周报-第27期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/03/opensouce-a-key-value-storage-tool/">开源一个Key-Value存储工具类</a>
       </li>
     
   </ul>

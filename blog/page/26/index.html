@@ -9,7 +9,8 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 本周iOS移动开发周报， &hellip;">
+  <meta name="description" content="这是一次和 @onevcat 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括： 系统对象的缓存
+Tagged Pointer对象 autorelase对象 按照苹果的编程约定，由非alloc,copy返回的对象都是autorelease的，所以对于以下代码， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +83,164 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">NSNumber对象缓存以及Tagged Pointer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T21:09:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是一次和 <a href="http://onevcat.com/">@onevcat</a> 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括：</p>
+
+<ol>
+<li>系统对象的缓存</li>
+<li><code>Tagged Pointer</code>对象</li>
+</ol>
+
+
+<h2>autorelase对象</h2>
+
+<p>按照苹果的编程约定，由非<code>alloc</code>,<code>copy</code>返回的对象都是<code>autorelease</code>的，所以对于以下代码，虽然变量<code>number</code>是<code>__weak</code>的，但是由于<code>[NSNumber numberWithInt:100]</code>返回的对象是<code>autorelase</code>的，所以仍然能通过NSLog打印出来。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>从汇编代码中看，以上代码在创建<code>number</code>变量时，是通过<code>objc_loadWeak</code>方法进行的。而根据 <a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#arc-runtime-objc-loadweak">Clang的官方文档</a>，<code>objc_loadWeak</code>方法会<code>retain</code>并<code>autorelease</code>这个对象。所以给一个weak对象赋值，它并不会马上释放，而是会放到<code>autorelease pool</code>中，与<code>autorelease pool</code>一起释放。</p>
+
+<p>如下是<code>objc_loadWeak</code>的代码示例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">id</span> <span class="nf">objc_loadWeak</span><span class="p">(</span><span class="kt">id</span> <span class="o">*</span><span class="n">object</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">objc_autorelease</span><span class="p">(</span><span class="n">objc_loadWeakRetained</span><span class="p">(</span><span class="n">object</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>为了验证这个回答，我们又做了一个有趣的例子来验证，如下所示：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
+</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在上面这个例子中，果然如我们所料，<code>number</code>在通过NSLog查看值时，变成了nil。</p>
+
+<h3>讨论二：关于NSNumber对象的缓存</h3>
+
+<p>我们在做以上实验时，发现一个有趣的现象，如果你把100变成了10，则<code>number</code>变成在NSLog时，就能够输出值来，不再是nil了。如下是测试代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__weak</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span><span class="p">;</span>
+</span><span class='line'><span class="err">@</span><span class="n">autoreleasepool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;number = %@&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>经过 onevcat 的实验，从-1 ～ 12都是可以输出的，而其它值却会变成nil。于是我们猜测是系统对这些常见值的对象做了缓存，于是我们写了如下代码来验证。</p>
+
+<p>结果果然是这样，多次创建值为10的<code>NSNumber</code>对象，其地址都是<font color=red>一样的</font>。而多次创建值为100的<code>NSNumber</code>对象，每次创建获得的对象地址都是<font color=red>不一样的</font>。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSNumber</span> <span class="o">*</span><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="n">another</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSNumber</span> <span class="nl">numberWithInt:</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%p %p&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">another</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>讨论三：64位系统与Tagged Pointer对象</h3>
+
+<p>讨论本来已经结束了，结果我在写这篇博客的时候，手贱又测试了一下，发现在64位的模拟器下，无论创建多少次，也无论int的值是多少，所有相同int值的<code>NSNumber</code>对象地址都是一样的！</p>
+
+<p>疑惑了几分钟，我突然想起WWDC中介绍的64位系统引放的<code>Tagged Pointer</code>，恍然大悟。</p>
+
+<p>在WWDC2013的《Session 404 Advanced in Objective-C》视频中，苹果介绍了<code>Tagged Pointer</code>。<code>Tagged Pointer</code>的存在主要是为了节省内存。我们知道，对象的指针大小一般是与机器字长有关，在32位系统中，一个指针的大小是32位（4字节），而在64位系统中，一个指针的大小将是64位（8字节）。</p>
+
+<p>在64位系统中，如果我们真正使用一个指针来存储<code>NSNumber</code>实例，那么我们首先需要一个8字节的指针，另外需要一块内存存储<code>NSNumber</code>实例，这通常又是8字节。这样的内存开销是比较大的。苹果对于<code>NSNumber</code>和<code>NSDate</code>对象，改成了用<code>Tagged Pointer</code>来存储，简单来说，<code>Tagged Pointer</code>是一个假的指针，它的值不再是另一个地址，而就是对应变量的值。</p>
+
+<p><code>Tagged Pointer</code>主要有以下3个特点：</p>
+
+<ol>
+<li><code>Tagged Pointer</code>专门用来存储小的对象，例如<code>NSNumber</code>和<code>NSDate</code></li>
+<li><code>Tagged Pointer</code>指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已！所以，它的内存并不存储在堆中，也不需要malloc和free。</li>
+<li>在内存读取上有着3倍的效率（以前是寻址->发消息->获取值，现在直接获取值），创建时比以前快106倍。</li>
+</ol>
+
+
+<p> 相关英文文档截图如下：</p>
+
+<p> <img src="/images/tagged_pointer_1.jpg"></p>
+
+<p>但<code>Tagged Pointer</code>的引入也带来了问题，即<code>Tagged Pointer</code>因为并不是真正的对象，而是一个伪对象，所以你如果完全把它当成对象来使，可能会让它露马脚。比如我在<a href="http://blog.devtang.com/blog/2013/10/15/objective-c-object-model/">《Objective-C对象模型及应用》</a>一文中就写道，所有对象都有 <code>isa</code> 指针，而<code>Tagged Pointer</code>其实是没有的，因为它不是真正的对象。</p>
+
+<p>因为不是真正的对象，所以如果你直接访问<code>Tagged Pointer</code>的<code>isa</code>成员的话，在编译时将会有如下警告：</p>
+
+<p> <img src="/images/tagged_pointer_2.jpg"></p>
+
+<p>对于上面的写法，应该换成相应的方法调用，如 <code>isKindOfClass</code> 和 <code>object_getClass</code>，如下图所示：</p>
+
+<p> <img src="/images/tagged_pointer_3.jpg"></p>
+
+<p>至此，所有疑问都已经解决，开心～</p>
+
+<p>另外这儿有一篇介绍<code>Tagged Pointer</code>的文章：<a href="http://blog.xcodev.com/archives/tagged-pointer-and-64-bit/">《64位与Tagged Pointer》</a>，一并推荐给大家。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/03/21/ios-weekly-4/">iOS移动开发周报-第4期</a></h1>
     
     
@@ -144,94 +303,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/14/ios-weekly-3/">iOS移动开发周报-第3期</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-14T15:10:00+08:00" pubdate data-updated="true">Mar 14<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/apple-ios71-xcode51">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本周移动开发周报带来如下内容：苹果发布iOS7.1相关内容，ReactiveCocoa和Origami相关的教程，一些来自于Facebook的开源项目。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://tech.sina.com.cn/it/apple/2014-03-11/01399228853.shtml">《苹果发布iOS 7.1更新》</a>：苹果在3月11日正式发布了iOS 7.1更新，支持连接车载系统CarPlay。iOS 7.1 对用户界面进一步做了改进，同时改进了Touch ID指纹识别的能力，并针对iPhone 4做了优化。也此同时，苹果也同步放出了支持iOS 7.1的集成编译环境Xcode 5.1正式版，开发者可以从<a href="http://developer.apple.com/">苹果开发者中心</a>下载新版本的Xcode。</p></li>
-<li><p><a href="http://www.polarb.com/publishers/results/poll_sets/2042">《iOS 7.1 vs iOS 7》</a>：文章对比了iOS 7.1相对于iOS 7所做的细节上的调整，这些调整结果也支持用户打分。从打分结果上看，大部分的调整得到了用户的肯定。</p></li>
-<li><p><a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">《3月的TIOBE编程语言排行榜》</a>：三月的TIOBE编程语言排行榜，Objective-C和C++继续拉开差距，稳坐第三的位置。而在半年前，二者还是几乎一样的Rating值，可见移动开发在继续升温。</p></li>
-<li><p>升级到Xcode 5.1和iOS 7遇到的各种开发问题及解决办法汇总：</p>
-
-<ul>
-<li><a href="http://weibo.com/2157980617/AAwK4kpE8?mod=weibotime">《iOS 企业证书部署无效的问题》</a></li>
-<li><a href="http://weibo.com/1658814735/AAvyB25js">《clipsToBounds 属性默认值变了》</a></li>
-<li><a href="http://weibo.com/2157980617/AAv3IwVrH?mod=weibotime">《第三方库不支持64位造成编译错误》</a></li>
-</ul>
-</li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://www.raywenderlich.com/62699/reactivecocoa-tutorial-pt1">《ReactiveCocoa Tutorial – The Definitive Introduction》</a>: RayWenderlich网站放出了从零开始学ReactiveCocoa系列教程第一课。讲得很基本很实用，适合想学ReactiveCocoa的同学作为入门教材。</p></li>
-<li><p><a href="http://imkevin.me/post/78301132929/nginx-spdy-ios">《让 Nginx SPDY 和 iOS 交朋友》</a>：<a href="http://zh.wikipedia.org/wiki/SPDY">SPDY</a>是Google开发的基于传输控制协议（TCP）的应用层协议，目前已经被用于Google Chrome浏览器中来访问Google的SSL加密服务。SPDY协议类似于HTTP，但旨在缩短网页的加载时间和提高安全性。SPDY协议通过压缩、多路复用和优先级来缩短加载时间。作者在文章中分享了如何在iOS应用中使用SPDY协议的经验。</p></li>
-<li><p><a href="http://blog.xcodev.com/archives/access-iphone-simcard-contacts-via-baseband/">《利用iPhone基带读写SIM卡联系人》</a> 和 <a href="http://blog.xcodev.com/archives/send-sms-via-iphone-baseband/">《利用iPhone基带发送短信息》</a>：文章简要介绍了一下SIM卡的一些常识，AT指令中中文字符的相关处理，以及如何读写SIM卡中的联系人数据，最终实现了利用iPhone基带发送短信息的功能。不过由于苹果沙盒(sandbox)的限制，该相关知识只能在越狱手机上应用。</p></li>
-<li><p><a href="http://vimeo.com/88468610">《The 4 Minute Guide to Quartz Composer
-》</a>和<a href="http://vimeo.com/85578380">《Prototyping with Facebook Origami》</a>：两篇介绍Facebook免费提供的基于Quartz Composer的交互设计工具Origami的视频教程（需要翻墙）。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li>手工写<code>.gitignore</code>文件常常费时费力还容易出错，<a href="http://www.gitignore.io/">http://www.gitignore.io/</a> 是一个<code>.gitignore</code>的生成网站，iOS工程的<code>.gitignore</code>生成地址是这个： <a href="http://www.gitignore.io/api/xcode,objective-c">http://www.gitignore.io/api/xcode,objective-c</a></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/facebook/Shimmer">Shimmer</a>: Facebook 开源了他旗下应用 Paper 的加载效果，它使用了WWDC 2009中介绍的<code>-[CALayer mask]</code>的技术方案。</p></li>
-<li><p><a href="https://github.com/facebook/chisel">chisel</a>：Facebook开源了LLDB的增强工具chisel，其中的许多命令对于调试界面非常有帮助。</p></li>
-<li><p><a href="https://github.com/facebook/KVOController">KVOController</a>: Facebook开源了Key-Value Observing工具KVOController。KVO是一个在iOS应用程序开发中，用于模块间通讯的技术技术，常常用于保证界面对于模型数据变化的实时响应。</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/27/">&larr; Older</a>
@@ -253,6 +324,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/11/how-to-finish-ios-pro-book/">我是如何完成《iOS开发进阶》的编写的？</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/01/07/ios-2014-summary/">解读2014之iOS篇：拥抱变化</a>
@@ -296,10 +371,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/22/ios-weekly-28/">iOS移动开发周报-第28期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/12/ios-weekly-27/">iOS移动开发周报-第27期</a>
       </li>
     
   </ul>

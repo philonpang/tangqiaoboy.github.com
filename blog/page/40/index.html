@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 随着近几年的发展，Git已经成为开源界的标准的版本控制工具。开源界的重量级项目，如Linux, Android, Eclipse, Gnome, KDE, Qt, ROR, Debian，无一例外的都是使用git来进行版本控制。如果你还不会Git，那么恕我直言，你已经out了， &hellip;">
+  <meta name="description" content="前言 我在去年的一篇文章《iOS5中UIViewController的新方法》中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,53 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/05/18/goodbye-viewdidunload/">再见，viewDidUnload方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T17:37:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>我在去年的一篇文章<a href="http://blog.devtang.com/blog/2012/02/06/new-methods-in-uiviewcontroller-of-ios5/">《iOS5中UIViewController的新方法》</a>中介绍了iOS5引入的关于ViewController的新方法。但是现在如果运行该文章中的Sample代码的话，你会发现Log中不会再出现viewDidUnload方法被调用的记录。这是因为在iOS6中，viewDidUnload回调方法被Deprecated掉了。查看苹果的文档，可以看到如下的说明。</p>
+
+<p><img src="/images/viewdidunload-1.jpg"></p>
+
+<p>那么，原本在viewDidUnload中的代码应该怎么处理？在iOS6中，又应该怎么处理内存警告？带着这些问题，我查找了一些资料，在此分享给大家。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/05/18/goodbye-viewdidunload/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/05/08/git-submodule-issues/">Git Submodule的坑</a></h1>
     
     
@@ -124,78 +171,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/30/the-history-of-wwdc/">历史上的WWDC门票售空图片</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-30T22:40:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>2008年</h2>
-
-<p>62天售空。介绍了iPhone 3G。</p>
-
-<p><img src="/images/wwdc-2008.jpg" width="500px" /></p>
-
-<h2>2009年</h2>
-
-<p>33天售空。介绍了iPhone 3GS。</p>
-
-<p><img src="/images/wwdc-2009.png" width="500px" /></p>
-
-<h2>2010年</h2>
-
-<p>8天售空。介绍了iPhone 4。</p>
-
-<p><img src="/images/wwdc-2010.png" width="500px" /></p>
-
-<h2>2011年</h2>
-
-<p>12小时售空。介绍了iOS5, ARC, Storyboard, iCloud, Mac OS X Lion。</p>
-
-<p>从这一年开始，iPhone新品都没能赶上在WWDC中介绍。</p>
-
-<p><img src="/images/wwdc-2011.jpg" width="500px" /></p>
-
-<h2>2012年</h2>
-
-<p>2小时售空。介绍了iOS6。</p>
-
-<p><img src="/images/wwdc-2012.jpg" width="500px" /></p>
-
-<h2>2013年</h2>
-
-<p>2分钟售空。期待。</p>
-
-<p><img src="/images/wwdc-2013.jpg" width="500px" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/41/">&larr; Older</a>
@@ -217,6 +192,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/18/ios-weekly-36/">iOS移动开发周报-第36期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/01/18/explain-ios-pro-book/">对《iOS开发进阶》一书的解释</a>
@@ -260,10 +239,6 @@
     
       <li class="post">
         <a href="/blog/2014/11/15/ios-weekly-30/">iOS移动开发周报-第30期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/30/ios-weekly-29/">iOS移动开发周报-第29期</a>
       </li>
     
   </ul>

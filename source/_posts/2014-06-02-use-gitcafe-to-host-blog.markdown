@@ -11,7 +11,7 @@ categories: summary
 
 但是自从我的博客每天访问量超过2000次以后，我就发现博客的访问速度还是一个不可忽视的问题。通过[监控宝](http://www.jiankongbao.com/)和[Google Analytics](http://www.google.com/analytics/)，我发现有些博客文章的平均打开时间长达4秒钟。于是我开始考虑将博客搭建在更快的服务器上面。
 
-我的首先考虑是购买独立的VPS，[Linode](https://www.linode.com/pricing)每月30$的价格还是略贵，于是我买的是 [DigitalOcean](https://www.digitalocean.com/?refcode=f54eef197afd)，[DigitalOcean](https://www.digitalocean.com/?refcode=f54eef197afd)算下来每月只需要5$。于是在一个周末，我花时间购买了DigitalOcean家的VPS，安装了Nginx，然后在上面运行了一个脚本，定时将我github博客的内容自动更新过来（其实就是定期`git pull`一下我博客的repo）。
+我的首先考虑是购买独立的VPS，我买的是 [DigitalOcean](https://www.digitalocean.com/?refcode=f54eef197afd)，[DigitalOcean](https://www.digitalocean.com/?refcode=f54eef197afd)算下来每月只需要5$。于是在一个周末，我花时间购买了DigitalOcean家的VPS，安装了Nginx，然后在上面运行了一个脚本，定时将我github博客的内容自动更新过来（其实就是定期`git pull`一下我博客的repo）。
 
 就这样运行了一个月，我发现虽然[DigitalOcean](https://www.digitalocean.com/?refcode=f54eef197afd)服务器的ping值相比github要快一些。但是从监控数据上看，整体的网页访问速度并没有什么提高。就在我在微博上抱怨的时候，一个朋友推荐我试试[GitCafe](http://gitcafe.com/signup?invited_by=tangqiaoboy)。于是我就尝试了一下，结果你猜怎么着？我被吓坏了。
 

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-01-11T22:36:54+08:00</updated>
+  <updated>2015-01-18T10:22:35+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[对《iOS开发进阶》一书的解释]]></title>
+    <link href="http://blog.devtang.com/blog/2015/01/18/explain-ios-pro-book/"/>
+    <updated>2015-01-18T10:17:21+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/01/18/explain-ios-pro-book</id>
+    <content type="html"><![CDATA[<p>《iOS开发进阶》虽然仅仅在<a href="http://product.china-pub.com/3770871">互动出版社</a>可以买到，还没有在京东和亚马逊上架，但是在 v2ex 上已经引起了一些讨论和误解，见 <a href="http://v2ex.com/t/161929?p=1">此贴</a>。所以我想在这里，对本书的内容和定位做一些解释。</p>
+
+<h2>定位</h2>
+
+<p>《iOS开发进阶》定位于帮助那些iOS开发刚刚入门的同行快速提高自己的水平，适用于至少有3个月以上iOS开发经验的读者。不适合没有任何iOS开发基础的读者阅读。对于iOS熟练开发者，本书也能补充其知识点的可能的盲区，使其相关知识体系更为完善。</p>
+
+<p>我可能需要强调一下，对于iOS熟练开发者（工作时间大于1年），本书也<font color=blue>只能做到补充其可能的盲区的作用</font>。或者有一些比较牛的朋友，本书也可能<font color=red>补不了什么盲区</font>。</p>
+
+<p>我自认为其中 “CoreText排版引擎章节”以及第三章的底层原理部分是适合这部分iOS熟练开发者的。但不排除很多熟练开发者对底层原理已经很了解了，同时对CoreText不感兴趣。</p>
+
+<p>所以希望iOS熟练开发者能够在买书前翻阅一下<a href="https://github.com/tangqiaoboy/iOS-Pro/blob/master/TableOfContents.md">本书目录</a>。</p>
+
+<h2>内容</h2>
+
+<p>本书中的所有内容都是我的原创，但是有部分在博客上公开过，我自己数了一下，一共有9个章节在我的博客上可以看到完整的内容，另外11个章节在我的博客上只能看到部分内容或完全看不到内容。但是很有可能，随着图书的慢慢发售，我将其它未公开的电子版内容放到网上。</p>
+
+<p>经常看我的博客的朋友，可能会有些失望或者觉得不值。所以希望大家在买书前翻阅一下<a href="https://github.com/tangqiaoboy/iOS-Pro/blob/master/TableOfContents.md">本书目录</a>，以避免买了后悔。</p>
+
+<h2>书名</h2>
+
+<p>有人抱怨说《iOS开发进阶》这个书名太过于有欺骗性，应该叫《iOS开发备忘录》。对此我不太认同，《iOS开发进阶》很好地排除了那些iOS初学者，从书名上他们就会放弃看本书，而如果叫《iOS开发备忘录》就不一定了。另外，任何一个读者都应该看过目录再买书的吧？我不认为本书的书名会有那么大的欺骗性。</p>
+
+<h2>质量</h2>
+
+<p>一些人批评本书的内容质量比国外的 objc.io 和 <a href="raywenderlich.com/">RW</a> 的书差多了。对此我想说，您批评得对，我还需要努力！但是这不代表本书就没有价值吧？例如CoreText章节，我现在在国内外的图书中，仍然没有看到有谁把这个从浅入深讲完整的呀。第一部分对工具的介绍虽然技术含量低，但也没有谁完整整理过。与其自叹和国外有差距，不如自己实际来努力一下，改善一下国内的知识分享环境，不是更好么？</p>
+
+<h2>最后</h2>
+
+<ul>
+<li>我写本书不指望能挣多少钱，实际上它也不能给我带来多少收入。但我真心希望这本书能够帮助到大家。现在看来，本书最合适的读者仍然是刚刚入门3个月的开发者。</li>
+<li>请所有购买此书的朋友购买前先看目录：<a href="https://github.com/tangqiaoboy/iOS-Pro/blob/master/TableOfContents.md">本书目录</a>。一本书不可能适合所有水平的读者，请自己决定。</li>
+</ul>
+
+
+<p>愿大家玩得开心～</p>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-18T10:17:21+08:00" pubdate data-updated="true">Jan 18<span>th</span>, 2015</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/summary/'>summary</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[我是如何完成《iOS开发进阶》的编写的？]]></title>
@@ -1840,77 +1908,6 @@ Sublime text 的问题就是无法方便地预览最后效果。</p>
 
 
 <time datetime="2014-09-09T21:16:05+08:00" pubdate data-updated="true">Sep 9<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第23期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/09/01/ios-weekly-23/"/>
-    <updated>2014-09-01T20:22:54+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/09/01/ios-weekly-23</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/08/afnetworking2.0">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果发出9月9日发布会邀请函，AFNetworking2.0源码解析，objc与鸭子对象，Protecting iOS Applications等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><a href="http://tech.sina.com.cn/mobile/n/apple/2014-08-29/01339582927.shtml">《苹果发出9月9日发布会邀请函》</a>：苹果公司刚刚向外界发出邀请函，太平洋时间9月9日上午10点（北京时间9月10日凌晨1点），将在美国库伯提诺市弗林特剧院举行发布会。本次发布会的主角极有可能是iPhone 6及iWatch智能手表。</li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://blog.cnbang.net/tech/2320/">《AFNetworking2.0源码解析》</a>：AFNetworking是著名的iOS网络库，文章作者分享了其阅读AFNetworking2.0源码的收获。</p></li>
-<li><p><a href="http://www.raywenderlich.com/76433/how-to-make-a-custom-control-swift">《Creating a Custom Control in Swift》</a>：文章介绍了如何使用Swift自定义一个进度条控件。</p></li>
-<li><p><a href="http://baoz.me/452378">《iOS干货精选》</a>：本文是《码农周刊》中的精品文章的集合，包括iOS和Android部分。</p></li>
-<li><p><a href="http://www.topcoder.com/blog/kicking-off-our-500k-learn-swift-series/">《Kicking Off our $500K Learn Swift Series》</a>：TopCoder推出学习Swift系列比赛，拿出多达50万美元奖励学习成绩突出者。</p></li>
-<li><p><a href="https://developer.apple.com/swift/blog/?id=12">《Optionals Case Study: valuesForKeys》</a>：来自苹果官方博客的教程，通过学习Dictionary的valuesForKeys方法，来了解Optional类型。</p></li>
-<li><p><a href="http://blog.csdn.net/u011247468/article/details/16332071">《Xcode5 Asset Catalog 使用备忘》</a>：Asset Catalog是Xcode5引入的一个新的图片管理方式，文章介绍了使用Asset Catalog创建可拉伸图片的方法。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/08/24/objc-duck/">《objc与鸭子对象（上）》</a>、<a href="http://blog.sunnyxx.com/2014/08/26/objc-duck-advanced/">《objc与鸭子对象（下）》</a>：文章上半部分介绍了鸭子类型和它在ObjC中的实践，以及一个使用NSProxy实现JSON Entity的鸭子类。下半部分介绍了鸭子对象的进阶用法，并简单介绍由鸭子对象思想衍生出的依赖注入。</p></li>
-<li><p><a href="http://www.polidea.com/#!heartbeat/blog/Protecting_iOS_Applications">《Protecting iOS Applications》</a>：文章系统地介绍了如何保护iOS程序的代码安全，防止反汇编分析。</p></li>
-<li><p><a href="http://iosdevelopertips.com/xcode/swift-replacement-pragma.html">《Swift’s Answer to #pragma mark, FIXME and TODO》</a>：文章介绍了在ObjC中支持的#pragma mark, FIXME 和 TODO，在Swift语言中是如何使用的。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><a href="https://github.com/Polidea/ios-class-guard">ios-class-guard</a>：一个用于混淆iOS的类名、方法名以及变量名的开源库。</li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-01T20:22:54+08:00" pubdate data-updated="true">Sep 1<span>st</span>, 2014</time> 
 
 <span class="categories">
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: summary | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/summary/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-01-11T22:36:54+08:00</updated>
+  <updated>2015-01-18T10:22:35+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[对《iOS开发进阶》一书的解释]]></title>
+    <link href="http://blog.devtang.com/blog/2015/01/18/explain-ios-pro-book/"/>
+    <updated>2015-01-18T10:17:21+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/01/18/explain-ios-pro-book</id>
+    <content type="html"><![CDATA[<p>《iOS开发进阶》虽然仅仅在<a href="http://product.china-pub.com/3770871">互动出版社</a>可以买到，还没有在京东和亚马逊上架，但是在 v2ex 上已经引起了一些讨论和误解，见 <a href="http://v2ex.com/t/161929?p=1">此贴</a>。所以我想在这里，对本书的内容和定位做一些解释。</p>
+
+<h2>定位</h2>
+
+<p>《iOS开发进阶》定位于帮助那些iOS开发刚刚入门的同行快速提高自己的水平，适用于至少有3个月以上iOS开发经验的读者。不适合没有任何iOS开发基础的读者阅读。对于iOS熟练开发者，本书也能补充其知识点的可能的盲区，使其相关知识体系更为完善。</p>
+
+<p>我可能需要强调一下，对于iOS熟练开发者（工作时间大于1年），本书也<font color=blue>只能做到补充其可能的盲区的作用</font>。或者有一些比较牛的朋友，本书也可能<font color=red>补不了什么盲区</font>。</p>
+
+<p>我自认为其中 “CoreText排版引擎章节”以及第三章的底层原理部分是适合这部分iOS熟练开发者的。但不排除很多熟练开发者对底层原理已经很了解了，同时对CoreText不感兴趣。</p>
+
+<p>所以希望iOS熟练开发者能够在买书前翻阅一下<a href="https://github.com/tangqiaoboy/iOS-Pro/blob/master/TableOfContents.md">本书目录</a>。</p>
+
+<h2>内容</h2>
+
+<p>本书中的所有内容都是我的原创，但是有部分在博客上公开过，我自己数了一下，一共有9个章节在我的博客上可以看到完整的内容，另外11个章节在我的博客上只能看到部分内容或完全看不到内容。但是很有可能，随着图书的慢慢发售，我将其它未公开的电子版内容放到网上。</p>
+
+<p>经常看我的博客的朋友，可能会有些失望或者觉得不值。所以希望大家在买书前翻阅一下<a href="https://github.com/tangqiaoboy/iOS-Pro/blob/master/TableOfContents.md">本书目录</a>，以避免买了后悔。</p>
+
+<h2>书名</h2>
+
+<p>有人抱怨说《iOS开发进阶》这个书名太过于有欺骗性，应该叫《iOS开发备忘录》。对此我不太认同，《iOS开发进阶》很好地排除了那些iOS初学者，从书名上他们就会放弃看本书，而如果叫《iOS开发备忘录》就不一定了。另外，任何一个读者都应该看过目录再买书的吧？我不认为本书的书名会有那么大的欺骗性。</p>
+
+<h2>质量</h2>
+
+<p>一些人批评本书的内容质量比国外的 objc.io 和 <a href="raywenderlich.com/">RW</a> 的书差多了。对此我想说，您批评得对，我还需要努力！但是这不代表本书就没有价值吧？例如CoreText章节，我现在在国内外的图书中，仍然没有看到有谁把这个从浅入深讲完整的呀。第一部分对工具的介绍虽然技术含量低，但也没有谁完整整理过。与其自叹和国外有差距，不如自己实际来努力一下，改善一下国内的知识分享环境，不是更好么？</p>
+
+<h2>最后</h2>
+
+<ul>
+<li>我写本书不指望能挣多少钱，实际上它也不能给我带来多少收入。但我真心希望这本书能够帮助到大家。现在看来，本书最合适的读者仍然是刚刚入门3个月的开发者。</li>
+<li>请所有购买此书的朋友购买前先看目录：<a href="https://github.com/tangqiaoboy/iOS-Pro/blob/master/TableOfContents.md">本书目录</a>。一本书不可能适合所有水平的读者，请自己决定。</li>
+</ul>
+
+
+<p>愿大家玩得开心～</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[我是如何完成《iOS开发进阶》的编写的？]]></title>
@@ -430,100 +473,6 @@ Sublime text 的问题就是无法方便地预览最后效果。</p>
 <p>PS：我们的公司猿题库创业两年，做在线教育方向，不久前顺利拿到了1500万美元的C轮融资。我们现在很缺人，也欢迎大家加入我们，和我们一起玩Scrum游戏，感兴趣的可以看：<a href="http://www.yuantiku.com/campus/">职位介绍</a>。</p>
 
 <p>愿大家玩得开心～</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[将博客从GitHub迁移到GitCafe]]></title>
-    <link href="http://blog.devtang.com/blog/2014/06/02/use-gitcafe-to-host-blog/"/>
-    <updated>2014-06-02T17:22:02+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/06/02/use-gitcafe-to-host-blog</id>
-    <content type="html"><![CDATA[<p>我之前一直使用<a href="https://pages.github.com/">Github Pages功能</a>以及<a href="http://octopress.org/">Octopress</a>来搭建个人博客，我也写了一篇文章<a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">《象写程序一样写博客：搭建基于github的博客》</a>来分享博客搭建的技术细节。</p>
-
-<p>但是自从我的博客每天访问量超过2000次以后，我就发现博客的访问速度还是一个不可忽视的问题。通过<a href="http://www.jiankongbao.com/">监控宝</a>和<a href="http://www.google.com/analytics/">Google Analytics</a>，我发现有些博客文章的平均打开时间长达4秒钟。于是我开始考虑将博客搭建在更快的服务器上面。</p>
-
-<p>我的首先考虑是购买独立的VPS，<a href="https://www.linode.com/pricing">Linode</a>每月30$的价格还是略贵，于是我买的是 <a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>，<a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>算下来每月只需要5$。于是在一个周末，我花时间购买了DigitalOcean家的VPS，安装了Nginx，然后在上面运行了一个脚本，定时将我github博客的内容自动更新过来（其实就是定期<code>git pull</code>一下我博客的repo）。</p>
-
-<p>就这样运行了一个月，我发现虽然<a href="https://www.digitalocean.com/?refcode=f54eef197afd">DigitalOcean</a>服务器的ping值相比github要快一些。但是从监控数据上看，整体的网页访问速度并没有什么提高。就在我在微博上抱怨的时候，一个朋友推荐我试试<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>。于是我就尝试了一下，结果你猜怎么着？我被吓坏了。</p>
-
-<p>ping值直接从200ms左右减少到3ms左右，如下图所示：</p>
-
-<p><img src="/images/gitcafe-ping.jpg"></p>
-
-<p>监控宝的统计显示，首页平均打开时间从原来的1800ms减少到350ms左右，快了5倍，如下图所示：</p>
-
-<p><img src="/images/gitcafe-jiankong.jpg"></p>
-
-<p>所以我强烈建议各位基于Github Pages功能来搭建个人博客的朋友，将博客内容镜像到<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>上。如果你有个人的独立域名，那么镜像之后就可以随时将博客地址在Github和Gitcafe之间切换了。对于各位博主来说，这样做没有任何风险，因为你可以随时再切换回去。当然，免费用了人家的服务，如果你能像我这样，在网站的底部附上感谢内容，那是再好不过的了。</p>
-
-<p>以下为大家介绍详细的迁移过程。</p>
-
-<h2>迁移教程</h2>
-
-<h3>注册</h3>
-
-<p>如果你还没有注册过<a href="http://gitcafe.com/signup?invited_by=tangqiaoboy">GitCafe</a>，首先需要<a href="https://gitcafe.com/signup">点这里</a>注册一下。</p>
-
-<p>注册完成之后，去<a href="https://gitcafe.com/account/public_keys">公钥管理</a>那儿添加一下你的ssh公钥，这样以后提交代码会方便很多。当然你也可以不设置这一步，每次提交通过密码来验证。</p>
-
-<h3>在GitCafe上新建一个博客项目</h3>
-
-<p>然后我们需要先在GitCafe上新建一个博客项目。GitCafe的博客搭建官方教程藏得比较深，所以我第一次还没有找到，教程地址在<a href="https://gitcafe.com/GitCafe/Help/wiki/Pages-%E7%9B%B8%E5%85%B3%E5%B8%AE%E5%8A%A9#wiki">这里</a>。具体来说，就是创建一个与用户名(如果是组织，就是组织名)相同名称的项目。如果你创建的项目名与用户名相同，GitCafe会自动识别成这是一个Page项目，如下所示：</p>
-
-<p><img src="/images/gitcafe-create-page.jpg"></p>
-
-<h3>设置多个Git Remote源</h3>
-
-<p>接下来我们需要将原本提交到Github上的博客内容同步提交到GitCafe。因为我的博客是基于<a href="http://octopress.org/">Octopress</a>的，我介绍一下Octopress的做法，其它博客引擎的做法类似。</p>
-
-<p>对于Octopress，我们只需要每次提交网站内容时，执行完 <code>rake deploy</code>之后，再执行以下脚本即可（你可以将该脚本中的代码仓库地址换成你的，然后将其保存成一个脚 本文件，需要时执行一下即可）：</p>
-
-<p>``` bash</p>
-
-<p>cd _deploy</p>
-
-<h1>添加 gitcafe 源</h1>
-
-<p>git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git >> /dev/null 2>&amp;1</p>
-
-<h1>提交博客内容</h1>
-
-<p>echo &ldquo;### Pushing to GitCafe&hellip;&rdquo;
-git push -u gitcafe master:gitcafe-pages
-echo &ldquo;### Done&rdquo;%</p>
-
-<p>```</p>
-
-<p>大概解释一下以上内容，Octopress在发布时会将自己的 <code>_delpoy</code>目录切换到master分支，然后将生成的博客内容放到<code>_delpoy</code>目录中，然后执行<code>git push</code>操作。正常情况下，默认内容是push到github上的。我们执行的以上脚本，就是为该项目增加了一个名为<code>gitcafe</code>的远程仓库，然后将master分支push到<code>gitcafe</code>的<code>gitcafe-pages</code>分支。</p>
-
-<h3>修改Rakefile (可选)</h3>
-
-<p>除了以上方法外，你也可以直接修改<code>Rakefile</code>。在其第269行后增加如下代码，也可以达到同样的目的，这样你每次就仍然只需要执行<code>rake deploy</code>即可同时将博客同步到github和gitcafe：</p>
-
-<p><code>ruby
-system "git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git &gt;&gt; /dev/null 2&gt;&amp;1"
-system "git push -u gitcafe master:gitcafe-pages"
-</code></p>
-
-<p>插入代码的示例位置如下：</p>
-
-<p><img src="/images/gitcafe-edit-rakefile.jpg"></p>
-
-<h3>设置域名</h3>
-
-<p>GitCafe的自定义域名设置比github要友好得多，它不但提供了图形界面设置，并且支持同时设置多个域名。在<code>项目管理</code>&ndash;><code>域名管理</code>中，我们可以找到相应的设置项，如下所示：</p>
-
-<p><img src="/images/gitcafe-set-domain.jpg"></p>
-
-<p>在设置完之后，我们需要去域名解析的服务商那儿，将对应的域名用<code>A记录</code>类型，解析到<code>117.79.146.98</code>即可。</p>
-
-<h3>添加对GitCafe的感谢(可选)</h3>
-
-<p>如果你也想像我一样，想在博客底部添加对GitCafe的感谢，可以参考<a href="https://github.com/tangqiaoboy/tangqiaoboy.github.com/commit/a8ff6914d6fca786baf5702de3da01d408bd7b43">这个提交</a>。它通过修改Octopress的<code>source/_includes/custom/footer.html</code>模版文件完成。</p>
-
-<h2>感谢</h2>
-
-<p>最后再次感谢GitCafe，上个月在QCon大会上了解到他们的发展思路和Github很不一样。虽然它还是一家创业公司，但是我期待看到它最终能够推动国内开源和技术社区的发展。</p>
 ]]></content>
   </entry>
   

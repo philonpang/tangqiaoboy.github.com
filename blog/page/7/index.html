@@ -82,6 +82,74 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/11/15/ios-weekly-30/">iOS移动开发周报-第30期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-15T08:38:00+08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/11/masonry-introduction-practise">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：Masonry介绍与使用实践、Objective-C Runtime、iOS APP 架构漫谈、教你用KEYNOTE做出APP原型等。</p>
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://adad184.com/2014/09/28/use-masonry-to-quick-solve-autolayout/">《Masonry介绍与使用实践(快速上手Autolayout)》</a>：iPhone6发布之后，我知道使用autolayout势在必行了，这时想起了以前在浏览Github看到过的一个第三方库Masonry。在花了几个小时的研究使用后，我就将autolayout掌握了(重点是我并没有学习任何的官方文档或者其他的关于autolayout的知识)，这就是我为什么要写下这篇文章来推荐它的原因。Masonry是一个轻量级的布局框架，拥有自己的描述语法，采用更优雅的链式语法封装自动布局，简洁明了并具有高可读性。</p></li>
+<li><p><a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/">《Objective-C Runtime》</a>：因为OC是一门动态语言，所以它总是想办法把一些决定工作从编译连接推迟到运行时。也就是说只有编译器是不够的，还需要一个运行时系统 (runtime system) 来执行编译后的代码。这就是 Objective-C Runtime 系统存在的意义，它是整个OC运行框架的一块基石。本文详细整理了 Cocoa 的 Runtime 系统的知识，它使得 Objective-C 如虎添翼，具备了灵活的动态特性，使这门古老的语言焕发生机。主要内容包括：与Runtime交互、Runtime术语、消息机制、动态方法解析、消息转发、壮的实例变量(Non Fragile ivars)、Objective-C Associated Objects。</p></li>
+<li><p><a href="http://t.cn/R7HYfhz">《刨根问底Objective－C Runtime（1）－ Self &amp; Super》</a>：本文通过分析clang重写的Objective-C源码，从而解释Objective-C中的self和super在编译器层面分别是如何处理的。</p></li>
+<li><p><a href="http://t.cn/R7QUSUE">《刨根问底Objective－C Runtime（2）－ Object &amp; Class &amp; Meta Class》</a>：本文主要讲述objc runtime中关于Object &amp; Class &amp; Meta Class的细节。</p></li>
+<li><p><a href="http://studentdeng.github.io/blog/2014/11/05/ios-architecture2/">《iOS APP 架构漫谈二》</a>：这篇文章简单介绍了一个在编程中非常重要的思想或工具——状态机（State machine）。对大多数计算机专业的家伙们来说，这应该是一门比较难学的课程，里面包含一大堆揪心的名字比如DFA，NFA，还有一大堆各种各样的数学符号,又是编译原理的基础。不过很遗憾，似乎在做完编译原理课程作业之后，很多人再也没有实现过或是用过状态机了。本文通过一个游戏demo来简单描述一下状态机在实践中的应用。</p></li>
+<li><p><a href="http://iiiyu.com/2014/10/20/iCloud-and-iCloud-Drive/">《iCloud 和 iCloud Drive》</a>：最近发现很多人对 iCloud 和 iCloud Drive 有些误解，而且还没有看见中文里面有一个比较正确的说法，本文详细讲解了 iCloud Drive 相关的知识。</p></li>
+<li><p><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTg2NDA3MQ==&amp;mid=201175604&amp;idx=1&amp;sn=06882db86c9eacbc0cdca4df6dbdb67b#rd">《教你用KEYNOTE做出APP原型》</a>：WWDC 2014 Session Videos里有个视频Prototyping: Fake It Till You Make It ，在视频中，他们指导大家如何用Keynote做出逼真的交互原型。作者结合这个视频的截图，介绍了如何充分发挥Keynote的特点的做出逼真的交互原型。</p></li>
+<li><p><a href="http://www.raywenderlich.com/82706/working-with-json-in-swift-tutorial">《Working with JSON in Swift Tutorial》</a>：文章介绍了在Swift中用原生方式处理JSON的不便之处，并详细介绍了开源库<code>SwiftyJSON</code>的使用。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/coolbeet/CBStoreHouseRefreshControl">CBStoreHouseRefreshControl</a>：一个效果很酷炫的下拉刷新控件。</p></li>
+<li><p><a href="https://github.com/zhxnlai/ZLSwipeableView">ZLSwipeableView</a>：ZLSwipeableView是一个方便做出卡片效果的UI库，支持各种卡片的滑动效果。</p></li>
+<li><p><a href="https://github.com/yuantiku/YTKNetwork">YTKNetwork</a>：YTKNetwork 是基于 AFNetworking 封装的 iOS 网络库，提供了更高层次的网络访问抽象。相比 AFNetworking，YTKNetwork 提供了以下更高级的功能：按时间或版本号缓存网络请求内容、检查返回 JSON 内容的合法性、文件的断点续传、批量的网络请求发送、filter和插件机制等。</p></li>
+<li><p><a href="https://github.com/iMartinKiss/Objective-Chain">Objective-Chain</a>：Objective-Chain是一个面向对象的响应式框架，作者表示该框架吸收了 ReactiveCocoa 的思想，并且想做得更面向对象一些。</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/10/30/ios-weekly-29/">iOS移动开发周报-第29期</a></h1>
     
     
@@ -149,83 +217,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/22/ios-weekly-28/">iOS移动开发周报-第28期</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-22T21:49:37+08:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/10/apple-product-release-conference">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果召开新品发布会、收据验证、Facebook开源AsyncDisplayKit等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><a href="http://money.163.com/14/1017/10/A8OJTF7700254TI5.html">《苹果召开新品发布会》</a>：北京时间10月17日凌晨1点，苹果在美国加州库比蒂诺总部Infinite Loop园区的Town Hall大会堂如期召开了主题为“久违了（It’s been way too long）”的新品发布会。这也是继苹果iPhone6、iPhone 6 Plus正式发布后，苹果在今年秋季举办的第二场大型发布会。在此次发布会上，苹果正式发布了iPad Air 2、iPad mini 3；视网膜屏iMac；新款Mac mini；以及iOS8.1和Yosemite系统。</li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://blog.sunnyxx.com/2014/10/14/fp-essential/">《( ) &ndash;> ( )》</a>：<code>() -&gt; ()</code>不是什么表情符号，而是一种高度抽象的编程范式，它表示了一个函数式的编程思想，即值的变化过程。本文从swift语言入手分析，元组，函数，闭包等的设计对它进行解释，并阐释swift语言设计的大局观，最后分享一个Reactive Cocoa作者的Talk中的编程思想。</p></li>
-<li><p><a href="http://objccn.io/issue-17-3/">《收据验证》</a>：收据 (Receipts) 是在 OS X 10.6.6 更新后，和 Mac App Store 一起出现的。 iOS 在内购的时候总是需要向服务器提供收据。验证收据的代码部分必须在安全方面高度敏感。如果被避开或者攻击，你就失去了核实用户权限的能力，并且无法验证用户是否购买。因此，让验证收据的代码能够承受黑客的攻击变得至关重要。本文讨论了如何安全地验证收据。</p></li>
-<li><p><a href="http://robb.is/working-on/a-hamburger-button-transition/">《如何用Swift做一个不错的按钮变换动画》</a>：文章介绍了如何用Swift语言，采用<code>Core Graphics</code>来完成两个按钮之间的切换动画效果（效果图如下所示）。作者也将相关的代码开源在了<a href="https://github.com/robb/hamburger-button">这里</a>。</p></li>
-</ol>
-
-
-<p> <img src="http://robb.is/img/hamburger-button.gif" alt="" /></p>
-
-<ol>
-<li><p><a href="http://imtx.me/archives/1910.html">《适配 iOS 8 时遇到的问题两则：远程推送和 Unwind Segue》</a>：作者介绍了适配 iOS 8 时遇到的问题以及解决方案，值得大家参考。</p></li>
-<li><p><a href="http://www.iwangke.me/2014/10/13/Why-Changba-iOS-choose-Mantle/">《为什么唱吧iOS 6.0选择了Mantle》</a>：唱吧6.0一个很重大的修改就是基于Mantle重建(新建)了Model层。文章分享了使用Mantle的决策及执行过程。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/facebook/AsyncDisplayKit">AsyncDisplayKit</a>：AsyncDisplayKit是facebook开源的一个框架，它能让复杂的用户交互效果流畅地显示，facebook使用它开发完成了paper。Facebook也在 <a href="https://code.facebook.com/posts/721586784561674/introducing-asyncdisplaykit-for-smooth-and-responsive-apps-on-ios/">这篇文章</a> 中，详细介绍了AsyncDisplayKit。</p></li>
-<li><p><a href="https://github.com/krzysztofzablocki/KZBootstrap">KZBootstrap</a>：一个方便iOS工程初始化的项目，它包含一些推荐的工程设置和工具。</p></li>
-<li><p><a href="https://github.com/chenqihui/NewsFourApp">NewsFourApp</a>：一个模仿网易4.0新UI框架的开源项目。</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -247,6 +238,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/22/pgy-usage-guide/">使用蒲公英来做iOS测试应用的分发</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/01/18/ios-weekly-36/">iOS移动开发周报-第36期</a>
@@ -290,10 +285,6 @@
     
       <li class="post">
         <a href="/blog/2014/11/19/ios-weekly-31/">iOS移动开发周报-第31期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/15/ios-weekly-30/">iOS移动开发周报-第30期</a>
       </li>
     
   </ul>

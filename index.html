@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本期iOS移动开发周报带来如下内容： &hellip;">
+  <meta name="description" content="前言 我在 《给 iOS 工程增加 Daily Build》 一文中介绍过如何用命令行生成 IPA 文件以及通过 itms-services 协议 来让用户可以直接在网页上安装测试应用。但是这种方法虽然有效，但是还是比较麻烦，因为： 开发者需要自己写相关的 Build 脚本。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,105 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/22/pgy-usage-guide/">使用蒲公英来做iOS测试应用的分发</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-22T19:16:06+08:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/pgy_0.jpg"></p>
+
+<h2>前言</h2>
+
+<p>我在 <a href="http://blog.devtang.com/blog/2012/02/16/apply-daily-build-in-ios-project/">《给 iOS 工程增加 Daily Build》</a> 一文中介绍过如何用命令行生成 IPA 文件以及通过 <code>itms-services</code> 协议 来让用户可以直接在网页上安装测试应用。但是这种方法虽然有效，但是还是比较麻烦，因为：</p>
+
+<ol>
+<li>开发者需要自己写相关的 Build 脚本。</li>
+<li>开发者需要自己搭建好应用下载的服务器。</li>
+<li>如果要做得更友好，开发者还需要部署 CDN 服务、增加扫描二维码下载等功能。</li>
+</ol>
+
+
+<p>所以本文给大家推荐一个叫 “蒲公英” 的免费服务，帮助开发者能够方便地来做 iOS 应用的测试分发工作。蒲公英于 2014 年 7 月正式上线，我自己使用过一段时间，还是挺满意的。</p>
+
+<p>下面我们就来看看，如何使用 “蒲公英” 来进行测试版本应用的分发工作。</p>
+
+<h2>生成 IPA 文件</h2>
+
+<p>生成应用的 IPA 文件可以使用命令行 <code>xcodebuild exportArchive -exportFormat ipa</code>来完成，也可以使用 Xcode 提供的相应功能。相信大部分同学应该都用过，我就简单介绍一下。</p>
+
+<p>首先将编译的目标机器设置成 “iOS Device&#8221;，然后点击”Product&#8221;&ndash;>&ldquo;Archive&#8221;，Archive 成功之后，就可以在 Xcode 的 Organizer 中看到相应的文件。</p>
+
+<p>接下来点击 Organizer 中的 &ldquo;Export&rdquo; 按钮，如下图所示：</p>
+
+<p><img src="/images/export_ipa_1.jpg"></p>
+
+<p>在接下来的弹出界面中选择 “Save for Ad Hoc Deployment&#8221;。如下图所示：</p>
+
+<p><img src="/images/export_ipa_2.jpg"></p>
+
+<p>选择完成后点 Next，Xcode 会自动将测试设备的签名信息附加上，并将相应的 IPA 文件导出。</p>
+
+<h2>上传到蒲公英</h2>
+
+<p>如果是第一次使用蒲公英，我们需要访问 <a href="http://www.pgyer.com/user/register">蒲公英的网址</a> 进行注册。注册主要是为了保护测试应用的安全和设置相应的权限（例如设置下载密码）。</p>
+
+<p>注册之后，点击蒲公英网站首页的 &ldquo;发布应用&#8221;，然后选择之前生成的 IPA 文件即可完成上传 IPA 的过程。蒲公英对上传速度进行了很大程度的优化，上传应用速度非常快，下图是我测试上传猿题库的过程（上传 18M 的 IPA 文件大概花了半分钟时间，平均速度应该超过了 500K 每秒）：</p>
+
+<p><img src="/images/pgy_1.jpg"></p>
+
+<p>上传成功后，蒲公英会自动分析应用的 Bundle ID 信息，将其在 App Store 上的应用介绍和截图获取下来。然后你可以选择设置一个 “安装密码”，以避免一些越狱用户非法安装你的应用。对于小范围试用的应用，建议也不要将其发布到 &ldquo;应用广场&#8221;。如下所示：</p>
+
+<p><img src="/images/pgy_2.jpg"></p>
+
+<p>设置好所有需要的信息后，点击发布应用，蒲公英会生成一个应用分发的网页。如下图所示：</p>
+
+<p><img src="/images/pgy_3.jpg"></p>
+
+<p>你可以把这个网页发给你的测试用户:</p>
+
+<ul>
+<li>如果用户在手机上打开这个页面，则可以直接点击 “安装按钮” 来一键下载和安装测试应用。</li>
+<li>如果用户在电脑上打开这个应用，则可以用扫描二维码的方式来一键下载和安装测试应用。</li>
+</ul>
+
+
+<h2>一些小技巧</h2>
+
+<ul>
+<li>有企业证书的同学，如果将 IPA 在本地用企业证书签名，则可以把蒲公英当作一个企业应用发布渠道，省去部署分发服务器的烦恼，但最好设置安装密码，以免被苹果认为滥用企业证书。</li>
+<li>嫌每次打开蒲公英的网页太麻烦？蒲公英提供了 <a href="http://www.pgyer.com/apps">Mac 客户端</a>，所有上传和设置操作都可以在客户端上直接进行。</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -162,76 +261,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/18/explain-ios-pro-book/">对《iOS开发进阶》一书的解释</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-18T10:17:21+08:00" pubdate data-updated="true">Jan 18<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>《iOS开发进阶》虽然仅仅在<a href="http://product.china-pub.com/3770871">互动出版社</a>可以买到，还没有在京东和亚马逊上架，但是在 v2ex 上已经引起了一些讨论和误解，见 <a href="http://v2ex.com/t/161929?p=1">此贴</a>。所以我想在这里，对本书的内容和定位做一些解释。</p>
-
-<h2>定位</h2>
-
-<p>《iOS开发进阶》定位于帮助那些iOS开发刚刚入门的同行快速提高自己的水平，适用于至少有3个月以上iOS开发经验的读者。不适合没有任何iOS开发基础的读者阅读。对于iOS熟练开发者，本书也能补充其知识点的可能的盲区，使其相关知识体系更为完善。</p>
-
-<p>我可能需要强调一下，对于iOS熟练开发者（工作时间大于1年），本书也<font color=blue>只能做到补充其可能的盲区的作用</font>。或者有一些比较牛的朋友，本书也可能<font color=red>补不了什么盲区</font>。</p>
-
-<p>我自认为其中 “CoreText排版引擎章节”以及第三章的底层原理部分是适合这部分iOS熟练开发者的。但不排除很多熟练开发者对底层原理已经很了解了，同时对CoreText不感兴趣。</p>
-
-<p>所以希望iOS熟练开发者能够在买书前翻阅一下<a href="https://github.com/tangqiaoboy/iOS-Pro/blob/master/TableOfContents.md">本书目录</a>。</p>
-
-<h2>内容</h2>
-
-<p>本书中的所有内容都是我的原创，但是有部分在博客上公开过，我自己数了一下，一共有9个章节在我的博客上可以看到完整的内容，另外11个章节在我的博客上只能看到部分内容或完全看不到内容。但是很有可能，随着图书的慢慢发售，我将其它未公开的电子版内容放到网上。</p>
-
-<p>经常看我的博客的朋友，可能会有些失望或者觉得不值。所以希望大家在买书前翻阅一下<a href="https://github.com/tangqiaoboy/iOS-Pro/blob/master/TableOfContents.md">本书目录</a>，以避免买了后悔。</p>
-
-<h2>书名</h2>
-
-<p>有人抱怨说《iOS开发进阶》这个书名太过于有欺骗性，应该叫《iOS开发备忘录》。对此我不太认同，《iOS开发进阶》很好地排除了那些iOS初学者，从书名上他们就会放弃看本书，而如果叫《iOS开发备忘录》就不一定了。另外，任何一个读者都应该看过目录再买书的吧？我不认为本书的书名会有那么大的欺骗性。</p>
-
-<h2>质量</h2>
-
-<p>一些人批评本书的内容质量比国外的 objc.io 和 <a href="raywenderlich.com/">RW</a> 的书差多了。对此我想说，您批评得对，我还需要努力！但是这不代表本书就没有价值吧？例如CoreText章节，我现在在国内外的图书中，仍然没有看到有谁把这个从浅入深讲完整的呀。第一部分对工具的介绍虽然技术含量低，但也没有谁完整整理过。与其自叹和国外有差距，不如自己实际来努力一下，改善一下国内的知识分享环境，不是更好么？</p>
-
-<h2>最后</h2>
-
-<ul>
-<li>我写本书不指望能挣多少钱，实际上它也不能给我带来多少收入。但我真心希望这本书能够帮助到大家。现在看来，本书最合适的读者仍然是刚刚入门3个月的开发者。</li>
-<li>请所有购买此书的朋友购买前先看目录：<a href="https://github.com/tangqiaoboy/iOS-Pro/blob/master/TableOfContents.md">本书目录</a>。一本书不可能适合所有水平的读者，请自己决定。</li>
-</ul>
-
-
-<p>愿大家玩得开心～</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -251,6 +280,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/22/pgy-usage-guide/">使用蒲公英来做iOS测试应用的分发</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/01/18/ios-weekly-36/">iOS移动开发周报-第36期</a>
@@ -294,10 +327,6 @@
     
       <li class="post">
         <a href="/blog/2014/11/19/ios-weekly-31/">iOS移动开发周报-第31期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/15/ios-weekly-30/">iOS移动开发周报-第30期</a>
       </li>
     
   </ul>

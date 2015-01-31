@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-01-22T21:33:48+08:00</updated>
+  <updated>2015-01-31T10:27:39+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第37期]]></title>
+    <link href="http://blog.devtang.com/blog/2015/01/31/ios-weekly-37/"/>
+    <updated>2015-01-31T09:34:58+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/01/31/ios-weekly-37</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，地址是<a href="http://www.infoq.com/cn/news/2015/01/ios-v-advanced-technology-road">这里</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>本期 iOS 移动开发周报带来如下内容：iOS大V的技术进阶之路、ARC 对 self 的内存管理、Method Swizzling 和 AOP 实践、使用 iMovie 和 Keynote 制作 App Preview等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.cocoachina.com/programmer/20150115/10930.html">《唐巧访谈： iOS大V的技术进阶之路》</a>：文章来自于 CocoaChina 的访谈，采访对象是唐巧，他的新书<a href="https://github.com/tangqiaoboy/iOS-Pro">《iOS开发进阶》</a>已经和大家见面.采访中唐巧表达了他对于技术学习、建设技术影响力等方面的经验和看法。</p></li>
+<li><p><a href="http://wangling.me/2015/01/moke-2014.html#fn-1?utm_source=qdan.me#/">《Moke 2014 以及 1 元应用效应》</a>：Moke 作者分享了他的应用在 2014 年的销售额以及他对于 1 元应用的看法。</p></li>
+<li><p><a href="http://www.cocoachina.com/programmer/20150121/10966.html">《王巍访谈：关于 Swift 学习和 AppleWatch 开发的一些建议》</a>：文章来自于 CocoaChina 的访谈，采访对象是王巍，微博 ID“onevcat”，圈儿内人称喵神，知名 iOS/Unity 开发者，现居日本，就职于 LINE。喵神是 <a href="http://objccn.io/">objc 中国</a>项目发起人，开源过广受开发者喜爱的 Xcode 插件 VVDocumenter，主创或参与开发《姬骑士和最后的百龙战争》、《英雄 Slash》、《冒险谜题王国》以及《小熊推金币》等多款游戏，个人应用代表有《番茄工作法》(Pomodoro Do) 和《云端记账》(Our Money)。</p></li>
+<li><p><a href="http://iiiyu.com/2015/01/20/2014-oh-my-star-app-annual-summary/">《2014 年 Oh My Star 总结》</a>：Oh My Star 是一款由国人 <a href="http://weibo.com/n/Sumi-iYu">@Sumi-iYu</a> 开发的管理 Github 上 star 项目的工具。笔者使用过，对于 star 功能的重度用户来说，非常好用。本文分享了作者在开发该软件的过程以及收货。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://blog.sunnyxx.com/2015/01/17/self-in-arc/">《ARC 对 self 的内存管理》</a>：文章从 YTKNetwork 的几行代码出发，讨论了 LLVM 编译器在传递 self 参数时，对 self 的引用计数的特殊处理。</p></li>
+<li><p><a href="http://blog.nswebfrog.com/2015/01/08/autolayout-trick/">《AutoLayout 布局技巧－等宽子视图》</a>：所谓等宽子视图，也就是对一个有 n 个子视图的父视图来说，无论父视图的宽度怎么变化，所有子视图的宽度是相等的。文章介绍了这一类排版需求的 AutoLayout 布局技巧。</p></li>
+<li><p><a href="http://tech.glowing.com/cn/objective-c-runtime/">《Objective-C Runtime》</a>：Objective-C 是一个动态语言，这意味着它不仅需要一个编译器，也需要一个运行时系统来动态得创建类和对象、进行消息传递和转发。理解 Objective-C 的 Runtime 机制可以帮我们更好的了解这个语言，适当的时候还能对语言进行扩展，从系统层面解决项目中的一些设计或技术问题。本文讲解了 Runtime 的核心 &ndash; 消息传递 （Messaging）。</p></li>
+<li><p><a href="http://tech.glowing.com/cn/method-swizzling-aop/">《Method Swizzling 和 AOP 实践》</a>：利用 Objective-C 的 Runtime 特性，我们可以给语言做扩展，帮助解决项目开发中的一些设计和技术问题。这一篇，我们来探索一些利用 Objective-C Runtime 的黑色技巧。这些技巧中最具争议的或许就是 Method Swizzling 。文本介绍了利用 Method Swizzling，结合 AOP 来做一些打 Log 的工作。利用 objective-C Runtime 特性和 Aspect Oriented Programming ，我们可以把琐碎事务的逻辑从主逻辑中分离出来，作为单独的模块。它是对面向对象编程模式的一个补充。</p></li>
+<li><p><a href="http://weibo.com/p/1001603800875490492754">《CocoaPods 最佳实践探讨》</a>：作者在文章中表达了对目前常见的 CocoaPods 使用方法的意见。希望大家根据自己的经验，一起讨论出一份真正的 “最佳实践”。</p></li>
+<li><p><a href="http://www.jianshu.com/p/358106d653cf">《使用 iMovie 和 Keynote 制作 App Preview》</a>：App Preview 就是一段 15-30 秒的短视频，用来展示你的应用的特性、用户界面、交互方式等内容。在 App Store 你的应用的详细信息页面里，放在原来的截图之前。体验上会比截图更有冲击力，也能够表现更多的东西。茫茫的 App 海洋之中，如何脱颖而出，卖相至关重要。本文作者分享了他使用 iMovie 和 Keynote 制作 App Preview 的经验，并且提供了相关的效果视频和 Keynote 源文件。</p></li>
+<li><p><a href="http://blog.callmewhy.com/2015/01/20/wtf-in-old-code/">《要你命三千：老代码中的那些坑》</a>: 最近在给以前的老项目维护，说起来工作很简单，一个字：改 Bug。这看起来平淡无常的工作，实际上凶险无比，藏坑无数。时至今日，感觉整个人都得到了升华。在睡觉前抽空写篇博客，和各位分享一下踩坑经历，一起品味其中的种种酸苦辣 (没甜)。</p></li>
+<li><p><a href="http://natashatherobot.com/unit-testing-swift-dependency-injection/">《Unit Testing in Swift: Dependency Injection》</a>：文章介绍了在 Swift 实现的单元测试中实现依赖注入，不过实际写起来还是比较麻烦。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="https://ship.io">ship.io</a>：ship.io 是一个持续集成服务。现在所有套餐免费，支持 Xcode 6.1.1。</p></li>
+<li><p><a href="https://crowdin.com/">Crowdin</a>: Crowdin 是一个多语言翻译服务。可以便于开发者将应用改成支持多语言。类似的服务还有：<a href="https://www.transifex.com/">Transifex</a>。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/dasdom/BreakOutToRefresh">BreakOutToRefresh</a>：BreakOutToRefresh 是一个有趣的项目，它利用 SpriteKit 在下拉刷新过程中做了一个打砖块游戏。</p></li>
+<li><p><a href="https://github.com/Ramotion/animated-tab-bar">RAMAnimatedTabBarController</a>：RAMAnimatedTabBarController 是一个让 TabBar 上的元素能够显示动画效果的开源库。</p></li>
+</ol>
+
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-31T09:34:58+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2015</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用蒲公英来做iOS测试应用的分发]]></title>
@@ -1674,78 +1756,6 @@ Sublime text 的问题就是无法方便地预览最后效果。</p>
 
 
 <time datetime="2014-09-24T20:49:02+08:00" pubdate data-updated="true">Sep 24<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第25期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/09/14/ios-weekly-25/"/>
-    <updated>2014-09-14T19:56:42+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/09/14/ios-weekly-25</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/09/iphone-6-release">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果发布 iPhone6 和 Apple Watch、Swift 1.0 GM发布、Xcode 6支持PDF Vector作为图像素材、iPhone6分辨率与适配等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://news.ifeng.com/a/20140910/41926157_0.shtml">《苹果发布 iPhone6 和 Apple Watch》</a>：北京时间9月10日凌晨1点，美国苹果公司在30年前发布Mac电脑的故地，正式发布了全新一代 iPhone 6以及可穿戴设备 Apple Watch。</p></li>
-<li><p><a href="http://www.infoq.com/cn/news/2014/09/swift-10-gm">《Swift 1.0 GM发布》</a>：北京时间9月10日，Swift迎来了第二个里程碑：Swift 1.0 GM发布。GM是Golden Master的缩写，GM版几乎等同于正式版.不过这次苹果还特意在发布新闻中提到GM版并非final版本，未来Swift还将添加其它更高级的新功能、提升性能以及精简语法。</p></li>
-<li><p><a href="http://weibo.com/1846569133/BmD7gEvkZ">《Xcode 6支持PDF Vector作为图像素材》</a>：Xcode 6 的默认 App 模板已经用 PDF Vector 矢量作为图像素材了。所以 iOS 的适配可以说是轻松的，布局用 AutoLayout，图标用矢量，可以无视分辨率的存在。设计师们在用 Sketch 设计时，不要再输出1x、2x、3x 的 PNG 了。</p></li>
-<li><p><a href="http://digi.it.sohu.com/20140912/n404256321.shtml">《苹果隐晦表示Apple Watch续航约为一天》</a>：苹果没有在发布会上提到Apple Watch的续航问题，但在记者问到时，苹果官方的回复是：“我们没有对外公布，但是我们希望用户白天戴表，晚上可以充电。”</p></li>
-<li><p><a href="http://weibo.com/1708947107/BmuUHA9RY?mod=weibotime#_rnd1410529835695">《iTunes Connect Bug导致只接受支持arm64的应用》</a>：苹果9月10日的iTunes Connect更新造成一个Bug，导致审核后台只接受支持arm64的应用上传。由于国内大量的第三方SDK并未更新到支持arm64，所以此Bug导致国内众多应用无法上传。好在问题只持续了一天，但是此事也给那些一直懒于更新第三方SDK的厂商敲响了警钟。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://www.objc.io/issue-16/">《Swift》</a>：objc.io第16期的专题为Swift，为我们带来了关于Swift的5篇精品文章。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/09/10/iphone6-resolution/">《iPhone6分辨率与适配》</a>：文章介绍了iPhone6的图片适配问题。</p></li>
-<li><p><a href="http://www.taofengping.com/2014/09/09/leak-GPUImage_cocoapods/#.VBL897ySyXw">《你的Pod出现内存泄露了吗》</a>：文章介绍了深度使用Cocoapods时可能遇到的内存泄漏问题。</p></li>
-<li><p><a href="http://kimsungwhee.com/xcode6-%E5%BC%80%E5%90%AF-iphone6-iphone6-plus-%E5%88%86%E8%BE%A8%E7%8E%87/">《xcode6 开启 iPhone6 &amp; iPhone6 plus 分辨率》</a>：文章介绍了在Xcode6 GM下如何开启iPhone6和iPhone6 plus的分辨率。作者微博：<a href="http://weibo.com/u/2289288323">@kimsungwhee</a>。</p></li>
-<li><p><a href="http://www.bignerdranch.com/blog/asynchronous-testing-with-xcode-6/">《Asynchronous Testing With Xcode 6》</a>：在Xcode 6以前，写异步的测试用例比较麻烦。该文章介绍了在Xcode 6下使用<code>XCTestExpectation</code>类，如何更方便地写一些异步的测试用例。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/tonymillion/Reachability">Reachability</a>：苹果提供过一个Reachability类，用于检测网络状态。但是该类由于年代久远，并不支持ARC。该项目旨在提供一个苹果的Reachability类的替代品，支持ARC和block的使用方式。</p></li>
-<li><p><a href="https://github.com/ch3n/ZAlert">ZAlert</a>：ZAlert是一个用Swift实现的，用于显示<code>UIAlertView</code>和<code>UIActionSheet</code>的工具类，支持链式调用，仅支持iOS8。作者微博：<a href="http://weibo.com/fantcbug">@ch3nz</a>。</p></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-14T19:56:42+08:00" pubdate data-updated="true">Sep 14<span>th</span>, 2014</time> 
 
 <span class="categories">
   

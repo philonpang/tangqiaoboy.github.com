@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>iOS移动开发周报-第7期 - 唐巧的技术博客</title>
+  <title>iOS移动开发周报-第37期 - 唐巧的技术博客</title>
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，地址是这里。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 本期 iOS 移动开发周报带来如下内容： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.devtang.com/blog/2014/04/10/ios-weekly-7">
+  <link rel="canonical" href="http://blog.devtang.com/blog/2015/01/31/ios-weekly-37">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
@@ -79,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">iOS移动开发周报-第7期</h1>
+      <h1 class="entry-title">iOS移动开发周报-第37期</h1>
     
     
       <p class="meta">
@@ -95,7 +95,7 @@
   
 
 
-<time datetime="2014-04-10T23:34:02+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time>
+<time datetime="2015-01-31T09:34:58+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2015</time>
         
       </p>
     
@@ -104,46 +104,51 @@
 
 <div class="entry-content"><h3>版权说明</h3>
 
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/04/apple-wwdc2014-ticket">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+<p>本文为InfoQ中文站特供稿件，地址是<a href="http://www.infoq.com/cn/news/2015/01/ios-v-advanced-technology-road">这里</a>。如需转载，请与InfoQ中文站联系。</p>
 
 <h3>前言</h3>
 
 <p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
 
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果WWDC2014门票开卖，
-ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
+<p>本期 iOS 移动开发周报带来如下内容：iOS大V的技术进阶之路、ARC 对 self 的内存管理、Method Swizzling 和 AOP 实践、使用 iMovie 和 Keynote 制作 App Preview等。</p>
 
 <h2>新闻</h2>
 
 <ol>
-<li><a href="http://nb.zol.com.cn/445/4451916.html">苹果WWDC2014门票开卖，开发者需通过抽签的方式申请购买</a>：2014年苹果开发者大会（WWDC）将于6月2日至6日在旧金山Moscone West中心举行。而本次WWDC大会的门票将于旧金山当地时间4月7日上午十点开始发售，开发者需通过抽签的方式申请购买，下午五点到八点公布获得门票的名单。</li>
+<li><p><a href="http://www.cocoachina.com/programmer/20150115/10930.html">《唐巧访谈： iOS大V的技术进阶之路》</a>：文章来自于 CocoaChina 的访谈，采访对象是唐巧，他的新书<a href="https://github.com/tangqiaoboy/iOS-Pro">《iOS开发进阶》</a>已经和大家见面.采访中唐巧表达了他对于技术学习、建设技术影响力等方面的经验和看法。</p></li>
+<li><p><a href="http://wangling.me/2015/01/moke-2014.html#fn-1?utm_source=qdan.me#/">《Moke 2014 以及 1 元应用效应》</a>：Moke 作者分享了他的应用在 2014 年的销售额以及他对于 1 元应用的看法。</p></li>
+<li><p><a href="http://www.cocoachina.com/programmer/20150121/10966.html">《王巍访谈：关于 Swift 学习和 AppleWatch 开发的一些建议》</a>：文章来自于 CocoaChina 的访谈，采访对象是王巍，微博 ID“onevcat”，圈儿内人称喵神，知名 iOS/Unity 开发者，现居日本，就职于 LINE。喵神是 <a href="http://objccn.io/">objc 中国</a>项目发起人，开源过广受开发者喜爱的 Xcode 插件 VVDocumenter，主创或参与开发《姬骑士和最后的百龙战争》、《英雄 Slash》、《冒险谜题王国》以及《小熊推金币》等多款游戏，个人应用代表有《番茄工作法》(Pomodoro Do) 和《云端记账》(Our Money)。</p></li>
+<li><p><a href="http://iiiyu.com/2015/01/20/2014-oh-my-star-app-annual-summary/">《2014 年 Oh My Star 总结》</a>：Oh My Star 是一款由国人 <a href="http://weibo.com/n/Sumi-iYu">@Sumi-iYu</a> 开发的管理 Github 上 star 项目的工具。笔者使用过，对于 star 功能的重度用户来说，非常好用。本文分享了作者在开发该软件的过程以及收货。</p></li>
 </ol>
 
 
 <h2>教程</h2>
 
 <ol>
-<li><p><a href="http://realmacsoftware.com/blog/dynamic-linking">《Dynamic Linking》</a>：文章详细解释了动态链接库在iOS程序中的加载过程，作者在也尝试自己实现了一个动态链接库并且在iOS程序中成功加载，不过文章最后指出，在AppStore上架的的应用，如果要加载动态链接库，该链接库需要得到苹果的签名才能加载成功，虽然这在技术上是可行的，但苹果现阶段的审核要求是不接受这种应用的。作者也将相关代码开源在 <a href="https://github.com/ddeville/Dynamic-iOS">Dynamic-iOS</a> 项目中。</p></li>
-<li><p><a href="http://nonomori.farbox.com/post/ios-7-jiao-hu-shi-guo-du">《iOS 7 交互式过渡》</a>：iOS 7 新加入了自定义 View Controller 之间的过渡效果的方法。本文介绍了如何利用相关的API实现自定义的过滤效果。文章的内容主要包括：实现自定义过渡、使用自定义过渡、让过渡变得可以交互。文中例子的工程文件也已上传至<a href="https://github.com/PeteC/InteractiveViewControllerTransitions">GitHub</a>。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/">《ARC下dealloc过程及.cxx_destruct的探究》</a>：在MRC时代，我们经常在<code>dealloc</code>方法将内部其他对象释放掉，申请的非Objc对象的内存当然也需要一并处理掉，最后调用super，继续将父类对象做析构。而在ARC时代，大部分的代码都不再需要了。这些相应的代码是如何由编译器完成的？带着这样的疑问，作者研究了LLVM的具体实现细节。</p></li>
-<li><p><a href="https://github.com/jspahrsummers/enemy-of-the-state/blob/master/Enemy%20of%20the%20State.pdf">《Enemy of the State》</a>：作者分享了程序架构中存在状态的坏处以及避免状态的一些方法：优先使用不可变对象、使用ReactiveCocoa框架、使用Model-View-ViewModel框架。</p></li>
+<li><p><a href="http://blog.sunnyxx.com/2015/01/17/self-in-arc/">《ARC 对 self 的内存管理》</a>：文章从 YTKNetwork 的几行代码出发，讨论了 LLVM 编译器在传递 self 参数时，对 self 的引用计数的特殊处理。</p></li>
+<li><p><a href="http://blog.nswebfrog.com/2015/01/08/autolayout-trick/">《AutoLayout 布局技巧－等宽子视图》</a>：所谓等宽子视图，也就是对一个有 n 个子视图的父视图来说，无论父视图的宽度怎么变化，所有子视图的宽度是相等的。文章介绍了这一类排版需求的 AutoLayout 布局技巧。</p></li>
+<li><p><a href="http://tech.glowing.com/cn/objective-c-runtime/">《Objective-C Runtime》</a>：Objective-C 是一个动态语言，这意味着它不仅需要一个编译器，也需要一个运行时系统来动态得创建类和对象、进行消息传递和转发。理解 Objective-C 的 Runtime 机制可以帮我们更好的了解这个语言，适当的时候还能对语言进行扩展，从系统层面解决项目中的一些设计或技术问题。本文讲解了 Runtime 的核心 &ndash; 消息传递 （Messaging）。</p></li>
+<li><p><a href="http://tech.glowing.com/cn/method-swizzling-aop/">《Method Swizzling 和 AOP 实践》</a>：利用 Objective-C 的 Runtime 特性，我们可以给语言做扩展，帮助解决项目开发中的一些设计和技术问题。这一篇，我们来探索一些利用 Objective-C Runtime 的黑色技巧。这些技巧中最具争议的或许就是 Method Swizzling 。文本介绍了利用 Method Swizzling，结合 AOP 来做一些打 Log 的工作。利用 objective-C Runtime 特性和 Aspect Oriented Programming ，我们可以把琐碎事务的逻辑从主逻辑中分离出来，作为单独的模块。它是对面向对象编程模式的一个补充。</p></li>
+<li><p><a href="http://weibo.com/p/1001603800875490492754">《CocoaPods 最佳实践探讨》</a>：作者在文章中表达了对目前常见的 CocoaPods 使用方法的意见。希望大家根据自己的经验，一起讨论出一份真正的 “最佳实践”。</p></li>
+<li><p><a href="http://www.jianshu.com/p/358106d653cf">《使用 iMovie 和 Keynote 制作 App Preview》</a>：App Preview 就是一段 15-30 秒的短视频，用来展示你的应用的特性、用户界面、交互方式等内容。在 App Store 你的应用的详细信息页面里，放在原来的截图之前。体验上会比截图更有冲击力，也能够表现更多的东西。茫茫的 App 海洋之中，如何脱颖而出，卖相至关重要。本文作者分享了他使用 iMovie 和 Keynote 制作 App Preview 的经验，并且提供了相关的效果视频和 Keynote 源文件。</p></li>
+<li><p><a href="http://blog.callmewhy.com/2015/01/20/wtf-in-old-code/">《要你命三千：老代码中的那些坑》</a>: 最近在给以前的老项目维护，说起来工作很简单，一个字：改 Bug。这看起来平淡无常的工作，实际上凶险无比，藏坑无数。时至今日，感觉整个人都得到了升华。在睡觉前抽空写篇博客，和各位分享一下踩坑经历，一起品味其中的种种酸苦辣 (没甜)。</p></li>
+<li><p><a href="http://natashatherobot.com/unit-testing-swift-dependency-injection/">《Unit Testing in Swift: Dependency Injection》</a>：文章介绍了在 Swift 实现的单元测试中实现依赖注入，不过实际写起来还是比较麻烦。</p></li>
 </ol>
 
 
 <h2>工具</h2>
 
 <ol>
-<li><p><a href="http://chen.do/blog/2013/09/30/selectively-ignoring-objective-c-exceptions-in-xcode/">在Xcode调试时忽略部分异常</a>：作者提供了一些llvm增强脚本，用于方便地在调试时忽略掉部分异常。增强脚本的代码也开源在<a href="https://gist.github.com/chendo/6759305/raw/ignore_specified_objc_exceptions.py">这里</a>。</p></li>
-<li><p><a href="https://github.com/naotaka/ClipMenu">ClipMenu</a>：开源的Mac OS剪贴板管理工具。</p></li>
-<li><p><a href="https://github.com/kolinkrewinkel/Polychromatic">Polychromatic</a>：一个只高亮属性和变量的Xcode插件。</p></li>
-<li><p><a href="https://github.com/shjborage/Reveal-Plugin-for-XCode">Reveal-Plugin-for-XCode</a>：作者写了一个Reveal插件，可以使工程不作任何修改的情况下使用Reveal，该插件已在Alcatraz上架。</p></li>
+<li><p><a href="https://ship.io">ship.io</a>：ship.io 是一个持续集成服务。现在所有套餐免费，支持 Xcode 6.1.1。</p></li>
+<li><p><a href="https://crowdin.com/">Crowdin</a>: Crowdin 是一个多语言翻译服务。可以便于开发者将应用改成支持多语言。类似的服务还有：<a href="https://www.transifex.com/">Transifex</a>。</p></li>
 </ol>
 
 
 <h2>开源项目</h2>
 
 <ol>
-<li><a href="https://github.com/iosre/HippocampHairSalon">HippocampHairSalon</a>：一个可以用于修改OSX和iOS程序内容的内存修改器。内存修改器最早出现在游戏中，可以修改游戏中人物的生命值等参数。其作者也在<a href="http://iosre.com/forum.php?mod=viewthread&amp;tid=105&amp;page=1&amp;extra=#pid521">这里</a>介绍了其制作的详细原理。</li>
+<li><p><a href="https://github.com/dasdom/BreakOutToRefresh">BreakOutToRefresh</a>：BreakOutToRefresh 是一个有趣的项目，它利用 SpriteKit 在下拉刷新过程中做了一个打砖块游戏。</p></li>
+<li><p><a href="https://github.com/Ramotion/animated-tab-bar">RAMAnimatedTabBarController</a>：RAMAnimatedTabBarController 是一个让 TabBar 上的元素能够显示动画效果的开源库。</p></li>
 </ol>
 
 </div>
@@ -168,7 +173,7 @@ ARC下dealloc过程，修改OSX和iOS程序内容的内存修改器等。</p>
   
 
 
-<time datetime="2014-04-10T23:34:02+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time>
+<time datetime="2015-01-31T09:34:58+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2015</time>
       
 
 <span class="categories">
@@ -227,10 +232,8 @@ var jiathis_config={
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/04/03/ios-weekly-6/" title="Previous Post: iOS移动开发周报-第6期">&laquo; iOS移动开发周报-第6期</a>
+        <a class="basic-alignment left" href="/blog/2015/01/22/pgy-usage-guide/" title="Previous Post: 使用蒲公英来做iOS测试应用的分发">&laquo; 使用蒲公英来做iOS测试应用的分发</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/04/12/install-mavericks-note/" title="Next Post: Mac重装记录">Mac重装记录 &raquo;</a>
       
     </p>
   </footer>

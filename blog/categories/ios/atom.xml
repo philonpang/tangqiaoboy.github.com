@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-02-01T13:05:46+08:00</updated>
+  <updated>2015-02-01T13:09:47+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -82,9 +82,13 @@
 
 <p>于是还有人专门帮微信另外说了一个非官方的说明文档，地址在这里：<a href="https://github.com/gbammc/WechatPayDemo">https://github.com/gbammc/WechatPayDemo</a></p>
 
+<h3>注意事项六：支持最新的 CPU 版本</h3>
+
+<p>说明：去年苹果的一次 Bug，造成上传应用必须支持 arm64 的 CPU 版本，结果众多应用因为依赖的 SDK 不支持 arm64 而无法更新。当然，这次 Bug 出来之后，各 SDK 厂商都紧急做了更新。但是我觉得这种事情如果要做得专业，就应该一开始就紧跟技术更新，及时更新，而不是被迫更新。</p>
+
 <h2>总结</h2>
 
-<p>以上 5 点是我认为写一个 SDK 的最最基本的要求，希望被点名批评的同学能尽快改正哟～</p>
+<p>以上 6 点是我认为写一个 SDK 的最最基本的要求，希望被点名批评的同学能尽快改正哟～</p>
 
 <p>如果大家在使用其它 SDK 时也发现了类似的问题，欢迎在文章下面留言。希望通过这种方式给开发相关 SDK 的同学一些压力，让他们好好改一下。</p>
 ]]></content>

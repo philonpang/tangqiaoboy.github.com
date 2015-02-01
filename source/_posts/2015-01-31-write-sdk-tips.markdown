@@ -54,7 +54,7 @@ Bad Case：小米的推送 SDK，直接在 SDK 静态库里面编进去一个第
 
 ### 注意事项四：做基本的检查和测试
 
-说明：SDK 对外公布前应该进行基本的编译检查，不应该有编译器 warning 存在。
+说明：SDK 对外公布前应该进行基本的编译检查，不应该有编译器警告存在。
 
 Bad Case：腾讯分享的 SDK。它的 `CGIParamsWrap.o` 和  `TencentOAuth.o` 文件里面的方法名冲突了，如下所示：
 
@@ -70,7 +70,7 @@ Bad Case: 微信官方的微信支付的示例代码，里面有各种错误，�
 
 {% img /images/weixin-pay-error.jpg %}
 
-于是还有人专门帮微信另外说了一个非官方的说明文档，地址在这里：<https://github.com/gbammc/WechatPayDemo>
+于是还有人专门帮微信另外制作了一个非官方的说明文档，地址在这里：<https://github.com/gbammc/WechatPayDemo>
 
 ### 注意事项六：支持最新的 CPU 版本
 

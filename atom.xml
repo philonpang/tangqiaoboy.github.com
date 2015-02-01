@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-02-01T13:18:22+08:00</updated>
+  <updated>2015-02-01T17:31:14+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,82 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[谈谈 React Native]]></title>
+    <link href="http://blog.devtang.com/blog/2015/02/01/talk-about-react-native/"/>
+    <updated>2015-02-01T16:27:43+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/02/01/talk-about-react-native</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>几天前，Facebook 在 React.js Conf 2015 大会上推出了 React Native（<a href="https://www.youtube.com/watch?v=7rDsRXj9-cU">视频链接</a>）。我发了一条微博(<a href="http://www.weibo.com/1708947107/C1WHHwqZv?from=page_1005051708947107_profile&amp;wvr=6&amp;mod=weibotime&amp;type=comment#_rnd1422782358309">地址</a>），结果引来了 100 多次转发。为什么 React Native 会引来如此多的关注呢？我在这里谈谈我对 React Native 的理解。</p>
+
+<p>一个新框架的出现总是为了解决现有的一些问题，那么对于现在的移动开发者来说，到底有哪些问题 React Native 能涉及呢？</p>
+
+<h3>人才稀缺的问题</h3>
+
+<p>首先的问题是：移动开发人才的稀缺。看看那些培训班出来的人吧，经过 3 个月的培训就可以拿到 8K 甚至上万的工作。在北京稍微有点工作经验的 iOS 开发，就要求 2 万一个月的工资。这说明当前移动互联网和创业的火热，已经让业界没有足够的开发人才了，所以大家都用涨工资来抢人才。而由于跨平台的框架（例如 PhoneGap，RubyMotion）都还是不太靠谱，所以对于稍微大一些的公司，都会选择针对 iOS 和 Android 平台分别做不同的定制开发。而 JavaScript 显然是一个群众基础更广的语言，这将使得相关人才更容易获得，同时由于后面提到的代码复用问题得到解决，也能节省一部分开发人员。</p>
+
+<h3>代码复用的问题</h3>
+
+<p>React Native 虽然强调自己不是 “Write once, run anywhere&#8221; 的框架，但是它至少能像 Google 的 <a href="https://github.com/google/j2objc">j2objc</a> 那样，在 Model 层实现复用。那些底层的、与界面无关的逻辑，相信 React Native 也可以实现复用。这样，虽然 UI 层的工作还是需要做 iOS 和 Android 两个平台，但如果抽象得好，Logic 和 Model 层的复用不但可以让代码复用，更可能实现底层的逻辑的单元测试。这样移动端的代码质量将更加可靠。</p>
+
+<p>其实 React Native 宣传的 &ldquo;Learning once, write anywhere&rdquo; 本身也是一种复用的思想。大家厌烦了各种各样的编程语言，如果有一种语言真的能够统一移动开发领域，对于所有人都是好事。</p>
+
+<h3>UI 排版的问题</h3>
+
+<p>我自己一直不喜欢苹果新推出的 AutoLayout 那套解决方案，其实 HTML 和 CSS 在界面布局和呈现上深耕多年，Android 也是借鉴的 HTML 的那套方案，苹果完全可以也走这套方案的。但是苹果选择发明了一个 Constraint 的东西来实现排版。在企业的开发中，其实大家很少使用 Xib 的，而手写 Constraint 其实是非常痛苦的。所以出现了 <a href="https://github.com/Masonry/Masonry">Masonry</a> 一类的开源框架来解决这类同行的痛苦。</p>
+
+<p>我一直在寻找使用类似 HTML + CSS 的排版，但是使用原生控件渲染的框架。其实之前 <a href="https://github.com/gavinkwoe/BeeFramework">BeeFramework</a> 就做了这方面的事情。所以我还专门代表 InfoQ 对他进行过采访。BeeFramework 虽然开源多年，而且有 2000 多的 star 数，但是受限于它自身的影响力以及框架的复杂性，一直没有很大的成功。至少我不知道有什么大的公司采用。</p>
+
+<p>这次 Facebook 的 React Native 做的事情相比 <a href="https://github.com/gavinkwoe/BeeFramework">BeeFramework</a> 更加激进。它不但采用了类似 HTML + CSS 的排版，还把语言也换成了 JavaScript，这下子改变可以称作巨大了。但是 Facebook 有它作为全球互联网企业的光环，相信会有不少开发者跟进采用 React Native。</p>
+
+<p>不过也说回来，Facebook 开源的也不一定都好，比如 <a href="https://github.com/facebookarchive/three20">three20</a> 就被 Facebook 放弃了，但是不可否认 <a href="https://github.com/facebookarchive/three20">three20</a> 作为一个框架，在那个时期的特定价值。所以 React Native 即使没有成功，它也将人们关注的焦点放在了移动开发的效率上了。很可能会有越来越多相关的框架因此涌现出来。</p>
+
+<h3>MVVM</h3>
+
+<p>MVVM 在 Web 开发领域相当火热，而 iOS 领域的 <a href="https://github.com/ReactiveCocoa/ReactiveCocoa">ReactiveCocoa</a> 虽然很火，但是还是非常小众。纠其原因，一方面是 ReactiveCocoa 带来的编程习惯上的改变实在太大，ReactiveCocoa 和 MVVM 的学习成本还是很高。另一方面是 ReactiveCocoa 在代码可读性、可维护性和协作上不太友好。</p>
+
+<p>而 Web 开发领域对 MVVM 编程模式的接受程度就大不相同了，在 Web 开发中有相当多的被广泛使用的 MVVM 的框架，例如 <a href="http://en.wikipedia.org/wiki/AngularJS">AngularJS</a>。相信 React Native 会推动 MVVM 应用在移动端的开发。</p>
+
+<h3>动态更新</h3>
+
+<p>终于说到最 &ldquo;鸡冻人心&rdquo; 的部分了。你受够了每次发新版本都要审核一个星期吗？苹果的审核团队在效率上的低下，使得我们这一群狠不得每天迭代更新一版的敏捷开发团队被迫每 2 周或 1 个月更新一次版本。很多团队上一个版本还没审核结束，下一个版本就做好了。</p>
+
+<p>React Native 的语言是基于 JavaScript，这必然会使得代码可以从服务器端动态更新成为可能。到时候，每天更新不再是梦想。当然，代码的安全性将更一步受到挑战，如何有效保护核心代码的安全将是一个难题。</p>
+
+<h2>总结</h2>
+
+<p>不管怎么样，这确确实实是一个移动互联网的时代，我相信随着几年的发展，移动互联网的开发生态也会积累出越来越多宝贵的框架，以支撑出更加伟大的 App 出现。作为一个移动开发者，我很高兴能够成为这个时代的主角，用移动开发技术改变人们的生活。</p>
+
+<p>愿大家珍惜这样的机会，玩得开心～</p>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-01T16:27:43+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2015</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[写iOS SDK注意事项]]></title>
@@ -1740,68 +1816,6 @@ Sublime text 的问题就是无法方便地预览最后效果。</p>
 <span class="categories">
   
     <a class='category' href='/blog/categories/ios/'>iOS</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[写在创业两周年]]></title>
-    <link href="http://blog.devtang.com/blog/2014/10/01/startup-2nd-year-summary/"/>
-    <updated>2014-10-01T22:06:20+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/10/01/startup-2nd-year-summary</id>
-    <content type="html"><![CDATA[<p>一年前写了一篇名为<a href="http://blog.devtang.com/blog/2013/06/17/startup-anniversary-note/">《写在创业一周年》</a>的文章，眼看创业已经两年多了，我就寻思着是不是再写一个创业两周年的总结。之所以拖了几个月，一是因为刚刚满两年的时候，我们公司刚刚拿下了<a href="http://tech.sina.com.cn/i/2014-07-22/11209510273.shtml">1500万美元的C轮融资</a>，但是还没有对外公开，所以不方便写。二是因为最近在忙<a href="http://www.yuansouti.com/">小猿搜题</a>这个新项目，顾不过来。现在正好国庆了，可以有时间好好思考总结下。</p>
-
-<p>如果说创业第一年，我努力提高了自己的基本功：包括技术实力，沟通能力，执行力，情绪控制等。那么创业第二年，我的提高可能就是更多的思考了。为什么我们能够在短短两年时间就做到1.25亿美元的估值？我觉得核心的原因就是：正确的决策+强大的执行力。执行力在以前已经说过很多次了，这次想分享一下我们的决策。</p>
-
-<p>创业两年，在我看来我们经历了两次重要的决策。</p>
-
-<p>第一次重要决策是：放弃做粉笔网转而做猿题库。这其实可以拆成两件事情：一、放弃粉笔网，二、决定做猿题库。有些创业公司成功的关键是坚持，有些创业公司成功的关键是转型。在我看来这两者并不矛盾，其实关键是你想清楚了所有的事情。</p>
-
-<p>放弃粉笔网是因为我们想清楚了这个模式是有问题的，所以我们并没有在这上面投入更多的市场推广费用，为团队节省了大量资金。这次试错，我们花的时间不到半年。不过也是因为运营粉笔网，我们发现了新的方向。我们的市场运营同事在邀请老师加入粉笔网时，发现了学生在手机上做题的需求，从而为团队找到了新的努力方向。</p>
-
-<p><img src="http://blog.devtang.com/images/2013-summary-fenbi-close.jpg"></p>
-
-<p>我们团队的特点就是执行力强，猿题库从计划到上线，我们只花了3个月。猿题库行测上线之后，收到了来自用户的良好反馈，这使得团队一下子确定了方向是正确的，大家的信心都恢复了。</p>
-
-<p>第二次重要的决策是：切入K12市场。我们本来打算把所有职业类考试的客户端都做一遍。但是我们的CEO李勇觉得这个模式如果被竞争者抢先用来做K12市场后，我们会很难受。所以我们主动放弃了很多职业类考试类客户端的开发，转而做猿题库高考。</p>
-
-<p>正因为这次决策，使得我们能够在短短半年时间，就积累起全中国超过10%的高考用户（每9个高考学生，就有一个用猿题库高考），随后的猿题库初高中整合版本也非常受学生欢迎，登上了AppStore教育榜首（我们没有刷榜）。也因为这次决策，才使得我们能够有C轮1.25亿美元这么高的估值。</p>
-
-<p><img src="http://blog.devtang.com/images/ape_appstore_top.jpg"></p>
-
-<p>虽然我没能参与这两次决策，但是我能感受到公司的管理层在创业上的深度思考，每一步都是经过仔细分析和推敲的。也因为这样，我们团队的大多数人就能够专心到事情的执行层面，把具体的事情做好。</p>
-
-<p>另外，我们公司非常强调“透明”，李勇会通过邮件或者周五全体会议的方式，将公司的想法传递给每一个人，大家能够知道每一个决策背后的原因，从而在做事情的时候有一个最根本的指导。李勇也多次强调大家有问题要说出来，通过沟通达到相互之间信息的透明。</p>
-
-<p>未来，猿题库应该还会经历很多重要决策，例如怎样用移动互联网的特点获得更多用户，例如如何给用户提供更多增值服务，获得收入。在线教育这个创业方向，与移动互联网结合起来，到底能有多大的想像空间，还需要我们一步一步探索。</p>
-
-<p>我很期待着与团队同事一起，为教育开辟一块新的市场，最终改变教育。</p>
-
-<p>最后，欢迎大家加入我们，这里有我们的<a href="http://www.yuantiku.com/campus/">职位介绍</a>。</p>
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-01T22:06:20+08:00" pubdate data-updated="true">Oct 1<span>st</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/summary/'>summary</a>
   
 </span>
 

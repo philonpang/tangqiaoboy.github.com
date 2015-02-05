@@ -4,7 +4,7 @@
   <title><![CDATA[Category: weekly | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/weekly/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-02-01T17:35:08+08:00</updated>
+  <updated>2015-02-05T21:37:48+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第38期]]></title>
+    <link href="http://blog.devtang.com/blog/2015/02/05/ios-weekly-38/"/>
+    <updated>2015-02-05T21:36:03+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/02/05/ios-weekly-38</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，文章地址是<a href="http://www.infoq.com/cn/news/2015/02/facebook-react-native">这里</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Facebook 推出 React Native、Swift 小技巧、RunLoop 主题的分享、使用蒲公英来做 iOS 测试应用的分发等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2015-01-25/10049980631.shtml">《分析师称 14 年四季度 iPhone 销量达 7300 万台》</a>：1 月 25 日上午消息，凯基证券分析师郭明池称，2014 年四季度 iPhone 销量达 7300 万台，iPad 销量达 2140 万台；并预计 2015 年一季度 iPhone 销量为 6160 万台，iPad 销量为 1010 万台。</p></li>
+<li><p><a href="http://tech.sina.com.cn/i/2015-01-23/doc-iavxeafs0339155.shtml">《2014 年 iOS 应用开发者收入超好莱坞美国票房》</a>：市场研究公司 Asymco 分析师霍拉斯·德迪乌 (Horace Dediu) 本周发布研究报告称，iOS 应用经济的规模已经超过了好莱坞电影在美国的票房。2014 年全年，开发者通过苹果获得的收入为 100 亿美元。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://objccn.io/issue-20/">《objc 中国 Issue 20：访谈》</a>：
+objc 中国 Issue 20 完成了三位传奇开发者的访谈，很有意思。从天才少年 Andy Matuschak ，到两次创业的 Loren Brichter，以及俄国妹子 Natasha Murashev，篇篇精彩。希望通过了解他们的经历，你会有所收获。</p></li>
+<li><p><a href="http://www.jianshu.com/p/5d4789db4310">《Swift 怎样更优雅地处理网络返回数据》</a>：我们在 iOS 开发中进行网络请求的时候，一般是获取到服务器返回的 data 后，再根据我们的需要转换成 JSON，图像等信息。但如果你的应用中存在各种类型的返回数据，那么你可能就要在各个网络请求的中进行重复的处理了。本文介绍了如何使用 Swift 中的泛型和 extension 让你的数据解析工作更优雅。</p></li>
+<li><p><a href="http://arstechnica.com/apple/2014/10/os-x-10-10/22/">《OS X 10.10 Yosemite: The Ars Technica Review》</a>：由 <a href="http://www.weibo.com/tualatrix?from=feed&amp;loc=avatar">图拉鼎</a> 推荐：这篇从 CPU 指令集、编译器来剖析 Swift 的文章，对其的设计越来越肯定了。简单的说，Swift 是一门使用 High Level 语言的语法及特性，同时仍有 Low Level 效能的一门语言。</p></li>
+<li><p><a href="http://imtx.me/archives/1921.html">《Swift 小技巧（三）：如何用 Swift 思维设计网络请求》</a>：近来在用 Swift 开发 App 的过程中，最大的心得就是：我开始渐渐用「Swift 思维」来思考了。回顾刚开始我用 Swift 时，只是套用它的语法而已，脑子里依然是 Objective-C 思维。这段时间，随着对 Swift 基本特性的掌握，我开始有意识地学习并尝试一些 Swift 才有的特性，此谓「Swift 思维」。Swift 有很多专有（Objective-C 没有的）的模式，今天我就从一个很简单的例子讲起，那就是：如何用 Swift 思维设计网络请求。</p></li>
+<li><p><a href="http://imtx.me/archives/1924.html">《wift 小技巧（五）：正确地启用 Logging 机制》</a>：文章介绍了如何在 Swift 项目里正确地设置 Logging 。</p></li>
+<li><p><a href="http://nshipster.cn/the-death-of-cocoa/">《The Death of Cocoa》</a>：Cocoa 实际就是 Objective-C 的标准库，包含了许多用语言编写程序最需要的一些框架，例如 Foundation、AppKit 和 Core Data。即使 Swift 才开始被使用几个月，Cocoa 已经开始失去它原有的光芒了。在语言方面，我们都见到了 Swift 是终结 Objective-C 的开始，但是作为基本库的 Cocoa 呢？(这已经不是苹果第一次把它的标准库淘汰了，记得 Carbon 么)？如果我们用 Swift 基本库重新建立一套 Foundation 会怎么样？让我们来看看一些 Cocoa 做过的具体的例子，并看看一个新的 Swift 基本库在哪些地方可以提高。</p></li>
+<li><p><a href="http://nshipster.cn/core-location-in-ios-8/">《Core Location in i​OS 8》</a>：自从 iPhone 存在以来，位置服务就一直处于非常重要的位置。Core Location API 也在 iPhone OS SDK 最初的公开版本里就存在了。iOS 8 ，Core Location 被改动了不少，不管是允许开发者做之前并不被允许的开发，还是帮助维护用户隐私。更特别的是，iOS 8 给 Core Location 带来了三个主要的改进：更分化的权限，室内定位以及访问监控。本文对此改进做了详细的介绍。</p></li>
+<li><p><a href="http://beyondvincent.com/2015/01/20/2015-01-20-Apple-Watch/">《Apple Watch: WatchKit 应用程序要点》</a>：本文介绍了在开发 Apple Watch 应用程序时需要注意的要点。包括 WatchKit 应用程序和 WatchKit 扩展，以及 WatchKit 应用程序的生命周期。此系列的文章还有：<a href="http://beyondvincent.com/2015/01/20/2015-01-20-watchkit-framework-taking-apps-pocket/">《WatchKit 框架: 将应用程序从裤兜里取出来》</a>。</p></li>
+</ol>
+
+
+<h2>视频</h2>
+
+<ol>
+<li><p><a href="http://v.youku.com/v_show/id_XODgxODkzODI0.html">《RunLoop 主题的分享 by 孙源 @sunnyxx》</a>：来自百度的孙源组织了一次关于 Objective-C RunLoop 的技术分享。</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=KVZ-P-ZI6W4&amp;app=desktop">《React.js Conf 2015 Keynote &ndash; Introducing React Native》</a>：这是 Facebook 出品的 react.js 的视频介绍。Facebook 打算用它来统一移动端的编程语言，react.js 把界面全部用 native 控件实现，js 只作为后端逻辑层。Facebook 也打算开源该框架，如果这个框架成功，将改变整个业界的移动开发效率，因为 iOS 和 android 代码可以大部分复用。注：视频来自 youtube。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="http://blog.devtang.com/blog/2015/01/22/pgy-usage-guide/">《使用蒲公英来做 iOS 测试应用的分发》</a>： “蒲公英” 是一个应用的免费分发服务，它帮助开发者能够方便地做 iOS 应用的测试分发工作。本文介绍了蒲公英的基本使用方法。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/x140yu/Developing_iOS_8_Apps_With_Swift">Developing iOS 8 Apps with Swift</a>：《Developing iOS 8 Apps with Swift》是 Stanford 公开课，本项目是其中文字幕翻译。</li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第37期]]></title>
@@ -226,61 +288,6 @@
 <li><p><a href="https://github.com/mutualmobile/MMWormhole">MMWormhole</a>：MMWormhole 是一个方便开发者在 iOS 应用与 iOS extensions 之间交换数据的开源框架。</p></li>
 <li><p><a href="https://github.com/rickytan/RTImageAssets">RTImageAssets</a>：RTImageAssets 是一个 Xcode 插件，用来生成 @3x 的图片资源对应的 @2x 和 @1x 版本，只要拖拽高清图到 @3x 的位置上，然后按 <code>Ctrl+Shift+A</code> 即可自动生成两张低清的补全空位。当然，如果你对图片质量要求不高的话，你也可以从 @2x 的图生成 @3x 版本。</p></li>
 <li><p><a href="https://github.com/poolqf/PQFCustomLoaders">PQFCustomLoaders</a>：PQFCustomLoaders 提供了高质量的、定制化的加载进度条。</p></li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第33期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/12/01/ios-weekly-33/"/>
-    <updated>2014-12-01T21:31:30+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/12/01/ios-weekly-33</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/12/google-inbox-reuse-code">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：Google Inbox 是如何跨平台重用代码的、iOS8.1.1系统被越狱、SizeClass 和AutoLayout教程等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://tech.sina.com.cn/it/apple/2014-11-29/05179836762.shtml">《乔布斯去世后仍获141项专利》</a>：据《麻省理工技术评论》称，尽管苹果公司联合创始人史蒂夫·乔布斯过世已三年有余，但直到今天仍陆续有新的专利归于他名下。截至目前已被授予乔布斯的专利总数共有458项。</p></li>
-<li><p><a href="http://tech.sina.com.cn/t/2014-11-27/doc-iavxeafr5326713.shtml">《iPhone 6在俄售价提高25%》</a>：近日16G版iPhone 6在俄罗斯官网上的售价提高了25%，从31990卢布提价至39990卢布(约5215元人民币)。此前，俄罗斯的iPhone 6售价是全欧洲最低，因此经常有特地去俄罗斯购买iPhone 6的游客。</p></li>
-<li><p><a href="http://tech.sina.com.cn/t/2014-11-30/doc-icczmvun0757922.shtml">《iOS8.1.1系统被越狱》</a>：某团队正式对外发布了iOS 8.1.1完美越狱工具，支持 iOS 8.1.1 版本。</p></li>
-<li><p><a href="http://coolshell.cn/articles/12136.html">《Google Inbox 是如何跨平台重用代码的？》</a>：开发一个移动应用在当下并不是一件容易的事情。如果想要获得最多的用户，你的应用通常需要覆盖 iOS, Android, 和 Web 三大平台。这就意味着同一个应用需要开发三个版本，使用 Objective-C 或者 Swift 开发 iOS 版本，使用 Java 开发 Android 版本，使用 JavaScript/CSS/HTML5 开发 Web 版本。工作量增大的同时也意味着有更多的 bug 需要修复。本文介绍了 Google 在发布 Google Inbox 时，使用 J2Objc 实现了70%的代码跨平台复用。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://limboy.me/ios/2014/11/28/facebook-app-headers.html">《读 Facebook App 头文件的一些收获》</a>：最近在看一些 App 架构相关的文章，也看了 Facebook 分享的两个不同时期的架构（2013 和 2014），于是就想一窥 Facebook App 的头文件，看看会不会有更多的收获，确实有，还不少。作者分享了从头文件中获取到的一些信息。</p></li>
-<li><p><a href="http://www.jianshu.com/p/3d6b2341fd83">《SizeClass 和AutoLayout教程3》</a>：文章翻译自《iOS8 by tutorials》的第一章，以开发一个天气应用为例子，介绍了SizeClass 和AutoLayout相关知识。译者：@<a href="http://weibo.com/1438670852/profile?topnav=1&amp;wvr=6">叶孤城___</a>。</p></li>
-<li><p><a href="http://www.jianshu.com/p/e72e957497b3">《SizeClasss和AutoLayout教程4》</a>：文章翻译自《iOS8 by tutorials》的第一章，介绍了如何在不同的 SizeClass 给同一个label设定不同的字体大小和样式。译者：@<a href="http://weibo.com/1438670852/profile?topnav=1&amp;wvr=6">叶孤城___</a>。</p></li>
-<li><p><a href="http://www.jianshu.com/p/85148630ec9c">《如何做出炫酷的卡片动画1》</a>：作者介绍了有关卡片动画的研究和实现。</p></li>
-<li><p><a href="http://chun.tips/blog/2014/11/19/zou-jin-watchkit-framework/">《走进 WatchKit Framework》</a>：作者整理了关于 WatchKit Framework API的知识点。</p></li>
-<li><p><a href="http://chun.tips/blog/2014/11/28/core-data-ban-ben-qian-yi-jing-yan-zong-jie/">《Core Data 版本迁移经验总结》</a>：大家在学习和使用Core Data过程中，第一次进行版本迁移的经历一定是记忆犹新，至少我是这样的，XD。弄的不好，就会搞出一些由于迁移过程中数据模型出错导致的Crash。作者在本文中总结了一下Core Data版本迁移过程中的经验。</p></li>
-<li><p><a href="http://www.raywenderlich.com/85080/beginning-alamofire-tutorial">《Beginning Alamofire Tutorial》</a>：Alamofire 是 AFNetworking 的作者 Mattt Thompson，用 Swift 实现的网络基础库。本文介绍了其基本的使用方法。</p></li>
-</ol>
-
-
-<h2>视频</h2>
-
-<ol>
-<li><a href="http://www.imooc.com/view/242">《一起来做价值百万的Apple Watch App：分歧终端机》</a>：视频展示了如何使用WatchKit，如何通过MVC的绑定来处理用户事件，如何制作动画的功能。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/victorjiang/MobileDataSwitch">MobileDataSwitch</a>：MobileDataSwitch 使用 CoreTelephony 中的私有接口，切换移动网络开关。作者还添加了App Extensions支持，可以在下拉通知 Today 中增加快速设置开关。</p></li>
-<li><p><a href="https://github.com/tapwork/HeapInspector-for-iOS">HeapInspector</a>：HeapInspector是一个用于检测应用中的内存泄漏的开源调试工具。</p></li>
 </ol>
 
 ]]></content>

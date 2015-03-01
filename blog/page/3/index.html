@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，地址是这里。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 本期 iOS 移动开发周报带来如下内容： &hellip;">
+  <meta name="description" content="我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，而且包括我以及我身边的很多朋友都被恶心到了，所以我就把这些注意事项总结出来，希望大家不要犯同样的错误。 注意事项一：所有类名都应该加前缀 说明：没有前缀的类名有冲突的风险。 Bad Case：微信分享的 SDK，文件名： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,136 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/31/write-sdk-tips/">写iOS SDK注意事项</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-31T21:44:33+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，而且包括我以及我身边的很多朋友都被恶心到了，所以我就把这些注意事项总结出来，希望大家不要犯同样的错误。</p>
+
+<h3>注意事项一：所有类名都应该加前缀</h3>
+
+<p>说明：没有前缀的类名有冲突的风险。</p>
+
+<p>Bad Case：微信分享的 SDK，文件名：<code>WXApiObject.h</code>，代码如下，其中<code>BaseReq</code>类和<code>BaseResp</code>类都没有加前缀。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@interface BaseReq : NSObject
+</span><span class='line'>
+</span><span class='line'>/** 请求类型 */
+</span><span class='line'>@property (nonatomic, assign) int type;
+</span><span class='line'>/** 由用户微信号和 AppID 组成的唯一标识，发送请求时第三方程序必须填写，用于校验微信用户是否换号登录 */
+</span><span class='line'>@property (nonatomic, retain) NSString* openID;
+</span><span class='line'>
+</span><span class='line'>@end
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>#pragma mark - BaseResp
+</span><span class='line'>/*! @brief 该类为微信终端 SDK 所有响应类的基类
+</span><span class='line'> *
+</span><span class='line'> */
+</span><span class='line'>@interface BaseResp : NSObject
+</span><span class='line'>/** 错误码 */
+</span><span class='line'>@property (nonatomic, assign) int errCode;
+</span><span class='line'>/** 错误提示字符串 */
+</span><span class='line'>@property (nonatomic, retain) NSString *errStr;
+</span><span class='line'>/** 响应类型 */
+</span><span class='line'>@property (nonatomic, assign) int type;
+</span><span class='line'>
+</span><span class='line'>@end</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>注意事项二：所有 category 方法加前缀</h3>
+
+<p>说明：category 方法如果不加前缀，有冲突的风险。</p>
+
+<p>Bad Case：腾讯分享的 SDK，它为 NSArray 增加了一个 JSONArray 的 category，造成我们本身的同名 category 被覆盖。另外他们为 NSArray 增加的其它 category 和著名的 Cordova 开源库冲突，造成 Cordova 无法使用。</p>
+
+<h3>注意事项三：不要将第三方库打包进 SDK</h3>
+
+<p>说明：尽量不要将第三方库打包进 SDK，如果要打包，最好也要将该第三方库重命名，以避免冲突。</p>
+
+<p>Bad Case：小米的推送 SDK，直接在 SDK 静态库里面编进去一个第三方依赖库，而且这个库还是 ASIHttpRequest。ASIHttp 当前已经处于无人维护状态，很多 Bug 都是大家自己在修复（例如网易就自己维护了一个 ASIHttpRequest 的分支）。在 SDK 中依赖这种库还是比较麻烦的。</p>
+
+<h3>注意事项四：做基本的检查和测试</h3>
+
+<p>说明：SDK 对外公布前应该进行基本的编译检查，不应该有编译器警告存在。</p>
+
+<p>Bad Case：腾讯分享的 SDK。它的 <code>CGIParamsWrap.o</code> 和  <code>TencentOAuth.o</code> 文件里面的方法名冲突了，如下所示：</p>
+
+<blockquote><p>ld: warning: instance method &lsquo;deleteAPIRequestBySeq:&rsquo; in category from /Users/tangqiao/work/iphone/solar-ios/lib_common/TencentOpenApi/TencentOpenAPI.framework/TencentOpenAPI(CGIParamsWrap.o) overrides method from class in /Users/tangqiao/work/iphone/solar-ios/lib_common/TencentOpenApi/TencentOpenAPI.framework/TencentOpenAPI(TencentOAuth.o)</p></blockquote>
+
+<h3>注意事项五：文档完整并且正确</h3>
+
+<p>说明：这就不用解释了吧？</p>
+
+<p>Bad Case: 微信官方的微信支付的示例代码，里面有各种错误，代码都无法编译成功。如下所示的是其中一个错误：</p>
+
+<p><img src="/images/weixin-pay-error.jpg"></p>
+
+<p>于是还有人专门帮微信另外制作了一个非官方的说明文档，地址在这里：<a href="https://github.com/gbammc/WechatPayDemo">https://github.com/gbammc/WechatPayDemo</a></p>
+
+<h3>注意事项六：支持最新的 CPU 版本</h3>
+
+<p>说明：去年苹果的一次 Bug，造成上传应用必须支持 arm64 的 CPU 版本，结果众多应用因为依赖的 SDK 不支持 arm64 而无法更新。当然，这次 Bug 出来之后，各 SDK 厂商都紧急做了更新。但是我觉得这种事情如果要做得专业，就应该一开始就紧跟技术更新，及时更新，而不是被迫更新。</p>
+
+<h2>总结</h2>
+
+<p>以上 6 点是我认为写一个 SDK 的最最基本的要求，希望被点名批评的同学能尽快改正哟～</p>
+
+<p>如果大家在使用其它 SDK 时也发现了类似的问题，欢迎在文章下面留言。希望通过这种方式给开发相关 SDK 的同学一些压力，让他们好好改一下。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -161,105 +291,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/22/pgy-usage-guide/">使用蒲公英来做iOS测试应用的分发</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-22T19:16:06+08:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/pgy_0.jpg"></p>
-
-<h2>前言</h2>
-
-<p>我在 <a href="http://blog.devtang.com/blog/2012/02/16/apply-daily-build-in-ios-project/">《给 iOS 工程增加 Daily Build》</a> 一文中介绍过如何用命令行生成 IPA 文件以及通过 <code>itms-services</code> 协议 来让用户可以直接在网页上安装测试应用。但是这种方法虽然有效，但是还是比较麻烦，因为：</p>
-
-<ol>
-<li>开发者需要自己写相关的 Build 脚本。</li>
-<li>开发者需要自己搭建好应用下载的服务器。</li>
-<li>如果要做得更友好，开发者还需要部署 CDN 服务、增加扫描二维码下载等功能。</li>
-</ol>
-
-
-<p>所以本文给大家推荐一个叫 “<a href="http://www.pgyer.com/">蒲公英</a>” 的免费服务，帮助开发者能够方便地来做 iOS 应用的测试分发工作。蒲公英于 2014 年 7 月正式上线，我自己使用过一段时间，还是挺满意的。</p>
-
-<p>下面我们就来看看，如何使用 “<a href="http://www.pgyer.com/">蒲公英</a>” 来进行测试版本应用的分发工作。</p>
-
-<h2>生成 IPA 文件</h2>
-
-<p>生成应用的 IPA 文件可以使用命令行 <code>xcodebuild exportArchive -exportFormat ipa</code>来完成，也可以使用 Xcode 提供的相应功能。相信大部分同学应该都用过，我就简单介绍一下。</p>
-
-<p>首先将编译的目标机器设置成 “iOS Device&#8221;，然后点击”Product&#8221;&ndash;>&ldquo;Archive&#8221;，Archive 成功之后，就可以在 Xcode 的 Organizer 中看到相应的文件。</p>
-
-<p>接下来点击 Organizer 中的 &ldquo;Export&rdquo; 按钮，如下图所示：</p>
-
-<p><img src="/images/export_ipa_1.jpg"></p>
-
-<p>在接下来的弹出界面中选择 “Save for Ad Hoc Deployment&#8221;。如下图所示：</p>
-
-<p><img src="/images/export_ipa_2.jpg"></p>
-
-<p>选择完成后点 Next，Xcode 会自动将测试设备的签名信息附加上，并将相应的 IPA 文件导出。</p>
-
-<h2>上传到蒲公英</h2>
-
-<p>如果是第一次使用蒲公英，我们需要访问 <a href="http://www.pgyer.com/user/register">蒲公英的网址</a> 进行注册。注册主要是为了保护测试应用的安全和设置相应的权限（例如设置下载密码）。</p>
-
-<p>注册之后，点击<a href="http://www.pgyer.com/">蒲公英网站首页</a>的 &ldquo;发布应用&#8221;，然后选择之前生成的 IPA 文件即可完成上传 IPA 的过程。蒲公英对上传速度进行了很大程度的优化，上传应用速度非常快，下图是我测试上传猿题库的过程（上传 18M 的 IPA 文件大概花了半分钟时间，平均速度应该超过了 500K 每秒）：</p>
-
-<p><img src="/images/pgy_1.jpg"></p>
-
-<p>上传成功后，蒲公英会自动分析应用的 Bundle ID 信息，将其在 App Store 上的应用介绍和截图获取下来。然后你可以选择设置一个 “安装密码”，以避免一些越狱用户非法安装你的应用。对于小范围试用的应用，建议也不要将其发布到 &ldquo;应用广场&#8221;。如下所示：</p>
-
-<p><img src="/images/pgy_2.jpg"></p>
-
-<p>设置好所有需要的信息后，点击发布应用，蒲公英会生成一个应用分发的网页。如下图所示：</p>
-
-<p><img src="/images/pgy_3.jpg"></p>
-
-<p>你可以把这个网页发给你的测试用户:</p>
-
-<ul>
-<li>如果用户在手机上打开这个页面，则可以直接点击 “安装按钮” 来一键下载和安装测试应用。</li>
-<li>如果用户在电脑上打开这个应用，则可以用扫描二维码的方式来一键下载和安装测试应用。</li>
-</ul>
-
-
-<h2>一些小技巧</h2>
-
-<ul>
-<li>有企业证书的同学，如果将 IPA 在本地用企业证书签名，则可以把蒲公英当作一个企业应用发布渠道，省去部署分发服务器的烦恼，但最好设置安装密码，以免被苹果认为滥用企业证书。</li>
-<li>嫌每次打开蒲公英的网页太麻烦？蒲公英提供了 <a href="http://www.pgyer.com/apps">Mac 客户端</a>，所有上传和设置操作都可以在客户端上直接进行。</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -281,6 +312,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/01/tipping-point/">《引爆点》读书心得</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/03/01/ios-weekly-39/">iOS移动开发周报-第39期</a>
@@ -324,10 +359,6 @@
     
       <li class="post">
         <a href="/blog/2015/01/01/2014-summary/">2014年个人总结</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/31/ios-weekly-35/">iOS移动开发周报-第35期</a>
       </li>
     
   </ul>

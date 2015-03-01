@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-03-01T14:16:33+08:00</updated>
+  <updated>2015-03-01T15:43:25+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,85 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[《引爆点》读书心得]]></title>
+    <link href="http://blog.devtang.com/blog/2015/03/01/tipping-point/"/>
+    <updated>2015-03-01T15:32:15+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/03/01/tipping-point</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/TippingPointBook.jpg"></p>
+
+<p>春节的时候看到了萧宸宇的博客中一篇名为 <a href="http://iiiyu.com/2015/01/31/read-the-tipping-point/">《读书笔记 「引爆点」》</a> 的文章。受文章的吸引，于是把 <a href="http://book.douban.com/subject/3900987/">《引爆点》</a> 这本书学习了一下。</p>
+
+<p>《引爆点》的作者格拉德威尔在书中主要讲解了他对于 &ldquo;流行现象&rdquo; 的理解。这里面的流行现象可以是指一种感冒流感病毒的传播，也可能指一个军事情报消息的传播，也可能指一种身着打扮的方式，也可能是一种电视节目，甚至是一个地区的犯罪行为。</p>
+
+<p>格拉德威尔的流行理论认为，造成流行现象涉及三个必不可少的因素：</p>
+
+<ul>
+<li>第一法则是个别人物法则，讲影响信息传播的关键人物角色：内行，联系员，推销员。</li>
+<li>第二法则是附着力因素，这条法则讲的是流行物本身所应具备的要素，它应该具备能让人过目不忘或者留下深刻印象的附着力，比如 iPod 漂亮的外形和一般随身听无法比拟的容量。</li>
+<li>第三法则是环境威力法则，意思就是发起流行的环境极端重要。注意：不是重要或者很重要，而是极端重要，甚至一个微小外部环境的变化，就能决定流行或者不流行。</li>
+</ul>
+
+
+<p>我在读完全书后，按我自己的理解，把这三条法则分为：内部因素、可控因素和不可控因素。</p>
+
+<h2>内部因素</h2>
+
+<p>内部因素就是《引爆点》书中指的附着力因素。附着力因素要求流行事物本身要有趣、有用、者解决用户痛点、让用户产生情感共鸣等要素。</p>
+
+<p>从互联网产品的流行来打比方，内部因素简单来说就是你的产品要好用，这个是流行的基础，任何脱离用户实际需求，不好用的产品，简单靠营销是不管用的。这一点我在读了《史玉柱自述：我的营销心得》我有了更深的体会，我一直以为脑白金是靠地毯式轰炸的广告来成功的，其实不是的，脑白金首先做到的是产品有效（改善睡眠），然后再靠有效的营销手段来成功的。</p>
+
+<h2>可控因素</h2>
+
+<p>可控因素就是《引爆点》书中指的个别人物法则。该法则强调了信息传播的关键节点，如果你的信息传播是那些关键节点的人发起的，则很容易造成流行，否则就很难。</p>
+
+<p>书中举出的 <a href="http://zh.wikipedia.org/wiki/%E5%85%AD%E5%BA%A6%E5%88%86%E9%9A%94%E7%90%86%E8%AE%BA">六度理论</a> 的例子，证明大部分的传递都是由那些极少数的明星人物完成的。书中把信息传递的关键人员分成内行，联系员，推销员，分别讲解了这些成员的特点。</p>
+
+<p>于是，问题就转化成如何找到这类关键人员。小米联合创始人黎万强在他写的<a href="http://book.douban.com/subject/25942507/">《参与感：小米口碑营销内部手册》</a>中介绍道，小米最开始在硬件发烧友论坛中找到了 100 位核心用户，邀请这些手机发烧友来参与小米手机的体验和讨论。这就是一次成功的找内行的营销方式。</p>
+
+<p>书中介绍的雷克萨斯轿车在美国刚刚开始销售豪华车时，因为汽车问题需要召回。但是因为雷克萨斯这个品牌当时很新，试用的用户都是汽车内行，于是雷克萨斯选择做了一次极致体验的召回行为，具体包括：给每一个用户打电话，把车加满油，上门处理等。一场本会成为灾难的汽车质量问题却为公司赢得了客户服务的美誉。</p>
+
+<p>具体到 iOS 这个圈子，也有人发现了我其实在 iOS 这个圈子内扮演 “内行”（多年开发经验）+ “推销员”（坚持写博客）的角色。于是找我帮他们转发微博，或者购买博客的广告位。这里顺便感谢我的广告主：<a href="http://www.pgyer.com/">蒲公英</a>和 <a href="https://www.upyun.com/index.html">upyun云</a>。</p>
+
+<h2>不可控因素</h2>
+
+<p>我认为环境威力法则属于不可控因素。当然，可能不太严格，但相对来说是，当然，书中也讲了很多通过控制环境变量来改变流行的例子。但是，更多的时候，我们是借环境的天时地利来做事情，而不是逆天而为。雷军讲做 “站在风口上，猪都能飞起来” 也是讲的这个道理。</p>
+
+<p>对于创业来说，其实非常关键的就是把握行业发展的趋势，在别人都没有关注的时候，抢先占领市场，利用时间窗口的优势来建立商业壁垒，这样才能成功。所以我很佩服我们的 CEO 李勇在在线教育完全没有流行的 3 年前，选择创业做在线教育，而今年众多的在线教育项目启动的时候，我们的产品猿题库已经充分利用时间窗口占领了超过 1000 万学生用户，让任何竞争对手都不敢做直接竞争，只能做差异化竞争。</p>
+
+<p>当然，在产品细节、具体营销方式上，利用环境威力法则，在细节上结合热点事件，Duang 一下，这种小的适应环境威力法则的行为还是有用的。</p>
+
+<h2>总结</h2>
+
+<p>这是一本好书，可以更加系统地理解流行的产生，以及学会利用流行的法则来做一些决策。</p>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-01T15:32:15+08:00" pubdate data-updated="true">Mar 1<span>st</span>, 2015</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/books/'>books</a>, <a class='category' href='/blog/categories/summary/'>summary</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第39期]]></title>
@@ -1627,81 +1706,6 @@ Sublime text 的问题就是无法方便地预览最后效果。</p>
 
 
 <time datetime="2014-10-30T21:34:29+08:00" pubdate data-updated="true">Oct 30<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第28期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/10/22/ios-weekly-28/"/>
-    <updated>2014-10-22T21:49:37+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/10/22/ios-weekly-28</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/10/apple-product-release-conference">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：苹果召开新品发布会、收据验证、Facebook开源AsyncDisplayKit等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><a href="http://money.163.com/14/1017/10/A8OJTF7700254TI5.html">《苹果召开新品发布会》</a>：北京时间10月17日凌晨1点，苹果在美国加州库比蒂诺总部Infinite Loop园区的Town Hall大会堂如期召开了主题为“久违了（It’s been way too long）”的新品发布会。这也是继苹果iPhone6、iPhone 6 Plus正式发布后，苹果在今年秋季举办的第二场大型发布会。在此次发布会上，苹果正式发布了iPad Air 2、iPad mini 3；视网膜屏iMac；新款Mac mini；以及iOS8.1和Yosemite系统。</li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://blog.sunnyxx.com/2014/10/14/fp-essential/">《( ) &ndash;> ( )》</a>：<code>() -&gt; ()</code>不是什么表情符号，而是一种高度抽象的编程范式，它表示了一个函数式的编程思想，即值的变化过程。本文从swift语言入手分析，元组，函数，闭包等的设计对它进行解释，并阐释swift语言设计的大局观，最后分享一个Reactive Cocoa作者的Talk中的编程思想。</p></li>
-<li><p><a href="http://objccn.io/issue-17-3/">《收据验证》</a>：收据 (Receipts) 是在 OS X 10.6.6 更新后，和 Mac App Store 一起出现的。 iOS 在内购的时候总是需要向服务器提供收据。验证收据的代码部分必须在安全方面高度敏感。如果被避开或者攻击，你就失去了核实用户权限的能力，并且无法验证用户是否购买。因此，让验证收据的代码能够承受黑客的攻击变得至关重要。本文讨论了如何安全地验证收据。</p></li>
-<li><p><a href="http://robb.is/working-on/a-hamburger-button-transition/">《如何用Swift做一个不错的按钮变换动画》</a>：文章介绍了如何用Swift语言，采用<code>Core Graphics</code>来完成两个按钮之间的切换动画效果（效果图如下所示）。作者也将相关的代码开源在了<a href="https://github.com/robb/hamburger-button">这里</a>。</p></li>
-</ol>
-
-
-<p> <img src="http://robb.is/img/hamburger-button.gif" alt="" /></p>
-
-<ol>
-<li><p><a href="http://imtx.me/archives/1910.html">《适配 iOS 8 时遇到的问题两则：远程推送和 Unwind Segue》</a>：作者介绍了适配 iOS 8 时遇到的问题以及解决方案，值得大家参考。</p></li>
-<li><p><a href="http://www.iwangke.me/2014/10/13/Why-Changba-iOS-choose-Mantle/">《为什么唱吧iOS 6.0选择了Mantle》</a>：唱吧6.0一个很重大的修改就是基于Mantle重建(新建)了Model层。文章分享了使用Mantle的决策及执行过程。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/facebook/AsyncDisplayKit">AsyncDisplayKit</a>：AsyncDisplayKit是facebook开源的一个框架，它能让复杂的用户交互效果流畅地显示，facebook使用它开发完成了paper。Facebook也在 <a href="https://code.facebook.com/posts/721586784561674/introducing-asyncdisplaykit-for-smooth-and-responsive-apps-on-ios/">这篇文章</a> 中，详细介绍了AsyncDisplayKit。</p></li>
-<li><p><a href="https://github.com/krzysztofzablocki/KZBootstrap">KZBootstrap</a>：一个方便iOS工程初始化的项目，它包含一些推荐的工程设置和工具。</p></li>
-<li><p><a href="https://github.com/chenqihui/NewsFourApp">NewsFourApp</a>：一个模仿网易4.0新UI框架的开源项目。</p></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-22T21:49:37+08:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2014</time> 
 
 <span class="categories">
   

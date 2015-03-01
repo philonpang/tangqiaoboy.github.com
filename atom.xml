@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-02-05T21:37:48+08:00</updated>
+  <updated>2015-03-01T14:16:33+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,87 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第39期]]></title>
+    <link href="http://blog.devtang.com/blog/2015/03/01/ios-weekly-39/"/>
+    <updated>2015-03-01T13:46:28+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/03/01/ios-weekly-39</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，文章地址是<a href="http://www.infoq.com/cn/news/2015/02/core-image-introduction">这里</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Core Image 介绍、写 iOS SDK 注意事项、利用 CocoaLumberjack 搭建自己的 Log 系统、KSHObjcUML 等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://www.williamlong.info/archives/4142.html">《Google 宣布淘汰 SPDY》</a>：Google 宣布计划淘汰该公司在 2009 年推出的 SPDY 协议，SPDY 原本定位为替代 HTTP 协议的新协议，Google 原本打算以它来加速 HTTP 的传输速度并推动成为标准，不过现在决定将支持 HTTP/2，并逐渐淘汰 SPDY，预计 2016 年就会完全从 Chrome 中移除对 SPDY 协议的支持。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://objccn.io/issue-21-6/">《Core Image 介绍》</a>：这篇文章为初学者介绍了 Core Image，一个 OS X 和 iOS 的图像处理框架。</p></li>
+<li><p><a href="http://limboy.me/ios/2015/02/07/builder-pattern.html">《Builder Pattern 在 Objective-C 中的使用》</a>：作者从一个真实场景出发，介绍了结合 block 使用工厂模式的实践方式。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2015/01/31/write-sdk-tips/">《写 iOS SDK 注意事项》</a>：我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，文本分享了写 iOS SDK 注意事项。</p></li>
+<li><p><a href="http://imtx.me/archives/1926.html">《CoreData 与 ReactiveCocoa 混用时要注意的线程问题》</a>：作者从一个 Crash 出发，分享了查找和修复问题的整个过程。</p></li>
+<li><p><a href="http://www.jianshu.com/p/5adb536fd32b">《iOS 开发如何快速成长 ?》</a>：作者分享了自己的一些心得，包括：做有难度的项目、尽量少抱大腿、多读源码、多读国外的 iOS 开发网站和 blog、要孜孜不倦的学习。</p></li>
+<li><p><a href="http://www.jianshu.com/p/f888db82fc27">《久违的的 LLDB 篇一，让 lldb 提升你的效率》</a>：作者分享了一些 LLDB 使用小技巧。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/li-yong-cocoalumberjack-da-jian-zi-ji-de-log-xi-tong">《利用 CocoaLumberjack 搭建自己的 Log 系统》</a>：CocoaLumberjack 最早是由 Robbie Hanson 开发的日志库，可以在 iOS 和 MacOSX 开发上使用。其简单，快读，强大又不失灵活。本文介绍了利用 CocoaLumberjack 搭建自己的 Log 系统的过程。</p></li>
+<li><p><a href="https://mikeash.com/pyblog/friday-qa-2015-02-20-lets-build-synchronized.html">《Let&rsquo;s Build @synchronized》</a>：本文讲解了 synchronized 关键字的内部实现原理。</p></li>
+</ol>
+
+
+<h2>视频</h2>
+
+<ol>
+<li><a href="http://realm.io/news/andy-matuschak-controlling-complexity/">《Controlling Complexity in Swift》</a>：本视频的作者来自 <a href="https://twitter.com/andy_matuschak">Andy Matuschak</a>，他曾在苹果 UIKit 组工作，在本视频中，他分享了用 Swift 来控制复杂度的经验。</li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="https://github.com/kimsungwhee/KSHObjcUML">KSHObjcUML</a>：KSHObjcUML 是一个 Objective-C 类引用关系图的 Xcode 插件。作者是：<a href="http://weibo.com/u/2289288323">@kimsungwhee</a>。</p></li>
+<li><p><a href="https://itunes.apple.com/app/id961651406">Xliffie</a>：Xliffie 是 <a href="http://weibo.com/lexrus">@ 汤圣罡</a> 推荐的一个本地化必备工具，它对 Xcode 生成的 Xliff 文件支持较好。</p></li>
+</ol>
+
+
+<p> <hr />
+广告：亚马逊上正在销售我的《iOS开发进阶》签名版，输入优惠码<code>JXBEGSGKUV</code>，可在结帐时减7元，点击查看：<a href="http://www.amazon.cn/b?node=1474130071">购买链接</a>。</p>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-01T13:46:28+08:00" pubdate data-updated="true">Mar 1<span>st</span>, 2015</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第38期]]></title>
@@ -183,7 +264,7 @@ objc 中国 Issue 20 完成了三位传奇开发者的访谈，很有意思。�
     <link href="http://blog.devtang.com/blog/2015/01/31/write-sdk-tips/"/>
     <updated>2015-01-31T21:44:33+08:00</updated>
     <id>http://blog.devtang.com/blog/2015/01/31/write-sdk-tips</id>
-    <content type="html"><![CDATA[<p>我发现即使是像腾讯、小米这样的大厂提供的 SDK 质量在规范上也有很多问题，而且包括我以及我身边的很多朋友都被恶心到了，所以我就把这些注意事项总结出来，希望大家不要犯同样的错误。</p>
+    <content type="html"><![CDATA[<p>我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，而且包括我以及我身边的很多朋友都被恶心到了，所以我就把这些注意事项总结出来，希望大家不要犯同样的错误。</p>
 
 <h3>注意事项一：所有类名都应该加前缀</h3>
 
@@ -1621,88 +1702,6 @@ Sublime text 的问题就是无法方便地预览最后效果。</p>
 
 
 <time datetime="2014-10-22T21:49:37+08:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第27期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/10/12/ios-weekly-27/"/>
-    <updated>2014-10-12T16:33:21+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/10/12/ios-weekly-27</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/10/ios6">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：国内iOS6比例已经低于5%，Apple 发布 Swift 语言和 Xcode 入门视频，Facebook&rsquo;s iOS Infrastructure等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://weibo.com/1708947107/BoBnZ1qy9?mod=weibotime#_rnd1412427404394">《国内iOS6比例已经低于5%》</a>：来自国内友盟的统计以及笔者开发的应用（猿题库）统计结果都显示，国内的iOS6用户比例已经低于5%。</p></li>
-<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-09-27/10059651916.shtml">《苹果关闭iOS 7.1.2验证：iOS 8将无法降级》</a>：在发布iOS 8的两个更新之后，苹果停止了为iOS 7.1.2固件提供签名。这意味着，已经升级至新版iOS 8的用户将无法再降级回iOS 7.1.2。</p></li>
-<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-10-04/08109666982.shtml">《新恶意软件iWorm已感染全球1.7万台Mac电脑》</a>：信息安全研究人员近期发现，全球超过1.7万台Mac电脑已经感染了一种名为“iWorm”的新的OS X恶意软件。这种恶意软件曾使用Reddit网站作为传播媒介，能窃取用户数据，触发多种系统操作，并执行Lua脚本。用户可以通过测试路径<code>/Library/Application Support/JavaW</code>是否存在，在判断是否中病毒。如果OS X找不到这一文件夹，那么Mac电脑就是安全的。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://swift-cheatsheet.co.uk/">《iOS8 Swift Cheat Sheet and Quick Reference Guide》</a>：这份速查表列出了Swift的常见的基本用法。</p></li>
-<li><p><a href="http://bbs.iosre.com/forum.php?mod=viewthread&amp;tid=422">《 获取当前安装的所有App》</a>：作者介绍了利用私有API在非越狱的iOS 7和8机器上，获取iOS中安装的所有App的办法。</p></li>
-<li><p><a href="http://weibo.com/p/23041889d963070102v39b">《iOS8企业应用部署Bug》</a>：作者发现使用iOS企业部署（In-HouseDistribution）方式进行应用升级时，在iOS8下无法成功，删除应用再重新安装也不行。经过调研，作者发现这个是Apple的bug，并且提供了临时解决办法。</p></li>
-<li><p><a href="https://designcode.io/learn">《The best resources for learning iOS design and Xcode》</a>：作者整理了一系列关于iOS 设计和 Xcode 方面的学习资源，并提供邮件订阅。</p></li>
-<li><p><a href="http://www.iwangke.me/2014/10/06/how-to-implement-a-core-animation-based-60-fps-ktv-lyrics-view/">《基于Core Animation的KTV歌词视图的平滑实现》</a>：文章介绍了唱吧歌词视图的技术实现细节。</p></li>
-<li><p><a href="https://medium.com/swift-programming/15-swift-ios-open-source-projects-you-cannot-ignore-6bd4ac37d7dd">《10 Swift IOS open-source projects you cannot ignore》</a>：文章介绍了10大不能错过的 Swift 开源项目。</p></li>
-<li><p><a href="http://www.appdesignvault.com/ios-8-custom-keyboard-extension/#a_aid=mdev">《iOS 8 Custom Keyboard Tutorial: How to Create A Third-Party Keyboard Extension》</a>：文章介绍了如何在iOS8下自定义键盘。</p></li>
-</ol>
-
-
-<h2>视频</h2>
-
-<ol>
-<li><p><a href="http://www.guomii.com/posts/39029">《Apple 发布 Swift 语言和 Xcode 入门视频》</a>：Apple 在 Swift 官方博客上发布了一段6分钟多的视频，介绍如何从零开始使用 Xcode 套件开发 iOS 应用，非常值得想现在开始学 iOS 开发的朋友一看。</p></li>
-<li><p><a href="https://www.youtube.com/watch?v=XhXC4SKOGfQ">《Facebook&rsquo;s iOS Infrastructure》</a>：Facebook在视频中分享了他们的iOS端架构。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/SwiftP2P/SwiftSSL">SwiftSSL</a>：SwiftSSL 是一个基于CommonCrypto的Swift语言的加密库。</p></li>
-<li><p><a href="https://github.com/daltoniam/SwiftHTTP">SwiftHTTP</a>：用Swift语言实现的HTTP网络库。</p></li>
-<li><p><a href="https://github.com/stephencelis/SQLite.swift">SQLite.swift</a>：SQLite.swift是一个将SQLite3封装成Swift语言的包装库。</p></li>
-<li><p><a href="https://github.com/Brimizer/Slidden">Slidden</a>: Slidden是一个老外开源的开发自定义键盘的库，利用这个开源库，可以方便的配置键位、颜色以及键位对应的图片。</p></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-12T16:33:21+08:00" pubdate data-updated="true">Oct 12<span>th</span>, 2014</time> 
 
 <span class="categories">
   

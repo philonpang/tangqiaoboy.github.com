@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-02-05T21:37:48+08:00</updated>
+  <updated>2015-03-01T14:16:33+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第39期]]></title>
+    <link href="http://blog.devtang.com/blog/2015/03/01/ios-weekly-39/"/>
+    <updated>2015-03-01T13:46:28+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/03/01/ios-weekly-39</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，文章地址是<a href="http://www.infoq.com/cn/news/2015/02/core-image-introduction">这里</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Core Image 介绍、写 iOS SDK 注意事项、利用 CocoaLumberjack 搭建自己的 Log 系统、KSHObjcUML 等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><a href="http://www.williamlong.info/archives/4142.html">《Google 宣布淘汰 SPDY》</a>：Google 宣布计划淘汰该公司在 2009 年推出的 SPDY 协议，SPDY 原本定位为替代 HTTP 协议的新协议，Google 原本打算以它来加速 HTTP 的传输速度并推动成为标准，不过现在决定将支持 HTTP/2，并逐渐淘汰 SPDY，预计 2016 年就会完全从 Chrome 中移除对 SPDY 协议的支持。</li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://objccn.io/issue-21-6/">《Core Image 介绍》</a>：这篇文章为初学者介绍了 Core Image，一个 OS X 和 iOS 的图像处理框架。</p></li>
+<li><p><a href="http://limboy.me/ios/2015/02/07/builder-pattern.html">《Builder Pattern 在 Objective-C 中的使用》</a>：作者从一个真实场景出发，介绍了结合 block 使用工厂模式的实践方式。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2015/01/31/write-sdk-tips/">《写 iOS SDK 注意事项》</a>：我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，文本分享了写 iOS SDK 注意事项。</p></li>
+<li><p><a href="http://imtx.me/archives/1926.html">《CoreData 与 ReactiveCocoa 混用时要注意的线程问题》</a>：作者从一个 Crash 出发，分享了查找和修复问题的整个过程。</p></li>
+<li><p><a href="http://www.jianshu.com/p/5adb536fd32b">《iOS 开发如何快速成长 ?》</a>：作者分享了自己的一些心得，包括：做有难度的项目、尽量少抱大腿、多读源码、多读国外的 iOS 开发网站和 blog、要孜孜不倦的学习。</p></li>
+<li><p><a href="http://www.jianshu.com/p/f888db82fc27">《久违的的 LLDB 篇一，让 lldb 提升你的效率》</a>：作者分享了一些 LLDB 使用小技巧。</p></li>
+<li><p><a href="http://nonomori.farbox.com/post/li-yong-cocoalumberjack-da-jian-zi-ji-de-log-xi-tong">《利用 CocoaLumberjack 搭建自己的 Log 系统》</a>：CocoaLumberjack 最早是由 Robbie Hanson 开发的日志库，可以在 iOS 和 MacOSX 开发上使用。其简单，快读，强大又不失灵活。本文介绍了利用 CocoaLumberjack 搭建自己的 Log 系统的过程。</p></li>
+<li><p><a href="https://mikeash.com/pyblog/friday-qa-2015-02-20-lets-build-synchronized.html">《Let&rsquo;s Build @synchronized》</a>：本文讲解了 synchronized 关键字的内部实现原理。</p></li>
+</ol>
+
+
+<h2>视频</h2>
+
+<ol>
+<li><a href="http://realm.io/news/andy-matuschak-controlling-complexity/">《Controlling Complexity in Swift》</a>：本视频的作者来自 <a href="https://twitter.com/andy_matuschak">Andy Matuschak</a>，他曾在苹果 UIKit 组工作，在本视频中，他分享了用 Swift 来控制复杂度的经验。</li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="https://github.com/kimsungwhee/KSHObjcUML">KSHObjcUML</a>：KSHObjcUML 是一个 Objective-C 类引用关系图的 Xcode 插件。作者是：<a href="http://weibo.com/u/2289288323">@kimsungwhee</a>。</p></li>
+<li><p><a href="https://itunes.apple.com/app/id961651406">Xliffie</a>：Xliffie 是 <a href="http://weibo.com/lexrus">@ 汤圣罡</a> 推荐的一个本地化必备工具，它对 Xcode 生成的 Xliff 文件支持较好。</p></li>
+</ol>
+
+
+<p> <hr />
+广告：亚马逊上正在销售我的《iOS开发进阶》签名版，输入优惠码<code>JXBEGSGKUV</code>，可在结帐时减7元，点击查看：<a href="http://www.amazon.cn/b?node=1474130071">购买链接</a>。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第38期]]></title>
@@ -133,7 +189,7 @@ objc 中国 Issue 20 完成了三位传奇开发者的访谈，很有意思。�
     <link href="http://blog.devtang.com/blog/2015/01/31/write-sdk-tips/"/>
     <updated>2015-01-31T21:44:33+08:00</updated>
     <id>http://blog.devtang.com/blog/2015/01/31/write-sdk-tips</id>
-    <content type="html"><![CDATA[<p>我发现即使是像腾讯、小米这样的大厂提供的 SDK 质量在规范上也有很多问题，而且包括我以及我身边的很多朋友都被恶心到了，所以我就把这些注意事项总结出来，希望大家不要犯同样的错误。</p>
+    <content type="html"><![CDATA[<p>我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，而且包括我以及我身边的很多朋友都被恶心到了，所以我就把这些注意事项总结出来，希望大家不要犯同样的错误。</p>
 
 <h3>注意事项一：所有类名都应该加前缀</h3>
 
@@ -262,78 +318,6 @@ objc 中国 Issue 20 完成了三位传奇开发者的访谈，很有意思。�
 <li><p><a href="https://github.com/dasdom/BreakOutToRefresh">BreakOutToRefresh</a>：BreakOutToRefresh 是一个有趣的项目，它利用 SpriteKit 在下拉刷新过程中做了一个打砖块游戏。</p></li>
 <li><p><a href="https://github.com/Ramotion/animated-tab-bar">RAMAnimatedTabBarController</a>：RAMAnimatedTabBarController 是一个让 TabBar 上的元素能够显示动画效果的开源库。</p></li>
 </ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用蒲公英来做iOS测试应用的分发]]></title>
-    <link href="http://blog.devtang.com/blog/2015/01/22/pgy-usage-guide/"/>
-    <updated>2015-01-22T19:16:06+08:00</updated>
-    <id>http://blog.devtang.com/blog/2015/01/22/pgy-usage-guide</id>
-    <content type="html"><![CDATA[<p><img src="/images/pgy_0.jpg"></p>
-
-<h2>前言</h2>
-
-<p>我在 <a href="http://blog.devtang.com/blog/2012/02/16/apply-daily-build-in-ios-project/">《给 iOS 工程增加 Daily Build》</a> 一文中介绍过如何用命令行生成 IPA 文件以及通过 <code>itms-services</code> 协议 来让用户可以直接在网页上安装测试应用。但是这种方法虽然有效，但是还是比较麻烦，因为：</p>
-
-<ol>
-<li>开发者需要自己写相关的 Build 脚本。</li>
-<li>开发者需要自己搭建好应用下载的服务器。</li>
-<li>如果要做得更友好，开发者还需要部署 CDN 服务、增加扫描二维码下载等功能。</li>
-</ol>
-
-
-<p>所以本文给大家推荐一个叫 “<a href="http://www.pgyer.com/">蒲公英</a>” 的免费服务，帮助开发者能够方便地来做 iOS 应用的测试分发工作。蒲公英于 2014 年 7 月正式上线，我自己使用过一段时间，还是挺满意的。</p>
-
-<p>下面我们就来看看，如何使用 “<a href="http://www.pgyer.com/">蒲公英</a>” 来进行测试版本应用的分发工作。</p>
-
-<h2>生成 IPA 文件</h2>
-
-<p>生成应用的 IPA 文件可以使用命令行 <code>xcodebuild exportArchive -exportFormat ipa</code>来完成，也可以使用 Xcode 提供的相应功能。相信大部分同学应该都用过，我就简单介绍一下。</p>
-
-<p>首先将编译的目标机器设置成 “iOS Device"，然后点击”Product"&ndash;>&ldquo;Archive"，Archive 成功之后，就可以在 Xcode 的 Organizer 中看到相应的文件。</p>
-
-<p>接下来点击 Organizer 中的 &ldquo;Export&rdquo; 按钮，如下图所示：</p>
-
-<p><img src="/images/export_ipa_1.jpg"></p>
-
-<p>在接下来的弹出界面中选择 “Save for Ad Hoc Deployment"。如下图所示：</p>
-
-<p><img src="/images/export_ipa_2.jpg"></p>
-
-<p>选择完成后点 Next，Xcode 会自动将测试设备的签名信息附加上，并将相应的 IPA 文件导出。</p>
-
-<h2>上传到蒲公英</h2>
-
-<p>如果是第一次使用蒲公英，我们需要访问 <a href="http://www.pgyer.com/user/register">蒲公英的网址</a> 进行注册。注册主要是为了保护测试应用的安全和设置相应的权限（例如设置下载密码）。</p>
-
-<p>注册之后，点击<a href="http://www.pgyer.com/">蒲公英网站首页</a>的 &ldquo;发布应用"，然后选择之前生成的 IPA 文件即可完成上传 IPA 的过程。蒲公英对上传速度进行了很大程度的优化，上传应用速度非常快，下图是我测试上传猿题库的过程（上传 18M 的 IPA 文件大概花了半分钟时间，平均速度应该超过了 500K 每秒）：</p>
-
-<p><img src="/images/pgy_1.jpg"></p>
-
-<p>上传成功后，蒲公英会自动分析应用的 Bundle ID 信息，将其在 App Store 上的应用介绍和截图获取下来。然后你可以选择设置一个 “安装密码”，以避免一些越狱用户非法安装你的应用。对于小范围试用的应用，建议也不要将其发布到 &ldquo;应用广场"。如下所示：</p>
-
-<p><img src="/images/pgy_2.jpg"></p>
-
-<p>设置好所有需要的信息后，点击发布应用，蒲公英会生成一个应用分发的网页。如下图所示：</p>
-
-<p><img src="/images/pgy_3.jpg"></p>
-
-<p>你可以把这个网页发给你的测试用户:</p>
-
-<ul>
-<li>如果用户在手机上打开这个页面，则可以直接点击 “安装按钮” 来一键下载和安装测试应用。</li>
-<li>如果用户在电脑上打开这个应用，则可以用扫描二维码的方式来一键下载和安装测试应用。</li>
-</ul>
-
-
-<h2>一些小技巧</h2>
-
-<ul>
-<li>有企业证书的同学，如果将 IPA 在本地用企业证书签名，则可以把蒲公英当作一个企业应用发布渠道，省去部署分发服务器的烦恼，但最好设置安装密码，以免被苹果认为滥用企业证书。</li>
-<li>嫌每次打开蒲公英的网页太麻烦？蒲公英提供了 <a href="http://www.pgyer.com/apps">Mac 客户端</a>，所有上传和设置操作都可以在客户端上直接进行。</li>
-</ul>
 
 ]]></content>
   </entry>

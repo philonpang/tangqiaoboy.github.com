@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-03-10T20:54:10+08:00</updated>
+  <updated>2015-03-17T08:35:57+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,97 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS 开发中的争议（一）]]></title>
+    <link href="http://blog.devtang.com/blog/2015/03/15/ios-dev-controversy-1/"/>
+    <updated>2015-03-15T20:53:41+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/03/15/ios-dev-controversy-1</id>
+    <content type="html"><![CDATA[<p>打算分享一些有争议的话题，并且表达一下我的看法。这是该系列的第一篇，我想讨论的是：类的成员变量应该如何定义？</p>
+
+<p>在 Objective-C 的语言的早期，类的私有成员变量是只能定义在 .h 的头文件里面的。像如下这样：</p>
+
+<p>```
+@interface ViewController : UIViewController {</p>
+
+<pre><code>@private
+NSInteger _value;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>之后，苹果改进了 Objective-C，允许在 .m 里面添加一个特殊的匿名 Category，即没有名字的 Category，来实现增加类的成员变量。像如下这样：</p>
+
+<p>```
+@interface ViewController ()</p>
+
+<p>@property (nonatomic) NSInteger value;</p>
+
+<p>@end
+```</p>
+
+<p>这样的好处是，这些变量在头文件中被彻底隐藏起来了，不用暴露给使用者。</p>
+
+<p>接着，在 2013 年的 WWDC 中，苹果进一步改进了 Objective-C，允许在 .m 的
+<code>@implementation</code> 中直接添加类的私有成员变量。像如下这样：</p>
+
+<p>```
+@implementation ViewController {</p>
+
+<pre><code>NSInteger _value;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>于是，大家对于如何定义私有的成员变量上就产生的分歧。许多人喜欢用匿名的 Category 的方式来定义私有成员变量。但是，我个人更推荐在 <code>@implementation</code> 中直接添加类的私有成员变量。下面我做一些解释。</p>
+
+<h3>历史原因</h3>
+
+<p>首先早期的 iOS 程序员一定知道，在 2011 年 ARC 被推出之前，Objective-C 是需要手工地管理引用计数的。而对类的所有私有成员使用 <code>self.property</code> 的形式，就可以使编译器为我们自动生成管理引用计数的代码。在 2012 年前，这个 feature 还需要使用 <code>@synthesize</code> 关键字来启用的。于是，苹果通过在代码规范中推荐和强调使用 <code>self.property</code> 的编程习惯，来让大家避免在内存管理中遇到问题。而在 ARC 时代，这个编程习惯带来的优势不再存在了，因为编译器会自动为我们管理引用计数，我们只需要关心不要造成循环引用问题就行了。</p>
+
+<h2>省心省事</h2>
+
+<p>刚刚说到，在类中完全使用 <code>_property</code> 的方式来访问私有成员变量，是不会有内存管理上的问题的。但是使用 <code>self.property</code> 的方式来访问私有变量是不是也是一样不会有内存管理上的问题呢？确实也是，但是有一点需要注意：我们最好不要在 init 和 dealloc 中使用 <code>self.property</code> 的方式来访问成员变量，这一点是写在苹果的官方文档里的，我在以前的文章里也介绍过。(见：<a href="http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">《不要在init和dealloc函数中使用accessor》</a>）</p>
+
+<p>所以，如果你用 <code>self.property</code> 来访问私有成员变量。那么你需要注意，在 init 和 dealloc 中不使用这种方式。这其实对程序员来说是一个负担，你需要不停提醒自己有没有犯错。如果你使用完全的 <code>_property</code> 的方式来访问私有成员变量，就不用想这一类问题了。</p>
+
+<h2>关于隐藏</h2>
+
+<p>大家知道，<code>self.property</code> 其实是调用了类的 <code>[self property]</code> 方法，所以这其实是有一层方法调用的隐藏，很多时候，我们需要延迟初使化一个类成员的时候，就会把这个成员的初使化方法写在这个 <code>[self property]</code> 方法的实现中。</p>
+
+<p>那么问题来了，当你在阅读别人代码时，看到 <code>self.property</code> 的时候，你会想：这里会不会有一些隐藏的函数实现？于是你需要跳转到其方法实现中去查找。但是在实际开发中，大部分的 property 其实是使用编译器自动生成的 Getter 和 Setter 方法，于是你会找不到实现，这个时候，你才知道：“哦，原来这段代码并没有做自定义的成员初使化工作”。</p>
+
+<p>这种默认的隐藏在代码中多了，会影响代码的阅读和维护。其实大部分的类成员变量都需要在类初使化方法中赋值，大部分的 UIViewController 的成员变量，都需要在 <code>viewDidLoad</code> 方法中赋值。那既然这样，不如直接在相应的方法中用一个名为 <code>setupProperty</code> 方法直接进行初使化。这样的好处是，代码的可读性更好了，<code>self.property</code> 只有需要延迟初使化的情况下才被使用。</p>
+
+<p>关于这个还有一个小故事，我之前 Review 过一个同事的 iOS 端代码，那个同事喜欢把 table view 的数据另外封装成一个类，而我觉得这些数据其实就是一个数组，没必要进行这一层封装，最终我们争论了比较久。我的观点是，一切隐藏都是对代码复杂性的增加，除非它带来了好处，例如达到了代码复用，提高了代码的可维护性等，否则，没有好处的封装只会给代码阅读理解带来成本。就我现在的经历中，大部分的 table view 的数据都可以放在一个数组中，没必要把这个数组封装起来，另外提供一套操作这个数组数据的方法。</p>
+
+<h2>简短的代码更易读</h2>
+
+<p><code>_property</code> 的写法比 <code>self.property</code> 更短，也更简单。我认为这样写出来的代码更方便阅读。</p>
+
+<h2>执行速度更快，IPA体积更小</h2>
+
+<p>我之前从来没想到过这两者之间的速度和应用体积会有很大差别。不过一个同行（来自国外著名的社交网络公司）告诉我，他们公司发现二者还是有不小的差距，如果你们的应用需要做一些深度优化，可以考虑一下把 <code>self.property</code> 换成 <code>_property</code>。但我觉得，大部分应用都应该是不需要做这种深度优化的。</p>
+
+<h2>KVO 和 KVC</h2>
+
+<p>是的，如果用 <code>_property</code> 这种写法，就不能使用 KVO 和 KVC 了。但是我得反问一下，在一个类的内部，KVO 自己的私有成员变量算是一个好设计吗？我们讲类要"高内聚，低耦合"，KVO 是为了实现观察者模式，让对象之间相互解耦的。如果把 KVO 用在类的内部，KVO 自己的私有成员，我认为其实这不是一个很好的设计。</p>
+
+<h2>Computed Properties</h2>
+
+<p>在 Swift 中，引入了 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-ID259">Computed Properties</a> 的概念，其实这在 Objective-C 中也有，只是没有专门给它名字。如果一个 property 我们提供了对应的 <code>setter</code> 和 <code>getter</code>，并且没有直接使用其对应的 _property 变量，那么这个 property 就是所谓的 Computed Properties。</p>
+
+<p>是的，在类的内部如果直接使用 <code>_property</code> 形式，也无法使用 Computed Properties 了，但我认为这影响不大。其实 Computed Properties 也就是一层对数据存取的封装，我们另外实现两个函数，分别对应数据的 <code>setter</code> 和 <code>getter</code> 功能，就可以达到同样的效果。</p>
+
+<h2>写在最后</h2>
+
+<p>其实我上面提到的这些问题都是小问题，影响不大。但是代码风格的统一却是大问题。所以不管你们项目中使用的是 <code>self.property</code> 风格还是 <code>_property</code> 风格，问题都不大，但是如果你们同时使用这两种风格，那么就非常不好了。</p>
+
+<p>希望我的这篇文章能让大家了解到在这方面的争论，也希望大家能够在这一点上，在公司内部达成统一。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第40期]]></title>
@@ -242,87 +333,6 @@ objc 中国 Issue 20 完成了三位传奇开发者的访谈，很有意思。�
 <p>不管怎么样，这确确实实是一个移动互联网的时代，我相信随着几年的发展，移动互联网的开发生态也会积累出越来越多宝贵的框架，以支撑出更加伟大的 App 出现。作为一个移动开发者，我很高兴能够成为这个时代的主角，用移动开发技术改变人们的生活。</p>
 
 <p>愿大家珍惜这样的机会，玩得开心～</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[写iOS SDK注意事项]]></title>
-    <link href="http://blog.devtang.com/blog/2015/01/31/write-sdk-tips/"/>
-    <updated>2015-01-31T21:44:33+08:00</updated>
-    <id>http://blog.devtang.com/blog/2015/01/31/write-sdk-tips</id>
-    <content type="html"><![CDATA[<p>我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，而且包括我以及我身边的很多朋友都被恶心到了，所以我就把这些注意事项总结出来，希望大家不要犯同样的错误。</p>
-
-<h3>注意事项一：所有类名都应该加前缀</h3>
-
-<p>说明：没有前缀的类名有冲突的风险。</p>
-
-<p>Bad Case：微信分享的 SDK，文件名：<code>WXApiObject.h</code>，代码如下，其中<code>BaseReq</code>类和<code>BaseResp</code>类都没有加前缀。</p>
-
-<p>```
-@interface BaseReq : NSObject</p>
-
-<p>/<strong> 请求类型 */
-@property (nonatomic, assign) int type;
-/</strong> 由用户微信号和 AppID 组成的唯一标识，发送请求时第三方程序必须填写，用于校验微信用户是否换号登录 <em>/
-@property (nonatomic, retain) NSString</em> openID;</p>
-
-<p>@end</p>
-
-<h1>pragma mark &ndash; BaseResp</h1>
-
-<p>/<em>! @brief 该类为微信终端 SDK 所有响应类的基类
- *
- </em>/
-@interface BaseResp : NSObject
-/<strong> 错误码 */
-@property (nonatomic, assign) int errCode;
-/</strong> 错误提示字符串 <em>/
-@property (nonatomic, retain) NSString </em>errStr;
-/<em>* 响应类型 </em>/
-@property (nonatomic, assign) int type;</p>
-
-<p>@end
-```</p>
-
-<h3>注意事项二：所有 category 方法加前缀</h3>
-
-<p>说明：category 方法如果不加前缀，有冲突的风险。</p>
-
-<p>Bad Case：腾讯分享的 SDK，它为 NSArray 增加了一个 JSONArray 的 category，造成我们本身的同名 category 被覆盖。另外他们为 NSArray 增加的其它 category 和著名的 Cordova 开源库冲突，造成 Cordova 无法使用。</p>
-
-<h3>注意事项三：不要将第三方库打包进 SDK</h3>
-
-<p>说明：尽量不要将第三方库打包进 SDK，如果要打包，最好也要将该第三方库重命名，以避免冲突。</p>
-
-<p>Bad Case：小米的推送 SDK，直接在 SDK 静态库里面编进去一个第三方依赖库，而且这个库还是 ASIHttpRequest。ASIHttp 当前已经处于无人维护状态，很多 Bug 都是大家自己在修复（例如网易就自己维护了一个 ASIHttpRequest 的分支）。在 SDK 中依赖这种库还是比较麻烦的。</p>
-
-<h3>注意事项四：做基本的检查和测试</h3>
-
-<p>说明：SDK 对外公布前应该进行基本的编译检查，不应该有编译器警告存在。</p>
-
-<p>Bad Case：腾讯分享的 SDK。它的 <code>CGIParamsWrap.o</code> 和  <code>TencentOAuth.o</code> 文件里面的方法名冲突了，如下所示：</p>
-
-<blockquote><p>ld: warning: instance method &lsquo;deleteAPIRequestBySeq:&rsquo; in category from /Users/tangqiao/work/iphone/solar-ios/lib_common/TencentOpenApi/TencentOpenAPI.framework/TencentOpenAPI(CGIParamsWrap.o) overrides method from class in /Users/tangqiao/work/iphone/solar-ios/lib_common/TencentOpenApi/TencentOpenAPI.framework/TencentOpenAPI(TencentOAuth.o)</p></blockquote>
-
-<h3>注意事项五：文档完整并且正确</h3>
-
-<p>说明：这就不用解释了吧？</p>
-
-<p>Bad Case: 微信官方的微信支付的示例代码，里面有各种错误，代码都无法编译成功。如下所示的是其中一个错误：</p>
-
-<p><img src="/images/weixin-pay-error.jpg"></p>
-
-<p>于是还有人专门帮微信另外制作了一个非官方的说明文档，地址在这里：<a href="https://github.com/gbammc/WechatPayDemo">https://github.com/gbammc/WechatPayDemo</a></p>
-
-<h3>注意事项六：支持最新的 CPU 版本</h3>
-
-<p>说明：去年苹果的一次 Bug，造成上传应用必须支持 arm64 的 CPU 版本，结果众多应用因为依赖的 SDK 不支持 arm64 而无法更新。当然，这次 Bug 出来之后，各 SDK 厂商都紧急做了更新。但是我觉得这种事情如果要做得专业，就应该一开始就紧跟技术更新，及时更新，而不是被迫更新。</p>
-
-<h2>总结</h2>
-
-<p>以上 6 点是我认为写一个 SDK 的最最基本的要求，希望被点名批评的同学能尽快改正哟～</p>
-
-<p>如果大家在使用其它 SDK 时也发现了类似的问题，欢迎在文章下面留言。希望通过这种方式给开发相关 SDK 的同学一些压力，让他们好好改一下。</p>
 ]]></content>
   </entry>
   

@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 几天前，Facebook 在 React.js Conf 2015 大会上推出了 React Native（视频链接）。我发了一条微博(地址），结果引来了 100 多次转发。为什么 React Native 会引来如此多的关注呢？我在这里谈谈我对 React Native 的理解。 &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，文章地址是这里。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本期 iOS &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,95 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/05/ios-weekly-38/">iOS移动开发周报-第38期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-05T21:36:03+08:00" pubdate data-updated="true">Feb 5<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，文章地址是<a href="http://www.infoq.com/cn/news/2015/02/facebook-react-native">这里</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Facebook 推出 React Native、Swift 小技巧、RunLoop 主题的分享、使用蒲公英来做 iOS 测试应用的分发等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2015-01-25/10049980631.shtml">《分析师称 14 年四季度 iPhone 销量达 7300 万台》</a>：1 月 25 日上午消息，凯基证券分析师郭明池称，2014 年四季度 iPhone 销量达 7300 万台，iPad 销量达 2140 万台；并预计 2015 年一季度 iPhone 销量为 6160 万台，iPad 销量为 1010 万台。</p></li>
+<li><p><a href="http://tech.sina.com.cn/i/2015-01-23/doc-iavxeafs0339155.shtml">《2014 年 iOS 应用开发者收入超好莱坞美国票房》</a>：市场研究公司 Asymco 分析师霍拉斯·德迪乌 (Horace Dediu) 本周发布研究报告称，iOS 应用经济的规模已经超过了好莱坞电影在美国的票房。2014 年全年，开发者通过苹果获得的收入为 100 亿美元。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://objccn.io/issue-20/">《objc 中国 Issue 20：访谈》</a>：
+objc 中国 Issue 20 完成了三位传奇开发者的访谈，很有意思。从天才少年 Andy Matuschak ，到两次创业的 Loren Brichter，以及俄国妹子 Natasha Murashev，篇篇精彩。希望通过了解他们的经历，你会有所收获。</p></li>
+<li><p><a href="http://www.jianshu.com/p/5d4789db4310">《Swift 怎样更优雅地处理网络返回数据》</a>：我们在 iOS 开发中进行网络请求的时候，一般是获取到服务器返回的 data 后，再根据我们的需要转换成 JSON，图像等信息。但如果你的应用中存在各种类型的返回数据，那么你可能就要在各个网络请求的中进行重复的处理了。本文介绍了如何使用 Swift 中的泛型和 extension 让你的数据解析工作更优雅。</p></li>
+<li><p><a href="http://arstechnica.com/apple/2014/10/os-x-10-10/22/">《OS X 10.10 Yosemite: The Ars Technica Review》</a>：由 <a href="http://www.weibo.com/tualatrix?from=feed&amp;loc=avatar">图拉鼎</a> 推荐：这篇从 CPU 指令集、编译器来剖析 Swift 的文章，对其的设计越来越肯定了。简单的说，Swift 是一门使用 High Level 语言的语法及特性，同时仍有 Low Level 效能的一门语言。</p></li>
+<li><p><a href="http://imtx.me/archives/1921.html">《Swift 小技巧（三）：如何用 Swift 思维设计网络请求》</a>：近来在用 Swift 开发 App 的过程中，最大的心得就是：我开始渐渐用「Swift 思维」来思考了。回顾刚开始我用 Swift 时，只是套用它的语法而已，脑子里依然是 Objective-C 思维。这段时间，随着对 Swift 基本特性的掌握，我开始有意识地学习并尝试一些 Swift 才有的特性，此谓「Swift 思维」。Swift 有很多专有（Objective-C 没有的）的模式，今天我就从一个很简单的例子讲起，那就是：如何用 Swift 思维设计网络请求。</p></li>
+<li><p><a href="http://imtx.me/archives/1924.html">《wift 小技巧（五）：正确地启用 Logging 机制》</a>：文章介绍了如何在 Swift 项目里正确地设置 Logging 。</p></li>
+<li><p><a href="http://nshipster.cn/the-death-of-cocoa/">《The Death of Cocoa》</a>：Cocoa 实际就是 Objective-C 的标准库，包含了许多用语言编写程序最需要的一些框架，例如 Foundation、AppKit 和 Core Data。即使 Swift 才开始被使用几个月，Cocoa 已经开始失去它原有的光芒了。在语言方面，我们都见到了 Swift 是终结 Objective-C 的开始，但是作为基本库的 Cocoa 呢？(这已经不是苹果第一次把它的标准库淘汰了，记得 Carbon 么)？如果我们用 Swift 基本库重新建立一套 Foundation 会怎么样？让我们来看看一些 Cocoa 做过的具体的例子，并看看一个新的 Swift 基本库在哪些地方可以提高。</p></li>
+<li><p><a href="http://nshipster.cn/core-location-in-ios-8/">《Core Location in i​OS 8》</a>：自从 iPhone 存在以来，位置服务就一直处于非常重要的位置。Core Location API 也在 iPhone OS SDK 最初的公开版本里就存在了。iOS 8 ，Core Location 被改动了不少，不管是允许开发者做之前并不被允许的开发，还是帮助维护用户隐私。更特别的是，iOS 8 给 Core Location 带来了三个主要的改进：更分化的权限，室内定位以及访问监控。本文对此改进做了详细的介绍。</p></li>
+<li><p><a href="http://beyondvincent.com/2015/01/20/2015-01-20-Apple-Watch/">《Apple Watch: WatchKit 应用程序要点》</a>：本文介绍了在开发 Apple Watch 应用程序时需要注意的要点。包括 WatchKit 应用程序和 WatchKit 扩展，以及 WatchKit 应用程序的生命周期。此系列的文章还有：<a href="http://beyondvincent.com/2015/01/20/2015-01-20-watchkit-framework-taking-apps-pocket/">《WatchKit 框架: 将应用程序从裤兜里取出来》</a>。</p></li>
+</ol>
+
+
+<h2>视频</h2>
+
+<ol>
+<li><p><a href="http://v.youku.com/v_show/id_XODgxODkzODI0.html">《RunLoop 主题的分享 by 孙源 @sunnyxx》</a>：来自百度的孙源组织了一次关于 Objective-C RunLoop 的技术分享。</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=KVZ-P-ZI6W4&amp;app=desktop">《React.js Conf 2015 Keynote &ndash; Introducing React Native》</a>：这是 Facebook 出品的 react.js 的视频介绍。Facebook 打算用它来统一移动端的编程语言，react.js 把界面全部用 native 控件实现，js 只作为后端逻辑层。Facebook 也打算开源该框架，如果这个框架成功，将改变整个业界的移动开发效率，因为 iOS 和 android 代码可以大部分复用。注：视频来自 youtube。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="http://blog.devtang.com/blog/2015/01/22/pgy-usage-guide/">《使用蒲公英来做 iOS 测试应用的分发》</a>： “蒲公英” 是一个应用的免费分发服务，它帮助开发者能够方便地做 iOS 应用的测试分发工作。本文介绍了蒲公英的基本使用方法。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><a href="https://github.com/x140yu/Developing_iOS_8_Apps_With_Swift">Developing iOS 8 Apps with Swift</a>：《Developing iOS 8 Apps with Swift》是 Stanford 公开课，本项目是其中文字幕翻译。</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -157,136 +246,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/31/write-sdk-tips/">写iOS SDK注意事项</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-31T21:44:33+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，而且包括我以及我身边的很多朋友都被恶心到了，所以我就把这些注意事项总结出来，希望大家不要犯同样的错误。</p>
-
-<h3>注意事项一：所有类名都应该加前缀</h3>
-
-<p>说明：没有前缀的类名有冲突的风险。</p>
-
-<p>Bad Case：微信分享的 SDK，文件名：<code>WXApiObject.h</code>，代码如下，其中<code>BaseReq</code>类和<code>BaseResp</code>类都没有加前缀。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface BaseReq : NSObject
-</span><span class='line'>
-</span><span class='line'>/** 请求类型 */
-</span><span class='line'>@property (nonatomic, assign) int type;
-</span><span class='line'>/** 由用户微信号和 AppID 组成的唯一标识，发送请求时第三方程序必须填写，用于校验微信用户是否换号登录 */
-</span><span class='line'>@property (nonatomic, retain) NSString* openID;
-</span><span class='line'>
-</span><span class='line'>@end
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>#pragma mark - BaseResp
-</span><span class='line'>/*! @brief 该类为微信终端 SDK 所有响应类的基类
-</span><span class='line'> *
-</span><span class='line'> */
-</span><span class='line'>@interface BaseResp : NSObject
-</span><span class='line'>/** 错误码 */
-</span><span class='line'>@property (nonatomic, assign) int errCode;
-</span><span class='line'>/** 错误提示字符串 */
-</span><span class='line'>@property (nonatomic, retain) NSString *errStr;
-</span><span class='line'>/** 响应类型 */
-</span><span class='line'>@property (nonatomic, assign) int type;
-</span><span class='line'>
-</span><span class='line'>@end</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>注意事项二：所有 category 方法加前缀</h3>
-
-<p>说明：category 方法如果不加前缀，有冲突的风险。</p>
-
-<p>Bad Case：腾讯分享的 SDK，它为 NSArray 增加了一个 JSONArray 的 category，造成我们本身的同名 category 被覆盖。另外他们为 NSArray 增加的其它 category 和著名的 Cordova 开源库冲突，造成 Cordova 无法使用。</p>
-
-<h3>注意事项三：不要将第三方库打包进 SDK</h3>
-
-<p>说明：尽量不要将第三方库打包进 SDK，如果要打包，最好也要将该第三方库重命名，以避免冲突。</p>
-
-<p>Bad Case：小米的推送 SDK，直接在 SDK 静态库里面编进去一个第三方依赖库，而且这个库还是 ASIHttpRequest。ASIHttp 当前已经处于无人维护状态，很多 Bug 都是大家自己在修复（例如网易就自己维护了一个 ASIHttpRequest 的分支）。在 SDK 中依赖这种库还是比较麻烦的。</p>
-
-<h3>注意事项四：做基本的检查和测试</h3>
-
-<p>说明：SDK 对外公布前应该进行基本的编译检查，不应该有编译器警告存在。</p>
-
-<p>Bad Case：腾讯分享的 SDK。它的 <code>CGIParamsWrap.o</code> 和  <code>TencentOAuth.o</code> 文件里面的方法名冲突了，如下所示：</p>
-
-<blockquote><p>ld: warning: instance method &lsquo;deleteAPIRequestBySeq:&rsquo; in category from /Users/tangqiao/work/iphone/solar-ios/lib_common/TencentOpenApi/TencentOpenAPI.framework/TencentOpenAPI(CGIParamsWrap.o) overrides method from class in /Users/tangqiao/work/iphone/solar-ios/lib_common/TencentOpenApi/TencentOpenAPI.framework/TencentOpenAPI(TencentOAuth.o)</p></blockquote>
-
-<h3>注意事项五：文档完整并且正确</h3>
-
-<p>说明：这就不用解释了吧？</p>
-
-<p>Bad Case: 微信官方的微信支付的示例代码，里面有各种错误，代码都无法编译成功。如下所示的是其中一个错误：</p>
-
-<p><img src="/images/weixin-pay-error.jpg"></p>
-
-<p>于是还有人专门帮微信另外制作了一个非官方的说明文档，地址在这里：<a href="https://github.com/gbammc/WechatPayDemo">https://github.com/gbammc/WechatPayDemo</a></p>
-
-<h3>注意事项六：支持最新的 CPU 版本</h3>
-
-<p>说明：去年苹果的一次 Bug，造成上传应用必须支持 arm64 的 CPU 版本，结果众多应用因为依赖的 SDK 不支持 arm64 而无法更新。当然，这次 Bug 出来之后，各 SDK 厂商都紧急做了更新。但是我觉得这种事情如果要做得专业，就应该一开始就紧跟技术更新，及时更新，而不是被迫更新。</p>
-
-<h2>总结</h2>
-
-<p>以上 6 点是我认为写一个 SDK 的最最基本的要求，希望被点名批评的同学能尽快改正哟～</p>
-
-<p>如果大家在使用其它 SDK 时也发现了类似的问题，欢迎在文章下面留言。希望通过这种方式给开发相关 SDK 的同学一些压力，让他们好好改一下。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -308,6 +267,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/15/ios-dev-controversy-1/">iOS 开发中的争议（一）</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/03/10/ios-weekly-40/">iOS移动开发周报-第40期</a>
@@ -351,10 +314,6 @@
     
       <li class="post">
         <a href="/blog/2015/01/11/how-to-finish-ios-pro-book/">我是如何完成《iOS开发进阶》的编写的？</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/07/ios-2014-summary/">解读2014之iOS篇：拥抱变化</a>
       </li>
     
   </ul>

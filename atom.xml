@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-03-10T20:54:10+08:00</updated>
+  <updated>2015-03-17T08:35:57+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,125 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS 开发中的争议（一）]]></title>
+    <link href="http://blog.devtang.com/blog/2015/03/15/ios-dev-controversy-1/"/>
+    <updated>2015-03-15T20:53:41+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/03/15/ios-dev-controversy-1</id>
+    <content type="html"><![CDATA[<p>打算分享一些有争议的话题，并且表达一下我的看法。这是该系列的第一篇，我想讨论的是：类的成员变量应该如何定义？</p>
+
+<p>在 Objective-C 的语言的早期，类的私有成员变量是只能定义在 .h 的头文件里面的。像如下这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@interface ViewController : UIViewController {
+</span><span class='line'>    @private
+</span><span class='line'>    NSInteger _value;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>之后，苹果改进了 Objective-C，允许在 .m 里面添加一个特殊的匿名 Category，即没有名字的 Category，来实现增加类的成员变量。像如下这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@interface ViewController ()
+</span><span class='line'>
+</span><span class='line'>@property (nonatomic) NSInteger value;
+</span><span class='line'>
+</span><span class='line'>@end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样的好处是，这些变量在头文件中被彻底隐藏起来了，不用暴露给使用者。</p>
+
+<p>接着，在 2013 年的 WWDC 中，苹果进一步改进了 Objective-C，允许在 .m 的
+<code>@implementation</code> 中直接添加类的私有成员变量。像如下这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@implementation ViewController {
+</span><span class='line'>    NSInteger _value;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>于是，大家对于如何定义私有的成员变量上就产生的分歧。许多人喜欢用匿名的 Category 的方式来定义私有成员变量。但是，我个人更推荐在 <code>@implementation</code> 中直接添加类的私有成员变量。下面我做一些解释。</p>
+
+<h3>历史原因</h3>
+
+<p>首先早期的 iOS 程序员一定知道，在 2011 年 ARC 被推出之前，Objective-C 是需要手工地管理引用计数的。而对类的所有私有成员使用 <code>self.property</code> 的形式，就可以使编译器为我们自动生成管理引用计数的代码。在 2012 年前，这个 feature 还需要使用 <code>@synthesize</code> 关键字来启用的。于是，苹果通过在代码规范中推荐和强调使用 <code>self.property</code> 的编程习惯，来让大家避免在内存管理中遇到问题。而在 ARC 时代，这个编程习惯带来的优势不再存在了，因为编译器会自动为我们管理引用计数，我们只需要关心不要造成循环引用问题就行了。</p>
+
+<h2>省心省事</h2>
+
+<p>刚刚说到，在类中完全使用 <code>_property</code> 的方式来访问私有成员变量，是不会有内存管理上的问题的。但是使用 <code>self.property</code> 的方式来访问私有变量是不是也是一样不会有内存管理上的问题呢？确实也是，但是有一点需要注意：我们最好不要在 init 和 dealloc 中使用 <code>self.property</code> 的方式来访问成员变量，这一点是写在苹果的官方文档里的，我在以前的文章里也介绍过。(见：<a href="http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">《不要在init和dealloc函数中使用accessor》</a>）</p>
+
+<p>所以，如果你用 <code>self.property</code> 来访问私有成员变量。那么你需要注意，在 init 和 dealloc 中不使用这种方式。这其实对程序员来说是一个负担，你需要不停提醒自己有没有犯错。如果你使用完全的 <code>_property</code> 的方式来访问私有成员变量，就不用想这一类问题了。</p>
+
+<h2>关于隐藏</h2>
+
+<p>大家知道，<code>self.property</code> 其实是调用了类的 <code>[self property]</code> 方法，所以这其实是有一层方法调用的隐藏，很多时候，我们需要延迟初使化一个类成员的时候，就会把这个成员的初使化方法写在这个 <code>[self property]</code> 方法的实现中。</p>
+
+<p>那么问题来了，当你在阅读别人代码时，看到 <code>self.property</code> 的时候，你会想：这里会不会有一些隐藏的函数实现？于是你需要跳转到其方法实现中去查找。但是在实际开发中，大部分的 property 其实是使用编译器自动生成的 Getter 和 Setter 方法，于是你会找不到实现，这个时候，你才知道：“哦，原来这段代码并没有做自定义的成员初使化工作”。</p>
+
+<p>这种默认的隐藏在代码中多了，会影响代码的阅读和维护。其实大部分的类成员变量都需要在类初使化方法中赋值，大部分的 UIViewController 的成员变量，都需要在 <code>viewDidLoad</code> 方法中赋值。那既然这样，不如直接在相应的方法中用一个名为 <code>setupProperty</code> 方法直接进行初使化。这样的好处是，代码的可读性更好了，<code>self.property</code> 只有需要延迟初使化的情况下才被使用。</p>
+
+<p>关于这个还有一个小故事，我之前 Review 过一个同事的 iOS 端代码，那个同事喜欢把 table view 的数据另外封装成一个类，而我觉得这些数据其实就是一个数组，没必要进行这一层封装，最终我们争论了比较久。我的观点是，一切隐藏都是对代码复杂性的增加，除非它带来了好处，例如达到了代码复用，提高了代码的可维护性等，否则，没有好处的封装只会给代码阅读理解带来成本。就我现在的经历中，大部分的 table view 的数据都可以放在一个数组中，没必要把这个数组封装起来，另外提供一套操作这个数组数据的方法。</p>
+
+<h2>简短的代码更易读</h2>
+
+<p><code>_property</code> 的写法比 <code>self.property</code> 更短，也更简单。我认为这样写出来的代码更方便阅读。</p>
+
+<h2>执行速度更快，IPA体积更小</h2>
+
+<p>我之前从来没想到过这两者之间的速度和应用体积会有很大差别。不过一个同行（来自国外著名的社交网络公司）告诉我，他们公司发现二者还是有不小的差距，如果你们的应用需要做一些深度优化，可以考虑一下把 <code>self.property</code> 换成 <code>_property</code>。但我觉得，大部分应用都应该是不需要做这种深度优化的。</p>
+
+<h2>KVO 和 KVC</h2>
+
+<p>是的，如果用 <code>_property</code> 这种写法，就不能使用 KVO 和 KVC 了。但是我得反问一下，在一个类的内部，KVO 自己的私有成员变量算是一个好设计吗？我们讲类要&#8221;高内聚，低耦合&#8221;，KVO 是为了实现观察者模式，让对象之间相互解耦的。如果把 KVO 用在类的内部，KVO 自己的私有成员，我认为其实这不是一个很好的设计。</p>
+
+<h2>Computed Properties</h2>
+
+<p>在 Swift 中，引入了 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-ID259">Computed Properties</a> 的概念，其实这在 Objective-C 中也有，只是没有专门给它名字。如果一个 property 我们提供了对应的 <code>setter</code> 和 <code>getter</code>，并且没有直接使用其对应的 _property 变量，那么这个 property 就是所谓的 Computed Properties。</p>
+
+<p>是的，在类的内部如果直接使用 <code>_property</code> 形式，也无法使用 Computed Properties 了，但我认为这影响不大。其实 Computed Properties 也就是一层对数据存取的封装，我们另外实现两个函数，分别对应数据的 <code>setter</code> 和 <code>getter</code> 功能，就可以达到同样的效果。</p>
+
+<h2>写在最后</h2>
+
+<p>其实我上面提到的这些问题都是小问题，影响不大。但是代码风格的统一却是大问题。所以不管你们项目中使用的是 <code>self.property</code> 风格还是 <code>_property</code> 风格，问题都不大，但是如果你们同时使用这两种风格，那么就非常不好了。</p>
+
+<p>希望我的这篇文章能让大家了解到在这方面的争论，也希望大家能够在这一点上，在公司内部达成统一。</p>
+ <p class="meta"> 
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+ 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-15T20:53:41+08:00" pubdate data-updated="true">Mar 15<span>th</span>, 2015</time> 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+ </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+ </p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第40期]]></title>
@@ -1665,72 +1784,6 @@ Sublime text 的问题就是无法方便地预览最后效果。</p>
 
 
 <time datetime="2014-11-19T22:09:57+08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2014</time> 
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
-  
-</span>
-
- </p> <p class="meta"> 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
- </p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第30期]]></title>
-    <link href="http://blog.devtang.com/blog/2014/11/15/ios-weekly-30/"/>
-    <updated>2014-11-15T08:38:00+08:00</updated>
-    <id>http://blog.devtang.com/blog/2014/11/15/ios-weekly-30</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/11/masonry-introduction-practise">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期iOS移动开发周报带来如下内容：Masonry介绍与使用实践、Objective-C Runtime、iOS APP 架构漫谈、教你用KEYNOTE做出APP原型等。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://adad184.com/2014/09/28/use-masonry-to-quick-solve-autolayout/">《Masonry介绍与使用实践(快速上手Autolayout)》</a>：iPhone6发布之后，我知道使用autolayout势在必行了，这时想起了以前在浏览Github看到过的一个第三方库Masonry。在花了几个小时的研究使用后，我就将autolayout掌握了(重点是我并没有学习任何的官方文档或者其他的关于autolayout的知识)，这就是我为什么要写下这篇文章来推荐它的原因。Masonry是一个轻量级的布局框架，拥有自己的描述语法，采用更优雅的链式语法封装自动布局，简洁明了并具有高可读性。</p></li>
-<li><p><a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/">《Objective-C Runtime》</a>：因为OC是一门动态语言，所以它总是想办法把一些决定工作从编译连接推迟到运行时。也就是说只有编译器是不够的，还需要一个运行时系统 (runtime system) 来执行编译后的代码。这就是 Objective-C Runtime 系统存在的意义，它是整个OC运行框架的一块基石。本文详细整理了 Cocoa 的 Runtime 系统的知识，它使得 Objective-C 如虎添翼，具备了灵活的动态特性，使这门古老的语言焕发生机。主要内容包括：与Runtime交互、Runtime术语、消息机制、动态方法解析、消息转发、壮的实例变量(Non Fragile ivars)、Objective-C Associated Objects。</p></li>
-<li><p><a href="http://t.cn/R7HYfhz">《刨根问底Objective－C Runtime（1）－ Self &amp; Super》</a>：本文通过分析clang重写的Objective-C源码，从而解释Objective-C中的self和super在编译器层面分别是如何处理的。</p></li>
-<li><p><a href="http://t.cn/R7QUSUE">《刨根问底Objective－C Runtime（2）－ Object &amp; Class &amp; Meta Class》</a>：本文主要讲述objc runtime中关于Object &amp; Class &amp; Meta Class的细节。</p></li>
-<li><p><a href="http://studentdeng.github.io/blog/2014/11/05/ios-architecture2/">《iOS APP 架构漫谈二》</a>：这篇文章简单介绍了一个在编程中非常重要的思想或工具——状态机（State machine）。对大多数计算机专业的家伙们来说，这应该是一门比较难学的课程，里面包含一大堆揪心的名字比如DFA，NFA，还有一大堆各种各样的数学符号,又是编译原理的基础。不过很遗憾，似乎在做完编译原理课程作业之后，很多人再也没有实现过或是用过状态机了。本文通过一个游戏demo来简单描述一下状态机在实践中的应用。</p></li>
-<li><p><a href="http://iiiyu.com/2014/10/20/iCloud-and-iCloud-Drive/">《iCloud 和 iCloud Drive》</a>：最近发现很多人对 iCloud 和 iCloud Drive 有些误解，而且还没有看见中文里面有一个比较正确的说法，本文详细讲解了 iCloud Drive 相关的知识。</p></li>
-<li><p><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTg2NDA3MQ==&amp;mid=201175604&amp;idx=1&amp;sn=06882db86c9eacbc0cdca4df6dbdb67b#rd">《教你用KEYNOTE做出APP原型》</a>：WWDC 2014 Session Videos里有个视频Prototyping: Fake It Till You Make It ，在视频中，他们指导大家如何用Keynote做出逼真的交互原型。作者结合这个视频的截图，介绍了如何充分发挥Keynote的特点的做出逼真的交互原型。</p></li>
-<li><p><a href="http://www.raywenderlich.com/82706/working-with-json-in-swift-tutorial">《Working with JSON in Swift Tutorial》</a>：文章介绍了在Swift中用原生方式处理JSON的不便之处，并详细介绍了开源库<code>SwiftyJSON</code>的使用。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/coolbeet/CBStoreHouseRefreshControl">CBStoreHouseRefreshControl</a>：一个效果很酷炫的下拉刷新控件。</p></li>
-<li><p><a href="https://github.com/zhxnlai/ZLSwipeableView">ZLSwipeableView</a>：ZLSwipeableView是一个方便做出卡片效果的UI库，支持各种卡片的滑动效果。</p></li>
-<li><p><a href="https://github.com/yuantiku/YTKNetwork">YTKNetwork</a>：YTKNetwork 是基于 AFNetworking 封装的 iOS 网络库，提供了更高层次的网络访问抽象。相比 AFNetworking，YTKNetwork 提供了以下更高级的功能：按时间或版本号缓存网络请求内容、检查返回 JSON 内容的合法性、文件的断点续传、批量的网络请求发送、filter和插件机制等。</p></li>
-<li><p><a href="https://github.com/iMartinKiss/Objective-Chain">Objective-Chain</a>：Objective-Chain是一个面向对象的响应式框架，作者表示该框架吸收了 ReactiveCocoa 的思想，并且想做得更面向对象一些。</p></li>
-</ol>
-
- <p class="meta"> 
-  
-
-<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
- 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-15T08:38:00+08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2014</time> 
 
 <span class="categories">
   

@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-03-17T08:35:57+08:00</updated>
+  <updated>2015-03-17T08:40:52+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -18,7 +18,9 @@
     <link href="http://blog.devtang.com/blog/2015/03/15/ios-dev-controversy-1/"/>
     <updated>2015-03-15T20:53:41+08:00</updated>
     <id>http://blog.devtang.com/blog/2015/03/15/ios-dev-controversy-1</id>
-    <content type="html"><![CDATA[<p>打算分享一些有争议的话题，并且表达一下我的看法。这是该系列的第一篇，我想讨论的是：类的成员变量应该如何定义？</p>
+    <content type="html"><![CDATA[<p><img src="http://blog.devtang.com/images/controversy.jpg"></p>
+
+<p>打算分享一些有争议的话题，并且表达一下我的看法。这是该系列的第一篇，我想讨论的是：类的成员变量应该如何定义？</p>
 
 <p>在 Objective-C 的语言的早期，类的私有成员变量是只能定义在 .h 的头文件里面的。像如下这样：</p>
 

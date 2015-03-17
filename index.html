@@ -192,6 +192,12 @@
 
 <p>是的，在类的内部如果直接使用 <code>_property</code> 形式，也无法使用 Computed Properties 了，但我认为这影响不大。其实 Computed Properties 也就是一层对数据存取的封装，我们另外实现两个函数，分别对应数据的 <code>setter</code> 和 <code>getter</code> 功能，就可以达到同样的效果。</p>
 
+<h2>循环引用问题</h2>
+
+<p>微博上的<a href="http://weibo.com/n/%E7%8E%8B_%E6%99%93%E7%A3%8A?from=feed&amp;loc=at">@王_晓磊</a>在评论中提到：直接用私有变量有个需要特别注意的地方，在 block 里直接写 <code>_property</code> 相当于 <code>self-&gt;_property</code>，虽然没写 self，但是暗含了对 self 的retain，容易造成循环引用。要记得用 weakSelf/strongSelf 大法。</p>
+
+<p>这一点确实是被很多人忽视的，所以我也一并写在这里，感谢他的补充。</p>
+
 <h2>写在最后</h2>
 
 <p>其实我上面提到的这些问题都是小问题，影响不大。但是代码风格的统一却是大问题。所以不管你们项目中使用的是 <code>self.property</code> 风格还是 <code>_property</code> 风格，问题都不大，但是如果你们同时使用这两种风格，那么就非常不好了。</p>

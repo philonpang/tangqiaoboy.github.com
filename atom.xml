@@ -4,7 +4,7 @@
   <title><![CDATA[唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-03-17T08:40:52+08:00</updated>
+  <updated>2015-03-17T22:27:32+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -100,6 +100,12 @@
 <p>在 Swift 中，引入了 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-ID259">Computed Properties</a> 的概念，其实这在 Objective-C 中也有，只是没有专门给它名字。如果一个 property 我们提供了对应的 <code>setter</code> 和 <code>getter</code>，并且没有直接使用其对应的 _property 变量，那么这个 property 就是所谓的 Computed Properties。</p>
 
 <p>是的，在类的内部如果直接使用 <code>_property</code> 形式，也无法使用 Computed Properties 了，但我认为这影响不大。其实 Computed Properties 也就是一层对数据存取的封装，我们另外实现两个函数，分别对应数据的 <code>setter</code> 和 <code>getter</code> 功能，就可以达到同样的效果。</p>
+
+<h2>循环引用问题</h2>
+
+<p>微博上的<a href="http://weibo.com/n/%E7%8E%8B_%E6%99%93%E7%A3%8A?from=feed&amp;loc=at">@王_晓磊</a>在评论中提到：直接用私有变量有个需要特别注意的地方，在 block 里直接写 <code>_property</code> 相当于 <code>self-&gt;_property</code>，虽然没写 self，但是暗含了对 self 的retain，容易造成循环引用。要记得用 weakSelf/strongSelf 大法。</p>
+
+<p>这一点确实是被很多人忽视的，所以我也一并写在这里，感谢他的补充。</p>
 
 <h2>写在最后</h2>
 

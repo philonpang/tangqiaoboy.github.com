@@ -80,6 +80,12 @@ categories: iOS
 
 是的，在类的内部如果直接使用 `_property` 形式，也无法使用 Computed Properties 了，但我认为这影响不大。其实 Computed Properties 也就是一层对数据存取的封装，我们另外实现两个函数，分别对应数据的 `setter` 和 `getter` 功能，就可以达到同样的效果。
 
+## 循环引用问题
+
+微博上的[@王_晓磊](http://weibo.com/n/%E7%8E%8B_%E6%99%93%E7%A3%8A?from=feed&loc=at)在评论中提到：直接用私有变量有个需要特别注意的地方，在 block 里直接写 `_property` 相当于 `self->_property`，虽然没写 self，但是暗含了对 self 的retain，容易造成循环引用。要记得用 weakSelf/strongSelf 大法。
+
+这一点确实是被很多人忽视的，所以我也一并写在这里，感谢他的补充。
+
 ## 写在最后
 
 其实我上面提到的这些问题都是小问题，影响不大。但是代码风格的统一却是大问题。所以不管你们项目中使用的是 `self.property` 风格还是 `_property` 风格，问题都不大，但是如果你们同时使用这两种风格，那么就非常不好了。

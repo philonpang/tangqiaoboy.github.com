@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content=" 前言 大约在去年这个时候，我离开网易有道，开始了自己的创业不归路。一年过去了，总是在忙碌，在最忙的时候，我连博客都没有时间更新了。但是这一年的经历对我的成长重大，还是挺值得写下来的，在此将我的故事分享给那些一同走在创业路上的朋友。 ">
+  <meta name="description" content="前言 因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是： 请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码? 我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,58 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/06/23/alipay-plugin-mechanism/">分析支付宝客户端的插件机制</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-23T12:39:00+08:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/alipay-plugin-1.jpg"></p>
+
+<h2>前言</h2>
+
+<p>因为开了iOSDevTips的微信公共账号，老收到各种iOS开发的问题，前两天收到一个问题的内容是：</p>
+
+<pre><code>请问像支付宝钱包那样可以在应用里安装自己的应用，是已经在应用里写了逻辑，还是可以向应用里发送代码?
+</code></pre>
+
+<p>我觉得这个问题挺有意思的，估计大家都感兴趣，所以今天就抽空研究了一下，将支付宝客户端的插件机制具体实现方式介绍给大家。</p>
+
+<p>先介绍一下该插件机制，如上图所示，支付宝客户端在安装后，对于像“彩票”、“爱心捐赠”这类功能，需要再点击安装一次，然后才可以使用。有些时候该插件功能进行了升级，需要点击升级才可以继续使用。插件的方式有利于软件动态增加新的功能或升级功能，而不用再一次向AppStore提交审核。另外，由于用户不需要的插件可以不用安装，也缩小了应用本身的体积大小，节省了下载流量。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/06/23/alipay-plugin-mechanism/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/06/17/startup-anniversary-note/">写在创业一周年</a></h1>
     
     
@@ -123,55 +175,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/16/ios-dev-tool-app-store-tool/">iOS开发工具篇-AppStore统计工具</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-16T12:26:00+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>本文首发于InfoQ，本文版权归InfoQ所有，转载请保留<a href="http://www.infoq.com/cn/articles/appstore-statistical-tool">原文链接</a>。</p>
-
-<h2>前言</h2>
-
-<p>随着iOS开发的流行，针对iOS开发涉及的方方面面，早有一些公司提供了专门的解决方案或工具。这些解决方案或工具包括：用户行为统计工具（友盟，Flurry，Google Analytics等),  App Store销售分析工具（例如App annie)， App crash收集工具（例如Crashlytics)，App测试发布工具（Test Flight）, App Push服务等。</p>
-
-<p>这些解决方案或工具节省了iOS开发者大量的开发时间，但是由于相关介绍文章的缺乏，许多开发者都在重复着自己一次又一次重新造轮子。所以我希望，将我自己使用和调研的相关的第三方服务使用经验，整理成一系列文章，以便广大开发者能够省去大量的重复性工作。</p>
-
-<p>今天介绍AppStore统计工具：App Annie和苹果的命令行统计工具。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/06/16/ios-dev-tool-app-store-tool/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/45/">&larr; Older</a>
@@ -193,6 +196,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/24/ios-weekly-41/">iOS移动开发周报-第41期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/03/22/ios-dev-controversy-2/">iOS 开发中的争议（二）</a>
@@ -236,10 +243,6 @@
     
       <li class="post">
         <a href="/blog/2015/01/18/ios-weekly-36/">iOS移动开发周报-第36期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/18/explain-ios-pro-book/">对《iOS开发进阶》一书的解释</a>
       </li>
     
   </ul>

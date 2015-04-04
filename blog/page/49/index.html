@@ -9,9 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="在iOS应用中，有时候会需要调用系统的一些UI控件，例如： 在UIWebView中长按会弹出系统的上下文菜单
-在UIImagePickerController中会使用系统的照相机界面
-在编译状态下的UITableViewCell，处于待删除时，会有一个系统的删除按钮。 以上这些UI控件中， &hellip;">
+  <meta name="description" content="记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。 后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,6 +83,51 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/02/21/introduction-of-weixin-public-account/">分享iOS开发技巧的微信公共账号</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-21T20:02:00+08:00" pubdate data-updated="true">Feb 21<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/weixin-why.jpg" width="300px" /></p>
+
+<p>记得我以前刚学iOS开发的时候，常常会遇到各种问题，身边没有人交流，遇到问题只能上网搜。虽然stackoverflow能解决大部分问题，但是还是很渴望和身边的一些同行进行讨论和交流。</p>
+
+<p>后来，我组建了一个QQ群，尽力把自己通过各种渠道认识的iOS同行聚集到群里面，希望形成一个讨论环境。现在群里面加入了包括网易，腾讯，百度，新浪，搜狐，美团，豆瓣等公司的iOS程序员以及一些自由职业者。因为大家都是比较有经验的开发者，所以每天大家的讨论不太多，但是都很有价值。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/02/21/introduction-of-weixin-public-account/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/01/23/set-ios-system-ui-language/">设置应用内的系统控件语言</a></h1>
     
     
@@ -132,58 +175,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/13/two-stage-creation-on-cocoa/">谈ObjC对象的两段构造模式</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-13T10:15:00+08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>Objective-c语言在申请对象的时，需要使用两段构造(<a href="http://volonbolon.net/post/634999801/two-stage-creation-in-cocoa">Two Stage Creation</a>)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithString:</span><span class="s">@&quot;http://blog.devtang.com&quot;</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>由于该语言的对象创建方法和大多数其它语言（如C、C++、Java、JavaScript）都不一样，所以引起了我的好奇。是什么原因促使Objective-C做了这种设计，而又是什么原因促使大多数其它语言都采用&#8221;new&#8221;方法来一次性创建对象呢？</p>
-
-<p>在看了<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书（顺便吐槽一下该书中文版翻译质量不高，建议看英文版），并且做了一些调研之后，我将总结分享给大家，欢迎大家讨论。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/13/two-stage-creation-on-cocoa/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/50/">&larr; Older</a>
@@ -205,6 +196,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/04/from-0-to-1-book-summary/">《从 0 到 1 》读书笔记</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/03/24/ios-weekly-41/">iOS移动开发周报-第41期</a>
@@ -248,10 +243,6 @@
     
       <li class="post">
         <a href="/blog/2015/01/22/pgy-usage-guide/">使用蒲公英来做iOS测试应用的分发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/18/ios-weekly-36/">iOS移动开发周报-第36期</a>
       </li>
     
   </ul>

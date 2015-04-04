@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，而且包括我以及我身边的很多朋友都被恶心到了，所以我就把这些注意事项总结出来，希望大家不要犯同样的错误。 注意事项一：所有类名都应该加前缀 说明：没有前缀的类名有冲突的风险。 Bad Case：微信分享的 SDK，文件名： &hellip;">
+  <meta name="description" content="前言 几天前，Facebook 在 React.js Conf 2015 大会上推出了 React Native（视频链接）。我发了一条微博(地址），结果引来了 100 多次转发。为什么 React Native 会引来如此多的关注呢？我在这里谈谈我对 React Native 的理解。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,86 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/01/talk-about-react-native/">谈谈 React Native</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-01T16:27:43+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/react-js.jpg"></p>
+
+<h2>前言</h2>
+
+<p>几天前，Facebook 在 React.js Conf 2015 大会上推出了 React Native（<a href="https://www.youtube.com/watch?v=7rDsRXj9-cU">视频链接</a>）。我发了一条微博(<a href="http://www.weibo.com/1708947107/C1WHHwqZv?from=page_1005051708947107_profile&amp;wvr=6&amp;mod=weibotime&amp;type=comment#_rnd1422782358309">地址</a>），结果引来了 100 多次转发。为什么 React Native 会引来如此多的关注呢？我在这里谈谈我对 React Native 的理解。</p>
+
+<p>一个新框架的出现总是为了解决现有的一些问题，那么对于现在的移动开发者来说，到底有哪些问题 React Native 能涉及呢？</p>
+
+<h3>人才稀缺的问题</h3>
+
+<p>首先的问题是：移动开发人才的稀缺。看看那些培训班出来的人吧，经过 3 个月的培训就可以拿到 8K 甚至上万的工作。在北京稍微有点工作经验的 iOS 开发，就要求 2 万一个月的工资。这说明当前移动互联网和创业的火热，已经让业界没有足够的开发人才了，所以大家都用涨工资来抢人才。而由于跨平台的框架（例如 PhoneGap，RubyMotion）都还是不太靠谱，所以对于稍微大一些的公司，都会选择针对 iOS 和 Android 平台分别做不同的定制开发。而 JavaScript 显然是一个群众基础更广的语言，这将使得相关人才更容易获得，同时由于后面提到的代码复用问题得到解决，也能节省一部分开发人员。</p>
+
+<h3>代码复用的问题</h3>
+
+<p>React Native 虽然强调自己不是 “Write once, run anywhere&#8221; 的框架，但是它至少能像 Google 的 <a href="https://github.com/google/j2objc">j2objc</a> 那样，在 Model 层实现复用。那些底层的、与界面无关的逻辑，相信 React Native 也可以实现复用。这样，虽然 UI 层的工作还是需要做 iOS 和 Android 两个平台，但如果抽象得好，Logic 和 Model 层的复用不但可以让代码复用，更可能实现底层的逻辑的单元测试。这样移动端的代码质量将更加可靠。</p>
+
+<p>其实 React Native 宣传的 &ldquo;Learning once, write anywhere&rdquo; 本身也是一种复用的思想。大家厌烦了各种各样的编程语言，如果有一种语言真的能够统一移动开发领域，对于所有人都是好事。</p>
+
+<h3>UI 排版的问题</h3>
+
+<p>我自己一直不喜欢苹果新推出的 AutoLayout 那套解决方案，其实 HTML 和 CSS 在界面布局和呈现上深耕多年，Android 也是借鉴的 HTML 的那套方案，苹果完全可以也走这套方案的。但是苹果选择发明了一个 Constraint 的东西来实现排版。在企业的开发中，其实大家很少使用 Xib 的，而手写 Constraint 其实是非常痛苦的。所以出现了 <a href="https://github.com/Masonry/Masonry">Masonry</a> 一类的开源框架来解决这类同行的痛苦。</p>
+
+<p>我一直在寻找使用类似 HTML + CSS 的排版，但是使用原生控件渲染的框架。其实之前 <a href="https://github.com/gavinkwoe/BeeFramework">BeeFramework</a> 就做了这方面的事情。所以我还专门代表 InfoQ 对他进行过采访。BeeFramework 虽然开源多年，而且有 2000 多的 star 数，但是受限于它自身的影响力以及框架的复杂性，一直没有很大的成功。至少我不知道有什么大的公司采用。</p>
+
+<p>这次 Facebook 的 React Native 做的事情相比 <a href="https://github.com/gavinkwoe/BeeFramework">BeeFramework</a> 更加激进。它不但采用了类似 HTML + CSS 的排版，还把语言也换成了 JavaScript，这下子改变可以称作巨大了。但是 Facebook 有它作为全球互联网企业的光环，相信会有不少开发者跟进采用 React Native。</p>
+
+<p>不过也说回来，Facebook 开源的也不一定都好，比如 <a href="https://github.com/facebookarchive/three20">three20</a> 就被 Facebook 放弃了，但是不可否认 <a href="https://github.com/facebookarchive/three20">three20</a> 作为一个框架，在那个时期的特定价值。所以 React Native 即使没有成功，它也将人们关注的焦点放在了移动开发的效率上了。很可能会有越来越多相关的框架因此涌现出来。</p>
+
+<h3>MVVM</h3>
+
+<p>MVVM 在 Web 开发领域相当火热，而 iOS 领域的 <a href="https://github.com/ReactiveCocoa/ReactiveCocoa">ReactiveCocoa</a> 虽然很火，但是还是非常小众。纠其原因，一方面是 ReactiveCocoa 带来的编程习惯上的改变实在太大，ReactiveCocoa 和 MVVM 的学习成本还是很高。另一方面是 ReactiveCocoa 在代码可读性、可维护性和协作上不太友好。</p>
+
+<p>而 Web 开发领域对 MVVM 编程模式的接受程度就大不相同了，在 Web 开发中有相当多的被广泛使用的 MVVM 的框架，例如 <a href="http://en.wikipedia.org/wiki/AngularJS">AngularJS</a>。相信 React Native 会推动 MVVM 应用在移动端的开发。</p>
+
+<h3>动态更新</h3>
+
+<p>终于说到最 &ldquo;鸡冻人心&rdquo; 的部分了。你受够了每次发新版本都要审核一个星期吗？苹果的审核团队在效率上的低下，使得我们这一群狠不得每天迭代更新一版的敏捷开发团队被迫每 2 周或 1 个月更新一次版本。很多团队上一个版本还没审核结束，下一个版本就做好了。</p>
+
+<p>React Native 的语言是基于 JavaScript，这必然会使得代码可以从服务器端动态更新成为可能。到时候，每天更新不再是梦想。当然，代码的安全性将更一步受到挑战，如何有效保护核心代码的安全将是一个难题。</p>
+
+<h2>总结</h2>
+
+<p>不管怎么样，这确确实实是一个移动互联网的时代，我相信随着几年的发展，移动互联网的开发生态也会积累出越来越多宝贵的框架，以支撑出更加伟大的 App 出现。作为一个移动开发者，我很高兴能够成为这个时代的主角，用移动开发技术改变人们的生活。</p>
+
+<p>愿大家珍惜这样的机会，玩得开心～</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -208,90 +288,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/31/ios-weekly-37/">iOS移动开发周报-第37期</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-31T09:34:58+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，地址是<a href="http://www.infoq.com/cn/news/2015/01/ios-v-advanced-technology-road">这里</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>本期 iOS 移动开发周报带来如下内容：iOS大V的技术进阶之路、ARC 对 self 的内存管理、Method Swizzling 和 AOP 实践、使用 iMovie 和 Keynote 制作 App Preview等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://www.cocoachina.com/programmer/20150115/10930.html">《唐巧访谈： iOS大V的技术进阶之路》</a>：文章来自于 CocoaChina 的访谈，采访对象是唐巧，他的新书<a href="https://github.com/tangqiaoboy/iOS-Pro">《iOS开发进阶》</a>已经和大家见面.采访中唐巧表达了他对于技术学习、建设技术影响力等方面的经验和看法。</p></li>
-<li><p><a href="http://wangling.me/2015/01/moke-2014.html#fn-1?utm_source=qdan.me#/">《Moke 2014 以及 1 元应用效应》</a>：Moke 作者分享了他的应用在 2014 年的销售额以及他对于 1 元应用的看法。</p></li>
-<li><p><a href="http://www.cocoachina.com/programmer/20150121/10966.html">《王巍访谈：关于 Swift 学习和 AppleWatch 开发的一些建议》</a>：文章来自于 CocoaChina 的访谈，采访对象是王巍，微博 ID“onevcat”，圈儿内人称喵神，知名 iOS/Unity 开发者，现居日本，就职于 LINE。喵神是 <a href="http://objccn.io/">objc 中国</a>项目发起人，开源过广受开发者喜爱的 Xcode 插件 VVDocumenter，主创或参与开发《姬骑士和最后的百龙战争》、《英雄 Slash》、《冒险谜题王国》以及《小熊推金币》等多款游戏，个人应用代表有《番茄工作法》(Pomodoro Do) 和《云端记账》(Our Money)。</p></li>
-<li><p><a href="http://iiiyu.com/2015/01/20/2014-oh-my-star-app-annual-summary/">《2014 年 Oh My Star 总结》</a>：Oh My Star 是一款由国人 <a href="http://weibo.com/n/Sumi-iYu">@Sumi-iYu</a> 开发的管理 Github 上 star 项目的工具。笔者使用过，对于 star 功能的重度用户来说，非常好用。本文分享了作者在开发该软件的过程以及收货。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://blog.sunnyxx.com/2015/01/17/self-in-arc/">《ARC 对 self 的内存管理》</a>：文章从 YTKNetwork 的几行代码出发，讨论了 LLVM 编译器在传递 self 参数时，对 self 的引用计数的特殊处理。</p></li>
-<li><p><a href="http://blog.nswebfrog.com/2015/01/08/autolayout-trick/">《AutoLayout 布局技巧－等宽子视图》</a>：所谓等宽子视图，也就是对一个有 n 个子视图的父视图来说，无论父视图的宽度怎么变化，所有子视图的宽度是相等的。文章介绍了这一类排版需求的 AutoLayout 布局技巧。</p></li>
-<li><p><a href="http://tech.glowing.com/cn/objective-c-runtime/">《Objective-C Runtime》</a>：Objective-C 是一个动态语言，这意味着它不仅需要一个编译器，也需要一个运行时系统来动态得创建类和对象、进行消息传递和转发。理解 Objective-C 的 Runtime 机制可以帮我们更好的了解这个语言，适当的时候还能对语言进行扩展，从系统层面解决项目中的一些设计或技术问题。本文讲解了 Runtime 的核心 &ndash; 消息传递 （Messaging）。</p></li>
-<li><p><a href="http://tech.glowing.com/cn/method-swizzling-aop/">《Method Swizzling 和 AOP 实践》</a>：利用 Objective-C 的 Runtime 特性，我们可以给语言做扩展，帮助解决项目开发中的一些设计和技术问题。这一篇，我们来探索一些利用 Objective-C Runtime 的黑色技巧。这些技巧中最具争议的或许就是 Method Swizzling 。文本介绍了利用 Method Swizzling，结合 AOP 来做一些打 Log 的工作。利用 objective-C Runtime 特性和 Aspect Oriented Programming ，我们可以把琐碎事务的逻辑从主逻辑中分离出来，作为单独的模块。它是对面向对象编程模式的一个补充。</p></li>
-<li><p><a href="http://weibo.com/p/1001603800875490492754">《CocoaPods 最佳实践探讨》</a>：作者在文章中表达了对目前常见的 CocoaPods 使用方法的意见。希望大家根据自己的经验，一起讨论出一份真正的 “最佳实践”。</p></li>
-<li><p><a href="http://www.jianshu.com/p/358106d653cf">《使用 iMovie 和 Keynote 制作 App Preview》</a>：App Preview 就是一段 15-30 秒的短视频，用来展示你的应用的特性、用户界面、交互方式等内容。在 App Store 你的应用的详细信息页面里，放在原来的截图之前。体验上会比截图更有冲击力，也能够表现更多的东西。茫茫的 App 海洋之中，如何脱颖而出，卖相至关重要。本文作者分享了他使用 iMovie 和 Keynote 制作 App Preview 的经验，并且提供了相关的效果视频和 Keynote 源文件。</p></li>
-<li><p><a href="http://blog.callmewhy.com/2015/01/20/wtf-in-old-code/">《要你命三千：老代码中的那些坑》</a>: 最近在给以前的老项目维护，说起来工作很简单，一个字：改 Bug。这看起来平淡无常的工作，实际上凶险无比，藏坑无数。时至今日，感觉整个人都得到了升华。在睡觉前抽空写篇博客，和各位分享一下踩坑经历，一起品味其中的种种酸苦辣 (没甜)。</p></li>
-<li><p><a href="http://natashatherobot.com/unit-testing-swift-dependency-injection/">《Unit Testing in Swift: Dependency Injection》</a>：文章介绍了在 Swift 实现的单元测试中实现依赖注入，不过实际写起来还是比较麻烦。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="https://ship.io">ship.io</a>：ship.io 是一个持续集成服务。现在所有套餐免费，支持 Xcode 6.1.1。</p></li>
-<li><p><a href="https://crowdin.com/">Crowdin</a>: Crowdin 是一个多语言翻译服务。可以便于开发者将应用改成支持多语言。类似的服务还有：<a href="https://www.transifex.com/">Transifex</a>。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/dasdom/BreakOutToRefresh">BreakOutToRefresh</a>：BreakOutToRefresh 是一个有趣的项目，它利用 SpriteKit 在下拉刷新过程中做了一个打砖块游戏。</p></li>
-<li><p><a href="https://github.com/Ramotion/animated-tab-bar">RAMAnimatedTabBarController</a>：RAMAnimatedTabBarController 是一个让 TabBar 上的元素能够显示动画效果的开源库。</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -313,6 +309,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/04/from-0-to-1-book-summary/">《从 0 到 1 》读书笔记</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/03/24/ios-weekly-41/">iOS移动开发周报-第41期</a>
@@ -356,10 +356,6 @@
     
       <li class="post">
         <a href="/blog/2015/01/22/pgy-usage-guide/">使用蒲公英来做iOS测试应用的分发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/18/ios-weekly-36/">iOS移动开发周报-第36期</a>
       </li>
     
   </ul>

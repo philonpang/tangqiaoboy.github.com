@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>iOS移动开发周报-第42期 - 唐巧的技术博客</title>
+  <meta name="author" content="唐巧">
+
+  
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本期 iOS &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.devtang.com/blog/2015/04/09/ios-weekly-42">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/atom.xml" rel="alternate" title="唐巧的技术博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <!-- googleapis is fucked by gfw -->
+  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28029597-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">唐巧的技术博客</a></h1>
+  
+    <h2>记录下自己学习的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.devtang.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">所有文章</a></li>
+  <li><a href="/blog/categories/ios/">iOS开发专题</a></li>
+  <li><a href="http://weibo.com/tangqiaoboy" target="_blank">我的微博</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">iOS移动开发周报-第42期</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-09T22:15:52+08:00" pubdate data-updated="true">Apr 9<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/04/facebook-react-native">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Facebook 正式开源 React Native、React 入门实例教程、React Native 通信机制详解等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.csdn.net/article/2015-03-27/2824323-facebook-open-sources-react-native">用 JavaScript 开发移动原生应用，Facebook 正式开源 React Native</a>：Facebook 正式开源了 <a href="https://github.com/facebook/react-native">React Native</a>，不过目前，只有 iOS 版，Android 版还需再等一段时间，这是最新的用 JavaScript 语言开发原生 App 的尝试。Facebook 同时还为 React Native 开发了一款基于 Atom 的 IDE：Nuclide，也已开源。</p></li>
+<li><p><a href="http://weibo.com/p/1001603823955516487761">谷歌发现用于中间人攻击的证书</a>：根据谷歌官方安全博客报道，谷歌发现 CNNIC 颁发了多个针对谷歌域名的用于中间人攻击的证书。该证书冒充成受信任的谷歌的域名，被用于部署到网络防火墙中，用于劫持所有处于该防火墙后的 HTTPS 网络通信，而绕过浏览器警告。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.jianshu.com/p/1bde36ad9938">《轻松学习 Objective-C 消息转发》</a>：作者在文章中通过一个小例子来讲解什么是消息转发，以及如何消息转发，希望看完这篇文章时大家会彻底的明白 OC 的消息转发机制。</p></li>
+<li><p><a href="http://www.ruanyifeng.com/blog/2015/03/react.html">《React 入门实例教程》</a>：React 起源于 Facebook 的内部项目，因为该公司对市场上所有 JavaScript MVC 框架，都不满意，就决定自己写一套，用来架设 Instagram 的网站。本文是阮一峰原创的入门教程。</p></li>
+<li><p><a href="http://blog.cnbang.net/tech/2698/">《React Native 通信机制详解》</a>：React Native 是 facebook 刚开源的框架，可以用 javascript 直接开发原生 APP，先不说这个框架后续是否能得到大众认可，单从源码来说，这个框架源码里有非常多的设计思想和实现方式值得学习，本文介绍了它最基础的 JavaScript-ObjectC 通信机制。</p></li>
+<li><p><a href="http://onevcat.com/2015/03/cross-platform/">《跨平台开发时代的 (再次) 到来？》</a>：这篇文章主要想谈谈最近又刮起的移动开发跨平台之风，并着重介绍和对比一下像是 Xamarin，NativeScript 和 React Native 之类的东西。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2015/03/22/ios-dev-controversy-2/">《iOS 开发中的争议（二）》</a>：本文作者分享了 iOS 中的一个争议话题：对于 UI 界面的编写工作，到底应该用 xib/storyboard 完成，还是用手写代码来完成？</p></li>
+<li><p><a href="http://tanqisen.github.io/blog/2013/04/19/gcd-block-cycle-retain/">《正确使用 Block 避免 Cycle Retain 和 Crash》</a>：Block 作为 C 语言的扩展，并不是高新技术，和其他语言的闭包或 lambda 表达式是一回事。需要注意的是由于 Objective-C 在 iOS 中不支持 GC 机制，使用 Block 必须自己管理内存，而内存管理正是使用 Block 坑最多的地方，错误的内存管理 要么导致 return cycle 内存泄漏要么内存被提前释放导致 crash。本文介绍了从 Block 实现原理切入，介绍了使用 Block 需要注意的地方。</p></li>
+<li><p><a href="http://tutuge.me/2015/03/29/bind-data-to-gcd-queue/">《为 GCD 队列绑定 NSObject 类型上下文数据-利用 __bridge_retained(transfer) 转移内存管理权》</a>：本文介绍了如何合理运用 <code>__bridge_retained(transfer)</code> 关键字转换对象的内存管理权，让我们自己控制对象的生命周期。</p></li>
+<li><p><a href="http://staltz.com/dont-react/#/">《Don&rsquo;t React》</a>：本文作者从多方面分享了他对于 React 框架的负面看法。通过此文，大家可以更加客观地了解 React 这个框架。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://developer.apple.com/library/ios/samplecode/Lister/Introduction/Intro.html">Lister</a>：Lister 是苹果提供的官方 Demo。包含了 iOS、Mac 和 Apple Watch 版本，并且为这个 demo 分别用 Objective-C 和 Swift 实现了一遍，最后还包括了 30 页的文档。</p></li>
+<li><p><a href="https://github.com/iSimar/HackerNews-React-Native">HackerNews-React-Native</a>：HackerNews-React-Native 是用 React Native 完成的 HackerNews 客户端。</p></li>
+<li><p><a href="https://github.com/recruit-mp/RMPZoomTransitionAnimator">RMPZoomTransitionAnimator</a>：RMPZoomTransitionAnimator 是一个放大缩小的动效开源库，可以实现图片的放大缩小效果。</p></li>
+<li><p><a href="https://github.com/adad184/MMTweenAnimation">MMTweenAnimation</a>：MMTweenAnimation 是一个基于 POP 的扩展，提供了 10 种自定义的动效。</p></li>
+</ol>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">唐巧</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-09T22:15:52+08:00" pubdate data-updated="true">Apr 9<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/weekly/'>weekly</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" id="">Creative Commons BY-NC-ND 3.0</a>
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <style>
+    .flash-video{display:none;}
+</style>
+<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_tsina">新浪微博</a>
+<a class="jiathis_button_t163">网易微博</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_renren">人人网</a>
+<a class="jiathis_button_douban">豆瓣</a>
+
+<a href="http://www.jiathis.com/share?uid=1574434" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+    data_track_clickback:true,
+    sm:"t163,tsina,tqq,renren,douban",
+    summary:"",
+    hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1574434" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<br />
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=89581" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/04/04/from-0-to-1-book-summary/" title="Previous Post: 《从 0 到 1 》读书笔记">&laquo; 《从 0 到 1 》读书笔记</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>赞助商</h1>
+  <p>
+     <a href="http://www.pgyer.com" target="_blank"><img width="260px" src="/images/ad_pgyer.png" /></a>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/09/ios-weekly-42/">iOS移动开发周报-第42期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/04/from-0-to-1-book-summary/">《从 0 到 1 》读书笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/24/ios-weekly-41/">iOS移动开发周报-第41期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/22/ios-dev-controversy-2/">iOS 开发中的争议（二）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/15/ios-dev-controversy-1/">iOS 开发中的争议（一）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/10/ios-weekly-40/">iOS移动开发周报-第40期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/01/tipping-point/">《引爆点》读书心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/01/ios-weekly-39/">iOS移动开发周报-第39期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/05/ios-weekly-38/">iOS移动开发周报-第38期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/01/talk-about-react-native/">谈谈 React Native</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/31/write-sdk-tips/">写iOS SDK注意事项</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/31/ios-weekly-37/">iOS移动开发周报-第37期</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p> Blogger, InfoQ编辑, iOS开发, 创业者。<br/>
+      <br/>Java开发工程师，曾开发网易微博后台。
+      <br/>iOS开发工程师，曾开发有道云笔记、粉笔网、猿题库。
+      <br/>
+      <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
+      <span id="wb_follow_btn"></span>
+      <br />购买 <a href='http://www.amazon.cn/b?node=1474130071' target='_blank'>《iOS开发进阶》签名版</a>
+      <br />我的<strong>"iOSDevTips"</strong>微信公众账号:
+      <br/><img width="220px" src="/images/weixin-qr.jpg" />
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  &copy; 2015 - 唐巧 -
+  <span class="credit">基于 <a href="http://octopress.org" target="_blank">Octopress</a></span>
+  <span class="credit">, 感谢 <a href="http://gitcafe.com/signup?invited_by=tangqiaoboy" target="_blank">GitCafe</a> 为本站提供存储空间</span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2351546126" type="text/javascript" charset="utf-8"></script>
+<script>
+WB2.anyWhere(function(W){
+W.widget.followButton({
+    uid: 1708947107,
+    id: "wb_follow_btn"
+    });
+});
+</script>
+
+
+</body>
+</html>

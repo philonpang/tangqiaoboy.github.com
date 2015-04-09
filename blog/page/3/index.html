@@ -9,7 +9,11 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，文章地址是这里。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本期 iOS &hellip;">
+  <meta name="description" content="打算分享一些有争议的话题，并且表达一下我的看法。这是该系列的第一篇，我想讨论的是：类的成员变量应该如何定义？ 在 Objective-C 的语言的早期，类的私有成员变量是只能定义在 .h 的头文件里面的。像如下这样： 1
+2
+3
+4
+@interface ViewController : &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +81,135 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/15/ios-dev-controversy-1/">iOS 开发中的争议（一）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-15T20:53:41+08:00" pubdate data-updated="true">Mar 15<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/controversy.jpg"></p>
+
+<p>打算分享一些有争议的话题，并且表达一下我的看法。这是该系列的第一篇，我想讨论的是：类的成员变量应该如何定义？</p>
+
+<p>在 Objective-C 的语言的早期，类的私有成员变量是只能定义在 .h 的头文件里面的。像如下这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@interface ViewController : UIViewController {
+</span><span class='line'>    @private
+</span><span class='line'>    NSInteger _value;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>之后，苹果改进了 Objective-C，允许在 .m 里面添加一个特殊的匿名 Category，即没有名字的 Category，来实现增加类的成员变量。像如下这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@interface ViewController ()
+</span><span class='line'>
+</span><span class='line'>@property (nonatomic) NSInteger value;
+</span><span class='line'>
+</span><span class='line'>@end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样的好处是，这些变量在头文件中被彻底隐藏起来了，不用暴露给使用者。</p>
+
+<p>接着，在 2013 年的 WWDC 中，苹果进一步改进了 Objective-C，允许在 .m 的
+<code>@implementation</code> 中直接添加类的私有成员变量。像如下这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@implementation ViewController {
+</span><span class='line'>    NSInteger _value;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>于是，大家对于如何定义私有的成员变量上就产生的分歧。许多人喜欢用匿名的 Category 的方式来定义私有成员变量。但是，我个人更推荐在 <code>@implementation</code> 中直接添加类的私有成员变量。下面我做一些解释。</p>
+
+<h3>历史原因</h3>
+
+<p>首先早期的 iOS 程序员一定知道，在 2011 年 ARC 被推出之前，Objective-C 是需要手工地管理引用计数的。而对类的所有私有成员使用 <code>self.property</code> 的形式，就可以使编译器为我们自动生成管理引用计数的代码。在 2012 年前，这个 feature 还需要使用 <code>@synthesize</code> 关键字来启用的。于是，苹果通过在代码规范中推荐和强调使用 <code>self.property</code> 的编程习惯，来让大家避免在内存管理中遇到问题。而在 ARC 时代，这个编程习惯带来的优势不再存在了，因为编译器会自动为我们管理引用计数，我们只需要关心不要造成循环引用问题就行了。</p>
+
+<h2>省心省事</h2>
+
+<p>刚刚说到，在类中完全使用 <code>_property</code> 的方式来访问私有成员变量，是不会有内存管理上的问题的。但是使用 <code>self.property</code> 的方式来访问私有变量是不是也是一样不会有内存管理上的问题呢？确实也是，但是有一点需要注意：我们最好不要在 init 和 dealloc 中使用 <code>self.property</code> 的方式来访问成员变量，这一点是写在苹果的官方文档里的，我在以前的文章里也介绍过。(见：<a href="http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">《不要在init和dealloc函数中使用accessor》</a>）</p>
+
+<p>所以，如果你用 <code>self.property</code> 来访问私有成员变量。那么你需要注意，在 init 和 dealloc 中不使用这种方式。这其实对程序员来说是一个负担，你需要不停提醒自己有没有犯错。如果你使用完全的 <code>_property</code> 的方式来访问私有成员变量，就不用想这一类问题了。</p>
+
+<h2>关于隐藏</h2>
+
+<p>大家知道，<code>self.property</code> 其实是调用了类的 <code>[self property]</code> 方法，所以这其实是有一层方法调用的隐藏，很多时候，我们需要延迟初使化一个类成员的时候，就会把这个成员的初使化方法写在这个 <code>[self property]</code> 方法的实现中。</p>
+
+<p>那么问题来了，当你在阅读别人代码时，看到 <code>self.property</code> 的时候，你会想：这里会不会有一些隐藏的函数实现？于是你需要跳转到其方法实现中去查找。但是在实际开发中，大部分的 property 其实是使用编译器自动生成的 Getter 和 Setter 方法，于是你会找不到实现，这个时候，你才知道：“哦，原来这段代码并没有做自定义的成员初使化工作”。</p>
+
+<p>这种默认的隐藏在代码中多了，会影响代码的阅读和维护。其实大部分的类成员变量都需要在类初使化方法中赋值，大部分的 UIViewController 的成员变量，都需要在 <code>viewDidLoad</code> 方法中赋值。那既然这样，不如直接在相应的方法中用一个名为 <code>setupProperty</code> 方法直接进行初使化。这样的好处是，代码的可读性更好了，<code>self.property</code> 只有需要延迟初使化的情况下才被使用。</p>
+
+<p>关于这个还有一个小故事，我之前 Review 过一个同事的 iOS 端代码，那个同事喜欢把 table view 的数据另外封装成一个类，而我觉得这些数据其实就是一个数组，没必要进行这一层封装，最终我们争论了比较久。我的观点是，一切隐藏都是对代码复杂性的增加，除非它带来了好处，例如达到了代码复用，提高了代码的可维护性等，否则，没有好处的封装只会给代码阅读理解带来成本。就我现在的经历中，大部分的 table view 的数据都可以放在一个数组中，没必要把这个数组封装起来，另外提供一套操作这个数组数据的方法。</p>
+
+<h2>简短的代码更易读</h2>
+
+<p><code>_property</code> 的写法比 <code>self.property</code> 更短，也更简单。我认为这样写出来的代码更方便阅读。</p>
+
+<h2>执行速度更快，IPA体积更小</h2>
+
+<p>我之前从来没想到过这两者之间的速度和应用体积会有很大差别。不过一个同行（来自国外著名的社交网络公司）告诉我，他们公司发现二者还是有不小的差距，如果你们的应用需要做一些深度优化，可以考虑一下把 <code>self.property</code> 换成 <code>_property</code>。但我觉得，大部分应用都应该是不需要做这种深度优化的。</p>
+
+<h2>KVO 和 KVC</h2>
+
+<p>是的，如果用 <code>_property</code> 这种写法，就不能使用 KVO 和 KVC 了。但是我得反问一下，在一个类的内部，KVO 自己的私有成员变量算是一个好设计吗？我们讲类要&#8221;高内聚，低耦合&#8221;，KVO 是为了实现观察者模式，让对象之间相互解耦的。如果把 KVO 用在类的内部，KVO 自己的私有成员，我认为其实这不是一个很好的设计。</p>
+
+<h2>Computed Properties</h2>
+
+<p>在 Swift 中，引入了 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-ID259">Computed Properties</a> 的概念，其实这在 Objective-C 中也有，只是没有专门给它名字。如果一个 property 我们提供了对应的 <code>setter</code> 和 <code>getter</code>，并且没有直接使用其对应的 _property 变量，那么这个 property 就是所谓的 Computed Properties。</p>
+
+<p>是的，在类的内部如果直接使用 <code>_property</code> 形式，也无法使用 Computed Properties 了，但我认为这影响不大。其实 Computed Properties 也就是一层对数据存取的封装，我们另外实现两个函数，分别对应数据的 <code>setter</code> 和 <code>getter</code> 功能，就可以达到同样的效果。</p>
+
+<h2>循环引用问题</h2>
+
+<p>微博上的<a href="http://weibo.com/n/%E7%8E%8B_%E6%99%93%E7%A3%8A?from=feed&amp;loc=at">@王_晓磊</a>在评论中提到：直接用私有变量有个需要特别注意的地方，在 block 里直接写 <code>_property</code> 相当于 <code>self-&gt;_property</code>，虽然没写 self，但是暗含了对 self 的retain，容易造成循环引用。要记得用 weakSelf/strongSelf 大法。</p>
+
+<p>这一点确实是被很多人忽视的，所以我也一并写在这里，感谢他的补充。</p>
+
+<h2>写在最后</h2>
+
+<p>其实我上面提到的这些问题都是小问题，影响不大。但是代码风格的统一却是大问题。所以不管你们项目中使用的是 <code>self.property</code> 风格还是 <code>_property</code> 风格，问题都不大，但是如果你们同时使用这两种风格，那么就非常不好了。</p>
+
+<p>希望我的这篇文章能让大家了解到在这方面的争论，也希望大家能够在这一点上，在公司内部达成统一。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -166,96 +299,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/03/01/tipping-point/">《引爆点》读书心得</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-01T15:32:15+08:00" pubdate data-updated="true">Mar 1<span>st</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/TippingPointBook.jpg"></p>
-
-<p>春节的时候看到了萧宸宇的博客中一篇名为 <a href="http://iiiyu.com/2015/01/31/read-the-tipping-point/">《读书笔记 「引爆点」》</a> 的文章。受文章的吸引，于是把 <a href="http://book.douban.com/subject/3900987/">《引爆点》</a> 这本书学习了一下。</p>
-
-<p>《引爆点》的作者格拉德威尔在书中主要讲解了他对于 &ldquo;流行现象&rdquo; 的理解。这里面的流行现象可以是指一种感冒流感病毒的传播，也可能指一个军事情报消息的传播，也可能指一种身着打扮的方式，也可能是一种电视节目，甚至是一个地区的犯罪行为。</p>
-
-<p>格拉德威尔的流行理论认为，造成流行现象涉及三个必不可少的因素：</p>
-
-<ul>
-<li>第一法则是个别人物法则，讲影响信息传播的关键人物角色：内行，联系员，推销员。</li>
-<li>第二法则是附着力因素法则，这条法则讲的是流行物本身所应具备的要素，它应该具备能让人过目不忘或者留下深刻印象的附着力，比如 iPod 漂亮的外形和一般随身听无法比拟的容量。</li>
-<li>第三法则是环境威力法则，意思就是发起流行的环境极端重要。注意：不是重要或者很重要，而是极端重要，甚至一个微小外部环境的变化，就能决定流行或者不流行。</li>
-</ul>
-
-
-<p>我在读完全书后，按我自己的理解，把这三条法则分为：内部因素、可控因素和不可控因素。</p>
-
-<h2>内部因素</h2>
-
-<p>内部因素就是 <a href="http://book.douban.com/subject/3900987/">《引爆点》</a> 书中指的附着力因素法则。附着力因素法则要求流行事物本身要有趣、有用、能解决用户痛点、让用户产生情感共鸣等要素。</p>
-
-<p>从互联网产品的流行来打比方，内部因素简单来说就是你的产品要好用，这个是流行的基础，任何脱离用户实际需求，不好用的产品，简单靠营销是不管用的。这一点我在读了《史玉柱自述：我的营销心得》我有了更深的体会，我一直以为脑白金是靠地毯式轰炸的广告来成功的，其实不是的，脑白金首先做到的是产品有效（改善睡眠），然后再靠有效的营销手段来成功的。</p>
-
-<h2>可控因素</h2>
-
-<p>可控因素就是《引爆点》书中指的个别人物法则。该法则强调了信息传播的关键节点，如果你的信息传播是那些关键节点的人发起的，则很容易造成流行，否则就很难。</p>
-
-<p>书中举出的 <a href="http://zh.wikipedia.org/wiki/%E5%85%AD%E5%BA%A6%E5%88%86%E9%9A%94%E7%90%86%E8%AE%BA">六度理论</a> 的例子，证明大部分的传递都是由那些极少数的明星人物完成的。书中把信息传递的关键人员分成内行，联系员，推销员，分别讲解了这些成员的特点。</p>
-
-<p>于是，问题就转化成如何找到这类关键人员。小米联合创始人黎万强在他写的<a href="http://book.douban.com/subject/25942507/">《参与感：小米口碑营销内部手册》</a>中介绍道，小米最开始在硬件发烧友论坛中找到了 100 位核心用户，邀请这些手机发烧友来参与小米手机的体验和讨论。这就是一次成功的找内行的营销方式。</p>
-
-<p>书中介绍的雷克萨斯轿车在美国刚刚开始销售豪华车时，因为汽车问题需要召回。但是因为雷克萨斯这个品牌当时很新，试用的用户都是汽车内行，于是雷克萨斯选择做了一次极致体验的召回行为，具体包括：给每一个用户打电话，把车加满油，上门处理等。一场本会成为灾难的汽车质量问题却为公司赢得了客户服务的美誉。</p>
-
-<p>具体到 iOS 这个圈子，也有人发现了我其实在 iOS 这个圈子内扮演 “内行”（多年开发经验）+ “推销员”（坚持写博客）的角色。于是找我帮他们转发微博，或者购买博客的广告位。这里顺便感谢我的广告主：<a href="http://www.pgyer.com/">蒲公英</a>和 <a href="https://www.upyun.com/index.html">upyun云</a>。</p>
-
-<h2>不可控因素</h2>
-
-<p>我认为环境威力法则属于不可控因素。当然，可能不太严格，但相对来说是，当然，书中也讲了很多通过控制环境变量来改变流行的例子。但是，更多的时候，我们是借环境的天时地利来做事情，而不是逆天而为。雷军讲做 “站在风口上，猪都能飞起来” 也是讲的这个道理。</p>
-
-<p>对于创业来说，其实非常关键的就是把握行业发展的趋势，在别人都没有关注的时候，抢先占领市场，利用时间窗口的优势来建立商业壁垒，这样才能成功。所以我很佩服我们的 CEO 李勇在在线教育完全没有流行的 3 年前，选择创业做在线教育，而今年众多的在线教育项目启动的时候，我们的产品猿题库已经充分利用时间窗口占领了超过 1000 万学生用户，让任何竞争对手都不敢做直接竞争，只能做差异化竞争。</p>
-
-<p>当然，在产品细节、具体营销方式上，利用环境威力法则，在细节上结合热点事件，Duang 一下，这种小的适应环境威力法则的行为还是有用的。</p>
-
-<h2>总结</h2>
-
-<p>看完这本书让我想起了一个叫 &ldquo;<a href="https://appsto.re/cn/xV1vF.i">瘟疫公司</a>&rdquo; 的iOS平台游戏，在该游戏中，玩家的目标是通过各种方式来改造细菌或病毒，最终让它感染并且杀死所有人。最终玩过几次后，玩家都懂得了成功的要素，对于此：</p>
-
-<ul>
-<li>游戏刚开始时，选一个好的病毒传播点就是利用个别人物法则。</li>
-<li>在游戏中，我们不停地进化病毒的各方面的能力，这就是利用附着力因素法则。</li>
-<li>在游戏开始，我们要将精力放在传播上，而在游戏后期，我们要将精力放到病毒的毒性上。这样的安排，就是利用了环境威力法则。当然，根据游戏中的随机事件，灵活地调整游戏策略也是利用了环境威力法则。</li>
-</ul>
-
-
-<p>这是一本好书，可以更加系统地理解流行的产生，以及学会利用流行的法则来做一些决策，推荐大家都看看～</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -277,6 +320,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/09/ios-weekly-42/">iOS移动开发周报-第42期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/04/04/from-0-to-1-book-summary/">《从 0 到 1 》读书笔记</a>
@@ -320,10 +367,6 @@
     
       <li class="post">
         <a href="/blog/2015/01/31/ios-weekly-37/">iOS移动开发周报-第37期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/22/pgy-usage-guide/">使用蒲公英来做iOS测试应用的分发</a>
       </li>
     
   </ul>

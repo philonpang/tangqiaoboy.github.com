@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-04-04T21:05:07+08:00</updated>
+  <updated>2015-04-09T22:10:49+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,55 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第42期]]></title>
+    <link href="http://blog.devtang.com/blog/2015/04/09/ios-weekly-42/"/>
+    <updated>2015-04-09T22:15:52+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/04/09/ios-weekly-42</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/04/facebook-react-native">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Facebook 正式开源 React Native、React 入门实例教程、React Native 通信机制详解等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.csdn.net/article/2015-03-27/2824323-facebook-open-sources-react-native">用 JavaScript 开发移动原生应用，Facebook 正式开源 React Native</a>：Facebook 正式开源了 <a href="https://github.com/facebook/react-native">React Native</a>，不过目前，只有 iOS 版，Android 版还需再等一段时间，这是最新的用 JavaScript 语言开发原生 App 的尝试。Facebook 同时还为 React Native 开发了一款基于 Atom 的 IDE：Nuclide，也已开源。</p></li>
+<li><p><a href="http://weibo.com/p/1001603823955516487761">谷歌发现用于中间人攻击的证书</a>：根据谷歌官方安全博客报道，谷歌发现 CNNIC 颁发了多个针对谷歌域名的用于中间人攻击的证书。该证书冒充成受信任的谷歌的域名，被用于部署到网络防火墙中，用于劫持所有处于该防火墙后的 HTTPS 网络通信，而绕过浏览器警告。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.jianshu.com/p/1bde36ad9938">《轻松学习 Objective-C 消息转发》</a>：作者在文章中通过一个小例子来讲解什么是消息转发，以及如何消息转发，希望看完这篇文章时大家会彻底的明白 OC 的消息转发机制。</p></li>
+<li><p><a href="http://www.ruanyifeng.com/blog/2015/03/react.html">《React 入门实例教程》</a>：React 起源于 Facebook 的内部项目，因为该公司对市场上所有 JavaScript MVC 框架，都不满意，就决定自己写一套，用来架设 Instagram 的网站。本文是阮一峰原创的入门教程。</p></li>
+<li><p><a href="http://blog.cnbang.net/tech/2698/">《React Native 通信机制详解》</a>：React Native 是 facebook 刚开源的框架，可以用 javascript 直接开发原生 APP，先不说这个框架后续是否能得到大众认可，单从源码来说，这个框架源码里有非常多的设计思想和实现方式值得学习，本文介绍了它最基础的 JavaScript-ObjectC 通信机制。</p></li>
+<li><p><a href="http://onevcat.com/2015/03/cross-platform/">《跨平台开发时代的 (再次) 到来？》</a>：这篇文章主要想谈谈最近又刮起的移动开发跨平台之风，并着重介绍和对比一下像是 Xamarin，NativeScript 和 React Native 之类的东西。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2015/03/22/ios-dev-controversy-2/">《iOS 开发中的争议（二）》</a>：本文作者分享了 iOS 中的一个争议话题：对于 UI 界面的编写工作，到底应该用 xib/storyboard 完成，还是用手写代码来完成？</p></li>
+<li><p><a href="http://tanqisen.github.io/blog/2013/04/19/gcd-block-cycle-retain/">《正确使用 Block 避免 Cycle Retain 和 Crash》</a>：Block 作为 C 语言的扩展，并不是高新技术，和其他语言的闭包或 lambda 表达式是一回事。需要注意的是由于 Objective-C 在 iOS 中不支持 GC 机制，使用 Block 必须自己管理内存，而内存管理正是使用 Block 坑最多的地方，错误的内存管理 要么导致 return cycle 内存泄漏要么内存被提前释放导致 crash。本文介绍了从 Block 实现原理切入，介绍了使用 Block 需要注意的地方。</p></li>
+<li><p><a href="http://tutuge.me/2015/03/29/bind-data-to-gcd-queue/">《为 GCD 队列绑定 NSObject 类型上下文数据-利用 __bridge_retained(transfer) 转移内存管理权》</a>：本文介绍了如何合理运用 <code>__bridge_retained(transfer)</code> 关键字转换对象的内存管理权，让我们自己控制对象的生命周期。</p></li>
+<li><p><a href="http://staltz.com/dont-react/#/">《Don&rsquo;t React》</a>：本文作者从多方面分享了他对于 React 框架的负面看法。通过此文，大家可以更加客观地了解 React 这个框架。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://developer.apple.com/library/ios/samplecode/Lister/Introduction/Intro.html">Lister</a>：Lister 是苹果提供的官方 Demo。包含了 iOS、Mac 和 Apple Watch 版本，并且为这个 demo 分别用 Objective-C 和 Swift 实现了一遍，最后还包括了 30 页的文档。</p></li>
+<li><p><a href="https://github.com/iSimar/HackerNews-React-Native">HackerNews-React-Native</a>：HackerNews-React-Native 是用 React Native 完成的 HackerNews 客户端。</p></li>
+<li><p><a href="https://github.com/recruit-mp/RMPZoomTransitionAnimator">RMPZoomTransitionAnimator</a>：RMPZoomTransitionAnimator 是一个放大缩小的动效开源库，可以实现图片的放大缩小效果。</p></li>
+<li><p><a href="https://github.com/adad184/MMTweenAnimation">MMTweenAnimation</a>：MMTweenAnimation 是一个基于 POP 的扩展，提供了 10 种自定义的动效。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第41期]]></title>
@@ -500,62 +549,6 @@ NSInteger _value;
 <li><a href="link">NativeScript</a>：NativeScript 是一个类似 React Native 的开源框架，使用 JavaScript 调用原生 API，构建原生应用，支持 iOS、 Android 和 WP 等多平台。</li>
 </ol>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第39期]]></title>
-    <link href="http://blog.devtang.com/blog/2015/03/01/ios-weekly-39/"/>
-    <updated>2015-03-01T13:46:28+08:00</updated>
-    <id>http://blog.devtang.com/blog/2015/03/01/ios-weekly-39</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，文章地址是<a href="http://www.infoq.com/cn/news/2015/02/core-image-introduction">这里</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Core Image 介绍、写 iOS SDK 注意事项、利用 CocoaLumberjack 搭建自己的 Log 系统、KSHObjcUML 等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><a href="http://www.williamlong.info/archives/4142.html">《Google 宣布淘汰 SPDY》</a>：Google 宣布计划淘汰该公司在 2009 年推出的 SPDY 协议，SPDY 原本定位为替代 HTTP 协议的新协议，Google 原本打算以它来加速 HTTP 的传输速度并推动成为标准，不过现在决定将支持 HTTP/2，并逐渐淘汰 SPDY，预计 2016 年就会完全从 Chrome 中移除对 SPDY 协议的支持。</li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://objccn.io/issue-21-6/">《Core Image 介绍》</a>：这篇文章为初学者介绍了 Core Image，一个 OS X 和 iOS 的图像处理框架。</p></li>
-<li><p><a href="http://limboy.me/ios/2015/02/07/builder-pattern.html">《Builder Pattern 在 Objective-C 中的使用》</a>：作者从一个真实场景出发，介绍了结合 block 使用工厂模式的实践方式。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2015/01/31/write-sdk-tips/">《写 iOS SDK 注意事项》</a>：我发现即使是像腾讯、小米这样的大厂提供的 SDK，在质量和规范上也有很多问题，文本分享了写 iOS SDK 注意事项。</p></li>
-<li><p><a href="http://imtx.me/archives/1926.html">《CoreData 与 ReactiveCocoa 混用时要注意的线程问题》</a>：作者从一个 Crash 出发，分享了查找和修复问题的整个过程。</p></li>
-<li><p><a href="http://www.jianshu.com/p/5adb536fd32b">《iOS 开发如何快速成长 ?》</a>：作者分享了自己的一些心得，包括：做有难度的项目、尽量少抱大腿、多读源码、多读国外的 iOS 开发网站和 blog、要孜孜不倦的学习。</p></li>
-<li><p><a href="http://www.jianshu.com/p/f888db82fc27">《久违的的 LLDB 篇一，让 lldb 提升你的效率》</a>：作者分享了一些 LLDB 使用小技巧。</p></li>
-<li><p><a href="http://nonomori.farbox.com/post/li-yong-cocoalumberjack-da-jian-zi-ji-de-log-xi-tong">《利用 CocoaLumberjack 搭建自己的 Log 系统》</a>：CocoaLumberjack 最早是由 Robbie Hanson 开发的日志库，可以在 iOS 和 MacOSX 开发上使用。其简单，快读，强大又不失灵活。本文介绍了利用 CocoaLumberjack 搭建自己的 Log 系统的过程。</p></li>
-<li><p><a href="https://mikeash.com/pyblog/friday-qa-2015-02-20-lets-build-synchronized.html">《Let&rsquo;s Build @synchronized》</a>：本文讲解了 synchronized 关键字的内部实现原理。</p></li>
-</ol>
-
-
-<h2>视频</h2>
-
-<ol>
-<li><a href="http://realm.io/news/andy-matuschak-controlling-complexity/">《Controlling Complexity in Swift》</a>：本视频的作者来自 <a href="https://twitter.com/andy_matuschak">Andy Matuschak</a>，他曾在苹果 UIKit 组工作，在本视频中，他分享了用 Swift 来控制复杂度的经验。</li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="https://github.com/kimsungwhee/KSHObjcUML">KSHObjcUML</a>：KSHObjcUML 是一个 Objective-C 类引用关系图的 Xcode 插件。作者是：<a href="http://weibo.com/u/2289288323">@kimsungwhee</a>。</p></li>
-<li><p><a href="https://itunes.apple.com/app/id961651406">Xliffie</a>：Xliffie 是 <a href="http://weibo.com/lexrus">@ 汤圣罡</a> 推荐的一个本地化必备工具，它对 Xcode 生成的 Xliff 文件支持较好。</p></li>
-</ol>
-
-
-<p> <hr />
-广告：亚马逊上正在销售我的《iOS开发进阶》签名版，输入优惠码<code>JXBEGSGKUV</code>，可在结帐时减7元，点击查看：<a href="http://www.amazon.cn/b?node=1474130071">购买链接</a>。</p>
 ]]></content>
   </entry>
   

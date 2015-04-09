@@ -4,7 +4,7 @@
   <title><![CDATA[Category: weekly | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/weekly/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-04-04T21:05:07+08:00</updated>
+  <updated>2015-04-09T22:10:49+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,55 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第42期]]></title>
+    <link href="http://blog.devtang.com/blog/2015/04/09/ios-weekly-42/"/>
+    <updated>2015-04-09T22:15:52+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/04/09/ios-weekly-42</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/04/facebook-react-native">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Facebook 正式开源 React Native、React 入门实例教程、React Native 通信机制详解等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.csdn.net/article/2015-03-27/2824323-facebook-open-sources-react-native">用 JavaScript 开发移动原生应用，Facebook 正式开源 React Native</a>：Facebook 正式开源了 <a href="https://github.com/facebook/react-native">React Native</a>，不过目前，只有 iOS 版，Android 版还需再等一段时间，这是最新的用 JavaScript 语言开发原生 App 的尝试。Facebook 同时还为 React Native 开发了一款基于 Atom 的 IDE：Nuclide，也已开源。</p></li>
+<li><p><a href="http://weibo.com/p/1001603823955516487761">谷歌发现用于中间人攻击的证书</a>：根据谷歌官方安全博客报道，谷歌发现 CNNIC 颁发了多个针对谷歌域名的用于中间人攻击的证书。该证书冒充成受信任的谷歌的域名，被用于部署到网络防火墙中，用于劫持所有处于该防火墙后的 HTTPS 网络通信，而绕过浏览器警告。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.jianshu.com/p/1bde36ad9938">《轻松学习 Objective-C 消息转发》</a>：作者在文章中通过一个小例子来讲解什么是消息转发，以及如何消息转发，希望看完这篇文章时大家会彻底的明白 OC 的消息转发机制。</p></li>
+<li><p><a href="http://www.ruanyifeng.com/blog/2015/03/react.html">《React 入门实例教程》</a>：React 起源于 Facebook 的内部项目，因为该公司对市场上所有 JavaScript MVC 框架，都不满意，就决定自己写一套，用来架设 Instagram 的网站。本文是阮一峰原创的入门教程。</p></li>
+<li><p><a href="http://blog.cnbang.net/tech/2698/">《React Native 通信机制详解》</a>：React Native 是 facebook 刚开源的框架，可以用 javascript 直接开发原生 APP，先不说这个框架后续是否能得到大众认可，单从源码来说，这个框架源码里有非常多的设计思想和实现方式值得学习，本文介绍了它最基础的 JavaScript-ObjectC 通信机制。</p></li>
+<li><p><a href="http://onevcat.com/2015/03/cross-platform/">《跨平台开发时代的 (再次) 到来？》</a>：这篇文章主要想谈谈最近又刮起的移动开发跨平台之风，并着重介绍和对比一下像是 Xamarin，NativeScript 和 React Native 之类的东西。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2015/03/22/ios-dev-controversy-2/">《iOS 开发中的争议（二）》</a>：本文作者分享了 iOS 中的一个争议话题：对于 UI 界面的编写工作，到底应该用 xib/storyboard 完成，还是用手写代码来完成？</p></li>
+<li><p><a href="http://tanqisen.github.io/blog/2013/04/19/gcd-block-cycle-retain/">《正确使用 Block 避免 Cycle Retain 和 Crash》</a>：Block 作为 C 语言的扩展，并不是高新技术，和其他语言的闭包或 lambda 表达式是一回事。需要注意的是由于 Objective-C 在 iOS 中不支持 GC 机制，使用 Block 必须自己管理内存，而内存管理正是使用 Block 坑最多的地方，错误的内存管理 要么导致 return cycle 内存泄漏要么内存被提前释放导致 crash。本文介绍了从 Block 实现原理切入，介绍了使用 Block 需要注意的地方。</p></li>
+<li><p><a href="http://tutuge.me/2015/03/29/bind-data-to-gcd-queue/">《为 GCD 队列绑定 NSObject 类型上下文数据-利用 __bridge_retained(transfer) 转移内存管理权》</a>：本文介绍了如何合理运用 <code>__bridge_retained(transfer)</code> 关键字转换对象的内存管理权，让我们自己控制对象的生命周期。</p></li>
+<li><p><a href="http://staltz.com/dont-react/#/">《Don&rsquo;t React》</a>：本文作者从多方面分享了他对于 React 框架的负面看法。通过此文，大家可以更加客观地了解 React 这个框架。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://developer.apple.com/library/ios/samplecode/Lister/Introduction/Intro.html">Lister</a>：Lister 是苹果提供的官方 Demo。包含了 iOS、Mac 和 Apple Watch 版本，并且为这个 demo 分别用 Objective-C 和 Swift 实现了一遍，最后还包括了 30 页的文档。</p></li>
+<li><p><a href="https://github.com/iSimar/HackerNews-React-Native">HackerNews-React-Native</a>：HackerNews-React-Native 是用 React Native 完成的 HackerNews 客户端。</p></li>
+<li><p><a href="https://github.com/recruit-mp/RMPZoomTransitionAnimator">RMPZoomTransitionAnimator</a>：RMPZoomTransitionAnimator 是一个放大缩小的动效开源库，可以实现图片的放大缩小效果。</p></li>
+<li><p><a href="https://github.com/adad184/MMTweenAnimation">MMTweenAnimation</a>：MMTweenAnimation 是一个基于 POP 的扩展，提供了 10 种自定义的动效。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第41期]]></title>
@@ -243,63 +292,6 @@ objc 中国 Issue 20 完成了三位传奇开发者的访谈，很有意思。�
 
 <ol>
 <li><a href="https://github.com/x140yu/Developing_iOS_8_Apps_With_Swift">Developing iOS 8 Apps with Swift</a>：《Developing iOS 8 Apps with Swift》是 Stanford 公开课，本项目是其中文字幕翻译。</li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第37期]]></title>
-    <link href="http://blog.devtang.com/blog/2015/01/31/ios-weekly-37/"/>
-    <updated>2015-01-31T09:34:58+08:00</updated>
-    <id>http://blog.devtang.com/blog/2015/01/31/ios-weekly-37</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，地址是<a href="http://www.infoq.com/cn/news/2015/01/ios-v-advanced-technology-road">这里</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>本期 iOS 移动开发周报带来如下内容：iOS大V的技术进阶之路、ARC 对 self 的内存管理、Method Swizzling 和 AOP 实践、使用 iMovie 和 Keynote 制作 App Preview等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://www.cocoachina.com/programmer/20150115/10930.html">《唐巧访谈： iOS大V的技术进阶之路》</a>：文章来自于 CocoaChina 的访谈，采访对象是唐巧，他的新书<a href="https://github.com/tangqiaoboy/iOS-Pro">《iOS开发进阶》</a>已经和大家见面.采访中唐巧表达了他对于技术学习、建设技术影响力等方面的经验和看法。</p></li>
-<li><p><a href="http://wangling.me/2015/01/moke-2014.html#fn-1?utm_source=qdan.me#/">《Moke 2014 以及 1 元应用效应》</a>：Moke 作者分享了他的应用在 2014 年的销售额以及他对于 1 元应用的看法。</p></li>
-<li><p><a href="http://www.cocoachina.com/programmer/20150121/10966.html">《王巍访谈：关于 Swift 学习和 AppleWatch 开发的一些建议》</a>：文章来自于 CocoaChina 的访谈，采访对象是王巍，微博 ID“onevcat”，圈儿内人称喵神，知名 iOS/Unity 开发者，现居日本，就职于 LINE。喵神是 <a href="http://objccn.io/">objc 中国</a>项目发起人，开源过广受开发者喜爱的 Xcode 插件 VVDocumenter，主创或参与开发《姬骑士和最后的百龙战争》、《英雄 Slash》、《冒险谜题王国》以及《小熊推金币》等多款游戏，个人应用代表有《番茄工作法》(Pomodoro Do) 和《云端记账》(Our Money)。</p></li>
-<li><p><a href="http://iiiyu.com/2015/01/20/2014-oh-my-star-app-annual-summary/">《2014 年 Oh My Star 总结》</a>：Oh My Star 是一款由国人 <a href="http://weibo.com/n/Sumi-iYu">@Sumi-iYu</a> 开发的管理 Github 上 star 项目的工具。笔者使用过，对于 star 功能的重度用户来说，非常好用。本文分享了作者在开发该软件的过程以及收货。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://blog.sunnyxx.com/2015/01/17/self-in-arc/">《ARC 对 self 的内存管理》</a>：文章从 YTKNetwork 的几行代码出发，讨论了 LLVM 编译器在传递 self 参数时，对 self 的引用计数的特殊处理。</p></li>
-<li><p><a href="http://blog.nswebfrog.com/2015/01/08/autolayout-trick/">《AutoLayout 布局技巧－等宽子视图》</a>：所谓等宽子视图，也就是对一个有 n 个子视图的父视图来说，无论父视图的宽度怎么变化，所有子视图的宽度是相等的。文章介绍了这一类排版需求的 AutoLayout 布局技巧。</p></li>
-<li><p><a href="http://tech.glowing.com/cn/objective-c-runtime/">《Objective-C Runtime》</a>：Objective-C 是一个动态语言，这意味着它不仅需要一个编译器，也需要一个运行时系统来动态得创建类和对象、进行消息传递和转发。理解 Objective-C 的 Runtime 机制可以帮我们更好的了解这个语言，适当的时候还能对语言进行扩展，从系统层面解决项目中的一些设计或技术问题。本文讲解了 Runtime 的核心 &ndash; 消息传递 （Messaging）。</p></li>
-<li><p><a href="http://tech.glowing.com/cn/method-swizzling-aop/">《Method Swizzling 和 AOP 实践》</a>：利用 Objective-C 的 Runtime 特性，我们可以给语言做扩展，帮助解决项目开发中的一些设计和技术问题。这一篇，我们来探索一些利用 Objective-C Runtime 的黑色技巧。这些技巧中最具争议的或许就是 Method Swizzling 。文本介绍了利用 Method Swizzling，结合 AOP 来做一些打 Log 的工作。利用 objective-C Runtime 特性和 Aspect Oriented Programming ，我们可以把琐碎事务的逻辑从主逻辑中分离出来，作为单独的模块。它是对面向对象编程模式的一个补充。</p></li>
-<li><p><a href="http://weibo.com/p/1001603800875490492754">《CocoaPods 最佳实践探讨》</a>：作者在文章中表达了对目前常见的 CocoaPods 使用方法的意见。希望大家根据自己的经验，一起讨论出一份真正的 “最佳实践”。</p></li>
-<li><p><a href="http://www.jianshu.com/p/358106d653cf">《使用 iMovie 和 Keynote 制作 App Preview》</a>：App Preview 就是一段 15-30 秒的短视频，用来展示你的应用的特性、用户界面、交互方式等内容。在 App Store 你的应用的详细信息页面里，放在原来的截图之前。体验上会比截图更有冲击力，也能够表现更多的东西。茫茫的 App 海洋之中，如何脱颖而出，卖相至关重要。本文作者分享了他使用 iMovie 和 Keynote 制作 App Preview 的经验，并且提供了相关的效果视频和 Keynote 源文件。</p></li>
-<li><p><a href="http://blog.callmewhy.com/2015/01/20/wtf-in-old-code/">《要你命三千：老代码中的那些坑》</a>: 最近在给以前的老项目维护，说起来工作很简单，一个字：改 Bug。这看起来平淡无常的工作，实际上凶险无比，藏坑无数。时至今日，感觉整个人都得到了升华。在睡觉前抽空写篇博客，和各位分享一下踩坑经历，一起品味其中的种种酸苦辣 (没甜)。</p></li>
-<li><p><a href="http://natashatherobot.com/unit-testing-swift-dependency-injection/">《Unit Testing in Swift: Dependency Injection》</a>：文章介绍了在 Swift 实现的单元测试中实现依赖注入，不过实际写起来还是比较麻烦。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="https://ship.io">ship.io</a>：ship.io 是一个持续集成服务。现在所有套餐免费，支持 Xcode 6.1.1。</p></li>
-<li><p><a href="https://crowdin.com/">Crowdin</a>: Crowdin 是一个多语言翻译服务。可以便于开发者将应用改成支持多语言。类似的服务还有：<a href="https://www.transifex.com/">Transifex</a>。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/dasdom/BreakOutToRefresh">BreakOutToRefresh</a>：BreakOutToRefresh 是一个有趣的项目，它利用 SpriteKit 在下拉刷新过程中做了一个打砖块游戏。</p></li>
-<li><p><a href="https://github.com/Ramotion/animated-tab-bar">RAMAnimatedTabBarController</a>：RAMAnimatedTabBarController 是一个让 TabBar 上的元素能够显示动画效果的开源库。</p></li>
 </ol>
 
 ]]></content>

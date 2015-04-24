@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-04-09T22:13:46+08:00</updated>
+  <updated>2015-04-24T21:01:44+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,61 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第43期]]></title>
+    <link href="http://blog.devtang.com/blog/2015/04/24/ios-weekly-43/"/>
+    <updated>2015-04-24T20:59:43+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/04/24/ios-weekly-43</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/04/ios-weekly-wwdc">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：WWDC 2015 将于 6 月 8 日在旧金山开幕、react-native 之布局篇、iOS 应用架构谈、iOS 证书及 ipa 包重签名探究、开源项目Kingfisher和samurai-native等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://tech.sina.com.cn/it/2015-04-14/doc-iavxeafs5472422.shtml">《WWDC 2015 将于 6 月 8 日在旧金山开幕》</a>：苹果于 4 月 14 日宣布，将于 6 月 8 日至 6 月 12 日在旧金山召开第 26 届年度全球开发者大会 (WWDC)。预计大会上将会发布 iOS 9 新版移动系统及用于 Mac 电脑的新版 OS X 系统。鉴于 Apple Watch 的重要性，这次也许苹果会将更多精力放在自己的智能手表生态建设上。苹果每次邀请函设计或多或少都有隐藏含义，本次方圆融合也许就体现了手表的特点。</p></li>
+<li><p><a href="http://www.macrumors.com/2015/04/13/ios-8-3-ifunbox-itools-sandbox-app-access/">《iOS 8.3 阻止了 iFunBox, iExplorer 等软件》</a>：苹果对 iOS 8.3 加强了安全性，阻止了 iFunBox, iExplorer 等软件来连接到 iOS 设备进行相应的管理操作。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="https://github.com/tmallfe/tmallfe.github.io/issues/19">《react-native 之布局篇》</a>：来自天猫的 @sysu_ 学家 同学实践并整理了一篇关于 React Native 的文章，详细丰富的介绍了 React Native 布局的知识。</p></li>
+<li><p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-kai-pian.html">《iOS 应用架构谈：开篇》</a>：对于 iOS 客户端应用的架构来说，复杂度不亚于服务端，但侧重点和入手点却跟服务端不太一样。本系列文章作者会主要专注在 iOS 应用架构方面，很多方案也是基于 iOS 技术栈的特点而建立的。本文是该系列第一篇。</p></li>
+<li><p><a href="http://answerhuang.duapp.com/index.php/2015/04/19/jenkins/">《我是怎么慢慢变懒的 : Jenkins + 蒲公英》</a>：任何工具出现的最初目的都是为了提高生产效率，很庆幸在 iOS 开发的这个圈子中有一大批的先驱者，他们创造并开源了很多优秀的工具，为这个环境奠定了一个良好的基础。本文作者 <a href="http://weibo.com/u/1623064627?s=6cm7D0">@answer-huang</a> 介绍了使用 Jenkins 和蒲公英来完成自动打包和分发测试包的工作。</p></li>
+<li><p><a href="http://www.olinone.com/?p=198">《iOS 证书及 ipa 包重签名探究》</a>：本文重点在于介绍 ios8.1.3 系统 ipa 包重签名 (如企业证书) 无法安装的问题。苹果在 iOS8.1.3 系统以后加强了对 ipa 安装包签名的验证，主要区别在于 ipa 唯一标识在原有 Bundle Identifier 的基础上增加了证书 ID，也就说安装包和手机上已安装 APP 的 Bundle Identifier 即使一致，如果两者签名的证书 ID 不相同，那么安装包也无法正常安装。</p></li>
+<li><p><a href="http://blog.knownsec.com/2015/04/iphone-target-analysis-and-exploitation-with-apple(udid">《iPhone 目标分析及使用 UDID 实施入侵》</a>/#rd?sukey=39297060d6d3d5574bdeed79fcfba01fbb2ceffdf0f3c671c96b4ed2e8a9aaae9524899fc6554db13dd83b76d048f839)：iPhone 有一些强大而实用的功能，例如定位追踪和远程数据擦除。这其实都得益于它的唯一设备识别符 UDID（Unique Device Identifier）。本文描述了发掘 iPhone 目标终端设备、利用量子计划（QUANTUM）直接植入目标的标准分析技术，说明 iPhone 唯一设备识别符（Unique Device Identifier，简称 UDID）可以用于追踪目标或与终端设备及目标电话相关联，强调该入侵技术目前可以实现并实施进一步定位的 CNE 过程。</p></li>
+<li><p><a href="http://apple.stackexchange.com/questions/176555/how-do-i-make-multiple-screen-recordings-with-the-exact-same-portion-of-the-scre/176595#176595">《录屏技巧》</a>：本文介绍了用 Swift 打开 QuickTime Player 录制指定区域的奇技淫巧。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://github.com/burczyk/XcodeSwiftSnippets">XcodeSwiftSnippets</a>：XcodeSwiftSnippets 提供了很多可在 Xcode 上使用的 Swift 语言的代码片段 , 通过自动补全的方式，可以极大的提高开发效率。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/onevcat/Kingfisher">Kingfisher</a>：Kingfisher 是一个用于图片缓存的开源库，类似  SDWebImage，但是完全基于 Swift 语言开发。</p></li>
+<li><p><a href="https://github.com/hackers-painters/samurai-native">samurai-native</a>：samurai-native 是 <a href="http://weibo.com/u/1641892107?topnav=1&amp;wvr=6&amp;topsug=1">@ 老郭为人民服务</a> 开源的一套新的构建 App 框架，可以使用 HTML 和 CSS 来生成原生的应用界面。</p></li>
+<li><p><a href="https://github.com/boycechang/BCMagicTransition">BCMagicTransition</a>：BCMagicTransition 是一个动效框架，用于自定义 UINavigationController 的切换动画，效果类似 Keynote 软件中 Magic Move 切换。它可以用于任意两个 UIViewController 之间，只需指定两个 VC 中的相同元素即可。</p></li>
+<li><p><a href="cikelengfeng/RPAXU">Refresh Plugins After Xcode Upgrading</a>：每当 Xcode 升级之后，都会导致原有的 Xcode 插件不能使用，这是因为每个插件的 Info.plist 中记录了该插件兼容的 Xcode 版本的 DVTPlugInCompatibilityUUID，而每个版本的 Xcode 的 DVTPlugInCompatibilityUUID 都是不同的。如果想让原来的插件继续工作，我们就得将新版 Xcode 的 DVTPlugInCompatibilityUUID 加入到每一个插件的 Info 文件中，手动添加的话比较费时间还可能出错，所以作者写了一个脚本来做这件事。</p></li>
+<li><p><a href="https://github.com/ResearchKit/ResearchKit">ResearchKit</a>：ResearchKit 是苹果开源的方便科研机构创建 App 的框架。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第42期]]></title>
@@ -488,67 +543,6 @@ NSInteger _value;
 <p>其实我上面提到的这些问题都是小问题，影响不大。但是代码风格的统一却是大问题。所以不管你们项目中使用的是 <code>self.property</code> 风格还是 <code>_property</code> 风格，问题都不大，但是如果你们同时使用这两种风格，那么就非常不好了。</p>
 
 <p>希望我的这篇文章能让大家了解到在这方面的争论，也希望大家能够在这一点上，在公司内部达成统一。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第40期]]></title>
-    <link href="http://blog.devtang.com/blog/2015/03/10/ios-weekly-40/"/>
-    <updated>2015-03-10T20:48:50+08:00</updated>
-    <id>http://blog.devtang.com/blog/2015/03/10/ios-weekly-40</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，文章地址是<a href="http://www.infoq.com/cn/news/2015/03/implementation-of-kvo">这里</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期 iOS 移动开发周报带来如下内容：iOS 开发者收入调查报告、如何自己动手实现 KVO、QQ 中未读气泡拖拽消失的实现分析、InfoQ 上移动端话题汇总、UIResponder 等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://www.cocoachina.com/apple/20150306/11250.html">《iPhone 6 再立功：中国区 iOS 份额历史新高》</a>：据来自 Kantar Worldpanel ComTech 的最新数据，截止至 2015 年一月的前三个月内，苹果 iOS 系统份额在中国区创历史新高，卖出的每四台智能手机就有一个是 iPhone。</p></li>
-<li><p><a href="http://www.cocoachina.com/programmer/20150304/11205.html">《iOS 开发者收入调查报告（一）：个人开发者篇》</a>：2014 年 12 月，CocoaChina 以网上调查问卷形式发起了 “2014 iOS 开发者收入调查报告” 活动，得到了广大开发者的支持。在对问卷数据进行了整理分析后形成了本次调查报告，从而让我们对国内 iOS 开发者的收入和生存状态有一个大概的了解。本文是该调查的最终报告。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://tech.glowing.com/cn/implement-kvo/">《如何自己动手实现 KVO》</a>：KVO 是 Objective-C 对观察者模式（Observer Pattern）的实现。也是 Cocoa Binding 的基础。当被观察对象的某个属性发生更改时，观察者对象会获得通知。本文探究了 KVO (Key-Value Observing) 实现机制，并去实践一番：利用 Runtime 自己动手去实现 KVO 。</p></li>
-<li><p><a href="http://kittenyang.com/drawablebubble/">《QQ 中未读气泡拖拽消失的实现分析》</a>：QQ 中针对强迫症有个很棒的交互，对于那些暂时不想理会的未读信息气泡，可以直接手指拖拽去掉。本文介绍了其实现方法。</p></li>
-<li><p><a href="http://t.cn/Rw3he5x">《UITextView 编辑时插入自定义表情-简单的图文混编》</a>：在 iOS 开发中，经常需要用 UITextView 作为编辑文本的输入控件。但是如何在编辑时插入自定义表情呢？本文简单的用 NSTextAttachment、NSAttributedString 的特性，实现了在 UITextView 中编辑文字时插入自定义表情图片，同时可以返回带有表情 “替换符” 的纯文本字符串。</p></li>
-<li><p><a href="http://tutuge.me/2015/02/19/%E6%8F%90%E5%8D%87UITableView%E6%80%A7%E8%83%BD-%E5%A4%8D%E6%9D%82%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%BC%98%E5%8C%96/">《提升 UITableView 性能-复杂页面的优化》</a>：随着 App 的用户界面的内容越来越丰富，再强的手机可能都无法同时渲染复杂的 UI 界面和保证流畅的体验。本文分享了一些提升 UITableView 性能的技巧。</p></li>
-<li><p><a href="http://weibo.com/p/1001603816757822408978">《InfoQ 上移动端话题汇总》</a>：<a href="http://weibo.com/ranwj">@ 移动开发小冉</a> 整理了一下 InfoQ 上关于移动方面的分享内容，涉及移动端架构、测试、流程优化等多方面的内容。</p></li>
-<li><p><a href="http://blog.csdn.net/zhengminwudi/article/details/43916791">《 在非越狱的 iPhone 6 (iOS 8.1.3) 上进行钓鱼攻击 (盗取 App Store 密码)》</a>：iOS 逆向工程的一大应用场景是 iOS 安全。它既可以作为攻击的矛，也可以作为防御的盾。由蒸米带来的本文就是一则典型的以逆向工程为矛的案例，他对 CoreFoundation 里私有函数的运用画龙点睛，值得学习。</p></li>
-<li><p><a href="http://southpeak.github.io/blog/2015/03/07/uiresponder/">《UIResponder》</a>：在 UIKit 中，IApplication、UIView、UIViewController 这几个类都是直接继承自 UIResponder 类。另外 SpriteKit 中的 SKNode 也是继承自 UIResponder 类。因此 UIKit 中的视图、控件、视图控制器，以及我们自定义的视图及视图控制器都有响应事件的能力。本文详细介绍了一个 UIResponder 类提供的基本功能。</p></li>
-<li><p><a href="http://blog.sunnyxx.com/2015/03/01/todo-macro/">《实现一个 TODO 宏》</a>：文章介绍了如何实现一个能产生编译器警告的 TODO 宏，用于在代码里做备忘。</p></li>
-</ol>
-
-
-<h2>视频</h2>
-
-<ol>
-<li><a href="http://jlongster.com/First-Impressions-using-React-Native">《First Impressions using React Native》</a>：作者介绍了他使用 Facebook 即将开源的 React Native 的感受。</li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><p><a href="https://github.com/kstenerud/iOS-Universal-Framework">iOS-Universal-Framework</a>：iOS-Universal-Framework 是一个方便你将第三方 SDK 编译成 Framework 的开源工具。</p></li>
-<li><p><a href="http://facebook.github.io/origami/">Origami</a>：Origami Live 支持在 iOS 设备上预览 Quartz Composer 项目，Origami 2.0 添加了导出 Objective-C、Java、JS 代码的功能，以后做原型效率更高了。由 <a href="http://weibo.com/lexrus">@ 汤圣罡</a> 推荐。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><a href="link">NativeScript</a>：NativeScript 是一个类似 React Native 的开源框架，使用 JavaScript 调用原生 API，构建原生应用，支持 iOS、 Android 和 WP 等多平台。</li>
-</ol>
-
 ]]></content>
   </entry>
   

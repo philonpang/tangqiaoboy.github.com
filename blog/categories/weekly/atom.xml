@@ -4,7 +4,7 @@
   <title><![CDATA[Category: weekly | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/weekly/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-04-09T22:13:46+08:00</updated>
+  <updated>2015-04-24T21:01:44+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,61 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第43期]]></title>
+    <link href="http://blog.devtang.com/blog/2015/04/24/ios-weekly-43/"/>
+    <updated>2015-04-24T20:59:43+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/04/24/ios-weekly-43</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/04/ios-weekly-wwdc">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：WWDC 2015 将于 6 月 8 日在旧金山开幕、react-native 之布局篇、iOS 应用架构谈、iOS 证书及 ipa 包重签名探究、开源项目Kingfisher和samurai-native等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://tech.sina.com.cn/it/2015-04-14/doc-iavxeafs5472422.shtml">《WWDC 2015 将于 6 月 8 日在旧金山开幕》</a>：苹果于 4 月 14 日宣布，将于 6 月 8 日至 6 月 12 日在旧金山召开第 26 届年度全球开发者大会 (WWDC)。预计大会上将会发布 iOS 9 新版移动系统及用于 Mac 电脑的新版 OS X 系统。鉴于 Apple Watch 的重要性，这次也许苹果会将更多精力放在自己的智能手表生态建设上。苹果每次邀请函设计或多或少都有隐藏含义，本次方圆融合也许就体现了手表的特点。</p></li>
+<li><p><a href="http://www.macrumors.com/2015/04/13/ios-8-3-ifunbox-itools-sandbox-app-access/">《iOS 8.3 阻止了 iFunBox, iExplorer 等软件》</a>：苹果对 iOS 8.3 加强了安全性，阻止了 iFunBox, iExplorer 等软件来连接到 iOS 设备进行相应的管理操作。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="https://github.com/tmallfe/tmallfe.github.io/issues/19">《react-native 之布局篇》</a>：来自天猫的 @sysu_ 学家 同学实践并整理了一篇关于 React Native 的文章，详细丰富的介绍了 React Native 布局的知识。</p></li>
+<li><p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-kai-pian.html">《iOS 应用架构谈：开篇》</a>：对于 iOS 客户端应用的架构来说，复杂度不亚于服务端，但侧重点和入手点却跟服务端不太一样。本系列文章作者会主要专注在 iOS 应用架构方面，很多方案也是基于 iOS 技术栈的特点而建立的。本文是该系列第一篇。</p></li>
+<li><p><a href="http://answerhuang.duapp.com/index.php/2015/04/19/jenkins/">《我是怎么慢慢变懒的 : Jenkins + 蒲公英》</a>：任何工具出现的最初目的都是为了提高生产效率，很庆幸在 iOS 开发的这个圈子中有一大批的先驱者，他们创造并开源了很多优秀的工具，为这个环境奠定了一个良好的基础。本文作者 <a href="http://weibo.com/u/1623064627?s=6cm7D0">@answer-huang</a> 介绍了使用 Jenkins 和蒲公英来完成自动打包和分发测试包的工作。</p></li>
+<li><p><a href="http://www.olinone.com/?p=198">《iOS 证书及 ipa 包重签名探究》</a>：本文重点在于介绍 ios8.1.3 系统 ipa 包重签名 (如企业证书) 无法安装的问题。苹果在 iOS8.1.3 系统以后加强了对 ipa 安装包签名的验证，主要区别在于 ipa 唯一标识在原有 Bundle Identifier 的基础上增加了证书 ID，也就说安装包和手机上已安装 APP 的 Bundle Identifier 即使一致，如果两者签名的证书 ID 不相同，那么安装包也无法正常安装。</p></li>
+<li><p><a href="http://blog.knownsec.com/2015/04/iphone-target-analysis-and-exploitation-with-apple(udid">《iPhone 目标分析及使用 UDID 实施入侵》</a>/#rd?sukey=39297060d6d3d5574bdeed79fcfba01fbb2ceffdf0f3c671c96b4ed2e8a9aaae9524899fc6554db13dd83b76d048f839)：iPhone 有一些强大而实用的功能，例如定位追踪和远程数据擦除。这其实都得益于它的唯一设备识别符 UDID（Unique Device Identifier）。本文描述了发掘 iPhone 目标终端设备、利用量子计划（QUANTUM）直接植入目标的标准分析技术，说明 iPhone 唯一设备识别符（Unique Device Identifier，简称 UDID）可以用于追踪目标或与终端设备及目标电话相关联，强调该入侵技术目前可以实现并实施进一步定位的 CNE 过程。</p></li>
+<li><p><a href="http://apple.stackexchange.com/questions/176555/how-do-i-make-multiple-screen-recordings-with-the-exact-same-portion-of-the-scre/176595#176595">《录屏技巧》</a>：本文介绍了用 Swift 打开 QuickTime Player 录制指定区域的奇技淫巧。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="https://github.com/burczyk/XcodeSwiftSnippets">XcodeSwiftSnippets</a>：XcodeSwiftSnippets 提供了很多可在 Xcode 上使用的 Swift 语言的代码片段 , 通过自动补全的方式，可以极大的提高开发效率。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/onevcat/Kingfisher">Kingfisher</a>：Kingfisher 是一个用于图片缓存的开源库，类似  SDWebImage，但是完全基于 Swift 语言开发。</p></li>
+<li><p><a href="https://github.com/hackers-painters/samurai-native">samurai-native</a>：samurai-native 是 <a href="http://weibo.com/u/1641892107?topnav=1&amp;wvr=6&amp;topsug=1">@ 老郭为人民服务</a> 开源的一套新的构建 App 框架，可以使用 HTML 和 CSS 来生成原生的应用界面。</p></li>
+<li><p><a href="https://github.com/boycechang/BCMagicTransition">BCMagicTransition</a>：BCMagicTransition 是一个动效框架，用于自定义 UINavigationController 的切换动画，效果类似 Keynote 软件中 Magic Move 切换。它可以用于任意两个 UIViewController 之间，只需指定两个 VC 中的相同元素即可。</p></li>
+<li><p><a href="cikelengfeng/RPAXU">Refresh Plugins After Xcode Upgrading</a>：每当 Xcode 升级之后，都会导致原有的 Xcode 插件不能使用，这是因为每个插件的 Info.plist 中记录了该插件兼容的 Xcode 版本的 DVTPlugInCompatibilityUUID，而每个版本的 Xcode 的 DVTPlugInCompatibilityUUID 都是不同的。如果想让原来的插件继续工作，我们就得将新版 Xcode 的 DVTPlugInCompatibilityUUID 加入到每一个插件的 Info 文件中，手动添加的话比较费时间还可能出错，所以作者写了一个脚本来做这件事。</p></li>
+<li><p><a href="https://github.com/ResearchKit/ResearchKit">ResearchKit</a>：ResearchKit 是苹果开源的方便科研机构创建 App 的框架。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS移动开发周报-第42期]]></title>
@@ -232,68 +287,6 @@
 
 <p> <hr />
 广告：亚马逊上正在销售我的《iOS开发进阶》签名版，输入优惠码<code>JXBEGSGKUV</code>，可在结帐时减7元，点击查看：<a href="http://www.amazon.cn/b?node=1474130071">购买链接</a>。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第38期]]></title>
-    <link href="http://blog.devtang.com/blog/2015/02/05/ios-weekly-38/"/>
-    <updated>2015-02-05T21:36:03+08:00</updated>
-    <id>http://blog.devtang.com/blog/2015/02/05/ios-weekly-38</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，文章地址是<a href="http://www.infoq.com/cn/news/2015/02/facebook-react-native">这里</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Facebook 推出 React Native、Swift 小技巧、RunLoop 主题的分享、使用蒲公英来做 iOS 测试应用的分发等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2015-01-25/10049980631.shtml">《分析师称 14 年四季度 iPhone 销量达 7300 万台》</a>：1 月 25 日上午消息，凯基证券分析师郭明池称，2014 年四季度 iPhone 销量达 7300 万台，iPad 销量达 2140 万台；并预计 2015 年一季度 iPhone 销量为 6160 万台，iPad 销量为 1010 万台。</p></li>
-<li><p><a href="http://tech.sina.com.cn/i/2015-01-23/doc-iavxeafs0339155.shtml">《2014 年 iOS 应用开发者收入超好莱坞美国票房》</a>：市场研究公司 Asymco 分析师霍拉斯·德迪乌 (Horace Dediu) 本周发布研究报告称，iOS 应用经济的规模已经超过了好莱坞电影在美国的票房。2014 年全年，开发者通过苹果获得的收入为 100 亿美元。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://objccn.io/issue-20/">《objc 中国 Issue 20：访谈》</a>：
-objc 中国 Issue 20 完成了三位传奇开发者的访谈，很有意思。从天才少年 Andy Matuschak ，到两次创业的 Loren Brichter，以及俄国妹子 Natasha Murashev，篇篇精彩。希望通过了解他们的经历，你会有所收获。</p></li>
-<li><p><a href="http://www.jianshu.com/p/5d4789db4310">《Swift 怎样更优雅地处理网络返回数据》</a>：我们在 iOS 开发中进行网络请求的时候，一般是获取到服务器返回的 data 后，再根据我们的需要转换成 JSON，图像等信息。但如果你的应用中存在各种类型的返回数据，那么你可能就要在各个网络请求的中进行重复的处理了。本文介绍了如何使用 Swift 中的泛型和 extension 让你的数据解析工作更优雅。</p></li>
-<li><p><a href="http://arstechnica.com/apple/2014/10/os-x-10-10/22/">《OS X 10.10 Yosemite: The Ars Technica Review》</a>：由 <a href="http://www.weibo.com/tualatrix?from=feed&amp;loc=avatar">图拉鼎</a> 推荐：这篇从 CPU 指令集、编译器来剖析 Swift 的文章，对其的设计越来越肯定了。简单的说，Swift 是一门使用 High Level 语言的语法及特性，同时仍有 Low Level 效能的一门语言。</p></li>
-<li><p><a href="http://imtx.me/archives/1921.html">《Swift 小技巧（三）：如何用 Swift 思维设计网络请求》</a>：近来在用 Swift 开发 App 的过程中，最大的心得就是：我开始渐渐用「Swift 思维」来思考了。回顾刚开始我用 Swift 时，只是套用它的语法而已，脑子里依然是 Objective-C 思维。这段时间，随着对 Swift 基本特性的掌握，我开始有意识地学习并尝试一些 Swift 才有的特性，此谓「Swift 思维」。Swift 有很多专有（Objective-C 没有的）的模式，今天我就从一个很简单的例子讲起，那就是：如何用 Swift 思维设计网络请求。</p></li>
-<li><p><a href="http://imtx.me/archives/1924.html">《wift 小技巧（五）：正确地启用 Logging 机制》</a>：文章介绍了如何在 Swift 项目里正确地设置 Logging 。</p></li>
-<li><p><a href="http://nshipster.cn/the-death-of-cocoa/">《The Death of Cocoa》</a>：Cocoa 实际就是 Objective-C 的标准库，包含了许多用语言编写程序最需要的一些框架，例如 Foundation、AppKit 和 Core Data。即使 Swift 才开始被使用几个月，Cocoa 已经开始失去它原有的光芒了。在语言方面，我们都见到了 Swift 是终结 Objective-C 的开始，但是作为基本库的 Cocoa 呢？(这已经不是苹果第一次把它的标准库淘汰了，记得 Carbon 么)？如果我们用 Swift 基本库重新建立一套 Foundation 会怎么样？让我们来看看一些 Cocoa 做过的具体的例子，并看看一个新的 Swift 基本库在哪些地方可以提高。</p></li>
-<li><p><a href="http://nshipster.cn/core-location-in-ios-8/">《Core Location in i​OS 8》</a>：自从 iPhone 存在以来，位置服务就一直处于非常重要的位置。Core Location API 也在 iPhone OS SDK 最初的公开版本里就存在了。iOS 8 ，Core Location 被改动了不少，不管是允许开发者做之前并不被允许的开发，还是帮助维护用户隐私。更特别的是，iOS 8 给 Core Location 带来了三个主要的改进：更分化的权限，室内定位以及访问监控。本文对此改进做了详细的介绍。</p></li>
-<li><p><a href="http://beyondvincent.com/2015/01/20/2015-01-20-Apple-Watch/">《Apple Watch: WatchKit 应用程序要点》</a>：本文介绍了在开发 Apple Watch 应用程序时需要注意的要点。包括 WatchKit 应用程序和 WatchKit 扩展，以及 WatchKit 应用程序的生命周期。此系列的文章还有：<a href="http://beyondvincent.com/2015/01/20/2015-01-20-watchkit-framework-taking-apps-pocket/">《WatchKit 框架: 将应用程序从裤兜里取出来》</a>。</p></li>
-</ol>
-
-
-<h2>视频</h2>
-
-<ol>
-<li><p><a href="http://v.youku.com/v_show/id_XODgxODkzODI0.html">《RunLoop 主题的分享 by 孙源 @sunnyxx》</a>：来自百度的孙源组织了一次关于 Objective-C RunLoop 的技术分享。</p></li>
-<li><p><a href="https://www.youtube.com/watch?v=KVZ-P-ZI6W4&amp;app=desktop">《React.js Conf 2015 Keynote &ndash; Introducing React Native》</a>：这是 Facebook 出品的 react.js 的视频介绍。Facebook 打算用它来统一移动端的编程语言，react.js 把界面全部用 native 控件实现，js 只作为后端逻辑层。Facebook 也打算开源该框架，如果这个框架成功，将改变整个业界的移动开发效率，因为 iOS 和 android 代码可以大部分复用。注：视频来自 youtube。</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="http://blog.devtang.com/blog/2015/01/22/pgy-usage-guide/">《使用蒲公英来做 iOS 测试应用的分发》</a>： “蒲公英” 是一个应用的免费分发服务，它帮助开发者能够方便地做 iOS 应用的测试分发工作。本文介绍了蒲公英的基本使用方法。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><a href="https://github.com/x140yu/Developing_iOS_8_Apps_With_Swift">Developing iOS 8 Apps with Swift</a>：《Developing iOS 8 Apps with Swift》是 Stanford 公开课，本项目是其中文字幕翻译。</li>
-</ol>
-
 ]]></content>
   </entry>
   

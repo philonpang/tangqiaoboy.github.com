@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="前言 还记得大学刚学数据库那会儿，天真地以为世界上所有的存储都需要用数据库来做。后来毕业后，正值NOSQL流行，那时我在网易参与了网易微博的开发，我们当时使用了有道自己做的“BigTable”— OMAP来存储微博数据，那个时候才发现，其实Key- &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/12/ios-weekly-27/">iOS移动开发周报-第27期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-12T16:33:21+08:00" pubdate data-updated="true">Oct 12<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/10/ios6">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期iOS移动开发周报带来如下内容：国内iOS6比例已经低于5%，Apple 发布 Swift 语言和 Xcode 入门视频，Facebook&rsquo;s iOS Infrastructure等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://weibo.com/1708947107/BoBnZ1qy9?mod=weibotime#_rnd1412427404394">《国内iOS6比例已经低于5%》</a>：来自国内友盟的统计以及笔者开发的应用（猿题库）统计结果都显示，国内的iOS6用户比例已经低于5%。</p></li>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-09-27/10059651916.shtml">《苹果关闭iOS 7.1.2验证：iOS 8将无法降级》</a>：在发布iOS 8的两个更新之后，苹果停止了为iOS 7.1.2固件提供签名。这意味着，已经升级至新版iOS 8的用户将无法再降级回iOS 7.1.2。</p></li>
+<li><p><a href="http://tech.sina.com.cn/mobile/n/apple/2014-10-04/08109666982.shtml">《新恶意软件iWorm已感染全球1.7万台Mac电脑》</a>：信息安全研究人员近期发现，全球超过1.7万台Mac电脑已经感染了一种名为“iWorm”的新的OS X恶意软件。这种恶意软件曾使用Reddit网站作为传播媒介，能窃取用户数据，触发多种系统操作，并执行Lua脚本。用户可以通过测试路径<code>/Library/Application Support/JavaW</code>是否存在，在判断是否中病毒。如果OS X找不到这一文件夹，那么Mac电脑就是安全的。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://swift-cheatsheet.co.uk/">《iOS8 Swift Cheat Sheet and Quick Reference Guide》</a>：这份速查表列出了Swift的常见的基本用法。</p></li>
+<li><p><a href="http://bbs.iosre.com/forum.php?mod=viewthread&amp;tid=422">《 获取当前安装的所有App》</a>：作者介绍了利用私有API在非越狱的iOS 7和8机器上，获取iOS中安装的所有App的办法。</p></li>
+<li><p><a href="http://weibo.com/p/23041889d963070102v39b">《iOS8企业应用部署Bug》</a>：作者发现使用iOS企业部署（In-HouseDistribution）方式进行应用升级时，在iOS8下无法成功，删除应用再重新安装也不行。经过调研，作者发现这个是Apple的bug，并且提供了临时解决办法。</p></li>
+<li><p><a href="https://designcode.io/learn">《The best resources for learning iOS design and Xcode》</a>：作者整理了一系列关于iOS 设计和 Xcode 方面的学习资源，并提供邮件订阅。</p></li>
+<li><p><a href="http://www.iwangke.me/2014/10/06/how-to-implement-a-core-animation-based-60-fps-ktv-lyrics-view/">《基于Core Animation的KTV歌词视图的平滑实现》</a>：文章介绍了唱吧歌词视图的技术实现细节。</p></li>
+<li><p><a href="https://medium.com/swift-programming/15-swift-ios-open-source-projects-you-cannot-ignore-6bd4ac37d7dd">《10 Swift IOS open-source projects you cannot ignore》</a>：文章介绍了10大不能错过的 Swift 开源项目。</p></li>
+<li><p><a href="http://www.appdesignvault.com/ios-8-custom-keyboard-extension/#a_aid=mdev">《iOS 8 Custom Keyboard Tutorial: How to Create A Third-Party Keyboard Extension》</a>：文章介绍了如何在iOS8下自定义键盘。</p></li>
+</ol>
+
+
+<h2>视频</h2>
+
+<ol>
+<li><p><a href="http://www.guomii.com/posts/39029">《Apple 发布 Swift 语言和 Xcode 入门视频》</a>：Apple 在 Swift 官方博客上发布了一段6分钟多的视频，介绍如何从零开始使用 Xcode 套件开发 iOS 应用，非常值得想现在开始学 iOS 开发的朋友一看。</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=XhXC4SKOGfQ">《Facebook&rsquo;s iOS Infrastructure》</a>：Facebook在视频中分享了他们的iOS端架构。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/SwiftP2P/SwiftSSL">SwiftSSL</a>：SwiftSSL 是一个基于CommonCrypto的Swift语言的加密库。</p></li>
+<li><p><a href="https://github.com/daltoniam/SwiftHTTP">SwiftHTTP</a>：用Swift语言实现的HTTP网络库。</p></li>
+<li><p><a href="https://github.com/stephencelis/SQLite.swift">SQLite.swift</a>：SQLite.swift是一个将SQLite3封装成Swift语言的包装库。</p></li>
+<li><p><a href="https://github.com/Brimizer/Slidden">Slidden</a>: Slidden是一个老外开源的开发自定义键盘的库，利用这个开源库，可以方便的配置键位、颜色以及键位对应的图片。</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -278,70 +362,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/01/startup-2nd-year-summary/">写在创业两周年</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-01T22:06:20+08:00" pubdate data-updated="true">Oct 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一年前写了一篇名为<a href="http://blog.devtang.com/blog/2013/06/17/startup-anniversary-note/">《写在创业一周年》</a>的文章，眼看创业已经两年多了，我就寻思着是不是再写一个创业两周年的总结。之所以拖了几个月，一是因为刚刚满两年的时候，我们公司刚刚拿下了<a href="http://tech.sina.com.cn/i/2014-07-22/11209510273.shtml">1500万美元的C轮融资</a>，但是还没有对外公开，所以不方便写。二是因为最近在忙<a href="http://www.yuansouti.com/">小猿搜题</a>这个新项目，顾不过来。现在正好国庆了，可以有时间好好思考总结下。</p>
-
-<p>如果说创业第一年，我努力提高了自己的基本功：包括技术实力，沟通能力，执行力，情绪控制等。那么创业第二年，我的提高可能就是更多的思考了。为什么我们能够在短短两年时间就做到1.25亿美元的估值？我觉得核心的原因就是：正确的决策+强大的执行力。执行力在以前已经说过很多次了，这次想分享一下我们的决策。</p>
-
-<p>创业两年，在我看来我们经历了两次重要的决策。</p>
-
-<p>第一次重要决策是：放弃做粉笔网转而做猿题库。这其实可以拆成两件事情：一、放弃粉笔网，二、决定做猿题库。有些创业公司成功的关键是坚持，有些创业公司成功的关键是转型。在我看来这两者并不矛盾，其实关键是你想清楚了所有的事情。</p>
-
-<p>放弃粉笔网是因为我们想清楚了这个模式是有问题的，所以我们并没有在这上面投入更多的市场推广费用，为团队节省了大量资金。这次试错，我们花的时间不到半年。不过也是因为运营粉笔网，我们发现了新的方向。我们的市场运营同事在邀请老师加入粉笔网时，发现了学生在手机上做题的需求，从而为团队找到了新的努力方向。</p>
-
-<p><img src="/images/2013-summary-fenbi-close.jpg"></p>
-
-<p>我们团队的特点就是执行力强，猿题库从计划到上线，我们只花了3个月。猿题库行测上线之后，收到了来自用户的良好反馈，这使得团队一下子确定了方向是正确的，大家的信心都恢复了。</p>
-
-<p>第二次重要的决策是：切入K12市场。我们本来打算把所有职业类考试的客户端都做一遍。但是我们的CEO李勇觉得这个模式如果被竞争者抢先用来做K12市场后，我们会很难受。所以我们主动放弃了很多职业类考试类客户端的开发，转而做猿题库高考。</p>
-
-<p>正因为这次决策，使得我们能够在短短半年时间，就积累起全中国超过10%的高考用户（每9个高考学生，就有一个用猿题库高考），随后的猿题库初高中整合版本也非常受学生欢迎，登上了AppStore教育榜首（我们没有刷榜）。也因为这次决策，才使得我们能够有C轮1.25亿美元这么高的估值。</p>
-
-<p><img src="/images/ape_appstore_top.jpg"></p>
-
-<p>虽然我没能参与这两次决策，但是我能感受到公司的管理层在创业上的深度思考，每一步都是经过仔细分析和推敲的。也因为这样，我们团队的大多数人就能够专心到事情的执行层面，把具体的事情做好。</p>
-
-<p>另外，我们公司非常强调“透明”，李勇会通过邮件或者周五全体会议的方式，将公司的想法传递给每一个人，大家能够知道每一个决策背后的原因，从而在做事情的时候有一个最根本的指导。李勇也多次强调大家有问题要说出来，通过沟通达到相互之间信息的透明。</p>
-
-<p>未来，猿题库应该还会经历很多重要决策，例如怎样用移动互联网的特点获得更多用户，例如如何给用户提供更多增值服务，获得收入。在线教育这个创业方向，与移动互联网结合起来，到底能有多大的想像空间，还需要我们一步一步探索。</p>
-
-<p>我很期待着与团队同事一起，为教育开辟一块新的市场，最终改变教育。</p>
-
-<p>最后，欢迎大家加入我们，这里有我们的<a href="http://www.yuantiku.com/campus/">职位介绍</a>。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/16/">&larr; Older</a>
@@ -363,6 +383,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/ios-weekly-43/">iOS移动开发周报-第43期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/04/09/ios-weekly-42/">iOS移动开发周报-第42期</a>
@@ -406,10 +430,6 @@
     
       <li class="post">
         <a href="/blog/2015/01/31/write-sdk-tips/">写iOS SDK注意事项</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/31/ios-weekly-37/">iOS移动开发周报-第37期</a>
       </li>
     
   </ul>

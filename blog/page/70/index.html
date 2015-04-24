@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="xcode中默认的UILabel是垂直居中对齐的，如果你的UILabel高度有多行，当内容少的时候，会自动垂直居中。 ">
+  <meta name="description" content="在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,47 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/">去掉xcode源码末尾的空格</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-10T17:08:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在用xcode开发的时候，很容易就在行末增加一些空格了。这些空格在上传到review board上后,就会被特别的颜色显示出来。因为一种好的编程风格是说,不应该在行末增加不必要的空格。如果是用eclipse写java,那么这种时候选中写好的代码，按ctrl+shift+F即可调整源码的风格,将尾部的空格去掉。可惜在xcode中并没有提供相应的功能。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/12/10/remove-tail-blankspace-in-xcode/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2011/11/20/set-uilabel-text-align-top/">让UILabel的文字顶部对齐</a></h1>
     
     
@@ -119,59 +160,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/25/use-rbtool-to-post-review-request/">使用RBTool自动提交code Review请求</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-25T18:13:00+08:00" pubdate data-updated="true">Aug 25<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>前言</h3>
-
-<p>让我们回想一下手工提交review请求的过程:</p>
-
-<ol>
-<li>首先得用 svn diff > filename.diff 生成diff文件。</li>
-<li>然后输入review board的网址，可能是 rb.companyname.com</li>
-<li>然后需要输入你的账号密码进行登录验证。</li>
-<li>然后你需要填写你的svn repository 地址，然后上传diff文件。</li>
-<li>然后你进到review请求的详细页面，填写summary, description, test-done, group和people项，而通常情况下，你的group是固定的，review你的people也就是那么几个人来回变。</li>
-<li>最后你填完这些内容，点击 publish 来发布你的review请求。</li>
-</ol>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/25/use-rbtool-to-post-review-request/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/71/">&larr; Older</a>
@@ -193,6 +181,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/ios-weekly-43/">iOS移动开发周报-第43期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/04/09/ios-weekly-42/">iOS移动开发周报-第42期</a>
@@ -236,10 +228,6 @@
     
       <li class="post">
         <a href="/blog/2015/01/31/write-sdk-tips/">写iOS SDK注意事项</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/31/ios-weekly-37/">iOS移动开发周报-第37期</a>
       </li>
     
   </ul>

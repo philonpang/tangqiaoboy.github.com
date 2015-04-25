@@ -9,8 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="这是一次和 @onevcat 的技术讨论总结。技术点比较散，但是还都比较有意思。涉及的技术细节包括： 系统对象的缓存
-Tagged Pointer对象 autorelase对象 按照苹果的编程约定，由非alloc,copy返回的对象都是autorelease的，所以对于以下代码， &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本期移动开发周报带来如下内容 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +77,87 @@ Tagged Pointer对象 autorelase对象 按照苹果的编程约定，由非alloc,
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/28/ios-weekly-5/">iOS移动开发周报-第5期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-28T23:52:29+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/reduce-ios-size">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期移动开发周报带来如下内容：减小iOS应用程序的大小，Quartz Composer的增强工具Origami的教程以及jQC工具等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="https://deals.iphoneincanada.ca/sales/the-mac-freebie-bundle-3-0">《The Mac Freebie Bundle 3.0》</a>：该网站提供了7个原本收费的Mac App的免费购买。笔者试用了一下其中的X-Mirage，它可以把iPhone投到Mac上，并提供录象功能，适合将演示导出成视频。另外那个页面有Bug，在购买时信用卡信息不用填写，留空就可以直接购买成功。</p></li>
+<li><p><a href="http://www.macstories.net/news/apple-testing-related-search-suggestions-on-the-app-store/">《App Store 将增加匹配相关搜索关键字的新功能》</a>：新增加的功能有助于提高相关关键词的点击量。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://nonomori.farbox.com/post/injection-plugin-for-xcode">《injection plugin for xcode》</a>：Injection Plugin For Xcode 是 Xcode 上的一个插件。利用它可以修改应用代码，实时在模拟器或实机上看到效果而不需要重启应用。作者介绍了该插件的详细使用方式。</p></li>
+<li><p><a href="http://www.pasanpremaratne.com/2014/03/15/UI-Prototyping-with-Quartz-Composer-and-Origami/">《UI Prototyping with Quartz Composer and Origami》</a>：由于工具的欠缺，大量的交互设计师的工作效率非常低下，他们为了做出一个新颖的效果常常需要花费大量精力。这次Facebook免费开放出基于苹果Quartz Composer的增强工具集Origami，使得交互设计工作得到更好的辅助。不过另一方面，该工具仍然需要设计师具备一定的逻辑思维能力，所以对于广大设计师来说，交互设计工具Origami对设计师带来的既是机会，同时也是挑战。本教程介绍了如何使用Quartz Composer 和 Origami来做交互设计。</p></li>
+<li><p>写给 iOS 开发者的系列教程：从有iOS开发背景的人的角度，学习其它语言：
+<a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">Android篇</a>，<a href="http://t.cn/8sbXyOH">C++ 篇1</a>和<a href="http://t.cn/8sbXLyg">C++ 篇2</a>，<a href="http://t.cn/8FpEP4x">Go 篇</a>。</p></li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/26/cookbook-moving-table-view-cells-with-a-long-press-gesture/">《利用长按手势移动 Table View Cells》</a>：本教程中介绍了如何通过长按手势来移动 table view中的cell，这种操作方式就像苹果自家的天气 App 一样。</p></li>
+<li><p><a href="http://beyondvincent.com/blog/2014/03/24/reducing-the-size-of-my-app/">《减小iOS应用程序的大小》</a>：本文收集了一些减小程序安装包大小的相关技巧(当第一次下载和安装程序时)。如果是针对升级程序的话，可以看这篇文章: <a href="https://developer.apple.com/library/ios/qa/qa1779/">《减小iOS应用程序升级时所需下载的大小》</a>，这与第一次安装使用的工作原理有所不同。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2014/03/21/weak_object_lifecycle_and_tagged_pointer/">《NSNumber对象缓存以及Tagged Pointer》</a>：本文讨论了<code>NSNumber</code>对象的缓存以及苹果在64位系统引入的<code>Tagged Pointer</code>对象。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><a href="http://qcdesigners.com/index.php/forums/topic/100/it-s-finally-here-j-qc-1-0-a-u/">jQC 1.0</a>：jQC是一个与Facebook之前开源的Origami兼容的工具，提供了15个新的Patch来提高Quartz Composer的功能。Quartz Composer是苹果提供的一个交互设计工具。</li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/gbammc/WechatPayDemo">WechatPayDemo</a>: WechatPayDemo是一个非官方的微信支付Demo，基于微信SDK1.4.1构建。由于微信官方并没有提供支付功能的iOS Demo，加上官方的文档错误，使得本文作者花了较大精力调试。他希望开源这个工程来帮助其他iOS开发者少有一些弯路。</p></li>
+<li><p><a href="http://trawor.farbox.com/post/vz">微转iOS客户端和服务端</a>：微转是一个基于微博的数码设备平台，客户端和后台全部基于AVOSCloud服务实现。作者将其iOS客户端和服务端代码全部开源。</p></li>
+<li><p><a href="https://github.com/facebook/Tweaks">Tweaks</a>：Tweaks让开发者可以方便地对特定事物进行标记——比如动画效果的时间，或者是按钮的颜色，或者是图片的透明度——并在使用设备实际运行应用时让开发者方便地进行实时调整。</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -237,73 +317,6 @@ Tagged Pointer对象 autorelase对象 按照苹果的编程约定，由非alloc,
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/21/ios-weekly-4/">iOS移动开发周报-第4期</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-21T20:23:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2014/03/lldb-debug-command">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>本周iOS移动开发周报，带来一系列iOS开发教程以及2个开源项目。这期中的2个开源项目都比较值得关注，一个是VVebo写的GIF解决方案，另一个是用OC实现的QQ自动回复机器人。后者的作者是图书<a href="http://item.jd.com/11389860.html">《iOS应用逆向工程》</a>的作者，这本书也是一本不错的安全方面的入门图书，一并推荐给大家。</p>
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://wufawei.com/2014/03/symbolicating-ios-crash-logs/">《分析iOS Crash文件：符号化iOS Crash文件的3种方法》</a>：文章介绍了拿到用户的<code>.crash</code>文件之后，如何符合化（Symbolicating）crash文件的3种方法。它们分别是：使用Xcode、使用命令行工具symbolicatecrash，以及使用命令行工具atos。这些方法可以帮助开发者尽快找到应用crash的原因。</p></li>
-<li><p><a href="http://objcio.com/blog/2014/03/10/custom-controls/">《自定义控件》</a>：本文翻译自objc.io的《Custom Controls》，讨论了一些自定义视图和控件的诀窍和技巧。文章先对UIKit已经提供的控件做了一个概览，介绍一些渲染技巧，随后深入到视图和它们的所有者之间的通信策略，并简略探讨了辅助功能、本地化和测试。</p></li>
-<li><p><a href="http://nshipster.cn/dictionary-services/">《关于字典的介绍》</a>：文章介绍了OS X和iOS里面系统提供的字典服务以及调用方法。其中OS X中介绍的是使用私有API的方法，而iOS中介绍的是使用公开的<code>UIReferenceLibraryViewController</code>的方法。</p></li>
-<li><p><a href="http://stuartkhall.com/posts/android-development-tips-for-ios-devs">《Android Development Tips For iOS Devs》</a>：写给iOS开发者看的Android开发技巧，适合有iOS开发背景的朋友学习Android开发。</p></li>
-<li><p><a href="http://iosinit.com/?p=1022">《iOS 7之UICollectionView与UIKit Dynamics》</a>：<code>UIKit Dynamics</code> 是 iOS 7 中基于物理动画引擎的一个新功能–它被特别设计使其能很好地与 <code>CollectionView</code> 配合工作。本文介绍了如何将这两个特性结合在一起。文章翻译自objc.io第5期。</p></li>
-<li><p><a href="http://www.starfelix.com/blog/2014/03/17/lldbdiao-shi-ming-ling-chu-tan/">《LLDB调试命令初探》</a>：LLDB是LLVM下的调试器，Xcode从4.0开始编译器开始改用LLVM，相应的调试器也从gdb改为LLDB。而从 Xcode5.0开始所有工程也被自动设置为使用LLDB。本文从初学者的角度讲解了在日常的开发中如何使用LLDB以及LLDB常用的命令。</p></li>
-<li><p><a href="http://beyondvincent.com/blog/2014/03/19/18-tips-for-working-effectively-with-interface-builder/">《提高Interface Builder高效工作的8个技巧》</a>：文章介绍了Xcode的界面编辑器Interface Builder的8个使用技巧，可以提高工作效率。</p></li>
-<li><p><a href="http://imtx.me/archives/1885.html">《自由地控制 Xcode Open Quickly 打开方式》</a>：文章介绍了Xcode Open Quickly使用的一则技巧，可以方便地控制打开方式。</p></li>
-<li><p><a href="http://blog.csdn.net/yiyaaixuexi/article/details/21469769">《static和被裁的符号表》</a>：作者念茜这次从安全防御角度出发，讲解利用static关键字裁掉函数符号，以便不让攻击者理清自己程序的敏感业务逻辑，提高应用的逆向门槛。</p></li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p>微博客户端 <a href="http://weibo.com/appsupport">VVebo</a> 的作者开源了他自己为VVebo写的GIF解决方案 <a href="https://github.com/johnil/VVeboImageView">VVeboImageView</a>， 占用内存很小。</p></li>
-<li><p><a href="https://github.com/iosre/Skua">《iOS客户端自动回复机器人源码》</a>：作者实现了一个QQ的自动回复机器人。</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/35/">&larr; Older</a>
@@ -325,6 +338,10 @@ Tagged Pointer对象 autorelase对象 按照苹果的编程约定，由非alloc,
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/qcon-2015-note/">QCon 参会笔记</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/04/24/ios-weekly-43/">iOS移动开发周报-第43期</a>
@@ -368,10 +385,6 @@ Tagged Pointer对象 autorelase对象 按照苹果的编程约定，由非alloc,
     
       <li class="post">
         <a href="/blog/2015/02/01/talk-about-react-native/">谈谈 React Native</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/31/write-sdk-tips/">写iOS SDK注意事项</a>
       </li>
     
   </ul>

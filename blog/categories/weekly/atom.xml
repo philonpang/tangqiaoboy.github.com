@@ -4,7 +4,7 @@
   <title><![CDATA[Category: weekly | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/weekly/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-04-25T13:16:40+08:00</updated>
+  <updated>2015-04-29T17:21:54+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -61,7 +61,7 @@
 <li><p><a href="https://github.com/onevcat/Kingfisher">Kingfisher</a>：Kingfisher 是一个用于图片缓存的开源库，类似  SDWebImage，但是完全基于 Swift 语言开发。</p></li>
 <li><p><a href="https://github.com/hackers-painters/samurai-native">samurai-native</a>：samurai-native 是 <a href="http://weibo.com/u/1641892107?topnav=1&amp;wvr=6&amp;topsug=1">@ 老郭为人民服务</a> 开源的一套新的构建 App 框架，可以使用 HTML 和 CSS 来生成原生的应用界面。</p></li>
 <li><p><a href="https://github.com/boycechang/BCMagicTransition">BCMagicTransition</a>：BCMagicTransition 是一个动效框架，用于自定义 UINavigationController 的切换动画，效果类似 Keynote 软件中 Magic Move 切换。它可以用于任意两个 UIViewController 之间，只需指定两个 VC 中的相同元素即可。</p></li>
-<li><p><a href="cikelengfeng/RPAXU">Refresh Plugins After Xcode Upgrading</a>：每当 Xcode 升级之后，都会导致原有的 Xcode 插件不能使用，这是因为每个插件的 Info.plist 中记录了该插件兼容的 Xcode 版本的 DVTPlugInCompatibilityUUID，而每个版本的 Xcode 的 DVTPlugInCompatibilityUUID 都是不同的。如果想让原来的插件继续工作，我们就得将新版 Xcode 的 DVTPlugInCompatibilityUUID 加入到每一个插件的 Info 文件中，手动添加的话比较费时间还可能出错，所以作者写了一个脚本来做这件事。</p></li>
+<li><p><a href="https://github.com/cikelengfeng/RPAXU">Refresh Plugins After Xcode Upgrading</a>：每当 Xcode 升级之后，都会导致原有的 Xcode 插件不能使用，这是因为每个插件的 Info.plist 中记录了该插件兼容的 Xcode 版本的 DVTPlugInCompatibilityUUID，而每个版本的 Xcode 的 DVTPlugInCompatibilityUUID 都是不同的。如果想让原来的插件继续工作，我们就得将新版 Xcode 的 DVTPlugInCompatibilityUUID 加入到每一个插件的 Info 文件中，手动添加的话比较费时间还可能出错，所以作者写了一个脚本来做这件事。</p></li>
 <li><p><a href="https://github.com/ResearchKit/ResearchKit">ResearchKit</a>：ResearchKit 是苹果开源的方便科研机构创建 App 的框架。</p></li>
 </ol>
 

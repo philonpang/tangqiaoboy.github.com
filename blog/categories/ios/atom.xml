@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-05-02T21:27:02+08:00</updated>
+  <updated>2015-05-02T21:29:09+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -18,7 +18,7 @@
     <link href="http://blog.devtang.com/blog/2015/05/01/apple-release-analytics-beta/"/>
     <updated>2015-05-01T20:51:29+08:00</updated>
     <id>http://blog.devtang.com/blog/2015/05/01/apple-release-analytics-beta</id>
-    <content type="html"><![CDATA[<p>{% img /images/apple-analytics-beta.jpg %}</p>
+    <content type="html"><![CDATA[<p><img src="/images/apple-analytics-beta.jpg"></p>
 
 <p>苹果在五月一号这天，向开发者发送邮件，邀请参与他自家的分析工具的试用。虽然现在我们公司猿题库的帐号还处于排队等待的状态中，不过我们可以从苹果的介绍中看出这个工具的特点</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOSDevTool | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/iosdevtool/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-05-02T21:27:02+08:00</updated>
+  <updated>2015-05-02T21:29:09+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -33,7 +33,7 @@
 
 <h2>App Annie介绍</h2>
 
-<p>{% img /images/app-annie-homepage.jpg %}</p>
+<p><img src="/images/app-annie-homepage.jpg"></p>
 
 <p>苹果官方的iTunes Connect提供的销售数据统计功能比较弱，例如只能保存最近30天的详细销售数据，界面丑陋，
 无法查看App的排名历史变化情况等。</p>
@@ -55,32 +55,32 @@
 
 <p>1、登录itunes connect，选择Manager Users</p>
 
-<p>{% img /images/itunes-connect-add-user-1.jpg %}</p>
+<p><img src="/images/itunes-connect-add-user-1.jpg"></p>
 
 <p>2、选择iTunes Connect User</p>
 
-<p>{% img /images/itunes-connect-add-user-2.jpg %}</p>
+<p><img src="/images/itunes-connect-add-user-2.jpg"></p>
 
 <p>3、点击Add new User</p>
 
-<p>{% img /images/itunes-connect-add-user-3.jpg %}</p>
+<p><img src="/images/itunes-connect-add-user-3.jpg"></p>
 
 <p>4、填写新用户的相关信息</p>
 
-<p>{% img /images/itunes-connect-add-user-4.jpg %}</p>
+<p><img src="/images/itunes-connect-add-user-4.jpg"></p>
 
 <p>5、勾选用户类型为Sales</p>
 
-<p>{% img /images/itunes-connect-add-user-5.jpg %}</p>
+<p><img src="/images/itunes-connect-add-user-5.jpg"></p>
 
 <p>6、选择Notifications为All Notifications。点击图中所指的位置即可全选。</p>
 
-<p>{% img /images/itunes-connect-add-user-6.jpg %}</p>
+<p><img src="/images/itunes-connect-add-user-6.jpg"></p>
 
 <p>7、之后，邮箱中会收到iTunes Connect发来的激活邮件。
 点击邮件中的激活链接，即可进入到账号注册界面，之后注册账号即可激活。如果该邮箱已经注册过Apple Id，则会进入到登录界面，登录后即可激活。</p>
 
-<p>{% img /images/itunes-connect-add-user-7.jpg %}</p>
+<p><img src="/images/itunes-connect-add-user-7.jpg"></p>
 
 <h2>注册 App Annie账号及配置</h2>
 
@@ -89,19 +89,19 @@
 
 <p>1、在设置页面中增加iTunes Connect账号</p>
 
-<p>{% img /images/app-annie-1.jpg %}</p>
+<p><img src="/images/app-annie-1.jpg"></p>
 
 <p>2、填写你的之前在iTunes Connect中增加的Sales类型的账号及密码</p>
 
-<p>{% img /images/app-annie-2.jpg %}</p>
+<p><img src="/images/app-annie-2.jpg"></p>
 
 <p>3、在User Setting中勾选上接收每日Report</p>
 
-<p>{% img /images/app-annie-3.jpg %}</p>
+<p><img src="/images/app-annie-3.jpg"></p>
 
 <p>4、这样，每天就可以收到AppAnnie发来的相关统计邮件了。如下是一封粉笔网的销售报告邮件截图：</p>
 
-<p>{% img /images/app-annie-4.jpg %}</p>
+<p><img src="/images/app-annie-4.jpg"></p>
 
 <h2>官方的命令行工具</h2>
 
@@ -118,7 +118,7 @@ java Autoingestion &lt;帐号名&gt; &lt;密码&gt; &lt;vendorId&gt; &lt;报告�
 
 <p>其中vendor Id在iTunes Connect的如下图所示位置获得，是一个数字8开头的序列。</p>
 
-<p>{% img /images/itunes-connect-vendor-id.jpg %}</p>
+<p><img src="/images/itunes-connect-vendor-id.jpg"></p>
 
 <p>&lt;报告类型>可选的值是：Sales 或 Newsstand</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: books | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/books/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-04-29T17:21:54+08:00</updated>
+  <updated>2015-05-02T21:27:02+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -18,7 +18,7 @@
     <link href="http://blog.devtang.com/blog/2015/04/04/from-0-to-1-book-summary/"/>
     <updated>2015-04-04T15:22:41+08:00</updated>
     <id>http://blog.devtang.com/blog/2015/04/04/from-0-to-1-book-summary</id>
-    <content type="html"><![CDATA[<p><img src="/images/from-zero-to-one-book.jpg"></p>
+    <content type="html"><![CDATA[<p>{% img /images/from-zero-to-one-book.jpg %}</p>
 
 <p>我每天坐地铁上班和下班，在路上的时间加起来有1个半小时。但有一个好处是：在地铁上，你除了看书也没什么事情可干。于是，最近看完了<a href="http://book.douban.com/subject/26297606/">《从 0 到 1》</a>。这本书的作者是：彼得·蒂尔（Peter Thiel，PayPal的联合创始人，Facebook的第一位外部投资者）。</p>
 
@@ -251,7 +251,7 @@
     <link href="http://blog.devtang.com/blog/2015/03/01/tipping-point/"/>
     <updated>2015-03-01T15:32:15+08:00</updated>
     <id>http://blog.devtang.com/blog/2015/03/01/tipping-point</id>
-    <content type="html"><![CDATA[<p><img src="/images/TippingPointBook.jpg"></p>
+    <content type="html"><![CDATA[<p>{% img /images/TippingPointBook.jpg %}</p>
 
 <p>春节的时候看到了萧宸宇的博客中一篇名为 <a href="http://iiiyu.com/2015/01/31/read-the-tipping-point/">《读书笔记 「引爆点」》</a> 的文章。受文章的吸引，于是把 <a href="http://book.douban.com/subject/3900987/">《引爆点》</a> 这本书学习了一下。</p>
 

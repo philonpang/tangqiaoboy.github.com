@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="和去年一样，记录一下今年的成长和收获。 ">
+  <meta name="description" content="前言 Objective-c语言在申请对象的时，需要使用两段构造(Two Stage Creation)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,58 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/01/13/two-stage-creation-on-cocoa/">谈ObjC对象的两段构造模式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-13T10:15:00+08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>Objective-c语言在申请对象的时，需要使用两段构造(<a href="http://volonbolon.net/post/634999801/two-stage-creation-in-cocoa">Two Stage Creation</a>)的模式。一个对象的创建，需要先调用alloc方法或allocWithZone方法，再调用init方法或initWithSomething方法。如下是一个NSString对象的创建示例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithString:</span><span class="s">@&quot;http://blog.devtang.com&quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>由于该语言的对象创建方法和大多数其它语言（如C、C++、Java、JavaScript）都不一样，所以引起了我的好奇。是什么原因促使Objective-C做了这种设计，而又是什么原因促使大多数其它语言都采用&#8221;new&#8221;方法来一次性创建对象呢？</p>
+
+<p>在看了<a href="http://www.amazon.com/Cocoa-Design-Patterns-Erik-Buck/dp/0321535022">《Cocoa Design Patterns》</a>一书（顺便吐槽一下该书中文版翻译质量不高，建议看英文版），并且做了一些调研之后，我将总结分享给大家，欢迎大家讨论。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/13/two-stage-creation-on-cocoa/">阅读 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/01/01/2012-summary/">2012年个人总结</a></h1>
     
     
@@ -119,53 +171,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/23/use-zxing-library/">在iOS中使用ZXing库</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-23T17:03:00+08:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/zxing-icon.png"></p>
-
-<h2>前言</h2>
-
-<p><a href="https://code.google.com/p/zxing/">ZXing</a>(<a href="https://github.com/zxing/zxing">Github镜像地址</a>)是一个开源的条码生成和扫描库（开源协议为<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache2.0</a>)。它不但支持众多的条码格式，而且有各种语言的实现版本，它支持的语言包括：Java, C++, C#, Objective-C, ActionScript和Ruby。</p>
-
-<p>我上周在iOS项目开发中使用了ZXing的扫描二维码功能。在此总结一下如何将ZXing集成到已有的iOS工程中，分享给大家。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/12/23/use-zxing-library/">阅读 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/53/">&larr; Older</a>
@@ -187,6 +192,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/05/01/apple-release-analytics-beta/">苹果推出了自家的分析工具</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/04/24/qcon-2015-note/">QCon 参会笔记</a>
@@ -232,22 +241,18 @@
         <a href="/blog/2015/02/05/ios-weekly-38/">iOS移动开发周报-第38期</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/02/01/talk-about-react-native/">谈谈 React Native</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>About Me</h1>
-  <p> Blogger, InfoQ编辑, iOS开发, 创业者。<br/>
+  <p> InfoQ编辑, 《iOS开发进阶》作者, 在猿题库创业。<br/>
       <br/>Java开发工程师，曾开发网易微博后台。
-      <br/>iOS开发工程师，曾开发有道云笔记、粉笔网、猿题库。
+      <br/>iOS开发工程师，曾开发有道云笔记、猿题库。
       <br/>
       <br/>新浪微博: <a href='http://weibo.com/tangqiaoboy' target='_blank'>唐巧_boy</a>
       <span id="wb_follow_btn"></span>
       <br />购买 <a href='http://www.amazon.cn/b?node=1474130071' target='_blank'>《iOS开发进阶》签名版</a>
-      <br />我的<strong>&#8220;iOSDevTips&#8221;</strong>微信公众账号:
+      <br />我的<strong>&#8220;iOS开发&#8221;</strong>微信公众账号:
       <br/><img width="220px" src="/images/weixin-qr.jpg" />
   </p>
 </section>

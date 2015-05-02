@@ -4,7 +4,7 @@
   <title><![CDATA[Category: shell | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-04-29T17:21:54+08:00</updated>
+  <updated>2015-05-02T21:27:02+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -281,7 +281,7 @@ git config --global core.autocrlf true
 
 <p> 一旦推送到远程仓库后，就不要用类似git reset, git ci &mdash;amend, git rebase等破坏性提交了，否则远程仓库会因为你的新推送不是Fast Forward而拒绝提交(关于什么是Fast Forward要讲的太多了，自已看书吧)。如果实在不小心做了。在确定别人没有检出前，用git push -f 可以强制推送到远程仓库中。如下图:</p>
 
-<p><img src="/images/git_push_f.jpg"></p>
+<p>{% img /images/git_push_f.jpg %}</p>
 
 <h3>使用git svn</h3>
 
@@ -424,7 +424,7 @@ chmod +x .git/hooks/pre-commit
 <p>默认的git diff, status, log什么的都是不带颜色的，可以用如下命令让它们都带上颜色。另外还有一些有趣的命令，一并列在下面。</p>
 
 <p>```
-git config &mdash;global &mdash;add user.email &ldquo;<a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#x65;&#109;&#97;&#x69;&#x6c;&#x40;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#109;">&#101;&#x6d;&#97;&#105;&#x6c;&#x40;&#49;&#54;&#x33;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;
+git config &mdash;global &mdash;add user.email &ldquo;<a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x65;&#x6d;&#x61;&#105;&#x6c;&#x40;&#49;&#x36;&#51;&#x2e;&#99;&#111;&#x6d;">&#x65;&#x6d;&#97;&#105;&#x6c;&#64;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#109;</a>&rdquo;
 git config &mdash;global &mdash;add user.name &ldquo;your name&rdquo;</p>
 
 <p>git config &mdash;global alias.co checkout

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: fun | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/fun/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-04-29T17:21:54+08:00</updated>
+  <updated>2015-05-02T21:27:02+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -74,7 +74,7 @@
 </ol>
 
 
-<p><img src="/images/imac-broken-cable.jpg"></p>
+<p>{% img /images/imac-broken-cable.jpg %}</p>
 
 <p>总之，自动动手换SSD不是那么复杂，胆大心细一些就可以轻松搞定。</p>
 ]]></content>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-04-29T17:21:54+08:00</updated>
+  <updated>2015-05-02T21:27:02+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -149,7 +149,7 @@ iFrame = null;
 
 <p>AMD规范需要用目录层级当作包层次，这一点就象java一样。之前我以为iOS打包后的ipa资源文件中不能有资源目录层级关系，今天在会上问了一下，原来是我自己弄错了。如果需要将目录层级带入ipa资源文件中，只需要将该目录拖入工程中，然后选择“Create groups for any added folders”。如下图所示，这样目录层级能够打包到ipa文件中。</p>
 
-<p><img src="/images/uiwebview-commonjs-folder.jpg"></p>
+<p>{% img /images/uiwebview-commonjs-folder.jpg %}</p>
 
 <h2>调试</h2>
 

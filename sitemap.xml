@@ -4,7 +4,7 @@
         <loc>
             http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/
         </loc>
-        <lastmod>2015-05-06T19:29:08+08:00</lastmod>
+        <lastmod>2015-05-06T19:47:57+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2011/08/25/use-rbtool-to-post-review-request/</loc>
@@ -128,11 +128,11 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/10/15/scrum-and-architecture-in-fenbi/</loc>
-        <lastmod>2014-05-06T23:00:40+08:00</lastmod>
+        <lastmod>2015-05-06T19:55:49+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/10/27/use-opencv-in-ios/</loc>
-        <lastmod>2014-05-06T23:00:40+08:00</lastmod>
+        <lastmod>2015-05-06T19:54:52+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2012/11/10/how-to-design-upgrade-notice/</loc>
@@ -208,7 +208,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/06/16/ios-dev-tool-app-store-tool/</loc>
-        <lastmod>2014-05-06T23:00:40+08:00</lastmod>
+        <lastmod>2015-05-06T19:53:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2013/06/17/startup-anniversary-note/</loc>
@@ -448,7 +448,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2014/09/13/scrum-introduction/</loc>
-        <lastmod>2014-09-14T20:17:53+08:00</lastmod>
+        <lastmod>2015-05-06T19:52:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2014/09/14/ios-weekly-25/</loc>
@@ -516,7 +516,7 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2015/01/11/how-to-finish-ios-pro-book/</loc>
-        <lastmod>2015-01-11T22:36:32+08:00</lastmod>
+        <lastmod>2015-05-06T19:51:51+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/2015/01/18/explain-ios-pro-book/</loc>
@@ -592,11 +592,11 @@
     </url>
     <url>
         <loc>http://blog.devtang.com/blog/archives/</loc>
-        <lastmod>2015-05-06T19:29:08+08:00</lastmod>
+        <lastmod>2015-05-06T19:55:49+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/</loc>
-        <lastmod>2015-05-06T19:29:08+08:00</lastmod>
+        <lastmod>2015-05-06T19:55:49+08:00</lastmod>
     </url>
     <url>
         <loc>http://blog.devtang.com/robots.txt</loc>

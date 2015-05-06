@@ -9,8 +9,8 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
-因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是： 1 &hellip;">
+  <meta name="description" content="Objective-C 2.0 增加了 dot syntax，用于简单地调用成员变量的 accessor。相当于 java 的 getter 和 setter。
+因为正常情况下，写一个 accessor 对于初学者来说，还是挺容易犯错的。比如有一个 NSString * 的成员变量叫 name。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,20 +104,20 @@
   </header>
 
 
-<div class="entry-content"><p>Objective-C 2.0 增加了dot syntax，用于简单地调用成员变量的accessor。相当于java的getter和setter。
-因为正常情况下，写一个accessor对于初学者来说，还是挺容易犯错的。比如有一个NSString * 的成员变量叫name。一个错误的写法是：</p>
+<div class="entry-content"><p>Objective-C 2.0 增加了 dot syntax，用于简单地调用成员变量的 accessor。相当于 java 的 getter 和 setter。
+因为正常情况下，写一个 accessor 对于初学者来说，还是挺容易犯错的。比如有一个 NSString * 的成员变量叫 name。一个错误的写法是：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
 </span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Java同学肯定想不通上面的代码有什么错吧？原因是Objective-C需要自己负责内存的释放。
-所以需要在改变reference之前，将原对象release，对新的对象，也需要retain一下，代码就改成这样：</p>
+<p>Java 同学肯定想不通上面的代码有什么错吧？原因是 Objective-C 需要自己负责内存的释放。
+所以需要在改变 reference 之前，将原对象 release，对新的对象，也需要 retain 一下，代码就改成这样：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -130,7 +130,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>初学者可能以为这样就对了，其实还是有错，如果newName和name的指向的是同一个对象，并且这个对象retain count只有1的话。
+<p>初学者可能以为这样就对了，其实还是有错，如果 newName 和 name 的指向的是同一个对象，并且这个对象 retain count 只有 1 的话。
 那么name release之后，这个对象就被回收掉了。所以应该改成：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -148,9 +148,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>这样才算是一个正确的set函数，Java同学肯定被吓到了，虽然知道这么写，但这比Java麻烦多了。于是，Objective-C允许程序员使用 @property + @synthesize 关键字来自动生成这些代码。于是Objective-C的程序员幸福了。大部分时候根本就不用写getter和setter。</p>
+<p>这样才算是一个正确的 set 函数，Java 同学肯定被吓到了，虽然知道这么写，但这比 Java 麻烦多了。于是，Objective-C 允许程序员使用 @property + @synthesize 关键字来自动生成这些代码（注：Xcode 现在会默认自动添加 @synthesize 关键字）。于是 Objective-C 的程序员幸福了。大部分时候根本就不用写 getter 和 setter。</p>
 
-<p>但是需要小心，Objective-C的accessor不能在init和dealloc函数中使用！如果你在dealloc中这么写，就有问题：</p>
+<p>但是需要小心，Objective-C 的 accessor 不能在 init 和 dealloc 函数中使用！如果你在 dealloc 中这么写，就有问题：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -177,7 +177,7 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">init</span> <span class="p">{</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">init</span> <span class="p">{</span>
 </span><span class='line'>     <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
 </span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>          <span class="n">_count</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSNumber</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithInteger:</span><span class="mi">0</span><span class="p">];</span>
@@ -206,7 +206,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>对于在dealloc中，对应的写法应该是调release:</p>
+<p>对于在 dealloc 中，对应的写法应该是调 release:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

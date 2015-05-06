@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="我每天坐地铁上班和下班，在路上的时间加起来有1个半小时。但有一个好处是：在地铁上，你除了看书也没什么事情可干。于是，最近看完了《从 0 到 1》。这本书的作者是：彼得·蒂尔（Peter Thiel，PayPal的联合创始人，Facebook的第一位外部投资者）。 不过《从 0 到 1》讲了太多， &hellip;">
+  <meta name="description" content="版权说明 本文为InfoQ中文站特供稿件，首发地址为：文章链接。如需转载，请与InfoQ中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本期 iOS &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/09/ios-weekly-42/">iOS移动开发周报-第42期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-09T22:15:52+08:00" pubdate data-updated="true">Apr 9<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/04/facebook-react-native">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Facebook 正式开源 React Native、React 入门实例教程、React Native 通信机制详解等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.csdn.net/article/2015-03-27/2824323-facebook-open-sources-react-native">用 JavaScript 开发移动原生应用，Facebook 正式开源 React Native</a>：Facebook 正式开源了 <a href="https://github.com/facebook/react-native">React Native</a>，不过目前，只有 iOS 版，Android 版还需再等一段时间，这是最新的用 JavaScript 语言开发原生 App 的尝试。Facebook 同时还为 React Native 开发了一款基于 Atom 的 IDE：Nuclide，也已开源。</p></li>
+<li><p><a href="http://weibo.com/p/1001603823955516487761">谷歌发现用于中间人攻击的证书</a>：根据谷歌官方安全博客报道，谷歌发现 CNNIC 颁发了多个针对谷歌域名的用于中间人攻击的证书。该证书冒充成受信任的谷歌的域名，被用于部署到网络防火墙中，用于劫持所有处于该防火墙后的 HTTPS 网络通信，而绕过浏览器警告。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="http://www.jianshu.com/p/1bde36ad9938">《轻松学习 Objective-C 消息转发》</a>：作者在文章中通过一个小例子来讲解什么是消息转发，以及如何消息转发，希望看完这篇文章时大家会彻底的明白 OC 的消息转发机制。</p></li>
+<li><p><a href="http://www.ruanyifeng.com/blog/2015/03/react.html">《React 入门实例教程》</a>：React 起源于 Facebook 的内部项目，因为该公司对市场上所有 JavaScript MVC 框架，都不满意，就决定自己写一套，用来架设 Instagram 的网站。本文是阮一峰原创的入门教程。</p></li>
+<li><p><a href="http://blog.cnbang.net/tech/2698/">《React Native 通信机制详解》</a>：React Native 是 facebook 刚开源的框架，可以用 javascript 直接开发原生 APP，先不说这个框架后续是否能得到大众认可，单从源码来说，这个框架源码里有非常多的设计思想和实现方式值得学习，本文介绍了它最基础的 JavaScript-ObjectC 通信机制。</p></li>
+<li><p><a href="http://onevcat.com/2015/03/cross-platform/">《跨平台开发时代的 (再次) 到来？》</a>：这篇文章主要想谈谈最近又刮起的移动开发跨平台之风，并着重介绍和对比一下像是 Xamarin，NativeScript 和 React Native 之类的东西。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2015/03/22/ios-dev-controversy-2/">《iOS 开发中的争议（二）》</a>：本文作者分享了 iOS 中的一个争议话题：对于 UI 界面的编写工作，到底应该用 xib/storyboard 完成，还是用手写代码来完成？</p></li>
+<li><p><a href="http://tanqisen.github.io/blog/2013/04/19/gcd-block-cycle-retain/">《正确使用 Block 避免 Cycle Retain 和 Crash》</a>：Block 作为 C 语言的扩展，并不是高新技术，和其他语言的闭包或 lambda 表达式是一回事。需要注意的是由于 Objective-C 在 iOS 中不支持 GC 机制，使用 Block 必须自己管理内存，而内存管理正是使用 Block 坑最多的地方，错误的内存管理 要么导致 return cycle 内存泄漏要么内存被提前释放导致 crash。本文介绍了从 Block 实现原理切入，介绍了使用 Block 需要注意的地方。</p></li>
+<li><p><a href="http://tutuge.me/2015/03/29/bind-data-to-gcd-queue/">《为 GCD 队列绑定 NSObject 类型上下文数据-利用 __bridge_retained(transfer) 转移内存管理权》</a>：本文介绍了如何合理运用 <code>__bridge_retained(transfer)</code> 关键字转换对象的内存管理权，让我们自己控制对象的生命周期。</p></li>
+<li><p><a href="http://staltz.com/dont-react/#/">《Don&rsquo;t React》</a>：本文作者从多方面分享了他对于 React 框架的负面看法。通过此文，大家可以更加客观地了解 React 这个框架。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://developer.apple.com/library/ios/samplecode/Lister/Introduction/Intro.html">Lister</a>：Lister 是苹果提供的官方 Demo。包含了 iOS、Mac 和 Apple Watch 版本，并且为这个 demo 分别用 Objective-C 和 Swift 实现了一遍，最后还包括了 30 页的文档。</p></li>
+<li><p><a href="https://github.com/iSimar/HackerNews-React-Native">HackerNews-React-Native</a>：HackerNews-React-Native 是用 React Native 完成的 HackerNews 客户端。</p></li>
+<li><p><a href="https://github.com/recruit-mp/RMPZoomTransitionAnimator">RMPZoomTransitionAnimator</a>：RMPZoomTransitionAnimator 是一个放大缩小的动效开源库，可以实现图片的放大缩小效果。</p></li>
+<li><p><a href="https://github.com/adad184/MMTweenAnimation">MMTweenAnimation</a>：MMTweenAnimation 是一个基于 POP 的扩展，提供了 10 种自定义的动效。</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -338,89 +414,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/03/24/ios-weekly-41/">iOS移动开发周报-第41期</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-24T16:22:45+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/03/evaluate-react-native">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期 iOS 移动开发周报带来如下内容：如何评价 React Native、用纯代码构建一个 Widget、FastImageCache 解析等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://www.cocoachina.com/apple/20150310/11273.html">苹果推出 Apple Watch</a>：3 月 10 日，苹果公司 2015 年春季发布会在美国旧金山芳草地艺术中心召开。苹果在会上宣布推出 Apple Watch，续航时间为 18 小时。Apple Watch 将于 4 月 10 日开始预售，4 月 24 日开始发货。首批发售区域包含中国。</p></li>
-<li><p><a href="http://www.csdn.net/article/2015-03-13/2824206-cocoapods-036-adds-swift-framework">CocoaPods 0.36 正式发布，实现 Swift 和 iOS 8 动态框架支持</a>：CocoaPods 于近日发布了 CocoaPods 0.36 正式版，其最大的改动便是为 iOS 引入了动态框架，并增加了对 AlamoFire、SwiftyJSON 等使用 Swift 所编写的库的支持，此举将影响包括 CocoaPods/Xcodeproj 在内的所有 CocoaPods gems。</p></li>
-<li><p><a href="http://weibo.com/1989324563/C8khmrwB3?ref=&amp;type=comment#_rnd1426425896500">苹果开始整治 iMessage 垃圾信息</a>：苹果在最新的 iOS 更新中，集成了更加方便的举报 iMessage 垃圾信息的功能。这将使得用户可以更方便地举报垃圾信息。</p></li>
-<li><p><a href="http://www.cocoachina.com/programmer/20150316/11339.html">2014 iOS 开发者收入调查报告（二）：企业开发者篇</a>：本次调研以 CocoaChina 网站用户为基础，总样本数量为 3591，调研时间为 2014 年 12 月 16 日-2015 年 1 月 31 日。调查报告的内容涉及开发经验、工作年限、待遇和工资满意度。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://www.zhihu.com/question/27852694/answer/41704172">《如何评价 React Native？》</a>：来自知乎的这个回答详细介绍了 Facebook 即将开源的 React Native 的相关知识，包括核心实现、设计考虑、以及 React Native 的优势和劣势。</p></li>
-<li><p><a href="http://www.jianshu.com/p/221507eb8590">《iOS 开发的一些小技巧篇一》</a>：<a href="http://weibo.com/u/2159267225?from=feed&amp;loc=nickname">@ 武蕴牛 x</a> 总结了 iOS 开发中的一些小技巧。</p></li>
-<li><p><a href="http://www.jianshu.com/p/80ebbb1950ba">《iOS 开发的一些小技巧篇二》</a>：<a href="http://weibo.com/u/2159267225?from=feed&amp;loc=nickname">@ 武蕴牛 x</a> 总结了 iOS 开发中的关于截图的技巧。</p></li>
-<li><p><a href="http://adad184.com/2014/10/29/2014-10-29-how-to-setup-today-extension-programmatically/">《如何用纯代码构建一个 Widget(today extension)》</a>：随着 iOS8 的发布，各种 iPhone 的新玩法出现了，其中最引人关注的就是 today extension(也叫做 widget)。网上有很多相关的文章教你如何编写一个简单的 widget，但是却没有一篇适合我们这种纯代码的拥趸。本文介绍了如何用纯代码的方式来构建一个 widget。</p></li>
-<li><p><a href="http://blog.cnbang.net/tech/2578/">《iOS 图片加载速度极限优化—FastImageCache 解析》</a>：FastImageCache 是 Path 团队开发的一个开源库，用于提升图片的加载和渲染速度，让基于图片的列表滑动起来更顺畅，本文分析了它的实现方式。</p></li>
-<li><p><a href="http://www.cocoachina.com/ios/20150318/11350.html">《Swift 语言 iOS 开发：CALayer 十则示例》</a>：我们在 iOS 应用中看到的都是视图，包括按钮视图、表视图、滑动条视图，还有可以容纳其他视图的父视图等。但你或许不知道在 iOS 中支撑起每个视图的是一个叫做 &ldquo; 图层（layer）&rdquo; 的类，确切地说是 CALayer。本文中您会了解 CALayer 及其工作原理，还有应用 CALayer 打造酷炫效果的十则示例，比如绘制矢量图形、渐变色，甚至是粒子系统。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2015/03/15/ios-dev-controversy-1/">《iOS 开发中的争议（一）》</a>：作者在文章中讨论了关于 Objective-C 语言中如下问题的争议：类的成员变量应该如何定义？</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="https://github.com/qfish/QLImageset">QLImageset</a>：QLImageset 是一个 QuickLook 插件：快速预览 imageset 文件夹包含的图片及其尺寸。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/Yalantis/Persei">Persei</a>：Persei 是一个在顶部显示或隐藏菜单的 Swift 开源库。</p></li>
-<li><p><a href="https://github.com/bryankeller/BLKFlexibleHeightBar">BLKFlexibleHeightBar</a>：BLKFlexibleHeightBar 是一个使导航栏高度可以动态变化的 UI 库。</p></li>
-<li><p><a href="https://github.com/hyperoslo/Form">Form</a>：Form 是一个方便开发者创建表单填写工作的 UI 库。</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -442,6 +435,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/05/06/ios-weekly-44/">iOS移动开发周报-第44期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/01/apple-release-analytics-beta/">苹果推出了官方的分析工具</a>
@@ -485,10 +482,6 @@
     
       <li class="post">
         <a href="/blog/2015/03/01/ios-weekly-39/">iOS移动开发周报-第39期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/02/05/ios-weekly-38/">iOS移动开发周报-第38期</a>
       </li>
     
   </ul>

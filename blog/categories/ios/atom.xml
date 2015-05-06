@@ -4,7 +4,7 @@
   <title><![CDATA[Category: iOS | 唐巧的技术博客]]></title>
   <link href="http://blog.devtang.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://blog.devtang.com/"/>
-  <updated>2015-05-06T19:57:05+08:00</updated>
+  <updated>2015-05-06T20:02:13+08:00</updated>
   <id>http://blog.devtang.com/</id>
   <author>
     <name><![CDATA[唐巧]]></name>
@@ -12,6 +12,64 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS移动开发周报-第44期]]></title>
+    <link href="http://blog.devtang.com/blog/2015/05/06/ios-weekly-44/"/>
+    <updated>2015-05-06T19:59:09+08:00</updated>
+    <id>http://blog.devtang.com/blog/2015/05/06/ios-weekly-44</id>
+    <content type="html"><![CDATA[<h3>版权说明</h3>
+
+<p>本文为 InfoQ 中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/05/ios-weekly-apple-watch">文章链接</a>。如需转载，请与 InfoQ 中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Apple Watch 产品体验报告、苹果推出了官方的分析工具、iOS 图形性能进阶与测试、iOS 应用架构谈等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.jianshu.com/p/b4e8f2cbcd6d">《Apple Watch 产品体验报告》</a>：文章从各个维度对 Apple Watch 进行了体验总结，包括外观感受、交互设计、功能场景分析、差异化分析等。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2015/05/01/apple-release-analytics-beta/">《苹果推出了官方的分析工具》</a>：苹果在五月一号这天，向开发者发送邮件，邀请参与他自家的分析工具的试用。从苹果的介绍中看出这个工具的特点是：无需额外操作，相关功能是直接集成进 iOS 系统中的，对应用来说没有任何其它的代价。另外由于苹果的限制，一些功能是第三方工具是无法提供的（例如统计运营活动效果、统计查看 AppStore 页面效果等）。苹果提供这样的工具，有助于开发者更加有效地开展市场推广和运营相关的工作。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="https://developer.apple.com/swift/blog/?id=27">《Increasing Performance by Reducing Dynamic Dispatch》</a>：来自苹果官方博客的文章，介绍了通过减少动态分发，来提高 Swift 程序的执行效率的办法。具体做法上，文章分享了使用 <code>final</code> 关键字，使用 <code>private</code> 关键字，以及使用 <code>Whole Module Optimization</code> 编译参数来进行深度优化。</p></li>
+<li><p><a href="http://iosre.com/t/mac-os-x-dash-v2-2-0/1132">《Mac OS X 上逆向 Dash v2.2.0 过程分析》</a>：不知不觉，<a href="http://iosre.com/">http://iosre.com/</a> 已经成为国内著名的 iOS 安全方面的网站了。本文在逆向 Dash 的同时，也揭露了 Dash 使用的防逆向手段，学习本文可以了解到常见的逆向攻击手段和防范方法（例如：二进制的校验），提高大家的安全意识。</p></li>
+<li><p><a href="http://www.jianshu.com/p/1f24a39f3c4f">《Scrapy+Flask+Mongodb+Swift 开发全攻略（1）》</a>：本文试图实现一个人完成获得资源、编写服务端、iOS 客户端、服务端部署上线、客户端上 AppStore 的完整过程。其中，Flask 是 python 写的一个非常有名的 web 开发框架，Mongodb 是一个非关系型数据库。</p></li>
+<li><p><a href="https://github.com/100mango/zen/blob/master/WWDC%E5%BF%83%E5%BE%97%EF%BC%9AAdvanced%20Graphics%20and%20Animations%20for%20iOS%20Apps/Advanced%20Graphics%20and%20Animations%20for%20iOS%20Apps.md">《iOS 图形性能进阶与测试》</a>：这篇文章主要是学习完 Advanced Graphics and Animations for iOS Apps 这个 session 后的总结和相应细节的延伸和细化。主要内容为图形性能与测试工具这两个章节。</p></li>
+<li><p><a href="http://lvwenhan.com/ios/450.html">《Auto Layout 使用心得（六）—— 制造炫酷的下拉刷新动画》</a>：本文中，我们将一起使用 Auto Layout 技术制造一个炫酷的下拉刷新动画。Auto Layout 除了在布局的时候比较繁琐以外，还有一个经常被人吐槽的点：让许多 UIView.animateWithDuration 失效，甚至在界面上出现 “反方向动画” 的视觉效果。本文中我们将主要讲述制造下拉刷新动画的过程，关于 Auto Layout 与动画的详细配合我们以后再一起仔细探究。</p></li>
+<li><p><a href="http://nilsun.github.io/iPhone-watch-communication/">《Apple Watch 和 iPhone 通信实践》</a>：本文主要从实践的角度分析 iPhone 和 Watch 的通信框架。</p></li>
+<li><p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html">《iOS 应用架构谈 &ndash; view 层的组织和调用方案》</a>：文章比较长，介绍了涉及 view 的各方面的经验。分享作者最后的总结：要做一个 View 层架构，主要就是从以下三方面入手：制定良好的规范、选择好合适的模式（MVC、MVCS、MVVM、VIPER）、根据业务情况针对 <code>ViewController</code> 做好拆分，提供一些小工具方便开发。</p></li>
+<li><p><a href="http://blog.csdn.net/agdsdl/article/details/45218987#0-tsina-1-51027-397232819ff9a47a7b7e80a40613cfe1">《CocoaPods 建立私有仓库》</a>：个人或公司在开发过程中，会积累很多可以复用的代码包，有些我们不想开源，又想像开源库一样在 CocoaPods 中管理它们，那么通过私有仓库来管理就很必要。文章介绍了建立私有仓库的具体操作方法。</p></li>
+<li><p><a href="http://www.jianshu.com/p/2ed5f7444900">《实时显示 iOS 的编写 UI 代码效果》</a>：编写 iOS 应用 UI 的方式大概有两种，一种是 Storyboard/Xib，另一种是手写代码。采用 Storyboard/Xib 方式组织 UI，由于提供可视化的特性，只要从 UI 库中拖动 UI 控件，便可以显示结果，极大地提高开发速度。但面临一个问题就是多人协作开发，由于所有的 UI 都放在同一个 Storyboard 文件中，使用 Git/SVN 合并代码就会出现冲突。多人协作开发还不是主要问题，有人提出可以创建多个 Storyboard 来分开 UI 编写，而 Storyboard/Xib 最主要问题是代码复用性比较差。所以有些人就选择手写 UI 代码，这样不仅可以解决多人协作开发问题，而且通过自定义控件在多个 View 使用。但每次手写 UI 代码后都要编译、构建和运行，最后在模拟器显示，这样会拖慢开发速度。如果每次修改 UI 控件后，保存修改便实时在模拟器显示修改后结果，就可以极大的提高编写 UI 的速度。本文介绍了一种办法可以实时显示 iOS 编写的 UI 代码效果。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="http://fuckingclangwarnings.com/">《Which Clang Warning Is Generating This Message》</a>：Clang 的警告与语义对照表。通过它可以更加方便地知道 Clang 的警告所表达的意思。</p></li>
+<li><p><a href="https://github.com/PonyCui/PPEtcHosts">PPEtcHosts</a>：PPEtcHosts 是一个小工具，可以在应用内实现域名 Host 绑定，可以解决真机无法修改 <code>/etc/hosts</code> 的问题。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/KittenYang/KYGooeyMenu">KYGooeyMenu</a>：KYGooeyMenu 是一个具有 Gooey Effects 带粘性的扇形菜单控件。</p></li>
+<li><p><a href="https://github.com/Draveness/DKNightVersion">DKNightVersion</a>：DKNightVersion 是一个支持夜间模式切换的框架。</p></li>
+<li><p><a href="https://github.com/forkingdog/UITableView-FDTemplateLayoutCell">UITableView-FDTemplateLayoutCell</a>：UITableView-FDTemplateLayoutCell 是一个方便缓存 UITableViewCell 的高度的框架。</p></li>
+<li><p><a href="https://github.com/shaojiankui/IOS-Categories">IOS-Categories</a>：IOS-Categories 是一个收集各种有用的 Objective-C 语言的 Category 的项目。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[苹果推出了官方的分析工具]]></title>
@@ -339,62 +397,6 @@
 <li><p><a href="https://github.com/iSimar/HackerNews-React-Native">HackerNews-React-Native</a>：HackerNews-React-Native 是用 React Native 完成的 HackerNews 客户端。</p></li>
 <li><p><a href="https://github.com/recruit-mp/RMPZoomTransitionAnimator">RMPZoomTransitionAnimator</a>：RMPZoomTransitionAnimator 是一个放大缩小的动效开源库，可以实现图片的放大缩小效果。</p></li>
 <li><p><a href="https://github.com/adad184/MMTweenAnimation">MMTweenAnimation</a>：MMTweenAnimation 是一个基于 POP 的扩展，提供了 10 种自定义的动效。</p></li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iOS移动开发周报-第41期]]></title>
-    <link href="http://blog.devtang.com/blog/2015/03/24/ios-weekly-41/"/>
-    <updated>2015-03-24T16:22:45+08:00</updated>
-    <id>http://blog.devtang.com/blog/2015/03/24/ios-weekly-41</id>
-    <content type="html"><![CDATA[<h3>版权说明</h3>
-
-<p>本文为InfoQ中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/03/evaluate-react-native">文章链接</a>。如需转载，请与InfoQ中文站联系。</p>
-
-<h3>前言</h3>
-
-<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
-
-<p>【摘要】：本期 iOS 移动开发周报带来如下内容：如何评价 React Native、用纯代码构建一个 Widget、FastImageCache 解析等。</p>
-
-<h2>新闻</h2>
-
-<ol>
-<li><p><a href="http://www.cocoachina.com/apple/20150310/11273.html">苹果推出 Apple Watch</a>：3 月 10 日，苹果公司 2015 年春季发布会在美国旧金山芳草地艺术中心召开。苹果在会上宣布推出 Apple Watch，续航时间为 18 小时。Apple Watch 将于 4 月 10 日开始预售，4 月 24 日开始发货。首批发售区域包含中国。</p></li>
-<li><p><a href="http://www.csdn.net/article/2015-03-13/2824206-cocoapods-036-adds-swift-framework">CocoaPods 0.36 正式发布，实现 Swift 和 iOS 8 动态框架支持</a>：CocoaPods 于近日发布了 CocoaPods 0.36 正式版，其最大的改动便是为 iOS 引入了动态框架，并增加了对 AlamoFire、SwiftyJSON 等使用 Swift 所编写的库的支持，此举将影响包括 CocoaPods/Xcodeproj 在内的所有 CocoaPods gems。</p></li>
-<li><p><a href="http://weibo.com/1989324563/C8khmrwB3?ref=&amp;type=comment#_rnd1426425896500">苹果开始整治 iMessage 垃圾信息</a>：苹果在最新的 iOS 更新中，集成了更加方便的举报 iMessage 垃圾信息的功能。这将使得用户可以更方便地举报垃圾信息。</p></li>
-<li><p><a href="http://www.cocoachina.com/programmer/20150316/11339.html">2014 iOS 开发者收入调查报告（二）：企业开发者篇</a>：本次调研以 CocoaChina 网站用户为基础，总样本数量为 3591，调研时间为 2014 年 12 月 16 日-2015 年 1 月 31 日。调查报告的内容涉及开发经验、工作年限、待遇和工资满意度。</p></li>
-</ol>
-
-
-<h2>教程</h2>
-
-<ol>
-<li><p><a href="http://www.zhihu.com/question/27852694/answer/41704172">《如何评价 React Native？》</a>：来自知乎的这个回答详细介绍了 Facebook 即将开源的 React Native 的相关知识，包括核心实现、设计考虑、以及 React Native 的优势和劣势。</p></li>
-<li><p><a href="http://www.jianshu.com/p/221507eb8590">《iOS 开发的一些小技巧篇一》</a>：<a href="http://weibo.com/u/2159267225?from=feed&amp;loc=nickname">@ 武蕴牛 x</a> 总结了 iOS 开发中的一些小技巧。</p></li>
-<li><p><a href="http://www.jianshu.com/p/80ebbb1950ba">《iOS 开发的一些小技巧篇二》</a>：<a href="http://weibo.com/u/2159267225?from=feed&amp;loc=nickname">@ 武蕴牛 x</a> 总结了 iOS 开发中的关于截图的技巧。</p></li>
-<li><p><a href="http://adad184.com/2014/10/29/2014-10-29-how-to-setup-today-extension-programmatically/">《如何用纯代码构建一个 Widget(today extension)》</a>：随着 iOS8 的发布，各种 iPhone 的新玩法出现了，其中最引人关注的就是 today extension(也叫做 widget)。网上有很多相关的文章教你如何编写一个简单的 widget，但是却没有一篇适合我们这种纯代码的拥趸。本文介绍了如何用纯代码的方式来构建一个 widget。</p></li>
-<li><p><a href="http://blog.cnbang.net/tech/2578/">《iOS 图片加载速度极限优化—FastImageCache 解析》</a>：FastImageCache 是 Path 团队开发的一个开源库，用于提升图片的加载和渲染速度，让基于图片的列表滑动起来更顺畅，本文分析了它的实现方式。</p></li>
-<li><p><a href="http://www.cocoachina.com/ios/20150318/11350.html">《Swift 语言 iOS 开发：CALayer 十则示例》</a>：我们在 iOS 应用中看到的都是视图，包括按钮视图、表视图、滑动条视图，还有可以容纳其他视图的父视图等。但你或许不知道在 iOS 中支撑起每个视图的是一个叫做 &ldquo; 图层（layer）&rdquo; 的类，确切地说是 CALayer。本文中您会了解 CALayer 及其工作原理，还有应用 CALayer 打造酷炫效果的十则示例，比如绘制矢量图形、渐变色，甚至是粒子系统。</p></li>
-<li><p><a href="http://blog.devtang.com/blog/2015/03/15/ios-dev-controversy-1/">《iOS 开发中的争议（一）》</a>：作者在文章中讨论了关于 Objective-C 语言中如下问题的争议：类的成员变量应该如何定义？</p></li>
-</ol>
-
-
-<h2>工具</h2>
-
-<ol>
-<li><a href="https://github.com/qfish/QLImageset">QLImageset</a>：QLImageset 是一个 QuickLook 插件：快速预览 imageset 文件夹包含的图片及其尺寸。</li>
-</ol>
-
-
-<h2>开源项目</h2>
-
-<ol>
-<li><p><a href="https://github.com/Yalantis/Persei">Persei</a>：Persei 是一个在顶部显示或隐藏菜单的 Swift 开源库。</p></li>
-<li><p><a href="https://github.com/bryankeller/BLKFlexibleHeightBar">BLKFlexibleHeightBar</a>：BLKFlexibleHeightBar 是一个使导航栏高度可以动态变化的 UI 库。</p></li>
-<li><p><a href="https://github.com/hyperoslo/Form">Form</a>：Form 是一个方便开发者创建表单填写工作的 UI 库。</p></li>
 </ol>
 
 ]]></content>

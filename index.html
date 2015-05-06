@@ -9,7 +9,7 @@
   <meta name="author" content="唐巧">
 
   
-  <meta name="description" content="苹果在五月一号这天，向开发者发送邮件，邀请参与他自家的分析工具的试用。虽然现在我们公司猿题库的帐号还处于排队等待的状态中，不过我们可以从苹果的介绍中看出这个工具的特点 无需额外操作 You won’t need any additional code or app updates, and &hellip;">
+  <meta name="description" content="版权说明 本文为 InfoQ 中文站特供稿件，首发地址为：文章链接。如需转载，请与 InfoQ 中文站联系。 前言 欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 @唐巧_boy 即可。 【摘要】：本期 iOS &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,91 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/05/06/ios-weekly-44/">iOS移动开发周报-第44期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-06T19:59:09+08:00" pubdate data-updated="true">May 6<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>版权说明</h3>
+
+<p>本文为 InfoQ 中文站特供稿件，首发地址为：<a href="http://www.infoq.com/cn/news/2015/05/ios-weekly-apple-watch">文章链接</a>。如需转载，请与 InfoQ 中文站联系。</p>
+
+<h3>前言</h3>
+
+<p>欢迎国内的iOS同行或技术作者向我提交周报线索，线索可以是新闻、教程、开发工具或开源项目，将相关文章的简介和链接在微博上发布并 <a href="http://weibo.com/tangqiaoboy">@唐巧_boy</a> 即可。</p>
+
+<p>【摘要】：本期 iOS 移动开发周报带来如下内容：Apple Watch 产品体验报告、苹果推出了官方的分析工具、iOS 图形性能进阶与测试、iOS 应用架构谈等。</p>
+
+<h2>新闻</h2>
+
+<ol>
+<li><p><a href="http://www.jianshu.com/p/b4e8f2cbcd6d">《Apple Watch 产品体验报告》</a>：文章从各个维度对 Apple Watch 进行了体验总结，包括外观感受、交互设计、功能场景分析、差异化分析等。</p></li>
+<li><p><a href="http://blog.devtang.com/blog/2015/05/01/apple-release-analytics-beta/">《苹果推出了官方的分析工具》</a>：苹果在五月一号这天，向开发者发送邮件，邀请参与他自家的分析工具的试用。从苹果的介绍中看出这个工具的特点是：无需额外操作，相关功能是直接集成进 iOS 系统中的，对应用来说没有任何其它的代价。另外由于苹果的限制，一些功能是第三方工具是无法提供的（例如统计运营活动效果、统计查看 AppStore 页面效果等）。苹果提供这样的工具，有助于开发者更加有效地开展市场推广和运营相关的工作。</p></li>
+</ol>
+
+
+<h2>教程</h2>
+
+<ol>
+<li><p><a href="https://developer.apple.com/swift/blog/?id=27">《Increasing Performance by Reducing Dynamic Dispatch》</a>：来自苹果官方博客的文章，介绍了通过减少动态分发，来提高 Swift 程序的执行效率的办法。具体做法上，文章分享了使用 <code>final</code> 关键字，使用 <code>private</code> 关键字，以及使用 <code>Whole Module Optimization</code> 编译参数来进行深度优化。</p></li>
+<li><p><a href="http://iosre.com/t/mac-os-x-dash-v2-2-0/1132">《Mac OS X 上逆向 Dash v2.2.0 过程分析》</a>：不知不觉，<a href="http://iosre.com/">http://iosre.com/</a> 已经成为国内著名的 iOS 安全方面的网站了。本文在逆向 Dash 的同时，也揭露了 Dash 使用的防逆向手段，学习本文可以了解到常见的逆向攻击手段和防范方法（例如：二进制的校验），提高大家的安全意识。</p></li>
+<li><p><a href="http://www.jianshu.com/p/1f24a39f3c4f">《Scrapy+Flask+Mongodb+Swift 开发全攻略（1）》</a>：本文试图实现一个人完成获得资源、编写服务端、iOS 客户端、服务端部署上线、客户端上 AppStore 的完整过程。其中，Flask 是 python 写的一个非常有名的 web 开发框架，Mongodb 是一个非关系型数据库。</p></li>
+<li><p><a href="https://github.com/100mango/zen/blob/master/WWDC%E5%BF%83%E5%BE%97%EF%BC%9AAdvanced%20Graphics%20and%20Animations%20for%20iOS%20Apps/Advanced%20Graphics%20and%20Animations%20for%20iOS%20Apps.md">《iOS 图形性能进阶与测试》</a>：这篇文章主要是学习完 Advanced Graphics and Animations for iOS Apps 这个 session 后的总结和相应细节的延伸和细化。主要内容为图形性能与测试工具这两个章节。</p></li>
+<li><p><a href="http://lvwenhan.com/ios/450.html">《Auto Layout 使用心得（六）—— 制造炫酷的下拉刷新动画》</a>：本文中，我们将一起使用 Auto Layout 技术制造一个炫酷的下拉刷新动画。Auto Layout 除了在布局的时候比较繁琐以外，还有一个经常被人吐槽的点：让许多 UIView.animateWithDuration 失效，甚至在界面上出现 “反方向动画” 的视觉效果。本文中我们将主要讲述制造下拉刷新动画的过程，关于 Auto Layout 与动画的详细配合我们以后再一起仔细探究。</p></li>
+<li><p><a href="http://nilsun.github.io/iPhone-watch-communication/">《Apple Watch 和 iPhone 通信实践》</a>：本文主要从实践的角度分析 iPhone 和 Watch 的通信框架。</p></li>
+<li><p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html">《iOS 应用架构谈 &ndash; view 层的组织和调用方案》</a>：文章比较长，介绍了涉及 view 的各方面的经验。分享作者最后的总结：要做一个 View 层架构，主要就是从以下三方面入手：制定良好的规范、选择好合适的模式（MVC、MVCS、MVVM、VIPER）、根据业务情况针对 <code>ViewController</code> 做好拆分，提供一些小工具方便开发。</p></li>
+<li><p><a href="http://blog.csdn.net/agdsdl/article/details/45218987#0-tsina-1-51027-397232819ff9a47a7b7e80a40613cfe1">《CocoaPods 建立私有仓库》</a>：个人或公司在开发过程中，会积累很多可以复用的代码包，有些我们不想开源，又想像开源库一样在 CocoaPods 中管理它们，那么通过私有仓库来管理就很必要。文章介绍了建立私有仓库的具体操作方法。</p></li>
+<li><p><a href="http://www.jianshu.com/p/2ed5f7444900">《实时显示 iOS 的编写 UI 代码效果》</a>：编写 iOS 应用 UI 的方式大概有两种，一种是 Storyboard/Xib，另一种是手写代码。采用 Storyboard/Xib 方式组织 UI，由于提供可视化的特性，只要从 UI 库中拖动 UI 控件，便可以显示结果，极大地提高开发速度。但面临一个问题就是多人协作开发，由于所有的 UI 都放在同一个 Storyboard 文件中，使用 Git/SVN 合并代码就会出现冲突。多人协作开发还不是主要问题，有人提出可以创建多个 Storyboard 来分开 UI 编写，而 Storyboard/Xib 最主要问题是代码复用性比较差。所以有些人就选择手写 UI 代码，这样不仅可以解决多人协作开发问题，而且通过自定义控件在多个 View 使用。但每次手写 UI 代码后都要编译、构建和运行，最后在模拟器显示，这样会拖慢开发速度。如果每次修改 UI 控件后，保存修改便实时在模拟器显示修改后结果，就可以极大的提高编写 UI 的速度。本文介绍了一种办法可以实时显示 iOS 编写的 UI 代码效果。</p></li>
+</ol>
+
+
+<h2>工具</h2>
+
+<ol>
+<li><p><a href="http://fuckingclangwarnings.com/">《Which Clang Warning Is Generating This Message》</a>：Clang 的警告与语义对照表。通过它可以更加方便地知道 Clang 的警告所表达的意思。</p></li>
+<li><p><a href="https://github.com/PonyCui/PPEtcHosts">PPEtcHosts</a>：PPEtcHosts 是一个小工具，可以在应用内实现域名 Host 绑定，可以解决真机无法修改 <code>/etc/hosts</code> 的问题。</p></li>
+</ol>
+
+
+<h2>开源项目</h2>
+
+<ol>
+<li><p><a href="https://github.com/KittenYang/KYGooeyMenu">KYGooeyMenu</a>：KYGooeyMenu 是一个具有 Gooey Effects 带粘性的扇形菜单控件。</p></li>
+<li><p><a href="https://github.com/Draveness/DKNightVersion">DKNightVersion</a>：DKNightVersion 是一个支持夜间模式切换的框架。</p></li>
+<li><p><a href="https://github.com/forkingdog/UITableView-FDTemplateLayoutCell">UITableView-FDTemplateLayoutCell</a>：UITableView-FDTemplateLayoutCell 是一个方便缓存 UITableViewCell 的高度的框架。</p></li>
+<li><p><a href="https://github.com/shaojiankui/IOS-Categories">IOS-Categories</a>：IOS-Categories 是一个收集各种有用的 Objective-C 语言的 Category 的项目。</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/05/01/apple-release-analytics-beta/">苹果推出了官方的分析工具</a></h1>
     
     
@@ -141,224 +226,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/24/qcon-2015-note/">QCon 参会笔记</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-24T21:24:28+08:00" pubdate data-updated="true">Apr 24<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>前言</h2>
-
-<p>这两天在北京国际会议中心，QCon 全球软件开发大会正如期举行，我有幸参加了此次会议。QCon 此次参会的人数远远超过了主办方的预期，以至于提前关闭了报名通道。大会现场很多演讲人员爆满，现场周围都站满了人。</p>
-
-<p>在会议上，我不但听了很多感兴趣的演讲，还见到了很多在网上多次交流，但从未谋面的好朋友，也认识了很多新朋友。这次交流对我来说收获挺多，在此总结一下。</p>
-
-<h2>和 gaosboy 聊天</h2>
-
-<p><a href="http://jiajun.org/">gaosboy</a> 是 <a href="http://segmentfault.com/">SegmentFault</a> 的联合创始人，现在在天猫。他在天猫工作两年了，在做 iOS 基础架构方面的事情。我和他之前在网上交流多次，也是由于他的引荐，我才加入了 InfoQ 的编辑团队。我和他交流了一些团队发展的问题，以及 iOS 的一些技术细节。</p>
-
-<h3>关于应用架构和开发方式</h3>
-
-<p>关于应用开发，天猫是将产品划分成很多组，每个小组的功能做完通过测试后，再 merge 到发布分支，发布分支要发布前，再进行一次集成测试，就可以上线了。这样可以各组之间不必完全同步进行开发，做完的就可以上线，没做完的小组顶多是赶不上某些上线，不会影响别的组的工作。</p>
-
-<p>天猫也做了很多方便后台定制客户端的工作，例如用 JSON 来定制界面，又如将 UI 控件进行标准化。通过和他的交流，我能感受到天猫的产品是很偏重运营的，所以他们在做技术架构的时候，会考虑到怎么方便运营同事能够在后台快速配置生成运营相关的界面。某一方面，他们在努力尝试跨平台的各种方案，也是为了解决运营上的快速变化和配置便捷的需求。这让我认识到，其实没有绝对意义上标准的应用架构，好的应用架构应该是与自己的产品特点紧密联系的，这样才是最合适的。</p>
-
-<h3>关于 UIWebView 与 其它界面的混排</h3>
-
-<p>gaosboy 也给我分享了关于原生界面和 UIWebView 混合排版的一些技巧，还挺有意思的。如果做过这方面工作的朋友就会知道，UIWebView 如果外层再套 UIScrollView，在内部和外部都可以上下滑动时，体验其实是不太好的，通常的做法是把内部的 UIWebView 高度完全展开，使得内部不再可以滑动，然后只用滑动外层的 UIScrollView 即可。</p>
-
-<p>但是这个方案也有一些问题，就是 UIWebView 内容的高度并不是可以很方便地获取的。因为 UIWebView 中的图片资源会异步加载，加上一些 JavaScript 逻辑也可能在 DOM 加载完成后二次操作 DOM 做界面调整，所以原生层很难方便地知道 UIWebView 的高度。</p>
-
-<p>gaosboy 给我分享了他在 SegmentFault 使用的技巧：利用 KVO 来监控 UIWebView 的 <code>contentSize</code> 的变化。这样可以随时知道 UIWebView 的内容高度有变化，然后就可以做相应的调整了。</p>
-
-<p>gaosboy 另外还给我分享了一个 “黑科技”，即将原生的控件直接用 <code>addSubView</code> 插入到 UIWebView 的内部，然后在 UIWebView 内部用 css 控制相应的 padding ，给原生的控件留出相应的空白位置。</p>
-
-<p>这个方案的优点是：这种办法可以保证整个界面只需要一个 UIWebView 即可完成。否则用之前的办法，如果某个界面有几个不相连的地方要用 UIWebView 展示，就得实例化多个 UIWebView 了。</p>
-
-<p>但之所以把它称做 “黑科技”，是因为这种方法也有一些缺点：</p>
-
-<ul>
-<li>一个是直接往系统控件里面插子 view 这种操作有很大风险。因为你不知道哪一天 iOS 系统升级后，这些控件内部的机制有没有调整，会不会造成这种黑科技挂掉。典型的例子就是 iOS8 刚升级那阵，微信的 ActionSheet 都弹不出来了。另外 iOS 8.3 的时候，我记得微信也出现过返回键失灵的情况。这些都是基于系统控件的一些内部机制做了一些事情，由于系统升级机制改变而受到的影响。</li>
-<li>由于 padding 是事先留好的，如果是往 UIWebView 的中间插入元素，那么当页面调整后，需要重新更新控件的位置。</li>
-</ul>
-
-
-<p>但是，这个方案当前确实被 gaosboy 他们在天猫采用过，所以我觉得也是一个挺有意思的、在某些实际场景下可以考虑的方案。</p>
-
-<h2>Native 和 Web 融合 &ndash; 听天猫前端开发专家鬼道（徐凯）的分享</h2>
-
-<p>鬼道老师所在的团队是最先尝试使用 React Native 的，之前我总结的 iOS 开发周报中的好几篇文章都是出自他们团队。我在这里将他的分享简单整理如下。</p>
-
-<h3>关于 WebView</h3>
-
-<p>鬼道首先分享了 WebView 在客户端的问题和特点，主要有：</p>
-
-<ul>
-<li>首次加载慢 &ndash; 用本地 zip 包来解决</li>
-<li>长列表占内存 &ndash; 用他们开源出来的 xList 来解决（类似 UITableView 的复用方案，不过我搜了一下，只找到一个 0 star 的项目：<a href="https://github.com/redcatmiss/xlist">xlist</a>，很可能找错了）</li>
-<li>动画、w3c 慢</li>
-<li>需要做 Hybird API</li>
-<li>更新快</li>
-<li>可以用 Hotpatch 来修复线上问题</li>
-<li>他们做了一套叫 Windvane 的框架，可以对 WebView 的强化，对缓存和网络的扩展。他说好象也开源了，不过我没有搜到，应该是没有开源。</li>
-</ul>
-
-
-<p>他们另外做了 WebView Crash 监控，通过冷加载，重构，把 Crash 率从 0.7% 降到 0.1%。</p>
-
-<p>分享中还涉及一个技巧：把两倍的图的质量调整到 50%，以节省 WebView 的内存占用。</p>
-
-<h3>React Native</h3>
-
-<p>Native 可以带来更好的人机交互体验：</p>
-
-<ul>
-<li>手势识别</li>
-<li>动画效果</li>
-<li>原生控件</li>
-<li>更合适的线程模型（如图象解码，文本渲染）</li>
-</ul>
-
-
-<p>Web 上的高效的开发效率和发布能力</p>
-
-<p>业界现在使用 React Native 的应用:</p>
-
-<ul>
-<li>FB ads/F8</li>
-<li>Chinese Flashcards</li>
-<li>天猫</li>
-</ul>
-
-
-<p>比较重要的是，鬼道分享了 React Native 几个重要的性能指标：</p>
-
-<ul>
-<li>内存：React Native 内存上的优势相对 WebView 比较明显，和原生的稍多一点。</li>
-<li>CPU：CPU 上也比 WebView 有优势</li>
-<li>启动时间：比 WebView 快 1 倍的样子</li>
-<li>体积：我问了一下，几百 K 而已</li>
-</ul>
-
-
-<p>要使用 React Native，基础环境还需要的工作：</p>
-
-<ul>
-<li>埋点方案</li>
-<li>缓存打包方案</li>
-<li>网络改造</li>
-<li>Framework 集成</li>
-<li>发布机制改造</li>
-<li>jsbundle 优化</li>
-</ul>
-
-
-<h2>Semi-Hybrid App Framework &ndash; Geek Zoo Studio 联合创始人 郭虹宇</h2>
-
-<p>老郭的项目说实话最早应该是被我关注到的，当时他还在做 BeeFramework。他在阿里技术沙龙的第一次分享是我邀请的，他的第一篇采访稿是我代表 InfoQ 做的。老郭一直在尝试 Semi-Hybrid 这种混合编程方案，这个也是我个人挺感兴趣的一个技术方向。</p>
-
-<p>由于我私下和他交流得太多，他的项目我也非常关注，这个分享我获得的新东西不多。但是还是给大家简单介绍一下老郭的这个项目吧。</p>
-
-<p>老郭自己实现了一套浏览器的排版引擎，然后可以将正常的 HTML 和 CSS “翻译” 成原生的控件，这样就可以用 HTML 和 CSS 来写界面了。整个框架使用起来还是很cool的，大家去 star 一下他的这个项目吧，地址是：<a href="https://github.com/hackers-painters/samurai-native">samurai-native</a>。</p>
-
-<p>最后多说一句，我觉得老郭的方案和 React Native 不是竞争关系。因为这两个框架解决问题的思路完全不一样。如果没有更新逻辑的需求，老郭的方案可能更适合天猫团队。当然，不管是samurai-native还是react native，现在都还没有开源出对 Android端的支持，不过这都只是时间问题。</p>
-
-<h2>移动时代用户端问题高效诊断 &ndash; 腾讯社交网络运维负责人 马玉明</h2>
-
-<p>主要讲了移动 App 优化、云诊断技术架构、未来展望。</p>
-
-<p>客户端优化：</p>
-
-<ul>
-<li>网络定时驱动到事件驱动</li>
-<li>TCP 粘包和半包处理</li>
-<li>网络线程</li>
-</ul>
-
-
-<p>网关劫持：</p>
-
-<ul>
-<li>下发 HTTP 页面&mdash;检测 html 页面并且 webview 展示</li>
-<li>下发错误数据</li>
-<li>协议和端口限制&mdash;后台优化，客户端轮换 ip。私有协议用 443 端口成功率比较高。</li>
-<li>异步启动的协议和端口限制</li>
-<li>协议包头（异步）检测劫持</li>
-</ul>
-
-
-<p>移动网络容灾调度：</p>
-
-<ul>
-<li>server iplist 拉取和 push</li>
-<li>移动终端网络质量数据监控</li>
-<li>支持版本、地区、运营商、ip 段，qq 号的调度</li>
-<li>具备断网、失效身份、踢下线、屏蔽命令字、进程自杀等能力</li>
-</ul>
-
-
-<p>其中的很多问题我们都曾经遇到过，比如被运营商封禁这种事情。私下和马玉明聊天，他说他们都不敢把一些内容放到 qq.com 之外的其它域名，因为由于 QQ 的流量很大，运营商是不封禁的，而其它域名，一旦流量太大，很可能就被运营商给封禁了。所以在这方面，由于有移动运营商这一层，在运维上还有挺多事情需要做的。</p>
-
-<p>最后马玉明成分享了他们的云诊断平台：<a href="http://huatuo.qq.com">http://huatuo.qq.com</a> 。</p>
-
-<h2>美团移动平台背后的技术 &ndash; 陈晓亮</h2>
-
-<p>陈晓亮也从美团的业务出发，介绍了他们的做法。具体细节和最先提到的 gaosboy 的做法不同，但都是为了与自己的业务模式契合。</p>
-
-<p>简单来说，晓亮他们用平台 + 频道来解决业务线种类多、差异大的问题。用 CocoaPods 、Jenkins 等来做代码的依赖和集成。</p>
-
-<p>另外，他们利用类似注册的方法，来解决模块之间的解耦。他们把这个方法叫做 Protal。我听着感觉和 Android 的发 Intent 类似。即每个页面可以向一个中心注册，说我提供哪些服务，然后这个中心就知道每个服务应该用哪个类来处理。当要进行服务切换时，这个中心来负责做相应类的实例化，页面跳转等逻辑。服务在 iOS 里面可以用自定义的 url 来表示。注册中心可以拿一个单例来实现。</p>
-
-<p>关于这种页面之前解耦，其实最早 Facebook 的 three20 框架就有。不过 Facebook 把它叫做 Router。three20 被废弃之后，也有很多人开源相应的解决方案。我记得 gaosboy 就开源过 <a href="https://github.com/gaosboy/urlmanager">urlmanager</a>， github 上也有一个叫 <a href="https://github.com/Huohua/HHRouter">HHRouter</a> 的开源库，大家感兴趣可以自已学习下。</p>
-
-<p>另外我才知道，美团他们大量使用了 ReactiveCocoa，有机会真是想好好讨论一下。</p>
-
-<p>这次分享也见到了同在美团的梁士兴，我们以前一起在 IBM 的 Symphony 项目组实习过。</p>
-
-<h2>谷歌，投资，创业：懂技术的优势和通病 &ndash;  技德科技 CEO 周哲</h2>
-
-<p>这位 Google 的第 103 号员工在财务自由之后，做了一段天使投资人，然后选择了创业。他给我们讲了他在谷歌、投资、创业中的故事。</p>
-
-<p>在看完《从 0 到 1》之后，再听他的故事，就觉得更加有趣了。因为你会发现，《从 0 到 1》里面提到的，“发现秘密” 这件事情，真是的非常困难的。Google 在早期，在很长一段时间内都没有考虑用广告来赢利，在最初做 Adwords 的时候，也只有 2.5 个工程师在做，而且这些工程师从来不点广告，认为这个东西做出来没人用。</p>
-
-<p>那事情的结果大家都知道了，广告成了搜索引擎公司最大的收入来源。现在看来，大家会觉得这个想法是非常自然的，但是如果真的是这样的话，当时的搜索巨头雅虎就不会把这块业务”OEM“给 Google 来做了。</p>
-
-<p>关于投资，周哲说虽然投兰亭集势成功了，投资主要的收获是那些失败的案例。而且选择创业，自然是认为他看到了另一个未被人发现的” 秘密 “。他讲了好几个故事，包括：教他编程的爸爸不会用 Windows 8，他自己花了 5 分钟不知道 Windows 8 如何关机，他当初是如何嘲笑 iPad 就是一个大一号的 iPhone，为什么大家现在还要用笔记本。最终他觉得当前没有谁在这方面很好地解决了用户的痛点，于是他选择了自己创业。</p>
-
-<p>他的创业作品在 <a href="http://www.jide.com/">http://www.jide.com/</a> ，是一个基于 Android 的、带键盘的笔记本。</p>
-
-<h2>总结</h2>
-
-<p>听了两天的 QCon，感觉大会整体的质量在逐年提高，自己的收获也很多，希望明年能够办得更好。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -378,6 +245,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/05/06/ios-weekly-44/">iOS移动开发周报-第44期</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/01/apple-release-analytics-beta/">苹果推出了官方的分析工具</a>
@@ -421,10 +292,6 @@
     
       <li class="post">
         <a href="/blog/2015/03/01/ios-weekly-39/">iOS移动开发周报-第39期</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/02/05/ios-weekly-38/">iOS移动开发周报-第38期</a>
       </li>
     
   </ul>

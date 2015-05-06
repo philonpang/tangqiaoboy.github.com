@@ -174,14 +174,122 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>Java同学肯定想不通上面的代码有什么错吧？原因是Objective-C需要自己负责内存的释放。
+所以需要在改变reference之前，将原对象release，对新的对象，也需要retain一下，代码就改成这样：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="p">[</span><span class="n">name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>     <span class="n">name</span> <span class="o">=</span> <span class="p">[</span><span class="n">newName</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>初学者可能以为这样就对了，其实还是有错，如果newName和name的指向的是同一个对象，并且这个对象retain count只有1的话。
+那么name release之后，这个对象就被回收掉了。所以应该改成：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">!=</span> <span class="n">newName</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="p">[</span><span class="n">name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>          <span class="n">name</span> <span class="o">=</span> <span class="p">[</span><span class="n">newName</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样才算是一个正确的set函数，Java同学肯定被吓到了，虽然知道这么写，但这比Java麻烦多了。于是，Objective-C允许程序员使用 @property + @synthesize 关键字来自动生成这些代码。于是Objective-C的程序员幸福了。大部分时候根本就不用写getter和setter。</p>
+
+<p>但是需要小心，Objective-C的accessor不能在init和dealloc函数中使用！如果你在dealloc中这么写，就有问题：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dealloc</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'>     <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>苹果在它的开发者文档库中有一个专门讲cocoa的内存管理的文章：
+<a href="http://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/MemoryMgmt.pdf">http://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/MemoryMgmt.pdf</a></p>
+
+<p>文章的第16页有一节题目是：Don’t Use Accessor Methods in Initializer Methods and dealloc</p>
+
+<p>文章说：你唯一不应该用 Accessor 的地方是 init 函数和 delloc 函数。在 init 函数中，对于一个 <code>_count</code> 成员变量应该像下面这样赋值：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">init</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">_count</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSNumber</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithInteger:</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'>     <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于一个带参数的init函数，你应该实现成下面这样：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithCount:</span><span class="p">(</span><span class="n">NSNumber</span> <span class="o">*</span><span class="p">)</span><span class="nv">startingCount</span> <span class="p">{</span>
+</span><span class='line'>     <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">_count</span> <span class="o">=</span> <span class="p">[</span><span class="n">startingCount</span> <span class="n">copy</span><span class="p">];</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'>     <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于在dealloc中，对应的写法应该是调release:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dealloc</span> <span class="p">{</span>
+</span><span class='line'>     <span class="p">[</span><span class="n">_count</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>     <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是比较郁闷的是，文章最后没有说为什么不能！去 stackoverflow 上搜了一下，比较不靠谱的说法是这样少一次函数调用，更快。比较靠谱的说法是：在 init 和 dealloc 中，对象的存在与否还不确定，所以给对象发消息可能不会成功。</p>
+
+<p>顺便说一下 , 当发现这个文章的时候，我们的代码中已经有了很多这样错误用法。虽然程序没有出现严重的内存问题，但是为了保险，还是打算一行一行改掉，后来我想，这个能不能用 vim 搞定呢？
+于是我进 vim，用 qa 启动宏录制，然后输入</p>
+
+<pre>
+:%s/self./[/g  再输入：%s/= nil/release]/g 
+</pre>
+
+
+<p>再输入q, 这样就可以用@a来启动刚刚录制的宏来做替换了。相当方便。</p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/">阅读 &rarr;</a>
-    </footer>
   
 
 
